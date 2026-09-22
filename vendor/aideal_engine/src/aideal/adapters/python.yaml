@@ -1,0 +1,57 @@
+# Adapter: plain Python codebases (pip-installable libraries).
+#
+# Pulled in from a project's aideal.yaml with:  extends: ["python"]
+# Merged between framework defaults and the project config. First target:
+# tslearn (experiments/tslearn). Counterpart of scala-spark.yaml — holds the
+# language conventions; a project supplies only globs, the preamble, and
+# (optionally) sample data.
+#
+# Language notes the pipeline relies on (implemented 2026-07-14):
+#   - visibility: `_name` convention (mode: convention) — plus the universal
+#     `_`-prefix rule; there are no private/protected keywords to scan.
+#   - docstrings live BELOW the def line (_doc_below_py) — before this, the
+#     `documented` intent signal fired 0x on Python (Sedona audit).
+#   - tests are pytest `def test_*` functions (_iter_test_blocks_py), not
+#     ScalaTest `test("...") { }` blocks.
+
+project:
+  language: Python
+
+codebase:
+  # functions AND classes: sklearn-style libraries expose estimators as classes
+  # (TimeSeriesKMeans) next to plain functions (dtw). One capture group = name.
+  public_def_regex: "^\\s*(?:def|class)\\s+([A-Za-z][A-Za-z0-9_]*)"
+  exclude_names: ["main", "setup"]
+
+docfix:
+  allowed_member_categories: [language_core, python_core]
+  member_categories:
+    python_core: [fit, predict, transform, fit_transform, fit_predict, score,
+      ravel, reshape, astype, tolist, copy, mean, sum, std, var, argmin, argmax,
+      cumsum, squeeze, flatten, array, asarray, zeros, ones, arange, linspace,
+      allclose, isclose, seed, rand, randn, randint, normal, shuffle, append,
+      extend, join, format, items, keys, values, get, strip, lower, upper,
+      round, set_params, get_params]
+
+comprehension:
+  execute:
+    test_filename: api_test.py
+    region: ["# TODO API_TEST_START", "# TODO API_TEST_END"]
+    # No build step, no jars: the library must be importable in the harness
+    # interpreter (pip install -e <repo> or pip install <pkg> — see RUNBOOK).
+    command: python3 {test_file}
+    timeout_seconds: 300
+    execution_context: >-
+      A runnable Python test harness is already in scope. The snippet body is
+      inserted inside a function; the preamble variables listed under
+      available inputs are already defined. Write plain statements and any
+      imports needed to resolve the target's public module path; do not write a
+      def/main or an if __name__ block. Print a small witness of the result (a
+      shape, a float, a length).
+    exec_hints: >-
+      Python specifics: use the pre-loaded numpy inputs instead of inventing
+      file paths; keep datasets tiny (a few short series) so the call finishes
+      in seconds; for sklearn-style estimator CLASSES instantiate with small
+      explicit hyperparameters, call .fit(X) (or fit_predict/transform), and
+      print the fitted attribute or output shape; for plain functions print
+      the returned value/shape directly. Do not plot, download, or write files.

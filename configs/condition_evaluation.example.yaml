@@ -1,0 +1,93 @@
+# A new protocol; this does not resume or reinterpret old three-README evidence.
+# Paths resolve relative to this YAML. Replace every placeholder before freezing.
+condition_evaluation:
+  schema_version: 1
+  design: six_arm  # five_arm excludes refactor_only; refactor_pair uses original/refactor_only.
+  bank: ../bank/held_out_tasks.json
+  model:
+    name: PIN_THE_AUDIENCE_MODEL
+    command: [/path/to/python, /path/to/AIDEAL_workflow/workflow/model_adapter.py]
+    artifacts: [/path/to/AIDEAL_workflow/workflow/model_adapter.py]
+  common:
+    temperature: 0.0
+    max_output_tokens: 4096
+    max_snippet_fixes: 1  # Hints can affect repairs; all conditions have this same budget.
+    provider_attempt_limit: 2
+    execution_timeout_s: 150
+    provider_timeout_s: 180
+    trial_ids: [trial_01]
+    ordering_seed: 42
+    documentation_max_characters: 24000
+    alias_max_characters: 4000
+    hint_max_characters: 4000
+    source_access: false
+  development_case_ids: []
+  holdout_review: >-
+    REPLACE with actual task/document/error-log development overlap review.
+    Development hints must not be learned from this held-out bank.
+  # Map public bank API names to the exact qualified IDs in development hints.
+  # api_function_ids: {bank_api: exact_qualified_development_function_id}
+  conditions:
+    original:
+      documents: [../original_documentation.txt]
+      source:
+        worktree: ../Original/source
+        revision: PIN_BASELINE_COMMIT
+        branch: aideal/original
+        artifacts: [../runtime/original/build_identity.json, ../runtime/original/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+    readme_only:
+      documents: [../README only/source/.aideal/treatments/README.md]
+      source:
+        worktree: ../README only/source
+        revision: PIN_README_TREATMENT_COMMIT
+        branch: aideal/readme-only
+        artifacts: [../runtime/original/build_identity.json, ../runtime/original/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+    alias_only:
+      documents: [../original_documentation.txt]
+      alias_interface: ../Alias only/source/.aideal/treatments/ALIASES.md
+      source:
+        worktree: ../Alias only/source
+        revision: PIN_ALIAS_TREATMENT_COMMIT
+        branch: aideal/alias-only
+        artifacts: [../runtime/alias/build_identity.json, ../runtime/alias/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/alias/runtime.json]
+    error_hints_only:
+      documents: [../original_documentation.txt]
+      error_hints: ../Error hints only/source/.aideal/treatments/error_hints.json
+      source:
+        worktree: ../Error hints only/source
+        revision: PIN_HINT_TREATMENT_COMMIT
+        branch: aideal/error-hints-only
+        artifacts: [../runtime/original/build_identity.json, ../runtime/original/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+    combined:
+      documents: [../Combined/source/.aideal/treatments/README.md]
+      alias_interface: ../Combined/source/.aideal/treatments/ALIASES.md
+      error_hints: ../Combined/source/.aideal/treatments/error_hints.json
+      source:
+        worktree: ../Combined/source
+        revision: PIN_COMBINED_TREATMENT_COMMIT
+        branch: aideal/combined
+        artifacts: [../runtime/alias/build_identity.json, ../runtime/alias/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/alias/runtime.json]
+    refactor_only:
+      documents: [../original_documentation.txt]
+      source:
+        worktree: ../Refactor only/VERSION/source
+        revision: PIN_REFACTOR_COMMIT
+        artifacts: [../runtime/refactor/build_identity.json, ../runtime/refactor/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/refactor/runtime.json]

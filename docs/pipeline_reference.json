@@ -1,0 +1,977 @@
+{
+  "schema_version": 1,
+  "title": "AIDEAL semantic pipeline reference",
+  "path_base": "repository_root",
+  "scope": "Portable treatment development, matched-condition evaluation, three-README evaluation and native documentation development. No machine-local study results are included.",
+  "prompt_resolution": {
+    "legacy_loader": "aideal.prompts:load",
+    "first": "<cfg.root>/<files.prompts_dir defaulting to prompts>/<name>.md",
+    "fallback": "vendor/aideal_engine/src/aideal/default_prompts/<name>.md",
+    "example_name": "aideal/readme_entry",
+    "current_comparison": "Inline workflow.evaluation_setup.SYSTEM, workflow.evaluation.audience_prompt and workflow.condition_context.public_context; see docs/SUMMARY.md.",
+    "flat_prompt_directory": "Reference/preview assets; not automatically the legacy aideal/<name>.md override layout."
+  },
+  "compatibility_facades": {
+    "readme_agent": "Existing aideal.readme_agent names explicitly reexport split implementation functions.",
+    "doc_checks": "Existing aideal.doc_checks names explicitly reexport split implementation functions."
+  },
+  "stages": [
+    {
+      "id": "comparison_setup",
+      "title": "Validate three-README inputs",
+      "track": "three_readme",
+      "entry_points": [
+        "workflow.evaluation_setup:read_config"
+      ],
+      "prompts": [],
+      "harness": "None; configuration inspection does not execute commands.",
+      "role": null,
+      "status": "implemented",
+      "outputs": [
+        "Validated config/bank/artifact payload"
+      ],
+      "limitations": [
+        "Input documents and independently designed tasks must already exist.",
+        "Evaluation-block paths use the YAML directory; bank reference/oracle paths use the bank directory."
+      ]
+    },
+    {
+      "id": "comparison_controls",
+      "title": "Execute independent checker controls",
+      "track": "three_readme",
+      "entry_points": [
+        "workflow.evaluation_setup:validate_bank",
+        "workflow.evaluation_setup:adapter_request",
+        "workflow.evaluation_setup:control_passes",
+        "workflow.execution:invoke"
+      ],
+      "prompts": [],
+      "harness": "readme_evaluation.adapter.command; correct, wrong-output and optional no-target-call controls",
+      "role": null,
+      "status": "implemented",
+      "outputs": [
+        "validation/identity.json",
+        "validation/<case>/<control>/attempt_*/request.json",
+        "validation/<case>/<control>/attempt_*/process.json",
+        "validation/validation.json"
+      ],
+      "limitations": [
+        "Private oracle paths and reference code are trusted-checker inputs only.",
+        "Infrastructure failures get a new attempt on explicit retry; verified semantic failures remain cached.",
+        "Controls test declared behaviors, not universal oracle validity."
+      ]
+    },
+    {
+      "id": "comparison_freeze",
+      "title": "Freeze and verify study identity",
+      "track": "three_readme",
+      "entry_points": [
+        "workflow.evaluation_setup:freeze_evaluation",
+        "workflow.evaluation_setup:open_frozen"
+      ],
+      "prompts": [
+        "workflow/evaluation_setup.py#SYSTEM"
+      ],
+      "harness": "No new execution in open_frozen; freeze_evaluation invokes controls.",
+      "role": null,
+      "status": "implemented",
+      "outputs": [
+        "frozen.json with study_sha256 and controller_sha256"
+      ],
+      "limitations": [
+        "Changed controller/artifact identities require fresh validation and freeze.",
+        "Review holds block control validation and evaluation."
+      ]
+    },
+    {
+      "id": "comparison_audience",
+      "title": "Select documentation and generate matched solutions",
+      "track": "three_readme",
+      "entry_points": [
+        "workflow.evaluation:run_evaluation",
+        "workflow.evaluation:select_documentation",
+        "workflow.evaluation:audience_prompt",
+        "workflow.evaluation:_request_solution",
+        "workflow.model_adapter:main",
+        "workflow.model_adapter:response_record"
+      ],
+      "prompts": [
+        "workflow/evaluation_setup.py#SYSTEM",
+        "workflow/evaluation.py#audience_prompt"
+      ],
+      "harness": "readme_evaluation.model.command; included Google SDK adapter; no library execution here",
+      "role": "configured audience model",
+      "status": "implemented",
+      "outputs": [
+        "<condition>/<case>--<trial>/documentation_exposure.json",
+        "round_*/provider_*/request.json",
+        "round_*/provider_*/process.json"
+      ],
+      "limitations": [
+        "Receives public task/contract/docs and permitted retry feedback; no hidden oracle/reference fields.",
+        "This path uses inline prompts, not aideal.prompts.load.",
+        "Same audience model handles initial solutions and snippet repairs."
+      ]
+    },
+    {
+      "id": "comparison_execution",
+      "title": "Execute solutions and bounded snippet repairs",
+      "track": "three_readme",
+      "entry_points": [
+        "workflow.evaluation:_run_unit",
+        "workflow.evaluation_setup:verified_outcome",
+        "workflow.execution:invoke"
+      ],
+      "prompts": [
+        "workflow/evaluation.py#audience_prompt"
+      ],
+      "harness": "readme_evaluation.adapter.command; independent outputs and target-API use checks",
+      "role": "same audience on permitted repair rounds",
+      "status": "implemented",
+      "outputs": [
+        "round_*/execution_*/request.json",
+        "round_*/execution_*/process.json",
+        "stdout.txt",
+        "stderr.txt",
+        "result.json"
+      ],
+      "limitations": [
+        "Execution, oracle and target flags all must pass.",
+        "Infrastructure errors remain unresolved; adapter-specific runtime behavior requires independent validation.",
+        "Source/readiness checks do not prove that an arbitrary adapter selected the intended runtime."
+      ]
+    },
+    {
+      "id": "comparison_reporting",
+      "title": "Resume, score and compare conditions",
+      "track": "three_readme",
+      "entry_points": [
+        "workflow.evaluation:_load_completed_rows",
+        "workflow.reporting:report",
+        "workflow.reporting:write_report",
+        "workflow.ablation:score"
+      ],
+      "prompts": [],
+      "harness": "None; reads recorded outcomes.",
+      "role": null,
+      "status": "implemented",
+      "outputs": [
+        "report.json",
+        "REPORT.md"
+      ],
+      "limitations": [
+        "Unresolved outcomes remain in the selected denominator.",
+        "Pass needs execution_pass, oracle_pass and target_reached.",
+        "Completed unit checkpoints are not fully hash-bound back to complete attempt evidence."
+      ]
+    },
+    {
+      "id": "legacy_inventory",
+      "title": "Discover API scope and intent",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.api_discovery:public_api_surface",
+        "aideal.api_discovery:public_api_details",
+        "aideal.api_discovery:render_api_surface",
+        "aideal.api_intent:llm_common_apis",
+        "aideal.api_intent:intended_api_llm"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/intent_common.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/intended_review.md"
+      ],
+      "harness": "Source/test discovery from legacy YAML; no native execution required.",
+      "role": "author for optional intent classification",
+      "status": "implemented_native",
+      "outputs": [
+        "API inventory, visibility/overload decisions",
+        "Intent caches and recorded classifier prompts"
+      ],
+      "limitations": [
+        "Declaration count is not automatically the scientific API denominator.",
+        "readme_agent retains compatible public imports."
+      ]
+    },
+    {
+      "id": "legacy_author",
+      "title": "Author grounded README entries",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.readme_generation:find_or_create",
+        "aideal.readme_generation:distilled_readme_context"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_distill.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_entry.md"
+      ],
+      "harness": "Optional probe_on_missing invokes development probes; ordinary authoring reads source/tests/docs.",
+      "role": "author",
+      "status": "implemented_native",
+      "outputs": [
+        "files.llm_readme",
+        "original_readme_notes.md",
+        "Generation state"
+      ],
+      "limitations": [
+        "Generates treatment candidates; does not create held-out task oracles.",
+        "Provider failures can leave clearly incomplete entry skeletons.",
+        "Prompt lookup supports project overrides before packaged defaults."
+      ]
+    },
+    {
+      "id": "legacy_harness",
+      "title": "Generate execution scaffold and inputs",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.scaffold_generation:generate_scaffold",
+        "aideal.doc_check_inputs:_fill_scaffold",
+        "aideal.doc_check_inputs:_execute_sample_data",
+        "aideal.doc_check_inputs:_resolve_preamble",
+        "aideal.doc_check_inputs:_resolve_io_hints"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/doc_check_inputs.py#_resolve_preamble",
+        "vendor/aideal_engine/src/aideal/doc_check_inputs.py#_resolve_io_hints"
+      ],
+      "harness": "comprehension.execute.scaffold/frame, imports, sample_data, insertion region, build/command/runtime settings",
+      "role": "author only for optional auto preamble/I/O hints",
+      "status": "implemented_native",
+      "outputs": [
+        "Scaffold text/configured destination",
+        "Fixture bindings",
+        "Optional preamble and I/O-hint caches"
+      ],
+      "limitations": [
+        "Generated harnesses remain library-specific and need validation.",
+        "Automatic preamble/I/O helpers use inline model prompts."
+      ]
+    },
+    {
+      "id": "legacy_comprehension_grade",
+      "title": "LLM-grade documentation comprehension",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.doc_check_comprehension:comprehension_check"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_grade.md"
+      ],
+      "harness": "execute=False; no native code execution",
+      "role": "audience writes; author grades",
+      "status": "implemented_native",
+      "outputs": [
+        "Comprehension snippet, model judgment and report"
+      ],
+      "limitations": [
+        "Model grading is not runtime proof or independent semantic correctness."
+      ]
+    },
+    {
+      "id": "legacy_comprehension_execute",
+      "title": "Execute documentation-derived snippets",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.doc_check_comprehension:comprehension_check",
+        "aideal.doc_check_execution:_comprehension_execute",
+        "aideal.doc_check_provenance:_comprehension_fingerprint_components"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write_exec.md"
+      ],
+      "harness": "comprehension.execute scaffold/build/command with native marker/error checks",
+      "role": "audience first attempt; fixer on retries",
+      "status": "implemented_native",
+      "outputs": [
+        "Native snippets and stdout/stderr",
+        "Error log",
+        "Checkpoint/results with experiment identity"
+      ],
+      "limitations": [
+        "Native exit/marker rules are not automatically independent scientific oracles.",
+        "First attempt avoids previous-failure hints; retry receives permitted failure context.",
+        "Split implementation code changes invalidate prior fingerprints."
+      ]
+    },
+    {
+      "id": "legacy_diagnosis",
+      "title": "Source-assisted development diagnosis",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.deepdive:deep_dive_run"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/deep_dive.md"
+      ],
+      "harness": "None in diagnosis itself; reads available source/type/call-site/failure evidence.",
+      "role": "fixer",
+      "status": "implemented_native",
+      "outputs": [
+        "docs/deepdive/<api>.md",
+        "Diagnosis metadata"
+      ],
+      "limitations": [
+        "Source-informed development context must not leak into held-out audience requests."
+      ]
+    },
+    {
+      "id": "legacy_doc_repair",
+      "title": "Repair persistent README and recheck",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.docfix:doc_fix_run",
+        "aideal.doc_repair:run"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/deep_dive.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/docfix_diagnose.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/docfix_rewrite.md"
+      ],
+      "harness": "Rechecks new documentation via comprehension_check under configured execution settings.",
+      "role": "fixer diagnoses/rewrites; audience/fixer for recheck snippets",
+      "status": "implemented_native",
+      "outputs": [
+        "Repair journal and locked document updates",
+        "Repair report",
+        "Recheck evidence"
+      ],
+      "limitations": [
+        "Document rounds differ from snippet fixes and provider retries.",
+        "Unsuccessful repairs can restore the original entry; a development pass is not a held-out score."
+      ]
+    },
+    {
+      "id": "legacy_candidates_probes",
+      "title": "Generate task candidates and development probes",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.task_generator:generate_tasks",
+        "aideal.probe:run_probe"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/tasks_generate.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/probe_write.md"
+      ],
+      "harness": "Probe-specific execution context; candidate task generation itself does not execute an oracle.",
+      "role": "author for tasks; audience for LLM probes",
+      "status": "implemented_native",
+      "outputs": [
+        "files.integration_tasks candidates",
+        "Probe code and execution evidence"
+      ],
+      "limitations": [
+        "Candidates need independent oracle/fixture validation before evaluation admission."
+      ]
+    },
+    {
+      "id": "legacy_puzzles",
+      "title": "Invoke application-owned puzzle evaluator",
+      "track": "legacy_development",
+      "entry_points": [
+        "aideal.doc_check_puzzles:puzzle_check"
+      ],
+      "prompts": [],
+      "harness": "puzzle.command, selected plan/document/scaffold, runner arguments; optional PUZZLE_HINTS",
+      "role": "audience provider/model identity forwarded to external runner",
+      "status": "implemented_native",
+      "outputs": [
+        "Application puzzle reports",
+        "Command/round/exit records"
+      ],
+      "limitations": [
+        "Prompts and correctness semantics belong to the configured application runner.",
+        "This is separate from workflow.run_evaluation's held-out bank."
+      ]
+    },
+    {
+      "id": "five_arm_attachment",
+      "title": "Attach five identical baseline worktrees",
+      "track": "five_arm",
+      "entry_points": [
+        "workflow.preparation:prepare_study",
+        "workflow.worktrees:attach",
+        "workflow.scaffolding:scaffold_spec",
+        "workflow.scaffolding:write_scaffold"
+      ],
+      "prompts": [],
+      "harness": "Configured harness, configured frame or templates/harness language skeleton, copied identically",
+      "role": null,
+      "status": "implemented_preparation_only",
+      "outputs": [
+        "source.json",
+        "plan.draft.json",
+        "bank.draft.json",
+        "attachment.json",
+        "Five condition records/worktrees",
+        "source/.aideal configs/harness/scaffold.json"
+      ],
+      "limitations": [
+        "No model call, treatment application or measured result.",
+        "Bank begins empty; scaffolds marked evaluation_ready=false.",
+        "Source-glob/repository check occurs after output creation and can leave a partial study."
+      ]
+    },
+    {
+      "id": "five_arm_execution",
+      "title": "Inspect legacy offline five-arm helpers",
+      "track": "five_arm",
+      "entry_points": [
+        "workflow.ablation:preflight",
+        "workflow.ablation:freeze",
+        "workflow.ablation:treatment_inputs",
+        "workflow.__main__:main"
+      ],
+      "prompts": [],
+      "harness": "Legacy offline integrity and scoring helpers; execution uses condition_freeze and condition_run.",
+      "role": null,
+      "status": "legacy_offline_helpers",
+      "outputs": [
+        "Offline integrity, routing and scoring helper results"
+      ],
+      "limitations": [
+        "Legacy run-arm intentionally refuses implicit study execution; use freeze-conditions and run-conditions.",
+        "Historical offline records are not automatically migrated into condition_evaluation_v1.",
+        "Five treatment arms do not isolate all three-factor interactions."
+      ]
+    },
+    {
+      "id": "treatment_preview",
+      "title": "Preview source and development failures",
+      "track": "treatment_development",
+      "entry_points": [
+        "workflow.improvement_context:preview_improvements",
+        "workflow.improvement_batches:preview_library_improvements"
+      ],
+      "prompts": [],
+      "harness": "Static source parsing only; never imports target code.",
+      "role": null,
+      "status": "implemented_preparation_only",
+      "outputs": [
+        "preview.json with selected API/source/error context and input hashes",
+        "Library manifest, bounded per-batch previews and complete scope accounting"
+      ],
+      "limitations": [
+        "Only explicitly selected development errors; known held-out labels rejected, unlabelled logs require operator selection.",
+        "Default 12 APIs and 60,000 context characters; source windows may include whole small files."
+      ]
+    },
+    {
+      "id": "treatment_proposal",
+      "title": "Suggest aliases and function fix hints",
+      "track": "treatment_development",
+      "entry_points": [
+        "workflow.improvement_suggestions:propose_improvements",
+        "workflow.improvement_suggestions:validate_suggestions",
+        "workflow.improvement_suggestions:matching_fix_hints",
+        "workflow.improvement_batches:propose_library_improvements"
+      ],
+      "prompts": [
+        "prompts/improvement_suggestions.md"
+      ],
+      "harness": "Configured development model via execution.invoke; bounded per-batch calls with exact saved request/response and resume identities.",
+      "role": "Explicit development-model config, independent of audience evaluation",
+      "status": "implemented_unvalidated",
+      "outputs": [
+        "Exact request.json and process/response evidence",
+        "Alias source/interface candidates",
+        "Function fix-hint JSON and JSONL",
+        "Hash-bound proposal.json, optionally containing an already generated README"
+      ],
+      "limitations": [
+        "Ordinary README generation is separate; a supplied README is bundled, not sent to this model.",
+        "Hint predicates must match cited development errors for the same function.",
+        "No behavior validation, human approval or evaluated fix is inferred."
+      ]
+    },
+    {
+      "id": "treatment_versions",
+      "title": "Install and version treatment branches",
+      "track": "treatment_development",
+      "entry_points": [
+        "workflow.treatment_versions:apply_treatments",
+        "workflow.treatment_bundles:bundle_proposals",
+        "workflow.source_refactors:study_versions"
+      ],
+      "prompts": [],
+      "harness": "No runtime harness; raw Git blobs and explicit local commits, with hooks/filters disabled.",
+      "role": null,
+      "status": "implemented_unvalidated",
+      "outputs": [
+        "Applicable attached source files and branch commits",
+        "Resumable journal, immutable application.json and current.json"
+      ],
+      "limitations": [
+        "Complete bundle: omitted treatments remove only previous AIDEAL-owned files; Original remains unchanged.",
+        "Combined reuses identical artifact bytes; installing does not establish model exposure.",
+        "Library validation and separate evaluation approval are still required; review holds are respected."
+      ]
+    },
+    {
+      "id": "source_refactors",
+      "title": "Suggest and compare duplicate-function refactors",
+      "track": "source_development",
+      "entry_points": [
+        "workflow.source_duplicates:scan_duplicates",
+        "workflow.source_duplicates:compare_duplicate_reports",
+        "workflow.source_refactors:install_refactor"
+      ],
+      "prompts": [],
+      "harness": "Static Python AST or partial Scala/Java/Rust lexical extraction; no models, target imports or tests.",
+      "role": null,
+      "status": "implemented_partial_language_coverage",
+      "outputs": [
+        "Duplicate-candidate groups, locations, input hashes and recommended checks",
+        "Compatible before/after counts and reduction, or explicit non-comparable result"
+      ],
+      "limitations": [
+        "Scanner/model outputs are review candidates; install-refactor versions an explicit replacement manifest separately, still requiring behavior validation.",
+        "Preserve public APIs; structural matches do not prove semantic equivalence.",
+        "Near duplicates and alpha-renamed functions are outside this scanner."
+      ]
+    },
+    {
+      "id": "condition_freeze",
+      "title": "Validate and freeze each treatment backend",
+      "track": "conditions",
+      "entry_points": [
+        "workflow.condition_setup:read_condition_config",
+        "workflow.condition_setup:validate_conditions",
+        "workflow.condition_setup:freeze_conditions",
+        "workflow.condition_setup:open_conditions"
+      ],
+      "prompts": [],
+      "harness": "Per-condition independent reference, wrong-output and no-target controls",
+      "role": null,
+      "status": "implemented",
+      "outputs": [
+        "validation/identity.json",
+        "validation/<condition>/<case>/control_NNN/attempt_NNN/",
+        "validation/validation.json",
+        "frozen.json"
+      ],
+      "limitations": [
+        "A valid library adapter/build, development separation and independent bank are explicit inputs.",
+        "Synthetic software checks are not hosted-model experimental results."
+      ]
+    },
+    {
+      "id": "condition_run",
+      "title": "Evaluate matched treatment conditions",
+      "track": "conditions",
+      "entry_points": [
+        "workflow.condition_evaluation:run_conditions",
+        "workflow.condition_context:public_context"
+      ],
+      "prompts": [
+        "workflow/evaluation_setup.py#SYSTEM",
+        "workflow/condition_context.py#public_context"
+      ],
+      "harness": "Per-condition backend-aware adapter; canonical targets and independent oracles",
+      "role": "configured audience model",
+      "status": "implemented",
+      "outputs": [
+        "<condition>/<case>--<trial>/result.json",
+        "<condition>/<case>--<trial>/round_NN/context_exposure.json",
+        "provider_NNN and execution_NNN request/process/log records"
+      ],
+      "limitations": [
+        "A valid library adapter/build, development separation and independent bank are explicit inputs.",
+        "Synthetic software checks are not hosted-model experimental results."
+      ]
+    },
+    {
+      "id": "condition_report",
+      "title": "Compare matched scores and resources",
+      "track": "conditions",
+      "entry_points": [
+        "workflow.condition_reporting:report_conditions"
+      ],
+      "prompts": [],
+      "harness": "No execution; reuse verified results",
+      "role": null,
+      "status": "implemented",
+      "outputs": [
+        "report.json",
+        "REPORT.md"
+      ],
+      "limitations": [
+        "A valid library adapter/build, development separation and independent bank are explicit inputs.",
+        "Synthetic software checks are not hosted-model experimental results."
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "comparison_setup",
+      "to": "comparison_controls",
+      "kind": "automatic"
+    },
+    {
+      "from": "comparison_controls",
+      "to": "comparison_freeze",
+      "kind": "automatic_after_valid_controls"
+    },
+    {
+      "from": "comparison_freeze",
+      "to": "comparison_audience",
+      "kind": "explicit_run_command"
+    },
+    {
+      "from": "comparison_audience",
+      "to": "comparison_execution",
+      "kind": "automatic"
+    },
+    {
+      "from": "comparison_execution",
+      "to": "comparison_audience",
+      "kind": "bounded_snippet_repair"
+    },
+    {
+      "from": "comparison_execution",
+      "to": "comparison_reporting",
+      "kind": "automatic"
+    },
+    {
+      "from": "legacy_inventory",
+      "to": "legacy_author",
+      "kind": "configured_development"
+    },
+    {
+      "from": "legacy_harness",
+      "to": "legacy_comprehension_execute",
+      "kind": "configured_development"
+    },
+    {
+      "from": "legacy_author",
+      "to": "legacy_comprehension_grade",
+      "kind": "explicit_mode"
+    },
+    {
+      "from": "legacy_author",
+      "to": "legacy_comprehension_execute",
+      "kind": "explicit_execute_mode"
+    },
+    {
+      "from": "legacy_comprehension_execute",
+      "to": "legacy_diagnosis",
+      "kind": "explicit_development_review"
+    },
+    {
+      "from": "legacy_diagnosis",
+      "to": "legacy_doc_repair",
+      "kind": "optional_deep_dive_first"
+    },
+    {
+      "from": "legacy_doc_repair",
+      "to": "legacy_comprehension_execute",
+      "kind": "development_recheck"
+    },
+    {
+      "from": "legacy_author",
+      "to": "comparison_setup",
+      "kind": "manual_document_selection_and_freeze"
+    },
+    {
+      "from": "legacy_doc_repair",
+      "to": "comparison_setup",
+      "kind": "manual_document_selection_and_freeze"
+    },
+    {
+      "from": "legacy_candidates_probes",
+      "to": "comparison_setup",
+      "kind": "independent_validation_required"
+    },
+    {
+      "from": "five_arm_attachment",
+      "to": "five_arm_execution",
+      "kind": "legacy_offline_helper"
+    },
+    {
+      "from": "operator_guidance",
+      "to": "comparison_setup",
+      "kind": "operator_guidance_only"
+    },
+    {
+      "from": "operator_guidance",
+      "to": "five_arm_attachment",
+      "kind": "operator_guidance_only"
+    },
+    {
+      "from": "five_arm_attachment",
+      "to": "treatment_preview",
+      "kind": "explicit_development_command"
+    },
+    {
+      "from": "treatment_preview",
+      "to": "treatment_proposal",
+      "kind": "explicit_model_command"
+    },
+    {
+      "from": "legacy_author",
+      "to": "treatment_proposal",
+      "kind": "optional_supplied_document"
+    },
+    {
+      "from": "treatment_proposal",
+      "to": "treatment_versions",
+      "kind": "explicit_install_command"
+    },
+    {
+      "from": "treatment_versions",
+      "to": "five_arm_execution",
+      "kind": "legacy_offline_helper"
+    },
+    {
+      "from": "five_arm_attachment",
+      "to": "source_refactors",
+      "kind": "optional_read_only_scan"
+    },
+    {
+      "from": "treatment_versions",
+      "to": "condition_freeze",
+      "kind": "explicit_validated_condition_protocol"
+    },
+    {
+      "from": "source_refactors",
+      "to": "condition_freeze",
+      "kind": "explicit_validated_condition_protocol"
+    },
+    {
+      "from": "condition_freeze",
+      "to": "condition_run",
+      "kind": "explicit_validated_condition_protocol"
+    },
+    {
+      "from": "condition_run",
+      "to": "condition_report",
+      "kind": "explicit_validated_condition_protocol"
+    }
+  ],
+  "review_paths": [
+    {
+      "id": "conditions",
+      "title": "Treatment evaluation",
+      "subtitle": "Five arms, refactor pair or six arms",
+      "summary": "Main matched treatment path: compare exact documentation, alias, hint and source versions on one shared task bank.",
+      "status": "Implemented; per-library validation required",
+      "note": "Validation executes controls on every backend. Hints appear only after checked failures; outputs remain bound to the frozen protocol.",
+      "entries": [
+        {
+          "id": "condition_freeze",
+          "title": "Freeze the condition study",
+          "function": "workflow.condition_setup:freeze_conditions",
+          "summary": "Freeze the condition study",
+          "inputs": "Explicit frozen/source/artifact identities and shared bank",
+          "outputs": "Validated evidence or an explicit unresolved state",
+          "stage_ids": [
+            "condition_freeze"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "condition_run",
+          "title": "Generate, execute and verify",
+          "function": "workflow.condition_evaluation:run_conditions",
+          "summary": "Generate, execute and verify",
+          "inputs": "Explicit frozen/source/artifact identities and shared bank",
+          "outputs": "Validated evidence or an explicit unresolved state",
+          "stage_ids": [
+            "condition_run"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "condition_report",
+          "title": "Read matched scores",
+          "function": "workflow.condition_reporting:report_conditions",
+          "summary": "Read matched scores",
+          "inputs": "Explicit frozen/source/artifact identities and shared bank",
+          "outputs": "Validated evidence or an explicit unresolved state",
+          "stage_ids": [
+            "condition_report"
+          ],
+          "status": "implemented"
+        }
+      ],
+      "extra_stage_ids": []
+    },
+    {
+      "id": "development",
+      "title": "Development",
+      "subtitle": "Generate documentation and propose source treatments",
+      "summary": "Review README development first. Expand the additional tools for source-grounded alias proposals, fix hints, treatment commits and duplicate-refactor suggestions.",
+      "status": "Implemented; library-specific validation required",
+      "note": "This is a separate development workflow. Documentation is supplied explicitly to evaluation; installed aliases and hints still need library validation and runtime integration.",
+      "entries": [
+        {
+          "id": "inspect-apis",
+          "title": "Inspect API scope",
+          "function": "aideal.api_discovery:public_api_details",
+          "summary": "Extract candidate API signatures, visibility and identities from the configured sources.",
+          "inputs": "Engine YAML and source patterns",
+          "outputs": "Candidate API inventory",
+          "stage_ids": [
+            "legacy_inventory"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "write-readme",
+          "title": "Generate README",
+          "function": "aideal.readme_generation:find_or_create",
+          "summary": "Use source, tests and original documentation to author API entries.",
+          "inputs": "API scope, source/test evidence, documentation and author model",
+          "outputs": "Configured README and generation state",
+          "stage_ids": [
+            "legacy_author"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "check-readme",
+          "title": "Check documentation examples",
+          "function": "aideal.doc_check_comprehension:comprehension_check",
+          "summary": "Write examples and route them to model grading or configured native execution.",
+          "inputs": "Documentation, audience model and optional execution harness",
+          "outputs": "Snippets and grading or execution records",
+          "stage_ids": [
+            "legacy_harness",
+            "legacy_comprehension_grade",
+            "legacy_comprehension_execute"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "repair-readme",
+          "title": "Diagnose and repair README",
+          "function": "aideal.docfix:doc_fix_run",
+          "summary": "Diagnose development failures, rewrite affected entries, and recheck them.",
+          "inputs": "Failed development cases and source/document context",
+          "outputs": "Journaled document changes and repair report",
+          "stage_ids": [
+            "legacy_diagnosis",
+            "legacy_doc_repair"
+          ],
+          "status": "implemented"
+        }
+      ],
+      "extra_stage_ids": [
+        "treatment_preview",
+        "treatment_proposal",
+        "treatment_versions",
+        "source_refactors",
+        "legacy_candidates_probes",
+        "legacy_puzzles"
+      ]
+    },
+    {
+      "id": "unfinished",
+      "title": "Attach and prepare a library",
+      "subtitle": "Attach and validate a concrete library",
+      "summary": "Branch and treatment preparation are implemented. Library-specific builds, fixtures and independent oracles remain explicit inputs.",
+      "status": "Preparation implemented; library validation required",
+      "note": "Creating branches or passing a readiness check does not prove the README, alias and error-hint treatments exist or have been evaluated.",
+      "entries": [
+        {
+          "id": "prepare-five-arm",
+          "title": "Prepare a study draft",
+          "function": "workflow.preparation:prepare_study",
+          "summary": "Snapshot configured inputs and create the initial shared study records.",
+          "inputs": "Engine YAML and destination directory",
+          "outputs": "Draft plan, empty task bank and condition folders",
+          "stage_ids": [
+            "five_arm_attachment"
+          ],
+          "status": "implemented_preparation_only"
+        },
+        {
+          "id": "attach-five-arm",
+          "title": "Create five worktrees",
+          "function": "workflow.worktrees:attach",
+          "summary": "Prepare the study and create isolated branches from one pinned clean revision.",
+          "inputs": "Clean Git repository, engine YAML and destination",
+          "outputs": "Five worktrees, attachment records and harness scaffolds",
+          "stage_ids": [
+            "five_arm_attachment"
+          ],
+          "status": "implemented_preparation_only"
+        },
+        {
+          "id": "check-five-arm",
+          "title": "Inspect readiness",
+          "function": "workflow.ablation:preflight",
+          "summary": "List missing requirements for the declared bank, treatments and adapter.",
+          "inputs": "Plan, bank, treatments, validation and approval records",
+          "outputs": "Readiness issue list",
+          "stage_ids": [
+            "five_arm_execution"
+          ],
+          "status": "implemented_helper"
+        },
+        {
+          "id": "run-five-arm",
+          "title": "Choose the matched condition runner",
+          "function": "workflow.condition_evaluation:run_conditions",
+          "summary": "Use run-conditions with an explicit frozen protocol; legacy run-arm does not select a study.",
+          "inputs": "Frozen condition study and separate output directory",
+          "outputs": "Saved attempts and matched report",
+          "stage_ids": [
+            "condition_run"
+          ],
+          "status": "implemented"
+        }
+      ],
+      "extra_stage_ids": []
+    },
+    {
+      "id": "evaluation",
+      "title": "Three-README comparison",
+      "subtitle": "One backend, three documentation versions",
+      "summary": "Read this separate protocol when comparing Original, Generated and Repaired README versions.",
+      "status": "Implemented; library-specific validation required",
+      "note": "Documents and an independent task bank must already exist. This protocol does not reinterpret condition-study evidence.",
+      "entries": [
+        {
+          "id": "freeze-study",
+          "title": "Validate and freeze",
+          "function": "workflow.evaluation_setup:freeze_evaluation",
+          "summary": "Check the study inputs and independent checker controls, then record their identities.",
+          "inputs": "Study YAML, three document bundles, task bank and adapters",
+          "outputs": "Validation evidence and frozen.json",
+          "stage_ids": [
+            "comparison_setup",
+            "comparison_controls",
+            "comparison_freeze"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "run-comparison",
+          "title": "Run or resume comparison",
+          "function": "workflow.evaluation:run_evaluation",
+          "summary": "Choose documentation, request fresh solutions, check them, and allow bounded snippet repairs.",
+          "inputs": "Frozen study and an output directory",
+          "outputs": "Saved requests, process records and per-task results",
+          "stage_ids": [
+            "comparison_audience",
+            "comparison_execution"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "compare-results",
+          "title": "Understand the scores",
+          "function": "workflow.reporting:report",
+          "summary": "Compare matched outcomes while retaining unresolved tasks in the denominator.",
+          "inputs": "Frozen study and saved result rows",
+          "outputs": "Paired metrics; write_report saves REPORT.md and report.json",
+          "stage_ids": [
+            "comparison_reporting"
+          ],
+          "status": "implemented"
+        }
+      ],
+      "extra_stage_ids": []
+    }
+  ]
+}

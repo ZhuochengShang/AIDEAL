@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "grail-agent"
+version = "0.1.0"
+description = "AIDEAL engine for API discovery, README authoring and executable documentation checks."
+requires-python = ">=3.10"
+dependencies = [
+  "langchain-core",
+  "langchain-openai",
+  "pyyaml",
+]
+
+[project.scripts]
+aideal = "aideal.cli:main"
+aideal-mcp = "aideal.mcp_server:main"
+
+[project.optional-dependencies]
+# extra providers for author/audience model experiments (Claude, Gemini, Kimi/Qwen via Ollama)
+providers = [
+  "langchain-anthropic",
+  "langchain-google-genai",
+  "langchain-ollama",
+]
+# MCP server so coding agents (Claude Code, Cursor, Windsurf) discover AIDEAL as tools
+mcp = [
+  "mcp",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+aideal = ["defaults.yaml", "adapters/*.yaml", "default_prompts/**/*.md"]

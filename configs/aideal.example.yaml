@@ -1,0 +1,40 @@
+# Copy to <study-workspace>/configs/aideal.yaml and fill in paths/settings.
+# This is the archived engine schema. Relative paths use <study-workspace>,
+# not the shell's current directory. Absolute source/documentation paths work.
+# Choose the adapter that matches your library; this Python example is editable.
+extends: [python] # Available archived adapters: python, java, scala-spark
+project:
+  name: YOUR_LIBRARY
+  language: Python
+codebase:
+  source_globs:
+    - /absolute/path/to/library/src/**/*.py
+  test_globs:
+    - /absolute/path/to/library/tests/**/*.py
+  surface_filter: all
+files:
+  original_readme:
+    - /absolute/path/to/library/README.md
+  llm_readme: docs/LLM_readme.md
+  project_profile: configs/project_profile.yaml
+  integration_tasks: configs/integration_tasks.yaml
+  aliases: aliases/aliases.json
+  error_log: logs/error_log.jsonl
+models:
+  registry: {} # Fill provider/model entries before any LLM use.
+  roles: {}    # Map author, audience and fixer to registry entries.
+comprehension:
+  execute:
+    scaffold: null # Supply and independently validate a library-specific harness.
+    command: null  # Supply the build/run command; setup never executes it.
+# New matched-study settings, read by the controller from the same YAML.
+# These do not change legacy comprehension settings automatically.
+evaluation:
+  model: null # Pin the audience model identity consistently with models.roles.
+  temperature: 0.0
+  max_output_tokens: null
+  max_snippet_fixes: 5
+  provider_attempt_limit: null
+  execution_timeout_s: null
+  trial_ids: [trial_01, trial_02, trial_03]
+  prompt_sha256: null # Set from the validated, frozen audience template.

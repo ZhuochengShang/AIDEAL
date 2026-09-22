@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIDEAL · Workflow guide</title>
+<style>__CODE_MAP_STYLE__</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">AIDEAL / Code review</p>
+  <h1>Start with the workflow.</h1>
+  <p>Read a few main entry points. Expand their helpers when you need more detail.</p>
+</header>
+<main>
+  <nav id="paths" class="path-tabs" aria-label="Choose a workflow"></nav>
+  <div class="view-bar">
+    <a id="guide-link" href="#path-evaluation">Guided workflow</a>
+    <a id="reference-link" href="#functions">Full function reference</a>
+  </div>
+  <section id="guide" aria-label="Guided workflow">
+    <div id="path-intro"></div>
+    <ol id="entries" class="entries"></ol>
+    <div id="other-tools"></div>
+    <details class="card" id="operating"><summary>Skills and operating guidance</summary><div id="operator-details"></div></details>
+  </section>
+  <section id="functions" class="hidden" aria-label="Full function reference">
+    <p class="intro">Use this reference for a specific question. The guided workflow gives you a smaller starting point. Functions with no resolved callers may still be used through commands, callbacks or external imports.</p>
+    <div class="toolbar">
+      <label>Search functions or prompt keys<input id="query" type="search" placeholder="Try run_evaluation, readme_entry or a helper name"></label>
+      <label>Module<select id="module"><option value="">All modules</option></select></label>
+    </div>
+    <p id="count" aria-live="polite"></p>
+    <div class="explorer">
+      <aside id="results" aria-label="Matching definitions"></aside>
+      <article id="detail" class="card detail"><h2>Choose a function</h2><p>Follow its calls, callers and source. These are static links, not an execution trace.</p></article>
+    </div>
+    <p id="limitations" class="notice"></p>
+  </section>
+  <footer>Local source reference · No model calls or experiment execution. Regenerate with <code>scripts/build_code_map.py</code> after code changes.</footer>
+</main>
+<script id="map-data" type="application/json">__CODE_MAP_DATA__</script>
+<script>__CODE_MAP_SCRIPT__</script>
+</body>
+</html>

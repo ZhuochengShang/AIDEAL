@@ -1,0 +1,22 @@
+# Explicit development-model adapter, separate from the audience evaluation model.
+# The command receives {system, prompt, model, temperature, max_output_tokens}
+# on stdin and returns {code: "JSON suggestion object", usage?, model_version?}.
+# Use an absolute launcher path; commands run from the saved attempt directory.
+model:
+  name: YOUR_DEVELOPMENT_MODEL
+  command:
+    - /absolute/path/to/python
+    - /absolute/path/to/AIDEAL_workflow/workflow/model_adapter.py
+  temperature: 0.0
+  max_output_tokens: 8192
+  timeout_s: 300
+  # Library batches: lifetime model attempts per batch, across resumptions.
+  provider_attempt_limit: 2
+
+# Use this file with propose-library --preview /path/to/manifest.json.
+# preview-library reads source/discovery/profile settings from the attached
+# library's AIDEAL YAML. Example proposal scope:
+#   preview-library --study STUDY --output PREVIEW --batch-size 12
+#     --alias-path-template 'src/aideal_aliases_{batch}.py'
+# Language-appropriate source/package paths are explicit; no universal alias
+# file layout is assumed. --max-batches on propose-library bounds one invocation.
