@@ -1,5 +1,7 @@
 # AIDEAL
 
+[Gemini Flash settings](docs/GEMINI_FLASH.md) · [Legacy-code review](docs/LEGACY_CODE_REVIEW.md)
+
 AIDEAL prepares and evaluates changes that may help language models use a software library: clearer documentation, forwarding aliases, function-specific error hints, and source refactors that preserve the public API.
 
 The toolkit records source versions, model inputs, checker controls, execution attempts, and scores needed to review a comparison. It supports five treatment conditions, an original/refactor pair, or all six conditions. A separate three-README evaluator remains available.

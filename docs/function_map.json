@@ -15,12 +15,6 @@
       "sha256": "137e36c7ef8b291cac55efb7cfb384093ff9df4cd762160ebebd47089ab5abd2"
     },
     {
-      "name": "aideal.alias_functions",
-      "path": "vendor/aideal_engine/src/aideal/alias_functions.py",
-      "lines": 106,
-      "sha256": "b4beffe308ec8c06b84a826b26790cde9a233f88c211f604d19a4332378dfb0c"
-    },
-    {
       "name": "aideal.alias_registry",
       "path": "vendor/aideal_engine/src/aideal/alias_registry.py",
       "lines": 96,
@@ -405,6 +399,12 @@
       "sha256": "647391a5218b1cb09f76a4fd754de123dc5b9fe100bdca1c478dce87bfb7d183"
     },
     {
+      "name": "workflow.gemini_flash_adapter",
+      "path": "workflow/gemini_flash_adapter.py",
+      "lines": 84,
+      "sha256": "85a422ef7f4429204b9f02a71e95e9309c98e985a9e2e2ae146417145805baac"
+    },
+    {
       "name": "workflow.improvement_batches",
       "path": "workflow/improvement_batches.py",
       "lines": 328,
@@ -491,84 +491,6 @@
   ],
   "functions": [
     {
-      "id": "aideal.alias_functions:module_path",
-      "module": "aideal.alias_functions",
-      "name": "module_path",
-      "kind": "function",
-      "path": "vendor/aideal_engine/src/aideal/alias_functions.py",
-      "line": 81,
-      "end_line": 85,
-      "signature": "module_path(cfg)",
-      "summary": "Where the generated module is written (next to the alias registry by\ndefault; override with files.alias_functions in the config).",
-      "calls": [],
-      "called_by": [
-        "aideal.alias_functions:sync"
-      ],
-      "unresolved_calls": [
-        "(cfg.raw.get('files', {}) or {}).get",
-        "cfg.raw.get"
-      ],
-      "prompts": [],
-      "source": "def module_path(cfg) -> Path:\n    \"\"\"Where the generated module is written (next to the alias registry by\n    default; override with files.alias_functions in the config).\"\"\"\n    rel = (cfg.raw.get(\"files\", {}) or {}).get(\"alias_functions\", \"aliases/GrailAliases.scala\")\n    return (cfg.root / rel)",
-      "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_functions.py#L81"
-    },
-    {
-      "id": "aideal.alias_functions:render_module",
-      "module": "aideal.alias_functions",
-      "name": "render_module",
-      "kind": "function",
-      "path": "vendor/aideal_engine/src/aideal/alias_functions.py",
-      "line": 71,
-      "end_line": 78,
-      "signature": "render_module(specs: list[dict])",
-      "summary": "Render the full GrailAliases.scala from the alias specs (deterministic,\nso re-running produces a stable diff).",
-      "calls": [],
-      "called_by": [
-        "aideal.alias_functions:sync"
-      ],
-      "unresolved_calls": [
-        "'\\n\\n'.join",
-        "parts.append",
-        "sorted"
-      ],
-      "prompts": [],
-      "source": "def render_module(specs: list[dict]) -> str:\n    \"\"\"Render the full GrailAliases.scala from the alias specs (deterministic,\n    so re-running produces a stable diff).\"\"\"\n    parts = []\n    for s in sorted(specs, key=lambda x: x[\"name\"]):\n        parts.append(f\"  /** {s['doc']} (alias for `{s['canonical']}`) */\\n\"\n                     f\"  {s['signature']} = {s['body']}\")\n    return _HEADER + \"\\n\" + \"\\n\\n\".join(parts) + \"\\n\" + _FOOTER",
-      "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_functions.py#L71"
-    },
-    {
-      "id": "aideal.alias_functions:sync",
-      "module": "aideal.alias_functions",
-      "name": "sync",
-      "kind": "function",
-      "path": "vendor/aideal_engine/src/aideal/alias_functions.py",
-      "line": 88,
-      "end_line": 106,
-      "signature": "sync(cfg, specs: list[dict] | None=None, *, mark_added: bool=True)",
-      "summary": "Render + write GrailAliases.scala and record each wrapper in the alias\nregistry (status `added`). Idempotent: re-running with the same specs rewrites\nthe same file and leaves the registry unchanged.",
-      "calls": [
-        "aideal.alias_functions:module_path",
-        "aideal.alias_functions:render_module",
-        "aideal.alias_registry:AliasRegistry"
-      ],
-      "called_by": [],
-      "unresolved_calls": [
-        "added.append",
-        "len",
-        "path.exists",
-        "path.parent.mkdir",
-        "path.read_text",
-        "path.write_text",
-        "reg.mark_added",
-        "str"
-      ],
-      "prompts": [],
-      "source": "def sync(cfg, specs: list[dict] | None = None, *, mark_added: bool = True) -> dict:\n    \"\"\"Render + write GrailAliases.scala and record each wrapper in the alias\n    registry (status `added`). Idempotent: re-running with the same specs rewrites\n    the same file and leaves the registry unchanged.\"\"\"\n    specs = specs if specs is not None else DEFAULT_ALIAS_FUNCTIONS\n    path = module_path(cfg)\n    path.parent.mkdir(parents=True, exist_ok=True)\n    text = render_module(specs)\n    changed = (not path.exists()) or path.read_text(encoding=\"utf-8\") != text\n    if changed:\n        path.write_text(text, encoding=\"utf-8\")\n    added = []\n    if mark_added:\n        reg = AliasRegistry(cfg.aliases_file)\n        for s in specs:\n            reg.mark_added(s[\"name\"], s[\"canonical\"])   # proposed -> added\n            added.append({\"alias\": s[\"name\"], \"canonical\": s[\"canonical\"]})\n    return {\"path\": str(path), \"changed\": changed, \"aliases\": added,\n            \"count\": len(specs)}",
-      "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_functions.py#L88"
-    },
-    {
       "id": "aideal.alias_registry:AliasRegistry",
       "module": "aideal.alias_registry",
       "name": "AliasRegistry",
@@ -580,14 +502,12 @@
       "summary": "",
       "calls": [],
       "called_by": [
-        "aideal.alias_functions:sync",
         "aideal.cli:_run"
       ],
       "unresolved_calls": [],
       "prompts": [],
       "source": "class AliasRegistry:\n    def __init__(self, path: Path):\n        self.path = path\n        self.records: list[dict] = []\n        if path.exists():\n            self.records = json.loads(path.read_text(encoding=\"utf-8\"))\n\n    def save(self) -> None:\n        self.path.parent.mkdir(parents=True, exist_ok=True)\n        self.path.write_text(json.dumps(self.records, indent=2), encoding=\"utf-8\")\n\n    def _find(self, alias: str, canonical: str, model: str | None = None) -> dict | None:\n        for r in self.records:\n            if r[\"alias\"] == alias and r[\"canonical\"] == canonical and (model is None or r[\"model\"] == model):\n                return r\n        return None\n\n    def record_use(self, alias: str, canonical: str, model: str) -> dict:\n        \"\"\"A model used/proposed `alias` for `canonical` (status stays proposed).\"\"\"\n        r = self._find(alias, canonical, model)\n        if r:\n            r[\"count\"] += 1\n        else:\n            r = {\"alias\": alias, \"canonical\": canonical, \"model\": model,\n                 \"count\": 1, \"status\": \"proposed\", \"run_id\": new_run_id(), \"added_at\": \"\"}\n            self.records.append(r)\n        self.save()\n        return r\n\n    def mark_added(self, alias: str, canonical: str) -> dict:\n        \"\"\"Track that this alias was actually ADDED to the codebase.\"\"\"\n        r = self._find(alias, canonical)\n        if r is None:\n            r = {\"alias\": alias, \"canonical\": canonical, \"model\": \"manual\",\n                 \"count\": 0, \"status\": \"proposed\", \"run_id\": new_run_id(), \"added_at\": \"\"}\n            self.records.append(r)\n        r[\"status\"] = \"added\"\n        r[\"added_at\"] = time.strftime(\"%Y%m%d-%H%M%SZ\", time.gmtime())\n        self.save()\n        return r\n\n    # -- metrics ------------------------------------------------------------\n\n    def histogram(self) -> dict[str, int]:\n        per_fn: dict[str, set[str]] = defaultdict(set)\n        for r in self.records:\n            per_fn[r[\"canonical\"]].add(r[\"alias\"])\n        return {fn: len(a) for fn, a in sorted(per_fn.items())}\n\n    def overlap(self, model_a: str, model_b: str) -> dict:\n        a = {(r[\"alias\"], r[\"canonical\"]) for r in self.records if r[\"model\"] == model_a}\n        b = {(r[\"alias\"], r[\"canonical\"]) for r in self.records if r[\"model\"] == model_b}\n        inter, union = a & b, a | b\n        return {\n            \"model_a\": model_a, \"model_b\": model_b,\n            \"a_size\": len(a), \"b_size\": len(b),\n            \"intersection\": len(inter),\n            \"jaccard\": round(len(inter) / len(union), 3) if union else 0.0,\n            \"shared\": sorted(f\"{al} -> {cn}\" for al, cn in inter),\n        }\n\n    def report(self) -> dict:\n        usage = Counter()\n        for r in self.records:\n            usage[r[\"alias\"]] += r[\"count\"]\n        return {\n            \"total_records\": len(self.records),\n            \"added\": [r for r in self.records if r[\"status\"] == \"added\"],\n            \"proposed\": [r for r in self.records if r[\"status\"] == \"proposed\"],\n            \"models\": sorted({r[\"model\"] for r in self.records}),\n            \"alias_histogram_per_function\": self.histogram(),\n            \"top_aliases_by_use\": usage.most_common(20),\n        }",
       "aliases": [
-        "aideal.alias_functions:AliasRegistry",
         "aideal.cli:AliasRegistry"
       ],
       "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L24"
@@ -13151,6 +13071,71 @@
       "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/execution.py#L23"
     },
     {
+      "id": "workflow.gemini_flash_adapter:main",
+      "module": "workflow.gemini_flash_adapter",
+      "name": "main",
+      "kind": "function",
+      "path": "workflow/gemini_flash_adapter.py",
+      "line": 36,
+      "end_line": 80,
+      "signature": "main(argv=None)",
+      "summary": "",
+      "calls": [
+        "workflow.gemini_flash_adapter:response_record"
+      ],
+      "called_by": [],
+      "unresolved_calls": [
+        "RuntimeError",
+        "ValueError",
+        "argparse.ArgumentParser",
+        "client.models.generate_content",
+        "genai.Client",
+        "hashlib.sha256",
+        "hashlib.sha256(json.dumps(settings, sort_keys=True, separators=(',', ':')).encode()).hexdigest",
+        "json.dumps",
+        "json.dumps(settings, sort_keys=True, separators=(',', ':')).encode",
+        "json.load",
+        "os.environ.get",
+        "parser.add_argument",
+        "parser.error",
+        "parser.parse_args",
+        "print",
+        "type",
+        "types.GenerateContentConfig",
+        "types.HttpOptions",
+        "types.HttpRetryOptions",
+        "types.ThinkingConfig"
+      ],
+      "prompts": [],
+      "source": "def main(argv=None):\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--thinking-level', choices=('low', 'minimal'), default='low')\n    parser.add_argument('--timeout-ms', type=int, default=120000,\n                        help='SDK HTTP timeout in milliseconds (default: 120000)')\n    args = parser.parse_args(argv)\n    if args.timeout_ms <= 0:\n        parser.error('--timeout-ms must be positive')\n    request = json.load(sys.stdin)\n    if request['model'] != 'gemini-3-flash-preview':\n        raise ValueError('This adapter requires model gemini-3-flash-preview')\n    cap = request['max_output_tokens']\n    if type(cap) is not int or cap <= 0:\n        raise ValueError('max_output_tokens must be a positive integer')\n    key = os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY')\n    if not key:\n        raise RuntimeError('Set GOOGLE_API_KEY or GEMINI_API_KEY in the launching environment')\n\n    # Lazy imports keep --help and configuration inspection offline.\n    from google import genai\n    from google.genai import types\n\n    settings = {\n        'model': request['model'], 'thinking_level': args.thinking_level,\n        'include_thoughts': False, 'temperature': request['temperature'],\n        'max_output_tokens': cap, 'candidate_count': 1,\n        'timeout_ms': args.timeout_ms, 'http_attempts': 1,\n        'api_version': 'v1beta', 'base_url': 'https://generativelanguage.googleapis.com',\n        'vertexai': False, 'sdk_version': genai.__version__,\n    }\n    with genai.Client(api_key=key, vertexai=False, http_options=types.HttpOptions(\n            api_version=settings['api_version'], base_url=settings['base_url'], timeout=args.timeout_ms,\n            retry_options=types.HttpRetryOptions(attempts=1))) as client:\n        response = client.models.generate_content(\n            model=request['model'], contents=request['prompt'],\n            config=types.GenerateContentConfig(\n                system_instruction=request['system'], temperature=request['temperature'],\n                max_output_tokens=cap, candidate_count=1,\n                thinking_config=types.ThinkingConfig(\n                    thinking_level=args.thinking_level, include_thoughts=False)))\n    record = response_record(response)\n    record['adapter_settings'] = settings\n    record['adapter_settings_sha256'] = hashlib.sha256(json.dumps(\n        settings, sort_keys=True, separators=(',', ':')).encode()).hexdigest()\n    print(json.dumps(record))",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/gemini_flash_adapter.py#L36"
+    },
+    {
+      "id": "workflow.gemini_flash_adapter:response_record",
+      "module": "workflow.gemini_flash_adapter",
+      "name": "response_record",
+      "kind": "function",
+      "path": "workflow/gemini_flash_adapter.py",
+      "line": 14,
+      "end_line": 33,
+      "signature": "response_record(response)",
+      "summary": "Retain evaluator-compatible totals and distinguish visible/reasoning usage.",
+      "calls": [],
+      "called_by": [
+        "workflow.gemini_flash_adapter:main"
+      ],
+      "unresolved_calls": [
+        "base_response_record",
+        "getattr",
+        "record['usage'].update"
+      ],
+      "prompts": [],
+      "source": "def response_record(response):\n    \"\"\"Retain evaluator-compatible totals and distinguish visible/reasoning usage.\"\"\"\n    record = base_response_record(response)\n    usage = response.usage_metadata\n    if usage is not None:\n        record['usage'].update({\n            'visible_output_tokens': usage.candidates_token_count,\n            'thinking_tokens': usage.thoughts_token_count,\n            'cached_input_tokens': usage.cached_content_token_count,\n            'tool_use_prompt_tokens': usage.tool_use_prompt_token_count,\n            'total_tokens': usage.total_token_count,\n        })\n    candidate = (response.candidates or [None])[0]\n    reason = getattr(candidate, 'finish_reason', None)\n    record['finish_reason'] = getattr(reason, 'value', reason)\n    record['finish_message'] = getattr(candidate, 'finish_message', None)\n    record['truncated'] = record['finish_reason'] == 'MAX_TOKENS'\n    block = getattr(response.prompt_feedback, 'block_reason', None)\n    record['prompt_block_reason'] = getattr(block, 'value', block)\n    return record",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/gemini_flash_adapter.py#L14"
+    },
+    {
       "id": "workflow.improvement_batches:_alias_destination",
       "module": "workflow.improvement_batches",
       "name": "_alias_destination",
@@ -16101,7 +16086,6 @@
     }
   ],
   "aliases": {
-    "aideal.alias_functions:AliasRegistry": "aideal.alias_registry:AliasRegistry",
     "aideal.alias_registry:new_run_id": "aideal.error_log:new_run_id",
     "aideal.api_discovery:AidealConfig": "aideal.config:AidealConfig",
     "aideal.api_discovery:_doc_at": "aideal.api_signatures:_doc_at",

@@ -8,35 +8,35 @@ Static Python names/imports only; unresolved calls include dynamic methods, call
 
 Main matched treatment path: compare exact documentation, alias, hint and source versions on one shared task bank.
 
-- [Freeze the condition study](#function-335): Freeze the condition study
-- [Generate, execute and verify](#function-321): Generate, execute and verify
-- [Read matched scores](#function-327): Read matched scores
+- [Freeze the condition study](#function-332): Freeze the condition study
+- [Generate, execute and verify](#function-318): Generate, execute and verify
+- [Read matched scores](#function-324): Read matched scores
 
 ## Start here: Development
 
 Review README development first. Expand the additional tools for source-grounded alias proposals, fix hints, treatment commits and duplicate-refactor suggestions.
 
-- [Inspect API scope](#function-14): Extract candidate API signatures, visibility and identities from the configured sources.
-- [Generate README](#function-264): Use source, tests and original documentation to author API entries.
-- [Check documentation examples](#function-78): Write examples and route them to model grading or configured native execution.
-- [Diagnose and repair README](#function-147): Diagnose development failures, rewrite affected entries, and recheck them.
+- [Inspect API scope](#function-11): Extract candidate API signatures, visibility and identities from the configured sources.
+- [Generate README](#function-261): Use source, tests and original documentation to author API entries.
+- [Check documentation examples](#function-75): Write examples and route them to model grading or configured native execution.
+- [Diagnose and repair README](#function-144): Diagnose development failures, rewrite affected entries, and recheck them.
 
 ## Start here: Attach and prepare a library
 
 Branch and treatment preparation are implemented. Library-specific builds, fixtures and independent oracles remain explicit inputs.
 
-- [Prepare a study draft](#function-404): Snapshot configured inputs and create the initial shared study records.
-- [Create five worktrees](#function-454): Prepare the study and create isolated branches from one pinned clean revision.
-- [Inspect readiness](#function-309): List missing requirements for the declared bank, treatments and adapter.
-- [Choose the matched condition runner](#function-321): Use run-conditions with an explicit frozen protocol; legacy run-arm does not select a study.
+- [Prepare a study draft](#function-403): Snapshot configured inputs and create the initial shared study records.
+- [Create five worktrees](#function-453): Prepare the study and create isolated branches from one pinned clean revision.
+- [Inspect readiness](#function-306): List missing requirements for the declared bank, treatments and adapter.
+- [Choose the matched condition runner](#function-318): Use run-conditions with an explicit frozen protocol; legacy run-arm does not select a study.
 
 ## Start here: Three-README comparison
 
 Read this separate protocol when comparing Original, Generated and Repaired README versions.
 
-- [Validate and freeze](#function-363): Check the study inputs and independent checker controls, then record their identities.
-- [Run or resume comparison](#function-349): Choose documentation, request fresh solutions, check them, and allow bounded snippet repairs.
-- [Understand the scores](#function-407): Compare matched outcomes while retaining unresolved tasks in the denominator.
+- [Validate and freeze](#function-360): Check the study inputs and independent checker controls, then record their identities.
+- [Run or resume comparison](#function-346): Choose documentation, request fresh solutions, check them, and allow bounded snippet repairs.
+- [Understand the scores](#function-406): Compare matched outcomes while retaining unresolved tasks in the denominator.
 
 ## Complete reference
 
@@ -46,55 +46,20 @@ Helpers and supporting APIs follow below.
 
 22 lines · `vendor/aideal_engine/src/aideal/__init__.py`
 
-## aideal.alias_functions
-
-106 lines · `vendor/aideal_engine/src/aideal/alias_functions.py`
-
-<a id="function-0"></a>
-### [module_path](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_functions.py#L81)
-
-Where the generated module is written (next to the alias registry by
-default; override with files.alias_functions in the config).
-
-Calls: None resolved
-
-Called by: [aideal.alias_functions:sync](#function-2)
-
-<a id="function-1"></a>
-### [render_module](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_functions.py#L71)
-
-Render the full GrailAliases.scala from the alias specs (deterministic,
-so re-running produces a stable diff).
-
-Calls: None resolved
-
-Called by: [aideal.alias_functions:sync](#function-2)
-
-<a id="function-2"></a>
-### [sync](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_functions.py#L88)
-
-Render + write GrailAliases.scala and record each wrapper in the alias
-registry (status `added`). Idempotent: re-running with the same specs rewrites
-the same file and leaves the registry unchanged.
-
-Calls: [aideal.alias_functions:module_path](#function-0), [aideal.alias_functions:render_module](#function-1), [aideal.alias_registry:AliasRegistry](#function-3)
-
-Called by: None resolved
-
 ## aideal.alias_registry
 
 96 lines · `vendor/aideal_engine/src/aideal/alias_registry.py`
 
-<a id="function-3"></a>
+<a id="function-0"></a>
 ### [AliasRegistry](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L24)
 
 Class in `aideal.alias_registry`.
 
 Calls: None resolved
 
-Called by: [aideal.alias_functions:sync](#function-2), [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-4"></a>
+<a id="function-1"></a>
 ### [AliasRegistry.__init__](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L25)
 
 Method in `aideal.alias_registry`.
@@ -103,34 +68,34 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-5"></a>
+<a id="function-2"></a>
 ### [AliasRegistry._find](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L35)
 
 Method in `aideal.alias_registry`.
 
 Calls: None resolved
 
-Called by: [aideal.alias_registry:AliasRegistry.mark_added](#function-7), [aideal.alias_registry:AliasRegistry.record_use](#function-9)
+Called by: [aideal.alias_registry:AliasRegistry.mark_added](#function-4), [aideal.alias_registry:AliasRegistry.record_use](#function-6)
 
-<a id="function-6"></a>
+<a id="function-3"></a>
 ### [AliasRegistry.histogram](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L67)
 
 Method in `aideal.alias_registry`.
 
 Calls: None resolved
 
-Called by: [aideal.alias_registry:AliasRegistry.report](#function-10)
+Called by: [aideal.alias_registry:AliasRegistry.report](#function-7)
 
-<a id="function-7"></a>
+<a id="function-4"></a>
 ### [AliasRegistry.mark_added](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L53)
 
 Track that this alias was actually ADDED to the codebase.
 
-Calls: [aideal.alias_registry:AliasRegistry._find](#function-5), [aideal.alias_registry:AliasRegistry.save](#function-11), [aideal.error_log:new_run_id](#function-156)
+Calls: [aideal.alias_registry:AliasRegistry._find](#function-2), [aideal.alias_registry:AliasRegistry.save](#function-8), [aideal.error_log:new_run_id](#function-153)
 
 Called by: None resolved
 
-<a id="function-8"></a>
+<a id="function-5"></a>
 ### [AliasRegistry.overlap](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L73)
 
 Method in `aideal.alias_registry`.
@@ -139,67 +104,67 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-9"></a>
+<a id="function-6"></a>
 ### [AliasRegistry.record_use](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L41)
 
 A model used/proposed `alias` for `canonical` (status stays proposed).
 
-Calls: [aideal.alias_registry:AliasRegistry._find](#function-5), [aideal.alias_registry:AliasRegistry.save](#function-11), [aideal.error_log:new_run_id](#function-156)
+Calls: [aideal.alias_registry:AliasRegistry._find](#function-2), [aideal.alias_registry:AliasRegistry.save](#function-8), [aideal.error_log:new_run_id](#function-153)
 
 Called by: None resolved
 
-<a id="function-10"></a>
+<a id="function-7"></a>
 ### [AliasRegistry.report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L85)
 
 Method in `aideal.alias_registry`.
 
-Calls: [aideal.alias_registry:AliasRegistry.histogram](#function-6)
+Calls: [aideal.alias_registry:AliasRegistry.histogram](#function-3)
 
 Called by: None resolved
 
-<a id="function-11"></a>
+<a id="function-8"></a>
 ### [AliasRegistry.save](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/alias_registry.py#L31)
 
 Method in `aideal.alias_registry`.
 
 Calls: None resolved
 
-Called by: [aideal.alias_registry:AliasRegistry.mark_added](#function-7), [aideal.alias_registry:AliasRegistry.record_use](#function-9)
+Called by: [aideal.alias_registry:AliasRegistry.mark_added](#function-4), [aideal.alias_registry:AliasRegistry.record_use](#function-6)
 
 ## aideal.api_discovery
 
 274 lines · `vendor/aideal_engine/src/aideal/api_discovery.py`
 
-<a id="function-12"></a>
+<a id="function-9"></a>
 ### [api_coverage](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_discovery.py#L237)
 
 Compare original/generated documentation coverage over a shared API scope:
 
-Calls: [aideal.api_discovery:api_coverage.pct](#function-13), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_intent:_doc_code_mentions](#function-24), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:api_coverage.pct](#function-10), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_intent:_doc_code_mentions](#function-21), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-13"></a>
+<a id="function-10"></a>
 ### [api_coverage.pct](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_discovery.py#L259)
 
 Function in `aideal.api_discovery`.
 
 Calls: None resolved
 
-Called by: [aideal.api_discovery:api_coverage](#function-12)
+Called by: [aideal.api_discovery:api_coverage](#function-9)
 
-<a id="function-14"></a>
+<a id="function-11"></a>
 ### [public_api_details](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_discovery.py#L93)
 
 Per-definition records for the surface: name, signature, params, return,
 description, visibility, file, line. One record per definition site (not
 collapsed), so overloads across classes stay distinct.
 
-Calls: [aideal.api_signatures:_doc_at](#function-37), [aideal.api_signatures:_java_param_record](#function-39), [aideal.api_signatures:_java_return_type](#function-40), [aideal.api_signatures:_python_qualified_identities](#function-43), [aideal.api_signatures:_signature_at](#function-47), [aideal.api_visibility:_is_public](#function-53), [aideal.api_visibility:_iter_defs](#function-54), [aideal.api_visibility:visibility_model](#function-55)
+Calls: [aideal.api_signatures:_doc_at](#function-34), [aideal.api_signatures:_java_param_record](#function-36), [aideal.api_signatures:_java_return_type](#function-37), [aideal.api_signatures:_python_qualified_identities](#function-40), [aideal.api_signatures:_signature_at](#function-44), [aideal.api_visibility:_is_public](#function-50), [aideal.api_visibility:_iter_defs](#function-51), [aideal.api_visibility:visibility_model](#function-52)
 
-Called by: [aideal.api_discovery:render_api_surface](#function-17), [aideal.api_discovery:surface_audit](#function-18), [aideal.api_intent:intended_api_llm](#function-26), [aideal.api_intent:llm_common_apis](#function-30), [aideal.api_overloads:dedup_report](#function-35), [aideal.cli:_run](#function-58), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_check_inputs:_consumed_type_counts](#function-87), [aideal.doc_check_inputs:_owner_map](#function-95), [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98), [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.docfix:_source_window](#function-144), [aideal.docfix:_type_context](#function-145), [aideal.probe:main](#function-214), [aideal.readme_catalogue:write_catalogue](#function-245), [aideal.readme_evidence:_grounding_tiers](#function-249), [aideal.readme_generation:find_or_create](#function-264), [aideal.scaffold_generation:_defining_object_imports](#function-278), [workflow.improvement_context:_library_inputs](#function-383)
+Called by: [aideal.api_discovery:render_api_surface](#function-14), [aideal.api_discovery:surface_audit](#function-15), [aideal.api_intent:intended_api_llm](#function-23), [aideal.api_intent:llm_common_apis](#function-27), [aideal.api_overloads:dedup_report](#function-32), [aideal.cli:_run](#function-55), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_check_inputs:_consumed_type_counts](#function-84), [aideal.doc_check_inputs:_owner_map](#function-92), [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95), [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.docfix:_source_window](#function-141), [aideal.docfix:_type_context](#function-142), [aideal.probe:main](#function-211), [aideal.readme_catalogue:write_catalogue](#function-242), [aideal.readme_evidence:_grounding_tiers](#function-246), [aideal.readme_generation:find_or_create](#function-261), [aideal.scaffold_generation:_defining_object_imports](#function-275), [workflow.improvement_context:_library_inputs](#function-382)
 
-<a id="function-15"></a>
+<a id="function-12"></a>
 ### [public_api_surface](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_discovery.py#L26)
 
 Public API names, optionally narrowed to the INTENDED API by a general,
@@ -211,29 +176,29 @@ discovered surface):
   documented_non_override   - both (tightest intended-API set)
 Default `all` (back-compat).
 
-Calls: [aideal.api_discovery:public_api_surface._tested](#function-16), [aideal.api_intent:intended_api_llm](#function-26), [aideal.api_intent:intent_scores](#function-29), [aideal.api_signatures:_doc_at](#function-37), [aideal.api_signatures:_python_qualified_identities](#function-43), [aideal.api_visibility:_is_public](#function-53), [aideal.api_visibility:_iter_defs](#function-54), [aideal.api_visibility:visibility_model](#function-55)
+Calls: [aideal.api_discovery:public_api_surface._tested](#function-13), [aideal.api_intent:intended_api_llm](#function-23), [aideal.api_intent:intent_scores](#function-26), [aideal.api_signatures:_doc_at](#function-34), [aideal.api_signatures:_python_qualified_identities](#function-40), [aideal.api_visibility:_is_public](#function-50), [aideal.api_visibility:_iter_defs](#function-51), [aideal.api_visibility:visibility_model](#function-52)
 
-Called by: [aideal.api_discovery:api_coverage](#function-12), [aideal.api_discovery:surface_audit](#function-18), [aideal.api_examples:api_test_examples](#function-23), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_check_sources:_comprehension_inventory](#function-110), [aideal.doc_check_sources:_load_manifest](#function-111), [aideal.doc_check_sources:completeness_check](#function-118), [aideal.doc_repair:run](#function-120), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.api_discovery:api_coverage](#function-9), [aideal.api_discovery:surface_audit](#function-15), [aideal.api_examples:api_test_examples](#function-20), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_check_sources:_comprehension_inventory](#function-107), [aideal.doc_check_sources:_load_manifest](#function-108), [aideal.doc_check_sources:completeness_check](#function-115), [aideal.doc_repair:run](#function-117), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-16"></a>
+<a id="function-13"></a>
 ### [public_api_surface._tested](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_discovery.py#L68)
 
 Function in `aideal.api_discovery`.
 
 Calls: None resolved
 
-Called by: [aideal.api_discovery:public_api_surface](#function-15)
+Called by: [aideal.api_discovery:public_api_surface](#function-12)
 
-<a id="function-17"></a>
+<a id="function-14"></a>
 ### [render_api_surface](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_discovery.py#L143)
 
 Plain-text dump of the discovered API surface (Step 1 of the test plan).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_visibility:visibility_model](#function-55)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_visibility:visibility_model](#function-52)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-18"></a>
+<a id="function-15"></a>
 ### [surface_audit](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_discovery.py#L180)
 
 Cross-check every LLM_readme catalog entry against the current API
@@ -244,15 +209,15 @@ file is excluded by `codebase.exclude_path_patterns`, or which fell below
 the intent threshold. These entries burn fix-loop rounds and can never
 pass from an external harness — prune or exclude them instead of fixing.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_visibility:_iter_defs](#function-54), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_visibility:_iter_defs](#function-51), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
 ## aideal.api_examples
 
 120 lines · `vendor/aideal_engine/src/aideal/api_examples.py`
 
-<a id="function-19"></a>
+<a id="function-16"></a>
 ### [_iter_test_blocks](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_examples.py#L84)
 
 Yield (test_name, block_text) for each `test("...") { ... }` (brace-balanced).
@@ -260,9 +225,9 @@ Generic for *Spec/FunSuite-style tests; falls back to nothing if none match.
 
 Calls: None resolved
 
-Called by: [aideal.api_examples:_test_blocks_for](#function-22)
+Called by: [aideal.api_examples:_test_blocks_for](#function-19)
 
-<a id="function-20"></a>
+<a id="function-17"></a>
 ### [_iter_test_blocks_java](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_examples.py#L46)
 
 JUnit style: yield (method_name, body) for each @Test/@ParameterizedTest
@@ -270,9 +235,9 @@ method (brace-balanced from its opening `{`).
 
 Calls: None resolved
 
-Called by: [aideal.api_examples:_test_blocks_for](#function-22)
+Called by: [aideal.api_examples:_test_blocks_for](#function-19)
 
-<a id="function-21"></a>
+<a id="function-18"></a>
 ### [_iter_test_blocks_py](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_examples.py#L19)
 
 pytest style: yield (test_name, body) for each `def test_*(...)`, the body
@@ -284,31 +249,31 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-22"></a>
+<a id="function-19"></a>
 ### [_test_blocks_for](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_examples.py#L71)
 
 Language-aware test-block iterator (see _TEST_MINERS).
 
-Calls: [aideal.api_examples:_iter_test_blocks](#function-19), [aideal.api_examples:_iter_test_blocks_java](#function-20)
+Calls: [aideal.api_examples:_iter_test_blocks](#function-16), [aideal.api_examples:_iter_test_blocks_java](#function-17)
 
-Called by: [aideal.api_examples:api_test_examples](#function-23)
+Called by: [aideal.api_examples:api_test_examples](#function-20)
 
-<a id="function-23"></a>
+<a id="function-20"></a>
 ### [api_test_examples](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_examples.py#L100)
 
 Search the configured test files and index real usage examples by API name.
 Returns {api_name: [{file, test, code}]}. These are compiling, ground-truth
 call patterns the generator/audience can learn from.
 
-Calls: [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_examples:_test_blocks_for](#function-22)
+Calls: [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_examples:_test_blocks_for](#function-19)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.readme_evidence:_grounding_tiers](#function-249), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.cli:_run](#function-55), [aideal.readme_evidence:_grounding_tiers](#function-246), [aideal.readme_generation:find_or_create](#function-261)
 
 ## aideal.api_intent
 
 477 lines · `vendor/aideal_engine/src/aideal/api_intent.py`
 
-<a id="function-24"></a>
+<a id="function-21"></a>
 ### [_doc_code_mentions](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_intent.py#L316)
 
 Subset of `names` mentioned in a CODE context of the baseline docs:
@@ -321,18 +286,18 @@ sentences.
 
 Calls: None resolved
 
-Called by: [aideal.api_discovery:api_coverage](#function-12), [aideal.api_intent:intent_scores](#function-29), [aideal.doc_check_sources:_relevant_original_texts](#function-115)
+Called by: [aideal.api_discovery:api_coverage](#function-9), [aideal.api_intent:intent_scores](#function-26), [aideal.doc_check_sources:_relevant_original_texts](#function-112)
 
-<a id="function-25"></a>
+<a id="function-22"></a>
 ### [_names_called_in](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_intent.py#L305)
 
 Subset of `names` that appear as a call/use in `text`.
 
 Calls: None resolved
 
-Called by: [aideal.api_intent:intent_scores](#function-29)
+Called by: [aideal.api_intent:intent_scores](#function-26)
 
-<a id="function-26"></a>
+<a id="function-23"></a>
 ### [intended_api_llm](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_intent.py#L84)
 
 Token-efficient intended-API selection: STATIC evidence auto-includes the
@@ -342,31 +307,31 @@ band, in batches, from COMPACT records (name/signature/doc/score/signals) —
 never source. Decisions are cached with provenance (`intended_api.cache`) so
 runs are reproducible. Returns (selected_names, decisions).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_intent:intended_api_llm._rank_score](#function-27), [aideal.api_intent:intent_scores](#function-29), [aideal.llm:invoke_text](#function-187), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_intent:intended_api_llm._rank_score](#function-24), [aideal.api_intent:intent_scores](#function-26), [aideal.llm:invoke_text](#function-184), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222)
 
-Called by: [aideal.api_discovery:public_api_surface](#function-15), [aideal.cli:_run](#function-58)
+Called by: [aideal.api_discovery:public_api_surface](#function-12), [aideal.cli:_run](#function-55)
 
 Prompt keys: `aideal/intended_review`
 
-<a id="function-27"></a>
+<a id="function-24"></a>
 ### [intended_api_llm._rank_score](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_intent.py#L237)
 
 Function in `aideal.api_intent`.
 
 Calls: None resolved
 
-Called by: [aideal.api_intent:intended_api_llm](#function-26)
+Called by: [aideal.api_intent:intended_api_llm](#function-23)
 
-<a id="function-28"></a>
+<a id="function-25"></a>
 ### [intent_compare](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_intent.py#L453)
 
 Compare intended-API selection WITHOUT the LLM signal vs WITH it.
 
-Calls: [aideal.api_intent:intent_scores](#function-29)
+Calls: [aideal.api_intent:intent_scores](#function-26)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-29"></a>
+<a id="function-26"></a>
 ### [intent_scores](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_intent.py#L353)
 
 Score each public API by GENERIC evidence of user-facing intent and select
@@ -376,11 +341,11 @@ boilerplate-name penalties. Weights/threshold/manual overrides come from
 `codebase.intent` in aideal.yaml. Returns {name: {score, reasons, selected}}
 — auditable, with per-API reasons.
 
-Calls: [aideal.api_intent:_doc_code_mentions](#function-24), [aideal.api_intent:_names_called_in](#function-25), [aideal.api_intent:llm_common_apis](#function-30), [aideal.api_signatures:_doc_at](#function-37), [aideal.api_signatures:_python_qualified_identities](#function-43), [aideal.api_visibility:_is_public](#function-53), [aideal.api_visibility:_iter_defs](#function-54), [aideal.api_visibility:visibility_model](#function-55)
+Calls: [aideal.api_intent:_doc_code_mentions](#function-21), [aideal.api_intent:_names_called_in](#function-22), [aideal.api_intent:llm_common_apis](#function-27), [aideal.api_signatures:_doc_at](#function-34), [aideal.api_signatures:_python_qualified_identities](#function-40), [aideal.api_visibility:_is_public](#function-50), [aideal.api_visibility:_iter_defs](#function-51), [aideal.api_visibility:visibility_model](#function-52)
 
-Called by: [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_intent:intended_api_llm](#function-26), [aideal.api_intent:intent_compare](#function-28), [aideal.api_overloads:dedup_report](#function-35), [aideal.cli:_run](#function-58)
+Called by: [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_intent:intended_api_llm](#function-23), [aideal.api_intent:intent_compare](#function-25), [aideal.api_overloads:dedup_report](#function-32), [aideal.cli:_run](#function-55)
 
-<a id="function-30"></a>
+<a id="function-27"></a>
 ### [llm_common_apis](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_intent.py#L43)
 
 OPTIONAL LLM signal: the author model (with the role/domain persona) judges
@@ -388,9 +353,9 @@ which candidates are commonly-used, user-facing operations. ONE call over the
 whole list, then CACHED to docs/intent_common.json so the intent score stays
 reproducible across runs (delete the cache or pass refresh to re-judge).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.llm:invoke_text](#function-187), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.llm:invoke_text](#function-184), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222)
 
-Called by: [aideal.api_intent:intent_scores](#function-29)
+Called by: [aideal.api_intent:intent_scores](#function-26)
 
 Prompt keys: `aideal/intent_common`
 
@@ -398,7 +363,7 @@ Prompt keys: `aideal/intent_common`
 
 188 lines · `vendor/aideal_engine/src/aideal/api_overloads.py`
 
-<a id="function-31"></a>
+<a id="function-28"></a>
 ### [_dedup_deprioritize](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_overloads.py#L66)
 
 Compiled `codebase.dedup.deprioritize_paths` patterns (adapter-level
@@ -406,67 +371,67 @@ default for scala-spark: Java facade files `Java*.scala`).
 
 Calls: None resolved
 
-Called by: [aideal.api_overloads:dedup_report](#function-35), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.docfix:_source_window](#function-144), [aideal.docfix:_type_context](#function-145), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.api_overloads:dedup_report](#function-32), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.docfix:_source_window](#function-141), [aideal.docfix:_type_context](#function-142), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-32"></a>
+<a id="function-29"></a>
 ### [_subsume_overloads](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_overloads.py#L14)
 
 Telescoping-overload analysis for ONE name's definition sites.
 
-Calls: [aideal.api_overloads:_subsume_overloads._depri](#function-33), [aideal.api_overloads:_subsume_overloads._types](#function-34)
+Calls: [aideal.api_overloads:_subsume_overloads._depri](#function-30), [aideal.api_overloads:_subsume_overloads._types](#function-31)
 
-Called by: [aideal.api_overloads:dedup_report](#function-35), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.docfix:_source_window](#function-144), [aideal.docfix:_type_context](#function-145), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.api_overloads:dedup_report](#function-32), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.docfix:_source_window](#function-141), [aideal.docfix:_type_context](#function-142), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-33"></a>
+<a id="function-30"></a>
 ### [_subsume_overloads._depri](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_overloads.py#L58)
 
 Function in `aideal.api_overloads`.
 
 Calls: None resolved
 
-Called by: [aideal.api_overloads:_subsume_overloads](#function-32)
+Called by: [aideal.api_overloads:_subsume_overloads](#function-29)
 
-<a id="function-34"></a>
+<a id="function-31"></a>
 ### [_subsume_overloads._types](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_overloads.py#L31)
 
 Function in `aideal.api_overloads`.
 
 Calls: None resolved
 
-Called by: [aideal.api_overloads:_subsume_overloads](#function-32)
+Called by: [aideal.api_overloads:_subsume_overloads](#function-29)
 
-<a id="function-35"></a>
+<a id="function-32"></a>
 ### [dedup_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_overloads.py#L74)
 
 Redundancy audit of the SELECTED surface. Deterministic (no LLM).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_intent:intent_scores](#function-29), [aideal.api_overloads:_dedup_deprioritize](#function-31), [aideal.api_overloads:_subsume_overloads](#function-32)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_intent:intent_scores](#function-26), [aideal.api_overloads:_dedup_deprioritize](#function-28), [aideal.api_overloads:_subsume_overloads](#function-29)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
 ## aideal.api_signatures
 
 305 lines · `vendor/aideal_engine/src/aideal/api_signatures.py`
 
-<a id="function-36"></a>
+<a id="function-33"></a>
 ### [_doc_above](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L191)
 
 Capture a doc/comment block (/** */, ///, #) immediately above line idx.
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_doc_at](#function-37)
+Called by: [aideal.api_signatures:_doc_at](#function-34)
 
-<a id="function-37"></a>
+<a id="function-34"></a>
 ### [_doc_at](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L184)
 
 Language-aware doc extraction for the def at line idx (see _DOC_POSITION).
 
-Calls: [aideal.api_signatures:_doc_above](#function-36), [aideal.api_signatures:_doc_below_py](#function-38)
+Calls: [aideal.api_signatures:_doc_above](#function-33), [aideal.api_signatures:_doc_below_py](#function-35)
 
-Called by: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_intent:intent_scores](#function-29)
+Called by: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_intent:intent_scores](#function-26)
 
-<a id="function-38"></a>
+<a id="function-35"></a>
 ### [_doc_below_py](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L141)
 
 Python: the docstring sits BELOW the def line. Walk past the (possibly
@@ -475,27 +440,27 @@ triple-quoted docstring if it opens there. Returns '' when absent.
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_doc_at](#function-37)
+Called by: [aideal.api_signatures:_doc_at](#function-34)
 
-<a id="function-39"></a>
+<a id="function-36"></a>
 ### [_java_param_record](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L40)
 
 Parse a Java parameter into the common structured form.
 
 Calls: None resolved
 
-Called by: [aideal.api_discovery:public_api_details](#function-14)
+Called by: [aideal.api_discovery:public_api_details](#function-11)
 
-<a id="function-40"></a>
+<a id="function-37"></a>
 ### [_java_return_type](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L67)
 
 Recover a Java method return type; constructors intentionally have none.
 
 Calls: None resolved
 
-Called by: [aideal.api_discovery:public_api_details](#function-14)
+Called by: [aideal.api_discovery:public_api_details](#function-11)
 
-<a id="function-41"></a>
+<a id="function-38"></a>
 ### [_param_record](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L28)
 
 Parse one parameter into {name, type, default}. Splits the default on a
@@ -503,103 +468,103 @@ top-level `=` that is NOT the `=>` of a function type (e.g. `f: Int => Int`).
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_python_qualified_identities.function_signature](#function-45), [aideal.api_signatures:_signature_at](#function-47)
+Called by: [aideal.api_signatures:_python_qualified_identities.function_signature](#function-42), [aideal.api_signatures:_signature_at](#function-44)
 
-<a id="function-42"></a>
+<a id="function-39"></a>
 ### [_python_module_name](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L212)
 
 Return the importable module path for a Python source file.
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_python_qualified_identities](#function-43)
+Called by: [aideal.api_signatures:_python_qualified_identities](#function-40)
 
-<a id="function-43"></a>
+<a id="function-40"></a>
 ### [_python_qualified_identities](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L228)
 
 AST-derived identity for each importable Python API definition.
 
-Calls: [aideal.api_signatures:_python_module_name](#function-42), [aideal.api_signatures:_python_qualified_identities.visit](#function-46)
+Calls: [aideal.api_signatures:_python_module_name](#function-39), [aideal.api_signatures:_python_qualified_identities.visit](#function-43)
 
-Called by: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_intent:intent_scores](#function-29)
+Called by: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_intent:intent_scores](#function-26)
 
-<a id="function-44"></a>
+<a id="function-41"></a>
 ### [_python_qualified_identities.class_signature](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L262)
 
 Function in `aideal.api_signatures`.
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_python_qualified_identities.visit](#function-46)
+Called by: [aideal.api_signatures:_python_qualified_identities.visit](#function-43)
 
-<a id="function-45"></a>
+<a id="function-42"></a>
 ### [_python_qualified_identities.function_signature](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L252)
 
 Function in `aideal.api_signatures`.
 
-Calls: [aideal.api_signatures:_param_record](#function-41), [aideal.api_signatures:_split_top_level](#function-50)
+Calls: [aideal.api_signatures:_param_record](#function-38), [aideal.api_signatures:_split_top_level](#function-47)
 
-Called by: [aideal.api_signatures:_python_qualified_identities.visit](#function-46)
+Called by: [aideal.api_signatures:_python_qualified_identities.visit](#function-43)
 
-<a id="function-46"></a>
+<a id="function-43"></a>
 ### [_python_qualified_identities.visit](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L270)
 
 Function in `aideal.api_signatures`.
 
-Calls: [aideal.api_signatures:_python_qualified_identities.class_signature](#function-44), [aideal.api_signatures:_python_qualified_identities.function_signature](#function-45), [aideal.api_signatures:_python_qualified_identities.visit](#function-46)
+Calls: [aideal.api_signatures:_python_qualified_identities.class_signature](#function-41), [aideal.api_signatures:_python_qualified_identities.function_signature](#function-42), [aideal.api_signatures:_python_qualified_identities.visit](#function-43)
 
-Called by: [aideal.api_signatures:_python_qualified_identities](#function-43), [aideal.api_signatures:_python_qualified_identities.visit](#function-46)
+Called by: [aideal.api_signatures:_python_qualified_identities](#function-40), [aideal.api_signatures:_python_qualified_identities.visit](#function-43)
 
-<a id="function-47"></a>
+<a id="function-44"></a>
 ### [_signature_at](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L88)
 
 From the def line return (raw_signature, params, return_type).
 
-Calls: [aideal.api_signatures:_param_record](#function-41), [aideal.api_signatures:_signature_at._skip_balanced](#function-48), [aideal.api_signatures:_signature_at._skip_ws](#function-49), [aideal.api_signatures:_split_top_level](#function-50)
+Calls: [aideal.api_signatures:_param_record](#function-38), [aideal.api_signatures:_signature_at._skip_balanced](#function-45), [aideal.api_signatures:_signature_at._skip_ws](#function-46), [aideal.api_signatures:_split_top_level](#function-47)
 
-Called by: [aideal.api_discovery:public_api_details](#function-14)
+Called by: [aideal.api_discovery:public_api_details](#function-11)
 
-<a id="function-48"></a>
+<a id="function-45"></a>
 ### [_signature_at._skip_balanced](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L110)
 
 Function in `aideal.api_signatures`.
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_signature_at](#function-47)
+Called by: [aideal.api_signatures:_signature_at](#function-44)
 
-<a id="function-49"></a>
+<a id="function-46"></a>
 ### [_signature_at._skip_ws](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L105)
 
 Function in `aideal.api_signatures`.
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_signature_at](#function-47)
+Called by: [aideal.api_signatures:_signature_at](#function-44)
 
-<a id="function-50"></a>
+<a id="function-47"></a>
 ### [_split_top_level](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_signatures.py#L11)
 
 Split a parameter list on top-level commas (ignoring nested []/<>/()/{}).
 
 Calls: None resolved
 
-Called by: [aideal.api_signatures:_python_qualified_identities.function_signature](#function-45), [aideal.api_signatures:_signature_at](#function-47)
+Called by: [aideal.api_signatures:_python_qualified_identities.function_signature](#function-42), [aideal.api_signatures:_signature_at](#function-44)
 
 ## aideal.api_visibility
 
 140 lines · `vendor/aideal_engine/src/aideal/api_visibility.py`
 
-<a id="function-51"></a>
+<a id="function-48"></a>
 ### [_container_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_visibility.py#L67)
 
 Per-line NON-PUBLIC modifier text of the enclosing containers.
 
 Calls: None resolved
 
-Called by: [aideal.api_visibility:_iter_defs](#function-54)
+Called by: [aideal.api_visibility:_iter_defs](#function-51)
 
-<a id="function-52"></a>
+<a id="function-49"></a>
 ### [_exclude_path_patterns](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_visibility.py#L102)
 
 codebase.exclude_path_patterns — regexes matched against the project-
@@ -609,9 +574,9 @@ API (e.g. a `commontest/` test-scaffolding module).
 
 Calls: None resolved
 
-Called by: [aideal.api_visibility:_iter_defs](#function-54)
+Called by: [aideal.api_visibility:_iter_defs](#function-51)
 
-<a id="function-53"></a>
+<a id="function-50"></a>
 ### [_is_public](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_visibility.py#L41)
 
 `prefix` is the text on the def line BEFORE the matched name (the modifiers),
@@ -620,68 +585,68 @@ with any NON-PUBLIC enclosing-container modifiers prepended by `_iter_defs`
 
 Calls: None resolved
 
-Called by: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_intent:intent_scores](#function-29)
+Called by: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_intent:intent_scores](#function-26)
 
-<a id="function-54"></a>
+<a id="function-51"></a>
 ### [_iter_defs](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_visibility.py#L111)
 
 Yield (name, prefix, file_path, lineno, line) for every matched def.
 
-Calls: [aideal.api_visibility:_container_context](#function-51), [aideal.api_visibility:_exclude_path_patterns](#function-52), [aideal.api_visibility:visibility_model](#function-55)
+Calls: [aideal.api_visibility:_container_context](#function-48), [aideal.api_visibility:_exclude_path_patterns](#function-49), [aideal.api_visibility:visibility_model](#function-52)
 
-Called by: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_discovery:surface_audit](#function-18), [aideal.api_intent:intent_scores](#function-29)
+Called by: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_discovery:surface_audit](#function-15), [aideal.api_intent:intent_scores](#function-26)
 
-<a id="function-55"></a>
+<a id="function-52"></a>
 ### [visibility_model](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/api_visibility.py#L34)
 
 Resolve the visibility model: explicit config overrides the language default.
 
 Calls: None resolved
 
-Called by: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_discovery:render_api_surface](#function-17), [aideal.api_intent:intent_scores](#function-29), [aideal.api_visibility:_iter_defs](#function-54), [aideal.cli:_run](#function-58)
+Called by: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_discovery:render_api_surface](#function-14), [aideal.api_intent:intent_scores](#function-26), [aideal.api_visibility:_iter_defs](#function-51), [aideal.cli:_run](#function-55)
 
 ## aideal.checkpoint_compatibility
 
 41 lines · `vendor/aideal_engine/src/aideal/checkpoint_compatibility.py`
 
-<a id="function-56"></a>
+<a id="function-53"></a>
 ### [fingerprint](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/checkpoint_compatibility.py#L14)
 
 Function in `aideal.checkpoint_compatibility`.
 
-Calls: [aideal.experiment_identity:digest_native](#function-163)
+Calls: [aideal.experiment_identity:digest_native](#function-160)
 
-Called by: [aideal.checkpoint_compatibility:load_compatibility](#function-57)
+Called by: [aideal.checkpoint_compatibility:load_compatibility](#function-54)
 
-<a id="function-57"></a>
+<a id="function-54"></a>
 ### [load_compatibility](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/checkpoint_compatibility.py#L18)
 
 Function in `aideal.checkpoint_compatibility`.
 
-Calls: [aideal.checkpoint_compatibility:fingerprint](#function-56)
+Calls: [aideal.checkpoint_compatibility:fingerprint](#function-53)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
 ## aideal.cli
 
 652 lines · `vendor/aideal_engine/src/aideal/cli.py`
 
-<a id="function-58"></a>
+<a id="function-55"></a>
 ### [_run](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/cli.py#L38)
 
 Function in `aideal.cli`.
 
-Calls: [aideal.alias_registry:AliasRegistry](#function-3), [aideal.api_discovery:api_coverage](#function-12), [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:render_api_surface](#function-17), [aideal.api_discovery:surface_audit](#function-18), [aideal.api_examples:api_test_examples](#function-23), [aideal.api_intent:intended_api_llm](#function-26), [aideal.api_intent:intent_compare](#function-28), [aideal.api_intent:intent_scores](#function-29), [aideal.api_overloads:dedup_report](#function-35), [aideal.api_visibility:visibility_model](#function-55), [aideal.config:init_config](#function-71), [aideal.config:load_config](#function-72), [aideal.config:load_tasks](#function-74), [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_puzzles:puzzle_check](#function-105), [aideal.doc_check_sources:completeness_check](#function-118), [aideal.doc_check_sources:form_check](#function-119), [aideal.doc_snapshot:prepare_original_docs](#function-132), [aideal.docfix:doc_fix_run](#function-147), [aideal.error_log:ErrorLog](#function-148), [aideal.fixreport:auto_report](#function-176), [aideal.fixreport:write_report](#function-184), [aideal.notes_to_self:NotesToSelf](#function-202), [aideal.profile:init_agents_md](#function-218), [aideal.profile:init_profile](#function-219), [aideal.profile:load_profile](#function-220), [aideal.profile:missing_fields](#function-221), [aideal.profile:profile_path](#function-222), [aideal.profile:project_context](#function-223), [aideal.puzzle_bank:freeze_puzzle_plan](#function-234), [aideal.puzzle_bank:write_plan](#function-240), [aideal.readme_catalogue:write_catalogue](#function-245), [aideal.readme_evidence:augment_from_log](#function-252), [aideal.readme_evidence:grounding_report](#function-253), [aideal.readme_evidence:organize_report](#function-254), [aideal.readme_format:parse_readme](#function-261), [aideal.readme_generation:find_or_create](#function-264), [aideal.scaffold_generation:generate_scaffold](#function-284), [aideal.task_generator:generate_tasks](#function-287)
+Calls: [aideal.alias_registry:AliasRegistry](#function-0), [aideal.api_discovery:api_coverage](#function-9), [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:render_api_surface](#function-14), [aideal.api_discovery:surface_audit](#function-15), [aideal.api_examples:api_test_examples](#function-20), [aideal.api_intent:intended_api_llm](#function-23), [aideal.api_intent:intent_compare](#function-25), [aideal.api_intent:intent_scores](#function-26), [aideal.api_overloads:dedup_report](#function-32), [aideal.api_visibility:visibility_model](#function-52), [aideal.config:init_config](#function-68), [aideal.config:load_config](#function-69), [aideal.config:load_tasks](#function-71), [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_puzzles:puzzle_check](#function-102), [aideal.doc_check_sources:completeness_check](#function-115), [aideal.doc_check_sources:form_check](#function-116), [aideal.doc_snapshot:prepare_original_docs](#function-129), [aideal.docfix:doc_fix_run](#function-144), [aideal.error_log:ErrorLog](#function-145), [aideal.fixreport:auto_report](#function-173), [aideal.fixreport:write_report](#function-181), [aideal.notes_to_self:NotesToSelf](#function-199), [aideal.profile:init_agents_md](#function-215), [aideal.profile:init_profile](#function-216), [aideal.profile:load_profile](#function-217), [aideal.profile:missing_fields](#function-218), [aideal.profile:profile_path](#function-219), [aideal.profile:project_context](#function-220), [aideal.puzzle_bank:freeze_puzzle_plan](#function-231), [aideal.puzzle_bank:write_plan](#function-237), [aideal.readme_catalogue:write_catalogue](#function-242), [aideal.readme_evidence:augment_from_log](#function-249), [aideal.readme_evidence:grounding_report](#function-250), [aideal.readme_evidence:organize_report](#function-251), [aideal.readme_format:parse_readme](#function-258), [aideal.readme_generation:find_or_create](#function-261), [aideal.scaffold_generation:generate_scaffold](#function-281), [aideal.task_generator:generate_tasks](#function-284)
 
-Called by: [aideal.cli:main](#function-59)
+Called by: [aideal.cli:main](#function-56)
 
-<a id="function-59"></a>
+<a id="function-56"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/cli.py#L638)
 
 Entry point: exit cleanly when piped into `head`/`less` etc. (the reader
 closes the pipe early, raising BrokenPipeError).
 
-Calls: [aideal.cli:_run](#function-58)
+Calls: [aideal.cli:_run](#function-55)
 
 Called by: None resolved
 
@@ -689,16 +654,16 @@ Called by: None resolved
 
 344 lines · `vendor/aideal_engine/src/aideal/config.py`
 
-<a id="function-60"></a>
+<a id="function-57"></a>
 ### [AidealConfig](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L21)
 
 Class in `aideal.config`.
 
 Calls: None resolved
 
-Called by: [aideal.config:load_config](#function-72)
+Called by: [aideal.config:load_config](#function-69)
 
-<a id="function-61"></a>
+<a id="function-58"></a>
 ### [AidealConfig.model_by_name](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L100)
 
 Method in `aideal.config`.
@@ -707,16 +672,16 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-62"></a>
+<a id="function-59"></a>
 ### [AidealConfig.model_for_role](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L79)
 
 Method in `aideal.config`.
 
-Calls: [aideal.config:AidealConfig.model_for_role](#function-62)
+Calls: [aideal.config:AidealConfig.model_for_role](#function-59)
 
-Called by: [aideal.config:AidealConfig.model_for_role](#function-62)
+Called by: [aideal.config:AidealConfig.model_for_role](#function-59)
 
-<a id="function-63"></a>
+<a id="function-60"></a>
 ### [AidealConfig.original_readme_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L54)
 
 Concatenate all baseline docs (README + extra docs/dirs) with file
@@ -726,7 +691,7 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-64"></a>
+<a id="function-61"></a>
 ### [AidealConfig.override_role](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L87)
 
 Point `role` at a model at runtime (CLI `--role role=value`).
@@ -734,40 +699,40 @@ Point `role` at a model at runtime (CLI `--role role=value`).
 `google:gemini-2.5-pro`, `codex:gpt-5.1-codex-max`) registered on
 the fly — benchmark conditions never need a yaml edit.
 
-Calls: [aideal.config:ModelSpec](#function-65)
+Calls: [aideal.config:ModelSpec](#function-62)
 
 Called by: None resolved
 
-<a id="function-65"></a>
+<a id="function-62"></a>
 ### [ModelSpec](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L15)
 
 Class in `aideal.config`.
 
 Calls: None resolved
 
-Called by: [aideal.config:AidealConfig.override_role](#function-64), [aideal.config:load_config](#function-72)
+Called by: [aideal.config:AidealConfig.override_role](#function-61), [aideal.config:load_config](#function-69)
 
-<a id="function-66"></a>
+<a id="function-63"></a>
 ### [_deep_merge](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L164)
 
 Recursively merge `over` onto `base`. Dicts merge key-by-key; lists and
 scalars are replaced by the higher layer.
 
-Calls: [aideal.config:_deep_merge](#function-66)
+Calls: [aideal.config:_deep_merge](#function-63)
 
-Called by: [aideal.config:_deep_merge](#function-66), [aideal.config:_load_layered](#function-67)
+Called by: [aideal.config:_deep_merge](#function-63), [aideal.config:_load_layered](#function-64)
 
-<a id="function-67"></a>
+<a id="function-64"></a>
 ### [_load_layered](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L187)
 
 Build the effective raw config: framework defaults, then each adapter in
 `extends:`, then the project file itself (highest precedence).
 
-Calls: [aideal.config:_deep_merge](#function-66), [aideal.config:_resolve_adapter](#function-68)
+Calls: [aideal.config:_deep_merge](#function-63), [aideal.config:_resolve_adapter](#function-65)
 
-Called by: [aideal.config:load_config](#function-72)
+Called by: [aideal.config:load_config](#function-69)
 
-<a id="function-68"></a>
+<a id="function-65"></a>
 ### [_resolve_adapter](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L176)
 
 An `extends:` entry resolves to a file relative to the project's configs/
@@ -775,9 +740,9 @@ dir, else to a named adapter shipped in this package's adapters/ dir.
 
 Calls: None resolved
 
-Called by: [aideal.config:_load_layered](#function-67)
+Called by: [aideal.config:_load_layered](#function-64)
 
-<a id="function-69"></a>
+<a id="function-66"></a>
 ### [_resolve_readme_sources](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L117)
 
 Expand each baseline-doc source (a file, a directory, or a glob) into a
@@ -787,58 +752,58 @@ globs and explicit files use the same filter.
 
 Calls: None resolved
 
-Called by: [aideal.config:load_config](#function-72)
+Called by: [aideal.config:load_config](#function-69)
 
-<a id="function-70"></a>
+<a id="function-67"></a>
 ### [find_config](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L142)
 
 Search cwd and up to 3 parents for configs/aideal.yaml.
 
 Calls: None resolved
 
-Called by: [aideal.config:load_config](#function-72)
+Called by: [aideal.config:load_config](#function-69)
 
-<a id="function-71"></a>
+<a id="function-68"></a>
 ### [init_config](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L330)
 
 Scaffold configs/aideal.yaml in `directory` (default cwd).
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-72"></a>
+<a id="function-69"></a>
 ### [load_config](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L201)
 
 Function in `aideal.config`.
 
-Calls: [aideal.config:AidealConfig](#function-60), [aideal.config:ModelSpec](#function-65), [aideal.config:_load_layered](#function-67), [aideal.config:_resolve_readme_sources](#function-69), [aideal.config:find_config](#function-70), [aideal.config:load_config._file](#function-73)
+Calls: [aideal.config:AidealConfig](#function-57), [aideal.config:ModelSpec](#function-62), [aideal.config:_load_layered](#function-64), [aideal.config:_resolve_readme_sources](#function-66), [aideal.config:find_config](#function-67), [aideal.config:load_config._file](#function-70)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:_cfg](#function-191), [aideal.probe:main](#function-214)
+Called by: [aideal.cli:_run](#function-55), [aideal.mcp_server:_cfg](#function-188), [aideal.probe:main](#function-211)
 
-<a id="function-73"></a>
+<a id="function-70"></a>
 ### [load_config._file](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L226)
 
 Function in `aideal.config`.
 
 Calls: None resolved
 
-Called by: [aideal.config:load_config](#function-72)
+Called by: [aideal.config:load_config](#function-69)
 
-<a id="function-74"></a>
+<a id="function-71"></a>
 ### [load_tasks](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/config.py#L339)
 
 Read integration_tasks.yaml -> list of {id, language, goal, apis}.
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58), [aideal.task_generator:generate_tasks](#function-287)
+Called by: [aideal.cli:_run](#function-55), [aideal.task_generator:generate_tasks](#function-284)
 
 ## aideal.deepdive
 
 102 lines · `vendor/aideal_engine/src/aideal/deepdive.py`
 
-<a id="function-75"></a>
+<a id="function-72"></a>
 ### [_call_sites](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/deepdive.py#L24)
 
 Real usages of `name` across the repo (main + tests), with a few lines
@@ -846,25 +811,25 @@ of context — how the codebase ITSELF calls this API.
 
 Calls: None resolved
 
-Called by: [aideal.deepdive:deep_dive_run](#function-77)
+Called by: [aideal.deepdive:deep_dive_run](#function-74)
 
-<a id="function-76"></a>
+<a id="function-73"></a>
 ### [_failure_history](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/deepdive.py#L50)
 
 Function in `aideal.deepdive`.
 
-Calls: [aideal.error_log:ErrorLog](#function-148)
+Calls: [aideal.error_log:ErrorLog](#function-145)
 
-Called by: [aideal.deepdive:deep_dive_run](#function-77)
+Called by: [aideal.deepdive:deep_dive_run](#function-74)
 
-<a id="function-77"></a>
+<a id="function-74"></a>
 ### [deep_dive_run](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/deepdive.py#L61)
 
 Function in `aideal.deepdive`.
 
-Calls: [aideal.deepdive:_call_sites](#function-75), [aideal.deepdive:_failure_history](#function-76), [aideal.docfix:_source_window](#function-144), [aideal.docfix:_type_context](#function-145), [aideal.llm:invoke_text](#function-187), [aideal.llm:usage_delta](#function-189), [aideal.llm:usage_snapshot](#function-190), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.deepdive:_call_sites](#function-72), [aideal.deepdive:_failure_history](#function-73), [aideal.docfix:_source_window](#function-141), [aideal.docfix:_type_context](#function-142), [aideal.llm:invoke_text](#function-184), [aideal.llm:usage_delta](#function-186), [aideal.llm:usage_snapshot](#function-187), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.doc_repair:run](#function-120)
+Called by: [aideal.cli:_run](#function-55), [aideal.doc_repair:run](#function-117)
 
 Prompt keys: `aideal/deep_dive`
 
@@ -872,15 +837,15 @@ Prompt keys: `aideal/deep_dive`
 
 153 lines · `vendor/aideal_engine/src/aideal/doc_check_comprehension.py`
 
-<a id="function-78"></a>
+<a id="function-75"></a>
 ### [comprehension_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_comprehension.py#L15)
 
 Given only the documentation, the audience model writes code; the author
 model grades strictly against the doc. Failures go to the error log.
 
-Calls: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_check_inputs:_execute_sample_data](#function-90), [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.doc_check_sources:_comprehension_inventory](#function-110), [aideal.doc_check_sources:_load_manifest](#function-111), [aideal.doc_check_sources:_resolve_class_context](#function-116), [aideal.error_log:ErrorLog](#function-148), [aideal.error_log:new_run_id](#function-156), [aideal.llm:invoke_text](#function-187), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225), [aideal.readme_catalogue:_class_context_body](#function-242), [aideal.readme_evidence:_exec_status_map](#function-247)
+Calls: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_check_inputs:_execute_sample_data](#function-87), [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.doc_check_sources:_comprehension_inventory](#function-107), [aideal.doc_check_sources:_load_manifest](#function-108), [aideal.doc_check_sources:_resolve_class_context](#function-113), [aideal.error_log:ErrorLog](#function-145), [aideal.error_log:new_run_id](#function-153), [aideal.llm:invoke_text](#function-184), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222), [aideal.readme_catalogue:_class_context_body](#function-239), [aideal.readme_evidence:_exec_status_map](#function-244)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.doc_repair:run.validate_draft](#function-124), [aideal.mcp_server:comprehension_check](#function-195)
+Called by: [aideal.cli:_run](#function-55), [aideal.doc_repair:run.validate_draft](#function-121), [aideal.mcp_server:comprehension_check](#function-192)
 
 Prompt keys: `aideal/comprehension_grade`, `aideal/comprehension_write`
 
@@ -888,17 +853,17 @@ Prompt keys: `aideal/comprehension_grade`, `aideal/comprehension_write`
 
 122 lines · `vendor/aideal_engine/src/aideal/doc_check_errors.py`
 
-<a id="function-79"></a>
+<a id="function-76"></a>
 ### [_classify_error](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_errors.py#L63)
 
 Return (category, message, locus) from the run output.
 category: compile | runtime | timeout | infra | unknown; locus = the failing call.
 
-Calls: [aideal.doc_check_errors:_classify_error_java](#function-80), [aideal.doc_check_errors:_classify_error_py](#function-81)
+Calls: [aideal.doc_check_errors:_classify_error_java](#function-77), [aideal.doc_check_errors:_classify_error_py](#function-78)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.probe:run_probe](#function-217)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.probe:run_probe](#function-214)
 
-<a id="function-80"></a>
+<a id="function-77"></a>
 ### [_classify_error_java](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_errors.py#L39)
 
 Java flavor: distinguish javac diagnostics, missing classpath entries,
@@ -906,9 +871,9 @@ and exceptions raised by an otherwise runnable harness.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_errors:_classify_error](#function-79)
+Called by: [aideal.doc_check_errors:_classify_error](#function-76)
 
-<a id="function-81"></a>
+<a id="function-78"></a>
 ### [_classify_error_py](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_errors.py#L11)
 
 Python flavor of _classify_error. compile = SyntaxError/IndentationError
@@ -918,9 +883,9 @@ NoClassDefFoundError); runtime = everything raised while running.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_errors:_classify_error](#function-79)
+Called by: [aideal.doc_check_errors:_classify_error](#function-76)
 
-<a id="function-82"></a>
+<a id="function-79"></a>
 ### [_codebase_frames](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_errors.py#L104)
 
 Extract the CODEBASE source lines exercised by a failing run: JVM stack
@@ -930,48 +895,48 @@ RDPro line did the snippet actually reach" for runtime failures.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
 ## aideal.doc_check_execution
 
 602 lines · `vendor/aideal_engine/src/aideal/doc_check_execution.py`
 
-<a id="function-83"></a>
+<a id="function-80"></a>
 ### [_comprehension_execute](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_execution.py#L24)
 
 Compile/run each API's audience snippet via the configured command.
 PASS = the program runs (success_marker present, exit 0). Real failures
 (compile/runtime) are logged with the actual error text.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_overloads:_dedup_deprioritize](#function-31), [aideal.api_overloads:_subsume_overloads](#function-32), [aideal.checkpoint_compatibility:load_compatibility](#function-57), [aideal.doc_check_errors:_classify_error](#function-79), [aideal.doc_check_errors:_codebase_frames](#function-82), [aideal.doc_check_execution:_comprehension_execute._resolve](#function-84), [aideal.doc_check_execution:_comprehension_execute._txt](#function-85), [aideal.doc_check_inputs:_execute_sample_data](#function-90), [aideal.doc_check_inputs:_fill_scaffold](#function-93), [aideal.doc_check_inputs:_owner_map](#function-95), [aideal.doc_check_inputs:_receiver_hint](#function-96), [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98), [aideal.doc_check_inputs:_strip_fences](#function-99), [aideal.doc_check_provenance:_checkpoint_row_reusable](#function-102), [aideal.doc_check_provenance:_comprehension_fingerprint_components](#function-103), [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.error_log:ErrorLog](#function-148), [aideal.error_log:new_run_id](#function-156), [aideal.execution:run_command](#function-160), [aideal.experiment_identity:digest_native](#function-163), [aideal.experiment_identity:write_run_identity](#function-167), [aideal.fix_guide:classify](#function-168), [aideal.llm:invoke_text](#function-187), [aideal.llm:usage_delta](#function-189), [aideal.llm:usage_snapshot](#function-190), [aideal.prompts:load](#function-225), [aideal.readme_catalogue:_class_context_body](#function-242)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_overloads:_dedup_deprioritize](#function-28), [aideal.api_overloads:_subsume_overloads](#function-29), [aideal.checkpoint_compatibility:load_compatibility](#function-54), [aideal.doc_check_errors:_classify_error](#function-76), [aideal.doc_check_errors:_codebase_frames](#function-79), [aideal.doc_check_execution:_comprehension_execute._resolve](#function-81), [aideal.doc_check_execution:_comprehension_execute._txt](#function-82), [aideal.doc_check_inputs:_execute_sample_data](#function-87), [aideal.doc_check_inputs:_fill_scaffold](#function-90), [aideal.doc_check_inputs:_owner_map](#function-92), [aideal.doc_check_inputs:_receiver_hint](#function-93), [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95), [aideal.doc_check_inputs:_strip_fences](#function-96), [aideal.doc_check_provenance:_checkpoint_row_reusable](#function-99), [aideal.doc_check_provenance:_comprehension_fingerprint_components](#function-100), [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.error_log:ErrorLog](#function-145), [aideal.error_log:new_run_id](#function-153), [aideal.execution:run_command](#function-157), [aideal.experiment_identity:digest_native](#function-160), [aideal.experiment_identity:write_run_identity](#function-164), [aideal.fix_guide:classify](#function-165), [aideal.llm:invoke_text](#function-184), [aideal.llm:usage_delta](#function-186), [aideal.llm:usage_snapshot](#function-187), [aideal.prompts:load](#function-222), [aideal.readme_catalogue:_class_context_body](#function-239)
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75)
 
 Prompt keys: `aideal/comprehension_write_exec`
 
-<a id="function-84"></a>
+<a id="function-81"></a>
 ### [_comprehension_execute._resolve](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_execution.py#L126)
 
 Function in `aideal.doc_check_execution`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
-<a id="function-85"></a>
+<a id="function-82"></a>
 ### [_comprehension_execute._txt](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_execution.py#L425)
 
 Function in `aideal.doc_check_execution`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
 ## aideal.doc_check_inputs
 
 374 lines · `vendor/aideal_engine/src/aideal/doc_check_inputs.py`
 
-<a id="function-86"></a>
+<a id="function-83"></a>
 ### [_base_type](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L139)
 
 Head type name, generics and package path stripped:
@@ -980,9 +945,9 @@ Head type name, generics and package path stripped:
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_inputs:_consumed_type_counts](#function-87), [aideal.doc_check_inputs:_drop_unconsumed_lines](#function-89), [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98)
+Called by: [aideal.doc_check_inputs:_consumed_type_counts](#function-84), [aideal.doc_check_inputs:_drop_unconsumed_lines](#function-86), [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95)
 
-<a id="function-87"></a>
+<a id="function-84"></a>
 ### [_consumed_type_counts](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L148)
 
 How many public defs accept each base type as a PARAMETER — i.e. what the
@@ -990,60 +955,60 @@ library's operations actually need loaded, weighted by demand. A reader whose
 return type has count 0 feeds nothing (a shadow reader, e.g. a Java* wrapper);
 a high count means many ops consume it. Codebase-agnostic: no hardcoded names.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.doc_check_inputs:_base_type](#function-86)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.doc_check_inputs:_base_type](#function-83)
 
-Called by: [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98)
+Called by: [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95)
 
-<a id="function-88"></a>
+<a id="function-85"></a>
 ### [_discover_fixtures](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L110)
 
 Convention over config: when `sample_data` isn't set, build the typed
 catalog by scanning `fixtures_dir` (default 'fixtures/').
 
-Calls: [aideal.doc_check_inputs:_kind_of](#function-94)
+Calls: [aideal.doc_check_inputs:_kind_of](#function-91)
 
-Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-90)
+Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-87)
 
-<a id="function-89"></a>
+<a id="function-86"></a>
 ### [_drop_unconsumed_lines](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L175)
 
 Belt-and-suspenders: drop any generated `val x: T = ...` whose type T is
 consumed by no documented op (e.g. the model still reached for a Java wrapper).
 
-Calls: [aideal.doc_check_inputs:_base_type](#function-86)
+Calls: [aideal.doc_check_inputs:_base_type](#function-83)
 
-Called by: [aideal.doc_check_inputs:_resolve_preamble](#function-98)
+Called by: [aideal.doc_check_inputs:_resolve_preamble](#function-95)
 
-<a id="function-90"></a>
+<a id="function-87"></a>
 ### [_execute_sample_data](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L281)
 
 Resolve sample-data bindings for prompts/scaffolds. Uses the configured
 `sample_data` if present; otherwise auto-discovers a `fixtures/` folder.
 Always provides an `output_dir` binding so write APIs have a target.
 
-Calls: [aideal.doc_check_inputs:_discover_fixtures](#function-88), [aideal.doc_check_inputs:_execute_sample_data._as_uri](#function-91), [aideal.doc_check_inputs:_execute_sample_data._resolve](#function-92), [aideal.doc_check_inputs:_validate_sample_data](#function-101)
+Calls: [aideal.doc_check_inputs:_discover_fixtures](#function-85), [aideal.doc_check_inputs:_execute_sample_data._as_uri](#function-88), [aideal.doc_check_inputs:_execute_sample_data._resolve](#function-89), [aideal.doc_check_inputs:_validate_sample_data](#function-98)
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.probe:resolve_exec_context](#function-216), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.probe:resolve_exec_context](#function-213), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-91"></a>
+<a id="function-88"></a>
 ### [_execute_sample_data._as_uri](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L307)
 
 Function in `aideal.doc_check_inputs`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-90)
+Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-87)
 
-<a id="function-92"></a>
+<a id="function-89"></a>
 ### [_execute_sample_data._resolve](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L290)
 
 Function in `aideal.doc_check_inputs`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-90)
+Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-87)
 
-<a id="function-93"></a>
+<a id="function-90"></a>
 ### [_fill_scaffold](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L27)
 
 Insert the snippet into the scaffold's API-test region and substitute
@@ -1052,18 +1017,18 @@ placeholder keys all come from config, nothing GRAIL-specific is hardcoded.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.probe:run_probe](#function-217)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.probe:run_probe](#function-214)
 
-<a id="function-94"></a>
+<a id="function-91"></a>
 ### [_kind_of](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L69)
 
 raster / vector / table for a file extension (the *_dir kind).
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_inputs:_discover_fixtures](#function-88)
+Called by: [aideal.doc_check_inputs:_discover_fixtures](#function-85)
 
-<a id="function-95"></a>
+<a id="function-92"></a>
 ### [_owner_map](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L331)
 
 name -> (owner_type, kind). owner_type is the class/object that DEFINES the
@@ -1072,20 +1037,20 @@ kind is 'static' when that type is declared `object <stem>` and NOT also a
 class/trait (call as `Owner.method(...)`), else 'instance' (needs a receiver of
 type Owner: `val r: Owner = ...; r.method(...)`).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14)
+Calls: [aideal.api_discovery:public_api_details](#function-11)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.doc_repair:run](#function-120), [aideal.readme_catalogue:write_catalogue](#function-245)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.doc_repair:run](#function-117), [aideal.readme_catalogue:write_catalogue](#function-242)
 
-<a id="function-96"></a>
+<a id="function-93"></a>
 ### [_receiver_hint](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L364)
 
 Render the receiver-typing instruction for the snippet-writer, from _owner_map.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_repair:run](#function-117)
 
-<a id="function-97"></a>
+<a id="function-94"></a>
 ### [_resolve_io_hints](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L242)
 
 Return the I/O cheat-sheet. `io_hints: auto` LLM-generates it ONCE (cached
@@ -1093,11 +1058,11 @@ to docs/io_hints.txt) from the codebase's own documented reader/writer APIs —
 so NO human writes it. A literal string is used as-is. Degrades to '' on any
 failure (no key/profile).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.doc_check_inputs:_base_type](#function-86), [aideal.doc_check_inputs:_consumed_type_counts](#function-87), [aideal.llm:invoke_text](#function-187), [aideal.profile:require_profile](#function-224), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.doc_check_inputs:_base_type](#function-83), [aideal.doc_check_inputs:_consumed_type_counts](#function-84), [aideal.llm:invoke_text](#function-184), [aideal.profile:require_profile](#function-221), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-98"></a>
+<a id="function-95"></a>
 ### [_resolve_preamble](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L189)
 
 Return the typed-input preamble. `preamble: auto` LLM-generates it ONCE
@@ -1106,11 +1071,11 @@ APIs — so NO human writes Scala. A literal string is used as-is (still
 supported). Any failure (no key/profile) degrades to '' so the model just
 writes its own I/O guided by io_hints.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.doc_check_inputs:_base_type](#function-86), [aideal.doc_check_inputs:_consumed_type_counts](#function-87), [aideal.doc_check_inputs:_drop_unconsumed_lines](#function-89), [aideal.doc_check_inputs:_useful_readers](#function-100), [aideal.llm:invoke_text](#function-187), [aideal.profile:require_profile](#function-224), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.doc_check_inputs:_base_type](#function-83), [aideal.doc_check_inputs:_consumed_type_counts](#function-84), [aideal.doc_check_inputs:_drop_unconsumed_lines](#function-86), [aideal.doc_check_inputs:_useful_readers](#function-97), [aideal.llm:invoke_text](#function-184), [aideal.profile:require_profile](#function-221), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-99"></a>
+<a id="function-96"></a>
 ### [_strip_fences](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L49)
 
 Remove markdown code fences / language tags the model may emit despite
@@ -1120,9 +1085,9 @@ imports shadowing curated scaffold imports.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.probe:_llm_probe_snippet](#function-211)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.probe:_llm_probe_snippet](#function-208)
 
-<a id="function-100"></a>
+<a id="function-97"></a>
 ### [_useful_readers](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L165)
 
 Order reader NAMES by how many documented ops consume each reader's return
@@ -1133,9 +1098,9 @@ wrapper (return feeds none) on a name collision, with no 'Java' rule.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_inputs:_resolve_preamble](#function-98)
+Called by: [aideal.doc_check_inputs:_resolve_preamble](#function-95)
 
-<a id="function-101"></a>
+<a id="function-98"></a>
 ### [_validate_sample_data](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_inputs.py#L75)
 
 Sanity-check every typed input path BEFORE it is compiled into the scaffold, so a
@@ -1145,95 +1110,95 @@ surfacing many steps later as an opaque Scala runtime error the fix-loop can't p
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-90)
+Called by: [aideal.doc_check_inputs:_execute_sample_data](#function-87)
 
 ## aideal.doc_check_provenance
 
 116 lines · `vendor/aideal_engine/src/aideal/doc_check_provenance.py`
 
-<a id="function-102"></a>
+<a id="function-99"></a>
 ### [_checkpoint_row_reusable](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_provenance.py#L113)
 
 Only stable terminal rows may suppress work after a restart.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
-<a id="function-103"></a>
+<a id="function-100"></a>
 ### [_comprehension_fingerprint_components](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_provenance.py#L42)
 
 Return every material input that makes a checkpoint reusable.
 
-Calls: [aideal.doc_check_provenance:_sha256_files](#function-104), [aideal.experiment_identity:extra_components](#function-164)
+Calls: [aideal.doc_check_provenance:_sha256_files](#function-101), [aideal.experiment_identity:extra_components](#function-161)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
-<a id="function-104"></a>
+<a id="function-101"></a>
 ### [_sha256_files](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_provenance.py#L13)
 
 Hash file names and contents deterministically for run provenance.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_provenance:_comprehension_fingerprint_components](#function-103)
+Called by: [aideal.doc_check_provenance:_comprehension_fingerprint_components](#function-100)
 
 ## aideal.doc_check_puzzles
 
 216 lines · `vendor/aideal_engine/src/aideal/doc_check_puzzles.py`
 
-<a id="function-105"></a>
+<a id="function-102"></a>
 ### [puzzle_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_puzzles.py#L13)
 
 Run an application-provided puzzle evaluator on a frozen AIDEAL plan.
 
-Calls: [aideal.doc_check_puzzles:puzzle_check._doc_path](#function-106), [aideal.doc_check_puzzles:puzzle_check._path](#function-107), [aideal.doc_check_puzzles:puzzle_check._sha](#function-108), [aideal.error_log:ErrorLog](#function-148), [aideal.notes_to_self:NotesToSelf](#function-202), [aideal.puzzle_bank:freeze_puzzle_plan](#function-234), [aideal.puzzle_bank:load_structured](#function-235), [aideal.puzzle_bank:verify_plan_inputs](#function-239), [aideal.puzzle_bank:write_plan](#function-240), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.doc_check_puzzles:puzzle_check._doc_path](#function-103), [aideal.doc_check_puzzles:puzzle_check._path](#function-104), [aideal.doc_check_puzzles:puzzle_check._sha](#function-105), [aideal.error_log:ErrorLog](#function-145), [aideal.notes_to_self:NotesToSelf](#function-199), [aideal.puzzle_bank:freeze_puzzle_plan](#function-231), [aideal.puzzle_bank:load_structured](#function-232), [aideal.puzzle_bank:verify_plan_inputs](#function-236), [aideal.puzzle_bank:write_plan](#function-237), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:puzzle_check](#function-200)
+Called by: [aideal.cli:_run](#function-55), [aideal.mcp_server:puzzle_check](#function-197)
 
-<a id="function-106"></a>
+<a id="function-103"></a>
 ### [puzzle_check._doc_path](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_puzzles.py#L53)
 
 Function in `aideal.doc_check_puzzles`.
 
-Calls: [aideal.doc_check_puzzles:puzzle_check._path](#function-107)
+Calls: [aideal.doc_check_puzzles:puzzle_check._path](#function-104)
 
-Called by: [aideal.doc_check_puzzles:puzzle_check](#function-105)
+Called by: [aideal.doc_check_puzzles:puzzle_check](#function-102)
 
-<a id="function-107"></a>
+<a id="function-104"></a>
 ### [puzzle_check._path](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_puzzles.py#L49)
 
 Function in `aideal.doc_check_puzzles`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_puzzles:puzzle_check](#function-105), [aideal.doc_check_puzzles:puzzle_check._doc_path](#function-106)
+Called by: [aideal.doc_check_puzzles:puzzle_check](#function-102), [aideal.doc_check_puzzles:puzzle_check._doc_path](#function-103)
 
-<a id="function-108"></a>
+<a id="function-105"></a>
 ### [puzzle_check._sha](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_puzzles.py#L77)
 
 Function in `aideal.doc_check_puzzles`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_puzzles:puzzle_check](#function-105)
+Called by: [aideal.doc_check_puzzles:puzzle_check](#function-102)
 
 ## aideal.doc_check_sources
 
 298 lines · `vendor/aideal_engine/src/aideal/doc_check_sources.py`
 
-<a id="function-109"></a>
+<a id="function-106"></a>
 ### [_build_catalogue_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L250)
 
 (model, name_to_gkey, by_name) for INDEX-FIRST comprehension, or None. Builds
 the SAME catalogue model `write_catalogue` renders, so the receiver line + the
 verified-sibling call pattern handed to the audience match the per-class files.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.doc_check_inputs:_owner_map](#function-95), [aideal.readme_catalogue:_catalogue_model](#function-241), [aideal.readme_evidence:_exec_status_map](#function-247), [aideal.readme_evidence:_grounding_tiers](#function-249), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.doc_check_inputs:_owner_map](#function-92), [aideal.readme_catalogue:_catalogue_model](#function-238), [aideal.readme_evidence:_exec_status_map](#function-244), [aideal.readme_evidence:_grounding_tiers](#function-246), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
-<a id="function-110"></a>
+<a id="function-107"></a>
 ### [_comprehension_inventory](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L177)
 
 Build (inventory, shared_doc, error_dict). shared_doc is None unless
@@ -1241,67 +1206,67 @@ full_doc — then every entry's audience context = shared_doc + target line
 (built late in the execute loop; bodies stay empty to avoid duplicating a
 multi-MB document per entry).
 
-Calls: [aideal.api_discovery:public_api_surface](#function-15), [aideal.doc_check_sources:_relevant_doc_inventory](#function-114), [aideal.doc_check_sources:_shared_doc_text](#function-117), [aideal.readme_format:ApiEntry](#function-255), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_surface](#function-12), [aideal.doc_check_sources:_relevant_doc_inventory](#function-111), [aideal.doc_check_sources:_shared_doc_text](#function-114), [aideal.readme_format:ApiEntry](#function-252), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75)
 
-<a id="function-111"></a>
+<a id="function-108"></a>
 ### [_load_manifest](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L32)
 
 Frozen API manifest: ONE list of names used by every experiment cell, so
 pass-rate deltas can never come from denominator drift (2x2 requirement).
 Accepts a JSON array or {"apis": [...]}; paths resolve against cfg.root.
 
-Calls: [aideal.api_discovery:public_api_surface](#function-15)
+Calls: [aideal.api_discovery:public_api_surface](#function-12)
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75)
 
-<a id="function-112"></a>
+<a id="function-109"></a>
 ### [_markdown_chunks](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L84)
 
 Stable file/heading chunks for deterministic, non-LLM retrieval.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_sources:_relevant_original_texts](#function-115)
+Called by: [aideal.doc_check_sources:_relevant_original_texts](#function-112)
 
-<a id="function-113"></a>
+<a id="function-110"></a>
 ### [_normalize](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L275)
 
 Function in `aideal.doc_check_sources`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_sources:completeness_check](#function-118)
+Called by: [aideal.doc_check_sources:completeness_check](#function-115)
 
-<a id="function-114"></a>
+<a id="function-111"></a>
 ### [_relevant_doc_inventory](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L155)
 
 Per-API relevant documentation with one equal character ceiling per source.
 
-Calls: [aideal.doc_check_sources:_relevant_original_texts](#function-115), [aideal.readme_format:ApiEntry](#function-255), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.doc_check_sources:_relevant_original_texts](#function-112), [aideal.readme_format:ApiEntry](#function-252), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.doc_check_sources:_comprehension_inventory](#function-110)
+Called by: [aideal.doc_check_sources:_comprehension_inventory](#function-107)
 
-<a id="function-115"></a>
+<a id="function-112"></a>
 ### [_relevant_original_texts](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L117)
 
 Index the original bundle for every manifest API in one corpus pass.
 
-Calls: [aideal.api_intent:_doc_code_mentions](#function-24), [aideal.doc_check_sources:_markdown_chunks](#function-112)
+Calls: [aideal.api_intent:_doc_code_mentions](#function-21), [aideal.doc_check_sources:_markdown_chunks](#function-109)
 
-Called by: [aideal.doc_check_sources:_relevant_doc_inventory](#function-114)
+Called by: [aideal.doc_check_sources:_relevant_doc_inventory](#function-111)
 
-<a id="function-116"></a>
+<a id="function-113"></a>
 ### [_resolve_class_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L268)
 
 CLI override wins; else the `comprehension.class_context` config flag (default off).
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75)
 
-<a id="function-117"></a>
+<a id="function-114"></a>
 ### [_shared_doc_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L62)
 
 FULL-DOCUMENT audience context (no truncation — the experiment requires
@@ -1310,25 +1275,25 @@ recorded in the run JSON so exposure is auditable).
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_sources:_comprehension_inventory](#function-110)
+Called by: [aideal.doc_check_sources:_comprehension_inventory](#function-107)
 
-<a id="function-118"></a>
+<a id="function-115"></a>
 ### [completeness_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L279)
 
 Function in `aideal.doc_check_sources`.
 
-Calls: [aideal.api_discovery:public_api_surface](#function-15), [aideal.doc_check_sources:_normalize](#function-113), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_surface](#function-12), [aideal.doc_check_sources:_normalize](#function-110), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:completeness_check](#function-194)
+Called by: [aideal.cli:_run](#function-55), [aideal.mcp_server:completeness_check](#function-191)
 
-<a id="function-119"></a>
+<a id="function-116"></a>
 ### [form_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_check_sources.py#L10)
 
 Function in `aideal.doc_check_sources`.
 
-Calls: [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:form_check](#function-196)
+Called by: [aideal.cli:_run](#function-55), [aideal.mcp_server:form_check](#function-193)
 
 ## aideal.doc_checks
 
@@ -1338,50 +1303,50 @@ Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:form_check](#func
 
 447 lines · `vendor/aideal_engine/src/aideal/doc_repair.py`
 
-<a id="function-120"></a>
+<a id="function-117"></a>
 ### [run](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_repair.py#L12)
 
 Doc-repair routing over failed APIs. Returns a report dict.
 
-Calls: [aideal.api_discovery:public_api_surface](#function-15), [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_inputs:_owner_map](#function-95), [aideal.doc_check_inputs:_receiver_hint](#function-96), [aideal.doc_repair:run._clip](#function-121), [aideal.doc_repair:run._flush](#function-122), [aideal.doc_repair:run.checkpoint](#function-123), [aideal.docfix:_allowed_members_from_config](#function-133), [aideal.docfix:_diag_sig](#function-134), [aideal.docfix:_err_sig](#function-135), [aideal.docfix:_fabricated_members](#function-136), [aideal.docfix:_failed_apis_from_results](#function-137), [aideal.docfix:_insert_entry_text](#function-138), [aideal.docfix:_read_report](#function-140), [aideal.docfix:_remove_entry_text](#function-141), [aideal.docfix:_replace_entry_text](#function-142), [aideal.docfix:_source_window](#function-144), [aideal.docfix:_type_context](#function-145), [aideal.docfix:_write_report](#function-146), [aideal.error_log:ErrorLog](#function-148), [aideal.llm:invoke_text](#function-187), [aideal.llm:usage_delta](#function-189), [aideal.llm:usage_snapshot](#function-190), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225), [aideal.readme_evidence:_exec_status_map](#function-247), [aideal.readme_format:parse_readme](#function-261), [aideal.repair_journal:RepairJournal](#function-267), [aideal.repair_journal:identity](#function-275), [aideal.repair_journal:write_text](#function-276)
+Calls: [aideal.api_discovery:public_api_surface](#function-12), [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_inputs:_owner_map](#function-92), [aideal.doc_check_inputs:_receiver_hint](#function-93), [aideal.doc_repair:run._clip](#function-118), [aideal.doc_repair:run._flush](#function-119), [aideal.doc_repair:run.checkpoint](#function-120), [aideal.docfix:_allowed_members_from_config](#function-130), [aideal.docfix:_diag_sig](#function-131), [aideal.docfix:_err_sig](#function-132), [aideal.docfix:_fabricated_members](#function-133), [aideal.docfix:_failed_apis_from_results](#function-134), [aideal.docfix:_insert_entry_text](#function-135), [aideal.docfix:_read_report](#function-137), [aideal.docfix:_remove_entry_text](#function-138), [aideal.docfix:_replace_entry_text](#function-139), [aideal.docfix:_source_window](#function-141), [aideal.docfix:_type_context](#function-142), [aideal.docfix:_write_report](#function-143), [aideal.error_log:ErrorLog](#function-145), [aideal.llm:invoke_text](#function-184), [aideal.llm:usage_delta](#function-186), [aideal.llm:usage_snapshot](#function-187), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222), [aideal.readme_evidence:_exec_status_map](#function-244), [aideal.readme_format:parse_readme](#function-258), [aideal.repair_journal:RepairJournal](#function-264), [aideal.repair_journal:identity](#function-272), [aideal.repair_journal:write_text](#function-273)
 
-Called by: [aideal.docfix:doc_fix_run](#function-147)
+Called by: [aideal.docfix:doc_fix_run](#function-144)
 
 Prompt keys: `aideal/docfix_diagnose`, `aideal/docfix_rewrite`
 
-<a id="function-121"></a>
+<a id="function-118"></a>
 ### [run._clip](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_repair.py#L92)
 
 Function in `aideal.doc_repair`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-122"></a>
+<a id="function-119"></a>
 ### [run._flush](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_repair.py#L125)
 
 Function in `aideal.doc_repair`.
 
-Calls: [aideal.docfix:_outcomes](#function-139), [aideal.docfix:_write_report](#function-146), [aideal.fixreport:auto_report](#function-176)
+Calls: [aideal.docfix:_outcomes](#function-136), [aideal.docfix:_write_report](#function-143), [aideal.fixreport:auto_report](#function-173)
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-123"></a>
+<a id="function-120"></a>
 ### [run.checkpoint](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_repair.py#L209)
 
 Function in `aideal.doc_repair`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-124"></a>
+<a id="function-121"></a>
 ### [run.validate_draft](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_repair.py#L333)
 
 Function in `aideal.doc_repair`.
 
-Calls: [aideal.doc_check_comprehension:comprehension_check](#function-78)
+Calls: [aideal.doc_check_comprehension:comprehension_check](#function-75)
 
 Called by: None resolved
 
@@ -1389,16 +1354,16 @@ Called by: None resolved
 
 109 lines · `vendor/aideal_engine/src/aideal/doc_snapshot.py`
 
-<a id="function-125"></a>
+<a id="function-122"></a>
 ### [_Text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L17)
 
 Class in `aideal.doc_snapshot`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_snapshot:prepare_original_docs](#function-132)
+Called by: [aideal.doc_snapshot:prepare_original_docs](#function-129)
 
-<a id="function-126"></a>
+<a id="function-123"></a>
 ### [_Text.__init__](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L18)
 
 Method in `aideal.doc_snapshot`.
@@ -1407,7 +1372,7 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-127"></a>
+<a id="function-124"></a>
 ### [_Text.handle_data](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L37)
 
 Method in `aideal.doc_snapshot`.
@@ -1416,7 +1381,7 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-128"></a>
+<a id="function-125"></a>
 ### [_Text.handle_endtag](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L30)
 
 Method in `aideal.doc_snapshot`.
@@ -1425,7 +1390,7 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-129"></a>
+<a id="function-126"></a>
 ### [_Text.handle_starttag](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L23)
 
 Method in `aideal.doc_snapshot`.
@@ -1434,7 +1399,7 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-130"></a>
+<a id="function-127"></a>
 ### [_Text.text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L41)
 
 Method in `aideal.doc_snapshot`.
@@ -1443,39 +1408,39 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-131"></a>
+<a id="function-128"></a>
 ### [_sha](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L48)
 
 Function in `aideal.doc_snapshot`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_snapshot:prepare_original_docs](#function-132)
+Called by: [aideal.doc_snapshot:prepare_original_docs](#function-129)
 
-<a id="function-132"></a>
+<a id="function-129"></a>
 ### [prepare_original_docs](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/doc_snapshot.py#L52)
 
 Download configured ZIP archives, extract text, and freeze one bundle.
 
-Calls: [aideal.doc_snapshot:_Text](#function-125), [aideal.doc_snapshot:_sha](#function-131)
+Calls: [aideal.doc_snapshot:_Text](#function-122), [aideal.doc_snapshot:_sha](#function-128)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
 ## aideal.docfix
 
 333 lines · `vendor/aideal_engine/src/aideal/docfix.py`
 
-<a id="function-133"></a>
+<a id="function-130"></a>
 ### [_allowed_members_from_config](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L159)
 
 Allowed-member vocabulary for the fabricated-member guard, from three
 layers (most general first):
 
-Calls: [aideal.docfix:_repo_called_members](#function-143)
+Calls: [aideal.docfix:_repo_called_members](#function-140)
 
-Called by: [aideal.doc_repair:run](#function-120), [aideal.docfix:_fabricated_members](#function-136)
+Called by: [aideal.doc_repair:run](#function-117), [aideal.docfix:_fabricated_members](#function-133)
 
-<a id="function-134"></a>
+<a id="function-131"></a>
 ### [_diag_sig](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L305)
 
 Signature of a diagnosis: the ROOT CAUSE section, whitespace-normalized.
@@ -1484,38 +1449,38 @@ root cause means the deep dive learned nothing new this round.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-135"></a>
+<a id="function-132"></a>
 ### [_err_sig](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L299)
 
 Normalized error signature (shared with fixreport) for progress checks.
 
-Calls: [aideal.fixreport:error_signature](#function-180)
+Calls: [aideal.fixreport:error_signature](#function-177)
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-136"></a>
+<a id="function-133"></a>
 ### [_fabricated_members](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L187)
 
 Member calls `.name(` inside the entry's code blocks that are neither on
 the library's RAW surface, nor configured ecosystem/language methods, nor
 the API itself — i.e. likely hallucinated project members (`.convolve`, …).
 
-Calls: [aideal.docfix:_allowed_members_from_config](#function-133)
+Calls: [aideal.docfix:_allowed_members_from_config](#function-130)
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-137"></a>
+<a id="function-134"></a>
 ### [_failed_apis_from_results](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L198)
 
 Return failed API names from a comprehension/bench result JSON.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-138"></a>
+<a id="function-135"></a>
 ### [_insert_entry_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L38)
 
 Append a brand-new `## API Test:` entry at the end of the catalog.
@@ -1524,27 +1489,27 @@ WRITES the entry that never existed).
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-139"></a>
+<a id="function-136"></a>
 ### [_outcomes](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L233)
 
 Function in `aideal.docfix`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run._flush](#function-122)
+Called by: [aideal.doc_repair:run._flush](#function-119)
 
-<a id="function-140"></a>
+<a id="function-137"></a>
 ### [_read_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L221)
 
 Function in `aideal.docfix`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-141"></a>
+<a id="function-138"></a>
 ### [_remove_entry_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L45)
 
 Delete an entry created by this run (all-rounds-fail in create-missing
@@ -1552,9 +1517,9 @@ mode reverts to ABSENT, keeping the catalog exactly as found).
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-142"></a>
+<a id="function-139"></a>
 ### [_replace_entry_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L28)
 
 Replace the `## API Test: `name`` section (up to the next entry or EOF).
@@ -1562,9 +1527,9 @@ Pure function so it is unit-testable. Raises KeyError if absent.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-143"></a>
+<a id="function-140"></a>
 ### [_repo_called_members](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L134)
 
 Derive an evidence-based member-name allowlist: every
@@ -1578,59 +1543,59 @@ itself); wrong-receiver misuse is still caught by the execution retry.
 
 Calls: None resolved
 
-Called by: [aideal.docfix:_allowed_members_from_config](#function-133)
+Called by: [aideal.docfix:_allowed_members_from_config](#function-130)
 
-<a id="function-144"></a>
+<a id="function-141"></a>
 ### [_source_window](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L52)
 
 (window_text, other_sites_note) for the CANONICAL definition of `name`
 — the same election dedup/readme use (subsumption + deprioritized paths).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_overloads:_dedup_deprioritize](#function-31), [aideal.api_overloads:_subsume_overloads](#function-32)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_overloads:_dedup_deprioritize](#function-28), [aideal.api_overloads:_subsume_overloads](#function-29)
 
-Called by: [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_repair:run](#function-120)
+Called by: [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_repair:run](#function-117)
 
-<a id="function-145"></a>
+<a id="function-142"></a>
 ### [_type_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L246)
 
 Definitions of receiver/parameter/return types found in configured source.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_overloads:_dedup_deprioritize](#function-31), [aideal.api_overloads:_subsume_overloads](#function-32)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_overloads:_dedup_deprioritize](#function-28), [aideal.api_overloads:_subsume_overloads](#function-29)
 
-Called by: [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_repair:run](#function-120)
+Called by: [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_repair:run](#function-117)
 
-<a id="function-146"></a>
+<a id="function-143"></a>
 ### [_write_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L212)
 
 Function in `aideal.docfix`.
 
-Calls: [aideal.repair_journal:atomic](#function-273)
+Calls: [aideal.repair_journal:atomic](#function-270)
 
-Called by: [aideal.doc_repair:run](#function-120), [aideal.doc_repair:run._flush](#function-122)
+Called by: [aideal.doc_repair:run](#function-117), [aideal.doc_repair:run._flush](#function-119)
 
-<a id="function-147"></a>
+<a id="function-144"></a>
 ### [doc_fix_run](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/docfix.py#L314)
 
 Run the resumable document-repair controller under one document lock.
 
-Calls: [aideal.doc_repair:run](#function-120), [aideal.repair_journal:document_lock](#function-274)
+Calls: [aideal.doc_repair:run](#function-117), [aideal.repair_journal:document_lock](#function-271)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
 ## aideal.error_log
 
 150 lines · `vendor/aideal_engine/src/aideal/error_log.py`
 
-<a id="function-148"></a>
+<a id="function-145"></a>
 ### [ErrorLog](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L64)
 
 Class in `aideal.error_log`.
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58), [aideal.deepdive:_failure_history](#function-76), [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_check_puzzles:puzzle_check](#function-105), [aideal.doc_repair:run](#function-120), [aideal.fixreport:write_report](#function-184), [aideal.mcp_server:alias_suggestions](#function-192), [aideal.mcp_server:known_mistakes](#function-197), [aideal.mcp_server:log_failure](#function-198), [aideal.probe:run_probe](#function-217), [aideal.readme_evidence:_exec_status_map](#function-247), [aideal.readme_evidence:augment_from_log](#function-252)
+Called by: [aideal.cli:_run](#function-55), [aideal.deepdive:_failure_history](#function-73), [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_check_puzzles:puzzle_check](#function-102), [aideal.doc_repair:run](#function-117), [aideal.fixreport:write_report](#function-181), [aideal.mcp_server:alias_suggestions](#function-189), [aideal.mcp_server:known_mistakes](#function-194), [aideal.mcp_server:log_failure](#function-195), [aideal.probe:run_probe](#function-214), [aideal.readme_evidence:_exec_status_map](#function-244), [aideal.readme_evidence:augment_from_log](#function-249)
 
-<a id="function-149"></a>
+<a id="function-146"></a>
 ### [ErrorLog.__init__](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L65)
 
 Method in `aideal.error_log`.
@@ -1639,54 +1604,54 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-150"></a>
+<a id="function-147"></a>
 ### [ErrorLog.append](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L68)
 
 Method in `aideal.error_log`.
 
-Calls: [aideal.error_log:new_run_id](#function-156)
+Calls: [aideal.error_log:new_run_id](#function-153)
 
 Called by: None resolved
 
-<a id="function-151"></a>
+<a id="function-148"></a>
 ### [ErrorLog.entries](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L81)
 
 Method in `aideal.error_log`.
 
 Calls: None resolved
 
-Called by: [aideal.error_log:ErrorLog.failures_for](#function-152), [aideal.error_log:ErrorLog.suggest_aliases](#function-153), [aideal.error_log:ErrorLog.to_prompt](#function-154)
+Called by: [aideal.error_log:ErrorLog.failures_for](#function-149), [aideal.error_log:ErrorLog.suggest_aliases](#function-150), [aideal.error_log:ErrorLog.to_prompt](#function-151)
 
-<a id="function-152"></a>
+<a id="function-149"></a>
 ### [ErrorLog.failures_for](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L113)
 
 Compact render of prior failures for ONE function, to feed back into
 the next generation/repair attempt. Pairs error -> fix when known.
 
-Calls: [aideal.error_log:ErrorLog.entries](#function-151)
+Calls: [aideal.error_log:ErrorLog.entries](#function-148)
 
 Called by: None resolved
 
-<a id="function-153"></a>
+<a id="function-150"></a>
 ### [ErrorLog.suggest_aliases](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L135)
 
 Hallucinated names are evidence of what models EXPECT the API to be
 called — i.e., good alias candidates.
 
-Calls: [aideal.error_log:ErrorLog.entries](#function-151)
+Calls: [aideal.error_log:ErrorLog.entries](#function-148)
 
 Called by: None resolved
 
-<a id="function-154"></a>
+<a id="function-151"></a>
 ### [ErrorLog.to_prompt](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L94)
 
 Compact token-efficient render: `function: error -> fix (xN)`.
 
-Calls: [aideal.error_log:ErrorLog.entries](#function-151)
+Calls: [aideal.error_log:ErrorLog.entries](#function-148)
 
 Called by: None resolved
 
-<a id="function-155"></a>
+<a id="function-152"></a>
 ### [git_version](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L52)
 
 Short git commit of the target codebase, used to tag memory entries so a
@@ -1695,31 +1660,31 @@ verified example can be invalidated when the code moves underneath it. Returns
 
 Calls: None resolved
 
-Called by: [aideal.probe:run_probe](#function-217), [aideal.readme_evidence:augment_from_log](#function-252)
+Called by: [aideal.probe:run_probe](#function-214), [aideal.readme_evidence:augment_from_log](#function-249)
 
-<a id="function-156"></a>
+<a id="function-153"></a>
 ### [new_run_id](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/error_log.py#L48)
 
 Function in `aideal.error_log`.
 
 Calls: None resolved
 
-Called by: [aideal.alias_registry:AliasRegistry.mark_added](#function-7), [aideal.alias_registry:AliasRegistry.record_use](#function-9), [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.error_log:ErrorLog.append](#function-150), [aideal.probe:run_probe](#function-217)
+Called by: [aideal.alias_registry:AliasRegistry.mark_added](#function-4), [aideal.alias_registry:AliasRegistry.record_use](#function-6), [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.error_log:ErrorLog.append](#function-147), [aideal.probe:run_probe](#function-214)
 
 ## aideal.execution
 
 86 lines · `vendor/aideal_engine/src/aideal/execution.py`
 
-<a id="function-157"></a>
+<a id="function-154"></a>
 ### [CleanupError](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/execution.py#L16)
 
 The runner cannot certify that its timed-out process group stopped.
 
 Calls: None resolved
 
-Called by: [aideal.execution:exclusive_work_dir.wrapped](#function-159), [aideal.execution:run_command](#function-160), [aideal.execution:run_command.uncertain](#function-161)
+Called by: [aideal.execution:exclusive_work_dir.wrapped](#function-156), [aideal.execution:run_command](#function-157), [aideal.execution:run_command.uncertain](#function-158)
 
-<a id="function-158"></a>
+<a id="function-155"></a>
 ### [exclusive_work_dir](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/execution.py#L20)
 
 Hold one checkpoint/test-file writer for the entire native evaluation.
@@ -1728,109 +1693,109 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-159"></a>
+<a id="function-156"></a>
 ### [exclusive_work_dir.wrapped](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/execution.py#L22)
 
 Function in `aideal.execution`.
 
-Calls: [aideal.execution:CleanupError](#function-157)
+Calls: [aideal.execution:CleanupError](#function-154)
 
 Called by: None resolved
 
-<a id="function-160"></a>
+<a id="function-157"></a>
 ### [run_command](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/execution.py#L37)
 
 Function in `aideal.execution`.
 
-Calls: [aideal.execution:CleanupError](#function-157), [aideal.execution:run_command.uncertain](#function-161)
+Calls: [aideal.execution:CleanupError](#function-154), [aideal.execution:run_command.uncertain](#function-158)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
-<a id="function-161"></a>
+<a id="function-158"></a>
 ### [run_command.uncertain](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/execution.py#L50)
 
 Function in `aideal.execution`.
 
-Calls: [aideal.execution:CleanupError](#function-157)
+Calls: [aideal.execution:CleanupError](#function-154)
 
-Called by: [aideal.execution:run_command](#function-160)
+Called by: [aideal.execution:run_command](#function-157)
 
 ## aideal.experiment_identity
 
 56 lines · `vendor/aideal_engine/src/aideal/experiment_identity.py`
 
-<a id="function-162"></a>
+<a id="function-159"></a>
 ### [digest](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/experiment_identity.py#L11)
 
 Function in `aideal.experiment_identity`.
 
 Calls: None resolved
 
-Called by: [aideal.experiment_identity:prompt_contract](#function-165), [aideal.repair_journal:identity](#function-275)
+Called by: [aideal.experiment_identity:prompt_contract](#function-162), [aideal.repair_journal:identity](#function-272)
 
-<a id="function-163"></a>
+<a id="function-160"></a>
 ### [digest_native](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/experiment_identity.py#L54)
 
 Function in `aideal.experiment_identity`.
 
 Calls: None resolved
 
-Called by: [aideal.checkpoint_compatibility:fingerprint](#function-56), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.experiment_identity:write_run_identity](#function-167)
+Called by: [aideal.checkpoint_compatibility:fingerprint](#function-53), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.experiment_identity:write_run_identity](#function-164)
 
-<a id="function-164"></a>
+<a id="function-161"></a>
 ### [extra_components](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/experiment_identity.py#L40)
 
 Function in `aideal.experiment_identity`.
 
-Calls: [aideal.experiment_identity:prompt_contract](#function-165), [aideal.experiment_identity:transport_contract](#function-166)
+Calls: [aideal.experiment_identity:prompt_contract](#function-162), [aideal.experiment_identity:transport_contract](#function-163)
 
-Called by: [aideal.doc_check_provenance:_comprehension_fingerprint_components](#function-103)
+Called by: [aideal.doc_check_provenance:_comprehension_fingerprint_components](#function-100)
 
-<a id="function-165"></a>
+<a id="function-162"></a>
 ### [prompt_contract](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/experiment_identity.py#L16)
 
 Function in `aideal.experiment_identity`.
 
-Calls: [aideal.experiment_identity:digest](#function-162), [aideal.profile:profile_path](#function-222), [aideal.prompts:prompts_dir](#function-226)
+Calls: [aideal.experiment_identity:digest](#function-159), [aideal.profile:profile_path](#function-219), [aideal.prompts:prompts_dir](#function-223)
 
-Called by: [aideal.experiment_identity:extra_components](#function-164), [aideal.repair_journal:identity](#function-275)
+Called by: [aideal.experiment_identity:extra_components](#function-161), [aideal.repair_journal:identity](#function-272)
 
-<a id="function-166"></a>
+<a id="function-163"></a>
 ### [transport_contract](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/experiment_identity.py#L28)
 
 Function in `aideal.experiment_identity`.
 
 Calls: None resolved
 
-Called by: [aideal.experiment_identity:extra_components](#function-164), [aideal.repair_journal:identity](#function-275)
+Called by: [aideal.experiment_identity:extra_components](#function-161), [aideal.repair_journal:identity](#function-272)
 
-<a id="function-167"></a>
+<a id="function-164"></a>
 ### [write_run_identity](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/experiment_identity.py#L44)
 
 Publish active identity before the first API; readers need no legacy alias.
 
-Calls: [aideal.experiment_identity:digest_native](#function-163)
+Calls: [aideal.experiment_identity:digest_native](#function-160)
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
 ## aideal.fix_guide
 
 76 lines · `vendor/aideal_engine/src/aideal/fix_guide.py`
 
-<a id="function-168"></a>
+<a id="function-165"></a>
 ### [classify](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fix_guide.py#L71)
 
 Return (category, fix_hint) for the first matching fix-guide rule.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
 ## aideal.fixreport
 
 534 lines · `vendor/aideal_engine/src/aideal/fixreport.py`
 
-<a id="function-169"></a>
+<a id="function-166"></a>
 ### [_details_error](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L64)
 
 (category, message) from a comprehension `details[name]` value —
@@ -1839,18 +1804,18 @@ error lives in the last failing round.
 
 Calls: None resolved
 
-Called by: [aideal.fixreport:load_run](#function-181)
+Called by: [aideal.fixreport:load_run](#function-178)
 
-<a id="function-170"></a>
+<a id="function-167"></a>
 ### [_last_sig](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L201)
 
 Function in `aideal.fixreport`.
 
-Calls: [aideal.fixreport:error_signature](#function-180)
+Calls: [aideal.fixreport:error_signature](#function-177)
 
-Called by: [aideal.fixreport:cluster_failures](#function-177), [aideal.fixreport:compare_runs](#function-178)
+Called by: [aideal.fixreport:cluster_failures](#function-174), [aideal.fixreport:compare_runs](#function-175)
 
-<a id="function-171"></a>
+<a id="function-168"></a>
 ### [_log_rounds](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L181)
 
 Round rows for one API in one run from the error log (fallback when the
@@ -1858,85 +1823,85 @@ result JSON has no per-round detail). Ordered by `round` when present.
 
 Calls: None resolved
 
-Called by: [aideal.fixreport:render_markdown](#function-183)
+Called by: [aideal.fixreport:render_markdown](#function-180)
 
-<a id="function-172"></a>
+<a id="function-169"></a>
 ### [_pct](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L289)
 
 Function in `aideal.fixreport`.
 
 Calls: None resolved
 
-Called by: [aideal.fixreport:render_markdown](#function-183)
+Called by: [aideal.fixreport:render_markdown](#function-180)
 
-<a id="function-173"></a>
+<a id="function-170"></a>
 ### [_rounds_of](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L88)
 
 Function in `aideal.fixreport`.
 
 Calls: None resolved
 
-Called by: [aideal.fixreport:load_run](#function-181)
+Called by: [aideal.fixreport:load_run](#function-178)
 
-<a id="function-174"></a>
+<a id="function-171"></a>
 ### [_short](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L296)
 
 Readability: collapse absolute file paths to basenames in error heads.
 
 Calls: None resolved
 
-Called by: [aideal.fixreport:render_markdown](#function-183)
+Called by: [aideal.fixreport:render_markdown](#function-180)
 
-<a id="function-175"></a>
+<a id="function-172"></a>
 ### [_stuckness](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L272)
 
 Human verdict on the loop's trajectory for one API.
 
-Calls: [aideal.fixreport:error_signature](#function-180)
+Calls: [aideal.fixreport:error_signature](#function-177)
 
-Called by: [aideal.fixreport:render_markdown](#function-183)
+Called by: [aideal.fixreport:render_markdown](#function-180)
 
-<a id="function-176"></a>
+<a id="function-173"></a>
 ### [auto_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L512)
 
 Best-effort readable report straight from an in-memory result dict
 (called at the end of comprehension --execute / fix-docs unless
 comprehension.execute.auto_report is false). Never raises.
 
-Calls: [aideal.fixreport:write_report](#function-184)
+Calls: [aideal.fixreport:write_report](#function-181)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.doc_repair:run._flush](#function-122)
+Called by: [aideal.cli:_run](#function-55), [aideal.doc_repair:run._flush](#function-119)
 
-<a id="function-177"></a>
+<a id="function-174"></a>
 ### [cluster_failures](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L235)
 
 Cross-API clustering of the run's failures by masked signature —
 'which ONE issue is costing the most APIs'.
 
-Calls: [aideal.fixreport:_last_sig](#function-170)
+Calls: [aideal.fixreport:_last_sig](#function-167)
 
-Called by: [aideal.fixreport:render_markdown](#function-183)
+Called by: [aideal.fixreport:render_markdown](#function-180)
 
-<a id="function-178"></a>
+<a id="function-175"></a>
 ### [compare_runs](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L206)
 
 fail->pass / pass->fail / still-failing split into same-signature
 (the issue is NOT being solved) vs changed-signature (churn/progress).
 
-Calls: [aideal.fixreport:_last_sig](#function-170), [aideal.fixreport:compare_runs._cats](#function-179)
+Calls: [aideal.fixreport:_last_sig](#function-167), [aideal.fixreport:compare_runs._cats](#function-176)
 
-Called by: [aideal.fixreport:render_markdown](#function-183)
+Called by: [aideal.fixreport:render_markdown](#function-180)
 
-<a id="function-179"></a>
+<a id="function-176"></a>
 ### [compare_runs._cats](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L222)
 
 Function in `aideal.fixreport`.
 
 Calls: None resolved
 
-Called by: [aideal.fixreport:compare_runs](#function-178)
+Called by: [aideal.fixreport:compare_runs](#function-175)
 
-<a id="function-180"></a>
+<a id="function-177"></a>
 ### [error_signature](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L45)
 
 Stable signature of an error for same-issue detection. Paths, line
@@ -1946,80 +1911,80 @@ not a member' and 'value fooY is not a member' are the same issue).
 
 Calls: None resolved
 
-Called by: [aideal.docfix:_err_sig](#function-135), [aideal.fixreport:_last_sig](#function-170), [aideal.fixreport:_stuckness](#function-175), [aideal.fixreport:recurrence](#function-182)
+Called by: [aideal.docfix:_err_sig](#function-132), [aideal.fixreport:_last_sig](#function-167), [aideal.fixreport:_stuckness](#function-172), [aideal.fixreport:recurrence](#function-179)
 
-<a id="function-181"></a>
+<a id="function-178"></a>
 ### [load_run](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L94)
 
 Normalize a result JSON (comprehension or fix-docs) into
 {kind, run_id, models, apis: {name: {...}}, meta}.
 
-Calls: [aideal.fixreport:_details_error](#function-169), [aideal.fixreport:_rounds_of](#function-173)
+Calls: [aideal.fixreport:_details_error](#function-166), [aideal.fixreport:_rounds_of](#function-170)
 
-Called by: [aideal.fixreport:write_report](#function-184)
+Called by: [aideal.fixreport:write_report](#function-181)
 
-<a id="function-182"></a>
+<a id="function-179"></a>
 ### [recurrence](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L249)
 
 Cross-RUN persistence per failing API: how many distinct runs recorded a
 failure, whether the LAST error signature is identical across those runs
 (same issue never solved), and when it was first seen.
 
-Calls: [aideal.fixreport:error_signature](#function-180)
+Calls: [aideal.fixreport:error_signature](#function-177)
 
-Called by: [aideal.fixreport:render_markdown](#function-183)
+Called by: [aideal.fixreport:render_markdown](#function-180)
 
-<a id="function-183"></a>
+<a id="function-180"></a>
 ### [render_markdown](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L301)
 
 Function in `aideal.fixreport`.
 
-Calls: [aideal.fixreport:_log_rounds](#function-171), [aideal.fixreport:_pct](#function-172), [aideal.fixreport:_short](#function-174), [aideal.fixreport:_stuckness](#function-175), [aideal.fixreport:cluster_failures](#function-177), [aideal.fixreport:compare_runs](#function-178), [aideal.fixreport:recurrence](#function-182)
+Calls: [aideal.fixreport:_log_rounds](#function-168), [aideal.fixreport:_pct](#function-169), [aideal.fixreport:_short](#function-171), [aideal.fixreport:_stuckness](#function-172), [aideal.fixreport:cluster_failures](#function-174), [aideal.fixreport:compare_runs](#function-175), [aideal.fixreport:recurrence](#function-179)
 
-Called by: [aideal.fixreport:write_report](#function-184)
+Called by: [aideal.fixreport:write_report](#function-181)
 
-<a id="function-184"></a>
+<a id="function-181"></a>
 ### [write_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/fixreport.py#L486)
 
 Function in `aideal.fixreport`.
 
-Calls: [aideal.error_log:ErrorLog](#function-148), [aideal.fixreport:load_run](#function-181), [aideal.fixreport:render_markdown](#function-183)
+Calls: [aideal.error_log:ErrorLog](#function-145), [aideal.fixreport:load_run](#function-178), [aideal.fixreport:render_markdown](#function-180)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.fixreport:auto_report](#function-176)
+Called by: [aideal.cli:_run](#function-55), [aideal.fixreport:auto_report](#function-173)
 
 ## aideal.llm
 
 184 lines · `vendor/aideal_engine/src/aideal/llm.py`
 
-<a id="function-185"></a>
+<a id="function-182"></a>
 ### [_wait_for_provider_slot](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/llm.py#L72)
 
 Process-shared request-start pacing for Google/Gemini.
 
 Calls: None resolved
 
-Called by: [aideal.llm:invoke_text](#function-187)
+Called by: [aideal.llm:invoke_text](#function-184)
 
-<a id="function-186"></a>
+<a id="function-183"></a>
 ### [get_chat_model](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/llm.py#L23)
 
 Return a LangChain chat model for the given provider/model.
 
 Calls: None resolved
 
-Called by: [aideal.llm:invoke_text](#function-187)
+Called by: [aideal.llm:invoke_text](#function-184)
 
-<a id="function-187"></a>
+<a id="function-184"></a>
 ### [invoke_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/llm.py#L138)
 
 One-shot text completion; returns the model's text content and adds the
 provider-reported token usage to the module accumulator.
 
-Calls: [aideal.llm:_wait_for_provider_slot](#function-185), [aideal.llm:get_chat_model](#function-186), [aideal.provider_deadline:provider_deadline](#function-228)
+Calls: [aideal.llm:_wait_for_provider_slot](#function-182), [aideal.llm:get_chat_model](#function-183), [aideal.provider_deadline:provider_deadline](#function-225)
 
-Called by: [aideal.api_intent:intended_api_llm](#function-26), [aideal.api_intent:llm_common_apis](#function-30), [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98), [aideal.doc_repair:run](#function-120), [aideal.probe:_llm_probe_snippet](#function-211), [aideal.readme_generation:distilled_readme_context](#function-263), [aideal.readme_generation:find_or_create](#function-264), [aideal.task_generator:generate_tasks](#function-287)
+Called by: [aideal.api_intent:intended_api_llm](#function-23), [aideal.api_intent:llm_common_apis](#function-27), [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95), [aideal.doc_repair:run](#function-117), [aideal.probe:_llm_probe_snippet](#function-208), [aideal.readme_generation:distilled_readme_context](#function-260), [aideal.readme_generation:find_or_create](#function-261), [aideal.task_generator:generate_tasks](#function-284)
 
-<a id="function-188"></a>
+<a id="function-185"></a>
 ### [reset_usage](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/llm.py#L110)
 
 Function in `aideal.llm`.
@@ -2028,67 +1993,67 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-189"></a>
+<a id="function-186"></a>
 ### [usage_delta](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/llm.py#L121)
 
 Usage accumulated since `before` (a usage_snapshot()), incl. per-model
 split — in a mixed-role run (writer=openai, fixer=gemini) the split shows
 who spent what.
 
-Calls: [aideal.llm:usage_snapshot](#function-190)
+Calls: [aideal.llm:usage_snapshot](#function-187)
 
-Called by: [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_repair:run](#function-120)
+Called by: [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_repair:run](#function-117)
 
-<a id="function-190"></a>
+<a id="function-187"></a>
 ### [usage_snapshot](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/llm.py#L114)
 
 Copy of the running usage totals (safe to keep across further calls).
 
 Calls: None resolved
 
-Called by: [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_repair:run](#function-120), [aideal.llm:usage_delta](#function-189)
+Called by: [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_repair:run](#function-117), [aideal.llm:usage_delta](#function-186)
 
 ## aideal.mcp_server
 
 126 lines · `vendor/aideal_engine/src/aideal/mcp_server.py`
 
-<a id="function-191"></a>
+<a id="function-188"></a>
 ### [_cfg](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L37)
 
 Function in `aideal.mcp_server`.
 
-Calls: [aideal.config:load_config](#function-72)
+Calls: [aideal.config:load_config](#function-69)
 
-Called by: [aideal.mcp_server:alias_suggestions](#function-192), [aideal.mcp_server:check_profile](#function-193), [aideal.mcp_server:completeness_check](#function-194), [aideal.mcp_server:comprehension_check](#function-195), [aideal.mcp_server:form_check](#function-196), [aideal.mcp_server:known_mistakes](#function-197), [aideal.mcp_server:log_failure](#function-198), [aideal.mcp_server:puzzle_check](#function-200), [aideal.mcp_server:readme_status](#function-201)
+Called by: [aideal.mcp_server:alias_suggestions](#function-189), [aideal.mcp_server:check_profile](#function-190), [aideal.mcp_server:completeness_check](#function-191), [aideal.mcp_server:comprehension_check](#function-192), [aideal.mcp_server:form_check](#function-193), [aideal.mcp_server:known_mistakes](#function-194), [aideal.mcp_server:log_failure](#function-195), [aideal.mcp_server:puzzle_check](#function-197), [aideal.mcp_server:readme_status](#function-198)
 
-<a id="function-192"></a>
+<a id="function-189"></a>
 ### [alias_suggestions](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L114)
 
 Alias candidates mined from logged hallucinated names (what models EXPECT APIs to be called).
 
-Calls: [aideal.error_log:ErrorLog](#function-148), [aideal.mcp_server:_cfg](#function-191)
+Calls: [aideal.error_log:ErrorLog](#function-145), [aideal.mcp_server:_cfg](#function-188)
 
 Called by: None resolved
 
-<a id="function-193"></a>
+<a id="function-190"></a>
 ### [check_profile](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L41)
 
 Project intake status: which required profile fields are still missing.
 
-Calls: [aideal.mcp_server:_cfg](#function-191), [aideal.profile:load_profile](#function-220), [aideal.profile:missing_fields](#function-221), [aideal.profile:profile_path](#function-222)
+Calls: [aideal.mcp_server:_cfg](#function-188), [aideal.profile:load_profile](#function-217), [aideal.profile:missing_fields](#function-218), [aideal.profile:profile_path](#function-219)
 
 Called by: None resolved
 
-<a id="function-194"></a>
+<a id="function-191"></a>
 ### [completeness_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L58)
 
 Coverage check: which public functions of the codebase have no doc entry?
 
-Calls: [aideal.doc_check_sources:completeness_check](#function-118), [aideal.mcp_server:_cfg](#function-191)
+Calls: [aideal.doc_check_sources:completeness_check](#function-115), [aideal.mcp_server:_cfg](#function-188)
 
 Called by: None resolved
 
-<a id="function-195"></a>
+<a id="function-192"></a>
 ### [comprehension_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L65)
 
 Readme unit test: audience model writes code from the docs alone; author model grades.
@@ -2096,39 +2061,39 @@ doc='original' uses the project's pre-existing README as the only context.
 class_context=True uses the INDEX-FIRST read path (prefix each API with its catalogue
 class header: receiver + a verified sibling's call pattern); None -> config default.
 
-Calls: [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.mcp_server:_cfg](#function-191)
+Calls: [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.mcp_server:_cfg](#function-188)
 
 Called by: None resolved
 
-<a id="function-196"></a>
+<a id="function-193"></a>
 ### [form_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L51)
 
 Structural check: does every API entry in LLM_readme.md have the required sections?
 
-Calls: [aideal.doc_check_sources:form_check](#function-119), [aideal.mcp_server:_cfg](#function-191)
+Calls: [aideal.doc_check_sources:form_check](#function-116), [aideal.mcp_server:_cfg](#function-188)
 
 Called by: None resolved
 
-<a id="function-197"></a>
+<a id="function-194"></a>
 ### [known_mistakes](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L91)
 
 Compact list of previously logged failures + distilled lessons.
 CALL THIS BEFORE GENERATING CODE against the codebase, and include it in your reasoning.
 
-Calls: [aideal.error_log:ErrorLog](#function-148), [aideal.mcp_server:_cfg](#function-191), [aideal.notes_to_self:NotesToSelf](#function-202)
+Calls: [aideal.error_log:ErrorLog](#function-145), [aideal.mcp_server:_cfg](#function-188), [aideal.notes_to_self:NotesToSelf](#function-199)
 
 Called by: None resolved
 
-<a id="function-198"></a>
+<a id="function-195"></a>
 ### [log_failure](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L102)
 
 Record a code-generation failure you encountered, so future runs avoid it.
 
-Calls: [aideal.error_log:ErrorLog](#function-148), [aideal.mcp_server:_cfg](#function-191)
+Calls: [aideal.error_log:ErrorLog](#function-145), [aideal.mcp_server:_cfg](#function-188)
 
 Called by: None resolved
 
-<a id="function-199"></a>
+<a id="function-196"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L121)
 
 Function in `aideal.mcp_server`.
@@ -2137,22 +2102,22 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-200"></a>
+<a id="function-197"></a>
 ### [puzzle_check](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L76)
 
 Integration check: compose sampled APIs into tasks, generate, execute, score.
 dry_run=True previews puzzles without LLM/execution cost.
 
-Calls: [aideal.doc_check_puzzles:puzzle_check](#function-105), [aideal.mcp_server:_cfg](#function-191)
+Calls: [aideal.doc_check_puzzles:puzzle_check](#function-102), [aideal.mcp_server:_cfg](#function-188)
 
 Called by: None resolved
 
-<a id="function-201"></a>
+<a id="function-198"></a>
 ### [readme_status](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/mcp_server.py#L84)
 
 Find the LLM readme, or create a skeleton (generate=True fills entries via the author model).
 
-Calls: [aideal.mcp_server:_cfg](#function-191), [aideal.readme_generation:find_or_create](#function-264)
+Calls: [aideal.mcp_server:_cfg](#function-188), [aideal.readme_generation:find_or_create](#function-261)
 
 Called by: None resolved
 
@@ -2160,16 +2125,16 @@ Called by: None resolved
 
 78 lines · `vendor/aideal_engine/src/aideal/notes_to_self.py`
 
-<a id="function-202"></a>
+<a id="function-199"></a>
 ### [NotesToSelf](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/notes_to_self.py#L29)
 
 Class in `aideal.notes_to_self`.
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58), [aideal.doc_check_puzzles:puzzle_check](#function-105), [aideal.mcp_server:known_mistakes](#function-197)
+Called by: [aideal.cli:_run](#function-55), [aideal.doc_check_puzzles:puzzle_check](#function-102), [aideal.mcp_server:known_mistakes](#function-194)
 
-<a id="function-203"></a>
+<a id="function-200"></a>
 ### [NotesToSelf.__init__](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/notes_to_self.py#L30)
 
 Method in `aideal.notes_to_self`.
@@ -2178,48 +2143,48 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-204"></a>
+<a id="function-201"></a>
 ### [NotesToSelf._ensure](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/notes_to_self.py#L33)
 
 Method in `aideal.notes_to_self`.
 
 Calls: None resolved
 
-Called by: [aideal.notes_to_self:NotesToSelf.add](#function-205)
+Called by: [aideal.notes_to_self:NotesToSelf.add](#function-202)
 
-<a id="function-205"></a>
+<a id="function-202"></a>
 ### [NotesToSelf.add](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/notes_to_self.py#L43)
 
 Append a note; returns False if an identical issue already exists.
 
-Calls: [aideal.notes_to_self:NotesToSelf._ensure](#function-204), [aideal.notes_to_self:NotesToSelf.notes](#function-207)
+Calls: [aideal.notes_to_self:NotesToSelf._ensure](#function-201), [aideal.notes_to_self:NotesToSelf.notes](#function-204)
 
-Called by: [aideal.notes_to_self:NotesToSelf.distill](#function-206)
+Called by: [aideal.notes_to_self:NotesToSelf.distill](#function-203)
 
-<a id="function-206"></a>
+<a id="function-203"></a>
 ### [NotesToSelf.distill](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/notes_to_self.py#L53)
 
 Consolidate repeated errors into notes. Returns number added.
 
-Calls: [aideal.notes_to_self:NotesToSelf.add](#function-205)
+Calls: [aideal.notes_to_self:NotesToSelf.add](#function-202)
 
 Called by: None resolved
 
-<a id="function-207"></a>
+<a id="function-204"></a>
 ### [NotesToSelf.notes](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/notes_to_self.py#L38)
 
 Method in `aideal.notes_to_self`.
 
 Calls: None resolved
 
-Called by: [aideal.notes_to_self:NotesToSelf.add](#function-205), [aideal.notes_to_self:NotesToSelf.to_prompt](#function-208)
+Called by: [aideal.notes_to_self:NotesToSelf.add](#function-202), [aideal.notes_to_self:NotesToSelf.to_prompt](#function-205)
 
-<a id="function-208"></a>
+<a id="function-205"></a>
 ### [NotesToSelf.to_prompt](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/notes_to_self.py#L71)
 
 Method in `aideal.notes_to_self`.
 
-Calls: [aideal.notes_to_self:NotesToSelf.notes](#function-207)
+Calls: [aideal.notes_to_self:NotesToSelf.notes](#function-204)
 
 Called by: None resolved
 
@@ -2227,46 +2192,46 @@ Called by: None resolved
 
 331 lines · `vendor/aideal_engine/src/aideal/probe.py`
 
-<a id="function-209"></a>
+<a id="function-206"></a>
 ### [ProbeResult](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L50)
 
 Class in `aideal.probe`.
 
 Calls: None resolved
 
-Called by: [aideal.probe:run_probe](#function-217)
+Called by: [aideal.probe:run_probe](#function-214)
 
-<a id="function-210"></a>
+<a id="function-207"></a>
 ### [_kind_for_signature](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L76)
 
 Function in `aideal.probe`.
 
 Calls: None resolved
 
-Called by: [aideal.probe:_pick_input](#function-212)
+Called by: [aideal.probe:_pick_input](#function-209)
 
-<a id="function-211"></a>
+<a id="function-208"></a>
 ### [_llm_probe_snippet](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L175)
 
 Function in `aideal.probe`.
 
-Calls: [aideal.doc_check_inputs:_strip_fences](#function-99), [aideal.llm:invoke_text](#function-187), [aideal.prompts:load](#function-225)
+Calls: [aideal.doc_check_inputs:_strip_fences](#function-96), [aideal.llm:invoke_text](#function-184), [aideal.prompts:load](#function-222)
 
-Called by: [aideal.probe:run_probe](#function-217)
+Called by: [aideal.probe:run_probe](#function-214)
 
 Prompt keys: `aideal/probe_write`
 
-<a id="function-212"></a>
+<a id="function-209"></a>
 ### [_pick_input](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L85)
 
 Return the sample_data KEY whose kind best matches the signature, else the
 first non-output input. `raster_tif` -> kind `raster`, etc.
 
-Calls: [aideal.probe:_kind_for_signature](#function-210)
+Calls: [aideal.probe:_kind_for_signature](#function-207)
 
-Called by: [aideal.probe:run_probe](#function-217)
+Called by: [aideal.probe:run_probe](#function-214)
 
-<a id="function-213"></a>
+<a id="function-210"></a>
 ### [_template_probe_snippet](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L160)
 
 No-LLM best-effort probe body (for offline/dry-run). Heuristic call shape:
@@ -2275,18 +2240,18 @@ as unverified — the LLM path (probe_write.md) produces the real snippet.
 
 Calls: None resolved
 
-Called by: [aideal.probe:run_probe](#function-217)
+Called by: [aideal.probe:run_probe](#function-214)
 
-<a id="function-214"></a>
+<a id="function-211"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L300)
 
 Function in `aideal.probe`.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.config:load_config](#function-72), [aideal.probe:run_probe](#function-217)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.config:load_config](#function-69), [aideal.probe:run_probe](#function-214)
 
 Called by: None resolved
 
-<a id="function-215"></a>
+<a id="function-212"></a>
 ### [probe_grounding_block](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L286)
 
 Render a probe result as a `tests_text` grounding block for the readme_entry
@@ -2294,143 +2259,143 @@ prompt — the same slot a real test example fills.
 
 Calls: None resolved
 
-Called by: [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-216"></a>
+<a id="function-213"></a>
 ### [resolve_exec_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L105)
 
 Function in `aideal.probe`.
 
-Calls: [aideal.doc_check_inputs:_execute_sample_data](#function-90), [aideal.scaffold_generation:generate_scaffold](#function-284)
+Calls: [aideal.doc_check_inputs:_execute_sample_data](#function-87), [aideal.scaffold_generation:generate_scaffold](#function-281)
 
-Called by: [aideal.probe:run_probe](#function-217)
+Called by: [aideal.probe:run_probe](#function-214)
 
-<a id="function-217"></a>
+<a id="function-214"></a>
 ### [run_probe](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/probe.py#L194)
 
 Try to invoke ONE function from its signature and report what happened.
 
-Calls: [aideal.doc_check_errors:_classify_error](#function-79), [aideal.doc_check_inputs:_fill_scaffold](#function-93), [aideal.error_log:ErrorLog](#function-148), [aideal.error_log:git_version](#function-155), [aideal.error_log:new_run_id](#function-156), [aideal.probe:ProbeResult](#function-209), [aideal.probe:_llm_probe_snippet](#function-211), [aideal.probe:_pick_input](#function-212), [aideal.probe:_template_probe_snippet](#function-213), [aideal.probe:resolve_exec_context](#function-216)
+Calls: [aideal.doc_check_errors:_classify_error](#function-76), [aideal.doc_check_inputs:_fill_scaffold](#function-90), [aideal.error_log:ErrorLog](#function-145), [aideal.error_log:git_version](#function-152), [aideal.error_log:new_run_id](#function-153), [aideal.probe:ProbeResult](#function-206), [aideal.probe:_llm_probe_snippet](#function-208), [aideal.probe:_pick_input](#function-209), [aideal.probe:_template_probe_snippet](#function-210), [aideal.probe:resolve_exec_context](#function-213)
 
-Called by: [aideal.probe:main](#function-214), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.probe:main](#function-211), [aideal.readme_generation:find_or_create](#function-261)
 
 ## aideal.profile
 
 142 lines · `vendor/aideal_engine/src/aideal/profile.py`
 
-<a id="function-218"></a>
+<a id="function-215"></a>
 ### [init_agents_md](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/profile.py#L102)
 
 Write AGENTS.md with the AIDEAL section if absent (never clobbers).
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-219"></a>
+<a id="function-216"></a>
 ### [init_profile](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/profile.py#L115)
 
 Function in `aideal.profile`.
 
-Calls: [aideal.profile:load_profile](#function-220), [aideal.profile:missing_fields](#function-221), [aideal.profile:profile_path](#function-222)
+Calls: [aideal.profile:load_profile](#function-217), [aideal.profile:missing_fields](#function-218), [aideal.profile:profile_path](#function-219)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-220"></a>
+<a id="function-217"></a>
 ### [load_profile](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/profile.py#L48)
 
 Function in `aideal.profile`.
 
-Calls: [aideal.profile:profile_path](#function-222)
+Calls: [aideal.profile:profile_path](#function-219)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:check_profile](#function-193), [aideal.profile:init_profile](#function-219), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225)
+Called by: [aideal.cli:_run](#function-55), [aideal.mcp_server:check_profile](#function-190), [aideal.profile:init_profile](#function-216), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222)
 
-<a id="function-221"></a>
+<a id="function-218"></a>
 ### [missing_fields](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/profile.py#L55)
 
 Function in `aideal.profile`.
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:check_profile](#function-193), [aideal.profile:init_profile](#function-219), [aideal.profile:require_profile](#function-224)
+Called by: [aideal.cli:_run](#function-55), [aideal.mcp_server:check_profile](#function-190), [aideal.profile:init_profile](#function-216), [aideal.profile:require_profile](#function-221)
 
-<a id="function-222"></a>
+<a id="function-219"></a>
 ### [profile_path](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/profile.py#L43)
 
 Function in `aideal.profile`.
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58), [aideal.experiment_identity:prompt_contract](#function-165), [aideal.mcp_server:check_profile](#function-193), [aideal.profile:init_profile](#function-219), [aideal.profile:load_profile](#function-220), [aideal.profile:require_profile](#function-224)
+Called by: [aideal.cli:_run](#function-55), [aideal.experiment_identity:prompt_contract](#function-162), [aideal.mcp_server:check_profile](#function-190), [aideal.profile:init_profile](#function-216), [aideal.profile:load_profile](#function-217), [aideal.profile:require_profile](#function-221)
 
-<a id="function-223"></a>
+<a id="function-220"></a>
 ### [project_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/profile.py#L125)
 
 Render the profile as a compact prompt block.
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58), [aideal.prompts:load](#function-225)
+Called by: [aideal.cli:_run](#function-55), [aideal.prompts:load](#function-222)
 
-<a id="function-224"></a>
+<a id="function-221"></a>
 ### [require_profile](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/profile.py#L67)
 
 Gate for LLM-based steps: raise with guidance if the profile is incomplete.
 
-Calls: [aideal.profile:load_profile](#function-220), [aideal.profile:missing_fields](#function-221), [aideal.profile:profile_path](#function-222)
+Calls: [aideal.profile:load_profile](#function-217), [aideal.profile:missing_fields](#function-218), [aideal.profile:profile_path](#function-219)
 
-Called by: [aideal.api_intent:intended_api_llm](#function-26), [aideal.api_intent:llm_common_apis](#function-30), [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98), [aideal.doc_repair:run](#function-120), [aideal.readme_generation:find_or_create](#function-264), [aideal.task_generator:generate_tasks](#function-287)
+Called by: [aideal.api_intent:intended_api_llm](#function-23), [aideal.api_intent:llm_common_apis](#function-27), [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95), [aideal.doc_repair:run](#function-117), [aideal.readme_generation:find_or_create](#function-261), [aideal.task_generator:generate_tasks](#function-284)
 
 ## aideal.prompts
 
 56 lines · `vendor/aideal_engine/src/aideal/prompts.py`
 
-<a id="function-225"></a>
+<a id="function-222"></a>
 ### [load](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/prompts.py#L29)
 
 Read prompts/<name>.md, fill placeholders, return (system, user).
 
-Calls: [aideal.profile:load_profile](#function-220), [aideal.profile:project_context](#function-223), [aideal.prompts:prompts_dir](#function-226)
+Calls: [aideal.profile:load_profile](#function-217), [aideal.profile:project_context](#function-220), [aideal.prompts:prompts_dir](#function-223)
 
-Called by: [aideal.api_intent:intended_api_llm](#function-26), [aideal.api_intent:llm_common_apis](#function-30), [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_execution:_comprehension_execute](#function-83), [aideal.doc_repair:run](#function-120), [aideal.probe:_llm_probe_snippet](#function-211), [aideal.readme_generation:distilled_readme_context](#function-263), [aideal.readme_generation:find_or_create](#function-264), [aideal.task_generator:generate_tasks](#function-287)
+Called by: [aideal.api_intent:intended_api_llm](#function-23), [aideal.api_intent:llm_common_apis](#function-27), [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_execution:_comprehension_execute](#function-80), [aideal.doc_repair:run](#function-117), [aideal.probe:_llm_probe_snippet](#function-208), [aideal.readme_generation:distilled_readme_context](#function-260), [aideal.readme_generation:find_or_create](#function-261), [aideal.task_generator:generate_tasks](#function-284)
 
-<a id="function-226"></a>
+<a id="function-223"></a>
 ### [prompts_dir](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/prompts.py#L24)
 
 Function in `aideal.prompts`.
 
 Calls: None resolved
 
-Called by: [aideal.experiment_identity:prompt_contract](#function-165), [aideal.prompts:load](#function-225), [aideal.repair_journal:identity](#function-275)
+Called by: [aideal.experiment_identity:prompt_contract](#function-162), [aideal.prompts:load](#function-222), [aideal.repair_journal:identity](#function-272)
 
 ## aideal.provider_deadline
 
 40 lines · `vendor/aideal_engine/src/aideal/provider_deadline.py`
 
-<a id="function-227"></a>
+<a id="function-224"></a>
 ### [_DeadlineExpired](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/provider_deadline.py#L12)
 
 Bypass SDK retry handlers so the entire invocation unwinds.
 
 Calls: None resolved
 
-Called by: [aideal.provider_deadline:provider_deadline.expire](#function-229)
+Called by: [aideal.provider_deadline:provider_deadline.expire](#function-226)
 
-<a id="function-228"></a>
+<a id="function-225"></a>
 ### [provider_deadline](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/provider_deadline.py#L16)
 
 Function in `aideal.provider_deadline`.
 
 Calls: None resolved
 
-Called by: [aideal.llm:invoke_text](#function-187)
+Called by: [aideal.llm:invoke_text](#function-184)
 
-<a id="function-229"></a>
+<a id="function-226"></a>
 ### [provider_deadline.expire](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/provider_deadline.py#L29)
 
 Function in `aideal.provider_deadline`.
 
-Calls: [aideal.provider_deadline:_DeadlineExpired](#function-227)
+Calls: [aideal.provider_deadline:_DeadlineExpired](#function-224)
 
 Called by: None resolved
 
@@ -2438,104 +2403,104 @@ Called by: None resolved
 
 282 lines · `vendor/aideal_engine/src/aideal/puzzle_bank.py`
 
-<a id="function-230"></a>
+<a id="function-227"></a>
 ### [_datasets](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L41)
 
 Function in `aideal.puzzle_bank`.
 
 Calls: None resolved
 
-Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-234), [aideal.puzzle_bank:validate_bank](#function-238)
+Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-231), [aideal.puzzle_bank:validate_bank](#function-235)
 
-<a id="function-231"></a>
+<a id="function-228"></a>
 ### [_resolve](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L123)
 
 Function in `aideal.puzzle_bank`.
 
 Calls: None resolved
 
-Called by: [aideal.puzzle_bank:_resolved_dataset](#function-232), [aideal.puzzle_bank:_resolved_oracle](#function-233)
+Called by: [aideal.puzzle_bank:_resolved_dataset](#function-229), [aideal.puzzle_bank:_resolved_oracle](#function-230)
 
-<a id="function-232"></a>
+<a id="function-229"></a>
 ### [_resolved_dataset](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L128)
 
 Function in `aideal.puzzle_bank`.
 
-Calls: [aideal.puzzle_bank:_resolve](#function-231), [aideal.puzzle_bank:sha256_file](#function-237)
+Calls: [aideal.puzzle_bank:_resolve](#function-228), [aideal.puzzle_bank:sha256_file](#function-234)
 
-Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-234)
+Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-231)
 
-<a id="function-233"></a>
+<a id="function-230"></a>
 ### [_resolved_oracle](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L159)
 
 Function in `aideal.puzzle_bank`.
 
-Calls: [aideal.puzzle_bank:_resolve](#function-231), [aideal.puzzle_bank:sha256_file](#function-237)
+Calls: [aideal.puzzle_bank:_resolve](#function-228), [aideal.puzzle_bank:sha256_file](#function-234)
 
-Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-234)
+Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-231)
 
-<a id="function-234"></a>
+<a id="function-231"></a>
 ### [freeze_puzzle_plan](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L174)
 
 Create an immutable-by-content plan shared by every ablation arm.
 
-Calls: [aideal.puzzle_bank:_datasets](#function-230), [aideal.puzzle_bank:_resolved_dataset](#function-232), [aideal.puzzle_bank:_resolved_oracle](#function-233), [aideal.puzzle_bank:load_structured](#function-235), [aideal.puzzle_bank:normalize_apis](#function-236), [aideal.puzzle_bank:sha256_file](#function-237), [aideal.puzzle_bank:validate_bank](#function-238)
+Calls: [aideal.puzzle_bank:_datasets](#function-227), [aideal.puzzle_bank:_resolved_dataset](#function-229), [aideal.puzzle_bank:_resolved_oracle](#function-230), [aideal.puzzle_bank:load_structured](#function-232), [aideal.puzzle_bank:normalize_apis](#function-233), [aideal.puzzle_bank:sha256_file](#function-234), [aideal.puzzle_bank:validate_bank](#function-235)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.doc_check_puzzles:puzzle_check](#function-105)
+Called by: [aideal.cli:_run](#function-55), [aideal.doc_check_puzzles:puzzle_check](#function-102)
 
-<a id="function-235"></a>
+<a id="function-232"></a>
 ### [load_structured](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L32)
 
 Load a JSON or YAML mapping with one consistent error contract.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_puzzles:puzzle_check](#function-105), [aideal.puzzle_bank:freeze_puzzle_plan](#function-234)
+Called by: [aideal.doc_check_puzzles:puzzle_check](#function-102), [aideal.puzzle_bank:freeze_puzzle_plan](#function-231)
 
-<a id="function-236"></a>
+<a id="function-233"></a>
 ### [normalize_apis](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L57)
 
 Function in `aideal.puzzle_bank`.
 
 Calls: None resolved
 
-Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-234), [aideal.puzzle_bank:validate_bank](#function-238)
+Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-231), [aideal.puzzle_bank:validate_bank](#function-235)
 
-<a id="function-237"></a>
+<a id="function-234"></a>
 ### [sha256_file](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L24)
 
 Function in `aideal.puzzle_bank`.
 
 Calls: None resolved
 
-Called by: [aideal.puzzle_bank:_resolved_dataset](#function-232), [aideal.puzzle_bank:_resolved_oracle](#function-233), [aideal.puzzle_bank:freeze_puzzle_plan](#function-234), [aideal.puzzle_bank:verify_plan_inputs](#function-239)
+Called by: [aideal.puzzle_bank:_resolved_dataset](#function-229), [aideal.puzzle_bank:_resolved_oracle](#function-230), [aideal.puzzle_bank:freeze_puzzle_plan](#function-231), [aideal.puzzle_bank:verify_plan_inputs](#function-236)
 
-<a id="function-238"></a>
+<a id="function-235"></a>
 ### [validate_bank](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L72)
 
 Validate portable structure and cross-links without invoking an LLM.
 
-Calls: [aideal.puzzle_bank:_datasets](#function-230), [aideal.puzzle_bank:normalize_apis](#function-236)
+Calls: [aideal.puzzle_bank:_datasets](#function-227), [aideal.puzzle_bank:normalize_apis](#function-233)
 
-Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-234)
+Called by: [aideal.puzzle_bank:freeze_puzzle_plan](#function-231)
 
-<a id="function-239"></a>
+<a id="function-236"></a>
 ### [verify_plan_inputs](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L257)
 
 Detect fixture drift before an expensive LLM/Spark run.
 
-Calls: [aideal.puzzle_bank:sha256_file](#function-237)
+Calls: [aideal.puzzle_bank:sha256_file](#function-234)
 
-Called by: [aideal.doc_check_puzzles:puzzle_check](#function-105)
+Called by: [aideal.doc_check_puzzles:puzzle_check](#function-102)
 
-<a id="function-240"></a>
+<a id="function-237"></a>
 ### [write_plan](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/puzzle_bank.py#L251)
 
 Function in `aideal.puzzle_bank`.
 
 Calls: None resolved
 
-Called by: [aideal.cli:_run](#function-58), [aideal.doc_check_puzzles:puzzle_check](#function-105)
+Called by: [aideal.cli:_run](#function-55), [aideal.doc_check_puzzles:puzzle_check](#function-102)
 
 ## aideal.readme_agent
 
@@ -2545,7 +2510,7 @@ Called by: [aideal.cli:_run](#function-58), [aideal.doc_check_puzzles:puzzle_che
 
 180 lines · `vendor/aideal_engine/src/aideal/readme_catalogue.py`
 
-<a id="function-241"></a>
+<a id="function-238"></a>
 ### [_catalogue_model](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_catalogue.py#L48)
 
 Pure/testable: group README entries by defining class, rank each class's
@@ -2554,11 +2519,11 @@ name), pick the primary, and take the class purpose from the primary's Goal (no
 new LLM call). Returns {group_key: {label, safe, primary, purpose, kind,
 members:[{name,tier,exec}]}}.
 
-Calls: [aideal.readme_catalogue:_safe_filenames](#function-244)
+Calls: [aideal.readme_catalogue:_safe_filenames](#function-241)
 
-Called by: [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.readme_catalogue:write_catalogue](#function-245)
+Called by: [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.readme_catalogue:write_catalogue](#function-242)
 
-<a id="function-242"></a>
+<a id="function-239"></a>
 ### [_class_context_body](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_catalogue.py#L97)
 
 INDEX-FIRST audience context. Prepend the target API's catalogue class header
@@ -2568,20 +2533,20 @@ point (the ~53% `value X is not a member` / `not found: value` failure class the
 flat per-API body can't prevent). Pure/testable; returns entry.body unchanged when
 the class isn't in the model.
 
-Calls: [aideal.readme_catalogue:_receiver_line](#function-243), [aideal.readme_format:_section_between](#function-259)
+Calls: [aideal.readme_catalogue:_receiver_line](#function-240), [aideal.readme_format:_section_between](#function-256)
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_execution:_comprehension_execute](#function-83)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_execution:_comprehension_execute](#function-80)
 
-<a id="function-243"></a>
+<a id="function-240"></a>
 ### [_receiver_line](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_catalogue.py#L122)
 
 Function in `aideal.readme_catalogue`.
 
 Calls: None resolved
 
-Called by: [aideal.readme_catalogue:_class_context_body](#function-242), [aideal.readme_catalogue:write_catalogue](#function-245)
+Called by: [aideal.readme_catalogue:_class_context_body](#function-239), [aideal.readme_catalogue:write_catalogue](#function-242)
 
-<a id="function-244"></a>
+<a id="function-241"></a>
 ### [_safe_filenames](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_catalogue.py#L22)
 
 Map each group key -> a UNIQUE, filesystem-safe filename stem. Start from the
@@ -2593,43 +2558,43 @@ output is byte-identical to before.
 
 Calls: None resolved
 
-Called by: [aideal.readme_catalogue:_catalogue_model](#function-241)
+Called by: [aideal.readme_catalogue:_catalogue_model](#function-238)
 
-<a id="function-245"></a>
+<a id="function-242"></a>
 ### [write_catalogue](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_catalogue.py#L127)
 
 ADDITIVE, non-breaking: export the flat LLM_readme into the two-level shape
 (catalogue + per-class files) WITHOUT touching LLM_readme.md or the read path.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.doc_check_inputs:_owner_map](#function-95), [aideal.readme_catalogue:_catalogue_model](#function-241), [aideal.readme_catalogue:_receiver_line](#function-243), [aideal.readme_evidence:_exec_status_map](#function-247), [aideal.readme_evidence:_grounding_tiers](#function-249), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.doc_check_inputs:_owner_map](#function-92), [aideal.readme_catalogue:_catalogue_model](#function-238), [aideal.readme_catalogue:_receiver_line](#function-240), [aideal.readme_evidence:_exec_status_map](#function-244), [aideal.readme_evidence:_grounding_tiers](#function-246), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
 ## aideal.readme_evidence
 
 304 lines · `vendor/aideal_engine/src/aideal/readme_evidence.py`
 
-<a id="function-246"></a>
+<a id="function-243"></a>
 ### [_augment_block](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L51)
 
 Rewrite one entry from real log rows: Common Failure Modes + Fix Code Hint
 from failures, and a `Verified Example` from the latest PASSING execution — a
 compiled-and-ran snippet, the strongest possible grounding for the entry.
 
-Calls: [aideal.readme_evidence:_fresh](#function-248), [aideal.readme_format:_replace_section](#function-258), [aideal.readme_format:_section_has_code](#function-260)
+Calls: [aideal.readme_evidence:_fresh](#function-245), [aideal.readme_format:_replace_section](#function-255), [aideal.readme_format:_section_has_code](#function-257)
 
-Called by: [aideal.readme_evidence:augment_from_log](#function-252)
+Called by: [aideal.readme_evidence:augment_from_log](#function-249)
 
-<a id="function-247"></a>
+<a id="function-244"></a>
 ### [_exec_status_map](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L138)
 
 function -> MOST RECENT execution outcome (pass/fail) from error_log.jsonl.
 
-Calls: [aideal.error_log:ErrorLog](#function-148)
+Calls: [aideal.error_log:ErrorLog](#function-145)
 
-Called by: [aideal.doc_check_comprehension:comprehension_check](#function-78), [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.doc_repair:run](#function-120), [aideal.readme_catalogue:write_catalogue](#function-245), [aideal.readme_evidence:_grounding_tiers](#function-249), [aideal.readme_evidence:grounding_report](#function-253), [aideal.readme_evidence:organize_report](#function-254)
+Called by: [aideal.doc_check_comprehension:comprehension_check](#function-75), [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.doc_repair:run](#function-117), [aideal.readme_catalogue:write_catalogue](#function-242), [aideal.readme_evidence:_grounding_tiers](#function-246), [aideal.readme_evidence:grounding_report](#function-250), [aideal.readme_evidence:organize_report](#function-251)
 
-<a id="function-248"></a>
+<a id="function-245"></a>
 ### [_fresh](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L42)
 
 Drop version-mismatched entries, then sort oldest->newest so callers can
@@ -2638,11 +2603,11 @@ promoting a verified example: without it, a `pass` snippet from three commits
 ago could be promoted as the current call pattern purely because it was the
 last line appended to the log.
 
-Calls: [aideal.readme_evidence:_is_stale](#function-250)
+Calls: [aideal.readme_evidence:_is_stale](#function-247)
 
-Called by: [aideal.readme_evidence:_augment_block](#function-246)
+Called by: [aideal.readme_evidence:_augment_block](#function-243)
 
-<a id="function-249"></a>
+<a id="function-246"></a>
 ### [_grounding_tiers](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L111)
 
 Per readme entry, most to least trustworthy:
@@ -2650,11 +2615,11 @@ Per readme entry, most to least trustworthy:
   sibling (a tested method on the same class shows the pattern) > guessed.
 Returns (tiers{name->tier}, class_of{name->class}, test_index).
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_examples:api_test_examples](#function-23), [aideal.readme_evidence:_exec_status_map](#function-247), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_examples:api_test_examples](#function-20), [aideal.readme_evidence:_exec_status_map](#function-244), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.readme_catalogue:write_catalogue](#function-245), [aideal.readme_evidence:grounding_report](#function-253), [aideal.readme_evidence:organize_report](#function-254)
+Called by: [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.readme_catalogue:write_catalogue](#function-242), [aideal.readme_evidence:grounding_report](#function-250), [aideal.readme_evidence:organize_report](#function-251)
 
-<a id="function-250"></a>
+<a id="function-247"></a>
 ### [_is_stale](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L34)
 
 A memory entry is stale when it was recorded against a DIFFERENT code
@@ -2663,9 +2628,9 @@ version than the one we're documenting now. Entries with no version tag
 
 Calls: None resolved
 
-Called by: [aideal.readme_evidence:_fresh](#function-248)
+Called by: [aideal.readme_evidence:_fresh](#function-245)
 
-<a id="function-251"></a>
+<a id="function-248"></a>
 ### [_recency_key](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L25)
 
 Sort key for 'newest wins'. Use run_id first: it is set on EVERY entry and
@@ -2678,7 +2643,7 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-252"></a>
+<a id="function-249"></a>
 ### [augment_from_log](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L248)
 
 Fold observed failures/fixes from error_log.jsonl into each LLM_readme
@@ -2686,20 +2651,20 @@ entry's `Common Failure Modes` and `Fix Code Hint` sections, plus a verified
 `Valid Call Patterns` example from a PASSING execution (augment-from-log).
 Evidence only — never invents. Safe to re-run after more comprehension/puzzle passes.
 
-Calls: [aideal.error_log:ErrorLog](#function-148), [aideal.error_log:git_version](#function-155), [aideal.readme_evidence:_augment_block](#function-246)
+Calls: [aideal.error_log:ErrorLog](#function-145), [aideal.error_log:git_version](#function-152), [aideal.readme_evidence:_augment_block](#function-243)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-253"></a>
+<a id="function-250"></a>
 ### [grounding_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L164)
 
 Which readme entries are TRUSTWORTHY vs SIBLING-backed vs GUESSED.
 
-Calls: [aideal.readme_evidence:_exec_status_map](#function-247), [aideal.readme_evidence:_grounding_tiers](#function-249)
+Calls: [aideal.readme_evidence:_exec_status_map](#function-244), [aideal.readme_evidence:_grounding_tiers](#function-246)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
-<a id="function-254"></a>
+<a id="function-251"></a>
 ### [organize_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_evidence.py#L205)
 
 Axis 1+2 curation: group intended APIs by defining class, rank each by
@@ -2707,35 +2672,35 @@ robustness (grounded > sibling > guessed, tie-broken by execution outcome),
 and mark the most robust `primary` per group so the agent reaches for it.
 Optionally writes a categorized, robust-first `docs/readme_index.md`.
 
-Calls: [aideal.readme_evidence:_exec_status_map](#function-247), [aideal.readme_evidence:_grounding_tiers](#function-249)
+Calls: [aideal.readme_evidence:_exec_status_map](#function-244), [aideal.readme_evidence:_grounding_tiers](#function-246)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
 ## aideal.readme_format
 
 134 lines · `vendor/aideal_engine/src/aideal/readme_format.py`
 
-<a id="function-255"></a>
+<a id="function-252"></a>
 ### [ApiEntry](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_format.py#L12)
 
 Class in `aideal.readme_format`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_check_sources:_comprehension_inventory](#function-110), [aideal.doc_check_sources:_relevant_doc_inventory](#function-114), [aideal.readme_format:parse_readme](#function-261), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.doc_check_sources:_comprehension_inventory](#function-107), [aideal.doc_check_sources:_relevant_doc_inventory](#function-111), [aideal.readme_format:parse_readme](#function-258), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-256"></a>
+<a id="function-253"></a>
 ### [_entry_skeleton](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_format.py#L81)
 
 Build a doc-entry skeleton with the factual Signature / Parameters /
 Output pre-filled from the surface; Goal / Input / examples left as TODO
 for the author model. `recs` = all definition sites for this name.
 
-Calls: [aideal.readme_format:_params_block](#function-257)
+Calls: [aideal.readme_format:_params_block](#function-254)
 
-Called by: [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-257"></a>
+<a id="function-254"></a>
 ### [_params_block](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_format.py#L68)
 
 Pre-fill a Parameters list from the structured signature (names/types/
@@ -2743,9 +2708,9 @@ defaults are facts; meanings are TODO for the author model).
 
 Calls: None resolved
 
-Called by: [aideal.readme_format:_entry_skeleton](#function-256)
+Called by: [aideal.readme_format:_entry_skeleton](#function-253)
 
-<a id="function-258"></a>
+<a id="function-255"></a>
 ### [_replace_section](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_format.py#L44)
 
 Replace the content under `### {header}` (up to the next ### or block end).
@@ -2753,18 +2718,18 @@ Appends the section if it isn't present.
 
 Calls: None resolved
 
-Called by: [aideal.readme_evidence:_augment_block](#function-246)
+Called by: [aideal.readme_evidence:_augment_block](#function-243)
 
-<a id="function-259"></a>
+<a id="function-256"></a>
 ### [_section_between](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_format.py#L20)
 
 Function in `aideal.readme_format`.
 
 Calls: None resolved
 
-Called by: [aideal.readme_catalogue:_class_context_body](#function-242), [aideal.readme_format:_section_has_code](#function-260), [aideal.readme_format:parse_readme](#function-261), [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.readme_catalogue:_class_context_body](#function-239), [aideal.readme_format:_section_has_code](#function-257), [aideal.readme_format:parse_readme](#function-258), [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-260"></a>
+<a id="function-257"></a>
 ### [_section_has_code](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_format.py#L53)
 
 True if the `### {header}` section already holds a REAL fenced code example —
@@ -2772,24 +2737,24 @@ a ``` block whose content isn't just the skeleton `TODO` placeholder. Drives
 augment's `only_missing` gap-fill: backfill ONLY entries lacking example/fix code,
 leaving curated or already-generated code untouched.
 
-Calls: [aideal.readme_format:_section_between](#function-259)
+Calls: [aideal.readme_format:_section_between](#function-256)
 
-Called by: [aideal.readme_evidence:_augment_block](#function-246)
+Called by: [aideal.readme_evidence:_augment_block](#function-243)
 
-<a id="function-261"></a>
+<a id="function-258"></a>
 ### [parse_readme](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_format.py#L25)
 
 Function in `aideal.readme_format`.
 
-Calls: [aideal.readme_format:ApiEntry](#function-255), [aideal.readme_format:_section_between](#function-259)
+Calls: [aideal.readme_format:ApiEntry](#function-252), [aideal.readme_format:_section_between](#function-256)
 
-Called by: [aideal.api_discovery:api_coverage](#function-12), [aideal.api_discovery:surface_audit](#function-18), [aideal.cli:_run](#function-58), [aideal.deepdive:deep_dive_run](#function-77), [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98), [aideal.doc_check_puzzles:puzzle_check](#function-105), [aideal.doc_check_sources:_build_catalogue_context](#function-109), [aideal.doc_check_sources:_comprehension_inventory](#function-110), [aideal.doc_check_sources:_relevant_doc_inventory](#function-114), [aideal.doc_check_sources:completeness_check](#function-118), [aideal.doc_check_sources:form_check](#function-119), [aideal.doc_repair:run](#function-120), [aideal.readme_catalogue:write_catalogue](#function-245), [aideal.readme_evidence:_grounding_tiers](#function-249), [aideal.readme_generation:find_or_create](#function-264), [aideal.task_generator:generate_tasks](#function-287)
+Called by: [aideal.api_discovery:api_coverage](#function-9), [aideal.api_discovery:surface_audit](#function-15), [aideal.cli:_run](#function-55), [aideal.deepdive:deep_dive_run](#function-74), [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95), [aideal.doc_check_puzzles:puzzle_check](#function-102), [aideal.doc_check_sources:_build_catalogue_context](#function-106), [aideal.doc_check_sources:_comprehension_inventory](#function-107), [aideal.doc_check_sources:_relevant_doc_inventory](#function-111), [aideal.doc_check_sources:completeness_check](#function-115), [aideal.doc_check_sources:form_check](#function-116), [aideal.doc_repair:run](#function-117), [aideal.readme_catalogue:write_catalogue](#function-242), [aideal.readme_evidence:_grounding_tiers](#function-246), [aideal.readme_generation:find_or_create](#function-261), [aideal.task_generator:generate_tasks](#function-284)
 
 ## aideal.readme_generation
 
 397 lines · `vendor/aideal_engine/src/aideal/readme_generation.py`
 
-<a id="function-262"></a>
+<a id="function-259"></a>
 ### [_original_readme_snippets](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_generation.py#L52)
 
 Index VERBATIM code blocks from the ORIGINAL readme by the API name(s) they
@@ -2801,147 +2766,147 @@ author reproduce the true receiver/qualifier. Returns {name: [code blocks]}.
 
 Calls: None resolved
 
-Called by: [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-263"></a>
+<a id="function-260"></a>
 ### [distilled_readme_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_generation.py#L27)
 
 Summarize the original README ONCE into a compact, reusable context note.
 
-Calls: [aideal.llm:invoke_text](#function-187), [aideal.prompts:load](#function-225)
+Calls: [aideal.llm:invoke_text](#function-184), [aideal.prompts:load](#function-222)
 
-Called by: [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.readme_generation:find_or_create](#function-261)
 
 Prompt keys: `aideal/readme_distill`
 
-<a id="function-264"></a>
+<a id="function-261"></a>
 ### [find_or_create](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_generation.py#L82)
 
 Return status of the LLM readme; create a skeleton if missing.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.api_discovery:public_api_surface](#function-15), [aideal.api_examples:api_test_examples](#function-23), [aideal.api_overloads:_dedup_deprioritize](#function-31), [aideal.api_overloads:_subsume_overloads](#function-32), [aideal.doc_check_inputs:_execute_sample_data](#function-90), [aideal.doc_check_inputs:_resolve_io_hints](#function-97), [aideal.doc_check_inputs:_resolve_preamble](#function-98), [aideal.llm:invoke_text](#function-187), [aideal.probe:probe_grounding_block](#function-215), [aideal.probe:run_probe](#function-217), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225), [aideal.readme_format:ApiEntry](#function-255), [aideal.readme_format:_entry_skeleton](#function-256), [aideal.readme_format:_section_between](#function-259), [aideal.readme_format:parse_readme](#function-261), [aideal.readme_generation:_original_readme_snippets](#function-262), [aideal.readme_generation:distilled_readme_context](#function-263), [aideal.readme_generation:find_or_create._generation_files_hash](#function-265), [aideal.readme_generation:find_or_create._write_generation_state](#function-266)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.api_discovery:public_api_surface](#function-12), [aideal.api_examples:api_test_examples](#function-20), [aideal.api_overloads:_dedup_deprioritize](#function-28), [aideal.api_overloads:_subsume_overloads](#function-29), [aideal.doc_check_inputs:_execute_sample_data](#function-87), [aideal.doc_check_inputs:_resolve_io_hints](#function-94), [aideal.doc_check_inputs:_resolve_preamble](#function-95), [aideal.llm:invoke_text](#function-184), [aideal.probe:probe_grounding_block](#function-212), [aideal.probe:run_probe](#function-214), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222), [aideal.readme_format:ApiEntry](#function-252), [aideal.readme_format:_entry_skeleton](#function-253), [aideal.readme_format:_section_between](#function-256), [aideal.readme_format:parse_readme](#function-258), [aideal.readme_generation:_original_readme_snippets](#function-259), [aideal.readme_generation:distilled_readme_context](#function-260), [aideal.readme_generation:find_or_create._generation_files_hash](#function-262), [aideal.readme_generation:find_or_create._write_generation_state](#function-263)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.mcp_server:readme_status](#function-201)
+Called by: [aideal.cli:_run](#function-55), [aideal.mcp_server:readme_status](#function-198)
 
 Prompt keys: `aideal/readme_entry`
 
-<a id="function-265"></a>
+<a id="function-262"></a>
 ### [find_or_create._generation_files_hash](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_generation.py#L126)
 
 Function in `aideal.readme_generation`.
 
 Calls: None resolved
 
-Called by: [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.readme_generation:find_or_create](#function-261)
 
-<a id="function-266"></a>
+<a id="function-263"></a>
 ### [find_or_create._write_generation_state](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/readme_generation.py#L209)
 
 Function in `aideal.readme_generation`.
 
 Calls: None resolved
 
-Called by: [aideal.readme_generation:find_or_create](#function-264)
+Called by: [aideal.readme_generation:find_or_create](#function-261)
 
 ## aideal.repair_journal
 
 122 lines · `vendor/aideal_engine/src/aideal/repair_journal.py`
 
-<a id="function-267"></a>
+<a id="function-264"></a>
 ### [RepairJournal](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L76)
 
 Class in `aideal.repair_journal`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-268"></a>
+<a id="function-265"></a>
 ### [RepairJournal.__init__](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L77)
 
 Method in `aideal.repair_journal`.
 
-Calls: [aideal.repair_journal:RepairJournal.save](#function-271)
+Calls: [aideal.repair_journal:RepairJournal.save](#function-268)
 
 Called by: None resolved
 
-<a id="function-269"></a>
+<a id="function-266"></a>
 ### [RepairJournal.checkpoint](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L120)
 
 Method in `aideal.repair_journal`.
 
-Calls: [aideal.repair_journal:RepairJournal.save](#function-271)
+Calls: [aideal.repair_journal:RepairJournal.save](#function-268)
 
 Called by: None resolved
 
-<a id="function-270"></a>
+<a id="function-267"></a>
 ### [RepairJournal.phase](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L91)
 
 Method in `aideal.repair_journal`.
 
-Calls: [aideal.repair_journal:RepairJournal.save](#function-271), [aideal.repair_journal:UncertainPhase](#function-272)
+Calls: [aideal.repair_journal:RepairJournal.save](#function-268), [aideal.repair_journal:UncertainPhase](#function-269)
 
 Called by: None resolved
 
-<a id="function-271"></a>
+<a id="function-268"></a>
 ### [RepairJournal.save](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L88)
 
 Method in `aideal.repair_journal`.
 
-Calls: [aideal.repair_journal:atomic](#function-273)
+Calls: [aideal.repair_journal:atomic](#function-270)
 
-Called by: [aideal.repair_journal:RepairJournal.__init__](#function-268), [aideal.repair_journal:RepairJournal.checkpoint](#function-269), [aideal.repair_journal:RepairJournal.phase](#function-270)
+Called by: [aideal.repair_journal:RepairJournal.__init__](#function-265), [aideal.repair_journal:RepairJournal.checkpoint](#function-266), [aideal.repair_journal:RepairJournal.phase](#function-267)
 
-<a id="function-272"></a>
+<a id="function-269"></a>
 ### [UncertainPhase](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L72)
 
 Class in `aideal.repair_journal`.
 
 Calls: None resolved
 
-Called by: [aideal.repair_journal:RepairJournal.phase](#function-270)
+Called by: [aideal.repair_journal:RepairJournal.phase](#function-267)
 
-<a id="function-273"></a>
+<a id="function-270"></a>
 ### [atomic](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L20)
 
 Function in `aideal.repair_journal`.
 
 Calls: None resolved
 
-Called by: [aideal.docfix:_write_report](#function-146), [aideal.repair_journal:RepairJournal.save](#function-271)
+Called by: [aideal.docfix:_write_report](#function-143), [aideal.repair_journal:RepairJournal.save](#function-268)
 
-<a id="function-274"></a>
+<a id="function-271"></a>
 ### [document_lock](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L42)
 
 Function in `aideal.repair_journal`.
 
 Calls: None resolved
 
-Called by: [aideal.docfix:doc_fix_run](#function-147)
+Called by: [aideal.docfix:doc_fix_run](#function-144)
 
-<a id="function-275"></a>
+<a id="function-272"></a>
 ### [identity](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L51)
 
 Function in `aideal.repair_journal`.
 
-Calls: [aideal.experiment_identity:digest](#function-162), [aideal.experiment_identity:prompt_contract](#function-165), [aideal.experiment_identity:transport_contract](#function-166), [aideal.prompts:prompts_dir](#function-226)
+Calls: [aideal.experiment_identity:digest](#function-159), [aideal.experiment_identity:prompt_contract](#function-162), [aideal.experiment_identity:transport_contract](#function-163), [aideal.prompts:prompts_dir](#function-223)
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
-<a id="function-276"></a>
+<a id="function-273"></a>
 ### [write_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/repair_journal.py#L31)
 
 Function in `aideal.repair_journal`.
 
 Calls: None resolved
 
-Called by: [aideal.doc_repair:run](#function-120)
+Called by: [aideal.doc_repair:run](#function-117)
 
 ## aideal.scaffold_generation
 
 407 lines · `vendor/aideal_engine/src/aideal/scaffold_generation.py`
 
-<a id="function-277"></a>
+<a id="function-274"></a>
 ### [_available_packages](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L66)
 
 Packages actually present in the jars the scaffold compiles against
@@ -2950,9 +2915,9 @@ packages not on the classpath (e.g. internal `jhdf`) that break compilation.
 
 Calls: None resolved
 
-Called by: [aideal.scaffold_generation:_defining_object_imports](#function-278), [aideal.scaffold_generation:_imports_from_tests](#function-280), [aideal.scaffold_generation:generate_scaffold](#function-284)
+Called by: [aideal.scaffold_generation:_defining_object_imports](#function-275), [aideal.scaffold_generation:_imports_from_tests](#function-277), [aideal.scaffold_generation:generate_scaffold](#function-281)
 
-<a id="function-278"></a>
+<a id="function-275"></a>
 ### [_defining_object_imports](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L264)
 
 Auto-import the symbols documented APIs need — no per-object/type config:
@@ -2967,11 +2932,11 @@ Both are looked up in the source symbol index; anything not defined in this
 codebase (Spark's `RDD`, generic params `T`/`U`, ...) is simply absent from the
 index and ignored.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [aideal.scaffold_generation:_available_packages](#function-277), [aideal.scaffold_generation:_on_classpath](#function-281), [aideal.scaffold_generation:_source_symbol_index](#function-283)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [aideal.scaffold_generation:_available_packages](#function-274), [aideal.scaffold_generation:_on_classpath](#function-278), [aideal.scaffold_generation:_source_symbol_index](#function-280)
 
-Called by: [aideal.scaffold_generation:generate_scaffold](#function-284)
+Called by: [aideal.scaffold_generation:generate_scaffold](#function-281)
 
-<a id="function-279"></a>
+<a id="function-276"></a>
 ### [_import_package](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L99)
 
 The enclosing PACKAGE an import resolves against — i.e. exactly what must be on
@@ -2994,9 +2959,9 @@ though package `org.apache.spark.test` ships no classes — the bug this replace
 
 Calls: None resolved
 
-Called by: [aideal.scaffold_generation:_on_classpath](#function-281)
+Called by: [aideal.scaffold_generation:_on_classpath](#function-278)
 
-<a id="function-280"></a>
+<a id="function-277"></a>
 ### [_imports_from_tests](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L147)
 
 Robust import block: the SPECIFIC imports the test suite already uses to
@@ -3005,11 +2970,11 @@ are expanded to one-per-name; any simple name that resolves to two different
 paths (e.g. two `ByteArrayOutputStream`s) is DROPPED, since including both
 would make scalac ambiguous. Test-framework imports are filtered out.
 
-Calls: [aideal.scaffold_generation:_available_packages](#function-277), [aideal.scaffold_generation:_on_classpath](#function-281)
+Calls: [aideal.scaffold_generation:_available_packages](#function-274), [aideal.scaffold_generation:_on_classpath](#function-278)
 
-Called by: [aideal.scaffold_generation:generate_scaffold](#function-284)
+Called by: [aideal.scaffold_generation:generate_scaffold](#function-281)
 
-<a id="function-281"></a>
+<a id="function-278"></a>
 ### [_on_classpath](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L130)
 
 True iff the import's enclosing package is present in the compile jars. `avail`
@@ -3020,11 +2985,11 @@ imports that resolve and drops exactly the ones that raise
 skip the filter entirely when `avail` is empty (jars unresolved), so behavior is
 unchanged when the classpath can't be determined.
 
-Calls: [aideal.scaffold_generation:_import_package](#function-279)
+Calls: [aideal.scaffold_generation:_import_package](#function-276)
 
-Called by: [aideal.scaffold_generation:_defining_object_imports](#function-278), [aideal.scaffold_generation:_imports_from_tests](#function-280)
+Called by: [aideal.scaffold_generation:_defining_object_imports](#function-275), [aideal.scaffold_generation:_imports_from_tests](#function-277)
 
-<a id="function-282"></a>
+<a id="function-279"></a>
 ### [_pkgobject_reexported_wildcards](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L191)
 
 Auto-detect wildcard imports made REDUNDANT (and thus ambiguous) by a Scala
@@ -3036,9 +3001,9 @@ Scala can no longer disambiguate and the conversion silently stops resolving
 
 Calls: None resolved
 
-Called by: [aideal.scaffold_generation:generate_scaffold](#function-284)
+Called by: [aideal.scaffold_generation:generate_scaffold](#function-281)
 
-<a id="function-283"></a>
+<a id="function-280"></a>
 ### [_source_symbol_index](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L235)
 
 Index PUBLIC, top-level type/object declarations across the source tree:
@@ -3051,9 +3016,9 @@ symbols automatically — no hand-maintained import list.
 
 Calls: None resolved
 
-Called by: [aideal.scaffold_generation:_defining_object_imports](#function-278)
+Called by: [aideal.scaffold_generation:_defining_object_imports](#function-275)
 
-<a id="function-284"></a>
+<a id="function-281"></a>
 ### [generate_scaffold](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L305)
 
 Build a runnable scaffold. `comprehension.execute.imports`:
@@ -3062,40 +3027,40 @@ Build a runnable scaffold. `comprehension.execute.imports`:
   uses (robust; avoids the ambiguous-RasterRDD wildcard collision),
 - unset       -> auto-derive wildcard imports from source packages (best-effort).
 
-Calls: [aideal.scaffold_generation:_available_packages](#function-277), [aideal.scaffold_generation:_defining_object_imports](#function-278), [aideal.scaffold_generation:_imports_from_tests](#function-280), [aideal.scaffold_generation:_pkgobject_reexported_wildcards](#function-282), [aideal.scaffold_generation:generate_scaffold._drop](#function-285), [aideal.scaffold_generation:generate_scaffold._wildcard_of](#function-286)
+Calls: [aideal.scaffold_generation:_available_packages](#function-274), [aideal.scaffold_generation:_defining_object_imports](#function-275), [aideal.scaffold_generation:_imports_from_tests](#function-277), [aideal.scaffold_generation:_pkgobject_reexported_wildcards](#function-279), [aideal.scaffold_generation:generate_scaffold._drop](#function-282), [aideal.scaffold_generation:generate_scaffold._wildcard_of](#function-283)
 
-Called by: [aideal.cli:_run](#function-58), [aideal.probe:resolve_exec_context](#function-216)
+Called by: [aideal.cli:_run](#function-55), [aideal.probe:resolve_exec_context](#function-213)
 
-<a id="function-285"></a>
+<a id="function-282"></a>
 ### [generate_scaffold._drop](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L342)
 
 Function in `aideal.scaffold_generation`.
 
 Calls: None resolved
 
-Called by: [aideal.scaffold_generation:generate_scaffold](#function-284)
+Called by: [aideal.scaffold_generation:generate_scaffold](#function-281)
 
-<a id="function-286"></a>
+<a id="function-283"></a>
 ### [generate_scaffold._wildcard_of](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/scaffold_generation.py#L374)
 
 Function in `aideal.scaffold_generation`.
 
 Calls: None resolved
 
-Called by: [aideal.scaffold_generation:generate_scaffold](#function-284)
+Called by: [aideal.scaffold_generation:generate_scaffold](#function-281)
 
 ## aideal.task_generator
 
 67 lines · `vendor/aideal_engine/src/aideal/task_generator.py`
 
-<a id="function-287"></a>
+<a id="function-284"></a>
 ### [generate_tasks](https://github.com/ZhuochengShang/AIDEAL/blob/main/vendor/aideal_engine/src/aideal/task_generator.py#L25)
 
 Function in `aideal.task_generator`.
 
-Calls: [aideal.config:load_tasks](#function-74), [aideal.llm:invoke_text](#function-187), [aideal.profile:require_profile](#function-224), [aideal.prompts:load](#function-225), [aideal.readme_format:parse_readme](#function-261)
+Calls: [aideal.config:load_tasks](#function-71), [aideal.llm:invoke_text](#function-184), [aideal.profile:require_profile](#function-221), [aideal.prompts:load](#function-222), [aideal.readme_format:parse_readme](#function-258)
 
-Called by: [aideal.cli:_run](#function-58)
+Called by: [aideal.cli:_run](#function-55)
 
 Prompt keys: `aideal/tasks_generate`
 
@@ -3107,12 +3072,12 @@ Prompt keys: `aideal/tasks_generate`
 
 23 lines · `studies/historical/__main__.py`
 
-<a id="function-288"></a>
+<a id="function-285"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/historical/__main__.py#L10)
 
 Function in `studies.historical.__main__`.
 
-Calls: [studies.historical.reporting:reproduce](#function-290), [studies.historical.status:study_status](#function-291)
+Calls: [studies.historical.reporting:reproduce](#function-287), [studies.historical.status:study_status](#function-288)
 
 Called by: None resolved
 
@@ -3120,36 +3085,36 @@ Called by: None resolved
 
 46 lines · `studies/historical/reporting.py`
 
-<a id="function-289"></a>
+<a id="function-286"></a>
 ### [_native_counts](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/historical/reporting.py#L9)
 
 Count archived native passes; do not reinterpret them as semantic checks.
 
-Calls: [workflow.ablation:file_hash](#function-306), [workflow.ablation:load](#function-308)
+Calls: [workflow.ablation:file_hash](#function-303), [workflow.ablation:load](#function-305)
 
-Called by: [studies.historical.reporting:reproduce](#function-290)
+Called by: [studies.historical.reporting:reproduce](#function-287)
 
-<a id="function-290"></a>
+<a id="function-287"></a>
 ### [reproduce](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/historical/reporting.py#L19)
 
 Recount archived outcomes, without generating or executing new solutions.
 
-Calls: [studies.historical.reporting:_native_counts](#function-289), [workflow.ablation:file_hash](#function-306), [workflow.ablation:load](#function-308)
+Calls: [studies.historical.reporting:_native_counts](#function-286), [workflow.ablation:file_hash](#function-303), [workflow.ablation:load](#function-305)
 
-Called by: [studies.historical.__main__:main](#function-288)
+Called by: [studies.historical.__main__:main](#function-285)
 
 ## studies.historical.status
 
 40 lines · `studies/historical/status.py`
 
-<a id="function-291"></a>
+<a id="function-288"></a>
 ### [study_status](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/historical/status.py#L8)
 
 Function in `studies.historical.status`.
 
-Calls: [workflow.ablation:bank_errors](#function-301), [workflow.ablation:load](#function-308)
+Calls: [workflow.ablation:bank_errors](#function-298), [workflow.ablation:load](#function-305)
 
-Called by: [studies.historical.__main__:main](#function-288)
+Called by: [studies.historical.__main__:main](#function-285)
 
 ## studies.sedonadb
 
@@ -3159,12 +3124,12 @@ Called by: [studies.historical.__main__:main](#function-288)
 
 40 lines · `studies/sedonadb/__main__.py`
 
-<a id="function-292"></a>
+<a id="function-289"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/sedonadb/__main__.py#L11)
 
 Function in `studies.sedonadb.__main__`.
 
-Calls: [studies.sedonadb.fixtures:relocated_catalog](#function-293), [studies.sedonadb.runner:run](#function-296), [studies.sedonadb.trace:trace](#function-297)
+Calls: [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [studies.sedonadb.trace:trace](#function-294)
 
 Called by: None resolved
 
@@ -3172,58 +3137,58 @@ Called by: None resolved
 
 31 lines · `studies/sedonadb/fixtures.py`
 
-<a id="function-293"></a>
+<a id="function-290"></a>
 ### [relocated_catalog](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/sedonadb/fixtures.py#L7)
 
 Function in `studies.sedonadb.fixtures`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:file_hash](#function-306), [workflow.ablation:load](#function-308), [workflow.ablation:save](#function-310)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:file_hash](#function-303), [workflow.ablation:load](#function-305), [workflow.ablation:save](#function-307)
 
-Called by: [studies.sedonadb.__main__:main](#function-292)
+Called by: [studies.sedonadb.__main__:main](#function-289)
 
 ## studies.sedonadb.runner
 
 167 lines · `studies/sedonadb/runner.py`
 
-<a id="function-294"></a>
+<a id="function-291"></a>
 ### [_execute](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/sedonadb/runner.py#L48)
 
 Run one Rust process and retain complete stdout/stderr on every outcome.
 
-Calls: [workflow.ablation:bind](#function-302)
+Calls: [workflow.ablation:bind](#function-299)
 
-Called by: [studies.sedonadb.runner:run](#function-296)
+Called by: [studies.sedonadb.runner:run](#function-293)
 
-<a id="function-295"></a>
+<a id="function-292"></a>
 ### [_resume_records](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/sedonadb/runner.py#L16)
 
 Reject incompatible or damaged evidence before skipping any execution.
 
 Calls: None resolved
 
-Called by: [studies.sedonadb.runner:run](#function-296)
+Called by: [studies.sedonadb.runner:run](#function-293)
 
-<a id="function-296"></a>
+<a id="function-293"></a>
 ### [run](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/sedonadb/runner.py#L85)
 
 Function in `studies.sedonadb.runner`.
 
-Calls: [studies.sedonadb.runner:_execute](#function-294), [studies.sedonadb.runner:_resume_records](#function-295), [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:file_hash](#function-306), [workflow.ablation:load](#function-308), [workflow.ablation:save](#function-310)
+Calls: [studies.sedonadb.runner:_execute](#function-291), [studies.sedonadb.runner:_resume_records](#function-292), [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:file_hash](#function-303), [workflow.ablation:load](#function-305), [workflow.ablation:save](#function-307)
 
-Called by: [studies.sedonadb.__main__:main](#function-292)
+Called by: [studies.sedonadb.__main__:main](#function-289)
 
 ## studies.sedonadb.trace
 
 42 lines · `studies/sedonadb/trace.py`
 
-<a id="function-297"></a>
+<a id="function-294"></a>
 ### [trace](https://github.com/ZhuochengShang/AIDEAL/blob/main/studies/sedonadb/trace.py#L8)
 
 Save an explicitly labeled SQL prompt preview and link recorded outcomes.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.ablation:save](#function-310)
+Calls: [workflow.ablation:load](#function-305), [workflow.ablation:save](#function-307)
 
-Called by: [studies.sedonadb.__main__:main](#function-292)
+Called by: [studies.sedonadb.__main__:main](#function-289)
 
 ## workflow
 
@@ -3233,12 +3198,12 @@ Called by: [studies.sedonadb.__main__:main](#function-292)
 
 111 lines · `workflow/__main__.py`
 
-<a id="function-298"></a>
+<a id="function-295"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/__main__.py#L13)
 
 Function in `workflow.__main__`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.condition_evaluation:run_conditions](#function-321), [workflow.condition_setup:freeze_conditions](#function-335), [workflow.development_cli:add_development_commands](#function-341), [workflow.development_cli:run_development_command](#function-342), [workflow.evaluation:run_evaluation](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-363), [workflow.mcp_server:main](#function-399), [workflow.preparation:prepare_study](#function-404), [workflow.preparation:prepared_study_status](#function-405), [workflow.reporting:verify](#function-408), [workflow.worktrees:attach](#function-454)
+Calls: [workflow.ablation:load](#function-305), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.development_cli:add_development_commands](#function-338), [workflow.development_cli:run_development_command](#function-339), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.mcp_server:main](#function-398), [workflow.preparation:prepare_study](#function-403), [workflow.preparation:prepared_study_status](#function-404), [workflow.reporting:verify](#function-407), [workflow.worktrees:attach](#function-453)
 
 Called by: None resolved
 
@@ -3246,124 +3211,124 @@ Called by: None resolved
 
 292 lines · `workflow/ablation.py`
 
-<a id="function-299"></a>
+<a id="function-296"></a>
 ### [approval_valid](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L59)
 
 A hash-bound audit check, NOT reviewer authentication.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:verify_artifact](#function-313)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:verify_artifact](#function-310)
 
-Called by: [workflow.ablation:preflight](#function-309)
+Called by: [workflow.ablation:preflight](#function-306)
 
-<a id="function-300"></a>
+<a id="function-297"></a>
 ### [automatic_hint](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L186)
 
 Conservative triage, not a source-verified diagnosis or fix.
 
 Calls: None resolved
 
-Called by: [workflow.ablation:capture_attempt](#function-303)
+Called by: [workflow.ablation:capture_attempt](#function-300)
 
-<a id="function-301"></a>
+<a id="function-298"></a>
 ### [bank_errors](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L72)
 
 Function in `workflow.ablation`.
 
-Calls: [workflow.ablation:verify_artifact](#function-313)
+Calls: [workflow.ablation:verify_artifact](#function-310)
 
-Called by: [studies.historical.status:study_status](#function-291), [workflow.ablation:preflight](#function-309)
+Called by: [studies.historical.status:study_status](#function-288), [workflow.ablation:preflight](#function-306)
 
-<a id="function-302"></a>
+<a id="function-299"></a>
 ### [bind](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L48)
 
 Function in `workflow.ablation`.
 
-Calls: [workflow.ablation:file_hash](#function-306)
+Calls: [workflow.ablation:file_hash](#function-303)
 
-Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-293), [studies.sedonadb.runner:_execute](#function-294), [studies.sedonadb.runner:run](#function-296), [workflow.ablation:capture_attempt](#function-303), [workflow.condition_context:public_context](#function-314), [workflow.condition_evaluation:_attempt_evidence](#function-315), [workflow.condition_evaluation:_round_evidence](#function-318), [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.condition_inputs:backend_identity](#function-322), [workflow.condition_inputs:bind_command](#function-323), [workflow.condition_inputs:match_treatments](#function-325), [workflow.condition_inputs:read_bank](#function-326), [workflow.condition_setup:_adjudication_artifacts_valid](#function-329), [workflow.condition_setup:read_condition_config](#function-337), [workflow.condition_setup:validate_conditions](#function-338), [workflow.evaluation_setup:read_config](#function-365), [workflow.evaluation_setup:validate_bank](#function-366), [workflow.improvement_batches:_implementation_bindings](#function-374), [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_context:_development_errors](#function-382), [workflow.improvement_context:_semantic_context](#function-384), [workflow.improvement_context:_source_windows](#function-385), [workflow.improvement_suggestions:_finish_proposal](#function-390), [workflow.improvement_suggestions:propose_improvements](#function-395), [workflow.preparation:prepare_study](#function-404), [workflow.scaffolding:scaffold_spec](#function-410), [workflow.scaffolding:write_scaffold](#function-411), [workflow.source_refactors:_current](#function-427), [workflow.source_refactors:_lineage](#function-428), [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_bundles:bundle_proposals](#function-433)
+Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:_execute](#function-291), [studies.sedonadb.runner:run](#function-293), [workflow.ablation:capture_attempt](#function-300), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_attempt_evidence](#function-312), [workflow.condition_evaluation:_round_evidence](#function-315), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_inputs:bind_command](#function-320), [workflow.condition_inputs:match_treatments](#function-322), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:_adjudication_artifacts_valid](#function-326), [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation_setup:read_config](#function-362), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:_implementation_bindings](#function-373), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_development_errors](#function-381), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_context:_source_windows](#function-384), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:scaffold_spec](#function-409), [workflow.scaffolding:write_scaffold](#function-410), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_bundles:bundle_proposals](#function-432)
 
-<a id="function-303"></a>
+<a id="function-300"></a>
 ### [capture_attempt](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L211)
 
 Capture in a NEW attempt directory, so failed attempts cannot disappear.
 
-Calls: [workflow.ablation:automatic_hint](#function-300), [workflow.ablation:bind](#function-302), [workflow.ablation:diagnostic_excerpt](#function-304), [workflow.ablation:save](#function-310)
+Calls: [workflow.ablation:automatic_hint](#function-297), [workflow.ablation:bind](#function-299), [workflow.ablation:diagnostic_excerpt](#function-301), [workflow.ablation:save](#function-307)
 
 Called by: None resolved
 
-<a id="function-304"></a>
+<a id="function-301"></a>
 ### [diagnostic_excerpt](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L172)
 
 Message-first context, not the first characters of a long path.
 
 Calls: None resolved
 
-Called by: [workflow.ablation:capture_attempt](#function-303)
+Called by: [workflow.ablation:capture_attempt](#function-300)
 
-<a id="function-305"></a>
+<a id="function-302"></a>
 ### [digest](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L24)
 
 Function in `workflow.ablation`.
 
 Calls: None resolved
 
-Called by: [studies.sedonadb.runner:run](#function-296), [workflow.ablation:approval_valid](#function-299), [workflow.ablation:freeze](#function-307), [workflow.condition_context:public_context](#function-314), [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.condition_inputs:backend_identity](#function-322), [workflow.condition_setup:freeze_conditions](#function-335), [workflow.condition_setup:open_conditions](#function-336), [workflow.condition_setup:validate_conditions](#function-338), [workflow.evaluation:select_documentation](#function-350), [workflow.evaluation_setup:freeze_evaluation](#function-363), [workflow.evaluation_setup:open_frozen](#function-364), [workflow.evaluation_setup:validate_bank](#function-366), [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_batches:_verified_completion](#function-378), [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_context:preview_improvements](#function-389), [workflow.improvement_suggestions:_finish_proposal](#function-390), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_bundles:bundle_proposals](#function-433), [workflow.treatment_versions:_current](#function-442), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [studies.sedonadb.runner:run](#function-293), [workflow.ablation:approval_valid](#function-296), [workflow.ablation:freeze](#function-304), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:select_documentation](#function-347), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-306"></a>
+<a id="function-303"></a>
 ### [file_hash](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L29)
 
 Function in `workflow.ablation`.
 
 Calls: None resolved
 
-Called by: [studies.historical.reporting:_native_counts](#function-289), [studies.historical.reporting:reproduce](#function-290), [studies.sedonadb.fixtures:relocated_catalog](#function-293), [studies.sedonadb.runner:run](#function-296), [workflow.ablation:bind](#function-302), [workflow.ablation:verify_artifact](#function-313), [workflow.condition_setup:_controller](#function-330), [workflow.evaluation_setup:_controller_hashes](#function-353), [workflow.reporting:verify](#function-408)
+Called by: [studies.historical.reporting:_native_counts](#function-286), [studies.historical.reporting:reproduce](#function-287), [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [workflow.ablation:bind](#function-299), [workflow.ablation:verify_artifact](#function-310), [workflow.condition_setup:_controller](#function-327), [workflow.evaluation_setup:_controller_hashes](#function-350), [workflow.reporting:verify](#function-407)
 
-<a id="function-307"></a>
+<a id="function-304"></a>
 ### [freeze](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L149)
 
 Function in `workflow.ablation`.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:preflight](#function-309)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:preflight](#function-306)
 
 Called by: None resolved
 
-<a id="function-308"></a>
+<a id="function-305"></a>
 ### [load](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L37)
 
 Read a UTF-8 JSON artifact.
 
 Calls: None resolved
 
-Called by: [studies.historical.reporting:_native_counts](#function-289), [studies.historical.reporting:reproduce](#function-290), [studies.historical.status:study_status](#function-291), [studies.sedonadb.fixtures:relocated_catalog](#function-293), [studies.sedonadb.runner:run](#function-296), [studies.sedonadb.trace:trace](#function-297), [workflow.__main__:main](#function-298), [workflow.condition_context:public_context](#function-314), [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_conditions](#function-321), [workflow.condition_inputs:hint_bundle](#function-324), [workflow.condition_inputs:read_bank](#function-326), [workflow.condition_setup:execute_condition](#function-334), [workflow.condition_setup:freeze_conditions](#function-335), [workflow.condition_setup:open_conditions](#function-336), [workflow.condition_setup:validate_conditions](#function-338), [workflow.condition_setup:verify_validation](#function-340), [workflow.development_cli:run_development_command](#function-342), [workflow.evaluation:_collect_resources](#function-343), [workflow.evaluation:_load_completed_rows](#function-344), [workflow.evaluation:_request_solution](#function-346), [workflow.evaluation:run_evaluation](#function-349), [workflow.evaluation_setup:_checked_execution](#function-352), [workflow.evaluation_setup:freeze_evaluation](#function-363), [workflow.evaluation_setup:open_frozen](#function-364), [workflow.evaluation_setup:read_config](#function-365), [workflow.evaluation_setup:validate_bank](#function-366), [workflow.execution:invoke](#function-370), [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_batches:_verified_completion](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_context:_library_inputs](#function-383), [workflow.improvement_context:development_destination](#function-387), [workflow.improvement_context:original_checkout](#function-388), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.preparation:prepared_study_status](#function-405), [workflow.reporting:verify](#function-408), [workflow.source_refactors:_candidate](#function-425), [workflow.source_refactors:_current](#function-427), [workflow.source_refactors:_lineage](#function-428), [workflow.source_refactors:install_refactor](#function-431), [workflow.source_refactors:study_versions](#function-432), [workflow.treatment_bundles:bundle_proposals](#function-433), [workflow.treatment_versions:_attachment](#function-435), [workflow.treatment_versions:_current](#function-442), [workflow.treatment_versions:_read_proposal](#function-446), [workflow.treatment_versions:apply_treatments](#function-452), [workflow.worktrees:attach](#function-454)
+Called by: [studies.historical.reporting:_native_counts](#function-286), [studies.historical.reporting:reproduce](#function-287), [studies.historical.status:study_status](#function-288), [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [studies.sedonadb.trace:trace](#function-294), [workflow.__main__:main](#function-295), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_inputs:hint_bundle](#function-321), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:execute_condition](#function-331), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.condition_setup:verify_validation](#function-337), [workflow.development_cli:run_development_command](#function-339), [workflow.evaluation:_collect_resources](#function-340), [workflow.evaluation:_load_completed_rows](#function-341), [workflow.evaluation:_request_solution](#function-343), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:_checked_execution](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.evaluation_setup:read_config](#function-362), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.execution:invoke](#function-367), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:development_destination](#function-386), [workflow.improvement_context:original_checkout](#function-387), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.preparation:prepared_study_status](#function-404), [workflow.reporting:verify](#function-407), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:apply_treatments](#function-451), [workflow.worktrees:attach](#function-453)
 
-<a id="function-309"></a>
+<a id="function-306"></a>
 ### [preflight](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L115)
 
 Function in `workflow.ablation`.
 
-Calls: [workflow.ablation:approval_valid](#function-299), [workflow.ablation:bank_errors](#function-301), [workflow.ablation:verify_artifact](#function-313)
+Calls: [workflow.ablation:approval_valid](#function-296), [workflow.ablation:bank_errors](#function-298), [workflow.ablation:verify_artifact](#function-310)
 
-Called by: [workflow.ablation:freeze](#function-307), [workflow.preparation:prepared_study_status](#function-405)
+Called by: [workflow.ablation:freeze](#function-304), [workflow.preparation:prepared_study_status](#function-404)
 
-<a id="function-310"></a>
+<a id="function-307"></a>
 ### [save](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L42)
 
 Function in `workflow.ablation`.
 
 Calls: None resolved
 
-Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-293), [studies.sedonadb.runner:run](#function-296), [studies.sedonadb.trace:trace](#function-297), [workflow.ablation:capture_attempt](#function-303), [workflow.preparation:prepare_study](#function-404), [workflow.scaffolding:write_scaffold](#function-411), [workflow.worktrees:attach](#function-454)
+Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [studies.sedonadb.trace:trace](#function-294), [workflow.ablation:capture_attempt](#function-300), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:write_scaffold](#function-410), [workflow.worktrees:attach](#function-453)
 
-<a id="function-311"></a>
+<a id="function-308"></a>
 ### [score](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L236)
 
 One latest adjudicated row per case/trial/arm, not raw attempt history.
 
 Calls: None resolved
 
-Called by: [workflow.condition_reporting:report_conditions](#function-327), [workflow.reporting:report](#function-407)
+Called by: [workflow.condition_reporting:report_conditions](#function-324), [workflow.reporting:report](#function-406)
 
-<a id="function-312"></a>
+<a id="function-309"></a>
 ### [treatment_inputs](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L161)
 
 Explicit prompt/artifact routing; a future runner must use this route.
@@ -3372,842 +3337,864 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-313"></a>
+<a id="function-310"></a>
 ### [verify_artifact](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L55)
 
 Function in `workflow.ablation`.
 
-Calls: [workflow.ablation:file_hash](#function-306)
+Calls: [workflow.ablation:file_hash](#function-303)
 
-Called by: [workflow.ablation:approval_valid](#function-299), [workflow.ablation:bank_errors](#function-301), [workflow.ablation:preflight](#function-309), [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_setup:verify_inputs](#function-339), [workflow.condition_setup:verify_validation](#function-340), [workflow.evaluation:run_evaluation](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-363), [workflow.evaluation_setup:open_frozen](#function-364), [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_batches:_verified_completion](#function-378), [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_context:_library_inputs](#function-383), [workflow.improvement_suggestions:_finish_proposal](#function-390), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.treatment_bundles:bundle_proposals](#function-433)
+Called by: [workflow.ablation:approval_valid](#function-296), [workflow.ablation:bank_errors](#function-298), [workflow.ablation:preflight](#function-306), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_setup:verify_inputs](#function-336), [workflow.condition_setup:verify_validation](#function-337), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.treatment_bundles:bundle_proposals](#function-432)
 
 ## workflow.condition_context
 
 62 lines · `workflow/condition_context.py`
 
-<a id="function-314"></a>
+<a id="function-311"></a>
 ### [public_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_context.py#L8)
 
 Function in `workflow.condition_context`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.evaluation:audience_prompt](#function-348), [workflow.evaluation:select_documentation](#function-350)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation:audience_prompt](#function-345), [workflow.evaluation:select_documentation](#function-347)
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317)
 
 ## workflow.condition_evaluation
 
 222 lines · `workflow/condition_evaluation.py`
 
-<a id="function-315"></a>
+<a id="function-312"></a>
 ### [_attempt_evidence](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_evaluation.py#L24)
 
 Function in `workflow.condition_evaluation`.
 
-Calls: [workflow.ablation:bind](#function-302)
+Calls: [workflow.ablation:bind](#function-299)
 
-Called by: [workflow.condition_evaluation:_round_evidence](#function-318)
+Called by: [workflow.condition_evaluation:_round_evidence](#function-315)
 
-<a id="function-316"></a>
+<a id="function-313"></a>
 ### [_candidate_body](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_evaluation.py#L16)
 
 Function in `workflow.condition_evaluation`.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317)
 
-<a id="function-317"></a>
+<a id="function-314"></a>
 ### [_model_request](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_evaluation.py#L47)
 
 Function in `workflow.condition_evaluation`.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317)
 
-<a id="function-318"></a>
+<a id="function-315"></a>
 ### [_round_evidence](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_evaluation.py#L35)
 
 Function in `workflow.condition_evaluation`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.condition_evaluation:_attempt_evidence](#function-315)
+Calls: [workflow.ablation:bind](#function-299), [workflow.condition_evaluation:_attempt_evidence](#function-312)
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317)
 
-<a id="function-319"></a>
+<a id="function-316"></a>
 ### [_verify_saved_row](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_evaluation.py#L92)
 
 Verify complete attempt evidence, costs and the public-prompt/candidate chain.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.condition_context:public_context](#function-314), [workflow.condition_evaluation:_candidate_body](#function-316), [workflow.condition_evaluation:_model_request](#function-317), [workflow.condition_evaluation:_round_evidence](#function-318), [workflow.condition_setup:checked_outcome](#function-331), [workflow.condition_setup:checker_request](#function-332), [workflow.evaluation:_collect_resources](#function-343), [workflow.evaluation:_model_response](#function-345)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_candidate_body](#function-313), [workflow.condition_evaluation:_model_request](#function-314), [workflow.condition_evaluation:_round_evidence](#function-315), [workflow.condition_setup:checked_outcome](#function-328), [workflow.condition_setup:checker_request](#function-329), [workflow.evaluation:_collect_resources](#function-340), [workflow.evaluation:_model_response](#function-342)
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318)
 
-<a id="function-320"></a>
+<a id="function-317"></a>
 ### [run_condition_unit](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_evaluation.py#L53)
 
 Function in `workflow.condition_evaluation`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.condition_context:public_context](#function-314), [workflow.condition_evaluation:_candidate_body](#function-316), [workflow.condition_evaluation:_model_request](#function-317), [workflow.condition_evaluation:_round_evidence](#function-318), [workflow.condition_setup:checked_outcome](#function-331), [workflow.condition_setup:execute_condition](#function-334), [workflow.condition_setup:verify_inputs](#function-339), [workflow.evaluation:_collect_resources](#function-343), [workflow.evaluation:_request_solution](#function-346), [workflow.execution:atomic_json](#function-369)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_candidate_body](#function-313), [workflow.condition_evaluation:_model_request](#function-314), [workflow.condition_evaluation:_round_evidence](#function-315), [workflow.condition_setup:checked_outcome](#function-328), [workflow.condition_setup:execute_condition](#function-331), [workflow.condition_setup:verify_inputs](#function-336), [workflow.evaluation:_collect_resources](#function-340), [workflow.evaluation:_request_solution](#function-343), [workflow.execution:atomic_json](#function-366)
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318)
 
-<a id="function-321"></a>
+<a id="function-318"></a>
 ### [run_conditions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_evaluation.py#L180)
 
 Function in `workflow.condition_evaluation`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.condition_reporting:report_conditions](#function-327), [workflow.condition_reporting:write_condition_report](#function-328), [workflow.condition_setup:open_conditions](#function-336), [workflow.condition_setup:verify_inputs](#function-339), [workflow.evaluation:_load_completed_rows](#function-344), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.execution:atomic_json](#function-369), [workflow.execution:ownership](#function-372)
+Calls: [workflow.ablation:load](#function-305), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_reporting:report_conditions](#function-324), [workflow.condition_reporting:write_condition_report](#function-325), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:verify_inputs](#function-336), [workflow.evaluation:_load_completed_rows](#function-341), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369)
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
 ## workflow.condition_inputs
 
 152 lines · `workflow/condition_inputs.py`
 
-<a id="function-322"></a>
+<a id="function-319"></a>
 ### [backend_identity](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_inputs.py#L78)
 
 Bind the Git tree, raw checkout, configured runtime and adapter artifacts.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_trees](#function-451)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_trees](#function-450)
 
-Called by: [workflow.condition_setup:read_condition_config](#function-337), [workflow.condition_setup:verify_inputs](#function-339)
+Called by: [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:verify_inputs](#function-336)
 
-<a id="function-323"></a>
+<a id="function-320"></a>
 ### [bind_command](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_inputs.py#L17)
 
 Function in `workflow.condition_inputs`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.evaluation_setup:_mapping](#function-354), [workflow.evaluation_setup:_path](#function-355), [workflow.evaluation_setup:_string_list](#function-356)
+Calls: [workflow.ablation:bind](#function-299), [workflow.evaluation_setup:_mapping](#function-351), [workflow.evaluation_setup:_path](#function-352), [workflow.evaluation_setup:_string_list](#function-353)
 
-Called by: [workflow.condition_setup:read_condition_config](#function-337)
+Called by: [workflow.condition_setup:read_condition_config](#function-334)
 
-<a id="function-324"></a>
+<a id="function-321"></a>
 ### [hint_bundle](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_inputs.py#L104)
 
 Function in `workflow.condition_inputs`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.evaluation_setup:_mapping](#function-354), [workflow.evaluation_setup:_string_list](#function-356), [workflow.evaluation_setup:_text](#function-357)
+Calls: [workflow.ablation:load](#function-305), [workflow.evaluation_setup:_mapping](#function-351), [workflow.evaluation_setup:_string_list](#function-353), [workflow.evaluation_setup:_text](#function-354)
 
-Called by: [workflow.condition_setup:read_condition_config](#function-337)
+Called by: [workflow.condition_setup:read_condition_config](#function-334)
 
-<a id="function-325"></a>
+<a id="function-322"></a>
 ### [match_treatments](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_inputs.py#L124)
 
 Reject treatment contamination before any model or checker command.
 
-Calls: [workflow.ablation:bind](#function-302)
+Calls: [workflow.ablation:bind](#function-299)
 
-Called by: [workflow.condition_setup:read_condition_config](#function-337), [workflow.condition_setup:verify_inputs](#function-339)
+Called by: [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:verify_inputs](#function-336)
 
-<a id="function-326"></a>
+<a id="function-323"></a>
 ### [read_bank](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_inputs.py#L27)
 
 The v1 protocol keeps canonical target IDs and requires all three controls.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:load](#function-308), [workflow.evaluation_setup:_mapping](#function-354), [workflow.evaluation_setup:_path](#function-355), [workflow.evaluation_setup:_string_list](#function-356), [workflow.evaluation_setup:_text](#function-357), [workflow.evaluation_setup:_valid_identifier](#function-358)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:_mapping](#function-351), [workflow.evaluation_setup:_path](#function-352), [workflow.evaluation_setup:_string_list](#function-353), [workflow.evaluation_setup:_text](#function-354), [workflow.evaluation_setup:_valid_identifier](#function-355)
 
-Called by: [workflow.condition_setup:read_condition_config](#function-337)
+Called by: [workflow.condition_setup:read_condition_config](#function-334)
 
 ## workflow.condition_reporting
 
 78 lines · `workflow/condition_reporting.py`
 
-<a id="function-327"></a>
+<a id="function-324"></a>
 ### [report_conditions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_reporting.py#L18)
 
 Function in `workflow.condition_reporting`.
 
-Calls: [workflow.ablation:score](#function-311)
+Calls: [workflow.ablation:score](#function-308)
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318)
 
-<a id="function-328"></a>
+<a id="function-325"></a>
 ### [write_condition_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_reporting.py#L58)
 
 Function in `workflow.condition_reporting`.
 
-Calls: [workflow.execution:atomic_json](#function-369)
+Calls: [workflow.execution:atomic_json](#function-366)
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318)
 
 ## workflow.condition_setup
 
 238 lines · `workflow/condition_setup.py`
 
-<a id="function-329"></a>
+<a id="function-326"></a>
 ### [_adjudication_artifacts_valid](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L88)
 
 Optional adapter evidence must be a nonempty list of canonical file bindings.
 
-Calls: [workflow.ablation:bind](#function-302)
+Calls: [workflow.ablation:bind](#function-299)
 
-Called by: [workflow.condition_setup:checked_outcome](#function-331)
+Called by: [workflow.condition_setup:checked_outcome](#function-328)
 
-<a id="function-330"></a>
+<a id="function-327"></a>
 ### [_controller](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L21)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.ablation:file_hash](#function-306)
+Calls: [workflow.ablation:file_hash](#function-303)
 
-Called by: [workflow.condition_setup:read_condition_config](#function-337), [workflow.condition_setup:verify_inputs](#function-339)
+Called by: [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:verify_inputs](#function-336)
 
-<a id="function-331"></a>
+<a id="function-328"></a>
 ### [checked_outcome](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L108)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.condition_setup:_adjudication_artifacts_valid](#function-329), [workflow.evaluation_setup:verified_outcome](#function-367)
+Calls: [workflow.condition_setup:_adjudication_artifacts_valid](#function-326), [workflow.evaluation_setup:verified_outcome](#function-364)
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.condition_setup:execute_condition](#function-334), [workflow.condition_setup:validate_conditions](#function-338), [workflow.condition_setup:verify_validation](#function-340)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_setup:execute_condition](#function-331), [workflow.condition_setup:validate_conditions](#function-335), [workflow.condition_setup:verify_validation](#function-337)
 
-<a id="function-332"></a>
+<a id="function-329"></a>
 ### [checker_request](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L81)
 
 Private routing contract; never insert backend/config/oracle into model text.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_setup:execute_condition](#function-334), [workflow.condition_setup:verify_validation](#function-340)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_setup:execute_condition](#function-331), [workflow.condition_setup:verify_validation](#function-337)
 
-<a id="function-333"></a>
+<a id="function-330"></a>
 ### [controls](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L130)
 
 Function in `workflow.condition_setup`.
 
 Calls: None resolved
 
-Called by: [workflow.condition_setup:validate_conditions](#function-338), [workflow.condition_setup:verify_validation](#function-340)
+Called by: [workflow.condition_setup:validate_conditions](#function-335), [workflow.condition_setup:verify_validation](#function-337)
 
-<a id="function-334"></a>
+<a id="function-331"></a>
 ### [execute_condition](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L119)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.condition_setup:checked_outcome](#function-331), [workflow.condition_setup:checker_request](#function-332), [workflow.execution:invoke](#function-370), [workflow.execution:next_directory](#function-371)
+Calls: [workflow.ablation:load](#function-305), [workflow.condition_setup:checked_outcome](#function-328), [workflow.condition_setup:checker_request](#function-329), [workflow.execution:invoke](#function-367), [workflow.execution:next_directory](#function-368)
 
-Called by: [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.condition_setup:validate_conditions](#function-338)
+Called by: [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_setup:validate_conditions](#function-335)
 
-<a id="function-335"></a>
+<a id="function-332"></a>
 ### [freeze_conditions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L207)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.condition_setup:read_condition_config](#function-337), [workflow.condition_setup:validate_conditions](#function-338), [workflow.condition_setup:verify_inputs](#function-339), [workflow.condition_setup:verify_validation](#function-340), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.execution:atomic_json](#function-369), [workflow.execution:ownership](#function-372)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:validate_conditions](#function-335), [workflow.condition_setup:verify_inputs](#function-336), [workflow.condition_setup:verify_validation](#function-337), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369)
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
-<a id="function-336"></a>
+<a id="function-333"></a>
 ### [open_conditions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L229)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.condition_setup:verify_inputs](#function-339), [workflow.condition_setup:verify_validation](#function-340), [workflow.evaluation_setup:assert_review_released](#function-361)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.condition_setup:verify_inputs](#function-336), [workflow.condition_setup:verify_validation](#function-337), [workflow.evaluation_setup:assert_review_released](#function-358)
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318)
 
-<a id="function-337"></a>
+<a id="function-334"></a>
 ### [read_condition_config](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L25)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.condition_inputs:backend_identity](#function-322), [workflow.condition_inputs:bind_command](#function-323), [workflow.condition_inputs:hint_bundle](#function-324), [workflow.condition_inputs:match_treatments](#function-325), [workflow.condition_inputs:read_bank](#function-326), [workflow.condition_setup:_controller](#function-330), [workflow.evaluation_setup:_mapping](#function-354), [workflow.evaluation_setup:_path](#function-355), [workflow.evaluation_setup:_string_list](#function-356), [workflow.evaluation_setup:_text](#function-357), [workflow.evaluation_setup:_validate_common](#function-359)
+Calls: [workflow.ablation:bind](#function-299), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_inputs:bind_command](#function-320), [workflow.condition_inputs:hint_bundle](#function-321), [workflow.condition_inputs:match_treatments](#function-322), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:_controller](#function-327), [workflow.evaluation_setup:_mapping](#function-351), [workflow.evaluation_setup:_path](#function-352), [workflow.evaluation_setup:_string_list](#function-353), [workflow.evaluation_setup:_text](#function-354), [workflow.evaluation_setup:_validate_common](#function-356)
 
-Called by: [workflow.condition_setup:freeze_conditions](#function-335)
+Called by: [workflow.condition_setup:freeze_conditions](#function-332)
 
-<a id="function-338"></a>
+<a id="function-335"></a>
 ### [validate_conditions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L147)
 
 Run every case's controls separately against every declared backend.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.condition_setup:checked_outcome](#function-331), [workflow.condition_setup:controls](#function-333), [workflow.condition_setup:execute_condition](#function-334), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.evaluation_setup:control_passes](#function-362), [workflow.execution:atomic_json](#function-369), [workflow.execution:ownership](#function-372)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.condition_setup:checked_outcome](#function-328), [workflow.condition_setup:controls](#function-330), [workflow.condition_setup:execute_condition](#function-331), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.evaluation_setup:control_passes](#function-359), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369)
 
-Called by: [workflow.condition_setup:freeze_conditions](#function-335)
+Called by: [workflow.condition_setup:freeze_conditions](#function-332)
 
-<a id="function-339"></a>
+<a id="function-336"></a>
 ### [verify_inputs](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L136)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.ablation:verify_artifact](#function-313), [workflow.condition_inputs:backend_identity](#function-322), [workflow.condition_inputs:match_treatments](#function-325), [workflow.condition_setup:_controller](#function-330)
+Calls: [workflow.ablation:verify_artifact](#function-310), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_inputs:match_treatments](#function-322), [workflow.condition_setup:_controller](#function-327)
 
-Called by: [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.condition_evaluation:run_conditions](#function-321), [workflow.condition_setup:freeze_conditions](#function-335), [workflow.condition_setup:open_conditions](#function-336)
+Called by: [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333)
 
-<a id="function-340"></a>
+<a id="function-337"></a>
 ### [verify_validation](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/condition_setup.py#L179)
 
 Function in `workflow.condition_setup`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.condition_setup:checked_outcome](#function-331), [workflow.condition_setup:checker_request](#function-332), [workflow.condition_setup:controls](#function-333), [workflow.evaluation_setup:control_passes](#function-362)
+Calls: [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.condition_setup:checked_outcome](#function-328), [workflow.condition_setup:checker_request](#function-329), [workflow.condition_setup:controls](#function-330), [workflow.evaluation_setup:control_passes](#function-359)
 
-Called by: [workflow.condition_setup:freeze_conditions](#function-335), [workflow.condition_setup:open_conditions](#function-336)
+Called by: [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333)
 
 ## workflow.development_cli
 
 118 lines · `workflow/development_cli.py`
 
-<a id="function-341"></a>
+<a id="function-338"></a>
 ### [add_development_commands](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/development_cli.py#L6)
 
 Function in `workflow.development_cli`.
 
 Calls: None resolved
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
-<a id="function-342"></a>
+<a id="function-339"></a>
 ### [run_development_command](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/development_cli.py#L73)
 
 Function in `workflow.development_cli`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_context:preview_improvements](#function-389), [workflow.improvement_suggestions:matching_fix_hints](#function-394), [workflow.improvement_suggestions:propose_improvements](#function-395), [workflow.source_duplicates:compare_duplicate_reports](#function-423), [workflow.source_duplicates:scan_duplicates](#function-424), [workflow.source_refactors:install_refactor](#function-431), [workflow.source_refactors:study_versions](#function-432), [workflow.treatment_bundles:bundle_proposals](#function-433), [workflow.treatment_versions:apply_treatments](#function-452)
+Calls: [workflow.ablation:load](#function-305), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:matching_fix_hints](#function-393), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.source_duplicates:compare_duplicate_reports](#function-422), [workflow.source_duplicates:scan_duplicates](#function-423), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:apply_treatments](#function-451)
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
 ## workflow.evaluation
 
 217 lines · `workflow/evaluation.py`
 
-<a id="function-343"></a>
+<a id="function-340"></a>
 ### [_collect_resources](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L199)
 
 Count all attempts, including interrupted calls with unknown token usage.
 
-Calls: [workflow.ablation:load](#function-308)
+Calls: [workflow.ablation:load](#function-305)
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.evaluation:_run_unit](#function-347)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.evaluation:_run_unit](#function-344)
 
-<a id="function-344"></a>
+<a id="function-341"></a>
 ### [_load_completed_rows](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L152)
 
 Read only unit checkpoints and reject duplicates before another model call.
 
-Calls: [workflow.ablation:load](#function-308)
+Calls: [workflow.ablation:load](#function-305)
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321), [workflow.evaluation:run_evaluation](#function-349)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318), [workflow.evaluation:run_evaluation](#function-346)
 
-<a id="function-345"></a>
+<a id="function-342"></a>
 ### [_model_response](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L167)
 
 One schema check shared by cached and newly returned provider responses.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:_verify_saved_row](#function-319), [workflow.evaluation:_request_solution](#function-346)
+Called by: [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.evaluation:_request_solution](#function-343)
 
-<a id="function-346"></a>
+<a id="function-343"></a>
 ### [_request_solution](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L175)
 
 Reuse a saved response before spending a bounded transport allowance.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.evaluation:_model_response](#function-345), [workflow.execution:invoke](#function-370), [workflow.execution:next_directory](#function-371)
+Calls: [workflow.ablation:load](#function-305), [workflow.evaluation:_model_response](#function-342), [workflow.execution:invoke](#function-367), [workflow.execution:next_directory](#function-368)
 
-Called by: [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.evaluation:_run_unit](#function-347)
+Called by: [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.evaluation:_run_unit](#function-344)
 
-<a id="function-347"></a>
+<a id="function-344"></a>
 ### [_run_unit](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L114)
 
 Function in `workflow.evaluation`.
 
-Calls: [workflow.evaluation:_collect_resources](#function-343), [workflow.evaluation:_request_solution](#function-346), [workflow.evaluation:audience_prompt](#function-348), [workflow.evaluation_setup:_checked_execution](#function-352), [workflow.evaluation_setup:verified_outcome](#function-367)
+Calls: [workflow.evaluation:_collect_resources](#function-340), [workflow.evaluation:_request_solution](#function-343), [workflow.evaluation:audience_prompt](#function-345), [workflow.evaluation_setup:_checked_execution](#function-349), [workflow.evaluation_setup:verified_outcome](#function-364)
 
-Called by: [workflow.evaluation:run_evaluation](#function-349)
+Called by: [workflow.evaluation:run_evaluation](#function-346)
 
-<a id="function-348"></a>
+<a id="function-345"></a>
 ### [audience_prompt](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L23)
 
 Build public model context; exclude oracle paths and reference answers.
 
 Calls: None resolved
 
-Called by: [workflow.condition_context:public_context](#function-314), [workflow.evaluation:_run_unit](#function-347)
+Called by: [workflow.condition_context:public_context](#function-311), [workflow.evaluation:_run_unit](#function-344)
 
-<a id="function-349"></a>
+<a id="function-346"></a>
 ### [run_evaluation](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L62)
 
 Resume matching unfinished units; preserve completed outcomes and all attempts.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.evaluation:_load_completed_rows](#function-344), [workflow.evaluation:_run_unit](#function-347), [workflow.evaluation:select_documentation](#function-350), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.evaluation_setup:open_frozen](#function-364), [workflow.execution:atomic_json](#function-369), [workflow.execution:ownership](#function-372), [workflow.reporting:report](#function-407), [workflow.reporting:write_report](#function-409)
+Calls: [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.evaluation:_load_completed_rows](#function-341), [workflow.evaluation:_run_unit](#function-344), [workflow.evaluation:select_documentation](#function-347), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369), [workflow.reporting:report](#function-406), [workflow.reporting:write_report](#function-408)
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
-<a id="function-350"></a>
+<a id="function-347"></a>
 ### [select_documentation](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L33)
 
 Same deterministic heading retrieval for every condition; log actual exposure.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.evaluation:select_documentation.relevance](#function-351)
+Calls: [workflow.ablation:digest](#function-302), [workflow.evaluation:select_documentation.relevance](#function-348)
 
-Called by: [workflow.condition_context:public_context](#function-314), [workflow.evaluation:run_evaluation](#function-349)
+Called by: [workflow.condition_context:public_context](#function-311), [workflow.evaluation:run_evaluation](#function-346)
 
-<a id="function-351"></a>
+<a id="function-348"></a>
 ### [select_documentation.relevance](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation.py#L47)
 
 Function in `workflow.evaluation`.
 
 Calls: None resolved
 
-Called by: [workflow.evaluation:select_documentation](#function-350)
+Called by: [workflow.evaluation:select_documentation](#function-347)
 
 ## workflow.evaluation_setup
 
 304 lines · `workflow/evaluation_setup.py`
 
-<a id="function-352"></a>
+<a id="function-349"></a>
 ### [_checked_execution](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L207)
 
 Run the trusted checker once, reusing only verified pass/fail outcomes.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.evaluation_setup:adapter_request](#function-360), [workflow.evaluation_setup:verified_outcome](#function-367), [workflow.execution:invoke](#function-370), [workflow.execution:next_directory](#function-371)
+Calls: [workflow.ablation:load](#function-305), [workflow.evaluation_setup:adapter_request](#function-357), [workflow.evaluation_setup:verified_outcome](#function-364), [workflow.execution:invoke](#function-367), [workflow.execution:next_directory](#function-368)
 
-Called by: [workflow.evaluation:_run_unit](#function-347), [workflow.evaluation_setup:validate_bank](#function-366)
+Called by: [workflow.evaluation:_run_unit](#function-344), [workflow.evaluation_setup:validate_bank](#function-363)
 
-<a id="function-353"></a>
+<a id="function-350"></a>
 ### [_controller_hashes](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L65)
 
 Identify this controller installation, independent of its location.
 
-Calls: [workflow.ablation:file_hash](#function-306)
+Calls: [workflow.ablation:file_hash](#function-303)
 
-Called by: [workflow.evaluation_setup:open_frozen](#function-364)
+Called by: [workflow.evaluation_setup:open_frozen](#function-361)
 
-<a id="function-354"></a>
+<a id="function-351"></a>
 ### [_mapping](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L46)
 
 Function in `workflow.evaluation_setup`.
 
 Calls: None resolved
 
-Called by: [workflow.condition_inputs:bind_command](#function-323), [workflow.condition_inputs:hint_bundle](#function-324), [workflow.condition_inputs:read_bank](#function-326), [workflow.condition_setup:read_condition_config](#function-337), [workflow.evaluation_setup:read_config](#function-365)
+Called by: [workflow.condition_inputs:bind_command](#function-320), [workflow.condition_inputs:hint_bundle](#function-321), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:read_condition_config](#function-334), [workflow.evaluation_setup:read_config](#function-362)
 
-<a id="function-355"></a>
+<a id="function-352"></a>
 ### [_path](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L24)
 
 Function in `workflow.evaluation_setup`.
 
-Calls: [workflow.evaluation_setup:_text](#function-357)
+Calls: [workflow.evaluation_setup:_text](#function-354)
 
-Called by: [workflow.condition_inputs:bind_command](#function-323), [workflow.condition_inputs:read_bank](#function-326), [workflow.condition_setup:read_condition_config](#function-337), [workflow.evaluation_setup:read_config](#function-365)
+Called by: [workflow.condition_inputs:bind_command](#function-320), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:read_condition_config](#function-334), [workflow.evaluation_setup:read_config](#function-362)
 
-<a id="function-356"></a>
+<a id="function-353"></a>
 ### [_string_list](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L58)
 
 Function in `workflow.evaluation_setup`.
 
 Calls: None resolved
 
-Called by: [workflow.condition_inputs:bind_command](#function-323), [workflow.condition_inputs:hint_bundle](#function-324), [workflow.condition_inputs:read_bank](#function-326), [workflow.condition_setup:read_condition_config](#function-337), [workflow.evaluation_setup:read_config](#function-365)
+Called by: [workflow.condition_inputs:bind_command](#function-320), [workflow.condition_inputs:hint_bundle](#function-321), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:read_condition_config](#function-334), [workflow.evaluation_setup:read_config](#function-362)
 
-<a id="function-357"></a>
+<a id="function-354"></a>
 ### [_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L52)
 
 Function in `workflow.evaluation_setup`.
 
 Calls: None resolved
 
-Called by: [workflow.condition_inputs:hint_bundle](#function-324), [workflow.condition_inputs:read_bank](#function-326), [workflow.condition_setup:read_condition_config](#function-337), [workflow.evaluation_setup:_path](#function-355), [workflow.evaluation_setup:_validate_common](#function-359), [workflow.evaluation_setup:read_config](#function-365)
+Called by: [workflow.condition_inputs:hint_bundle](#function-321), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:read_condition_config](#function-334), [workflow.evaluation_setup:_path](#function-352), [workflow.evaluation_setup:_validate_common](#function-356), [workflow.evaluation_setup:read_config](#function-362)
 
-<a id="function-358"></a>
+<a id="function-355"></a>
 ### [_valid_identifier](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L39)
 
 Function in `workflow.evaluation_setup`.
 
 Calls: None resolved
 
-Called by: [workflow.condition_inputs:read_bank](#function-326), [workflow.evaluation_setup:_validate_common](#function-359), [workflow.evaluation_setup:read_config](#function-365)
+Called by: [workflow.condition_inputs:read_bank](#function-323), [workflow.evaluation_setup:_validate_common](#function-356), [workflow.evaluation_setup:read_config](#function-362)
 
-<a id="function-359"></a>
+<a id="function-356"></a>
 ### [_validate_common](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L70)
 
 Reject ambiguous budgets before creating files or launching commands.
 
-Calls: [workflow.evaluation_setup:_text](#function-357), [workflow.evaluation_setup:_valid_identifier](#function-358)
+Calls: [workflow.evaluation_setup:_text](#function-354), [workflow.evaluation_setup:_valid_identifier](#function-355)
 
-Called by: [workflow.condition_setup:read_condition_config](#function-337), [workflow.evaluation_setup:read_config](#function-365)
+Called by: [workflow.condition_setup:read_condition_config](#function-334), [workflow.evaluation_setup:read_config](#function-362)
 
-<a id="function-360"></a>
+<a id="function-357"></a>
 ### [adapter_request](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L190)
 
 Private request to the trusted checker; never forward it to the model.
 
 Calls: None resolved
 
-Called by: [workflow.evaluation_setup:_checked_execution](#function-352)
+Called by: [workflow.evaluation_setup:_checked_execution](#function-349)
 
-<a id="function-361"></a>
+<a id="function-358"></a>
 ### [assert_review_released](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L30)
 
 Honor an explicit review hold before executing any study work.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321), [workflow.condition_inputs:backend_identity](#function-322), [workflow.condition_setup:freeze_conditions](#function-335), [workflow.condition_setup:open_conditions](#function-336), [workflow.condition_setup:validate_conditions](#function-338), [workflow.evaluation:run_evaluation](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-363), [workflow.evaluation_setup:validate_bank](#function-366), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_versions:_attachment](#function-435), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-362"></a>
+<a id="function-359"></a>
 ### [control_passes](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L221)
 
 A wrong-output control must run; a compiler error cannot validate an oracle.
 
-Calls: [workflow.evaluation_setup:verified_outcome](#function-367)
+Calls: [workflow.evaluation_setup:verified_outcome](#function-364)
 
-Called by: [workflow.condition_setup:validate_conditions](#function-338), [workflow.condition_setup:verify_validation](#function-340), [workflow.evaluation_setup:validate_bank](#function-366)
+Called by: [workflow.condition_setup:validate_conditions](#function-335), [workflow.condition_setup:verify_validation](#function-337), [workflow.evaluation_setup:validate_bank](#function-363)
 
-<a id="function-363"></a>
+<a id="function-360"></a>
 ### [freeze_evaluation](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L268)
 
 Validate actual controls, then save a new immutable study description.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.evaluation_setup:read_config](#function-365), [workflow.evaluation_setup:validate_bank](#function-366), [workflow.execution:atomic_json](#function-369), [workflow.execution:ownership](#function-372)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.evaluation_setup:read_config](#function-362), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369)
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
-<a id="function-364"></a>
+<a id="function-361"></a>
 ### [open_frozen](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L292)
 
 Reject changed inputs; never silently rebind an old run to edited code.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.evaluation_setup:_controller_hashes](#function-353)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.evaluation_setup:_controller_hashes](#function-350)
 
-Called by: [workflow.evaluation:run_evaluation](#function-349)
+Called by: [workflow.evaluation:run_evaluation](#function-346)
 
-<a id="function-365"></a>
+<a id="function-362"></a>
 ### [read_config](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L102)
 
 Evaluation paths are relative to this YAML file; legacy intake is unchanged.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:load](#function-308), [workflow.evaluation_setup:_mapping](#function-354), [workflow.evaluation_setup:_path](#function-355), [workflow.evaluation_setup:_string_list](#function-356), [workflow.evaluation_setup:_text](#function-357), [workflow.evaluation_setup:_valid_identifier](#function-358), [workflow.evaluation_setup:_validate_common](#function-359)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:_mapping](#function-351), [workflow.evaluation_setup:_path](#function-352), [workflow.evaluation_setup:_string_list](#function-353), [workflow.evaluation_setup:_text](#function-354), [workflow.evaluation_setup:_valid_identifier](#function-355), [workflow.evaluation_setup:_validate_common](#function-356)
 
-Called by: [workflow.evaluation_setup:freeze_evaluation](#function-363)
+Called by: [workflow.evaluation_setup:freeze_evaluation](#function-360)
 
-<a id="function-366"></a>
+<a id="function-363"></a>
 ### [validate_bank](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L236)
 
 Actually execute reference and negative solutions, keeping all evidence.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.evaluation_setup:_checked_execution](#function-352), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.evaluation_setup:control_passes](#function-362), [workflow.execution:atomic_json](#function-369), [workflow.execution:ownership](#function-372)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:_checked_execution](#function-349), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.evaluation_setup:control_passes](#function-359), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369)
 
-Called by: [workflow.evaluation_setup:freeze_evaluation](#function-363)
+Called by: [workflow.evaluation_setup:freeze_evaluation](#function-360)
 
-<a id="function-367"></a>
+<a id="function-364"></a>
 ### [verified_outcome](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L196)
 
 Return True/False for a checked solution, or None for a checker failure.
 
 Calls: None resolved
 
-Called by: [workflow.condition_setup:checked_outcome](#function-331), [workflow.evaluation:_run_unit](#function-347), [workflow.evaluation_setup:_checked_execution](#function-352), [workflow.evaluation_setup:control_passes](#function-362)
+Called by: [workflow.condition_setup:checked_outcome](#function-328), [workflow.evaluation:_run_unit](#function-344), [workflow.evaluation_setup:_checked_execution](#function-349), [workflow.evaluation_setup:control_passes](#function-359)
 
 ## workflow.execution
 
 107 lines · `workflow/execution.py`
 
-<a id="function-368"></a>
+<a id="function-365"></a>
 ### [_stop_process_group](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/execution.py#L39)
 
 Stop descendants in this invocation's private group, returning cleanup errors.
 
 Calls: None resolved
 
-Called by: [workflow.execution:invoke](#function-370)
+Called by: [workflow.execution:invoke](#function-367)
 
-<a id="function-369"></a>
+<a id="function-366"></a>
 ### [atomic_json](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/execution.py#L14)
 
 Replace a complete checkpoint atomically; never leave half-written JSON.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:run_condition_unit](#function-320), [workflow.condition_evaluation:run_conditions](#function-321), [workflow.condition_reporting:write_condition_report](#function-328), [workflow.condition_setup:freeze_conditions](#function-335), [workflow.condition_setup:validate_conditions](#function-338), [workflow.evaluation:run_evaluation](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-363), [workflow.evaluation_setup:validate_bank](#function-366), [workflow.execution:invoke](#function-370), [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_context:preview_improvements](#function-389), [workflow.improvement_suggestions:_finish_proposal](#function-390), [workflow.improvement_suggestions:propose_improvements](#function-395), [workflow.reporting:write_report](#function-409), [workflow.treatment_bundles:bundle_proposals](#function-433), [workflow.treatment_versions:_record](#function-447)
+Called by: [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_reporting:write_condition_report](#function-325), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.execution:invoke](#function-367), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.reporting:write_report](#function-408), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_record](#function-446)
 
-<a id="function-370"></a>
+<a id="function-367"></a>
 ### [invoke](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/execution.py#L54)
 
 No shell. Keep full logs, including failed and interrupted attempts.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.execution:_stop_process_group](#function-368), [workflow.execution:atomic_json](#function-369)
+Calls: [workflow.ablation:load](#function-305), [workflow.execution:_stop_process_group](#function-365), [workflow.execution:atomic_json](#function-366)
 
-Called by: [workflow.condition_setup:execute_condition](#function-334), [workflow.evaluation:_request_solution](#function-346), [workflow.evaluation_setup:_checked_execution](#function-352), [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_suggestions:propose_improvements](#function-395)
+Called by: [workflow.condition_setup:execute_condition](#function-331), [workflow.evaluation:_request_solution](#function-343), [workflow.evaluation_setup:_checked_execution](#function-349), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_suggestions:propose_improvements](#function-394)
 
-<a id="function-371"></a>
+<a id="function-368"></a>
 ### [next_directory](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/execution.py#L102)
 
 Never overwrite partial work left by a killed process.
 
 Calls: None resolved
 
-Called by: [workflow.condition_setup:execute_condition](#function-334), [workflow.evaluation:_request_solution](#function-346), [workflow.evaluation_setup:_checked_execution](#function-352)
+Called by: [workflow.condition_setup:execute_condition](#function-331), [workflow.evaluation:_request_solution](#function-343), [workflow.evaluation_setup:_checked_execution](#function-349)
 
-<a id="function-372"></a>
+<a id="function-369"></a>
 ### [ownership](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/execution.py#L23)
 
 Hold one OS lock for the writer; process exit releases a stale lock.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-321), [workflow.condition_setup:freeze_conditions](#function-335), [workflow.condition_setup:validate_conditions](#function-338), [workflow.evaluation:run_evaluation](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-363), [workflow.evaluation_setup:validate_bank](#function-366), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
+
+## workflow.gemini_flash_adapter
+
+84 lines · `workflow/gemini_flash_adapter.py`
+
+<a id="function-370"></a>
+### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/gemini_flash_adapter.py#L36)
+
+Function in `workflow.gemini_flash_adapter`.
+
+Calls: [workflow.gemini_flash_adapter:response_record](#function-371)
+
+Called by: None resolved
+
+<a id="function-371"></a>
+### [response_record](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/gemini_flash_adapter.py#L14)
+
+Retain evaluator-compatible totals and distinguish visible/reasoning usage.
+
+Calls: None resolved
+
+Called by: [workflow.gemini_flash_adapter:main](#function-370)
 
 ## workflow.improvement_batches
 
 328 lines · `workflow/improvement_batches.py`
 
-<a id="function-373"></a>
+<a id="function-372"></a>
 ### [_alias_destination](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L18)
 
 Function in `workflow.improvement_batches`.
 
-Calls: [workflow.improvement_context:alias_target](#function-386)
+Calls: [workflow.improvement_context:alias_target](#function-385)
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:preview_library_improvements.context](#function-380)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:preview_library_improvements.context](#function-379)
 
-<a id="function-374"></a>
+<a id="function-373"></a>
 ### [_implementation_bindings](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L163)
 
 Function in `workflow.improvement_batches`.
 
-Calls: [workflow.ablation:bind](#function-302)
+Calls: [workflow.ablation:bind](#function-299)
 
-Called by: [workflow.improvement_batches:propose_library_improvements](#function-381)
+Called by: [workflow.improvement_batches:propose_library_improvements](#function-380)
 
-<a id="function-375"></a>
+<a id="function-374"></a>
 ### [_integer](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L13)
 
 Function in `workflow.improvement_batches`.
 
 Calls: None resolved
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:propose_library_improvements](#function-381)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380)
 
-<a id="function-376"></a>
+<a id="function-375"></a>
 ### [_library_overview](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L29)
 
 Bound the cross-batch orientation, while retaining the full catalogue on disk.
 
 Calls: None resolved
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378)
 
-<a id="function-377"></a>
+<a id="function-376"></a>
 ### [_run_batch](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L179)
 
 Function in `workflow.improvement_batches`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.execution:atomic_json](#function-369), [workflow.execution:invoke](#function-370), [workflow.improvement_batches:_verified_completion](#function-378), [workflow.improvement_suggestions:_finish_proposal](#function-390), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.improvement_suggestions:validate_suggestions](#function-396)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.execution:atomic_json](#function-366), [workflow.execution:invoke](#function-367), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.improvement_suggestions:validate_suggestions](#function-395)
 
-Called by: [workflow.improvement_batches:propose_library_improvements](#function-381)
+Called by: [workflow.improvement_batches:propose_library_improvements](#function-380)
 
-<a id="function-378"></a>
+<a id="function-377"></a>
 ### [_verified_completion](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L170)
 
 Function in `workflow.improvement_batches`.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310)
 
-Called by: [workflow.improvement_batches:_run_batch](#function-377)
+Called by: [workflow.improvement_batches:_run_batch](#function-376)
 
-<a id="function-379"></a>
+<a id="function-378"></a>
 ### [preview_library_improvements](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L51)
 
 Partition every selected public API exactly once; save contexts without calls.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:verify_artifact](#function-313), [workflow.execution:atomic_json](#function-369), [workflow.improvement_batches:_alias_destination](#function-373), [workflow.improvement_batches:_integer](#function-375), [workflow.improvement_batches:_library_overview](#function-376), [workflow.improvement_batches:preview_library_improvements.context](#function-380), [workflow.improvement_context:_development_errors](#function-382), [workflow.improvement_context:_library_inputs](#function-383), [workflow.improvement_context:_semantic_context](#function-384), [workflow.improvement_context:_source_windows](#function-385), [workflow.improvement_context:development_destination](#function-387)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:verify_artifact](#function-310), [workflow.execution:atomic_json](#function-366), [workflow.improvement_batches:_alias_destination](#function-372), [workflow.improvement_batches:_integer](#function-374), [workflow.improvement_batches:_library_overview](#function-375), [workflow.improvement_batches:preview_library_improvements.context](#function-379), [workflow.improvement_context:_development_errors](#function-381), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_context:_source_windows](#function-384), [workflow.improvement_context:development_destination](#function-386)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
-<a id="function-380"></a>
+<a id="function-379"></a>
 ### [preview_library_improvements.context](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L89)
 
 Function in `workflow.improvement_batches`.
 
-Calls: [workflow.improvement_batches:_alias_destination](#function-373)
+Calls: [workflow.improvement_batches:_alias_destination](#function-372)
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378)
 
-<a id="function-381"></a>
+<a id="function-380"></a>
 ### [propose_library_improvements](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_batches.py#L224)
 
 Run/resume a bounded proposal collection; install nothing and preserve failures.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.execution:atomic_json](#function-369), [workflow.execution:ownership](#function-372), [workflow.improvement_batches:_implementation_bindings](#function-374), [workflow.improvement_batches:_integer](#function-375), [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_context:development_destination](#function-387), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.improvement_suggestions:_model_settings](#function-392)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369), [workflow.improvement_batches:_implementation_bindings](#function-373), [workflow.improvement_batches:_integer](#function-374), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_context:development_destination](#function-386), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.improvement_suggestions:_model_settings](#function-391)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
 ## workflow.improvement_context
 
 241 lines · `workflow/improvement_context.py`
 
-<a id="function-382"></a>
+<a id="function-381"></a>
 ### [_development_errors](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L57)
 
 Only explicit development logs; never read a held-out bank or its oracles.
 
-Calls: [workflow.ablation:bind](#function-302)
+Calls: [workflow.ablation:bind](#function-299)
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_context:preview_improvements](#function-389)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_context:preview_improvements](#function-388)
 
-<a id="function-383"></a>
+<a id="function-382"></a>
 ### [_library_inputs](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L104)
 
 Discover the full pinned public surface without importing target code.
 
-Calls: [aideal.api_discovery:public_api_details](#function-14), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.improvement_context:original_checkout](#function-388), [workflow.preparation:_engine_config_module](#function-403), [workflow.treatment_versions:_run](#function-449)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.improvement_context:original_checkout](#function-387), [workflow.preparation:_engine_config_module](#function-402), [workflow.treatment_versions:_run](#function-448)
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_context:preview_improvements](#function-389)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_context:preview_improvements](#function-388)
 
-<a id="function-384"></a>
+<a id="function-383"></a>
 ### [_semantic_context](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L155)
 
 Expose discovery semantics and explicit profile, never model credentials.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.preparation:_engine_config_module](#function-403)
+Calls: [workflow.ablation:bind](#function-299), [workflow.preparation:_engine_config_module](#function-402)
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_context:preview_improvements](#function-389)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_context:preview_improvements](#function-388)
 
-<a id="function-385"></a>
+<a id="function-384"></a>
 ### [_source_windows](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L179)
 
 Capture bounded literal source evidence, keyed by original function ID.
 
-Calls: [workflow.ablation:bind](#function-302)
+Calls: [workflow.ablation:bind](#function-299)
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_context:preview_improvements](#function-389)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_context:preview_improvements](#function-388)
 
-<a id="function-386"></a>
+<a id="function-385"></a>
 ### [alias_target](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L15)
 
 Function in `workflow.improvement_context`.
 
 Calls: None resolved
 
-Called by: [workflow.improvement_batches:_alias_destination](#function-373), [workflow.improvement_context:preview_improvements](#function-389), [workflow.improvement_suggestions:validate_suggestions](#function-396)
+Called by: [workflow.improvement_batches:_alias_destination](#function-372), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:validate_suggestions](#function-395)
 
-<a id="function-387"></a>
+<a id="function-386"></a>
 ### [development_destination](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L46)
 
 Keep preview/proposal outputs outside all library source checkouts.
 
-Calls: [workflow.ablation:load](#function-308)
+Calls: [workflow.ablation:load](#function-305)
 
-Called by: [workflow.improvement_batches:preview_library_improvements](#function-379), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_context:preview_improvements](#function-389), [workflow.improvement_suggestions:propose_improvements](#function-395)
+Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:propose_improvements](#function-394)
 
-<a id="function-388"></a>
+<a id="function-387"></a>
 ### [original_checkout](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L28)
 
 Function in `workflow.improvement_context`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_run](#function-449)
+Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_run](#function-448)
 
-Called by: [workflow.improvement_context:_library_inputs](#function-383), [workflow.improvement_suggestions:_finish_proposal](#function-390), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.source_refactors:install_refactor](#function-431)
+Called by: [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-430)
 
-<a id="function-389"></a>
+<a id="function-388"></a>
 ### [preview_improvements](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L206)
 
 Save the exact development context before any model command is permitted.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.execution:atomic_json](#function-369), [workflow.improvement_context:_development_errors](#function-382), [workflow.improvement_context:_library_inputs](#function-383), [workflow.improvement_context:_semantic_context](#function-384), [workflow.improvement_context:_source_windows](#function-385), [workflow.improvement_context:alias_target](#function-386), [workflow.improvement_context:development_destination](#function-387)
+Calls: [workflow.ablation:digest](#function-302), [workflow.execution:atomic_json](#function-366), [workflow.improvement_context:_development_errors](#function-381), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_context:_source_windows](#function-384), [workflow.improvement_context:alias_target](#function-385), [workflow.improvement_context:development_destination](#function-386)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
 ## workflow.improvement_suggestions
 
 213 lines · `workflow/improvement_suggestions.py`
 
-<a id="function-390"></a>
+<a id="function-389"></a>
 ### [_finish_proposal](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_suggestions.py#L147)
 
 Persist review artifacts from a recorded result; never install or execute them.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:verify_artifact](#function-313), [workflow.execution:atomic_json](#function-369), [workflow.improvement_context:original_checkout](#function-388), [workflow.improvement_suggestions:validate_suggestions](#function-396)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:verify_artifact](#function-310), [workflow.execution:atomic_json](#function-366), [workflow.improvement_context:original_checkout](#function-387), [workflow.improvement_suggestions:validate_suggestions](#function-395)
 
-Called by: [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_suggestions:propose_improvements](#function-395)
+Called by: [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_suggestions:propose_improvements](#function-394)
 
-<a id="function-391"></a>
+<a id="function-390"></a>
 ### [_load_preview](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_suggestions.py#L108)
 
 Revalidate the pinned source and development inputs before any request.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.improvement_context:original_checkout](#function-388)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.improvement_context:original_checkout](#function-387)
 
-Called by: [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_suggestions:propose_improvements](#function-395)
+Called by: [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_suggestions:propose_improvements](#function-394)
 
-<a id="function-392"></a>
+<a id="function-391"></a>
 ### [_model_settings](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_suggestions.py#L25)
 
 Function in `workflow.improvement_suggestions`.
 
-Calls: [workflow.improvement_suggestions:_text](#function-393), [workflow.preparation:_engine_config_module](#function-403)
+Calls: [workflow.improvement_suggestions:_text](#function-392), [workflow.preparation:_engine_config_module](#function-402)
 
-Called by: [workflow.improvement_batches:propose_library_improvements](#function-381), [workflow.improvement_suggestions:propose_improvements](#function-395)
+Called by: [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_suggestions:propose_improvements](#function-394)
 
-<a id="function-393"></a>
+<a id="function-392"></a>
 ### [_text](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_suggestions.py#L19)
 
 Function in `workflow.improvement_suggestions`.
 
 Calls: None resolved
 
-Called by: [workflow.improvement_suggestions:_model_settings](#function-392), [workflow.improvement_suggestions:validate_suggestions](#function-396)
+Called by: [workflow.improvement_suggestions:_model_settings](#function-391), [workflow.improvement_suggestions:validate_suggestions](#function-395)
 
-<a id="function-394"></a>
+<a id="function-393"></a>
 ### [matching_fix_hints](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_suggestions.py#L209)
 
 Return only same-function literal matches; hints never become verified here.
 
 Calls: None resolved
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
-<a id="function-395"></a>
+<a id="function-394"></a>
 ### [propose_improvements](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_suggestions.py#L124)
 
 One recorded model request, producing a complete unvalidated treatment bundle.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.execution:atomic_json](#function-369), [workflow.execution:invoke](#function-370), [workflow.improvement_context:development_destination](#function-387), [workflow.improvement_suggestions:_finish_proposal](#function-390), [workflow.improvement_suggestions:_load_preview](#function-391), [workflow.improvement_suggestions:_model_settings](#function-392)
+Calls: [workflow.ablation:bind](#function-299), [workflow.execution:atomic_json](#function-366), [workflow.execution:invoke](#function-367), [workflow.improvement_context:development_destination](#function-386), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.improvement_suggestions:_model_settings](#function-391)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
-<a id="function-396"></a>
+<a id="function-395"></a>
 ### [validate_suggestions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_suggestions.py#L43)
 
 Validate referential/schema integrity, without claiming code correctness.
 
-Calls: [workflow.improvement_context:alias_target](#function-386), [workflow.improvement_suggestions:_text](#function-393), [workflow.refactor_proposals:validate_refactors](#function-406)
+Calls: [workflow.improvement_context:alias_target](#function-385), [workflow.improvement_suggestions:_text](#function-392), [workflow.refactor_proposals:validate_refactors](#function-405)
 
-Called by: [workflow.improvement_batches:_run_batch](#function-377), [workflow.improvement_suggestions:_finish_proposal](#function-390)
+Called by: [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_suggestions:_finish_proposal](#function-389)
 
 ## workflow.mcp_server
 
 45 lines · `workflow/mcp_server.py`
 
-<a id="function-397"></a>
+<a id="function-396"></a>
 ### [attach_codebase](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/mcp_server.py#L22)
 
 Create five real branches in a separate local clone; never patch the input checkout.
 
-Calls: [workflow.worktrees:attach](#function-454)
+Calls: [workflow.worktrees:attach](#function-453)
 
 Called by: None resolved
 
-<a id="function-398"></a>
+<a id="function-397"></a>
 ### [inspect_study](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/mcp_server.py#L28)
 
 Inspect generated preparation records; does not launch evaluation or validate approval.
 
-Calls: [workflow.preparation:prepared_study_status](#function-405)
+Calls: [workflow.preparation:prepared_study_status](#function-404)
 
 Called by: None resolved
 
-<a id="function-399"></a>
+<a id="function-398"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/mcp_server.py#L40)
 
 Function in `workflow.mcp_server`.
 
 Calls: None resolved
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
-<a id="function-400"></a>
+<a id="function-399"></a>
 ### [operating_instructions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/mcp_server.py#L34)
 
 Read the toolkit's current implementation boundaries and end-to-end instructions.
@@ -4220,153 +4207,153 @@ Called by: None resolved
 
 46 lines · `workflow/model_adapter.py`
 
-<a id="function-401"></a>
+<a id="function-400"></a>
 ### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/model_adapter.py#L29)
 
 Function in `workflow.model_adapter`.
 
-Calls: [workflow.model_adapter:response_record](#function-402)
+Calls: [workflow.model_adapter:response_record](#function-401)
 
 Called by: None resolved
 
-<a id="function-402"></a>
+<a id="function-401"></a>
 ### [response_record](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/model_adapter.py#L11)
 
 Preserve usage even when the model returns no code.
 
 Calls: None resolved
 
-Called by: [workflow.model_adapter:main](#function-401)
+Called by: [workflow.model_adapter:main](#function-400)
 
 ## workflow.preparation
 
 147 lines · `workflow/preparation.py`
 
-<a id="function-403"></a>
+<a id="function-402"></a>
 ### [_engine_config_module](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/preparation.py#L18)
 
 Load the pinned engine's YAML loader, without importing its model clients.
 
 Calls: None resolved
 
-Called by: [workflow.improvement_context:_library_inputs](#function-383), [workflow.improvement_context:_semantic_context](#function-384), [workflow.improvement_suggestions:_model_settings](#function-392), [workflow.preparation:prepare_study](#function-404), [workflow.scaffolding:scaffold_spec](#function-410), [workflow.scaffolding:write_scaffold](#function-411)
+Called by: [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_suggestions:_model_settings](#function-391), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:scaffold_spec](#function-409), [workflow.scaffolding:write_scaffold](#function-410)
 
-<a id="function-404"></a>
+<a id="function-403"></a>
 ### [prepare_study](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/preparation.py#L34)
 
 Read the archived engine's YAML schema and create five isolated drafts.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:save](#function-310), [workflow.preparation:_engine_config_module](#function-403), [workflow.preparation:prepared_study_status](#function-405)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:save](#function-307), [workflow.preparation:_engine_config_module](#function-402), [workflow.preparation:prepared_study_status](#function-404)
 
-Called by: [workflow.__main__:main](#function-298), [workflow.worktrees:attach](#function-454)
+Called by: [workflow.__main__:main](#function-295), [workflow.worktrees:attach](#function-453)
 
-<a id="function-405"></a>
+<a id="function-404"></a>
 ### [prepared_study_status](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/preparation.py#L136)
 
 Report generic draft readiness without implying adapter execution exists.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.ablation:preflight](#function-309)
+Calls: [workflow.ablation:load](#function-305), [workflow.ablation:preflight](#function-306)
 
-Called by: [workflow.__main__:main](#function-298), [workflow.mcp_server:inspect_study](#function-398), [workflow.preparation:prepare_study](#function-404)
+Called by: [workflow.__main__:main](#function-295), [workflow.mcp_server:inspect_study](#function-397), [workflow.preparation:prepare_study](#function-403)
 
 ## workflow.refactor_proposals
 
 47 lines · `workflow/refactor_proposals.py`
 
-<a id="function-406"></a>
+<a id="function-405"></a>
 ### [validate_refactors](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/refactor_proposals.py#L4)
 
 Check literal source citations, not equivalence or implementation safety.
 
 Calls: None resolved
 
-Called by: [workflow.improvement_suggestions:validate_suggestions](#function-396)
+Called by: [workflow.improvement_suggestions:validate_suggestions](#function-395)
 
 ## workflow.reporting
 
 86 lines · `workflow/reporting.py`
 
-<a id="function-407"></a>
+<a id="function-406"></a>
 ### [report](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/reporting.py#L24)
 
 Function in `workflow.reporting`.
 
-Calls: [workflow.ablation:score](#function-311)
+Calls: [workflow.ablation:score](#function-308)
 
-Called by: [workflow.evaluation:run_evaluation](#function-349)
+Called by: [workflow.evaluation:run_evaluation](#function-346)
 
-<a id="function-408"></a>
+<a id="function-407"></a>
 ### [verify](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/reporting.py#L10)
 
 Check artifact identity and archived reporting independently of live jobs.
 
-Calls: [workflow.ablation:file_hash](#function-306), [workflow.ablation:load](#function-308)
+Calls: [workflow.ablation:file_hash](#function-303), [workflow.ablation:load](#function-305)
 
-Called by: [workflow.__main__:main](#function-298)
+Called by: [workflow.__main__:main](#function-295)
 
-<a id="function-409"></a>
+<a id="function-408"></a>
 ### [write_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/reporting.py#L60)
 
 Function in `workflow.reporting`.
 
-Calls: [workflow.execution:atomic_json](#function-369)
+Calls: [workflow.execution:atomic_json](#function-366)
 
-Called by: [workflow.evaluation:run_evaluation](#function-349)
+Called by: [workflow.evaluation:run_evaluation](#function-346)
 
 ## workflow.scaffolding
 
 119 lines · `workflow/scaffolding.py`
 
-<a id="function-410"></a>
+<a id="function-409"></a>
 ### [scaffold_spec](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/scaffolding.py#L17)
 
 Read a configured harness or render a language-only, fail-closed skeleton.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.preparation:_engine_config_module](#function-403)
+Calls: [workflow.ablation:bind](#function-299), [workflow.preparation:_engine_config_module](#function-402)
 
-Called by: [workflow.worktrees:attach](#function-454)
+Called by: [workflow.worktrees:attach](#function-453)
 
-<a id="function-411"></a>
+<a id="function-410"></a>
 ### [write_scaffold](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/scaffolding.py#L57)
 
 Write the same instrumentation to every condition; never overwrite .aideal.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:save](#function-310), [workflow.preparation:_engine_config_module](#function-403), [workflow.scaffolding:write_scaffold.relocate](#function-412)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:save](#function-307), [workflow.preparation:_engine_config_module](#function-402), [workflow.scaffolding:write_scaffold.relocate](#function-411)
 
-Called by: [workflow.worktrees:attach](#function-454)
+Called by: [workflow.worktrees:attach](#function-453)
 
-<a id="function-412"></a>
+<a id="function-411"></a>
 ### [write_scaffold.relocate](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/scaffolding.py#L67)
 
 Function in `workflow.scaffolding`.
 
 Calls: None resolved
 
-Called by: [workflow.scaffolding:write_scaffold](#function-411)
+Called by: [workflow.scaffolding:write_scaffold](#function-410)
 
 ## workflow.source_duplicates
 
 375 lines · `workflow/source_duplicates.py`
 
-<a id="function-413"></a>
+<a id="function-412"></a>
 ### [_digest](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L37)
 
 Function in `workflow.source_duplicates`.
 
 Calls: None resolved
 
-Called by: [workflow.source_duplicates:_lexical_functions](#function-417), [workflow.source_duplicates:_python_functions.visit](#function-421), [workflow.source_duplicates:scan_duplicates](#function-424)
+Called by: [workflow.source_duplicates:_lexical_functions](#function-416), [workflow.source_duplicates:_python_functions.visit](#function-420), [workflow.source_duplicates:scan_duplicates](#function-423)
 
-<a id="function-414"></a>
+<a id="function-413"></a>
 ### [_files](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L52)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_files.git](#function-416), [workflow.source_duplicates:_matches](#function-418)
+Calls: [workflow.source_duplicates:_files.git](#function-415), [workflow.source_duplicates:_matches](#function-417)
 
-Called by: [workflow.source_duplicates:scan_duplicates](#function-424)
+Called by: [workflow.source_duplicates:scan_duplicates](#function-423)
 
-<a id="function-415"></a>
+<a id="function-414"></a>
 ### [_files.fail_discovery](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L78)
 
 Function in `workflow.source_duplicates`.
@@ -4375,369 +4362,369 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-416"></a>
+<a id="function-415"></a>
 ### [_files.git](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L55)
 
 Function in `workflow.source_duplicates`.
 
 Calls: None resolved
 
-Called by: [workflow.source_duplicates:_files](#function-414)
+Called by: [workflow.source_duplicates:_files](#function-413)
 
-<a id="function-417"></a>
+<a id="function-416"></a>
 ### [_lexical_functions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L196)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_digest](#function-413), [workflow.source_duplicates:_tokens](#function-422)
+Calls: [workflow.source_duplicates:_digest](#function-412), [workflow.source_duplicates:_tokens](#function-421)
 
-Called by: [workflow.source_duplicates:scan_duplicates](#function-424)
+Called by: [workflow.source_duplicates:scan_duplicates](#function-423)
 
-<a id="function-418"></a>
+<a id="function-417"></a>
 ### [_matches](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L42)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_matches.match](#function-419)
+Calls: [workflow.source_duplicates:_matches.match](#function-418)
 
-Called by: [workflow.source_duplicates:_files](#function-414)
+Called by: [workflow.source_duplicates:_files](#function-413)
 
-<a id="function-419"></a>
+<a id="function-418"></a>
 ### [_matches.match](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L43)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_matches.match](#function-419)
+Calls: [workflow.source_duplicates:_matches.match](#function-418)
 
-Called by: [workflow.source_duplicates:_matches](#function-418), [workflow.source_duplicates:_matches.match](#function-419)
+Called by: [workflow.source_duplicates:_matches](#function-417), [workflow.source_duplicates:_matches.match](#function-418)
 
-<a id="function-420"></a>
+<a id="function-419"></a>
 ### [_python_functions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L100)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_python_functions.visit](#function-421)
+Calls: [workflow.source_duplicates:_python_functions.visit](#function-420)
 
-Called by: [workflow.source_duplicates:scan_duplicates](#function-424)
+Called by: [workflow.source_duplicates:scan_duplicates](#function-423)
 
-<a id="function-421"></a>
+<a id="function-420"></a>
 ### [_python_functions.visit](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L103)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_digest](#function-413), [workflow.source_duplicates:_python_functions.visit](#function-421)
+Calls: [workflow.source_duplicates:_digest](#function-412), [workflow.source_duplicates:_python_functions.visit](#function-420)
 
-Called by: [workflow.source_duplicates:_python_functions](#function-420), [workflow.source_duplicates:_python_functions.visit](#function-421)
+Called by: [workflow.source_duplicates:_python_functions](#function-419), [workflow.source_duplicates:_python_functions.visit](#function-420)
 
-<a id="function-422"></a>
+<a id="function-421"></a>
 ### [_tokens](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L132)
 
 Keep literal bytes/identifiers; discard comments without treating their braces as code.
 
 Calls: None resolved
 
-Called by: [workflow.source_duplicates:_lexical_functions](#function-417)
+Called by: [workflow.source_duplicates:_lexical_functions](#function-416)
 
-<a id="function-423"></a>
+<a id="function-422"></a>
 ### [compare_duplicate_reports](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L347)
 
 Compare observed candidates, refusing to claim reduction after coverage failures.
 
 Calls: None resolved
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
-<a id="function-424"></a>
+<a id="function-423"></a>
 ### [scan_duplicates](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L273)
 
 Return JSON-compatible evidence and suggestions; never change library files.
 
-Calls: [workflow.source_duplicates:_digest](#function-413), [workflow.source_duplicates:_files](#function-414), [workflow.source_duplicates:_lexical_functions](#function-417), [workflow.source_duplicates:_python_functions](#function-420)
+Calls: [workflow.source_duplicates:_digest](#function-412), [workflow.source_duplicates:_files](#function-413), [workflow.source_duplicates:_lexical_functions](#function-416), [workflow.source_duplicates:_python_functions](#function-419)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
 ## workflow.source_refactors
 
 262 lines · `workflow/source_refactors.py`
 
-<a id="function-425"></a>
+<a id="function-424"></a>
 ### [_candidate](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L77)
 
 Function in `workflow.source_refactors`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.treatment_versions:_blob](#function-437), [workflow.treatment_versions:_relative](#function-448), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_safe_path](#function-450), [workflow.treatment_versions:_trees](#function-451)
+Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_blob](#function-436), [workflow.treatment_versions:_relative](#function-447), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
 
-Called by: [workflow.source_refactors:install_refactor](#function-431)
+Called by: [workflow.source_refactors:install_refactor](#function-430)
 
-<a id="function-426"></a>
+<a id="function-425"></a>
 ### [_check_repository](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L68)
 
 Function in `workflow.source_refactors`.
 
-Calls: [workflow.treatment_versions:_run](#function-449)
+Calls: [workflow.treatment_versions:_run](#function-448)
 
-Called by: [workflow.source_refactors:install_refactor](#function-431)
+Called by: [workflow.source_refactors:install_refactor](#function-430)
 
-<a id="function-427"></a>
+<a id="function-426"></a>
 ### [_current](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L46)
 
 Function in `workflow.source_refactors`.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:load](#function-308), [workflow.source_refactors:_lineage](#function-428), [workflow.source_refactors:_version](#function-430), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_version](#function-429), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.source_refactors:install_refactor](#function-431), [workflow.source_refactors:study_versions](#function-432)
+Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431)
 
-<a id="function-428"></a>
+<a id="function-427"></a>
 ### [_lineage](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L20)
 
 Follow explicit predecessor hashes; never infer latest from file times.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:load](#function-308), [workflow.source_refactors:_version](#function-430), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.source_refactors:_version](#function-429), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.source_refactors:_current](#function-427), [workflow.source_refactors:install_refactor](#function-431)
+Called by: [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:install_refactor](#function-430)
 
-<a id="function-429"></a>
+<a id="function-428"></a>
 ### [_other_pending](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L60)
 
 Prevent a second lineage while an earlier install needs recovery.
 
-Calls: [workflow.source_refactors:_version](#function-430), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.source_refactors:_version](#function-429), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.source_refactors:install_refactor](#function-431)
+Called by: [workflow.source_refactors:install_refactor](#function-430)
 
-<a id="function-430"></a>
+<a id="function-429"></a>
 ### [_version](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L14)
 
 Function in `workflow.source_refactors`.
 
 Calls: None resolved
 
-Called by: [workflow.source_refactors:_current](#function-427), [workflow.source_refactors:_lineage](#function-428), [workflow.source_refactors:_other_pending](#function-429)
+Called by: [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_other_pending](#function-428)
 
-<a id="function-431"></a>
+<a id="function-430"></a>
 ### [install_refactor](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L143)
 
 Create one local version branch from baseline; never edit existing arms.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.execution:ownership](#function-372), [workflow.improvement_context:original_checkout](#function-388), [workflow.source_refactors:_candidate](#function-425), [workflow.source_refactors:_check_repository](#function-426), [workflow.source_refactors:_current](#function-427), [workflow.source_refactors:_lineage](#function-428), [workflow.source_refactors:_other_pending](#function-429), [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_committed](#function-441), [workflow.treatment_versions:_install](#function-445), [workflow.treatment_versions:_record](#function-447), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_safe_path](#function-450), [workflow.treatment_versions:_trees](#function-451)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:ownership](#function-369), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_check_repository](#function-425), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_other_pending](#function-428), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_record](#function-446), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
-<a id="function-432"></a>
+<a id="function-431"></a>
 ### [study_versions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L240)
 
 Read current source/artifact pointers; do not switch any Git branch.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.source_refactors:_current](#function-427), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.ablation:load](#function-305), [workflow.source_refactors:_current](#function-426), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
 ## workflow.treatment_bundles
 
 122 lines · `workflow/treatment_bundles.py`
 
-<a id="function-433"></a>
+<a id="function-432"></a>
 ### [bundle_proposals](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_bundles.py#L11)
 
 Produce a complete multi-file version; installation remains a separate step.
 
-Calls: [workflow.ablation:bind](#function-302), [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.ablation:verify_artifact](#function-313), [workflow.execution:atomic_json](#function-369), [workflow.treatment_versions:_artifact_role](#function-434), [workflow.treatment_versions:_read_proposal](#function-446)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.execution:atomic_json](#function-366), [workflow.treatment_versions:_artifact_role](#function-433), [workflow.treatment_versions:_read_proposal](#function-445)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
 ## workflow.treatment_versions
 
 467 lines · `workflow/treatment_versions.py`
 
-<a id="function-434"></a>
+<a id="function-433"></a>
 ### [_artifact_role](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L69)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.treatment_bundles:bundle_proposals](#function-433), [workflow.treatment_versions:_bundle](#function-438), [workflow.treatment_versions:_read_proposal](#function-446)
+Called by: [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_bundle](#function-437), [workflow.treatment_versions:_read_proposal](#function-445)
 
-<a id="function-435"></a>
+<a id="function-434"></a>
 ### [_attachment](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L228)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-436"></a>
+<a id="function-435"></a>
 ### [_binding_entry](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L172)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_expected_changes](#function-444), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-437"></a>
+<a id="function-436"></a>
 ### [_blob](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L124)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.source_refactors:_candidate](#function-425), [workflow.treatment_versions:_bundle](#function-438), [workflow.treatment_versions:_disk_entry](#function-443)
+Called by: [workflow.source_refactors:_candidate](#function-424), [workflow.treatment_versions:_bundle](#function-437), [workflow.treatment_versions:_disk_entry](#function-442)
 
-<a id="function-438"></a>
+<a id="function-437"></a>
 ### [_bundle](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L159)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_artifact_role](#function-434), [workflow.treatment_versions:_blob](#function-437)
+Calls: [workflow.treatment_versions:_artifact_role](#function-433), [workflow.treatment_versions:_blob](#function-436)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-439"></a>
+<a id="function-438"></a>
 ### [_check_target_paths](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L176)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-440"></a>
+<a id="function-439"></a>
 ### [_check_worktree](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L189)
 
 Compare raw file/index blobs, without invoking attributes or Git filters.
 
-Calls: [workflow.treatment_versions:_binding_entry](#function-436), [workflow.treatment_versions:_disk_entry](#function-443), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_safe_path](#function-450), [workflow.treatment_versions:_trees](#function-451)
+Calls: [workflow.treatment_versions:_binding_entry](#function-435), [workflow.treatment_versions:_disk_entry](#function-442), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
 
-Called by: [workflow.condition_inputs:backend_identity](#function-322), [workflow.improvement_context:original_checkout](#function-388), [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-441"></a>
+<a id="function-440"></a>
 ### [_committed](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L278)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_expected_changes](#function-444), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_trees](#function-451)
+Calls: [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_trees](#function-450)
 
-Called by: [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-442"></a>
+<a id="function-441"></a>
 ### [_current](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L255)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-443"></a>
+<a id="function-442"></a>
 ### [_disk_entry](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L145)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_blob](#function-437)
+Calls: [workflow.treatment_versions:_blob](#function-436)
 
-Called by: [workflow.treatment_versions:_check_worktree](#function-440)
+Called by: [workflow.treatment_versions:_check_worktree](#function-439)
 
-<a id="function-444"></a>
+<a id="function-443"></a>
 ### [_expected_changes](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L271)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_binding_entry](#function-436), [workflow.treatment_versions:_trees](#function-451)
+Calls: [workflow.treatment_versions:_binding_entry](#function-435), [workflow.treatment_versions:_trees](#function-450)
 
-Called by: [workflow.treatment_versions:_committed](#function-441), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-445"></a>
+<a id="function-444"></a>
 ### [_install](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L288)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-446"></a>
+<a id="function-445"></a>
 ### [_read_proposal](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L73)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.treatment_versions:_artifact_role](#function-434), [workflow.treatment_versions:_relative](#function-448), [workflow.treatment_versions:_safe_path](#function-450)
+Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_artifact_role](#function-433), [workflow.treatment_versions:_relative](#function-447), [workflow.treatment_versions:_safe_path](#function-449)
 
-Called by: [workflow.treatment_bundles:bundle_proposals](#function-433), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-447"></a>
+<a id="function-446"></a>
 ### [_record](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L63)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.execution:atomic_json](#function-369)
+Calls: [workflow.execution:atomic_json](#function-366)
 
-Called by: [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-448"></a>
+<a id="function-447"></a>
 ### [_relative](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L46)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.source_refactors:_candidate](#function-425), [workflow.treatment_versions:_read_proposal](#function-446), [workflow.treatment_versions:_safe_path](#function-450)
+Called by: [workflow.source_refactors:_candidate](#function-424), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:_safe_path](#function-449)
 
-<a id="function-449"></a>
+<a id="function-448"></a>
 ### [_run](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L31)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.worktrees:_git](#function-453)
+Calls: [workflow.worktrees:_git](#function-452)
 
-Called by: [workflow.condition_inputs:backend_identity](#function-322), [workflow.improvement_context:_library_inputs](#function-383), [workflow.improvement_context:original_checkout](#function-388), [workflow.source_refactors:_candidate](#function-425), [workflow.source_refactors:_check_repository](#function-426), [workflow.source_refactors:install_refactor](#function-431), [workflow.source_refactors:study_versions](#function-432), [workflow.treatment_versions:_attachment](#function-435), [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_committed](#function-441), [workflow.treatment_versions:_install](#function-445), [workflow.treatment_versions:_trees](#function-451), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_check_repository](#function-425), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_trees](#function-450), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-450"></a>
+<a id="function-449"></a>
 ### [_safe_path](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L54)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_relative](#function-448)
+Calls: [workflow.treatment_versions:_relative](#function-447)
 
-Called by: [workflow.source_refactors:_candidate](#function-425), [workflow.source_refactors:_current](#function-427), [workflow.source_refactors:_lineage](#function-428), [workflow.source_refactors:_other_pending](#function-429), [workflow.source_refactors:install_refactor](#function-431), [workflow.source_refactors:study_versions](#function-432), [workflow.treatment_versions:_attachment](#function-435), [workflow.treatment_versions:_check_target_paths](#function-439), [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_current](#function-442), [workflow.treatment_versions:_install](#function-445), [workflow.treatment_versions:_read_proposal](#function-446), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_other_pending](#function-428), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_check_target_paths](#function-438), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-451"></a>
+<a id="function-450"></a>
 ### [_trees](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L128)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_run](#function-449)
+Calls: [workflow.treatment_versions:_run](#function-448)
 
-Called by: [workflow.condition_inputs:backend_identity](#function-322), [workflow.source_refactors:_candidate](#function-425), [workflow.source_refactors:install_refactor](#function-431), [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_committed](#function-441), [workflow.treatment_versions:_expected_changes](#function-444), [workflow.treatment_versions:apply_treatments](#function-452)
+Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:apply_treatments](#function-451)
 
-<a id="function-452"></a>
+<a id="function-451"></a>
 ### [apply_treatments](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L309)
 
 Install a complete proposal, preserving all earlier versions and evidence.
 
-Calls: [workflow.ablation:digest](#function-305), [workflow.ablation:load](#function-308), [workflow.evaluation_setup:assert_review_released](#function-361), [workflow.execution:ownership](#function-372), [workflow.treatment_versions:_attachment](#function-435), [workflow.treatment_versions:_binding_entry](#function-436), [workflow.treatment_versions:_bundle](#function-438), [workflow.treatment_versions:_check_target_paths](#function-439), [workflow.treatment_versions:_check_worktree](#function-440), [workflow.treatment_versions:_committed](#function-441), [workflow.treatment_versions:_current](#function-442), [workflow.treatment_versions:_expected_changes](#function-444), [workflow.treatment_versions:_install](#function-445), [workflow.treatment_versions:_read_proposal](#function-446), [workflow.treatment_versions:_record](#function-447), [workflow.treatment_versions:_run](#function-449), [workflow.treatment_versions:_safe_path](#function-450), [workflow.treatment_versions:_trees](#function-451)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:ownership](#function-369), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_binding_entry](#function-435), [workflow.treatment_versions:_bundle](#function-437), [workflow.treatment_versions:_check_target_paths](#function-438), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:_record](#function-446), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
 
-Called by: [workflow.development_cli:run_development_command](#function-342)
+Called by: [workflow.development_cli:run_development_command](#function-339)
 
 ## workflow.worktrees
 
 88 lines · `workflow/worktrees.py`
 
-<a id="function-453"></a>
+<a id="function-452"></a>
 ### [_git](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/worktrees.py#L10)
 
 Function in `workflow.worktrees`.
 
 Calls: None resolved
 
-Called by: [workflow.treatment_versions:_run](#function-449), [workflow.worktrees:attach](#function-454)
+Called by: [workflow.treatment_versions:_run](#function-448), [workflow.worktrees:attach](#function-453)
 
-<a id="function-454"></a>
+<a id="function-453"></a>
 ### [attach](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/worktrees.py#L19)
 
 Pin a clean local Git checkout; never switch or patch the user's checkout.
 
-Calls: [workflow.ablation:load](#function-308), [workflow.ablation:save](#function-310), [workflow.preparation:prepare_study](#function-404), [workflow.scaffolding:scaffold_spec](#function-410), [workflow.scaffolding:write_scaffold](#function-411), [workflow.worktrees:_git](#function-453)
+Calls: [workflow.ablation:load](#function-305), [workflow.ablation:save](#function-307), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:scaffold_spec](#function-409), [workflow.scaffolding:write_scaffold](#function-410), [workflow.worktrees:_git](#function-452)
 
-Called by: [workflow.__main__:main](#function-298), [workflow.mcp_server:attach_codebase](#function-397)
+Called by: [workflow.__main__:main](#function-295), [workflow.mcp_server:attach_codebase](#function-396)
