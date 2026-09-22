@@ -435,10 +435,22 @@
       "sha256": "d0bd3c5bdaa4d4e06008147b12197acce18bca3c2fa8ed72d252d1eefc957389"
     },
     {
+      "name": "workflow.openai_codex_adapter",
+      "path": "workflow/openai_codex_adapter.py",
+      "lines": 115,
+      "sha256": "69bd0531914326156dcd57a3d6ebc2e218fbd77646b0c2ffb0bb2f1c0cc14031"
+    },
+    {
       "name": "workflow.preparation",
       "path": "workflow/preparation.py",
       "lines": 147,
       "sha256": "2e7f7e5e2144ff8033c11d7ac812d1f2d3f85e16ebdb29c36d6171a51196ddc4"
+    },
+    {
+      "name": "workflow.provider_budget",
+      "path": "workflow/provider_budget.py",
+      "lines": 173,
+      "sha256": "5a6755b038228ba13ef191ea1ac7c6c22af59181618c17deb1b80f46d5f53308"
     },
     {
       "name": "workflow.refactor_proposals",
@@ -14185,6 +14197,101 @@
       "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/model_adapter.py#L11"
     },
     {
+      "id": "workflow.openai_codex_adapter:_failure",
+      "module": "workflow.openai_codex_adapter",
+      "name": "_failure",
+      "kind": "function",
+      "path": "workflow/openai_codex_adapter.py",
+      "line": 45,
+      "end_line": 53,
+      "signature": "_failure(exc)",
+      "summary": "Never persist raw SDK error bodies, URLs, headers, or exception messages.",
+      "calls": [],
+      "called_by": [
+        "workflow.openai_codex_adapter:main"
+      ],
+      "unresolved_calls": [
+        "getattr",
+        "isinstance",
+        "re.fullmatch",
+        "type"
+      ],
+      "prompts": [],
+      "source": "def _failure(exc):\n    \"\"\"Never persist raw SDK error bodies, URLs, headers, or exception messages.\"\"\"\n    code = getattr(exc, 'code', None)\n    request_id = getattr(exc, 'request_id', None)\n    status = getattr(exc, 'status_code', None)\n    return {'type': type(exc).__name__,\n            'status_code': status if type(status) is int and 100 <= status <= 599 else None,\n            'code': code if isinstance(code, str) and re.fullmatch(r'[a-z_]{1,64}', code) else None,\n            'request_id': request_id if isinstance(request_id, str) and re.fullmatch(r'req_[a-zA-Z0-9]{1,128}', request_id) else None}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/openai_codex_adapter.py#L45"
+    },
+    {
+      "id": "workflow.openai_codex_adapter:main",
+      "module": "workflow.openai_codex_adapter",
+      "name": "main",
+      "kind": "function",
+      "path": "workflow/openai_codex_adapter.py",
+      "line": 56,
+      "end_line": 111,
+      "signature": "main(argv=None)",
+      "summary": "",
+      "calls": [
+        "workflow.openai_codex_adapter:_failure",
+        "workflow.openai_codex_adapter:response_record"
+      ],
+      "called_by": [],
+      "unresolved_calls": [
+        "BudgetLedger",
+        "RuntimeError",
+        "ValueError",
+        "all",
+        "argparse.ArgumentParser",
+        "client.responses.create",
+        "digest",
+        "isinstance",
+        "json.dumps",
+        "json.load",
+        "ledger.finish",
+        "ledger.reserve",
+        "math.isfinite",
+        "openai.OpenAI",
+        "os.environ.get",
+        "parser.add_argument",
+        "parser.parse_args",
+        "print",
+        "record.get",
+        "record.update",
+        "str",
+        "type"
+      ],
+      "prompts": [],
+      "source": "def main(argv=None):\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--budget-ledger', required=True,\n                        help='Use --budget-ledger=/absolute/path so controllers do not hash this mutable file')\n    parser.add_argument('--max-cost-usd', default='5', help='Shared cap, at most $5; immutable on resume')\n    args = parser.parse_args(argv)\n    request = json.load(sys.stdin)\n    if request['model'] != MODEL:\n        raise ValueError('This adapter requires model gpt-5.3-codex')\n    if not all(isinstance(request[key], str) for key in ('system', 'prompt')):\n        raise ValueError('system and prompt must be strings')\n    cap = request['max_output_tokens']\n    if type(cap) is not int or not 0 < cap <= 128000:\n        raise ValueError('max_output_tokens must be an integer from 1 to 128000')\n    temperature = request['temperature']\n    if type(temperature) not in (int, float) or not math.isfinite(temperature):\n        raise ValueError('Requested temperature must be a finite number')\n    key = os.environ.get('OPENAI_API_KEY')\n    if not key:\n        raise RuntimeError('Set OPENAI_API_KEY in the launching environment')\n    import openai  # Optional SDK; --help and module inspection stay offline.\n\n    ledger = BudgetLedger(args.budget_ledger, args.max_cost_usd)\n    parameters = {'model': MODEL, 'reasoning': {'effort': 'low'}, 'max_output_tokens': cap,\n                  'store': False, 'tools': [], 'tool_choice': 'none', 'service_tier': 'default',\n                  'background': False, 'stream': False, 'truncation': 'disabled'}\n    settings = {'endpoint': 'https://api.openai.com/v1', 'api': 'responses', 'timeout_s': 120,\n                'max_retries': 0, 'sdk_version': openai.__version__, 'parameters': parameters,\n                'requested_temperature': temperature, 'temperature_sent': False,\n                'effective_temperature': 'provider_default_not_explicitly_set',\n                'instructions_sha256': digest(request['system']), 'input_sha256': digest(request['prompt']),\n                'budget_ledger': str(ledger.path), 'max_cost_nanousd': ledger.identity['max_cost_nanousd']}\n    request_hash, settings_hash = digest(request), digest(settings)\n    reservation = None\n    try:\n        with openai.OpenAI(api_key=key, base_url=settings['endpoint'], max_retries=0, timeout=120.0) as client:\n            reservation = ledger.reserve(request['system'], request['prompt'], cap, request_hash, settings_hash)\n            response = client.responses.create(instructions=request['system'], input=request['prompt'], **parameters)\n        record = response_record(response)\n    except Exception as exc:\n        failure = _failure(exc)\n        if reservation is not None:\n            try:\n                ledger.finish(reservation, failure=failure)\n            except Exception as ledger_error:\n                failure['ledger_error_type'] = type(ledger_error).__name__\n        raise RuntimeError('Codex request failed: ' + json.dumps(failure)) from None\n    receipt = ledger.finish(reservation, usage=record.get('usage'), response_id=record['response_id'],\n                            status=record['response_status'])\n    if record['response_status'] not in ('completed', 'incomplete'):\n        raise RuntimeError('Codex provider returned non-solution status: ' + json.dumps({\n            'response_status': record['response_status'], 'response_id': record['response_id'],\n            'budget': receipt})) from None\n    record.update(adapter_settings=settings, adapter_settings_sha256=settings_hash,\n                  request_sha256=request_hash, budget=receipt)\n    print(json.dumps(record, allow_nan=False))",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/openai_codex_adapter.py#L56"
+    },
+    {
+      "id": "workflow.openai_codex_adapter:response_record",
+      "module": "workflow.openai_codex_adapter",
+      "name": "response_record",
+      "kind": "function",
+      "path": "workflow/openai_codex_adapter.py",
+      "line": 15,
+      "end_line": 42,
+      "signature": "response_record(response)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.openai_codex_adapter:main"
+      ],
+      "unresolved_calls": [
+        "''.join",
+        "getattr",
+        "messages.append",
+        "refusals.extend",
+        "type"
+      ],
+      "prompts": [],
+      "source": "def response_record(response):\n    messages, refusals = [], []\n    for item in response.output or []:\n        if getattr(item, 'type', None) != 'message' or getattr(item, 'role', None) != 'assistant':\n            continue\n        text = ''.join(part.text for part in item.content if part.type == 'output_text')\n        refusals.extend(part.refusal for part in item.content if part.type == 'refusal')\n        messages.append({'id': item.id, 'phase': getattr(item, 'phase', None),\n                         'status': item.status, 'text': text})\n    final = [item for item in messages if item['phase'] == 'final_answer']\n    selected = final if final else [item for item in messages if item['phase'] is None]\n    code = ''.join(item['text'] for item in selected)\n    status = response.status\n    reason = getattr(response.incomplete_details, 'reason', None)\n    record = {'code': code, 'model_version': response.model, 'response_id': response.id,\n              'response_status': status, 'incomplete_reason': reason,\n              'truncated': reason == 'max_output_tokens', 'refusals': refusals,\n              'response_kind': 'solution' if code else ('refusal' if refusals else 'empty_model_output'),\n              'messages': messages, 'error_code': getattr(response.error, 'code', None)}\n    usage = response.usage\n    if usage is not None:\n        reasoning = getattr(usage.output_tokens_details, 'reasoning_tokens', None)\n        record['usage'] = {'input_tokens': usage.input_tokens, 'output_tokens': usage.output_tokens,\n                           'reasoning_tokens': reasoning,\n                           'non_reasoning_output_tokens': usage.output_tokens - reasoning if type(reasoning) is int else None,\n                           'cached_input_tokens': getattr(usage.input_tokens_details, 'cached_tokens', None),\n                           'total_tokens': usage.total_tokens}\n    return record",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/openai_codex_adapter.py#L15"
+    },
+    {
       "id": "workflow.preparation:_engine_config_module",
       "module": "workflow.preparation",
       "name": "_engine_config_module",
@@ -14308,6 +14415,340 @@
         "workflow.mcp_server:prepared_study_status"
       ],
       "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/preparation.py#L136"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetError",
+      "module": "workflow.provider_budget",
+      "name": "BudgetError",
+      "kind": "class",
+      "path": "workflow/provider_budget.py",
+      "line": 18,
+      "end_line": 19,
+      "signature": "BudgetError",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.provider_budget:BudgetLedger.__init__",
+        "workflow.provider_budget:BudgetLedger._locked",
+        "workflow.provider_budget:BudgetLedger._validate",
+        "workflow.provider_budget:BudgetLedger.finish",
+        "workflow.provider_budget:BudgetLedger.reserve"
+      ],
+      "unresolved_calls": [],
+      "prompts": [],
+      "source": "class BudgetError(RuntimeError):\n    pass",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L18"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger",
+      "kind": "class",
+      "path": "workflow/provider_budget.py",
+      "line": 35,
+      "end_line": 173,
+      "signature": "BudgetLedger",
+      "summary": "",
+      "calls": [],
+      "called_by": [],
+      "unresolved_calls": [],
+      "prompts": [],
+      "source": "class BudgetLedger:\n    def __init__(self, path, max_cost_usd='5'):\n        self.path = Path(path).expanduser().resolve()\n        try:\n            cap = Decimal(str(max_cost_usd)) * 1_000_000_000\n            if not cap.is_finite() or cap <= 0 or cap > 5_000_000_000 or cap != cap.to_integral_value():\n                raise ValueError\n            cap = int(cap)\n        except (InvalidOperation, ValueError):\n            raise BudgetError('Budget must be positive, at most $5, and precise to nanodollars') from None\n        self.identity = {'schema_version': 1, 'model': MODEL, 'max_cost_nanousd': cap,\n                         'prices_nanousd_per_token': PRICES, 'framing_tokens': FRAMING_TOKENS}\n\n    def _save(self, data):\n        fd, name = tempfile.mkstemp(prefix=self.path.name + '.', suffix='.tmp', dir=self.path.parent)\n        try:\n            with os.fdopen(fd, 'w') as output:\n                json.dump(data, output, indent=2, allow_nan=False)\n                output.write('\\n')\n                output.flush()\n                os.fsync(output.fileno())\n            os.replace(name, self.path)\n            directory = os.open(self.path.parent, os.O_RDONLY)\n            try:\n                os.fsync(directory)\n            finally:\n                os.close(directory)\n        finally:\n            if os.path.exists(name):\n                os.unlink(name)\n\n    def _validate(self, data, marker):\n        if not isinstance(data, dict):\n            raise BudgetError('Invalid ledger document; refusing to spend')\n        if any(data.get(key) != value for key, value in self.identity.items()):\n            raise BudgetError('Ledger model, prices, cap or schema changed; automatic reset is forbidden')\n        if not marker or data.get('ledger_id') != marker or not isinstance(data.get('records'), list):\n            raise BudgetError('Ledger identity or records are invalid')\n        seen = set()\n        for row in data['records']:\n            if (not isinstance(row, dict) or not isinstance(row.get('id'), str)\n                    or row['id'] in seen or row.get('state') not in ('reserved', 'uncertain', 'settled')\n                    or not _integer(row.get('reserved_nanousd'))\n                    or not _integer(row.get('charged_nanousd'))\n                    or not _integer(row.get('input_upper_tokens'))\n                    or not _integer(row.get('max_output_tokens'))):\n                raise BudgetError('Invalid ledger record; refusing to spend')\n            expected = row['input_upper_tokens'] * PRICES['input'] + row['max_output_tokens'] * PRICES['output']\n            if row['reserved_nanousd'] != expected:\n                raise BudgetError('Ledger reservation is inconsistent')\n            if row['state'] != 'settled' and row['charged_nanousd'] != expected:\n                raise BudgetError('Unresolved reservation must remain fully charged')\n            if row['state'] == 'settled' and row['charged_nanousd'] != self._actual(row.get('usage')):\n                raise BudgetError('Settled ledger usage is inconsistent')\n            seen.add(row['id'])\n\n    @contextmanager\n    def _locked(self):\n        self.path.parent.mkdir(parents=True, exist_ok=True)\n        fd = os.open(str(self.path) + '.lock', os.O_RDWR | os.O_CREAT, 0o600)\n        with os.fdopen(fd, 'r+') as lock:\n            fcntl.flock(lock, fcntl.LOCK_EX)\n            marker = lock.read().strip()\n            if self.path.exists():\n                try:\n                    data = json.loads(self.path.read_text())\n                except (ValueError, OSError):\n                    raise BudgetError('Cannot read budget ledger; refusing to reset it') from None\n            else:\n                if marker:\n                    raise BudgetError('Budget ledger was removed; automatic recreation is forbidden')\n                marker = uuid.uuid4().hex\n                data = {**self.identity, 'ledger_id': marker, 'records': []}\n                self._save(data)\n                lock.write(marker)\n                lock.flush()\n                os.fsync(lock.fileno())\n            self._validate(data, marker)\n            yield data\n            self._save(data)\n\n    def reserve(self, system, prompt, max_output_tokens, request_sha256, settings_sha256):\n        if not isinstance(system, str) or not isinstance(prompt, str):\n            raise BudgetError('Only text requests can be reserved')\n        if type(max_output_tokens) is not int or max_output_tokens <= 0:\n            raise BudgetError('Output limit must be a positive integer')\n        if any(not isinstance(value, str) or len(value) != 64\n               or any(char not in '0123456789abcdef' for char in value)\n               for value in (request_sha256, settings_sha256)):\n            raise BudgetError('Request and settings hashes are required')\n        bound = len(system.encode('utf-8')) + len(prompt.encode('utf-8')) + FRAMING_TOKENS\n        amount = bound * PRICES['input'] + max_output_tokens * PRICES['output']\n        with self._locked() as data:\n            used = sum(row['charged_nanousd'] for row in data['records'])\n            if data.get('blocked_reason') or used + amount > self.identity['max_cost_nanousd']:\n                raise BudgetError('Shared budget cannot cover this request; no provider call permitted')\n            row = {'id': uuid.uuid4().hex, 'state': 'reserved', 'created_at': _now(),\n                   'request_sha256': request_sha256, 'settings_sha256': settings_sha256,\n                   'input_upper_tokens': bound, 'max_output_tokens': max_output_tokens,\n                   'reserved_nanousd': amount, 'charged_nanousd': amount}\n            data['records'].append(row)\n        return row['id']\n\n    @staticmethod\n    def _actual(usage):\n        if not isinstance(usage, dict):\n            return None\n        incoming, cached, outgoing = (usage.get(key) for key in\n                                      ('input_tokens', 'cached_input_tokens', 'output_tokens'))\n        if not all(_integer(value) for value in (incoming, cached, outgoing)) or cached > incoming:\n            return None\n        return (incoming - cached) * PRICES['input'] + cached * PRICES['cached_input'] + outgoing * PRICES['output']\n\n    def finish(self, reservation_id, *, usage=None, response_id=None, status=None, failure=None):\n        \"\"\"Only complete, final usage releases a reservation; uncertain calls stay charged.\"\"\"\n        violation = False\n        with self._locked() as data:\n            row = next((row for row in data['records'] if row['id'] == reservation_id), None)\n            if row is None or row['state'] != 'reserved':\n                raise BudgetError('Reservation is missing or already finalized')\n            row.update(finished_at=_now(), response_id=response_id, response_status=status)\n            amount = self._actual(usage) if status in ('completed', 'incomplete', 'failed', 'cancelled') else None\n            if amount is None:\n                row.update(state='uncertain', failure=failure or {'type': 'MissingFinalUsage'})\n            else:\n                row.update(state='settled', charged_nanousd=amount, usage=usage)\n                violation = (amount > row['reserved_nanousd'] or\n                             usage['input_tokens'] > row['input_upper_tokens'] or\n                             usage['output_tokens'] > row['max_output_tokens'])\n                if violation:\n                    data['blocked_reason'] = 'Provider usage exceeded the conservative reservation'\n            receipt = {'reservation_id': row['id'], 'state': row['state'],\n                       'reserved_nanousd': row['reserved_nanousd'],\n                       'charged_nanousd': row['charged_nanousd'],\n                       'total_committed_nanousd': sum(item['charged_nanousd'] for item in data['records']),\n                       'max_cost_nanousd': self.identity['max_cost_nanousd']}\n        if violation:\n            raise BudgetError('Provider usage exceeded reservation; ledger is blocked for review')\n        return receipt",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L35"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger.__init__",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger.__init__",
+      "kind": "method",
+      "path": "workflow/provider_budget.py",
+      "line": 36,
+      "end_line": 46,
+      "signature": "__init__(self, path, max_cost_usd='5')",
+      "summary": "",
+      "calls": [
+        "workflow.provider_budget:BudgetError"
+      ],
+      "called_by": [],
+      "unresolved_calls": [
+        "Decimal",
+        "Path",
+        "Path(path).expanduser",
+        "Path(path).expanduser().resolve",
+        "cap.is_finite",
+        "cap.to_integral_value",
+        "int",
+        "str"
+      ],
+      "prompts": [],
+      "source": "    def __init__(self, path, max_cost_usd='5'):\n        self.path = Path(path).expanduser().resolve()\n        try:\n            cap = Decimal(str(max_cost_usd)) * 1_000_000_000\n            if not cap.is_finite() or cap <= 0 or cap > 5_000_000_000 or cap != cap.to_integral_value():\n                raise ValueError\n            cap = int(cap)\n        except (InvalidOperation, ValueError):\n            raise BudgetError('Budget must be positive, at most $5, and precise to nanodollars') from None\n        self.identity = {'schema_version': 1, 'model': MODEL, 'max_cost_nanousd': cap,\n                         'prices_nanousd_per_token': PRICES, 'framing_tokens': FRAMING_TOKENS}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L36"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger._actual",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger._actual",
+      "kind": "method",
+      "path": "workflow/provider_budget.py",
+      "line": 138,
+      "end_line": 146,
+      "signature": "_actual(usage)",
+      "summary": "",
+      "calls": [
+        "workflow.provider_budget:_integer"
+      ],
+      "called_by": [
+        "workflow.provider_budget:BudgetLedger._validate",
+        "workflow.provider_budget:BudgetLedger.finish"
+      ],
+      "unresolved_calls": [
+        "all",
+        "isinstance",
+        "usage.get"
+      ],
+      "prompts": [],
+      "source": "    @staticmethod\n    def _actual(usage):\n        if not isinstance(usage, dict):\n            return None\n        incoming, cached, outgoing = (usage.get(key) for key in\n                                      ('input_tokens', 'cached_input_tokens', 'output_tokens'))\n        if not all(_integer(value) for value in (incoming, cached, outgoing)) or cached > incoming:\n            return None\n        return (incoming - cached) * PRICES['input'] + cached * PRICES['cached_input'] + outgoing * PRICES['output']",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L138"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger._locked",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger._locked",
+      "kind": "method",
+      "path": "workflow/provider_budget.py",
+      "line": 91,
+      "end_line": 114,
+      "signature": "_locked(self)",
+      "summary": "",
+      "calls": [
+        "workflow.provider_budget:BudgetError",
+        "workflow.provider_budget:BudgetLedger._save",
+        "workflow.provider_budget:BudgetLedger._validate"
+      ],
+      "called_by": [
+        "workflow.provider_budget:BudgetLedger.finish",
+        "workflow.provider_budget:BudgetLedger.reserve"
+      ],
+      "unresolved_calls": [
+        "fcntl.flock",
+        "json.loads",
+        "lock.fileno",
+        "lock.flush",
+        "lock.read",
+        "lock.read().strip",
+        "lock.write",
+        "os.fdopen",
+        "os.fsync",
+        "os.open",
+        "self.path.exists",
+        "self.path.parent.mkdir",
+        "self.path.read_text",
+        "str",
+        "uuid.uuid4"
+      ],
+      "prompts": [],
+      "source": "    @contextmanager\n    def _locked(self):\n        self.path.parent.mkdir(parents=True, exist_ok=True)\n        fd = os.open(str(self.path) + '.lock', os.O_RDWR | os.O_CREAT, 0o600)\n        with os.fdopen(fd, 'r+') as lock:\n            fcntl.flock(lock, fcntl.LOCK_EX)\n            marker = lock.read().strip()\n            if self.path.exists():\n                try:\n                    data = json.loads(self.path.read_text())\n                except (ValueError, OSError):\n                    raise BudgetError('Cannot read budget ledger; refusing to reset it') from None\n            else:\n                if marker:\n                    raise BudgetError('Budget ledger was removed; automatic recreation is forbidden')\n                marker = uuid.uuid4().hex\n                data = {**self.identity, 'ledger_id': marker, 'records': []}\n                self._save(data)\n                lock.write(marker)\n                lock.flush()\n                os.fsync(lock.fileno())\n            self._validate(data, marker)\n            yield data\n            self._save(data)",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L91"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger._save",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger._save",
+      "kind": "method",
+      "path": "workflow/provider_budget.py",
+      "line": 48,
+      "end_line": 64,
+      "signature": "_save(self, data)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.provider_budget:BudgetLedger._locked"
+      ],
+      "unresolved_calls": [
+        "json.dump",
+        "os.close",
+        "os.fdopen",
+        "os.fsync",
+        "os.open",
+        "os.path.exists",
+        "os.replace",
+        "os.unlink",
+        "output.fileno",
+        "output.flush",
+        "output.write",
+        "tempfile.mkstemp"
+      ],
+      "prompts": [],
+      "source": "    def _save(self, data):\n        fd, name = tempfile.mkstemp(prefix=self.path.name + '.', suffix='.tmp', dir=self.path.parent)\n        try:\n            with os.fdopen(fd, 'w') as output:\n                json.dump(data, output, indent=2, allow_nan=False)\n                output.write('\\n')\n                output.flush()\n                os.fsync(output.fileno())\n            os.replace(name, self.path)\n            directory = os.open(self.path.parent, os.O_RDONLY)\n            try:\n                os.fsync(directory)\n            finally:\n                os.close(directory)\n        finally:\n            if os.path.exists(name):\n                os.unlink(name)",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L48"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger._validate",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger._validate",
+      "kind": "method",
+      "path": "workflow/provider_budget.py",
+      "line": 66,
+      "end_line": 89,
+      "signature": "_validate(self, data, marker)",
+      "summary": "",
+      "calls": [
+        "workflow.provider_budget:BudgetError",
+        "workflow.provider_budget:BudgetLedger._actual",
+        "workflow.provider_budget:_integer"
+      ],
+      "called_by": [
+        "workflow.provider_budget:BudgetLedger._locked"
+      ],
+      "unresolved_calls": [
+        "any",
+        "data.get",
+        "isinstance",
+        "row.get",
+        "seen.add",
+        "self.identity.items",
+        "set"
+      ],
+      "prompts": [],
+      "source": "    def _validate(self, data, marker):\n        if not isinstance(data, dict):\n            raise BudgetError('Invalid ledger document; refusing to spend')\n        if any(data.get(key) != value for key, value in self.identity.items()):\n            raise BudgetError('Ledger model, prices, cap or schema changed; automatic reset is forbidden')\n        if not marker or data.get('ledger_id') != marker or not isinstance(data.get('records'), list):\n            raise BudgetError('Ledger identity or records are invalid')\n        seen = set()\n        for row in data['records']:\n            if (not isinstance(row, dict) or not isinstance(row.get('id'), str)\n                    or row['id'] in seen or row.get('state') not in ('reserved', 'uncertain', 'settled')\n                    or not _integer(row.get('reserved_nanousd'))\n                    or not _integer(row.get('charged_nanousd'))\n                    or not _integer(row.get('input_upper_tokens'))\n                    or not _integer(row.get('max_output_tokens'))):\n                raise BudgetError('Invalid ledger record; refusing to spend')\n            expected = row['input_upper_tokens'] * PRICES['input'] + row['max_output_tokens'] * PRICES['output']\n            if row['reserved_nanousd'] != expected:\n                raise BudgetError('Ledger reservation is inconsistent')\n            if row['state'] != 'settled' and row['charged_nanousd'] != expected:\n                raise BudgetError('Unresolved reservation must remain fully charged')\n            if row['state'] == 'settled' and row['charged_nanousd'] != self._actual(row.get('usage')):\n                raise BudgetError('Settled ledger usage is inconsistent')\n            seen.add(row['id'])",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L66"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger.finish",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger.finish",
+      "kind": "method",
+      "path": "workflow/provider_budget.py",
+      "line": 148,
+      "end_line": 173,
+      "signature": "finish(self, reservation_id, *, usage=None, response_id=None, status=None, failure=None)",
+      "summary": "Only complete, final usage releases a reservation; uncertain calls stay charged.",
+      "calls": [
+        "workflow.provider_budget:BudgetError",
+        "workflow.provider_budget:BudgetLedger._actual",
+        "workflow.provider_budget:BudgetLedger._locked",
+        "workflow.provider_budget:_now"
+      ],
+      "called_by": [],
+      "unresolved_calls": [
+        "next",
+        "row.update",
+        "sum"
+      ],
+      "prompts": [],
+      "source": "    def finish(self, reservation_id, *, usage=None, response_id=None, status=None, failure=None):\n        \"\"\"Only complete, final usage releases a reservation; uncertain calls stay charged.\"\"\"\n        violation = False\n        with self._locked() as data:\n            row = next((row for row in data['records'] if row['id'] == reservation_id), None)\n            if row is None or row['state'] != 'reserved':\n                raise BudgetError('Reservation is missing or already finalized')\n            row.update(finished_at=_now(), response_id=response_id, response_status=status)\n            amount = self._actual(usage) if status in ('completed', 'incomplete', 'failed', 'cancelled') else None\n            if amount is None:\n                row.update(state='uncertain', failure=failure or {'type': 'MissingFinalUsage'})\n            else:\n                row.update(state='settled', charged_nanousd=amount, usage=usage)\n                violation = (amount > row['reserved_nanousd'] or\n                             usage['input_tokens'] > row['input_upper_tokens'] or\n                             usage['output_tokens'] > row['max_output_tokens'])\n                if violation:\n                    data['blocked_reason'] = 'Provider usage exceeded the conservative reservation'\n            receipt = {'reservation_id': row['id'], 'state': row['state'],\n                       'reserved_nanousd': row['reserved_nanousd'],\n                       'charged_nanousd': row['charged_nanousd'],\n                       'total_committed_nanousd': sum(item['charged_nanousd'] for item in data['records']),\n                       'max_cost_nanousd': self.identity['max_cost_nanousd']}\n        if violation:\n            raise BudgetError('Provider usage exceeded reservation; ledger is blocked for review')\n        return receipt",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L148"
+    },
+    {
+      "id": "workflow.provider_budget:BudgetLedger.reserve",
+      "module": "workflow.provider_budget",
+      "name": "BudgetLedger.reserve",
+      "kind": "method",
+      "path": "workflow/provider_budget.py",
+      "line": 116,
+      "end_line": 136,
+      "signature": "reserve(self, system, prompt, max_output_tokens, request_sha256, settings_sha256)",
+      "summary": "",
+      "calls": [
+        "workflow.provider_budget:BudgetError",
+        "workflow.provider_budget:BudgetLedger._locked",
+        "workflow.provider_budget:_now"
+      ],
+      "called_by": [],
+      "unresolved_calls": [
+        "any",
+        "data.get",
+        "data['records'].append",
+        "isinstance",
+        "len",
+        "prompt.encode",
+        "sum",
+        "system.encode",
+        "type",
+        "uuid.uuid4"
+      ],
+      "prompts": [],
+      "source": "    def reserve(self, system, prompt, max_output_tokens, request_sha256, settings_sha256):\n        if not isinstance(system, str) or not isinstance(prompt, str):\n            raise BudgetError('Only text requests can be reserved')\n        if type(max_output_tokens) is not int or max_output_tokens <= 0:\n            raise BudgetError('Output limit must be a positive integer')\n        if any(not isinstance(value, str) or len(value) != 64\n               or any(char not in '0123456789abcdef' for char in value)\n               for value in (request_sha256, settings_sha256)):\n            raise BudgetError('Request and settings hashes are required')\n        bound = len(system.encode('utf-8')) + len(prompt.encode('utf-8')) + FRAMING_TOKENS\n        amount = bound * PRICES['input'] + max_output_tokens * PRICES['output']\n        with self._locked() as data:\n            used = sum(row['charged_nanousd'] for row in data['records'])\n            if data.get('blocked_reason') or used + amount > self.identity['max_cost_nanousd']:\n                raise BudgetError('Shared budget cannot cover this request; no provider call permitted')\n            row = {'id': uuid.uuid4().hex, 'state': 'reserved', 'created_at': _now(),\n                   'request_sha256': request_sha256, 'settings_sha256': settings_sha256,\n                   'input_upper_tokens': bound, 'max_output_tokens': max_output_tokens,\n                   'reserved_nanousd': amount, 'charged_nanousd': amount}\n            data['records'].append(row)\n        return row['id']",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L116"
+    },
+    {
+      "id": "workflow.provider_budget:_integer",
+      "module": "workflow.provider_budget",
+      "name": "_integer",
+      "kind": "function",
+      "path": "workflow/provider_budget.py",
+      "line": 31,
+      "end_line": 32,
+      "signature": "_integer(value)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.provider_budget:BudgetLedger._actual",
+        "workflow.provider_budget:BudgetLedger._validate"
+      ],
+      "unresolved_calls": [
+        "type"
+      ],
+      "prompts": [],
+      "source": "def _integer(value):\n    return type(value) is int and value >= 0",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L31"
+    },
+    {
+      "id": "workflow.provider_budget:_now",
+      "module": "workflow.provider_budget",
+      "name": "_now",
+      "kind": "function",
+      "path": "workflow/provider_budget.py",
+      "line": 27,
+      "end_line": 28,
+      "signature": "_now()",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.provider_budget:BudgetLedger.finish",
+        "workflow.provider_budget:BudgetLedger.reserve"
+      ],
+      "unresolved_calls": [
+        "datetime.now",
+        "datetime.now(timezone.utc).isoformat"
+      ],
+      "prompts": [],
+      "source": "def _now():\n    return datetime.now(timezone.utc).isoformat()",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L27"
+    },
+    {
+      "id": "workflow.provider_budget:digest",
+      "module": "workflow.provider_budget",
+      "name": "digest",
+      "kind": "function",
+      "path": "workflow/provider_budget.py",
+      "line": 22,
+      "end_line": 24,
+      "signature": "digest(value)",
+      "summary": "",
+      "calls": [],
+      "called_by": [],
+      "unresolved_calls": [
+        "hashlib.sha256",
+        "hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest",
+        "json.dumps",
+        "json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode"
+      ],
+      "prompts": [],
+      "source": "def digest(value):\n    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'),\n                                    allow_nan=False).encode()).hexdigest()",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L22"
     },
     {
       "id": "workflow.refactor_proposals:validate_refactors",
@@ -17110,6 +17551,58 @@
           "A valid library adapter/build, development separation and independent bank are explicit inputs.",
           "Synthetic software checks are not hosted-model experimental results."
         ]
+      },
+      {
+        "id": "codex_provider",
+        "title": "Request code with the optional Codex adapter",
+        "track": "configured_provider",
+        "status": "implemented",
+        "role": "configured development or audience model",
+        "entry_points": [
+          "workflow.openai_codex_adapter:main",
+          "workflow.openai_codex_adapter:response_record",
+          "workflow.openai_codex_adapter:_failure"
+        ],
+        "prompts": [],
+        "harness": "Explicit model command; GPT-5.3-Codex Responses API, low reasoning, no tools, one HTTP attempt.",
+        "outputs": [
+          "Evaluator-compatible code/usage JSON, message phases, response status and effective settings hash"
+        ],
+        "limitations": [
+          "Optional provider selected by configuration; the controller does not select it automatically.",
+          "Caller supplies system/prompt; this adapter does not read source or held-out fixtures.",
+          "Requested temperature is recorded but omitted from the API request; provider default applies.",
+          "Preparation previews and offline adapter checks do not establish model task performance."
+        ]
+      },
+      {
+        "id": "codex_budget",
+        "title": "Reserve and account for the shared Codex budget",
+        "track": "configured_provider",
+        "status": "implemented",
+        "role": null,
+        "entry_points": [
+          "workflow.provider_budget:BudgetLedger.__init__",
+          "workflow.provider_budget:BudgetLedger.reserve",
+          "workflow.provider_budget:BudgetLedger.finish",
+          "workflow.provider_budget:BudgetLedger._locked",
+          "workflow.provider_budget:BudgetLedger._validate",
+          "workflow.provider_budget:BudgetLedger._save",
+          "workflow.provider_budget:BudgetLedger._actual",
+          "workflow.provider_budget:digest"
+        ],
+        "prompts": [],
+        "harness": "Local POSIX file lock and atomic JSON; reserve before HTTP and account after the provider outcome.",
+        "outputs": [
+          "Shared ledger and persistent sibling .lock identity; request/settings hashes and token-cost receipts"
+        ],
+        "limitations": [
+          "At most $5 across calls sharing this ledger, at pinned standard token rates before tax.",
+          "Ambiguous errors and missing/nonfinal usage retain the full conservative reservation.",
+          "Use --budget-ledger=/absolute/path as one argument; bind source files, not mutable ledger contents.",
+          "This local guard excludes other clients/ledgers and deliberate accounting-file changes.",
+          "Related functions are curated links; dynamic instance calls may remain unresolved in the static graph."
+        ]
       }
     ],
     "relationships": [
@@ -17257,6 +17750,26 @@
         "from": "condition_run",
         "to": "condition_report",
         "kind": "explicit_validated_condition_protocol"
+      },
+      {
+        "from": "treatment_proposal",
+        "to": "codex_provider",
+        "kind": "optional_explicit_model_command"
+      },
+      {
+        "from": "condition_run",
+        "to": "codex_provider",
+        "kind": "optional_explicit_model_command"
+      },
+      {
+        "from": "comparison_audience",
+        "to": "codex_provider",
+        "kind": "optional_explicit_model_command"
+      },
+      {
+        "from": "codex_provider",
+        "to": "codex_budget",
+        "kind": "mandatory_budget_guard"
       }
     ],
     "review_paths": [
@@ -17288,7 +17801,9 @@
             "inputs": "Explicit frozen/source/artifact identities and shared bank",
             "outputs": "Validated evidence or an explicit unresolved state",
             "stage_ids": [
-              "condition_run"
+              "condition_run",
+              "codex_provider",
+              "codex_budget"
             ],
             "status": "implemented"
           },
@@ -17373,7 +17888,9 @@
           "treatment_versions",
           "source_refactors",
           "legacy_candidates_probes",
-          "legacy_puzzles"
+          "legacy_puzzles",
+          "codex_provider",
+          "codex_budget"
         ]
       },
       {
@@ -17466,7 +17983,9 @@
             "outputs": "Saved requests, process records and per-task results",
             "stage_ids": [
               "comparison_audience",
-              "comparison_execution"
+              "comparison_execution",
+              "codex_provider",
+              "codex_budget"
             ],
             "status": "implemented"
           },
@@ -17527,7 +18046,9 @@
           "inputs": "Explicit frozen/source/artifact identities and shared bank",
           "outputs": "Validated evidence or an explicit unresolved state",
           "stage_ids": [
-            "condition_run"
+            "condition_run",
+            "codex_provider",
+            "codex_budget"
           ],
           "status": "implemented",
           "helper_ids": [
@@ -17680,7 +18201,9 @@
         "treatment_versions",
         "source_refactors",
         "legacy_candidates_probes",
-        "legacy_puzzles"
+        "legacy_puzzles",
+        "codex_provider",
+        "codex_budget"
       ]
     },
     {
@@ -17815,7 +18338,9 @@
           "outputs": "Saved requests, process records and per-task results",
           "stage_ids": [
             "comparison_audience",
-            "comparison_execution"
+            "comparison_execution",
+            "codex_provider",
+            "codex_budget"
           ],
           "status": "implemented",
           "helper_ids": [

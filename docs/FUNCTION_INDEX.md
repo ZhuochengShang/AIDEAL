@@ -25,8 +25,8 @@ Review README development first. Expand the additional tools for source-grounded
 
 Branch and treatment preparation are implemented. Library-specific builds, fixtures and independent oracles remain explicit inputs.
 
-- [Prepare a study draft](#function-403): Snapshot configured inputs and create the initial shared study records.
-- [Create five worktrees](#function-453): Prepare the study and create isolated branches from one pinned clean revision.
+- [Prepare a study draft](#function-406): Snapshot configured inputs and create the initial shared study records.
+- [Create five worktrees](#function-468): Prepare the study and create isolated branches from one pinned clean revision.
 - [Inspect readiness](#function-306): List missing requirements for the declared bank, treatments and adapter.
 - [Choose the matched condition runner](#function-318): Use run-conditions with an explicit frozen protocol; legacy run-arm does not select a study.
 
@@ -36,7 +36,7 @@ Read this separate protocol when comparing Original, Generated and Repaired READ
 
 - [Validate and freeze](#function-360): Check the study inputs and independent checker controls, then record their identities.
 - [Run or resume comparison](#function-346): Choose documentation, request fresh solutions, check them, and allow bounded snippet repairs.
-- [Understand the scores](#function-406): Compare matched outcomes while retaining unresolved tasks in the denominator.
+- [Understand the scores](#function-421): Compare matched outcomes while retaining unresolved tasks in the denominator.
 
 ## Complete reference
 
@@ -3203,7 +3203,7 @@ Called by: [studies.sedonadb.__main__:main](#function-289)
 
 Function in `workflow.__main__`.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.development_cli:add_development_commands](#function-338), [workflow.development_cli:run_development_command](#function-339), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.mcp_server:main](#function-398), [workflow.preparation:prepare_study](#function-403), [workflow.preparation:prepared_study_status](#function-404), [workflow.reporting:verify](#function-407), [workflow.worktrees:attach](#function-453)
+Calls: [workflow.ablation:load](#function-305), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.development_cli:add_development_commands](#function-338), [workflow.development_cli:run_development_command](#function-339), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.mcp_server:main](#function-398), [workflow.preparation:prepare_study](#function-406), [workflow.preparation:prepared_study_status](#function-407), [workflow.reporting:verify](#function-422), [workflow.worktrees:attach](#function-468)
 
 Called by: None resolved
 
@@ -3245,7 +3245,7 @@ Function in `workflow.ablation`.
 
 Calls: [workflow.ablation:file_hash](#function-303)
 
-Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:_execute](#function-291), [studies.sedonadb.runner:run](#function-293), [workflow.ablation:capture_attempt](#function-300), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_attempt_evidence](#function-312), [workflow.condition_evaluation:_round_evidence](#function-315), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_inputs:bind_command](#function-320), [workflow.condition_inputs:match_treatments](#function-322), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:_adjudication_artifacts_valid](#function-326), [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation_setup:read_config](#function-362), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:_implementation_bindings](#function-373), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_development_errors](#function-381), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_context:_source_windows](#function-384), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:scaffold_spec](#function-409), [workflow.scaffolding:write_scaffold](#function-410), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_bundles:bundle_proposals](#function-432)
+Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:_execute](#function-291), [studies.sedonadb.runner:run](#function-293), [workflow.ablation:capture_attempt](#function-300), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_attempt_evidence](#function-312), [workflow.condition_evaluation:_round_evidence](#function-315), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_inputs:bind_command](#function-320), [workflow.condition_inputs:match_treatments](#function-322), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:_adjudication_artifacts_valid](#function-326), [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation_setup:read_config](#function-362), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:_implementation_bindings](#function-373), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_development_errors](#function-381), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_context:_source_windows](#function-384), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.preparation:prepare_study](#function-406), [workflow.scaffolding:scaffold_spec](#function-424), [workflow.scaffolding:write_scaffold](#function-425), [workflow.source_refactors:_current](#function-441), [workflow.source_refactors:_lineage](#function-442), [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_bundles:bundle_proposals](#function-447)
 
 <a id="function-300"></a>
 ### [capture_attempt](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L211)
@@ -3272,7 +3272,7 @@ Function in `workflow.ablation`.
 
 Calls: None resolved
 
-Called by: [studies.sedonadb.runner:run](#function-293), [workflow.ablation:approval_valid](#function-296), [workflow.ablation:freeze](#function-304), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:select_documentation](#function-347), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [studies.sedonadb.runner:run](#function-293), [workflow.ablation:approval_valid](#function-296), [workflow.ablation:freeze](#function-304), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:select_documentation](#function-347), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_bundles:bundle_proposals](#function-447), [workflow.treatment_versions:_current](#function-456), [workflow.treatment_versions:apply_treatments](#function-466)
 
 <a id="function-303"></a>
 ### [file_hash](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L29)
@@ -3281,7 +3281,7 @@ Function in `workflow.ablation`.
 
 Calls: None resolved
 
-Called by: [studies.historical.reporting:_native_counts](#function-286), [studies.historical.reporting:reproduce](#function-287), [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [workflow.ablation:bind](#function-299), [workflow.ablation:verify_artifact](#function-310), [workflow.condition_setup:_controller](#function-327), [workflow.evaluation_setup:_controller_hashes](#function-350), [workflow.reporting:verify](#function-407)
+Called by: [studies.historical.reporting:_native_counts](#function-286), [studies.historical.reporting:reproduce](#function-287), [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [workflow.ablation:bind](#function-299), [workflow.ablation:verify_artifact](#function-310), [workflow.condition_setup:_controller](#function-327), [workflow.evaluation_setup:_controller_hashes](#function-350), [workflow.reporting:verify](#function-422)
 
 <a id="function-304"></a>
 ### [freeze](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L149)
@@ -3299,7 +3299,7 @@ Read a UTF-8 JSON artifact.
 
 Calls: None resolved
 
-Called by: [studies.historical.reporting:_native_counts](#function-286), [studies.historical.reporting:reproduce](#function-287), [studies.historical.status:study_status](#function-288), [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [studies.sedonadb.trace:trace](#function-294), [workflow.__main__:main](#function-295), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_inputs:hint_bundle](#function-321), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:execute_condition](#function-331), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.condition_setup:verify_validation](#function-337), [workflow.development_cli:run_development_command](#function-339), [workflow.evaluation:_collect_resources](#function-340), [workflow.evaluation:_load_completed_rows](#function-341), [workflow.evaluation:_request_solution](#function-343), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:_checked_execution](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.evaluation_setup:read_config](#function-362), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.execution:invoke](#function-367), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:development_destination](#function-386), [workflow.improvement_context:original_checkout](#function-387), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.preparation:prepared_study_status](#function-404), [workflow.reporting:verify](#function-407), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:apply_treatments](#function-451), [workflow.worktrees:attach](#function-453)
+Called by: [studies.historical.reporting:_native_counts](#function-286), [studies.historical.reporting:reproduce](#function-287), [studies.historical.status:study_status](#function-288), [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [studies.sedonadb.trace:trace](#function-294), [workflow.__main__:main](#function-295), [workflow.condition_context:public_context](#function-311), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_inputs:hint_bundle](#function-321), [workflow.condition_inputs:read_bank](#function-323), [workflow.condition_setup:execute_condition](#function-331), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.condition_setup:verify_validation](#function-337), [workflow.development_cli:run_development_command](#function-339), [workflow.evaluation:_collect_resources](#function-340), [workflow.evaluation:_load_completed_rows](#function-341), [workflow.evaluation:_request_solution](#function-343), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:_checked_execution](#function-349), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.evaluation_setup:read_config](#function-362), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.execution:invoke](#function-367), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:development_destination](#function-386), [workflow.improvement_context:original_checkout](#function-387), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.preparation:prepared_study_status](#function-407), [workflow.reporting:verify](#function-422), [workflow.source_refactors:_candidate](#function-439), [workflow.source_refactors:_current](#function-441), [workflow.source_refactors:_lineage](#function-442), [workflow.source_refactors:install_refactor](#function-445), [workflow.source_refactors:study_versions](#function-446), [workflow.treatment_bundles:bundle_proposals](#function-447), [workflow.treatment_versions:_attachment](#function-449), [workflow.treatment_versions:_current](#function-456), [workflow.treatment_versions:_read_proposal](#function-460), [workflow.treatment_versions:apply_treatments](#function-466), [workflow.worktrees:attach](#function-468)
 
 <a id="function-306"></a>
 ### [preflight](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L115)
@@ -3308,7 +3308,7 @@ Function in `workflow.ablation`.
 
 Calls: [workflow.ablation:approval_valid](#function-296), [workflow.ablation:bank_errors](#function-298), [workflow.ablation:verify_artifact](#function-310)
 
-Called by: [workflow.ablation:freeze](#function-304), [workflow.preparation:prepared_study_status](#function-404)
+Called by: [workflow.ablation:freeze](#function-304), [workflow.preparation:prepared_study_status](#function-407)
 
 <a id="function-307"></a>
 ### [save](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L42)
@@ -3317,7 +3317,7 @@ Function in `workflow.ablation`.
 
 Calls: None resolved
 
-Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [studies.sedonadb.trace:trace](#function-294), [workflow.ablation:capture_attempt](#function-300), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:write_scaffold](#function-410), [workflow.worktrees:attach](#function-453)
+Called by: [studies.sedonadb.fixtures:relocated_catalog](#function-290), [studies.sedonadb.runner:run](#function-293), [studies.sedonadb.trace:trace](#function-294), [workflow.ablation:capture_attempt](#function-300), [workflow.preparation:prepare_study](#function-406), [workflow.scaffolding:write_scaffold](#function-425), [workflow.worktrees:attach](#function-468)
 
 <a id="function-308"></a>
 ### [score](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L236)
@@ -3326,7 +3326,7 @@ One latest adjudicated row per case/trial/arm, not raw attempt history.
 
 Calls: None resolved
 
-Called by: [workflow.condition_reporting:report_conditions](#function-324), [workflow.reporting:report](#function-406)
+Called by: [workflow.condition_reporting:report_conditions](#function-324), [workflow.reporting:report](#function-421)
 
 <a id="function-309"></a>
 ### [treatment_inputs](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/ablation.py#L161)
@@ -3344,7 +3344,7 @@ Function in `workflow.ablation`.
 
 Calls: [workflow.ablation:file_hash](#function-303)
 
-Called by: [workflow.ablation:approval_valid](#function-296), [workflow.ablation:bank_errors](#function-298), [workflow.ablation:preflight](#function-306), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_setup:verify_inputs](#function-336), [workflow.condition_setup:verify_validation](#function-337), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.treatment_bundles:bundle_proposals](#function-432)
+Called by: [workflow.ablation:approval_valid](#function-296), [workflow.ablation:bank_errors](#function-298), [workflow.ablation:preflight](#function-306), [workflow.condition_evaluation:_verify_saved_row](#function-316), [workflow.condition_setup:verify_inputs](#function-336), [workflow.condition_setup:verify_validation](#function-337), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:_verified_completion](#function-377), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.treatment_bundles:bundle_proposals](#function-447)
 
 ## workflow.condition_context
 
@@ -3435,7 +3435,7 @@ Called by: [workflow.__main__:main](#function-295)
 
 Bind the Git tree, raw checkout, configured runtime and adapter artifacts.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_trees](#function-450)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_trees](#function-465)
 
 Called by: [workflow.condition_setup:read_condition_config](#function-334), [workflow.condition_setup:verify_inputs](#function-336)
 
@@ -3627,7 +3627,7 @@ Called by: [workflow.__main__:main](#function-295)
 
 Function in `workflow.development_cli`.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:matching_fix_hints](#function-393), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.source_duplicates:compare_duplicate_reports](#function-422), [workflow.source_duplicates:scan_duplicates](#function-423), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:apply_treatments](#function-451)
+Calls: [workflow.ablation:load](#function-305), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:matching_fix_hints](#function-393), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.source_duplicates:compare_duplicate_reports](#function-437), [workflow.source_duplicates:scan_duplicates](#function-438), [workflow.source_refactors:install_refactor](#function-445), [workflow.source_refactors:study_versions](#function-446), [workflow.treatment_bundles:bundle_proposals](#function-447), [workflow.treatment_versions:apply_treatments](#function-466)
 
 Called by: [workflow.__main__:main](#function-295)
 
@@ -3694,7 +3694,7 @@ Called by: [workflow.condition_context:public_context](#function-311), [workflow
 
 Resume matching unfinished units; preserve completed outcomes and all attempts.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.evaluation:_load_completed_rows](#function-341), [workflow.evaluation:_run_unit](#function-344), [workflow.evaluation:select_documentation](#function-347), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369), [workflow.reporting:report](#function-406), [workflow.reporting:write_report](#function-408)
+Calls: [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.evaluation:_load_completed_rows](#function-341), [workflow.evaluation:_run_unit](#function-344), [workflow.evaluation:select_documentation](#function-347), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.evaluation_setup:open_frozen](#function-361), [workflow.execution:atomic_json](#function-366), [workflow.execution:ownership](#function-369), [workflow.reporting:report](#function-421), [workflow.reporting:write_report](#function-423)
 
 Called by: [workflow.__main__:main](#function-295)
 
@@ -3808,7 +3808,7 @@ Honor an explicit review hold before executing any study work.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_inputs:backend_identity](#function-319), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:open_conditions](#function-333), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_versions:_attachment](#function-449), [workflow.treatment_versions:apply_treatments](#function-466)
 
 <a id="function-359"></a>
 ### [control_passes](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/evaluation_setup.py#L221)
@@ -3884,7 +3884,7 @@ Replace a complete checkpoint atomically; never leave half-written JSON.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_reporting:write_condition_report](#function-325), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.execution:invoke](#function-367), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.reporting:write_report](#function-408), [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_record](#function-446)
+Called by: [workflow.condition_evaluation:run_condition_unit](#function-317), [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_reporting:write_condition_report](#function-325), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.execution:invoke](#function-367), [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_context:preview_improvements](#function-388), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:propose_improvements](#function-394), [workflow.reporting:write_report](#function-423), [workflow.treatment_bundles:bundle_proposals](#function-447), [workflow.treatment_versions:_record](#function-461)
 
 <a id="function-367"></a>
 ### [invoke](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/execution.py#L54)
@@ -3911,7 +3911,7 @@ Hold one OS lock for the writer; process exit releases a stale lock.
 
 Calls: None resolved
 
-Called by: [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.condition_evaluation:run_conditions](#function-318), [workflow.condition_setup:freeze_conditions](#function-332), [workflow.condition_setup:validate_conditions](#function-335), [workflow.evaluation:run_evaluation](#function-346), [workflow.evaluation_setup:freeze_evaluation](#function-360), [workflow.evaluation_setup:validate_bank](#function-363), [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_versions:apply_treatments](#function-466)
 
 ## workflow.gemini_flash_adapter
 
@@ -4038,7 +4038,7 @@ Called by: [workflow.improvement_batches:preview_library_improvements](#function
 
 Discover the full pinned public surface without importing target code.
 
-Calls: [aideal.api_discovery:public_api_details](#function-11), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.improvement_context:original_checkout](#function-387), [workflow.preparation:_engine_config_module](#function-402), [workflow.treatment_versions:_run](#function-448)
+Calls: [aideal.api_discovery:public_api_details](#function-11), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.improvement_context:original_checkout](#function-387), [workflow.preparation:_engine_config_module](#function-405), [workflow.treatment_versions:_run](#function-463)
 
 Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_context:preview_improvements](#function-388)
 
@@ -4047,7 +4047,7 @@ Called by: [workflow.improvement_batches:preview_library_improvements](#function
 
 Expose discovery semantics and explicit profile, never model credentials.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.preparation:_engine_config_module](#function-402)
+Calls: [workflow.ablation:bind](#function-299), [workflow.preparation:_engine_config_module](#function-405)
 
 Called by: [workflow.improvement_batches:preview_library_improvements](#function-378), [workflow.improvement_context:preview_improvements](#function-388)
 
@@ -4083,9 +4083,9 @@ Called by: [workflow.improvement_batches:preview_library_improvements](#function
 
 Function in `workflow.improvement_context`.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_run](#function-448)
+Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_run](#function-463)
 
-Called by: [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-430)
+Called by: [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_suggestions:_finish_proposal](#function-389), [workflow.improvement_suggestions:_load_preview](#function-390), [workflow.source_refactors:install_refactor](#function-445)
 
 <a id="function-388"></a>
 ### [preview_improvements](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/improvement_context.py#L206)
@@ -4123,7 +4123,7 @@ Called by: [workflow.improvement_batches:_run_batch](#function-376), [workflow.i
 
 Function in `workflow.improvement_suggestions`.
 
-Calls: [workflow.improvement_suggestions:_text](#function-392), [workflow.preparation:_engine_config_module](#function-402)
+Calls: [workflow.improvement_suggestions:_text](#function-392), [workflow.preparation:_engine_config_module](#function-405)
 
 Called by: [workflow.improvement_batches:propose_library_improvements](#function-380), [workflow.improvement_suggestions:propose_improvements](#function-394)
 
@@ -4159,7 +4159,7 @@ Called by: [workflow.development_cli:run_development_command](#function-339)
 
 Validate referential/schema integrity, without claiming code correctness.
 
-Calls: [workflow.improvement_context:alias_target](#function-385), [workflow.improvement_suggestions:_text](#function-392), [workflow.refactor_proposals:validate_refactors](#function-405)
+Calls: [workflow.improvement_context:alias_target](#function-385), [workflow.improvement_suggestions:_text](#function-392), [workflow.refactor_proposals:validate_refactors](#function-420)
 
 Called by: [workflow.improvement_batches:_run_batch](#function-376), [workflow.improvement_suggestions:_finish_proposal](#function-389)
 
@@ -4172,7 +4172,7 @@ Called by: [workflow.improvement_batches:_run_batch](#function-376), [workflow.i
 
 Create five real branches in a separate local clone; never patch the input checkout.
 
-Calls: [workflow.worktrees:attach](#function-453)
+Calls: [workflow.worktrees:attach](#function-468)
 
 Called by: None resolved
 
@@ -4181,7 +4181,7 @@ Called by: None resolved
 
 Inspect generated preparation records; does not launch evaluation or validate approval.
 
-Calls: [workflow.preparation:prepared_study_status](#function-404)
+Calls: [workflow.preparation:prepared_study_status](#function-407)
 
 Called by: None resolved
 
@@ -4225,42 +4225,185 @@ Calls: None resolved
 
 Called by: [workflow.model_adapter:main](#function-400)
 
+## workflow.openai_codex_adapter
+
+115 lines · `workflow/openai_codex_adapter.py`
+
+<a id="function-402"></a>
+### [_failure](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/openai_codex_adapter.py#L45)
+
+Never persist raw SDK error bodies, URLs, headers, or exception messages.
+
+Calls: None resolved
+
+Called by: [workflow.openai_codex_adapter:main](#function-403)
+
+<a id="function-403"></a>
+### [main](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/openai_codex_adapter.py#L56)
+
+Function in `workflow.openai_codex_adapter`.
+
+Calls: [workflow.openai_codex_adapter:_failure](#function-402), [workflow.openai_codex_adapter:response_record](#function-404)
+
+Called by: None resolved
+
+<a id="function-404"></a>
+### [response_record](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/openai_codex_adapter.py#L15)
+
+Function in `workflow.openai_codex_adapter`.
+
+Calls: None resolved
+
+Called by: [workflow.openai_codex_adapter:main](#function-403)
+
 ## workflow.preparation
 
 147 lines · `workflow/preparation.py`
 
-<a id="function-402"></a>
+<a id="function-405"></a>
 ### [_engine_config_module](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/preparation.py#L18)
 
 Load the pinned engine's YAML loader, without importing its model clients.
 
 Calls: None resolved
 
-Called by: [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_suggestions:_model_settings](#function-391), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:scaffold_spec](#function-409), [workflow.scaffolding:write_scaffold](#function-410)
+Called by: [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:_semantic_context](#function-383), [workflow.improvement_suggestions:_model_settings](#function-391), [workflow.preparation:prepare_study](#function-406), [workflow.scaffolding:scaffold_spec](#function-424), [workflow.scaffolding:write_scaffold](#function-425)
 
-<a id="function-403"></a>
+<a id="function-406"></a>
 ### [prepare_study](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/preparation.py#L34)
 
 Read the archived engine's YAML schema and create five isolated drafts.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:save](#function-307), [workflow.preparation:_engine_config_module](#function-402), [workflow.preparation:prepared_study_status](#function-404)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:save](#function-307), [workflow.preparation:_engine_config_module](#function-405), [workflow.preparation:prepared_study_status](#function-407)
 
-Called by: [workflow.__main__:main](#function-295), [workflow.worktrees:attach](#function-453)
+Called by: [workflow.__main__:main](#function-295), [workflow.worktrees:attach](#function-468)
 
-<a id="function-404"></a>
+<a id="function-407"></a>
 ### [prepared_study_status](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/preparation.py#L136)
 
 Report generic draft readiness without implying adapter execution exists.
 
 Calls: [workflow.ablation:load](#function-305), [workflow.ablation:preflight](#function-306)
 
-Called by: [workflow.__main__:main](#function-295), [workflow.mcp_server:inspect_study](#function-397), [workflow.preparation:prepare_study](#function-403)
+Called by: [workflow.__main__:main](#function-295), [workflow.mcp_server:inspect_study](#function-397), [workflow.preparation:prepare_study](#function-406)
+
+## workflow.provider_budget
+
+173 lines · `workflow/provider_budget.py`
+
+<a id="function-408"></a>
+### [BudgetError](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L18)
+
+Class in `workflow.provider_budget`.
+
+Calls: None resolved
+
+Called by: [workflow.provider_budget:BudgetLedger.__init__](#function-410), [workflow.provider_budget:BudgetLedger._locked](#function-412), [workflow.provider_budget:BudgetLedger._validate](#function-414), [workflow.provider_budget:BudgetLedger.finish](#function-415), [workflow.provider_budget:BudgetLedger.reserve](#function-416)
+
+<a id="function-409"></a>
+### [BudgetLedger](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L35)
+
+Class in `workflow.provider_budget`.
+
+Calls: None resolved
+
+Called by: None resolved
+
+<a id="function-410"></a>
+### [BudgetLedger.__init__](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L36)
+
+Method in `workflow.provider_budget`.
+
+Calls: [workflow.provider_budget:BudgetError](#function-408)
+
+Called by: None resolved
+
+<a id="function-411"></a>
+### [BudgetLedger._actual](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L138)
+
+Method in `workflow.provider_budget`.
+
+Calls: [workflow.provider_budget:_integer](#function-417)
+
+Called by: [workflow.provider_budget:BudgetLedger._validate](#function-414), [workflow.provider_budget:BudgetLedger.finish](#function-415)
+
+<a id="function-412"></a>
+### [BudgetLedger._locked](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L91)
+
+Method in `workflow.provider_budget`.
+
+Calls: [workflow.provider_budget:BudgetError](#function-408), [workflow.provider_budget:BudgetLedger._save](#function-413), [workflow.provider_budget:BudgetLedger._validate](#function-414)
+
+Called by: [workflow.provider_budget:BudgetLedger.finish](#function-415), [workflow.provider_budget:BudgetLedger.reserve](#function-416)
+
+<a id="function-413"></a>
+### [BudgetLedger._save](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L48)
+
+Method in `workflow.provider_budget`.
+
+Calls: None resolved
+
+Called by: [workflow.provider_budget:BudgetLedger._locked](#function-412)
+
+<a id="function-414"></a>
+### [BudgetLedger._validate](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L66)
+
+Method in `workflow.provider_budget`.
+
+Calls: [workflow.provider_budget:BudgetError](#function-408), [workflow.provider_budget:BudgetLedger._actual](#function-411), [workflow.provider_budget:_integer](#function-417)
+
+Called by: [workflow.provider_budget:BudgetLedger._locked](#function-412)
+
+<a id="function-415"></a>
+### [BudgetLedger.finish](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L148)
+
+Only complete, final usage releases a reservation; uncertain calls stay charged.
+
+Calls: [workflow.provider_budget:BudgetError](#function-408), [workflow.provider_budget:BudgetLedger._actual](#function-411), [workflow.provider_budget:BudgetLedger._locked](#function-412), [workflow.provider_budget:_now](#function-418)
+
+Called by: None resolved
+
+<a id="function-416"></a>
+### [BudgetLedger.reserve](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L116)
+
+Method in `workflow.provider_budget`.
+
+Calls: [workflow.provider_budget:BudgetError](#function-408), [workflow.provider_budget:BudgetLedger._locked](#function-412), [workflow.provider_budget:_now](#function-418)
+
+Called by: None resolved
+
+<a id="function-417"></a>
+### [_integer](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L31)
+
+Function in `workflow.provider_budget`.
+
+Calls: None resolved
+
+Called by: [workflow.provider_budget:BudgetLedger._actual](#function-411), [workflow.provider_budget:BudgetLedger._validate](#function-414)
+
+<a id="function-418"></a>
+### [_now](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L27)
+
+Function in `workflow.provider_budget`.
+
+Calls: None resolved
+
+Called by: [workflow.provider_budget:BudgetLedger.finish](#function-415), [workflow.provider_budget:BudgetLedger.reserve](#function-416)
+
+<a id="function-419"></a>
+### [digest](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/provider_budget.py#L22)
+
+Function in `workflow.provider_budget`.
+
+Calls: None resolved
+
+Called by: None resolved
 
 ## workflow.refactor_proposals
 
 47 lines · `workflow/refactor_proposals.py`
 
-<a id="function-405"></a>
+<a id="function-420"></a>
 ### [validate_refactors](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/refactor_proposals.py#L4)
 
 Check literal source citations, not equivalence or implementation safety.
@@ -4273,7 +4416,7 @@ Called by: [workflow.improvement_suggestions:validate_suggestions](#function-395
 
 86 lines · `workflow/reporting.py`
 
-<a id="function-406"></a>
+<a id="function-421"></a>
 ### [report](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/reporting.py#L24)
 
 Function in `workflow.reporting`.
@@ -4282,7 +4425,7 @@ Calls: [workflow.ablation:score](#function-308)
 
 Called by: [workflow.evaluation:run_evaluation](#function-346)
 
-<a id="function-407"></a>
+<a id="function-422"></a>
 ### [verify](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/reporting.py#L10)
 
 Check artifact identity and archived reporting independently of live jobs.
@@ -4291,7 +4434,7 @@ Calls: [workflow.ablation:file_hash](#function-303), [workflow.ablation:load](#f
 
 Called by: [workflow.__main__:main](#function-295)
 
-<a id="function-408"></a>
+<a id="function-423"></a>
 ### [write_report](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/reporting.py#L60)
 
 Function in `workflow.reporting`.
@@ -4304,56 +4447,56 @@ Called by: [workflow.evaluation:run_evaluation](#function-346)
 
 119 lines · `workflow/scaffolding.py`
 
-<a id="function-409"></a>
+<a id="function-424"></a>
 ### [scaffold_spec](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/scaffolding.py#L17)
 
 Read a configured harness or render a language-only, fail-closed skeleton.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.preparation:_engine_config_module](#function-402)
+Calls: [workflow.ablation:bind](#function-299), [workflow.preparation:_engine_config_module](#function-405)
 
-Called by: [workflow.worktrees:attach](#function-453)
+Called by: [workflow.worktrees:attach](#function-468)
 
-<a id="function-410"></a>
+<a id="function-425"></a>
 ### [write_scaffold](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/scaffolding.py#L57)
 
 Write the same instrumentation to every condition; never overwrite .aideal.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:save](#function-307), [workflow.preparation:_engine_config_module](#function-402), [workflow.scaffolding:write_scaffold.relocate](#function-411)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:save](#function-307), [workflow.preparation:_engine_config_module](#function-405), [workflow.scaffolding:write_scaffold.relocate](#function-426)
 
-Called by: [workflow.worktrees:attach](#function-453)
+Called by: [workflow.worktrees:attach](#function-468)
 
-<a id="function-411"></a>
+<a id="function-426"></a>
 ### [write_scaffold.relocate](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/scaffolding.py#L67)
 
 Function in `workflow.scaffolding`.
 
 Calls: None resolved
 
-Called by: [workflow.scaffolding:write_scaffold](#function-410)
+Called by: [workflow.scaffolding:write_scaffold](#function-425)
 
 ## workflow.source_duplicates
 
 375 lines · `workflow/source_duplicates.py`
 
-<a id="function-412"></a>
+<a id="function-427"></a>
 ### [_digest](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L37)
 
 Function in `workflow.source_duplicates`.
 
 Calls: None resolved
 
-Called by: [workflow.source_duplicates:_lexical_functions](#function-416), [workflow.source_duplicates:_python_functions.visit](#function-420), [workflow.source_duplicates:scan_duplicates](#function-423)
+Called by: [workflow.source_duplicates:_lexical_functions](#function-431), [workflow.source_duplicates:_python_functions.visit](#function-435), [workflow.source_duplicates:scan_duplicates](#function-438)
 
-<a id="function-413"></a>
+<a id="function-428"></a>
 ### [_files](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L52)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_files.git](#function-415), [workflow.source_duplicates:_matches](#function-417)
+Calls: [workflow.source_duplicates:_files.git](#function-430), [workflow.source_duplicates:_matches](#function-432)
 
-Called by: [workflow.source_duplicates:scan_duplicates](#function-423)
+Called by: [workflow.source_duplicates:scan_duplicates](#function-438)
 
-<a id="function-414"></a>
+<a id="function-429"></a>
 ### [_files.fail_discovery](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L78)
 
 Function in `workflow.source_duplicates`.
@@ -4362,70 +4505,70 @@ Calls: None resolved
 
 Called by: None resolved
 
-<a id="function-415"></a>
+<a id="function-430"></a>
 ### [_files.git](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L55)
 
 Function in `workflow.source_duplicates`.
 
 Calls: None resolved
 
-Called by: [workflow.source_duplicates:_files](#function-413)
+Called by: [workflow.source_duplicates:_files](#function-428)
 
-<a id="function-416"></a>
+<a id="function-431"></a>
 ### [_lexical_functions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L196)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_digest](#function-412), [workflow.source_duplicates:_tokens](#function-421)
+Calls: [workflow.source_duplicates:_digest](#function-427), [workflow.source_duplicates:_tokens](#function-436)
 
-Called by: [workflow.source_duplicates:scan_duplicates](#function-423)
+Called by: [workflow.source_duplicates:scan_duplicates](#function-438)
 
-<a id="function-417"></a>
+<a id="function-432"></a>
 ### [_matches](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L42)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_matches.match](#function-418)
+Calls: [workflow.source_duplicates:_matches.match](#function-433)
 
-Called by: [workflow.source_duplicates:_files](#function-413)
+Called by: [workflow.source_duplicates:_files](#function-428)
 
-<a id="function-418"></a>
+<a id="function-433"></a>
 ### [_matches.match](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L43)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_matches.match](#function-418)
+Calls: [workflow.source_duplicates:_matches.match](#function-433)
 
-Called by: [workflow.source_duplicates:_matches](#function-417), [workflow.source_duplicates:_matches.match](#function-418)
+Called by: [workflow.source_duplicates:_matches](#function-432), [workflow.source_duplicates:_matches.match](#function-433)
 
-<a id="function-419"></a>
+<a id="function-434"></a>
 ### [_python_functions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L100)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_python_functions.visit](#function-420)
+Calls: [workflow.source_duplicates:_python_functions.visit](#function-435)
 
-Called by: [workflow.source_duplicates:scan_duplicates](#function-423)
+Called by: [workflow.source_duplicates:scan_duplicates](#function-438)
 
-<a id="function-420"></a>
+<a id="function-435"></a>
 ### [_python_functions.visit](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L103)
 
 Function in `workflow.source_duplicates`.
 
-Calls: [workflow.source_duplicates:_digest](#function-412), [workflow.source_duplicates:_python_functions.visit](#function-420)
+Calls: [workflow.source_duplicates:_digest](#function-427), [workflow.source_duplicates:_python_functions.visit](#function-435)
 
-Called by: [workflow.source_duplicates:_python_functions](#function-419), [workflow.source_duplicates:_python_functions.visit](#function-420)
+Called by: [workflow.source_duplicates:_python_functions](#function-434), [workflow.source_duplicates:_python_functions.visit](#function-435)
 
-<a id="function-421"></a>
+<a id="function-436"></a>
 ### [_tokens](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L132)
 
 Keep literal bytes/identifiers; discard comments without treating their braces as code.
 
 Calls: None resolved
 
-Called by: [workflow.source_duplicates:_lexical_functions](#function-416)
+Called by: [workflow.source_duplicates:_lexical_functions](#function-431)
 
-<a id="function-422"></a>
+<a id="function-437"></a>
 ### [compare_duplicate_reports](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L347)
 
 Compare observed candidates, refusing to claim reduction after coverage failures.
@@ -4434,12 +4577,12 @@ Calls: None resolved
 
 Called by: [workflow.development_cli:run_development_command](#function-339)
 
-<a id="function-423"></a>
+<a id="function-438"></a>
 ### [scan_duplicates](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_duplicates.py#L273)
 
 Return JSON-compatible evidence and suggestions; never change library files.
 
-Calls: [workflow.source_duplicates:_digest](#function-412), [workflow.source_duplicates:_files](#function-413), [workflow.source_duplicates:_lexical_functions](#function-416), [workflow.source_duplicates:_python_functions](#function-419)
+Calls: [workflow.source_duplicates:_digest](#function-427), [workflow.source_duplicates:_files](#function-428), [workflow.source_duplicates:_lexical_functions](#function-431), [workflow.source_duplicates:_python_functions](#function-434)
 
 Called by: [workflow.development_cli:run_development_command](#function-339)
 
@@ -4447,75 +4590,75 @@ Called by: [workflow.development_cli:run_development_command](#function-339)
 
 262 lines · `workflow/source_refactors.py`
 
-<a id="function-424"></a>
+<a id="function-439"></a>
 ### [_candidate](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L77)
 
 Function in `workflow.source_refactors`.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_blob](#function-436), [workflow.treatment_versions:_relative](#function-447), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
+Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_blob](#function-451), [workflow.treatment_versions:_relative](#function-462), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_safe_path](#function-464), [workflow.treatment_versions:_trees](#function-465)
 
-Called by: [workflow.source_refactors:install_refactor](#function-430)
+Called by: [workflow.source_refactors:install_refactor](#function-445)
 
-<a id="function-425"></a>
+<a id="function-440"></a>
 ### [_check_repository](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L68)
 
 Function in `workflow.source_refactors`.
 
-Calls: [workflow.treatment_versions:_run](#function-448)
+Calls: [workflow.treatment_versions:_run](#function-463)
 
-Called by: [workflow.source_refactors:install_refactor](#function-430)
+Called by: [workflow.source_refactors:install_refactor](#function-445)
 
-<a id="function-426"></a>
+<a id="function-441"></a>
 ### [_current](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L46)
 
 Function in `workflow.source_refactors`.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_version](#function-429), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.source_refactors:_lineage](#function-442), [workflow.source_refactors:_version](#function-444), [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431)
+Called by: [workflow.source_refactors:install_refactor](#function-445), [workflow.source_refactors:study_versions](#function-446)
 
-<a id="function-427"></a>
+<a id="function-442"></a>
 ### [_lineage](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L20)
 
 Follow explicit predecessor hashes; never infer latest from file times.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.source_refactors:_version](#function-429), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:load](#function-305), [workflow.source_refactors:_version](#function-444), [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:install_refactor](#function-430)
+Called by: [workflow.source_refactors:_current](#function-441), [workflow.source_refactors:install_refactor](#function-445)
 
-<a id="function-428"></a>
+<a id="function-443"></a>
 ### [_other_pending](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L60)
 
 Prevent a second lineage while an earlier install needs recovery.
 
-Calls: [workflow.source_refactors:_version](#function-429), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.source_refactors:_version](#function-444), [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.source_refactors:install_refactor](#function-430)
+Called by: [workflow.source_refactors:install_refactor](#function-445)
 
-<a id="function-429"></a>
+<a id="function-444"></a>
 ### [_version](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L14)
 
 Function in `workflow.source_refactors`.
 
 Calls: None resolved
 
-Called by: [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_other_pending](#function-428)
+Called by: [workflow.source_refactors:_current](#function-441), [workflow.source_refactors:_lineage](#function-442), [workflow.source_refactors:_other_pending](#function-443)
 
-<a id="function-430"></a>
+<a id="function-445"></a>
 ### [install_refactor](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L143)
 
 Create one local version branch from baseline; never edit existing arms.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:ownership](#function-369), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_check_repository](#function-425), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_other_pending](#function-428), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_record](#function-446), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:ownership](#function-369), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:_candidate](#function-439), [workflow.source_refactors:_check_repository](#function-440), [workflow.source_refactors:_current](#function-441), [workflow.source_refactors:_lineage](#function-442), [workflow.source_refactors:_other_pending](#function-443), [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_committed](#function-455), [workflow.treatment_versions:_install](#function-459), [workflow.treatment_versions:_record](#function-461), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_safe_path](#function-464), [workflow.treatment_versions:_trees](#function-465)
 
 Called by: [workflow.development_cli:run_development_command](#function-339)
 
-<a id="function-431"></a>
+<a id="function-446"></a>
 ### [study_versions](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/source_refactors.py#L240)
 
 Read current source/artifact pointers; do not switch any Git branch.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.source_refactors:_current](#function-426), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.ablation:load](#function-305), [workflow.source_refactors:_current](#function-441), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_safe_path](#function-464)
 
 Called by: [workflow.development_cli:run_development_command](#function-339)
 
@@ -4523,12 +4666,12 @@ Called by: [workflow.development_cli:run_development_command](#function-339)
 
 122 lines · `workflow/treatment_bundles.py`
 
-<a id="function-432"></a>
+<a id="function-447"></a>
 ### [bundle_proposals](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_bundles.py#L11)
 
 Produce a complete multi-file version; installation remains a separate step.
 
-Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.execution:atomic_json](#function-366), [workflow.treatment_versions:_artifact_role](#function-433), [workflow.treatment_versions:_read_proposal](#function-445)
+Calls: [workflow.ablation:bind](#function-299), [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.ablation:verify_artifact](#function-310), [workflow.execution:atomic_json](#function-366), [workflow.treatment_versions:_artifact_role](#function-448), [workflow.treatment_versions:_read_proposal](#function-460)
 
 Called by: [workflow.development_cli:run_development_command](#function-339)
 
@@ -4536,174 +4679,174 @@ Called by: [workflow.development_cli:run_development_command](#function-339)
 
 467 lines · `workflow/treatment_versions.py`
 
-<a id="function-433"></a>
+<a id="function-448"></a>
 ### [_artifact_role](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L69)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:_bundle](#function-437), [workflow.treatment_versions:_read_proposal](#function-445)
+Called by: [workflow.treatment_bundles:bundle_proposals](#function-447), [workflow.treatment_versions:_bundle](#function-452), [workflow.treatment_versions:_read_proposal](#function-460)
 
-<a id="function-434"></a>
+<a id="function-449"></a>
 ### [_attachment](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L228)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-435"></a>
+<a id="function-450"></a>
 ### [_binding_entry](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L172)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_expected_changes](#function-458), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-436"></a>
+<a id="function-451"></a>
 ### [_blob](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L124)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.source_refactors:_candidate](#function-424), [workflow.treatment_versions:_bundle](#function-437), [workflow.treatment_versions:_disk_entry](#function-442)
+Called by: [workflow.source_refactors:_candidate](#function-439), [workflow.treatment_versions:_bundle](#function-452), [workflow.treatment_versions:_disk_entry](#function-457)
 
-<a id="function-437"></a>
+<a id="function-452"></a>
 ### [_bundle](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L159)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_artifact_role](#function-433), [workflow.treatment_versions:_blob](#function-436)
+Calls: [workflow.treatment_versions:_artifact_role](#function-448), [workflow.treatment_versions:_blob](#function-451)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-438"></a>
+<a id="function-453"></a>
 ### [_check_target_paths](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L176)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-439"></a>
+<a id="function-454"></a>
 ### [_check_worktree](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L189)
 
 Compare raw file/index blobs, without invoking attributes or Git filters.
 
-Calls: [workflow.treatment_versions:_binding_entry](#function-435), [workflow.treatment_versions:_disk_entry](#function-442), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
+Calls: [workflow.treatment_versions:_binding_entry](#function-450), [workflow.treatment_versions:_disk_entry](#function-457), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_safe_path](#function-464), [workflow.treatment_versions:_trees](#function-465)
 
-Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-440"></a>
+<a id="function-455"></a>
 ### [_committed](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L278)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_trees](#function-450)
+Calls: [workflow.treatment_versions:_expected_changes](#function-458), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_trees](#function-465)
 
-Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-441"></a>
+<a id="function-456"></a>
 ### [_current](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L255)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-442"></a>
+<a id="function-457"></a>
 ### [_disk_entry](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L145)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_blob](#function-436)
+Calls: [workflow.treatment_versions:_blob](#function-451)
 
-Called by: [workflow.treatment_versions:_check_worktree](#function-439)
+Called by: [workflow.treatment_versions:_check_worktree](#function-454)
 
-<a id="function-443"></a>
+<a id="function-458"></a>
 ### [_expected_changes](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L271)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_binding_entry](#function-435), [workflow.treatment_versions:_trees](#function-450)
+Calls: [workflow.treatment_versions:_binding_entry](#function-450), [workflow.treatment_versions:_trees](#function-465)
 
-Called by: [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.treatment_versions:_committed](#function-455), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-444"></a>
+<a id="function-459"></a>
 ### [_install](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L288)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-445"></a>
+<a id="function-460"></a>
 ### [_read_proposal](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L73)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_artifact_role](#function-433), [workflow.treatment_versions:_relative](#function-447), [workflow.treatment_versions:_safe_path](#function-449)
+Calls: [workflow.ablation:load](#function-305), [workflow.treatment_versions:_artifact_role](#function-448), [workflow.treatment_versions:_relative](#function-462), [workflow.treatment_versions:_safe_path](#function-464)
 
-Called by: [workflow.treatment_bundles:bundle_proposals](#function-432), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.treatment_bundles:bundle_proposals](#function-447), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-446"></a>
+<a id="function-461"></a>
 ### [_record](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L63)
 
 Function in `workflow.treatment_versions`.
 
 Calls: [workflow.execution:atomic_json](#function-366)
 
-Called by: [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-447"></a>
+<a id="function-462"></a>
 ### [_relative](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L46)
 
 Function in `workflow.treatment_versions`.
 
 Calls: None resolved
 
-Called by: [workflow.source_refactors:_candidate](#function-424), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:_safe_path](#function-449)
+Called by: [workflow.source_refactors:_candidate](#function-439), [workflow.treatment_versions:_read_proposal](#function-460), [workflow.treatment_versions:_safe_path](#function-464)
 
-<a id="function-448"></a>
+<a id="function-463"></a>
 ### [_run](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L31)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.worktrees:_git](#function-452)
+Calls: [workflow.worktrees:_git](#function-467)
 
-Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_check_repository](#function-425), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_trees](#function-450), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.improvement_context:_library_inputs](#function-382), [workflow.improvement_context:original_checkout](#function-387), [workflow.source_refactors:_candidate](#function-439), [workflow.source_refactors:_check_repository](#function-440), [workflow.source_refactors:install_refactor](#function-445), [workflow.source_refactors:study_versions](#function-446), [workflow.treatment_versions:_attachment](#function-449), [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_committed](#function-455), [workflow.treatment_versions:_install](#function-459), [workflow.treatment_versions:_trees](#function-465), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-449"></a>
+<a id="function-464"></a>
 ### [_safe_path](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L54)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_relative](#function-447)
+Calls: [workflow.treatment_versions:_relative](#function-462)
 
-Called by: [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:_current](#function-426), [workflow.source_refactors:_lineage](#function-427), [workflow.source_refactors:_other_pending](#function-428), [workflow.source_refactors:install_refactor](#function-430), [workflow.source_refactors:study_versions](#function-431), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_check_target_paths](#function-438), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.source_refactors:_candidate](#function-439), [workflow.source_refactors:_current](#function-441), [workflow.source_refactors:_lineage](#function-442), [workflow.source_refactors:_other_pending](#function-443), [workflow.source_refactors:install_refactor](#function-445), [workflow.source_refactors:study_versions](#function-446), [workflow.treatment_versions:_attachment](#function-449), [workflow.treatment_versions:_check_target_paths](#function-453), [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_current](#function-456), [workflow.treatment_versions:_install](#function-459), [workflow.treatment_versions:_read_proposal](#function-460), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-450"></a>
+<a id="function-465"></a>
 ### [_trees](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L128)
 
 Function in `workflow.treatment_versions`.
 
-Calls: [workflow.treatment_versions:_run](#function-448)
+Calls: [workflow.treatment_versions:_run](#function-463)
 
-Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.source_refactors:_candidate](#function-424), [workflow.source_refactors:install_refactor](#function-430), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:apply_treatments](#function-451)
+Called by: [workflow.condition_inputs:backend_identity](#function-319), [workflow.source_refactors:_candidate](#function-439), [workflow.source_refactors:install_refactor](#function-445), [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_committed](#function-455), [workflow.treatment_versions:_expected_changes](#function-458), [workflow.treatment_versions:apply_treatments](#function-466)
 
-<a id="function-451"></a>
+<a id="function-466"></a>
 ### [apply_treatments](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/treatment_versions.py#L309)
 
 Install a complete proposal, preserving all earlier versions and evidence.
 
-Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:ownership](#function-369), [workflow.treatment_versions:_attachment](#function-434), [workflow.treatment_versions:_binding_entry](#function-435), [workflow.treatment_versions:_bundle](#function-437), [workflow.treatment_versions:_check_target_paths](#function-438), [workflow.treatment_versions:_check_worktree](#function-439), [workflow.treatment_versions:_committed](#function-440), [workflow.treatment_versions:_current](#function-441), [workflow.treatment_versions:_expected_changes](#function-443), [workflow.treatment_versions:_install](#function-444), [workflow.treatment_versions:_read_proposal](#function-445), [workflow.treatment_versions:_record](#function-446), [workflow.treatment_versions:_run](#function-448), [workflow.treatment_versions:_safe_path](#function-449), [workflow.treatment_versions:_trees](#function-450)
+Calls: [workflow.ablation:digest](#function-302), [workflow.ablation:load](#function-305), [workflow.evaluation_setup:assert_review_released](#function-358), [workflow.execution:ownership](#function-369), [workflow.treatment_versions:_attachment](#function-449), [workflow.treatment_versions:_binding_entry](#function-450), [workflow.treatment_versions:_bundle](#function-452), [workflow.treatment_versions:_check_target_paths](#function-453), [workflow.treatment_versions:_check_worktree](#function-454), [workflow.treatment_versions:_committed](#function-455), [workflow.treatment_versions:_current](#function-456), [workflow.treatment_versions:_expected_changes](#function-458), [workflow.treatment_versions:_install](#function-459), [workflow.treatment_versions:_read_proposal](#function-460), [workflow.treatment_versions:_record](#function-461), [workflow.treatment_versions:_run](#function-463), [workflow.treatment_versions:_safe_path](#function-464), [workflow.treatment_versions:_trees](#function-465)
 
 Called by: [workflow.development_cli:run_development_command](#function-339)
 
@@ -4711,20 +4854,20 @@ Called by: [workflow.development_cli:run_development_command](#function-339)
 
 88 lines · `workflow/worktrees.py`
 
-<a id="function-452"></a>
+<a id="function-467"></a>
 ### [_git](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/worktrees.py#L10)
 
 Function in `workflow.worktrees`.
 
 Calls: None resolved
 
-Called by: [workflow.treatment_versions:_run](#function-448), [workflow.worktrees:attach](#function-453)
+Called by: [workflow.treatment_versions:_run](#function-463), [workflow.worktrees:attach](#function-468)
 
-<a id="function-453"></a>
+<a id="function-468"></a>
 ### [attach](https://github.com/ZhuochengShang/AIDEAL/blob/main/workflow/worktrees.py#L19)
 
 Pin a clean local Git checkout; never switch or patch the user's checkout.
 
-Calls: [workflow.ablation:load](#function-305), [workflow.ablation:save](#function-307), [workflow.preparation:prepare_study](#function-403), [workflow.scaffolding:scaffold_spec](#function-409), [workflow.scaffolding:write_scaffold](#function-410), [workflow.worktrees:_git](#function-452)
+Calls: [workflow.ablation:load](#function-305), [workflow.ablation:save](#function-307), [workflow.preparation:prepare_study](#function-406), [workflow.scaffolding:scaffold_spec](#function-424), [workflow.scaffolding:write_scaffold](#function-425), [workflow.worktrees:_git](#function-467)
 
 Called by: [workflow.__main__:main](#function-295), [workflow.mcp_server:attach_codebase](#function-396)

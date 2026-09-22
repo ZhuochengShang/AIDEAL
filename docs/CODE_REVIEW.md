@@ -12,6 +12,7 @@ Read the [workflow](SUMMARY.md) and [condition matrix](VERSIONS.md), then follow
 | Contract/freeze | [condition_inputs.py](../workflow/condition_inputs.py), `freeze_conditions` in [condition_setup.py](../workflow/condition_setup.py) | Are arms matched, controls complete and runtime dependencies explicitly bound? |
 | Audience context | `public_context` in [condition_context.py](../workflow/condition_context.py) | Are private answers excluded and hints delivered only after matching failures? |
 | Execution/resume | `run_conditions` in [condition_evaluation.py](../workflow/condition_evaluation.py), [execution.py](../workflow/execution.py) | Are retries distinct from repairs and all reused evidence verified? |
+| Optional Codex provider | [openai_codex_adapter.py](../workflow/openai_codex_adapter.py), [provider_budget.py](../workflow/provider_budget.py), [pilot guide](OPENAI_CODEX_PILOT.md) | Are final-answer phases selected, request settings recorded, and the shared reservation made before HTTP? |
 | Scores | `report_conditions` in [condition_reporting.py](../workflow/condition_reporting.py) | Are denominators, matched pairs, unresolved units and costs retained? |
 
 ## Native documentation development

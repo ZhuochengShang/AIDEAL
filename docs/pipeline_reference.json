@@ -598,6 +598,58 @@
         "A valid library adapter/build, development separation and independent bank are explicit inputs.",
         "Synthetic software checks are not hosted-model experimental results."
       ]
+    },
+    {
+      "id": "codex_provider",
+      "title": "Request code with the optional Codex adapter",
+      "track": "configured_provider",
+      "status": "implemented",
+      "role": "configured development or audience model",
+      "entry_points": [
+        "workflow.openai_codex_adapter:main",
+        "workflow.openai_codex_adapter:response_record",
+        "workflow.openai_codex_adapter:_failure"
+      ],
+      "prompts": [],
+      "harness": "Explicit model command; GPT-5.3-Codex Responses API, low reasoning, no tools, one HTTP attempt.",
+      "outputs": [
+        "Evaluator-compatible code/usage JSON, message phases, response status and effective settings hash"
+      ],
+      "limitations": [
+        "Optional provider selected by configuration; the controller does not select it automatically.",
+        "Caller supplies system/prompt; this adapter does not read source or held-out fixtures.",
+        "Requested temperature is recorded but omitted from the API request; provider default applies.",
+        "Preparation previews and offline adapter checks do not establish model task performance."
+      ]
+    },
+    {
+      "id": "codex_budget",
+      "title": "Reserve and account for the shared Codex budget",
+      "track": "configured_provider",
+      "status": "implemented",
+      "role": null,
+      "entry_points": [
+        "workflow.provider_budget:BudgetLedger.__init__",
+        "workflow.provider_budget:BudgetLedger.reserve",
+        "workflow.provider_budget:BudgetLedger.finish",
+        "workflow.provider_budget:BudgetLedger._locked",
+        "workflow.provider_budget:BudgetLedger._validate",
+        "workflow.provider_budget:BudgetLedger._save",
+        "workflow.provider_budget:BudgetLedger._actual",
+        "workflow.provider_budget:digest"
+      ],
+      "prompts": [],
+      "harness": "Local POSIX file lock and atomic JSON; reserve before HTTP and account after the provider outcome.",
+      "outputs": [
+        "Shared ledger and persistent sibling .lock identity; request/settings hashes and token-cost receipts"
+      ],
+      "limitations": [
+        "At most $5 across calls sharing this ledger, at pinned standard token rates before tax.",
+        "Ambiguous errors and missing/nonfinal usage retain the full conservative reservation.",
+        "Use --budget-ledger=/absolute/path as one argument; bind source files, not mutable ledger contents.",
+        "This local guard excludes other clients/ledgers and deliberate accounting-file changes.",
+        "Related functions are curated links; dynamic instance calls may remain unresolved in the static graph."
+      ]
     }
   ],
   "relationships": [
@@ -745,6 +797,26 @@
       "from": "condition_run",
       "to": "condition_report",
       "kind": "explicit_validated_condition_protocol"
+    },
+    {
+      "from": "treatment_proposal",
+      "to": "codex_provider",
+      "kind": "optional_explicit_model_command"
+    },
+    {
+      "from": "condition_run",
+      "to": "codex_provider",
+      "kind": "optional_explicit_model_command"
+    },
+    {
+      "from": "comparison_audience",
+      "to": "codex_provider",
+      "kind": "optional_explicit_model_command"
+    },
+    {
+      "from": "codex_provider",
+      "to": "codex_budget",
+      "kind": "mandatory_budget_guard"
     }
   ],
   "review_paths": [
@@ -776,7 +848,9 @@
           "inputs": "Explicit frozen/source/artifact identities and shared bank",
           "outputs": "Validated evidence or an explicit unresolved state",
           "stage_ids": [
-            "condition_run"
+            "condition_run",
+            "codex_provider",
+            "codex_budget"
           ],
           "status": "implemented"
         },
@@ -861,7 +935,9 @@
         "treatment_versions",
         "source_refactors",
         "legacy_candidates_probes",
-        "legacy_puzzles"
+        "legacy_puzzles",
+        "codex_provider",
+        "codex_budget"
       ]
     },
     {
@@ -954,7 +1030,9 @@
           "outputs": "Saved requests, process records and per-task results",
           "stage_ids": [
             "comparison_audience",
-            "comparison_execution"
+            "comparison_execution",
+            "codex_provider",
+            "codex_budget"
           ],
           "status": "implemented"
         },

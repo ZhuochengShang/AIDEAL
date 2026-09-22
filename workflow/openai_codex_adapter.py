@@ -1,0 +1,115 @@
+"""One low-reasoning Codex Responses call guarded by a shared $5 budget ledger."""
+import argparse
+import json
+import math
+import os
+import re
+import sys
+
+if __package__:
+    from .provider_budget import BudgetLedger, MODEL, digest
+else:
+    from provider_budget import BudgetLedger, MODEL, digest
+
+
+def response_record(response):
+    messages, refusals = [], []
+    for item in response.output or []:
+        if getattr(item, 'type', None) != 'message' or getattr(item, 'role', None) != 'assistant':
+            continue
+        text = ''.join(part.text for part in item.content if part.type == 'output_text')
+        refusals.extend(part.refusal for part in item.content if part.type == 'refusal')
+        messages.append({'id': item.id, 'phase': getattr(item, 'phase', None),
+                         'status': item.status, 'text': text})
+    final = [item for item in messages if item['phase'] == 'final_answer']
+    selected = final if final else [item for item in messages if item['phase'] is None]
+    code = ''.join(item['text'] for item in selected)
+    status = response.status
+    reason = getattr(response.incomplete_details, 'reason', None)
+    record = {'code': code, 'model_version': response.model, 'response_id': response.id,
+              'response_status': status, 'incomplete_reason': reason,
+              'truncated': reason == 'max_output_tokens', 'refusals': refusals,
+              'response_kind': 'solution' if code else ('refusal' if refusals else 'empty_model_output'),
+              'messages': messages, 'error_code': getattr(response.error, 'code', None)}
+    usage = response.usage
+    if usage is not None:
+        reasoning = getattr(usage.output_tokens_details, 'reasoning_tokens', None)
+        record['usage'] = {'input_tokens': usage.input_tokens, 'output_tokens': usage.output_tokens,
+                           'reasoning_tokens': reasoning,
+                           'non_reasoning_output_tokens': usage.output_tokens - reasoning if type(reasoning) is int else None,
+                           'cached_input_tokens': getattr(usage.input_tokens_details, 'cached_tokens', None),
+                           'total_tokens': usage.total_tokens}
+    return record
+
+
+def _failure(exc):
+    """Never persist raw SDK error bodies, URLs, headers, or exception messages."""
+    code = getattr(exc, 'code', None)
+    request_id = getattr(exc, 'request_id', None)
+    status = getattr(exc, 'status_code', None)
+    return {'type': type(exc).__name__,
+            'status_code': status if type(status) is int and 100 <= status <= 599 else None,
+            'code': code if isinstance(code, str) and re.fullmatch(r'[a-z_]{1,64}', code) else None,
+            'request_id': request_id if isinstance(request_id, str) and re.fullmatch(r'req_[a-zA-Z0-9]{1,128}', request_id) else None}
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--budget-ledger', required=True,
+                        help='Use --budget-ledger=/absolute/path so controllers do not hash this mutable file')
+    parser.add_argument('--max-cost-usd', default='5', help='Shared cap, at most $5; immutable on resume')
+    args = parser.parse_args(argv)
+    request = json.load(sys.stdin)
+    if request['model'] != MODEL:
+        raise ValueError('This adapter requires model gpt-5.3-codex')
+    if not all(isinstance(request[key], str) for key in ('system', 'prompt')):
+        raise ValueError('system and prompt must be strings')
+    cap = request['max_output_tokens']
+    if type(cap) is not int or not 0 < cap <= 128000:
+        raise ValueError('max_output_tokens must be an integer from 1 to 128000')
+    temperature = request['temperature']
+    if type(temperature) not in (int, float) or not math.isfinite(temperature):
+        raise ValueError('Requested temperature must be a finite number')
+    key = os.environ.get('OPENAI_API_KEY')
+    if not key:
+        raise RuntimeError('Set OPENAI_API_KEY in the launching environment')
+    import openai  # Optional SDK; --help and module inspection stay offline.
+
+    ledger = BudgetLedger(args.budget_ledger, args.max_cost_usd)
+    parameters = {'model': MODEL, 'reasoning': {'effort': 'low'}, 'max_output_tokens': cap,
+                  'store': False, 'tools': [], 'tool_choice': 'none', 'service_tier': 'default',
+                  'background': False, 'stream': False, 'truncation': 'disabled'}
+    settings = {'endpoint': 'https://api.openai.com/v1', 'api': 'responses', 'timeout_s': 120,
+                'max_retries': 0, 'sdk_version': openai.__version__, 'parameters': parameters,
+                'requested_temperature': temperature, 'temperature_sent': False,
+                'effective_temperature': 'provider_default_not_explicitly_set',
+                'instructions_sha256': digest(request['system']), 'input_sha256': digest(request['prompt']),
+                'budget_ledger': str(ledger.path), 'max_cost_nanousd': ledger.identity['max_cost_nanousd']}
+    request_hash, settings_hash = digest(request), digest(settings)
+    reservation = None
+    try:
+        with openai.OpenAI(api_key=key, base_url=settings['endpoint'], max_retries=0, timeout=120.0) as client:
+            reservation = ledger.reserve(request['system'], request['prompt'], cap, request_hash, settings_hash)
+            response = client.responses.create(instructions=request['system'], input=request['prompt'], **parameters)
+        record = response_record(response)
+    except Exception as exc:
+        failure = _failure(exc)
+        if reservation is not None:
+            try:
+                ledger.finish(reservation, failure=failure)
+            except Exception as ledger_error:
+                failure['ledger_error_type'] = type(ledger_error).__name__
+        raise RuntimeError('Codex request failed: ' + json.dumps(failure)) from None
+    receipt = ledger.finish(reservation, usage=record.get('usage'), response_id=record['response_id'],
+                            status=record['response_status'])
+    if record['response_status'] not in ('completed', 'incomplete'):
+        raise RuntimeError('Codex provider returned non-solution status: ' + json.dumps({
+            'response_status': record['response_status'], 'response_id': record['response_id'],
+            'budget': receipt})) from None
+    record.update(adapter_settings=settings, adapter_settings_sha256=settings_hash,
+                  request_sha256=request_hash, budget=receipt)
+    print(json.dumps(record, allow_nan=False))
+
+
+if __name__ == '__main__':
+    main()

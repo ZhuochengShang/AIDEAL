@@ -1,6 +1,6 @@
 # AIDEAL
 
-[Gemini Flash settings](docs/GEMINI_FLASH.md) · [Legacy-code review](docs/LEGACY_CODE_REVIEW.md)
+[Codex pilot and shared budget](docs/OPENAI_CODEX_PILOT.md) · [Gemini Flash settings](docs/GEMINI_FLASH.md) · [Legacy-code review](docs/LEGACY_CODE_REVIEW.md)
 
 AIDEAL prepares and evaluates changes that may help language models use a software library: clearer documentation, forwarding aliases, function-specific error hints, and source refactors that preserve the public API.
 
@@ -43,7 +43,7 @@ python scripts/aideal preview-library \
 
 Attachment pins the baseline in an isolated Git store and creates five preparation worktrees. Preview records bounded source/API context and coverage without calling a model. Add `--api` for explicit APIs and `--alias-path-template` for a language-appropriate new alias module path.
 
-Model proposals require an explicit [development-model configuration](configs/improvements.example.yaml). The included Google adapter additionally uses [requirements-evaluation.txt](requirements-evaluation.txt) and environment credentials; a custom JSON command adapter may use another provider.
+Model proposals require an explicit [development-model configuration](configs/improvements.example.yaml). The included Google adapter uses [requirements-evaluation.txt](requirements-evaluation.txt). The optional [Codex adapter](docs/OPENAI_CODEX_PILOT.md) uses [requirements-openai.txt](requirements-openai.txt) and a shared budget ledger. Each provider reads its credentials from the launching environment.
 
 Native README authoring is a separate engine interface. Install its model-provider dependencies when using that path:
 
