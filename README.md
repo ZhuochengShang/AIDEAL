@@ -1,6 +1,10 @@
-# AIDEAL — RDPro · GPT-5.3-Codex · five conditions · 2026-09-21
+# AIDEAL — shared evaluation and library studies
 
-This is **`evaluation/2026-09-21-rdpro-gpt-5.3-codex-five-conditions`**, the dedicated review branch for the completed RDPro pilot. It starts from toolkit commit `8083e3b27c05b899b8a4941377ab0abc5c81dcbb`; GitHub `main` remains the toolkit release.
+This branch, `setup/2026-09-21-library-five-conditions`, connects one shared AIDEAL evaluator to the source repositories for all six registered libraries. The existing RDPro pilot is preserved. SedonaDB, MDAnalysis, tslearn, mir_eval and Thumbnailator each have a new baseline-only five-condition preparation; their treatments, independent benchmark adapters and evaluations are pending.
+
+Start with the [library index](studies/README.md) for source versions, configuration, implementation links and future output locations. Each companion repository has a navigation-only `main` and five source branches: Original, README only, Alias only, Error hints only and Combined. All five new conditions start at the same per-library baseline; no generated treatment or measured result is implied by a branch name. No model was called during this setup.
+
+## Completed RDPro pilot
 
 - [RDPro evaluation: setup, five conditions and results](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md)
 - [Actual checker, JVM harness and offline tests](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness/README.md)

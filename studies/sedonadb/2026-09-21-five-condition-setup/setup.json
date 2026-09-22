@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "study_id": "2026-09-21-five-condition-setup",
+  "library": "SedonaDB",
+  "date_label": "Setup started 2026-09-21 and continued after midnight; the identifier is stable.",
+  "slug": "sedonadb",
+  "language": "Rust",
+  "repository": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB",
+  "publication": {
+    "status": "prepared",
+    "remote_refs_verified": false,
+    "visibility": "private",
+    "access": "Repository access is required."
+  },
+  "upstream": {
+    "repository": "https://github.com/apache/sedona-db.git",
+    "commit": "59ec34c79594222891b1dbaf106bfa9de14a5b99"
+  },
+  "baseline_snapshot": {
+    "commit": "255a2cdc9528f3908ae097f2b498c27d48d4b7d7",
+    "tree": "1df3708ef1d66d3bcbeabbc7bf292a4740290cfd",
+    "tree_matches_upstream": true,
+    "upstream_ancestry_included": false
+  },
+  "scope": {
+    "source_globs": [
+      "rust/*/src/**/*.rs",
+      "c/*/src/**/*.rs"
+    ],
+    "test_globs": [
+      "rust/*/tests/**/*.rs",
+      "c/*/tests/**/*.rs"
+    ],
+    "original_readme": [
+      "README.md",
+      "examples/sedonadb-rust/README.md"
+    ],
+    "discovery_executed": false,
+    "note": "File selection for future discovery; not a resolved public-API census."
+  },
+  "conditions": [
+    {
+      "condition": "original",
+      "branch": "preparation/2026-09-21-five-conditions/original",
+      "commit": "255a2cdc9528f3908ae097f2b498c27d48d4b7d7",
+      "tree": "1df3708ef1d66d3bcbeabbc7bf292a4740290cfd",
+      "treatment_status": "baseline",
+      "evaluation_status": "not_run",
+      "branch_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/tree/preparation/2026-09-21-five-conditions/original",
+      "commit_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/commit/255a2cdc9528f3908ae097f2b498c27d48d4b7d7"
+    },
+    {
+      "condition": "readme_only",
+      "branch": "preparation/2026-09-21-five-conditions/readme-only",
+      "commit": "255a2cdc9528f3908ae097f2b498c27d48d4b7d7",
+      "tree": "1df3708ef1d66d3bcbeabbc7bf292a4740290cfd",
+      "treatment_status": "not_generated",
+      "evaluation_status": "not_run",
+      "branch_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/tree/preparation/2026-09-21-five-conditions/readme-only",
+      "commit_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/commit/255a2cdc9528f3908ae097f2b498c27d48d4b7d7"
+    },
+    {
+      "condition": "alias_only",
+      "branch": "preparation/2026-09-21-five-conditions/alias-only",
+      "commit": "255a2cdc9528f3908ae097f2b498c27d48d4b7d7",
+      "tree": "1df3708ef1d66d3bcbeabbc7bf292a4740290cfd",
+      "treatment_status": "not_generated",
+      "evaluation_status": "not_run",
+      "branch_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/tree/preparation/2026-09-21-five-conditions/alias-only",
+      "commit_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/commit/255a2cdc9528f3908ae097f2b498c27d48d4b7d7"
+    },
+    {
+      "condition": "error_hints_only",
+      "branch": "preparation/2026-09-21-five-conditions/error-hints-only",
+      "commit": "255a2cdc9528f3908ae097f2b498c27d48d4b7d7",
+      "tree": "1df3708ef1d66d3bcbeabbc7bf292a4740290cfd",
+      "treatment_status": "not_generated",
+      "evaluation_status": "not_run",
+      "branch_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/tree/preparation/2026-09-21-five-conditions/error-hints-only",
+      "commit_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/commit/255a2cdc9528f3908ae097f2b498c27d48d4b7d7"
+    },
+    {
+      "condition": "combined",
+      "branch": "preparation/2026-09-21-five-conditions/combined",
+      "commit": "255a2cdc9528f3908ae097f2b498c27d48d4b7d7",
+      "tree": "1df3708ef1d66d3bcbeabbc7bf292a4740290cfd",
+      "treatment_status": "not_generated",
+      "evaluation_status": "not_run",
+      "branch_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/tree/preparation/2026-09-21-five-conditions/combined",
+      "commit_url": "https://github.com/ZhuochengShang/AIDEAL-SedonaDB/commit/255a2cdc9528f3908ae097f2b498c27d48d4b7d7"
+    }
+  ],
+  "model": null,
+  "model_calls": 0,
+  "evaluated": false,
+  "status_scope": "This new preparation only; historical library experiments are not imported.",
+  "treatments": "not_generated_or_installed",
+  "adapter": "generic_skeleton_unvalidated",
+  "bank": "empty_draft",
+  "runtime_builds": "not_validated",
+  "freeze": "not_created",
+  "readiness_note": "Rust crate and native-wrapper Rust source scope; other language bindings and submodule internals excluded from initial discovery. Historical 320/322 SQL examples executed without an independent semantic oracle; not a five-condition LLM result. Four submodules uninitialized; no Rust build validation in this setup.",
+  "submodules": [
+    {
+      "path": "c/sedona-s2geography/s2geography",
+      "commit": "3ab3dd9ab95dd473647f7ed9fcaccbb784d58dc1",
+      "url": "https://github.com/paleolimbot/s2geography.git",
+      "initialized": false,
+      "relative_url_override_needed": false
+    },
+    {
+      "path": "c/sedona-s2geography/s2geometry",
+      "commit": "a37aba69f14af676e9605cd9515c8aca6cef8342",
+      "url": "https://github.com/google/s2geometry.git",
+      "initialized": false,
+      "relative_url_override_needed": false
+    },
+    {
+      "path": "submodules/geoarrow-data",
+      "commit": "e8eaa04487d982398f07713cde527c5c5edeee1e",
+      "url": "https://github.com/geoarrow/geoarrow-data.git",
+      "initialized": false,
+      "relative_url_override_needed": false
+    },
+    {
+      "path": "submodules/sedona-testing",
+      "commit": "4a05ef1c3c9dbeaab8568211112b32a2a50fcda4",
+      "url": "https://github.com/apache/sedona-testing.git",
+      "initialized": false,
+      "relative_url_override_needed": false
+    }
+  ],
+  "ci_policy": "GitHub Actions disabled during preparation; no upstream CI run claimed as validation",
+  "licenses": [
+    {
+      "path": "LICENSE",
+      "sha256": "30de2d126b53de43ba6a753403959a86e3748fd751fdb728369f061d14786127",
+      "bytes": 13941
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "ed78517b1cb4e1e1d2160f4746538a6b4b38fcdc1dfa7e93e92157fe2e52da6b",
+      "bytes": 165
+    }
+  ],
+  "shared_guide": "https://github.com/ZhuochengShang/AIDEAL/blob/setup/2026-09-21-library-five-conditions/studies/sedonadb/2026-09-21-five-condition-setup/README.md",
+  "shared_branch": "setup/2026-09-21-library-five-conditions",
+  "next_steps": [
+    "Validate runtime and library-specific checker",
+    "Build an independent task bank and controls",
+    "Review and test new treatment artifacts",
+    "Build and bind every condition",
+    "Choose/pin model, prompts and budgets",
+    "Validate controls and create a new freeze",
+    "Run matched evaluation"
+  ]
+}
