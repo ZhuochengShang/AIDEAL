@@ -1,5 +1,6 @@
 """Bounded JSON subprocess adapters, atomic evidence, and exclusive ownership."""
 from contextlib import contextmanager
+from datetime import datetime, timezone
 import fcntl
 import json
 import os
@@ -66,36 +67,53 @@ def invoke(command, request, directory, timeout):
     directory.mkdir(parents=True, exist_ok=False)
     atomic_json(directory / 'request.json', request)
     started = time.monotonic()
-    status, payload = 'adapter_error', None
+    started_at = datetime.now(timezone.utc).isoformat()
+    atomic_json(directory / 'invocation.json', {'started_at': started_at,
+                'command': list(command), 'timeout_s': timeout, 'status': 'started'})
+    status, payload, process = 'adapter_error', None, None
+    error_category, error_type, cleanup_error, interrupted = None, None, None, None
     with (directory / 'stdout.txt').open('w') as stdout, (directory / 'stderr.txt').open('w') as stderr:
-        process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr,
-                                   cwd=directory, text=True, start_new_session=True)
         try:
+            process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr,
+                                       cwd=directory, text=True, start_new_session=True)
             process.communicate(json.dumps(request, allow_nan=False), timeout=timeout)
             if process.returncode == 0:
                 try:
                     payload = json.loads((directory / 'stdout.txt').read_text())
                     if isinstance(payload, dict):
                         status = 'ok'
+                    else:
+                        error_category = 'adapter_output_not_object'
                 except (ValueError, UnicodeError):
-                    pass
+                    error_category = 'adapter_output_not_json'
+            else:
+                error_category = 'adapter_nonzero_exit'
         except subprocess.TimeoutExpired:
             status = 'timeout'
+            error_category = 'adapter_timeout'
             _stop_process_group(process)
             process.communicate()
-        except BaseException:
-            _stop_process_group(process)
-            process.wait()
-            raise
+        except OSError as exc:
+            error_category, error_type = 'adapter_launch_or_io_error', type(exc).__name__
+        except BaseException as exc:
+            status, error_category, error_type = 'interrupted', 'invocation_interrupted', type(exc).__name__
+            interrupted = exc
         finally:
             # Nested compilers/debuggers can leave children after adapter failure.
             # Every invocation owns a new process group, so cleanup is scoped.
-            cleanup_error = _stop_process_group(process)
-    result = {'status': status, 'returncode': process.returncode,
-              'seconds': time.monotonic() - started, 'payload': payload}
+            if process is not None:
+                cleanup_error = _stop_process_group(process)
+                if process.poll() is None:
+                    process.wait()
+    result = {'status': status, 'returncode': process.returncode if process is not None else None,
+              'seconds': time.monotonic() - started, 'payload': payload,
+              'started_at': started_at, 'finished_at': datetime.now(timezone.utc).isoformat(),
+              'error_category': error_category, 'error_type': error_type}
     if cleanup_error:
         result['cleanup_error'] = cleanup_error
     atomic_json(directory / 'process.json', result)
+    if interrupted is not None:
+        raise interrupted
     return result
 
 

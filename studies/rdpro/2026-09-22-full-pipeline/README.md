@@ -1,8 +1,10 @@
 # RDPro: broader evaluation and selective README updates
 
-Status: offline preparation. No paid model calls or audience results exist for this study yet. The completed September 21 pilot remains a separate, unchanged experiment.
+Status: official source verified; user requested the five-condition run on the prepared 16-API, 32-task bank with three trials (480 units). Recording and execution preparation are being finalized before model calls. The separate three-README-policy comparison is outside this run. The completed September 21 pilot remains unchanged.
 
-This study uses GPT-5.3-Codex with low reasoning. It compares five source/documentation conditions and, separately, three README update policies. Every paid stage is planned to share one reservation ledger; its proposed $100 limit requires the operator's approval before execution.
+[Fresh Bitbucket source proof](provenancePUBLIC.md) · [Recording and execution plan](RECORDED_RUN.md)
+
+This study uses GPT-5.3-Codex with low reasoning. It compares five source/documentation conditions and, separately, three README update policies. The authorized five-condition run uses a shared reservation ledger with a $100 stopping limit. Its planning estimate is $19–$26, with a $55 high-output scenario. The limit is a guard, not a target spend or a completion guarantee. The additional README-policy comparison is not being launched.
 
 | Estimated API cost, USD | Low usage | Planning case | High-output scenario |
 | --- | ---: | ---: | ---: |

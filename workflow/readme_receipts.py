@@ -1,14 +1,28 @@
 """Bind native text results to independently saved provider and budget evidence."""
 import fcntl
 from decimal import Decimal
+from datetime import datetime
 import hashlib
 import json
+import math
 from pathlib import Path
 
 from .provider_budget import BudgetLedger, digest
 
 FILES = ('contract.json', 'request.json', 'settings.json', 'reservation.json',
          'response.json', 'result.json', 'outcome.json')
+TIMING = ('started_at', 'finished_at', 'seconds')
+
+
+def _without_timing(record):
+    """Timing is bound by receipt hashes; legacy receipts may lack all three fields."""
+    if any(key in record for key in TIMING):
+        start, end = (datetime.fromisoformat(record[key]) for key in TIMING[:2])
+        seconds = record['seconds']
+        if (start.tzinfo is None or end.tzinfo is None
+                or type(seconds) not in (int, float) or not math.isfinite(seconds) or seconds < 0):
+            raise ValueError('Invalid provider receipt timing')
+    return {key: value for key, value in record.items() if key not in TIMING}
 
 
 def _read(path):
@@ -78,9 +92,9 @@ def receipt_binding(call_dir, text, request, contract):
             or settings.get('budget_policy_identity') != contract['budget_identity']
             or settings.get('budget_ledger') != contract['budget_ledger']):
         raise ValueError('Provider evidence settings changed')
-    response = {key: value for key, value in result.items()
+    response = {key: value for key, value in _without_timing(result).items()
                 if key not in ('adapter_settings', 'adapter_settings_sha256', 'request_sha256', 'budget')}
-    if records['response.json'] != response or records['outcome.json'] != {
+    if records['response.json'] != response or _without_timing(records['outcome.json']) != {
             'status': 'completed', 'request_sha256': request_hash, 'result_sha256': digest(result)}:
         raise ValueError('Provider outcome or response differs from its result')
     if (result.get('code') != text or not isinstance(text, str) or not text.strip()

@@ -18,8 +18,9 @@ types that are not listed here):
 Project context distilled from the original README (grounding — may say none exists):
 {original_readme_context}
 
-Real usage from the project's existing test suite (these compile and pass — base
-the Valid Call Patterns and realistic Common Failure Modes on them; may be empty):
+Observed source snippets from the project's existing test suite (not executed by
+this authoring step; check qualified receiver and signature before using them for
+Valid Call Patterns or possible Common Failure Modes; may be empty):
 ```{language}
 {test_examples}
 ```
@@ -32,11 +33,13 @@ Verbatim code example(s) from the ORIGINAL project README that call `{api_name}`
 
 GROUND THE CALL FORM by combining the sources above, in this priority order — and
 NEVER invent a call shape that appears in none of them:
-1. If a test-suite example is shown, its call form is authoritative (it compiles
-   and passes) — reproduce that exact receiver and argument order.
-2. Otherwise use the original-README example's call form.
-3. If BOTH are shown, reproduce a real form verbatim (either compiles); when they
-   differ, the instance/implicit form `value.{api_name}(...)` is the most portable.
+1. If a test-suite example is shown, treat it as observed source usage, not proof
+   that it compiled or passed. Preserve its exact receiver and argument order only
+   when they agree with the supplied qualified API facts.
+2. Otherwise use the original-README example's call form if it agrees with those facts.
+3. If BOTH are shown, compare their receiver, overload and argument types against
+   the qualified API facts. Explain unresolved differences; do not claim either
+   example was executed or that an instance/implicit form is universally portable.
 4. If NEITHER is shown, derive the call from the Signature/API facts and say in the
    entry that the example is inferred from the signature (not verified).
 Preserve the receiver/qualifier EXACTLY as written — if it is

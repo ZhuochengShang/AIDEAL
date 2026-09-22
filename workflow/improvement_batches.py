@@ -7,7 +7,8 @@ from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json, invoke, ownership
 from .improvement_context import (alias_target, development_destination, _development_errors,
                                   _library_inputs, _semantic_context, _source_windows)
-from .improvement_suggestions import PROMPT, _finish_proposal, _load_preview, _model_settings
+from .improvement_suggestions import (PROMPT, _finish_proposal, _load_preview, _model_settings,
+                                     proposal_response_error)
 
 
 def _integer(value, name, low, high):
@@ -204,6 +205,10 @@ def _run_batch(preview_path, settings, output, identity, run_artifacts, public_n
         raise ValueError('Library proposal inputs changed during generation; preserve this output')
     if result['status'] != 'ok' or not isinstance(result.get('payload'), dict) or not isinstance(result['payload'].get('code'), str):
         return {'status': 'model_attempt_failed', 'output': str(output), 'attempt': str(attempt)}, calls
+    error = proposal_response_error(result, settings['name'])
+    if error:
+        atomic_json(attempt / 'rejected.json', {'reason': error, 'status': 'invalid_provider_response'})
+        return {'status': 'invalid_suggestions', 'output': str(output), 'attempt': str(attempt)}, calls
     # Validate outside the emission helper so schema failures are retryable, while
     # changed source/evidence remains a hard error rather than a new model attempt.
     from .improvement_suggestions import validate_suggestions
@@ -214,7 +219,7 @@ def _run_batch(preview_path, settings, output, identity, run_artifacts, public_n
         return {'status': 'invalid_suggestions', 'output': str(output), 'attempt': str(attempt)}, calls
     value = _finish_proposal(preview, attachment, output, result, None, attempt)
     artifacts = [bind(p) for p in sorted(output.iterdir()) if p.is_file()]
-    artifacts += [bind(attempt / 'request.json'), bind(attempt / 'process.json')]
+    artifacts += [bind(p) for p in sorted(attempt.rglob('*')) if p.is_file()]
     record = {'identity': identity, 'result': value, 'artifacts': artifacts}
     record['completion_sha256'] = digest(record)
     atomic_json(complete, record)

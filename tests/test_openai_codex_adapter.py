@@ -44,6 +44,7 @@ class CodexAdapterTests(unittest.TestCase):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
         self.path = Path(self.directory.name) / 'budget.json'
+        self.audit_counter = 0
         self.client = MagicMock()
         self.client.__enter__.return_value = self.client
         self.client.responses.create.return_value = response()
@@ -54,7 +55,9 @@ class CodexAdapterTests(unittest.TestCase):
                 patch.dict('os.environ', {'OPENAI_API_KEY': 'test-private-key'}, clear=True), \
                 patch('sys.stdin', io.StringIO(json.dumps(request or REQUEST))), \
                 contextlib.redirect_stdout(output):
-            adapter.main(['--budget-ledger=' + str(self.path), '--max-cost-usd=' + limit])
+            self.audit_counter += 1
+            adapter.main(['--budget-ledger=' + str(self.path), '--max-cost-usd=' + limit,
+                          '--audit-directory=' + str(self.path.parent / ('audit_' + str(self.audit_counter)))])
         return json.loads(output.getvalue()), constructor
 
     def read(self):
@@ -85,6 +88,32 @@ class CodexAdapterTests(unittest.TestCase):
         self.assertEqual(result['budget']['charged_nanousd'], 80 * 1750 + 20 * 175 + 30 * 14000)
         self.assertEqual(result['model_version'], 'gpt-5.3-codex')
         self.assertEqual(result['response_id'], 'resp_test')
+
+    def test_cli_audits_provider_response_before_non_solution_failure(self):
+        self.client.responses.create.return_value = response(status='failed')
+        with self.assertRaisesRegex(RuntimeError, 'non-solution status'):
+            self.invoke()
+        audit = self.path.parent / 'audit_1'
+        result = json.loads((audit / 'result.json').read_text())
+        self.assertEqual('failed', result['response_status'])
+        self.assertEqual(23, result['usage']['reasoning_tokens'])
+        self.assertEqual('settled', result['budget']['state'])
+        self.assertLessEqual(result['started_at'], result['finished_at'])
+        self.assertGreaterEqual(result['seconds'], 0)
+        self.assertEqual(REQUEST, json.loads((audit / 'request.json').read_text()))
+        self.assertNotIn('test-private-key', ''.join(p.read_text() for p in audit.glob('*.json')))
+
+    def test_cli_persists_sanitized_failure_and_reservation(self):
+        self.client.responses.create.side_effect = TimeoutError('test-private-key secret')
+        with self.assertRaises(RuntimeError):
+            self.invoke()
+        audit = self.path.parent / 'audit_1'
+        failure = json.loads((audit / 'failure.json').read_text())
+        reservation = json.loads((audit / 'reservation.json').read_text())
+        self.assertEqual(reservation['reservation_id'], failure['reservation_id'])
+        self.assertEqual('TimeoutError', failure['failure']['type'])
+        self.assertGreaterEqual(failure['seconds'], 0)
+        self.assertNotIn('test-private-key', ''.join(p.read_text() for p in audit.glob('*.json')))
 
     def test_final_answer_excludes_commentary_and_preserves_message_metadata(self):
         self.client.responses.create.return_value = response(output=[
@@ -196,13 +225,13 @@ class CodexAdapterTests(unittest.TestCase):
         with patch.object(openai, 'OpenAI') as constructor, \
                 patch('sys.stdin', io.StringIO(json.dumps({**REQUEST, 'model': 'gpt-other'}))), \
                 self.assertRaisesRegex(ValueError, 'requires model'):
-            adapter.main(['--budget-ledger=' + str(self.path)])
+            adapter.main(['--budget-ledger=' + str(self.path), '--audit-directory=' + str(self.path.parent / 'audit')])
         constructor.assert_not_called()
 
     def test_no_key_creates_no_ledger(self):
         with patch.dict('os.environ', {}, clear=True), patch('sys.stdin', io.StringIO(json.dumps(REQUEST))), \
                 self.assertRaisesRegex(RuntimeError, 'OPENAI_API_KEY'):
-            adapter.main(['--budget-ledger=' + str(self.path)])
+            adapter.main(['--budget-ledger=' + str(self.path), '--audit-directory=' + str(self.path.parent / 'audit')])
         self.assertFalse(self.path.exists())
 
     def test_tool_output_and_hidden_reasoning_are_never_executed_or_exposed(self):

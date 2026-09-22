@@ -153,6 +153,28 @@ class LibraryProposalTests(unittest.TestCase):
         self.assertTrue((self.root / 'proposals/batch-0001/attempt_001/process.json').exists())
         self.assertTrue((self.root / 'proposals/batch-0001/attempt_002/process.json').exists())
 
+    def test_valid_json_in_incomplete_response_is_preserved_but_not_published(self):
+        self.settings['model']['provider_attempt_limit'] = 1
+        self.model_config.write_text(json.dumps(self.settings))
+        manifest = self.plan()
+        def partial(command, request, directory, timeout):
+            result = self.fake_invoke(command, request, directory, timeout)
+            result['payload']['response_status'] = 'incomplete'
+            result['payload']['truncated'] = True
+            atomic_json(Path(directory) / 'process.json', result)
+            return result
+        with patch('workflow.improvement_batches.invoke', side_effect=partial):
+            first = propose_library_improvements(manifest, self.model_config, self.root / 'proposals')
+        batch = self.root / 'proposals/batch-0001'
+        self.assertEqual('incomplete', first['status'])
+        self.assertTrue((batch / 'attempt_001/rejected.json').is_file())
+        self.assertFalse((batch / 'proposal.json').exists())
+        self.assertFalse((batch / 'completion.json').exists())
+        second = self.run_plan(manifest)
+        self.assertEqual('incomplete', second['status'])
+        self.assertEqual(0, second['llm_calls'])
+        self.assertEqual(1, len(self.calls))
+
     def test_attempt_limit_bounds_failed_and_interrupted_calls(self):
         self.settings['model']['provider_attempt_limit'] = 1
         self.model_config.write_text(json.dumps(self.settings))

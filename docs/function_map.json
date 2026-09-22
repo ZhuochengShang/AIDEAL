@@ -353,8 +353,8 @@
     {
       "name": "workflow.condition_evaluation",
       "path": "workflow/condition_evaluation.py",
-      "lines": 222,
-      "sha256": "08fc7ee344fd5780b50d555106e3a58e940afb8b9f2d7b4fef12b06837d61239"
+      "lines": 224,
+      "sha256": "ef00f0254bfe5d3b761012c094554605c5900fdbce6fcfb10614a023e78dfe7d"
     },
     {
       "name": "workflow.condition_inputs",
@@ -401,8 +401,8 @@
     {
       "name": "workflow.execution",
       "path": "workflow/execution.py",
-      "lines": 107,
-      "sha256": "647391a5218b1cb09f76a4fd754de123dc5b9fe100bdca1c478dce87bfb7d183"
+      "lines": 125,
+      "sha256": "878763f5762e164c5e4908fe26c651d168635f9de021d6180193c24dd9e0f60e"
     },
     {
       "name": "workflow.gemini_flash_adapter",
@@ -413,8 +413,8 @@
     {
       "name": "workflow.improvement_batches",
       "path": "workflow/improvement_batches.py",
-      "lines": 328,
-      "sha256": "3ba8d38373777f9218ad2318d136ba0ea70fdce9a266d523d9c60230def80554"
+      "lines": 333,
+      "sha256": "8f9c0254e65ad621c91b25aebaadeb90fe3289d96106c65b4261a54f6112c467"
     },
     {
       "name": "workflow.improvement_context",
@@ -425,8 +425,8 @@
     {
       "name": "workflow.improvement_suggestions",
       "path": "workflow/improvement_suggestions.py",
-      "lines": 213,
-      "sha256": "f701fe78b501fd911a57bbf613944174292eae0be3f3b74394f16a57d151ded4"
+      "lines": 238,
+      "sha256": "788995f786bce811a3d3d74fd8dbbf439f010f1317d19346155a199b630ab570"
     },
     {
       "name": "workflow.mcp_server",
@@ -443,14 +443,14 @@
     {
       "name": "workflow.native_provider_bridge",
       "path": "workflow/native_provider_bridge.py",
-      "lines": 115,
-      "sha256": "e8a25894860646ca4bd197394a4425f450f40901b7e38ed574e0fa6088788c32"
+      "lines": 123,
+      "sha256": "79c2b96df13eab6d20d0e8746005e639a63a16f3e435de627cfcd7f9147be71d"
     },
     {
       "name": "workflow.openai_codex_adapter",
       "path": "workflow/openai_codex_adapter.py",
-      "lines": 137,
-      "sha256": "519dcfc6d4d389d147ae52f391b50d9f3c4489833eb51c7f428472435decc085"
+      "lines": 157,
+      "sha256": "a1a693b77cb00d14994da3d27f5e8f1f3025f8fd96c2c902b7ba0ef80b4ccd38"
     },
     {
       "name": "workflow.preparation",
@@ -473,14 +473,14 @@
     {
       "name": "workflow.readme_receipts",
       "path": "workflow/readme_receipts.py",
-      "lines": 121,
-      "sha256": "7b8762bb7fd5e5554c94c827ac07e9f3023ccc49c6c049a09d7e02e600a3d26c"
+      "lines": 135,
+      "sha256": "fe33e482c86455616d41cda9771b1781e479c8f69384bc271b1393611f53d517"
     },
     {
       "name": "workflow.readme_session",
       "path": "workflow/readme_session.py",
-      "lines": 196,
-      "sha256": "e037533cf6cff6e2286e727f620d44a5cb32a37bc8e674edb1310acb9eff4a5f"
+      "lines": 204,
+      "sha256": "e2024488fc69b4f45f8cf8cb0779032ed1589268cfd8bf56903f7024907624e4"
     },
     {
       "name": "workflow.readme_spans",
@@ -523,6 +523,12 @@
       "path": "workflow/source_refactors.py",
       "lines": 262,
       "sha256": "95596d7a1cc8df76ed6f9dc655429464da64d9166565d0fd2ee43e0399c86407"
+    },
+    {
+      "name": "workflow.task_telemetry",
+      "path": "workflow/task_telemetry.py",
+      "lines": 261,
+      "sha256": "571e11c20ee0e9c5e4a226b94803e3342a6a53dfff551239bf60765007bd4603"
     },
     {
       "name": "workflow.treatment_bundles",
@@ -11128,7 +11134,7 @@
       "kind": "function",
       "path": "workflow/condition_evaluation.py",
       "line": 24,
-      "end_line": 32,
+      "end_line": 34,
       "signature": "_attempt_evidence(root, prefix)",
       "summary": "",
       "calls": [
@@ -11138,9 +11144,12 @@
         "workflow.condition_evaluation:_round_evidence"
       ],
       "unresolved_calls": [
+        "(directory / 'provider_audit').glob",
         "(directory / name).exists",
         "ValueError",
         "directory.is_dir",
+        "p.relative_to",
+        "p.relative_to(directory).as_posix",
         "re.escape",
         "re.fullmatch",
         "receipts.append",
@@ -11149,7 +11158,7 @@
         "str"
       ],
       "prompts": [],
-      "source": "def _attempt_evidence(root, prefix):\n    receipts = []\n    for directory in sorted(root.glob(prefix + '*')):\n        if not directory.is_dir() or re.fullmatch(re.escape(prefix) + r'\\d{3,}', directory.name) is None:\n            raise ValueError('Unexpected condition attempt directory')\n        receipts.append({'directory': str(directory), 'files': {\n            name: bind(directory / name) for name in ('request.json', 'process.json', 'stdout.txt', 'stderr.txt')\n            if (directory / name).exists()}})\n    return receipts",
+      "source": "def _attempt_evidence(root, prefix):\n    receipts = []\n    for directory in sorted(root.glob(prefix + '*')):\n        if not directory.is_dir() or re.fullmatch(re.escape(prefix) + r'\\d{3,}', directory.name) is None:\n            raise ValueError('Unexpected condition attempt directory')\n        receipts.append({'directory': str(directory), 'files': {\n            name: bind(directory / name) for name in ('request.json', 'process.json', 'stdout.txt', 'stderr.txt',\n                'invocation.json', *(p.relative_to(directory).as_posix()\n                    for p in sorted((directory / 'provider_audit').glob('*.json'))))\n            if (directory / name).exists()}})\n    return receipts",
       "aliases": [],
       "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L24"
     },
@@ -11184,8 +11193,8 @@
       "name": "_model_request",
       "kind": "function",
       "path": "workflow/condition_evaluation.py",
-      "line": 47,
-      "end_line": 50,
+      "line": 49,
+      "end_line": 52,
       "signature": "_model_request(frozen, prompt)",
       "summary": "",
       "calls": [],
@@ -11197,7 +11206,7 @@
       "prompts": [],
       "source": "def _model_request(frozen, prompt):\n    common = frozen['config']['common']\n    return {'system': frozen['system_prompt'], 'prompt': prompt, 'model': frozen['config']['model']['name'],\n            'temperature': common['temperature'], 'max_output_tokens': common['max_output_tokens']}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L47"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L49"
     },
     {
       "id": "workflow.condition_evaluation:_round_evidence",
@@ -11205,8 +11214,8 @@
       "name": "_round_evidence",
       "kind": "function",
       "path": "workflow/condition_evaluation.py",
-      "line": 35,
-      "end_line": 44,
+      "line": 37,
+      "end_line": 46,
       "signature": "_round_evidence(directory)",
       "summary": "",
       "calls": [
@@ -11230,7 +11239,7 @@
       "prompts": [],
       "source": "def _round_evidence(directory):\n    receipts = []\n    for root in sorted(directory.glob('round_*')):\n        if not root.is_dir() or re.fullmatch(r'round_\\d{2,}', root.name) is None:\n            raise ValueError('Unexpected condition round directory')\n        receipts.append({'round': int(root.name.removeprefix('round_')),\n                         'exposure': bind(root / 'context_exposure.json'),\n                         'providers': _attempt_evidence(root, 'provider_'),\n                         'executions': _attempt_evidence(root, 'execution_')})\n    return sorted(receipts, key=lambda item: item['round'])",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L35"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L37"
     },
     {
       "id": "workflow.condition_evaluation:_verify_saved_row",
@@ -11238,8 +11247,8 @@
       "name": "_verify_saved_row",
       "kind": "function",
       "path": "workflow/condition_evaluation.py",
-      "line": 92,
-      "end_line": 177,
+      "line": 94,
+      "end_line": 179,
       "signature": "_verify_saved_row(frozen, row, directory)",
       "summary": "Verify complete attempt evidence, costs and the public-prompt/candidate chain.",
       "calls": [
@@ -11281,7 +11290,7 @@
       "prompts": [],
       "source": "def _verify_saved_row(frozen, row, directory):\n    \"\"\"Verify complete attempt evidence, costs and the public-prompt/candidate chain.\"\"\"\n    if row.get('round_evidence') != _round_evidence(directory):\n        raise ValueError('Saved condition attempt evidence changed')\n    if row.get('resources') != _collect_resources(directory):\n        raise ValueError('Saved condition resource totals differ from attempt evidence')\n    if row['status'] not in ('pass', 'fail'):\n        return\n    evidence = row.get('adjudication')\n    if not isinstance(evidence, dict) or set(evidence) != {'process', 'request'}:\n        raise ValueError('Terminal condition result lacks adjudication evidence')\n    if not all(verify_artifact(r) for r in evidence.values()):\n        raise ValueError('Condition result evidence changed')\n    number = row.get('last_checked_round')\n    if type(number) is not int or not 0 <= number <= frozen['config']['common']['max_snippet_fixes']:\n        raise ValueError('Invalid checked round in saved result')\n    process_path, request_path = Path(evidence['process']['path']), Path(evidence['request']['path'])\n    if (process_path.parent != request_path.parent or process_path.name != 'process.json'\n            or request_path.name != 'request.json' or process_path.parent.parent != directory / f'round_{number:02d}'\n            or not process_path.parent.name.startswith('execution_')):\n        raise ValueError('Adjudication evidence belongs to another unit')\n    request, process = load(request_path), load(process_path)\n    case = next(c for c in frozen['bank']['cases'] if c['id'] == row['case_id'])\n    if request != checker_request(frozen, row['arm'], case, request.get('code')):\n        raise ValueError('Adjudication request differs from the frozen case/backend')\n    if not isinstance(request.get('code'), str) or digest(request['code']) != row.get('code_sha256'):\n        raise ValueError('Saved candidate identity differs')\n    outcome = checked_outcome(process, frozen['backends'][row['arm']]['sha256'])\n    if outcome is None or outcome != (row['status'] == 'pass'):\n        raise ValueError('Saved result differs from the checker verdict')\n    if any(row.get(k) is not process['payload'][k] for k in ('execution_pass', 'oracle_pass', 'target_reached')):\n        raise ValueError('Saved result flags differ from the checker verdict')\n    if row['status'] == 'pass' and row['first_pass_round'] != number:\n        raise ValueError('Saved first-pass round differs from adjudication')\n    if row['status'] == 'fail' and number != frozen['config']['common']['max_snippet_fixes']:\n        raise ValueError('Saved failure has not exhausted the common repair budget')\n    exposures = row.get('context_exposures', [])\n    expected = {str(directory / f'round_{n:02d}/context_exposure.json') for n in range(number + 1)}\n    if ({r.get('path') for r in exposures} != expected or len(exposures) != len(expected)\n            or not all(verify_artifact(r) for r in exposures)):\n        raise ValueError('Saved public-context exposure changed')\n    rounds = row['round_evidence']\n    if [item['round'] for item in rounds] != list(range(number + 1)):\n        raise ValueError('Saved condition evidence has missing or unexpected rounds')\n    previous = None\n    for item in rounds:\n        prompt, exposure = public_context(frozen, row['arm'], case, previous)\n        if load(item['exposure']['path']) != exposure:\n            raise ValueError('Saved public-context exposure differs from the frozen prompt')\n        expected_model = _model_request(frozen, prompt)\n        response = None\n        for attempt in item['providers']:\n            files = attempt['files']\n            if 'request.json' in files and load(files['request.json']['path']) != expected_model:\n                raise ValueError('Saved provider request differs from the frozen public prompt')\n            if 'process.json' in files:\n                if 'request.json' not in files:\n                    raise ValueError('Saved provider process lacks its request')\n                value = _model_response(load(files['process.json']['path']))\n                if response is None and value is not None:\n                    response = value\n        if response is None:\n            raise ValueError('Checked condition round lacks a successful provider response')\n        expected_checker = checker_request(frozen, row['arm'], case, _candidate_body(response['code']))\n        checked = None\n        for attempt in item['executions']:\n            files = attempt['files']\n            if 'request.json' in files and load(files['request.json']['path']) != expected_checker:\n                raise ValueError('Saved checker candidate differs from the provider response')\n            if 'process.json' in files:\n                if 'request.json' not in files:\n                    raise ValueError('Saved checker process lacks its request')\n                value = load(files['process.json']['path'])\n                outcome = checked_outcome(value, frozen['backends'][row['arm']]['sha256'])\n                if outcome is not None:\n                    checked = (outcome, value, files)\n        if checked is None:\n            raise ValueError('Checked condition round lacks verified execution evidence')\n        outcome, value, files = checked\n        if item['round'] < number and outcome:\n            raise ValueError('Saved repair follows an already passing round')\n        if item['round'] == number and (files['process.json'] != evidence['process']\n                                       or files['request.json'] != evidence['request']):\n            raise ValueError('Final adjudication differs from the selected execution attempt')\n        previous = {'code': expected_checker['code'],\n                    'feedback': value['payload'].get('public_feedback', 'Independent checks failed.')}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L92"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L94"
     },
     {
       "id": "workflow.condition_evaluation:run_condition_unit",
@@ -11289,8 +11298,8 @@
       "name": "run_condition_unit",
       "kind": "function",
       "path": "workflow/condition_evaluation.py",
-      "line": 53,
-      "end_line": 89,
+      "line": 55,
+      "end_line": 91,
       "signature": "run_condition_unit(frozen, arm, case, trial, directory, retry_provider=False)",
       "summary": "",
       "calls": [
@@ -11320,7 +11329,7 @@
       "prompts": [],
       "source": "def run_condition_unit(frozen, arm, case, trial, directory, retry_provider=False):\n    cfg, common = frozen['config'], frozen['config']['common']\n    backend = frozen['backends'][arm]['sha256']\n    row = {'arm': arm, 'case_id': case['id'], 'trial_id': trial,\n           'study_sha256': frozen['study_sha256'], 'backend_sha256': backend,\n           'status': 'not_run', 'first_attempt_pass': False}\n    previous = None\n    for number in range(common['max_snippet_fixes'] + 1):\n        root = directory / f'round_{number:02d}'\n        prompt, exposure = public_context(frozen, arm, case, previous)\n        atomic_json(root / 'context_exposure.json', exposure)\n        request = _model_request(frozen, prompt)\n        response = _request_solution(cfg, request, root, retry_provider)\n        verify_inputs(frozen)\n        if response is None:\n            row['status'] = 'provider_pending'\n            break\n        code = _candidate_body(response['code'])\n        destination, process = execute_condition(frozen, arm, case, code, root)\n        verify_inputs(frozen)\n        passed = checked_outcome(process, backend)\n        if passed is None:\n            row['status'] = 'unverified'\n            break\n        row.update({k: process['payload'][k] for k in ('execution_pass', 'oracle_pass', 'target_reached')})\n        row.update(last_checked_round=number, code_sha256=digest(code),\n                   adjudication={'process': bind(destination / 'process.json'),\n                                 'request': bind(destination / 'request.json')})\n        if passed:\n            row.update(status='pass', first_attempt_pass=number == 0, first_pass_round=number)\n            break\n        row['status'] = 'fail'\n        previous = {'code': code, 'feedback': process['payload'].get('public_feedback', 'Independent checks failed.')}\n    row['resources'] = _collect_resources(directory)\n    row['context_exposures'] = [bind(p) for p in sorted(directory.glob('round_*/context_exposure.json'))]\n    row['round_evidence'] = _round_evidence(directory)\n    return row",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L53"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L55"
     },
     {
       "id": "workflow.condition_evaluation:run_conditions",
@@ -11328,8 +11337,8 @@
       "name": "run_conditions",
       "kind": "function",
       "path": "workflow/condition_evaluation.py",
-      "line": 180,
-      "end_line": 222,
+      "line": 182,
+      "end_line": 224,
       "signature": "run_conditions(study, output, condition=None, max_units=None, retry_provider=False)",
       "summary": "",
       "calls": [
@@ -11369,7 +11378,7 @@
       "prompts": [],
       "source": "def run_conditions(study, output, condition=None, max_units=None, retry_provider=False):\n    assert_review_released(Path(study).resolve().parent)\n    if max_units is not None and (type(max_units) is not int or max_units < 1):\n        raise ValueError('max_units must be a positive integer')\n    frozen = open_conditions(study)\n    cfg, bank = frozen['config'], frozen['bank']\n    if condition is not None and condition not in cfg['conditions']:\n        raise ValueError('Unknown study condition')\n    output = Path(output).resolve()\n    assert_review_released(output)\n    with ownership(output):\n        identity = output / 'identity.json'\n        if identity.exists() and load(identity).get('study_sha256') != frozen['study_sha256']:\n            raise ValueError('Run belongs to another frozen condition study')\n        atomic_json(identity, {'study_sha256': frozen['study_sha256'], 'protocol': frozen['protocol']})\n        rows = _load_completed_rows(output)\n        report_conditions(frozen, list(rows.values()))\n        for (arm, case_id, trial), row in rows.items():\n            _verify_saved_row(frozen, row, output / arm / f'{case_id}--{trial}')\n        schedule = [(a, c, t) for a in cfg['conditions'] for c in bank['cases'] for t in cfg['common']['trial_ids']]\n        random.Random(cfg['common'].get('ordering_seed', 42)).shuffle(schedule)\n        processed = 0\n        for arm, case, trial in schedule:\n            key = (arm, case['id'], trial)\n            if (condition and arm != condition) or rows.get(key, {}).get('status') in ('pass', 'fail'):\n                continue\n            if max_units is not None and processed >= max_units:\n                break\n            verify_inputs(frozen)\n            directory = output / arm / f\"{case['id']}--{trial}\"\n            directory.mkdir(parents=True, exist_ok=True)\n            row = run_condition_unit(frozen, arm, case, trial, directory, retry_provider)\n            verify_inputs(frozen)\n            _verify_saved_row(frozen, row, directory)\n            atomic_json(directory / 'result.json', row)\n            rows[key] = row\n            write_condition_report(output, report_conditions(frozen, list(rows.values())))\n            processed += 1\n            if row['status'] in ('provider_pending', 'unverified'):\n                break\n        summary = report_conditions(frozen, list(rows.values()))\n        write_condition_report(output, summary)\n        return summary",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L180"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/condition_evaluation.py#L182"
     },
     {
       "id": "workflow.condition_inputs:backend_identity",
@@ -13294,8 +13303,8 @@
       "name": "_stop_process_group",
       "kind": "function",
       "path": "workflow/execution.py",
-      "line": 39,
-      "end_line": 51,
+      "line": 40,
+      "end_line": 52,
       "signature": "_stop_process_group(process)",
       "summary": "Stop descendants in this invocation's private group, returning cleanup errors.",
       "calls": [],
@@ -13311,7 +13320,7 @@
       "prompts": [],
       "source": "def _stop_process_group(process):\n    \"\"\"Stop descendants in this invocation's private group, returning cleanup errors.\"\"\"\n    try:\n        os.killpg(process.pid, signal.SIGKILL)\n    except ProcessLookupError:\n        return None  # The group has already exited.\n    except PermissionError as exc:\n        # Some host sandboxes deny group signals. Still stop our direct child,\n        # and record that descendant cleanup could not be confirmed.\n        if process.poll() is None:\n            process.kill()\n        return str(exc)\n    return None",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L39"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L40"
     },
     {
       "id": "workflow.execution:atomic_json",
@@ -13319,8 +13328,8 @@
       "name": "atomic_json",
       "kind": "function",
       "path": "workflow/execution.py",
-      "line": 14,
-      "end_line": 20,
+      "line": 15,
+      "end_line": 21,
       "signature": "atomic_json(path, value)",
       "summary": "Replace a complete checkpoint atomically; never leave half-written JSON.",
       "calls": [],
@@ -13367,7 +13376,7 @@
         "workflow.treatment_bundles:atomic_json",
         "workflow.treatment_versions:atomic_json"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L14"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L15"
     },
     {
       "id": "workflow.execution:invoke",
@@ -13375,8 +13384,8 @@
       "name": "invoke",
       "kind": "function",
       "path": "workflow/execution.py",
-      "line": 54,
-      "end_line": 99,
+      "line": 55,
+      "end_line": 117,
       "signature": "invoke(command, request, directory, timeout)",
       "summary": "No shell. Keep full logs, including failed and interrupted attempts.",
       "calls": [
@@ -13398,17 +13407,22 @@
         "(directory / 'stdout.txt').read_text",
         "Path",
         "ValueError",
+        "datetime.now",
+        "datetime.now(timezone.utc).isoformat",
         "directory.mkdir",
         "isinstance",
         "json.dumps",
         "json.loads",
+        "list",
         "process.communicate",
+        "process.poll",
         "process.wait",
         "subprocess.Popen",
-        "time.monotonic"
+        "time.monotonic",
+        "type"
       ],
       "prompts": [],
-      "source": "def invoke(command, request, directory, timeout):\n    \"\"\"No shell. Keep full logs, including failed and interrupted attempts.\n\n    Commands are trusted local adapters, not model-provided commands. Adapter\n    implementations must isolate generated programs themselves.\n    \"\"\"\n    directory = Path(directory)\n    if (directory / 'process.json').exists():\n        result = load(directory / 'process.json')\n        if load(directory / 'request.json') != request:\n            raise ValueError('Cached process request changed')\n        return result\n    directory.mkdir(parents=True, exist_ok=False)\n    atomic_json(directory / 'request.json', request)\n    started = time.monotonic()\n    status, payload = 'adapter_error', None\n    with (directory / 'stdout.txt').open('w') as stdout, (directory / 'stderr.txt').open('w') as stderr:\n        process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr,\n                                   cwd=directory, text=True, start_new_session=True)\n        try:\n            process.communicate(json.dumps(request, allow_nan=False), timeout=timeout)\n            if process.returncode == 0:\n                try:\n                    payload = json.loads((directory / 'stdout.txt').read_text())\n                    if isinstance(payload, dict):\n                        status = 'ok'\n                except (ValueError, UnicodeError):\n                    pass\n        except subprocess.TimeoutExpired:\n            status = 'timeout'\n            _stop_process_group(process)\n            process.communicate()\n        except BaseException:\n            _stop_process_group(process)\n            process.wait()\n            raise\n        finally:\n            # Nested compilers/debuggers can leave children after adapter failure.\n            # Every invocation owns a new process group, so cleanup is scoped.\n            cleanup_error = _stop_process_group(process)\n    result = {'status': status, 'returncode': process.returncode,\n              'seconds': time.monotonic() - started, 'payload': payload}\n    if cleanup_error:\n        result['cleanup_error'] = cleanup_error\n    atomic_json(directory / 'process.json', result)\n    return result",
+      "source": "def invoke(command, request, directory, timeout):\n    \"\"\"No shell. Keep full logs, including failed and interrupted attempts.\n\n    Commands are trusted local adapters, not model-provided commands. Adapter\n    implementations must isolate generated programs themselves.\n    \"\"\"\n    directory = Path(directory)\n    if (directory / 'process.json').exists():\n        result = load(directory / 'process.json')\n        if load(directory / 'request.json') != request:\n            raise ValueError('Cached process request changed')\n        return result\n    directory.mkdir(parents=True, exist_ok=False)\n    atomic_json(directory / 'request.json', request)\n    started = time.monotonic()\n    started_at = datetime.now(timezone.utc).isoformat()\n    atomic_json(directory / 'invocation.json', {'started_at': started_at,\n                'command': list(command), 'timeout_s': timeout, 'status': 'started'})\n    status, payload, process = 'adapter_error', None, None\n    error_category, error_type, cleanup_error, interrupted = None, None, None, None\n    with (directory / 'stdout.txt').open('w') as stdout, (directory / 'stderr.txt').open('w') as stderr:\n        try:\n            process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=stdout, stderr=stderr,\n                                       cwd=directory, text=True, start_new_session=True)\n            process.communicate(json.dumps(request, allow_nan=False), timeout=timeout)\n            if process.returncode == 0:\n                try:\n                    payload = json.loads((directory / 'stdout.txt').read_text())\n                    if isinstance(payload, dict):\n                        status = 'ok'\n                    else:\n                        error_category = 'adapter_output_not_object'\n                except (ValueError, UnicodeError):\n                    error_category = 'adapter_output_not_json'\n            else:\n                error_category = 'adapter_nonzero_exit'\n        except subprocess.TimeoutExpired:\n            status = 'timeout'\n            error_category = 'adapter_timeout'\n            _stop_process_group(process)\n            process.communicate()\n        except OSError as exc:\n            error_category, error_type = 'adapter_launch_or_io_error', type(exc).__name__\n        except BaseException as exc:\n            status, error_category, error_type = 'interrupted', 'invocation_interrupted', type(exc).__name__\n            interrupted = exc\n        finally:\n            # Nested compilers/debuggers can leave children after adapter failure.\n            # Every invocation owns a new process group, so cleanup is scoped.\n            if process is not None:\n                cleanup_error = _stop_process_group(process)\n                if process.poll() is None:\n                    process.wait()\n    result = {'status': status, 'returncode': process.returncode if process is not None else None,\n              'seconds': time.monotonic() - started, 'payload': payload,\n              'started_at': started_at, 'finished_at': datetime.now(timezone.utc).isoformat(),\n              'error_category': error_category, 'error_type': error_type}\n    if cleanup_error:\n        result['cleanup_error'] = cleanup_error\n    atomic_json(directory / 'process.json', result)\n    if interrupted is not None:\n        raise interrupted\n    return result",
       "aliases": [
         "workflow.condition_setup:invoke",
         "workflow.evaluation:invoke",
@@ -13416,7 +13430,7 @@
         "workflow.improvement_batches:invoke",
         "workflow.improvement_suggestions:invoke"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L54"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L55"
     },
     {
       "id": "workflow.execution:next_directory",
@@ -13424,8 +13438,8 @@
       "name": "next_directory",
       "kind": "function",
       "path": "workflow/execution.py",
-      "line": 102,
-      "end_line": 107,
+      "line": 120,
+      "end_line": 125,
       "signature": "next_directory(parent, prefix)",
       "summary": "Never overwrite partial work left by a killed process.",
       "calls": [],
@@ -13450,7 +13464,7 @@
         "workflow.evaluation:next_directory",
         "workflow.evaluation_setup:next_directory"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L102"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L120"
     },
     {
       "id": "workflow.execution:ownership",
@@ -13458,8 +13472,8 @@
       "name": "ownership",
       "kind": "function",
       "path": "workflow/execution.py",
-      "line": 23,
-      "end_line": 36,
+      "line": 24,
+      "end_line": 37,
       "signature": "ownership(directory)",
       "summary": "Hold one OS lock for the writer; process exit releases a stale lock.",
       "calls": [],
@@ -13492,7 +13506,7 @@
         "workflow.source_refactors:ownership",
         "workflow.treatment_versions:ownership"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L23"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/execution.py#L24"
     },
     {
       "id": "workflow.gemini_flash_adapter:main",
@@ -13565,8 +13579,8 @@
       "name": "_alias_destination",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 18,
-      "end_line": 26,
+      "line": 19,
+      "end_line": 27,
       "signature": "_alias_destination(template, number)",
       "summary": "",
       "calls": [
@@ -13585,7 +13599,7 @@
       "prompts": [],
       "source": "def _alias_destination(template, number):\n    if template is None:\n        return None\n    if not isinstance(template, str) or template.count('{batch}') != 1:\n        raise ValueError('alias_path_template must contain exactly one {batch} placeholder')\n    value = template.replace('{batch}', f'{number:04d}')\n    if '{' in value or '}' in value:\n        raise ValueError('Only the {batch} placeholder is supported')\n    return alias_target(value)",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L18"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L19"
     },
     {
       "id": "workflow.improvement_batches:_implementation_bindings",
@@ -13593,8 +13607,8 @@
       "name": "_implementation_bindings",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 163,
-      "end_line": 167,
+      "line": 164,
+      "end_line": 168,
       "signature": "_implementation_bindings()",
       "summary": "",
       "calls": [
@@ -13613,7 +13627,7 @@
       "prompts": [],
       "source": "def _implementation_bindings():\n    root = Path(__file__).resolve().parents[1]\n    paths = sorted((root / 'workflow').glob('*.py'))\n    paths += sorted((root / 'vendor/aideal_engine/src/aideal').glob('*.py'))\n    return [bind(path) for path in paths]",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L163"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L164"
     },
     {
       "id": "workflow.improvement_batches:_integer",
@@ -13621,8 +13635,8 @@
       "name": "_integer",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 13,
-      "end_line": 15,
+      "line": 14,
+      "end_line": 16,
       "signature": "_integer(value, name, low, high)",
       "summary": "",
       "calls": [],
@@ -13637,7 +13651,7 @@
       "prompts": [],
       "source": "def _integer(value, name, low, high):\n    if type(value) is not int or not low <= value <= high:\n        raise ValueError(f'{name} must be between {low} and {high}')",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L13"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L14"
     },
     {
       "id": "workflow.improvement_batches:_library_overview",
@@ -13645,8 +13659,8 @@
       "name": "_library_overview",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 29,
-      "end_line": 48,
+      "line": 30,
+      "end_line": 49,
       "signature": "_library_overview(public, max_characters)",
       "summary": "Bound the cross-batch orientation, while retaining the full catalogue on disk.",
       "calls": [],
@@ -13664,7 +13678,7 @@
       "prompts": [],
       "source": "def _library_overview(public, max_characters):\n    \"\"\"Bound the cross-batch orientation, while retaining the full catalogue on disk.\"\"\"\n    counts = Counter(row.get('module') or row['file'] for row in public)\n    overview = {'module_count': len(counts), 'modules': [], 'omitted_modules': len(counts),\n                'api_catalog': [], 'omitted_catalog_entries': len(public),\n                'scope': 'Compact cross-batch orientation only; source evidence remains batch-local.'}\n    module_budget = max_characters // 3\n    for module, count in sorted(counts.items()):\n        candidate = overview['modules'] + [{'module': module, 'public_definitions': count}]\n        if len(json.dumps(candidate, ensure_ascii=False, indent=2)) > module_budget:\n            break\n        overview['modules'] = candidate\n        overview['omitted_modules'] -= 1\n    for row in public:\n        entry = {key: row[key] for key in ('id', 'name', 'signature')}\n        candidate = {**overview, 'api_catalog': overview['api_catalog'] + [entry],\n                     'omitted_catalog_entries': overview['omitted_catalog_entries'] - 1}\n        if len(json.dumps(candidate, ensure_ascii=False, indent=2)) <= max_characters:\n            overview = candidate\n    return overview",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L29"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L30"
     },
     {
       "id": "workflow.improvement_batches:_run_batch",
@@ -13672,8 +13686,8 @@
       "name": "_run_batch",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 179,
-      "end_line": 221,
+      "line": 180,
+      "end_line": 226,
       "signature": "_run_batch(preview_path, settings, output, identity, run_artifacts, public_names)",
       "summary": "",
       "calls": [
@@ -13686,6 +13700,7 @@
         "workflow.improvement_batches:_verified_completion",
         "workflow.improvement_suggestions:_finish_proposal",
         "workflow.improvement_suggestions:_load_preview",
+        "workflow.improvement_suggestions:proposal_response_error",
         "workflow.improvement_suggestions:validate_suggestions"
       ],
       "called_by": [
@@ -13697,6 +13712,7 @@
         "PROMPT.read_text",
         "ValueError",
         "all",
+        "attempt.rglob",
         "complete.exists",
         "isinstance",
         "json.dumps",
@@ -13716,9 +13732,9 @@
         "str"
       ],
       "prompts": [],
-      "source": "def _run_batch(preview_path, settings, output, identity, run_artifacts, public_names):\n    preview, _, attachment = _load_preview(preview_path)\n    complete = output / 'completion.json'\n    if complete.exists():\n        return _verified_completion(complete, identity), 0\n    output.mkdir(parents=True, exist_ok=True)\n    atomic_json(output / 'preview.json', preview)\n    request = {'system': PROMPT.read_text(), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),\n               'model': settings['name'], 'temperature': settings['temperature'],\n               'max_output_tokens': settings['max_output_tokens']}\n    atomic_json(output / 'request.json', request)\n    limit = settings.get('provider_attempt_limit', 1)\n    calls = 0\n    attempts = sorted(output.glob('attempt_[0-9][0-9][0-9]'))\n    # Reuse a successful recorded response after interruption during publication.\n    attempt = next((path for path in reversed(attempts)\n                    if (path / 'process.json').is_file() and not (path / 'rejected.json').exists()\n                    and load(path / 'process.json').get('status') == 'ok'), None)\n    if attempt is None:\n        if len(attempts) >= limit:\n            return {'status': 'attempt_budget_exhausted', 'output': str(output)}, 0\n        attempt = output / f'attempt_{len(attempts) + 1:03d}'\n        calls = 1\n    result = invoke(settings['command'], request, attempt, settings['timeout_s'])\n    if not all(verify_artifact(ref) for ref in run_artifacts):\n        raise ValueError('Library proposal inputs changed during generation; preserve this output')\n    if result['status'] != 'ok' or not isinstance(result.get('payload'), dict) or not isinstance(result['payload'].get('code'), str):\n        return {'status': 'model_attempt_failed', 'output': str(output), 'attempt': str(attempt)}, calls\n    # Validate outside the emission helper so schema failures are retryable, while\n    # changed source/evidence remains a hard error rather than a new model attempt.\n    from .improvement_suggestions import validate_suggestions\n    try:\n        validate_suggestions(json.loads(result['payload']['code']), preview['context'], reserved_names=public_names)\n    except (ValueError, SyntaxError, TypeError) as exc:\n        atomic_json(attempt / 'rejected.json', {'reason': str(exc), 'status': 'invalid_suggestions'})\n        return {'status': 'invalid_suggestions', 'output': str(output), 'attempt': str(attempt)}, calls\n    value = _finish_proposal(preview, attachment, output, result, None, attempt)\n    artifacts = [bind(p) for p in sorted(output.iterdir()) if p.is_file()]\n    artifacts += [bind(attempt / 'request.json'), bind(attempt / 'process.json')]\n    record = {'identity': identity, 'result': value, 'artifacts': artifacts}\n    record['completion_sha256'] = digest(record)\n    atomic_json(complete, record)\n    return value, calls",
+      "source": "def _run_batch(preview_path, settings, output, identity, run_artifacts, public_names):\n    preview, _, attachment = _load_preview(preview_path)\n    complete = output / 'completion.json'\n    if complete.exists():\n        return _verified_completion(complete, identity), 0\n    output.mkdir(parents=True, exist_ok=True)\n    atomic_json(output / 'preview.json', preview)\n    request = {'system': PROMPT.read_text(), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),\n               'model': settings['name'], 'temperature': settings['temperature'],\n               'max_output_tokens': settings['max_output_tokens']}\n    atomic_json(output / 'request.json', request)\n    limit = settings.get('provider_attempt_limit', 1)\n    calls = 0\n    attempts = sorted(output.glob('attempt_[0-9][0-9][0-9]'))\n    # Reuse a successful recorded response after interruption during publication.\n    attempt = next((path for path in reversed(attempts)\n                    if (path / 'process.json').is_file() and not (path / 'rejected.json').exists()\n                    and load(path / 'process.json').get('status') == 'ok'), None)\n    if attempt is None:\n        if len(attempts) >= limit:\n            return {'status': 'attempt_budget_exhausted', 'output': str(output)}, 0\n        attempt = output / f'attempt_{len(attempts) + 1:03d}'\n        calls = 1\n    result = invoke(settings['command'], request, attempt, settings['timeout_s'])\n    if not all(verify_artifact(ref) for ref in run_artifacts):\n        raise ValueError('Library proposal inputs changed during generation; preserve this output')\n    if result['status'] != 'ok' or not isinstance(result.get('payload'), dict) or not isinstance(result['payload'].get('code'), str):\n        return {'status': 'model_attempt_failed', 'output': str(output), 'attempt': str(attempt)}, calls\n    error = proposal_response_error(result, settings['name'])\n    if error:\n        atomic_json(attempt / 'rejected.json', {'reason': error, 'status': 'invalid_provider_response'})\n        return {'status': 'invalid_suggestions', 'output': str(output), 'attempt': str(attempt)}, calls\n    # Validate outside the emission helper so schema failures are retryable, while\n    # changed source/evidence remains a hard error rather than a new model attempt.\n    from .improvement_suggestions import validate_suggestions\n    try:\n        validate_suggestions(json.loads(result['payload']['code']), preview['context'], reserved_names=public_names)\n    except (ValueError, SyntaxError, TypeError) as exc:\n        atomic_json(attempt / 'rejected.json', {'reason': str(exc), 'status': 'invalid_suggestions'})\n        return {'status': 'invalid_suggestions', 'output': str(output), 'attempt': str(attempt)}, calls\n    value = _finish_proposal(preview, attachment, output, result, None, attempt)\n    artifacts = [bind(p) for p in sorted(output.iterdir()) if p.is_file()]\n    artifacts += [bind(p) for p in sorted(attempt.rglob('*')) if p.is_file()]\n    record = {'identity': identity, 'result': value, 'artifacts': artifacts}\n    record['completion_sha256'] = digest(record)\n    atomic_json(complete, record)\n    return value, calls",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L179"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L180"
     },
     {
       "id": "workflow.improvement_batches:_verified_completion",
@@ -13726,8 +13742,8 @@
       "name": "_verified_completion",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 170,
-      "end_line": 176,
+      "line": 171,
+      "end_line": 177,
       "signature": "_verified_completion(path, identity)",
       "summary": "",
       "calls": [
@@ -13747,7 +13763,7 @@
       "prompts": [],
       "source": "def _verified_completion(path, identity):\n    record = load(path)\n    if (record.get('identity') != identity\n            or record.get('completion_sha256') != digest({k: v for k, v in record.items() if k != 'completion_sha256'})\n            or not all(verify_artifact(ref) for ref in record['artifacts'])):\n        raise ValueError('Completed proposal batch evidence changed; preserve it and use a new output')\n    return record['result']",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L170"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L171"
     },
     {
       "id": "workflow.improvement_batches:preview_library_improvements",
@@ -13755,8 +13771,8 @@
       "name": "preview_library_improvements",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 51,
-      "end_line": 160,
+      "line": 52,
+      "end_line": 161,
       "signature": "preview_library_improvements(study, output, *, alias_path_template=None, apis=None, development_errors=None, batch_size=12, max_context_characters=60000, max_batches=1000, max_error_characters=12000, max_catalog_characters=6000)",
       "summary": "Partition every selected public API exactly once; save contexts without calls.",
       "calls": [
@@ -13800,7 +13816,7 @@
       "prompts": [],
       "source": "def preview_library_improvements(study, output, *, alias_path_template=None, apis=None,\n                                 development_errors=None, batch_size=12,\n                                 max_context_characters=60000, max_batches=1000,\n                                 max_error_characters=12000, max_catalog_characters=6000):\n    \"\"\"Partition every selected public API exactly once; save contexts without calls.\n\n    Source discovery is static and bounded by the configured tracked file scope.\n    Refactor evidence is batch-local; this is not an all-pairs semantic comparison.\n    \"\"\"\n    _integer(batch_size, 'batch_size', 1, 100)\n    _integer(max_context_characters, 'max_context_characters', 1000, 250000)\n    _integer(max_batches, 'max_batches', 1, 10000)\n    _integer(max_error_characters, 'max_error_characters', 0, 100000)\n    _integer(max_catalog_characters, 'max_catalog_characters', 500, 25000)\n    _alias_destination(alias_path_template, 1)\n    study, root, attachment, cfg, public, refs = _library_inputs(study)\n    output = development_destination(study, output)\n    if output.exists():\n        raise FileExistsError('Library preview output already exists')\n    definitions = public\n    if apis:\n        known = {row[k] for row in public for k in ('id', 'name', 'qualified_name')}\n        if set(apis) - known:\n            raise ValueError('Requested API not found: ' + ', '.join(sorted(set(apis) - known)))\n        definitions = [row for row in public if {row['id'], row['name'], row['qualified_name']}.intersection(apis)]\n    source_refs = _source_windows(root, definitions)\n    semantics, profile_refs = _semantic_context(cfg, root, attachment)\n    errors, error_ref, omitted_errors = _development_errors(\n        development_errors, public, max_characters=max_error_characters * max_batches)\n    catalog = [{key: row[key] for key in ('id', 'name', 'qualified_name', 'file', 'line', 'signature')}\n               for row in public]\n    common = {'project': cfg.project_name, 'language': cfg.language,\n              'baseline_revision': attachment['revision'], **semantics,\n              'library_overview': _library_overview(public, max_catalog_characters),\n              'library_scope': {'public_definitions': len(public), 'requested_definitions': len(definitions),\n                                'catalog_sha256': digest(catalog),\n                                'limitations': 'Cross-batch bodies are not supplied. Discovery can miss syntax unsupported by the configured adapter.'}}\n\n    def context(rows, number):\n        ids = {row['id'] for row in rows}\n        selected_errors, used, omitted = [], 0, 0\n        for error in errors:\n            if error['function_id'] not in ids:\n                continue\n            size = len(json.dumps(error, ensure_ascii=False))\n            if used + size > max_error_characters:\n                omitted += 1\n            else:\n                selected_errors.append(error)\n                used += size\n        return {**common, 'batch_id': f'batch-{number:04d}',\n                'alias_destination': _alias_destination(alias_path_template, number),\n                'apis': rows, 'development_errors': selected_errors,\n                'coverage': {'matching_definitions': len(definitions), 'selected_definitions': len(rows),\n                             'omitted_definitions': len(definitions) - len(rows),\n                             'omitted_error_rows': omitted,\n                             'source_window_policy': 'Three preceding and up to sixty following lines; not complete function bodies.'}}\n\n    groups, current = [], []\n    for row in definitions:\n        candidate = current + [row]\n        value = context(candidate, len(groups) + 1)\n        if current and (len(candidate) > batch_size or len(json.dumps(value, ensure_ascii=False, indent=2)) > max_context_characters):\n            groups.append(current)\n            current = []\n            value = context([row], len(groups) + 1)\n        if len(json.dumps(value, ensure_ascii=False, indent=2)) > max_context_characters:\n            raise ValueError('One API plus shared context exceeds the context budget: ' + row['id'])\n        current.append(row)\n    if current:\n        groups.append(current)\n    if len(groups) > max_batches:\n        raise ValueError('Full API coverage exceeds max_batches; raise the explicit limit or narrow the API scope')\n    contexts = [context(rows, number) for number, rows in enumerate(groups, 1)]\n    for value in contexts:\n        if value['alias_destination'] and (root / value['alias_destination']).exists():\n            raise ValueError('Aliases must be new modules, not replace baseline code')\n    shared_refs = refs + profile_refs + ([error_ref] if error_ref else [])\n    # Detect input changes during preparation before publishing any manifest.\n    if not all(verify_artifact(ref) for ref in source_refs + shared_refs):\n        raise ValueError('Development inputs changed during preview')\n    output.mkdir(parents=True, exist_ok=False)\n    batches = []\n    for value in contexts:\n        paths = {str(root / row['file']) for row in value['apis']}\n        preview = {'schema_version': 1, 'study': str(study), 'source_root': str(root),\n                   'baseline_revision': attachment['revision'], 'context': value,\n                   'artifacts': [ref for ref in source_refs if ref['path'] in paths] + shared_refs,\n                   'error_scope': 'operator-designated development logs only', 'llm_calls': 0}\n        preview['preview_sha256'] = digest(preview)\n        path = output / value['batch_id'] / 'preview.json'\n        atomic_json(path, preview)\n        batches.append({'batch_id': value['batch_id'], 'preview': bind(path),\n                        'api_ids': [row['id'] for row in value['apis']],\n                        'context_characters': len(json.dumps(value, ensure_ascii=False, indent=2))})\n    manifest = {'schema_version': 1, 'kind': 'library_improvement_preview',\n                'study': str(study), 'baseline_revision': attachment['revision'],\n                'settings': {'batch_size': batch_size, 'max_context_characters': max_context_characters,\n                             'max_batches': max_batches, 'max_error_characters': max_error_characters,\n                             'max_catalog_characters': max_catalog_characters,\n                             'alias_path_template': alias_path_template, 'apis': apis},\n                'coverage': {'public_definitions': len(public), 'requested_definitions': len(definitions),\n                             'planned_definitions': sum(len(rows) for rows in groups),\n                             'omitted_requested_definitions': 0, 'batch_count': len(batches),\n                             'omitted_or_unmatched_development_rows': omitted_errors},\n                'api_catalog': catalog, 'artifacts': source_refs + shared_refs,\n                'batches': batches, 'llm_calls': 0}\n    manifest['manifest_sha256'] = digest(manifest)\n    atomic_json(output / 'manifest.json', manifest)\n    return {'manifest': str(output / 'manifest.json'), 'coverage': manifest['coverage'], 'llm_calls': 0}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L51"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L52"
     },
     {
       "id": "workflow.improvement_batches:preview_library_improvements.context",
@@ -13808,8 +13824,8 @@
       "name": "preview_library_improvements.context",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 89,
-      "end_line": 107,
+      "line": 90,
+      "end_line": 108,
       "signature": "context(rows, number)",
       "summary": "",
       "calls": [
@@ -13826,7 +13842,7 @@
       "prompts": [],
       "source": "    def context(rows, number):\n        ids = {row['id'] for row in rows}\n        selected_errors, used, omitted = [], 0, 0\n        for error in errors:\n            if error['function_id'] not in ids:\n                continue\n            size = len(json.dumps(error, ensure_ascii=False))\n            if used + size > max_error_characters:\n                omitted += 1\n            else:\n                selected_errors.append(error)\n                used += size\n        return {**common, 'batch_id': f'batch-{number:04d}',\n                'alias_destination': _alias_destination(alias_path_template, number),\n                'apis': rows, 'development_errors': selected_errors,\n                'coverage': {'matching_definitions': len(definitions), 'selected_definitions': len(rows),\n                             'omitted_definitions': len(definitions) - len(rows),\n                             'omitted_error_rows': omitted,\n                             'source_window_policy': 'Three preceding and up to sixty following lines; not complete function bodies.'}}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L89"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L90"
     },
     {
       "id": "workflow.improvement_batches:propose_library_improvements",
@@ -13834,8 +13850,8 @@
       "name": "propose_library_improvements",
       "kind": "function",
       "path": "workflow/improvement_batches.py",
-      "line": 224,
-      "end_line": 328,
+      "line": 229,
+      "end_line": 333,
       "signature": "propose_library_improvements(manifest_path, model_config, output, *, max_batches=None)",
       "summary": "Run/resume a bounded proposal collection; install nothing and preserve failures.",
       "calls": [
@@ -13890,7 +13906,7 @@
       "prompts": [],
       "source": "def propose_library_improvements(manifest_path, model_config, output, *, max_batches=None):\n    \"\"\"Run/resume a bounded proposal collection; install nothing and preserve failures.\n\n    max_batches limits new batches attempted in this invocation. The model config's\n    provider_attempt_limit (default one) bounds lifetime calls per batch, including\n    failed or interrupted attempts. Resume always requires the same exact identity.\n    \"\"\"\n    manifest_path = Path(manifest_path).resolve()\n    manifest = load(manifest_path)\n    if (manifest.get('kind') != 'library_improvement_preview'\n            or manifest.get('manifest_sha256') != digest({k: v for k, v in manifest.items() if k != 'manifest_sha256'})):\n        raise ValueError('Library preview manifest changed')\n    if not all(verify_artifact(ref) for ref in manifest['artifacts']):\n        raise ValueError('Library preview input artifacts changed')\n    batch_ids = []\n    for number, batch in enumerate(manifest['batches'], 1):\n        if batch.get('batch_id') != f'batch-{number:04d}':\n            raise ValueError('Library batch IDs must be ordered safe directory names')\n        if not verify_artifact(batch['preview']):\n            raise ValueError('Library batch preview changed')\n        preview = load(batch['preview']['path'])\n        if (preview.get('study') != manifest['study']\n                or preview.get('baseline_revision') != manifest['baseline_revision']\n                or preview.get('preview_sha256') != digest({k: v for k, v in preview.items() if k != 'preview_sha256'})\n                or preview['context'].get('batch_id') != batch['batch_id']\n                or [row['id'] for row in preview['context']['apis']] != batch['api_ids']):\n            raise ValueError('Library batch identity or API coverage does not match its manifest')\n        batch_ids.extend(batch['api_ids'])\n    if (not batch_ids or len(batch_ids) != len(set(batch_ids))\n            or len(batch_ids) != manifest['coverage']['planned_definitions']\n            or len(manifest['batches']) != manifest['coverage']['batch_count']):\n        raise ValueError('Library batch API coverage is empty, duplicated or inconsistent')\n    if max_batches is not None:\n        _integer(max_batches, 'max_batches', 1, 10000)\n    settings = _model_settings(model_config)\n    _integer(settings.get('provider_attempt_limit', 1), 'model.provider_attempt_limit', 1, 100)\n    # Recheck the attachment and review hold even when every batch is cached.\n    _load_preview(manifest['batches'][0]['preview']['path'])\n    output = development_destination(manifest['study'], output)\n    command_files = [bind(p) for p in settings['command'] if Path(p).is_absolute() and Path(p).is_file()]\n    extra_files = settings.get('artifacts', [])\n    if not isinstance(extra_files, list) or any(not isinstance(p, str) for p in extra_files):\n        raise ValueError('model.artifacts must be a list of filenames')\n    command_files += [bind(Path(model_config).resolve().parent / p) for p in extra_files]\n    identity = {'manifest': bind(manifest_path), 'model_configuration': bind(model_config),\n                'model_command_artifacts': command_files, 'prompt': bind(PROMPT),\n                'implementation': _implementation_bindings()}\n    identity_hash = digest(identity)\n    run_artifacts = [identity['manifest'], identity['model_configuration'], identity['prompt'],\n                     *identity['model_command_artifacts'], *identity['implementation']]\n    with ownership(output):\n        identity_path = output / 'identity.json'\n        if identity_path.exists():\n            if load(identity_path) != identity:\n                raise ValueError('Library proposal identity changed; use a new output directory')\n        elif any(p.name != '.lock' for p in output.iterdir()):\n            raise ValueError('Existing library output has no identity; preserve it and use a new output')\n        else:\n            atomic_json(identity_path, identity)\n        completed, attempted, calls, stopped = [], 0, 0, None\n        public_names = {row['name'] for row in manifest['api_catalog']}\n        alias_owners = {}\n        collisions = []\n        for batch in manifest['batches']:\n            folder = output / batch['batch_id']\n            if folder.is_symlink() or folder.resolve().parent != output:\n                raise ValueError('Batch output must be inside the owned output directory')\n            if not (folder / 'completion.json').exists():\n                if max_batches is not None and attempted >= max_batches:\n                    stopped = 'invocation_batch_limit'\n                    break\n                attempted += 1\n            batch_identity = digest({'run': identity_hash, 'batch': batch})\n            if not all(verify_artifact(ref) for ref in run_artifacts):\n                raise ValueError('Library proposal inputs changed during generation')\n            result, used = _run_batch(batch['preview']['path'], settings, folder, batch_identity, run_artifacts, public_names)\n            calls += used\n            if result['status'] in ('attempt_budget_exhausted', 'model_attempt_failed', 'invalid_suggestions'):\n                stopped = result\n                break\n            item = {'batch_id': batch['batch_id'], 'api_ids': batch['api_ids'], 'status': result['status'],\n                    'completion': bind(folder / 'completion.json'),\n                    'proposal': bind(result['proposal']) if result.get('proposal') else None}\n            if item['proposal']:\n                proposal = load(item['proposal']['path'])\n                for alias in proposal['aliases']:\n                    name = alias['name']\n                    if name in alias_owners or name in public_names:\n                        collisions.append({'name': name, 'batch': batch['batch_id'],\n                                           'other': alias_owners.get(name, 'existing_public_api')})\n                    alias_owners[name] = batch['batch_id']\n            completed.append(item)\n        report = {'schema_version': 1, 'kind': 'library_improvement_proposal_collection',\n                  'study': manifest['study'], 'baseline_revision': manifest['baseline_revision'],\n                  'identity_sha256': identity_hash, 'manifest': bind(manifest_path),\n                  'status': 'alias_collisions_require_review' if collisions else\n                            'complete_unvalidated' if len(completed) == len(manifest['batches']) else 'incomplete',\n                  'coverage': manifest['coverage'], 'completed_batches': len(completed),\n                  'batches': completed, 'alias_collisions': collisions, 'stopped': stopped,\n                  'llm_calls_this_invocation': calls, 'installed': False, 'requires_validation': True}\n        atomic_json(output / 'collection.json', report)\n    return {'collection': str(output / 'collection.json'), 'status': report['status'],\n            'completed_batches': len(completed), 'total_batches': len(manifest['batches']),\n            'llm_calls': calls, 'alias_collisions': collisions,\n            'proposals': [item['proposal']['path'] for item in completed if item['proposal']]}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L224"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_batches.py#L229"
     },
     {
       "id": "workflow.improvement_context:_development_errors",
@@ -14298,8 +14314,8 @@
       "name": "_finish_proposal",
       "kind": "function",
       "path": "workflow/improvement_suggestions.py",
-      "line": 147,
-      "end_line": 206,
+      "line": 170,
+      "end_line": 231,
       "signature": "_finish_proposal(preview, attachment, output, result, readme_ref, attempt)",
       "summary": "Persist review artifacts from a recorded result; never install or execute them.",
       "calls": [
@@ -14308,6 +14324,7 @@
         "workflow.ablation:verify_artifact",
         "workflow.execution:atomic_json",
         "workflow.improvement_context:original_checkout",
+        "workflow.improvement_suggestions:proposal_response_error",
         "workflow.improvement_suggestions:validate_suggestions"
       ],
       "called_by": [
@@ -14330,11 +14347,11 @@
         "str"
       ],
       "prompts": [],
-      "source": "def _finish_proposal(preview, attachment, output, result, readme_ref, attempt):\n    \"\"\"Persist review artifacts from a recorded result; never install or execute them.\"\"\"\n    if not all(verify_artifact(ref) for ref in preview['artifacts']):\n        raise ValueError('Source changed during generation; do not install these suggestions')\n    original_checkout(preview['study'])\n    suggestions = validate_suggestions(json.loads(result['payload']['code']), preview['context'])\n    atomic_json(output / 'suggestions.json', suggestions)\n    batch_id = preview['context'].get('batch_id')\n    aliases = [{**row, 'alias_id': digest(row)[:20], 'source_batch': batch_id} for row in suggestions['aliases']]\n    hints = [{**row, 'hint_id': digest(row)[:20], 'source_batch': batch_id} for row in suggestions['hints']]\n    artifacts = {}\n    if readme_ref:\n        if not verify_artifact(readme_ref):\n            raise ValueError('Supplied README changed during generation')\n        shutil.copyfile(readme_ref['path'], output / 'README.md')\n        artifacts['readme'] = bind(output / 'README.md')\n    if suggestions['aliases']:\n        target = preview['context']['alias_destination']\n        code = output / ('alias_source' + Path(target).suffix)\n        code.write_text(suggestions['alias_code'])\n        interface = output / 'ALIASES.md'\n        interface.write_text(suggestions['alias_interface'])\n        artifacts['alias'] = {**bind(code), 'target': target}\n        artifacts['alias_interface'] = {**bind(interface), 'source_batch': batch_id,\n                                        'alias_ids': [row['alias_id'] for row in aliases]}\n    if suggestions['hints']:\n        path = output / 'error_hints.json'\n        atomic_json(path, {'schema_version': 1, 'status': 'unverified',\n                          'source': 'development evidence only',\n                          'hints': [{**row, 'status': 'unverified'} for row in hints]})\n        artifacts['error_hints'] = bind(path)\n        # A companion per-function log connects each suggestion to the exact\n        # development record; existing error logs and evaluation records are immutable.\n        (output / 'function_fix_hints.jsonl').write_text(''.join(\n            json.dumps({'function': row['function_id'], 'status': 'suggested_unverified', **row}, ensure_ascii=False) + '\\n'\n            for row in hints))\n    refactors = None\n    if suggestions['refactors']:\n        path = output / 'refactor_suggestions.json'\n        atomic_json(path, {'schema_version': 1, 'status': 'unverified_review_candidates',\n                          'preview_sha256': preview['preview_sha256'],\n                          'source_batch': preview['context'].get('batch_id'),\n                          'refactors': [{**row, 'refactor_id': digest(row)[:20], 'status': 'unverified'}\n                                        for row in suggestions['refactors']]})\n        refactors = bind(path)\n    if not artifacts and not refactors:\n        return {'status': 'no_supported_suggestions', 'output': str(output), 'notes': suggestions['notes'], 'llm_calls': 1}\n    proposal = {'schema_version': 1, 'baseline_revision': attachment['revision'],\n                'study': preview['study'], 'status': 'proposed_unvalidated', 'artifacts': artifacts,\n                'preview_sha256': preview['preview_sha256'], 'aliases': aliases, 'notes': suggestions['notes'],\n                'model_attempt': bind(attempt / 'process.json'),\n                'request': bind(attempt / 'request.json'),\n                'scope': preview['context']['coverage'], 'requires_validation': True,\n                'source_batch': preview['context'].get('batch_id'), 'refactor_suggestions': refactors}\n    if not artifacts:\n        proposal['status'] = 'review_candidates_only'\n    atomic_json(output / 'proposal.json', proposal)\n    return {'status': proposal['status'], 'proposal': str(output / 'proposal.json'),\n            'alias_count': len(suggestions['aliases']), 'hint_count': len(suggestions['hints']),\n            'refactor_count': len(suggestions['refactors']), 'llm_calls': 1}",
+      "source": "def _finish_proposal(preview, attachment, output, result, readme_ref, attempt):\n    \"\"\"Persist review artifacts from a recorded result; never install or execute them.\"\"\"\n    if proposal_response_error(result):\n        raise ValueError('Incomplete, refused or invalid proposal response')\n    if not all(verify_artifact(ref) for ref in preview['artifacts']):\n        raise ValueError('Source changed during generation; do not install these suggestions')\n    original_checkout(preview['study'])\n    suggestions = validate_suggestions(json.loads(result['payload']['code']), preview['context'])\n    atomic_json(output / 'suggestions.json', suggestions)\n    batch_id = preview['context'].get('batch_id')\n    aliases = [{**row, 'alias_id': digest(row)[:20], 'source_batch': batch_id} for row in suggestions['aliases']]\n    hints = [{**row, 'hint_id': digest(row)[:20], 'source_batch': batch_id} for row in suggestions['hints']]\n    artifacts = {}\n    if readme_ref:\n        if not verify_artifact(readme_ref):\n            raise ValueError('Supplied README changed during generation')\n        shutil.copyfile(readme_ref['path'], output / 'README.md')\n        artifacts['readme'] = bind(output / 'README.md')\n    if suggestions['aliases']:\n        target = preview['context']['alias_destination']\n        code = output / ('alias_source' + Path(target).suffix)\n        code.write_text(suggestions['alias_code'])\n        interface = output / 'ALIASES.md'\n        interface.write_text(suggestions['alias_interface'])\n        artifacts['alias'] = {**bind(code), 'target': target}\n        artifacts['alias_interface'] = {**bind(interface), 'source_batch': batch_id,\n                                        'alias_ids': [row['alias_id'] for row in aliases]}\n    if suggestions['hints']:\n        path = output / 'error_hints.json'\n        atomic_json(path, {'schema_version': 1, 'status': 'unverified',\n                          'source': 'development evidence only',\n                          'hints': [{**row, 'status': 'unverified'} for row in hints]})\n        artifacts['error_hints'] = bind(path)\n        # A companion per-function log connects each suggestion to the exact\n        # development record; existing error logs and evaluation records are immutable.\n        (output / 'function_fix_hints.jsonl').write_text(''.join(\n            json.dumps({'function': row['function_id'], 'status': 'suggested_unverified', **row}, ensure_ascii=False) + '\\n'\n            for row in hints))\n    refactors = None\n    if suggestions['refactors']:\n        path = output / 'refactor_suggestions.json'\n        atomic_json(path, {'schema_version': 1, 'status': 'unverified_review_candidates',\n                          'preview_sha256': preview['preview_sha256'],\n                          'source_batch': preview['context'].get('batch_id'),\n                          'refactors': [{**row, 'refactor_id': digest(row)[:20], 'status': 'unverified'}\n                                        for row in suggestions['refactors']]})\n        refactors = bind(path)\n    if not artifacts and not refactors:\n        return {'status': 'no_supported_suggestions', 'output': str(output), 'notes': suggestions['notes'], 'llm_calls': 1}\n    proposal = {'schema_version': 1, 'baseline_revision': attachment['revision'],\n                'study': preview['study'], 'status': 'proposed_unvalidated', 'artifacts': artifacts,\n                'preview_sha256': preview['preview_sha256'], 'aliases': aliases, 'notes': suggestions['notes'],\n                'model_attempt': bind(attempt / 'process.json'),\n                'request': bind(attempt / 'request.json'),\n                'scope': preview['context']['coverage'], 'requires_validation': True,\n                'source_batch': preview['context'].get('batch_id'), 'refactor_suggestions': refactors}\n    if not artifacts:\n        proposal['status'] = 'review_candidates_only'\n    atomic_json(output / 'proposal.json', proposal)\n    return {'status': proposal['status'], 'proposal': str(output / 'proposal.json'),\n            'alias_count': len(suggestions['aliases']), 'hint_count': len(suggestions['hints']),\n            'refactor_count': len(suggestions['refactors']), 'llm_calls': 1}",
       "aliases": [
         "workflow.improvement_batches:_finish_proposal"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L147"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L170"
     },
     {
       "id": "workflow.improvement_suggestions:_load_preview",
@@ -14342,8 +14359,8 @@
       "name": "_load_preview",
       "kind": "function",
       "path": "workflow/improvement_suggestions.py",
-      "line": 108,
-      "end_line": 121,
+      "line": 129,
+      "end_line": 142,
       "signature": "_load_preview(preview_path)",
       "summary": "Revalidate the pinned source and development inputs before any request.",
       "calls": [
@@ -14372,7 +14389,7 @@
       "aliases": [
         "workflow.improvement_batches:_load_preview"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L108"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L129"
     },
     {
       "id": "workflow.improvement_suggestions:_model_settings",
@@ -14442,8 +14459,8 @@
       "name": "matching_fix_hints",
       "kind": "function",
       "path": "workflow/improvement_suggestions.py",
-      "line": 209,
-      "end_line": 213,
+      "line": 234,
+      "end_line": 238,
       "signature": "matching_fix_hints(bundle, function_id, error)",
       "summary": "Return only same-function literal matches; hints never become verified here.",
       "calls": [],
@@ -14458,7 +14475,37 @@
       "prompts": [],
       "source": "def matching_fix_hints(bundle, function_id, error):\n    \"\"\"Return only same-function literal matches; hints never become verified here.\"\"\"\n    return [{**hint, 'status': 'unverified'} for hint in bundle.get('hints', [])\n            if hint.get('function_id') == function_id and isinstance(hint.get('error_contains'), str)\n            and hint['error_contains'] and hint['error_contains'] in error]",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L209"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L234"
+    },
+    {
+      "id": "workflow.improvement_suggestions:proposal_response_error",
+      "module": "workflow.improvement_suggestions",
+      "name": "proposal_response_error",
+      "kind": "function",
+      "path": "workflow/improvement_suggestions.py",
+      "line": 43,
+      "end_line": 61,
+      "signature": "proposal_response_error(result, model=None)",
+      "summary": "Do not install syntactically valid partial/refused provider suggestions.",
+      "calls": [],
+      "called_by": [
+        "workflow.improvement_batches:_run_batch",
+        "workflow.improvement_suggestions:_finish_proposal",
+        "workflow.improvement_suggestions:propose_improvements"
+      ],
+      "unresolved_calls": [
+        "isinstance",
+        "payload.get",
+        "payload['budget'].get",
+        "payload['code'].strip",
+        "result.get"
+      ],
+      "prompts": [],
+      "source": "def proposal_response_error(result, model=None):\n    \"\"\"Do not install syntactically valid partial/refused provider suggestions.\"\"\"\n    payload = result.get('payload')\n    if result.get('status') != 'ok' or not isinstance(payload, dict):\n        return 'provider_attempt_failed'\n    if not isinstance(payload.get('code'), str) or not payload['code'].strip():\n        return 'provider_empty_or_invalid_output'\n    status = payload.get('response_status')\n    if ((status is not None and status != 'completed') or payload.get('truncated')\n            or payload.get('incomplete_reason')):\n        return 'provider_incomplete_or_noncompleted'\n    if payload.get('refusals') or payload.get('response_kind') in ('refusal', 'empty_model_output'):\n        return 'provider_refusal_or_empty_output'\n    if model == 'gpt-5.3-codex':\n        if status != 'completed':\n            return 'provider_completion_status_missing'\n        if not isinstance(payload.get('budget'), dict) or payload['budget'].get('state') != 'settled':\n            return 'provider_usage_unsettled'\n    return None",
+      "aliases": [
+        "workflow.improvement_batches:proposal_response_error"
+      ],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L43"
     },
     {
       "id": "workflow.improvement_suggestions:propose_improvements",
@@ -14466,8 +14513,8 @@
       "name": "propose_improvements",
       "kind": "function",
       "path": "workflow/improvement_suggestions.py",
-      "line": 124,
-      "end_line": 144,
+      "line": 145,
+      "end_line": 167,
       "signature": "propose_improvements(preview_path, model_config, output, *, readme=None)",
       "summary": "One recorded model request, producing a complete unvalidated treatment bundle.",
       "calls": [
@@ -14477,7 +14524,8 @@
         "workflow.improvement_context:development_destination",
         "workflow.improvement_suggestions:_finish_proposal",
         "workflow.improvement_suggestions:_load_preview",
-        "workflow.improvement_suggestions:_model_settings"
+        "workflow.improvement_suggestions:_model_settings",
+        "workflow.improvement_suggestions:proposal_response_error"
       ],
       "called_by": [
         "workflow.development_cli:run_development_command"
@@ -14485,16 +14533,13 @@
       "unresolved_calls": [
         "PROMPT.read_text",
         "ValueError",
-        "isinstance",
         "json.dumps",
-        "output.mkdir",
-        "result.get",
-        "result['payload'].get"
+        "output.mkdir"
       ],
       "prompts": [],
-      "source": "def propose_improvements(preview_path, model_config, output, *, readme=None):\n    \"\"\"One recorded model request, producing a complete unvalidated treatment bundle.\n\n    Nothing is installed by this command. Existing provider command contract is\n    reused: stdout JSON with a `code` string containing the suggestion JSON.\n    \"\"\"\n    preview, study, attachment = _load_preview(preview_path)\n    settings = _model_settings(model_config)\n    readme_ref = bind(readme) if readme else None\n    output = development_destination(study, output)\n    output.mkdir(parents=True, exist_ok=False)\n    atomic_json(output / 'preview.json', preview)\n    atomic_json(output / 'model_configuration_identity.json', bind(model_config))\n    request = {'system': PROMPT.read_text(), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),\n               'model': settings['name'], 'temperature': settings['temperature'],\n               'max_output_tokens': settings['max_output_tokens']}\n    # invoke stores exact system/user messages and full adapter stdout/stderr.\n    result = invoke(settings['command'], request, output / 'model_attempt', settings['timeout_s'])\n    if result['status'] != 'ok' or not isinstance(result.get('payload'), dict) or not isinstance(result['payload'].get('code'), str):\n        raise ValueError('Development model failed; attempt evidence is preserved')\n    return _finish_proposal(preview, attachment, output, result, readme_ref, output / 'model_attempt')",
+      "source": "def propose_improvements(preview_path, model_config, output, *, readme=None):\n    \"\"\"One recorded model request, producing a complete unvalidated treatment bundle.\n\n    Nothing is installed by this command. Existing provider command contract is\n    reused: stdout JSON with a `code` string containing the suggestion JSON.\n    \"\"\"\n    preview, study, attachment = _load_preview(preview_path)\n    settings = _model_settings(model_config)\n    readme_ref = bind(readme) if readme else None\n    output = development_destination(study, output)\n    output.mkdir(parents=True, exist_ok=False)\n    atomic_json(output / 'preview.json', preview)\n    atomic_json(output / 'model_configuration_identity.json', bind(model_config))\n    request = {'system': PROMPT.read_text(), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),\n               'model': settings['name'], 'temperature': settings['temperature'],\n               'max_output_tokens': settings['max_output_tokens']}\n    # invoke stores exact system/user messages and full adapter stdout/stderr.\n    result = invoke(settings['command'], request, output / 'model_attempt', settings['timeout_s'])\n    error = proposal_response_error(result, settings['name'])\n    if error:\n        atomic_json(output / 'model_attempt/rejected.json', {'status': 'invalid_provider_response', 'reason': error})\n        raise ValueError('Development model response rejected: ' + error + '; attempt evidence is preserved')\n    return _finish_proposal(preview, attachment, output, result, readme_ref, output / 'model_attempt')",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L124"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L145"
     },
     {
       "id": "workflow.improvement_suggestions:validate_suggestions",
@@ -14502,8 +14547,8 @@
       "name": "validate_suggestions",
       "kind": "function",
       "path": "workflow/improvement_suggestions.py",
-      "line": 43,
-      "end_line": 105,
+      "line": 64,
+      "end_line": 126,
       "signature": "validate_suggestions(value, context, *, reserved_names=None)",
       "summary": "Validate referential/schema integrity, without claiming code correctness.",
       "calls": [
@@ -14534,7 +14579,7 @@
       "prompts": [],
       "source": "def validate_suggestions(value, context, *, reserved_names=None):\n    \"\"\"Validate referential/schema integrity, without claiming code correctness.\"\"\"\n    if not isinstance(value, dict):\n        raise ValueError('Model suggestions must be a JSON object')\n    expected = {'aliases', 'alias_code', 'alias_interface', 'hints', 'notes'}\n    if set(value) not in (expected, expected | {'refactors'}):\n        raise ValueError('Model response must contain aliases, alias_code, alias_interface, hints, notes and optional refactors')\n    value = {**value, 'refactors': value.get('refactors', [])}\n    functions = {row['id']: row for row in context['apis']}\n    evidence = {row['id']: row for row in context['development_errors']}\n    aliases, hints = value['aliases'], value['hints']\n    if not isinstance(aliases, list) or len(aliases) > 20 or not isinstance(hints, list) or len(hints) > 100:\n        raise ValueError('aliases/hints must be bounded lists')\n    for field in ('alias_code', 'alias_interface', 'notes'):\n        _text(value[field], field, empty=True)\n    names = set()\n    original_names = {row['name'] for row in functions.values()} | set(reserved_names or [])\n    for alias in aliases:\n        if not isinstance(alias, dict) or set(alias) != {'name', 'target_function', 'rationale'}:\n            raise ValueError('Invalid alias record')\n        name = _text(alias['name'], 'alias.name')\n        if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', name) or name in names or name in original_names:\n            raise ValueError('Alias name must be a distinct new identifier')\n        names.add(name)\n        if _text(alias['target_function'], 'target_function') not in functions:\n            raise ValueError('Alias target was not in the model input')\n        _text(alias['rationale'], 'alias.rationale')\n    if aliases:\n        if alias_target(context['alias_destination']) is None:\n            raise ValueError('No alias destination was requested')\n        _text(value['alias_code'], 'alias_code')\n        _text(value['alias_interface'], 'alias_interface')\n        if context['alias_destination'].endswith('.py'):\n            tree = ast.parse(value['alias_code'])\n            defined = {n.name for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}\n            if not names <= defined:\n                raise ValueError('Python alias source does not define each proposed name')\n    elif value['alias_code'].strip() or value['alias_interface'].strip():\n        raise ValueError('Alias source/interface supplied without alias records')\n    for hint in hints:\n        required = {'function_id', 'evidence_ids', 'error_contains', 'likely_cause',\n                    'fix_steps', 'suggested_fix_code', 'validation'}\n        if not isinstance(hint, dict) or set(hint) != required:\n            raise ValueError('Invalid hint record')\n        if _text(hint['function_id'], 'function_id') not in functions:\n            raise ValueError('Hint function was not in the model input')\n        refs = hint['evidence_ids']\n        if not isinstance(refs, list) or not refs or any(not isinstance(r, str) or r not in evidence for r in refs):\n            raise ValueError('Hint must cite supplied development evidence')\n        if any(evidence[r]['function_id'] != hint['function_id'] for r in refs):\n            raise ValueError('Hint evidence belongs to a different function')\n        pattern = _text(hint['error_contains'], 'error_contains')\n        if any(pattern not in evidence[r]['error'] for r in refs):\n            raise ValueError('Hint match text must occur in every cited diagnostic')\n        for field in ('likely_cause', 'validation'):\n            _text(hint[field], field)\n        _text(hint['suggested_fix_code'], 'suggested_fix_code', empty=True)\n        if not isinstance(hint['fix_steps'], list) or not hint['fix_steps']:\n            raise ValueError('Hint needs concrete fix_steps')\n        for step in hint['fix_steps']:\n            _text(step, 'fix_steps')\n    validate_refactors(value['refactors'], functions)\n    return value",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L43"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/improvement_suggestions.py#L64"
     },
     {
       "id": "workflow.mcp_server:attach_codebase",
@@ -14677,8 +14722,8 @@
       "name": "NativeBridgeError",
       "kind": "class",
       "path": "workflow/native_provider_bridge.py",
-      "line": 21,
-      "end_line": 22,
+      "line": 22,
+      "end_line": 23,
       "signature": "NativeBridgeError",
       "summary": "The audited route failed; callers must not substitute another provider.",
       "calls": [],
@@ -14691,7 +14736,7 @@
       "prompts": [],
       "source": "class NativeBridgeError(RuntimeError):\n    \"\"\"The audited route failed; callers must not substitute another provider.\"\"\"",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L21"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L22"
     },
     {
       "id": "workflow.native_provider_bridge:_path",
@@ -14699,8 +14744,8 @@
       "name": "_path",
       "kind": "function",
       "path": "workflow/native_provider_bridge.py",
-      "line": 30,
-      "end_line": 36,
+      "line": 31,
+      "end_line": 37,
       "signature": "_path(value, label)",
       "summary": "",
       "calls": [
@@ -14721,7 +14766,7 @@
       "prompts": [],
       "source": "def _path(value, label):\n    if not isinstance(value, str) or not value.strip() or not Path(value).is_absolute():\n        raise NativeBridgeError(label + ' must be an explicit absolute path')\n    path = Path(value)\n    if any(p.is_symlink() for p in (path, *path.parents)):\n        raise NativeBridgeError(label + ' must not traverse a symlink')\n    return path.resolve()",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L30"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L31"
     },
     {
       "id": "workflow.native_provider_bridge:_write",
@@ -14729,8 +14774,8 @@
       "name": "_write",
       "kind": "function",
       "path": "workflow/native_provider_bridge.py",
-      "line": 68,
-      "end_line": 74,
+      "line": 69,
+      "end_line": 75,
       "signature": "_write(path, value)",
       "summary": "Exclusive durable writes; a partial/crashed call is retained, never reused.",
       "calls": [],
@@ -14749,7 +14794,7 @@
       "prompts": [],
       "source": "def _write(path, value):\n    \"\"\"Exclusive durable writes; a partial/crashed call is retained, never reused.\"\"\"\n    data = (json.dumps(value, indent=2, allow_nan=False) + '\\n').encode()\n    with path.open('xb') as output:\n        output.write(data)\n        output.flush()\n        os.fsync(output.fileno())",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L68"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L69"
     },
     {
       "id": "workflow.native_provider_bridge:active_controller_hashes",
@@ -14757,8 +14802,8 @@
       "name": "active_controller_hashes",
       "kind": "function",
       "path": "workflow/native_provider_bridge.py",
-      "line": 25,
-      "end_line": 27,
+      "line": 26,
+      "end_line": 28,
       "signature": "active_controller_hashes()",
       "summary": "",
       "calls": [],
@@ -14775,7 +14820,7 @@
       "prompts": [],
       "source": "def active_controller_hashes():\n    root = Path(__file__).resolve().parent.parent\n    return {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in CONTROLLER_FILES}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L25"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L26"
     },
     {
       "id": "workflow.native_provider_bridge:guarded_native_contract",
@@ -14783,8 +14828,8 @@
       "name": "guarded_native_contract",
       "kind": "function",
       "path": "workflow/native_provider_bridge.py",
-      "line": 39,
-      "end_line": 65,
+      "line": 40,
+      "end_line": 66,
       "signature": "guarded_native_contract(spec)",
       "summary": "Read-only policy/implementation validation for preparation and session pins.",
       "calls": [
@@ -14810,7 +14855,7 @@
       "prompts": [],
       "source": "def guarded_native_contract(spec):\n    \"\"\"Read-only policy/implementation validation for preparation and session pins.\"\"\"\n    if spec.provider != PROVIDER or spec.model != MODEL:\n        raise NativeBridgeError('Native audited provider and gpt-5.3-codex must be explicitly selected')\n    config = getattr(spec, 'bridge', None)\n    if not isinstance(config, dict) or set(config) != FIELDS:\n        raise NativeBridgeError('Native bridge requires exactly its documented configuration fields')\n    if config['policy'] != 'study-v2':\n        raise NativeBridgeError('Native bridge requires a new explicit study-v2 budget')\n    stage = config['stage']\n    if not isinstance(stage, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{0,95}', stage):\n        raise NativeBridgeError('Stage must be a stable nonempty label')\n    cap = config['max_output_tokens']\n    if type(cap) is not int or not 0 < cap <= 128000:\n        raise NativeBridgeError('max_output_tokens must be an integer from 1 to 128000')\n    evidence = _path(config['evidence_dir'], 'evidence_dir')\n    ledger_path = _path(config['budget_ledger'], 'budget_ledger')\n    if ledger_path == evidence or evidence in ledger_path.parents:\n        raise NativeBridgeError('Keep the shared mutable ledger outside the stage evidence directory')\n    ledger = BudgetLedger(ledger_path, config['max_cost_usd'], policy=config['policy'], study_id=config['study_id'])\n    actual = active_controller_hashes()\n    if config['controller_sha256'] != actual:\n        raise NativeBridgeError('Pinned native bridge implementation differs from the active installation')\n    result = {'schema_version': 1, 'provider': PROVIDER, 'model': MODEL,\n              'stage': stage, 'budget_ledger': str(ledger_path), 'budget_identity': ledger.identity,\n              'max_output_tokens': cap, 'evidence_dir': str(evidence), 'controller_sha256': actual}\n    return {**result, 'identity_sha256': digest(result)}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L39"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L40"
     },
     {
       "id": "workflow.native_provider_bridge:invoke_native",
@@ -14818,8 +14863,8 @@
       "name": "invoke_native",
       "kind": "function",
       "path": "workflow/native_provider_bridge.py",
-      "line": 77,
-      "end_line": 115,
+      "line": 78,
+      "end_line": 123,
       "signature": "invoke_native(spec, system, user)",
       "summary": "Persist one exact request and route it through the shared adapter once.",
       "calls": [
@@ -14837,6 +14882,7 @@
         "Path",
         "call_dir.mkdir",
         "datetime.now",
+        "datetime.now(timezone.utc).isoformat",
         "datetime.now(timezone.utc).strftime",
         "isinstance",
         "json.loads",
@@ -14844,13 +14890,15 @@
         "marker.read_text",
         "record['code'].strip",
         "root.mkdir",
+        "str",
+        "time.monotonic",
         "type",
         "uuid.uuid4"
       ],
       "prompts": [],
-      "source": "def invoke_native(spec, system, user):\n    \"\"\"Persist one exact request and route it through the shared adapter once.\"\"\"\n    contract = guarded_native_contract(spec)\n    if not isinstance(system, str) or not isinstance(user, str):\n        raise NativeBridgeError('Native prompts must be strings')\n    root = Path(contract['evidence_dir'])\n    root.mkdir(parents=True, exist_ok=True)\n    marker = root / 'contract.json'\n    try:\n        _write(marker, contract)\n    except FileExistsError:\n        if marker.is_symlink() or json.loads(marker.read_text()) != contract:\n            raise NativeBridgeError('Stage evidence directory belongs to a different immutable contract') from None\n    call_dir = root / ('call-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S') + '-' + uuid.uuid4().hex)\n    call_dir.mkdir()\n    request = {'model': MODEL, 'system': system, 'prompt': user,\n               'max_output_tokens': contract['max_output_tokens'], 'temperature': 0,\n               'native_context': {'stage': contract['stage'], 'contract_sha256': contract['identity_sha256']}}\n    _write(call_dir / 'request.json', request)\n    _write(call_dir / 'contract.json', contract)\n    ledger = BudgetLedger(contract['budget_ledger'], spec.bridge['max_cost_usd'],\n                          policy='study-v2', study_id=spec.bridge['study_id'])\n    try:\n        record = openai_codex_adapter.invoke(request, ledger,\n            audit=lambda event, value: _write(call_dir / (event + '.json'), value))\n        if (record['response_status'] != 'completed' or record['response_kind'] != 'solution'\n                or not record['code'].strip() or record['refusals'] or record['truncated']\n                or record['budget']['state'] != 'settled'):\n            raise NativeBridgeError('Native authoring requires complete nonempty output with final accounted usage')\n        # Detect source/config changes during the HTTP call before using its text.\n        if guarded_native_contract(spec) != contract:\n            raise NativeBridgeError('Native contract changed during the provider call')\n        _write(call_dir / 'outcome.json', {'status': 'completed', 'request_sha256': digest(request),\n                                         'result_sha256': digest(record)})\n        return record\n    except Exception as exc:\n        _write(call_dir / 'outcome.json', {'status': 'failed_closed', 'error_type': type(exc).__name__,\n                                         'request_sha256': digest(request)})\n        raise NativeBridgeError(f'Native audited call failed ({type(exc).__name__}); evidence: {call_dir}') from None",
+      "source": "def invoke_native(spec, system, user):\n    \"\"\"Persist one exact request and route it through the shared adapter once.\"\"\"\n    contract = guarded_native_contract(spec)\n    if not isinstance(system, str) or not isinstance(user, str):\n        raise NativeBridgeError('Native prompts must be strings')\n    root = Path(contract['evidence_dir'])\n    root.mkdir(parents=True, exist_ok=True)\n    marker = root / 'contract.json'\n    try:\n        _write(marker, contract)\n    except FileExistsError:\n        if marker.is_symlink() or json.loads(marker.read_text()) != contract:\n            raise NativeBridgeError('Stage evidence directory belongs to a different immutable contract') from None\n    call_dir = root / ('call-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S') + '-' + uuid.uuid4().hex)\n    call_dir.mkdir()\n    started_at, started = datetime.now(timezone.utc).isoformat(), time.monotonic()\n    request = {'model': MODEL, 'system': system, 'prompt': user,\n               'max_output_tokens': contract['max_output_tokens'], 'temperature': 0,\n               'native_context': {'stage': contract['stage'], 'contract_sha256': contract['identity_sha256']}}\n    _write(call_dir / 'request.json', request)\n    _write(call_dir / 'contract.json', contract)\n    ledger = BudgetLedger(contract['budget_ledger'], spec.bridge['max_cost_usd'],\n                          policy='study-v2', study_id=spec.bridge['study_id'])\n    try:\n        record = openai_codex_adapter.invoke(request, ledger,\n            audit=lambda event, value: _write(call_dir / (event + '.json'), value))\n        if (record['response_status'] != 'completed' or record['response_kind'] != 'solution'\n                or not record['code'].strip() or record['refusals'] or record['truncated']\n                or record['budget']['state'] != 'settled'):\n            raise NativeBridgeError('Native authoring requires complete nonempty output with final accounted usage')\n        # Detect source/config changes during the HTTP call before using its text.\n        if guarded_native_contract(spec) != contract:\n            raise NativeBridgeError('Native contract changed during the provider call')\n        _write(call_dir / 'outcome.json', {'status': 'completed', 'request_sha256': digest(request),\n                                         'result_sha256': digest(record), 'started_at': started_at,\n                                         'finished_at': datetime.now(timezone.utc).isoformat(),\n                                         'seconds': time.monotonic() - started})\n        return record\n    except Exception as exc:\n        _write(call_dir / 'outcome.json', {'status': 'failed_closed', 'error_type': type(exc).__name__,\n                                         'request_sha256': digest(request), 'started_at': started_at,\n                                         'finished_at': datetime.now(timezone.utc).isoformat(),\n                                         'seconds': time.monotonic() - started})\n        error = NativeBridgeError(f'Native audited call failed ({type(exc).__name__}); evidence: {call_dir}')\n        error.call_directory = str(call_dir)\n        raise error from None",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L77"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/native_provider_bridge.py#L78"
     },
     {
       "id": "workflow.openai_codex_adapter:_failure",
@@ -14858,8 +14906,8 @@
       "name": "_failure",
       "kind": "function",
       "path": "workflow/openai_codex_adapter.py",
-      "line": 45,
-      "end_line": 53,
+      "line": 48,
+      "end_line": 56,
       "signature": "_failure(exc)",
       "summary": "Never persist raw SDK error bodies, URLs, headers, or exception messages.",
       "calls": [],
@@ -14875,7 +14923,7 @@
       "prompts": [],
       "source": "def _failure(exc):\n    \"\"\"Never persist raw SDK error bodies, URLs, headers, or exception messages.\"\"\"\n    code = getattr(exc, 'code', None)\n    request_id = getattr(exc, 'request_id', None)\n    status = getattr(exc, 'status_code', None)\n    return {'type': type(exc).__name__,\n            'status_code': status if type(status) is int and 100 <= status <= 599 else None,\n            'code': code if isinstance(code, str) and re.fullmatch(r'[a-z_]{1,64}', code) else None,\n            'request_id': request_id if isinstance(request_id, str) and re.fullmatch(r'req_[a-zA-Z0-9]{1,128}', request_id) else None}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L45"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L48"
     },
     {
       "id": "workflow.openai_codex_adapter:invoke",
@@ -14883,8 +14931,8 @@
       "name": "invoke",
       "kind": "function",
       "path": "workflow/openai_codex_adapter.py",
-      "line": 56,
-      "end_line": 119,
+      "line": 59,
+      "end_line": 127,
       "signature": "invoke(request, ledger, *, audit=None)",
       "summary": "Shared CLI/native transport. Audit settings and reservation before HTTP.",
       "calls": [
@@ -14900,6 +14948,8 @@
         "ValueError",
         "all",
         "client.responses.create",
+        "datetime.now",
+        "datetime.now(timezone.utc).isoformat",
         "digest",
         "emit",
         "isinstance",
@@ -14912,12 +14962,13 @@
         "record.get",
         "record.update",
         "str",
+        "time.monotonic",
         "type"
       ],
       "prompts": [],
-      "source": "def invoke(request, ledger, *, audit=None):\n    \"\"\"Shared CLI/native transport. Audit settings and reservation before HTTP.\n\n    The optional callback receives only normalized, secret-free records. Caller\n    persistence errors fail closed; provider errors retain uncertain reservations.\n    \"\"\"\n    emit = audit or (lambda event, value: None)\n    if request['model'] != MODEL:\n        raise ValueError('This adapter requires model gpt-5.3-codex')\n    if not all(isinstance(request[key], str) for key in ('system', 'prompt')):\n        raise ValueError('system and prompt must be strings')\n    cap = request['max_output_tokens']\n    if type(cap) is not int or not 0 < cap <= 128000:\n        raise ValueError('max_output_tokens must be an integer from 1 to 128000')\n    temperature = request['temperature']\n    if type(temperature) not in (int, float) or not math.isfinite(temperature):\n        raise ValueError('Requested temperature must be a finite number')\n    key = os.environ.get('OPENAI_API_KEY')\n    if not key:\n        raise RuntimeError('Set OPENAI_API_KEY in the launching environment')\n    import openai  # Optional SDK; --help and module inspection stay offline.\n\n    parameters = {'model': MODEL, 'reasoning': {'effort': 'low'}, 'max_output_tokens': cap,\n                  'store': False, 'tools': [], 'tool_choice': 'none', 'service_tier': 'default',\n                  'background': False, 'stream': False, 'truncation': 'disabled'}\n    settings = {'endpoint': 'https://api.openai.com/v1', 'api': 'responses', 'timeout_s': 120,\n                'max_retries': 0, 'sdk_version': openai.__version__, 'parameters': parameters,\n                'requested_temperature': temperature, 'temperature_sent': False,\n                'effective_temperature': 'provider_default_not_explicitly_set',\n                'instructions_sha256': digest(request['system']), 'input_sha256': digest(request['prompt']),\n                'budget_ledger': str(ledger.path), 'max_cost_nanousd': ledger.identity['max_cost_nanousd']}\n    if ledger.identity['schema_version'] == 2:\n        settings['budget_policy_identity'] = ledger.identity\n    request_hash, settings_hash = digest(request), digest(settings)\n    reservation = None\n    try:\n        emit('settings', settings)\n        with openai.OpenAI(api_key=key, base_url=settings['endpoint'], max_retries=0, timeout=120.0) as client:\n            reservation = ledger.reserve(request['system'], request['prompt'], cap, request_hash, settings_hash)\n            emit('reservation', {'reservation_id': reservation, 'request_sha256': request_hash,\n                                 'settings_sha256': settings_hash})\n            response = client.responses.create(instructions=request['system'], input=request['prompt'], **parameters)\n        record = response_record(response)\n    except Exception as exc:\n        failure = _failure(exc)\n        if reservation is not None:\n            try:\n                ledger.finish(reservation, failure=failure)\n            except Exception as ledger_error:\n                failure['ledger_error_type'] = type(ledger_error).__name__\n        emit('failure', {'failure': failure, 'reservation_id': reservation,\n                         'request_sha256': request_hash, 'settings_sha256': settings_hash})\n        raise RuntimeError('Codex request failed: ' + json.dumps(failure)) from None\n    emit('response', record)\n    receipt = ledger.finish(reservation, usage=record.get('usage'), response_id=record['response_id'],\n                            status=record['response_status'])\n    record.update(adapter_settings=settings, adapter_settings_sha256=settings_hash,\n                  request_sha256=request_hash, budget=receipt)\n    emit('result', record)\n    if record['response_status'] not in ('completed', 'incomplete'):\n        raise RuntimeError('Codex provider returned non-solution status: ' + json.dumps({\n            'response_status': record['response_status'], 'response_id': record['response_id'],\n            'budget': receipt})) from None\n    return record",
+      "source": "def invoke(request, ledger, *, audit=None):\n    \"\"\"Shared CLI/native transport. Audit settings and reservation before HTTP.\n\n    The optional callback receives only normalized, secret-free records. Caller\n    persistence errors fail closed; provider errors retain uncertain reservations.\n    \"\"\"\n    emit = audit or (lambda event, value: None)\n    started_at, started = datetime.now(timezone.utc).isoformat(), time.monotonic()\n    if request['model'] != MODEL:\n        raise ValueError('This adapter requires model gpt-5.3-codex')\n    if not all(isinstance(request[key], str) for key in ('system', 'prompt')):\n        raise ValueError('system and prompt must be strings')\n    cap = request['max_output_tokens']\n    if type(cap) is not int or not 0 < cap <= 128000:\n        raise ValueError('max_output_tokens must be an integer from 1 to 128000')\n    temperature = request['temperature']\n    if type(temperature) not in (int, float) or not math.isfinite(temperature):\n        raise ValueError('Requested temperature must be a finite number')\n    key = os.environ.get('OPENAI_API_KEY')\n    if not key:\n        raise RuntimeError('Set OPENAI_API_KEY in the launching environment')\n    import openai  # Optional SDK; --help and module inspection stay offline.\n\n    parameters = {'model': MODEL, 'reasoning': {'effort': 'low'}, 'max_output_tokens': cap,\n                  'store': False, 'tools': [], 'tool_choice': 'none', 'service_tier': 'default',\n                  'background': False, 'stream': False, 'truncation': 'disabled'}\n    settings = {'endpoint': 'https://api.openai.com/v1', 'api': 'responses', 'timeout_s': 120,\n                'max_retries': 0, 'sdk_version': openai.__version__, 'parameters': parameters,\n                'requested_temperature': temperature, 'temperature_sent': False,\n                'effective_temperature': 'provider_default_not_explicitly_set',\n                'instructions_sha256': digest(request['system']), 'input_sha256': digest(request['prompt']),\n                'budget_ledger': str(ledger.path), 'max_cost_nanousd': ledger.identity['max_cost_nanousd']}\n    if ledger.identity['schema_version'] == 2:\n        settings['budget_policy_identity'] = ledger.identity\n    request_hash, settings_hash = digest(request), digest(settings)\n    reservation = None\n    try:\n        emit('settings', settings)\n        with openai.OpenAI(api_key=key, base_url=settings['endpoint'], max_retries=0, timeout=120.0) as client:\n            reservation = ledger.reserve(request['system'], request['prompt'], cap, request_hash, settings_hash)\n            emit('reservation', {'reservation_id': reservation, 'request_sha256': request_hash,\n                                 'settings_sha256': settings_hash})\n            response = client.responses.create(instructions=request['system'], input=request['prompt'], **parameters)\n        record = response_record(response)\n    except Exception as exc:\n        failure = _failure(exc)\n        if reservation is not None:\n            try:\n                ledger.finish(reservation, failure=failure)\n            except Exception as ledger_error:\n                failure['ledger_error_type'] = type(ledger_error).__name__\n        emit('failure', {'failure': failure, 'reservation_id': reservation,\n                         'request_sha256': request_hash, 'settings_sha256': settings_hash,\n                         'started_at': started_at, 'finished_at': datetime.now(timezone.utc).isoformat(),\n                         'seconds': time.monotonic() - started})\n        raise RuntimeError('Codex request failed: ' + json.dumps(failure)) from None\n    emit('response', record)\n    receipt = ledger.finish(reservation, usage=record.get('usage'), response_id=record['response_id'],\n                            status=record['response_status'])\n    record.update(adapter_settings=settings, adapter_settings_sha256=settings_hash,\n                  request_sha256=request_hash, budget=receipt,\n                  started_at=started_at, finished_at=datetime.now(timezone.utc).isoformat(),\n                  seconds=time.monotonic() - started)\n    emit('result', record)\n    if record['response_status'] not in ('completed', 'incomplete'):\n        raise RuntimeError('Codex provider returned non-solution status: ' + json.dumps({\n            'response_status': record['response_status'], 'response_id': record['response_id'],\n            'budget': receipt})) from None\n    return record",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L56"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L59"
     },
     {
       "id": "workflow.openai_codex_adapter:main",
@@ -14925,17 +14976,20 @@
       "name": "main",
       "kind": "function",
       "path": "workflow/openai_codex_adapter.py",
-      "line": 122,
-      "end_line": 133,
+      "line": 130,
+      "end_line": 153,
       "signature": "main(argv=None)",
       "summary": "",
       "calls": [
-        "workflow.openai_codex_adapter:invoke"
+        "workflow.openai_codex_adapter:invoke",
+        "workflow.openai_codex_adapter:main.audit"
       ],
       "called_by": [],
       "unresolved_calls": [
         "BudgetLedger",
+        "Path",
         "argparse.ArgumentParser",
+        "evidence.mkdir",
         "json.dumps",
         "json.load",
         "parser.add_argument",
@@ -14943,9 +14997,36 @@
         "print"
       ],
       "prompts": [],
-      "source": "def main(argv=None):\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--budget-ledger', required=True,\n                        help='Use --budget-ledger=/absolute/path so controllers do not hash this mutable file')\n    parser.add_argument('--max-cost-usd', default='5', help='Immutable cap: legacy-v1 <=$5; explicit study-v2 <=$100')\n    parser.add_argument('--budget-policy', choices=('legacy-v1', 'study-v2'), default='legacy-v1')\n    parser.add_argument('--study-id', help='Required immutable identity for a new study-v2 ledger')\n    args = parser.parse_args(argv)\n    request = json.load(sys.stdin)\n    ledger = BudgetLedger(args.budget_ledger, args.max_cost_usd, policy=args.budget_policy, study_id=args.study_id)\n    record = invoke(request, ledger)\n    print(json.dumps(record, allow_nan=False))",
+      "source": "def main(argv=None):\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--budget-ledger', required=True,\n                        help='Use --budget-ledger=/absolute/path so controllers do not hash this mutable file')\n    parser.add_argument('--max-cost-usd', default='5', help='Immutable cap: legacy-v1 <=$5; explicit study-v2 <=$100')\n    parser.add_argument('--budget-policy', choices=('legacy-v1', 'study-v2'), default='legacy-v1')\n    parser.add_argument('--study-id', help='Required immutable identity for a new study-v2 ledger')\n    parser.add_argument('--audit-directory', default='provider_audit',\n                        help='New local evidence directory; default is inside this adapter attempt')\n    args = parser.parse_args(argv)\n    request = json.load(sys.stdin)\n    ledger = BudgetLedger(args.budget_ledger, args.max_cost_usd, policy=args.budget_policy, study_id=args.study_id)\n    evidence = Path(args.audit_directory)\n    evidence.mkdir(parents=True, exist_ok=False)\n    def audit(event, value):\n        # Same secret-free events used by the native bridge, including failed calls.\n        with (evidence / (event + '.json')).open('x') as stream:\n            json.dump(value, stream, indent=2, allow_nan=False)\n            stream.write('\\n')\n            stream.flush()\n            os.fsync(stream.fileno())\n    audit('request', request)\n    record = invoke(request, ledger, audit=audit)\n    print(json.dumps(record, allow_nan=False))",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L122"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L130"
+    },
+    {
+      "id": "workflow.openai_codex_adapter:main.audit",
+      "module": "workflow.openai_codex_adapter",
+      "name": "main.audit",
+      "kind": "function",
+      "path": "workflow/openai_codex_adapter.py",
+      "line": 144,
+      "end_line": 150,
+      "signature": "audit(event, value)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.openai_codex_adapter:main"
+      ],
+      "unresolved_calls": [
+        "(evidence / (event + '.json')).open",
+        "json.dump",
+        "os.fsync",
+        "stream.fileno",
+        "stream.flush",
+        "stream.write"
+      ],
+      "prompts": [],
+      "source": "    def audit(event, value):\n        # Same secret-free events used by the native bridge, including failed calls.\n        with (evidence / (event + '.json')).open('x') as stream:\n            json.dump(value, stream, indent=2, allow_nan=False)\n            stream.write('\\n')\n            stream.flush()\n            os.fsync(stream.fileno())",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L144"
     },
     {
       "id": "workflow.openai_codex_adapter:response_record",
@@ -14953,8 +15034,8 @@
       "name": "response_record",
       "kind": "function",
       "path": "workflow/openai_codex_adapter.py",
-      "line": 15,
-      "end_line": 42,
+      "line": 18,
+      "end_line": 45,
       "signature": "response_record(response)",
       "summary": "",
       "calls": [],
@@ -14971,7 +15052,7 @@
       "prompts": [],
       "source": "def response_record(response):\n    messages, refusals = [], []\n    for item in response.output or []:\n        if getattr(item, 'type', None) != 'message' or getattr(item, 'role', None) != 'assistant':\n            continue\n        text = ''.join(part.text for part in item.content if part.type == 'output_text')\n        refusals.extend(part.refusal for part in item.content if part.type == 'refusal')\n        messages.append({'id': item.id, 'phase': getattr(item, 'phase', None),\n                         'status': item.status, 'text': text})\n    final = [item for item in messages if item['phase'] == 'final_answer']\n    selected = final if final else [item for item in messages if item['phase'] is None]\n    code = ''.join(item['text'] for item in selected)\n    status = response.status\n    reason = getattr(response.incomplete_details, 'reason', None)\n    record = {'code': code, 'model_version': response.model, 'response_id': response.id,\n              'response_status': status, 'incomplete_reason': reason,\n              'truncated': reason == 'max_output_tokens', 'refusals': refusals,\n              'response_kind': 'solution' if code else ('refusal' if refusals else 'empty_model_output'),\n              'messages': messages, 'error_code': getattr(response.error, 'code', None)}\n    usage = response.usage\n    if usage is not None:\n        reasoning = getattr(usage.output_tokens_details, 'reasoning_tokens', None)\n        record['usage'] = {'input_tokens': usage.input_tokens, 'output_tokens': usage.output_tokens,\n                           'reasoning_tokens': reasoning,\n                           'non_reasoning_output_tokens': usage.output_tokens - reasoning if type(reasoning) is int else None,\n                           'cached_input_tokens': getattr(usage.input_tokens_details, 'cached_tokens', None),\n                           'total_tokens': usage.total_tokens}\n    return record",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L15"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/openai_codex_adapter.py#L18"
     },
     {
       "id": "workflow.preparation:_engine_config_module",
@@ -15861,8 +15942,8 @@
       "name": "_ledger_binding",
       "kind": "function",
       "path": "workflow/readme_receipts.py",
-      "line": 28,
-      "end_line": 55,
+      "line": 42,
+      "end_line": 69,
       "signature": "_ledger_binding(contract, result)",
       "summary": "Read one settled row under the existing lock; never mutate the ledger.",
       "calls": [
@@ -15892,7 +15973,7 @@
       "prompts": [],
       "source": "def _ledger_binding(contract, result):\n    \"\"\"Read one settled row under the existing lock; never mutate the ledger.\"\"\"\n    path = Path(contract['budget_ledger'])\n    lock_path = Path(str(path) + '.lock')\n    if any(p.is_symlink() for p in (lock_path, *lock_path.parents)):\n        raise ValueError('Redirected budget lock')\n    with lock_path.open('r') as lock:\n        fcntl.flock(lock, fcntl.LOCK_SH)\n        ledger, _ = _read(path)\n        identity = contract['budget_identity']\n        policy = BudgetLedger(path, str(Decimal(identity['max_cost_nanousd']) / 1_000_000_000),\n                              policy=identity['policy'], study_id=identity['study_id'])\n        if policy.identity != identity:\n            raise ValueError('Budget contract identity differs')\n        policy._validate(ledger, lock.read().strip())\n        rows = [row for row in ledger['records'] if row['id'] == result['budget']['reservation_id']]\n        if len(rows) != 1:\n            raise ValueError('Provider reservation is absent from its ledger')\n        row = rows[0]\n        expected = {'state': 'settled', 'request_sha256': result['request_sha256'],\n                    'settings_sha256': result['adapter_settings_sha256'], 'usage': result['usage'],\n                    'response_id': result['response_id'], 'response_status': 'completed',\n                    'reserved_nanousd': result['budget']['reserved_nanousd'],\n                    'charged_nanousd': result['budget']['charged_nanousd']}\n        if any(row.get(key) != value for key, value in expected.items()):\n            raise ValueError('Provider result differs from settled budget evidence')\n        return {'path': str(path), 'ledger_id': ledger['ledger_id'], 'reservation_id': row['id'],\n                'record_sha256': digest(row)}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L28"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L42"
     },
     {
       "id": "workflow.readme_receipts:_provider_request",
@@ -15900,8 +15981,8 @@
       "name": "_provider_request",
       "kind": "function",
       "path": "workflow/readme_receipts.py",
-      "line": 22,
-      "end_line": 25,
+      "line": 36,
+      "end_line": 39,
       "signature": "_provider_request(request, contract)",
       "summary": "",
       "calls": [],
@@ -15913,7 +15994,7 @@
       "prompts": [],
       "source": "def _provider_request(request, contract):\n    return {'model': contract['model'], 'system': request['system'], 'prompt': request['prompt'],\n            'max_output_tokens': contract['max_output_tokens'], 'temperature': 0,\n            'native_context': {'stage': contract['stage'], 'contract_sha256': contract['identity_sha256']}}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L22"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L36"
     },
     {
       "id": "workflow.readme_receipts:_read",
@@ -15921,8 +16002,8 @@
       "name": "_read",
       "kind": "function",
       "path": "workflow/readme_receipts.py",
-      "line": 14,
-      "end_line": 19,
+      "line": 28,
+      "end_line": 33,
       "signature": "_read(path)",
       "summary": "",
       "calls": [],
@@ -15946,7 +16027,34 @@
       "prompts": [],
       "source": "def _read(path):\n    path = Path(path)\n    if any(p.is_symlink() for p in (path, *path.parents)) or not path.is_file():\n        raise ValueError('Missing or redirected provider evidence: ' + str(path))\n    data = path.read_bytes()\n    return json.loads(data), hashlib.sha256(data).hexdigest()",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L14"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L28"
+    },
+    {
+      "id": "workflow.readme_receipts:_without_timing",
+      "module": "workflow.readme_receipts",
+      "name": "_without_timing",
+      "kind": "function",
+      "path": "workflow/readme_receipts.py",
+      "line": 17,
+      "end_line": 25,
+      "signature": "_without_timing(record)",
+      "summary": "Timing is bound by receipt hashes; legacy receipts may lack all three fields.",
+      "calls": [],
+      "called_by": [
+        "workflow.readme_receipts:receipt_binding"
+      ],
+      "unresolved_calls": [
+        "ValueError",
+        "any",
+        "datetime.fromisoformat",
+        "math.isfinite",
+        "record.items",
+        "type"
+      ],
+      "prompts": [],
+      "source": "def _without_timing(record):\n    \"\"\"Timing is bound by receipt hashes; legacy receipts may lack all three fields.\"\"\"\n    if any(key in record for key in TIMING):\n        start, end = (datetime.fromisoformat(record[key]) for key in TIMING[:2])\n        seconds = record['seconds']\n        if (start.tzinfo is None or end.tzinfo is None\n                or type(seconds) not in (int, float) or not math.isfinite(seconds) or seconds < 0):\n            raise ValueError('Invalid provider receipt timing')\n    return {key: value for key, value in record.items() if key not in TIMING}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L17"
     },
     {
       "id": "workflow.readme_receipts:invoke_recorded",
@@ -15954,8 +16062,8 @@
       "name": "invoke_recorded",
       "kind": "function",
       "path": "workflow/readme_receipts.py",
-      "line": 102,
-      "end_line": 121,
+      "line": 116,
+      "end_line": 135,
       "signature": "invoke_recorded(invoke, spec, system, prompt, contract)",
       "summary": "Invoke native text once, then require one matching newly saved receipt.",
       "calls": [
@@ -15981,7 +16089,7 @@
       "aliases": [
         "workflow.readme_session:invoke_recorded"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L102"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L116"
     },
     {
       "id": "workflow.readme_receipts:receipt_binding",
@@ -15989,15 +16097,16 @@
       "name": "receipt_binding",
       "kind": "function",
       "path": "workflow/readme_receipts.py",
-      "line": 58,
-      "end_line": 94,
+      "line": 72,
+      "end_line": 108,
       "signature": "receipt_binding(call_dir, text, request, contract)",
       "summary": "Validate cross-file identities and bind every original receipt byte.",
       "calls": [
         "workflow.provider_budget:digest",
         "workflow.readme_receipts:_ledger_binding",
         "workflow.readme_receipts:_provider_request",
-        "workflow.readme_receipts:_read"
+        "workflow.readme_receipts:_read",
+        "workflow.readme_receipts:_without_timing"
       ],
       "called_by": [
         "workflow.readme_receipts:invoke_recorded",
@@ -16006,19 +16115,19 @@
       "unresolved_calls": [
         "Path",
         "ValueError",
+        "_without_timing(result).items",
         "call_dir.name.startswith",
         "isinstance",
         "result.get",
-        "result.items",
         "result['budget'].get",
         "settings.get",
         "str",
         "text.strip"
       ],
       "prompts": [],
-      "source": "def receipt_binding(call_dir, text, request, contract):\n    \"\"\"Validate cross-file identities and bind every original receipt byte.\"\"\"\n    root = Path(contract['evidence_dir'])\n    call_dir = Path(call_dir)\n    if call_dir.parent != root or not call_dir.name.startswith('call-'):\n        raise ValueError('Provider receipt is outside its bound stage')\n    stage, stage_hash = _read(root / 'contract.json')\n    records, hashes = {}, {}\n    for name in FILES:\n        records[name], hashes[name] = _read(call_dir / name)\n    if stage != contract or records['contract.json'] != contract:\n        raise ValueError('Provider evidence contract changed')\n    expected = _provider_request(request, contract)\n    result, settings = records['result.json'], records['settings.json']\n    request_hash, settings_hash = digest(expected), digest(settings)\n    if records['request.json'] != expected or result.get('request_sha256') != request_hash:\n        raise ValueError('Provider evidence request changed')\n    if (result.get('adapter_settings') != settings or result.get('adapter_settings_sha256') != settings_hash\n            or settings.get('instructions_sha256') != digest(request['system'])\n            or settings.get('input_sha256') != digest(request['prompt'])\n            or settings.get('budget_policy_identity') != contract['budget_identity']\n            or settings.get('budget_ledger') != contract['budget_ledger']):\n        raise ValueError('Provider evidence settings changed')\n    response = {key: value for key, value in result.items()\n                if key not in ('adapter_settings', 'adapter_settings_sha256', 'request_sha256', 'budget')}\n    if records['response.json'] != response or records['outcome.json'] != {\n            'status': 'completed', 'request_sha256': request_hash, 'result_sha256': digest(result)}:\n        raise ValueError('Provider outcome or response differs from its result')\n    if (result.get('code') != text or not isinstance(text, str) or not text.strip()\n            or result.get('response_status') != 'completed' or result.get('response_kind') != 'solution'\n            or result.get('refusals') or result.get('truncated') or result['budget'].get('state') != 'settled'):\n        raise ValueError('Saved phase text differs from complete provider evidence')\n    if records['reservation.json'] != {'reservation_id': result['budget']['reservation_id'],\n            'request_sha256': request_hash, 'settings_sha256': settings_hash}:\n        raise ValueError('Provider reservation evidence changed')\n    return {'schema_version': 1, 'call_directory': str(call_dir), 'file_sha256': hashes,\n            'stage_contract_sha256': stage_hash, 'ledger': _ledger_binding(contract, result)}",
+      "source": "def receipt_binding(call_dir, text, request, contract):\n    \"\"\"Validate cross-file identities and bind every original receipt byte.\"\"\"\n    root = Path(contract['evidence_dir'])\n    call_dir = Path(call_dir)\n    if call_dir.parent != root or not call_dir.name.startswith('call-'):\n        raise ValueError('Provider receipt is outside its bound stage')\n    stage, stage_hash = _read(root / 'contract.json')\n    records, hashes = {}, {}\n    for name in FILES:\n        records[name], hashes[name] = _read(call_dir / name)\n    if stage != contract or records['contract.json'] != contract:\n        raise ValueError('Provider evidence contract changed')\n    expected = _provider_request(request, contract)\n    result, settings = records['result.json'], records['settings.json']\n    request_hash, settings_hash = digest(expected), digest(settings)\n    if records['request.json'] != expected or result.get('request_sha256') != request_hash:\n        raise ValueError('Provider evidence request changed')\n    if (result.get('adapter_settings') != settings or result.get('adapter_settings_sha256') != settings_hash\n            or settings.get('instructions_sha256') != digest(request['system'])\n            or settings.get('input_sha256') != digest(request['prompt'])\n            or settings.get('budget_policy_identity') != contract['budget_identity']\n            or settings.get('budget_ledger') != contract['budget_ledger']):\n        raise ValueError('Provider evidence settings changed')\n    response = {key: value for key, value in _without_timing(result).items()\n                if key not in ('adapter_settings', 'adapter_settings_sha256', 'request_sha256', 'budget')}\n    if records['response.json'] != response or _without_timing(records['outcome.json']) != {\n            'status': 'completed', 'request_sha256': request_hash, 'result_sha256': digest(result)}:\n        raise ValueError('Provider outcome or response differs from its result')\n    if (result.get('code') != text or not isinstance(text, str) or not text.strip()\n            or result.get('response_status') != 'completed' or result.get('response_kind') != 'solution'\n            or result.get('refusals') or result.get('truncated') or result['budget'].get('state') != 'settled'):\n        raise ValueError('Saved phase text differs from complete provider evidence')\n    if records['reservation.json'] != {'reservation_id': result['budget']['reservation_id'],\n            'request_sha256': request_hash, 'settings_sha256': settings_hash}:\n        raise ValueError('Provider reservation evidence changed')\n    return {'schema_version': 1, 'call_directory': str(call_dir), 'file_sha256': hashes,\n            'stage_contract_sha256': stage_hash, 'ledger': _ledger_binding(contract, result)}",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L58"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L72"
     },
     {
       "id": "workflow.readme_receipts:verify_provider_evidence",
@@ -16026,8 +16135,8 @@
       "name": "verify_provider_evidence",
       "kind": "function",
       "path": "workflow/readme_receipts.py",
-      "line": 97,
-      "end_line": 99,
+      "line": 111,
+      "end_line": 113,
       "signature": "verify_provider_evidence(binding, text, request, contract)",
       "summary": "",
       "calls": [
@@ -16046,7 +16155,7 @@
       "aliases": [
         "workflow.readme_session:verify_provider_evidence"
       ],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L97"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_receipts.py#L111"
     },
     {
       "id": "workflow.readme_session:atomic_bytes",
@@ -16054,8 +16163,8 @@
       "name": "atomic_bytes",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 16,
-      "end_line": 27,
+      "line": 18,
+      "end_line": 29,
       "signature": "atomic_bytes(path, data)",
       "summary": "",
       "calls": [],
@@ -16079,7 +16188,7 @@
       "prompts": [],
       "source": "def atomic_bytes(path, data):\n    path = Path(path)\n    path.parent.mkdir(parents=True, exist_ok=True)\n    temporary = path.with_name(path.name + '.' + uuid.uuid4().hex + '.tmp')\n    try:\n        with temporary.open('xb') as stream:\n            stream.write(data)\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        temporary.unlink(missing_ok=True)",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L16"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L18"
     },
     {
       "id": "workflow.readme_session:atomic_json",
@@ -16087,8 +16196,8 @@
       "name": "atomic_json",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 30,
-      "end_line": 31,
+      "line": 32,
+      "end_line": 33,
       "signature": "atomic_json(path, value)",
       "summary": "",
       "calls": [
@@ -16105,7 +16214,7 @@
       "prompts": [],
       "source": "def atomic_json(path, value):\n    atomic_bytes(path, (json.dumps(value, indent=2, ensure_ascii=False) + '\\n').encode())",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L30"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L32"
     },
     {
       "id": "workflow.readme_session:load_verified",
@@ -16113,8 +16222,8 @@
       "name": "load_verified",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 41,
-      "end_line": 88,
+      "line": 43,
+      "end_line": 90,
       "signature": "load_verified(directory)",
       "summary": "Fail before any provider call if input, output or provider policy changed.",
       "calls": [
@@ -16157,7 +16266,7 @@
       "prompts": [],
       "source": "def load_verified(directory):\n    \"\"\"Fail before any provider call if input, output or provider policy changed.\"\"\"\n    session = json.loads((directory / 'session.json').read_text())\n    if session['identity_sha256'] != digest({k: v for k, v in session.items() if k != 'identity_sha256'}):\n        raise ValueError('Prepared session identity changed')\n    if digest(session['requests']) != session['requests_sha256']:\n        raise ValueError('Prepared requests changed')\n    if digest((directory / 'base.md').read_bytes()) != session['base_sha256']:\n        raise ValueError('Immutable base snapshot changed')\n    for item in session['inputs']:\n        path = Path(item['path'])\n        if not path.is_file() or digest(path.read_bytes()) != item['sha256']:\n            raise ValueError('Session input changed: ' + str(path))\n    manifest = session['manifest']\n    head = subprocess.check_output(['git', '-C', manifest['repository'], 'rev-parse', 'HEAD']).decode().strip()\n    if head != manifest['revision']:\n        raise ValueError('Pinned repository HEAD changed')\n    cfg = _engine_config_module().load_config(session['config_path'])\n    if cfg.raw != session['effective_config']:\n        raise ValueError('Effective layered configuration changed')\n    from .native_provider_bridge import guarded_native_contract\n    specs = {role: cfg.model_for_role(role) for role in session['provider_contracts']}\n    for role, spec in specs.items():\n        if guarded_native_contract(spec) != session['provider_contracts'][role]:\n            raise ValueError('Guarded native provider contract changed')\n    for index, request in enumerate(session['requests']):\n        entry = directory / f'entry_{index:04d}'\n        if json.loads((entry / 'prepared.json').read_text()) != request:\n            raise ValueError('Prepared entry changed')\n        for name in request['phases']:\n            state_path = entry / (name + '.state.json')\n            if not state_path.exists():\n                continue\n            state = json.loads(state_path.read_text())\n            if state.get('status') != 'complete':\n                raise ValueError('Prior incomplete/failed invocation requires explicit reconciliation')\n            saved = json.loads((entry / (name + '.request.json')).read_text())\n            if digest(saved) != state.get('request_sha256') or digest(state.get('text')) != state.get('text_sha256'):\n                raise ValueError('Saved phase evidence changed')\n            contract = session['provider_contracts'][request['phase_roles'][name]]\n            verify_provider_evidence(state.get('provider_evidence'), state['text'], saved, contract)\n        candidate = entry / 'candidate.md'\n        final_name = 'entry' if session['mode'] == 'full' else 'rewrite'\n        final_state = entry / (final_name + '.state.json')\n        if candidate.exists():\n            if not final_state.exists() or candidate.read_bytes() != candidate_bytes(json.loads(final_state.read_text())['text'], request['heading']):\n                raise ValueError('Saved candidate changed')\n    return session, specs",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L41"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L43"
     },
     {
       "id": "workflow.readme_session:phase",
@@ -16165,8 +16274,8 @@
       "name": "phase",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 91,
-      "end_line": 124,
+      "line": 93,
+      "end_line": 132,
       "signature": "phase(directory, name, request, invoke, contract)",
       "summary": "One attempted invocation per phase; uncertain/failed calls never auto-repeat.",
       "calls": [
@@ -16179,6 +16288,9 @@
       ],
       "unresolved_calls": [
         "ValueError",
+        "datetime.now",
+        "datetime.now(timezone.utc).isoformat",
+        "getattr",
         "invoke",
         "isinstance",
         "json.loads",
@@ -16189,12 +16301,13 @@
         "state_path.exists",
         "state_path.read_text",
         "text.strip",
+        "time.monotonic",
         "type"
       ],
       "prompts": [],
-      "source": "def phase(directory, name, request, invoke, contract):\n    \"\"\"One attempted invocation per phase; uncertain/failed calls never auto-repeat.\"\"\"\n    request_path, state_path = directory / (name + '.request.json'), directory / (name + '.state.json')\n    expected = digest(request)\n    if request_path.exists():\n        if json.loads(request_path.read_text()) != request:\n            raise ValueError('Saved exact request differs from bound phase')\n    else:\n        atomic_json(request_path, request)\n    if state_path.exists():\n        state = json.loads(state_path.read_text())\n        if state.get('request_sha256') != expected:\n            raise ValueError('Phase request identity changed')\n        if state.get('status') != 'complete':\n            raise ValueError('Phase has a prior incomplete/failed invocation; explicit reconciliation required')\n        if digest(state['text']) != state.get('text_sha256'):\n            raise ValueError('Saved phase response changed')\n        verify_provider_evidence(state.get('provider_evidence'), state['text'], request, contract)\n        return state['text']\n    atomic_json(state_path, {'status': 'started', 'request_sha256': expected})\n    try:\n        result = invoke(request['system'], request['prompt'])\n        text = result['text']\n        if not isinstance(text, str) or not text.strip():\n            raise ValueError('Provider returned no text')\n        verify_provider_evidence(result.get('provider_evidence'), text, request, contract)\n    except Exception as exc:\n        atomic_json(state_path, {'status': 'failed_or_uncertain', 'request_sha256': expected,\n                                 'error_type': type(exc).__name__})\n        raise\n    atomic_json(state_path, {'status': 'complete', 'request_sha256': expected,\n                             'text': text, 'text_sha256': digest(text),\n                             'provider_evidence': result['provider_evidence']})\n    return text",
+      "source": "def phase(directory, name, request, invoke, contract):\n    \"\"\"One attempted invocation per phase; uncertain/failed calls never auto-repeat.\"\"\"\n    request_path, state_path = directory / (name + '.request.json'), directory / (name + '.state.json')\n    expected = digest(request)\n    if request_path.exists():\n        if json.loads(request_path.read_text()) != request:\n            raise ValueError('Saved exact request differs from bound phase')\n    else:\n        atomic_json(request_path, request)\n    if state_path.exists():\n        state = json.loads(state_path.read_text())\n        if state.get('request_sha256') != expected:\n            raise ValueError('Phase request identity changed')\n        if state.get('status') != 'complete':\n            raise ValueError('Phase has a prior incomplete/failed invocation; explicit reconciliation required')\n        if digest(state['text']) != state.get('text_sha256'):\n            raise ValueError('Saved phase response changed')\n        verify_provider_evidence(state.get('provider_evidence'), state['text'], request, contract)\n        return state['text']\n    started_at, started = datetime.now(timezone.utc).isoformat(), time.monotonic()\n    atomic_json(state_path, {'status': 'started', 'request_sha256': expected, 'started_at': started_at})\n    try:\n        result = invoke(request['system'], request['prompt'])\n        text = result['text']\n        if not isinstance(text, str) or not text.strip():\n            raise ValueError('Provider returned no text')\n        verify_provider_evidence(result.get('provider_evidence'), text, request, contract)\n    except Exception as exc:\n        atomic_json(state_path, {'status': 'failed_or_uncertain', 'request_sha256': expected,\n                                 'error_type': type(exc).__name__, 'started_at': started_at,\n                                 'finished_at': datetime.now(timezone.utc).isoformat(),\n                                 'seconds': time.monotonic() - started,\n                                 'provider_call_directory': getattr(exc, 'call_directory', None)})\n        raise\n    atomic_json(state_path, {'status': 'complete', 'request_sha256': expected,\n                             'text': text, 'text_sha256': digest(text),\n                             'started_at': started_at, 'finished_at': datetime.now(timezone.utc).isoformat(),\n                             'seconds': time.monotonic() - started,\n                             'provider_evidence': result['provider_evidence']})\n    return text",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L91"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L93"
     },
     {
       "id": "workflow.readme_session:run_readme_session",
@@ -16202,8 +16315,8 @@
       "name": "run_readme_session",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 127,
-      "end_line": 187,
+      "line": 135,
+      "end_line": 195,
       "signature": "run_readme_session(directory, max_entries=None)",
       "summary": "Generate candidates only. There is no execution-based acceptance claim.",
       "calls": [
@@ -16242,7 +16355,7 @@
       "prompts": [],
       "source": "def run_readme_session(directory, max_entries=None):\n    \"\"\"Generate candidates only. There is no execution-based acceptance claim.\n\n    Existing complete phases resume by exact hashes. New refresh entries call\n    fresh deep-dive then one rewrite. No legacy journals/caches are consulted.\n    \"\"\"\n    directory = Path(directory).resolve()\n    if max_entries is not None and (type(max_entries) is not int or max_entries < 1):\n        raise ValueError('max_entries must be positive')\n    with session_lock(directory):\n        session, specs = load_verified(directory)\n        engine_imports()\n        from aideal.llm import invoke_text\n        candidates = {}\n        for index, prepared in enumerate(session['requests']):\n            if max_entries is not None and index >= max_entries:\n                break\n            root = directory / f'entry_{index:04d}'\n            def call_for(name):\n                role = prepared['phase_roles'][name]\n                return lambda system, prompt: invoke_recorded(invoke_text, specs[role], system, prompt,\n                                                              session['provider_contracts'][role])\n            def contract_for(name):\n                return session['provider_contracts'][prepared['phase_roles'][name]]\n            if session['mode'] == 'refresh':\n                report = phase(root, 'deep_dive', prepared['phases']['deep_dive'], call_for('deep_dive'), contract_for('deep_dive'))\n                load_verified(directory)  # Recheck bindings after any paid phase.\n                template = prepared['phases']['rewrite']\n                request = {k: v.replace(REPORT_MARKER, report) for k, v in template.items()}\n                # The exact rendered request carries the input report identity.\n                request['deep_dive_sha256'] = digest(report)\n                text = phase(root, 'rewrite', request, call_for('rewrite'), contract_for('rewrite'))\n            else:\n                text = phase(root, 'entry', prepared['phases']['entry'], call_for('entry'), contract_for('entry'))\n            load_verified(directory)\n            candidate = candidate_bytes(text, prepared['heading'])\n            path = root / 'candidate.md'\n            if path.exists() and path.read_bytes() != candidate:\n                raise ValueError('Saved candidate changed')\n            atomic_bytes(path, candidate)\n            candidates[prepared['id']] = text\n        if len(candidates) != len(session['requests']):\n            return {'status': 'partial_candidates', 'completed_entries': len(candidates),\n                    'total_entries': len(session['requests']), 'output': None}\n        base = (directory / 'base.md').read_bytes()\n        output = compose(base, session['manifest']['entries'], candidates)\n        path = directory / 'README.md'\n        if path.exists() and path.read_bytes() != output:\n            raise ValueError('Existing composed output changed')\n        atomic_bytes(path, output)\n        result = {'status': 'authored_not_execution_validated', 'identity_sha256': session['identity_sha256'],\n                  'output': str(path), 'output_sha256': digest(output), 'base_sha256': session['base_sha256'],\n                  'candidate_sha256': {key: digest(candidate_bytes(text, next(e['heading'] for e in session['manifest']['entries'] if e['id'] == key)))\n                                       for key, text in candidates.items()},\n                  'completed_entries': len(candidates), 'cache_policy': session['cache_policy'],\n                  'validation_status': 'not_executed', 'legacy_deep_dive_reused': False}\n        completion = directory / 'completion.json'\n        if completion.exists() and json.loads(completion.read_text()) != result:\n            raise ValueError('Completion receipt changed')\n        atomic_json(completion, result)\n        return result",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L127"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L135"
     },
     {
       "id": "workflow.readme_session:run_readme_session.call_for",
@@ -16250,8 +16363,8 @@
       "name": "run_readme_session.call_for",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 145,
-      "end_line": 148,
+      "line": 153,
+      "end_line": 156,
       "signature": "call_for(name)",
       "summary": "",
       "calls": [
@@ -16264,7 +16377,7 @@
       "prompts": [],
       "source": "            def call_for(name):\n                role = prepared['phase_roles'][name]\n                return lambda system, prompt: invoke_recorded(invoke_text, specs[role], system, prompt,\n                                                              session['provider_contracts'][role])",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L145"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L153"
     },
     {
       "id": "workflow.readme_session:run_readme_session.contract_for",
@@ -16272,8 +16385,8 @@
       "name": "run_readme_session.contract_for",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 149,
-      "end_line": 150,
+      "line": 157,
+      "end_line": 158,
       "signature": "contract_for(name)",
       "summary": "",
       "calls": [],
@@ -16284,7 +16397,7 @@
       "prompts": [],
       "source": "            def contract_for(name):\n                return session['provider_contracts'][prepared['phase_roles'][name]]",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L149"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L157"
     },
     {
       "id": "workflow.readme_session:session_lock",
@@ -16292,8 +16405,8 @@
       "name": "session_lock",
       "kind": "function",
       "path": "workflow/readme_session.py",
-      "line": 34,
-      "end_line": 38,
+      "line": 36,
+      "end_line": 40,
       "signature": "session_lock(directory)",
       "summary": "",
       "calls": [],
@@ -16307,7 +16420,7 @@
       "prompts": [],
       "source": "@contextmanager\ndef session_lock(directory):\n    with (directory / '.session.lock').open('a') as stream:\n        fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)\n        yield",
       "aliases": [],
-      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L34"
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/readme_session.py#L36"
     },
     {
       "id": "workflow.readme_spans:candidate_bytes",
@@ -17556,6 +17669,398 @@
       "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/source_refactors.py#L240"
     },
     {
+      "id": "workflow.task_telemetry:_binding",
+      "module": "workflow.task_telemetry",
+      "name": "_binding",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 46,
+      "end_line": 48,
+      "signature": "_binding(path)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.task_telemetry:_diagnostics",
+        "workflow.task_telemetry:_evidence",
+        "workflow.task_telemetry:collect_telemetry"
+      ],
+      "unresolved_calls": [
+        "hashlib.sha256",
+        "hashlib.sha256(data).hexdigest",
+        "len",
+        "path.read_bytes",
+        "str"
+      ],
+      "prompts": [],
+      "source": "def _binding(path):\n    data = path.read_bytes()\n    return {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L46"
+    },
+    {
+      "id": "workflow.task_telemetry:_categories",
+      "module": "workflow.task_telemetry",
+      "name": "_categories",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 88,
+      "end_line": 114,
+      "signature": "_categories(kind, process, payload, directory)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.task_telemetry:_native",
+        "workflow.task_telemetry:_subprocess"
+      ],
+      "unresolved_calls": [
+        "all",
+        "compile_log.is_file",
+        "compile_log.stat",
+        "isinstance",
+        "payload.get",
+        "payload['code'].strip",
+        "process.get",
+        "result.append",
+        "type"
+      ],
+      "prompts": [],
+      "source": "def _categories(kind, process, payload, directory):\n    status = process.get('status', 'in_progress_or_interrupted')\n    if status not in ('ok', 'completed'):\n        return [process.get('error_category') or status]\n    if kind == 'provider':\n        if payload.get('refusals') or payload.get('response_kind') == 'refusal':\n            return ['provider_refusal']\n        if payload.get('truncated') or payload.get('response_status') == 'incomplete':\n            return ['provider_incomplete_output']\n        if payload.get('response_status') not in (None, 'completed'):\n            return ['provider_noncompleted_status']\n        return [] if isinstance(payload.get('code'), str) and payload['code'].strip() else ['provider_empty_or_invalid_output']\n    flags = ('execution_pass', 'oracle_pass', 'target_reached')\n    if not all(type(payload.get(key)) is bool for key in flags):\n        return ['unverified_checker_payload']\n    result = []\n    if not payload['execution_pass']:\n        compile_log = directory / 'compile.stderr'\n        result.append('candidate_compile_or_execution_failure')\n        if compile_log.is_file() and compile_log.stat().st_size:\n            result.append('compiler_diagnostic_present')\n    else:\n        if not payload['oracle_pass']:\n            result.append('oracle_mismatch')\n        if not payload['target_reached']:\n            result.append('required_target_not_observed')\n    return result",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L88"
+    },
+    {
+      "id": "workflow.task_telemetry:_diagnostics",
+      "module": "workflow.task_telemetry",
+      "name": "_diagnostics",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 23,
+      "end_line": 36,
+      "signature": "_diagnostics(directory)",
+      "summary": "Heuristic tags point to saved lines; never expose diagnostic/private values.",
+      "calls": [
+        "workflow.task_telemetry:_binding"
+      ],
+      "called_by": [
+        "workflow.task_telemetry:_subprocess"
+      ],
+      "unresolved_calls": [
+        "DIAGNOSTIC_RULES.items",
+        "any",
+        "enumerate",
+        "p.is_symlink",
+        "path.is_file",
+        "path.read_text",
+        "path.read_text(errors='replace').splitlines",
+        "re.search",
+        "tags.append"
+      ],
+      "prompts": [],
+      "source": "def _diagnostics(directory):\n    \"\"\"Heuristic tags point to saved lines; never expose diagnostic/private values.\"\"\"\n    tags = []\n    for name in ('compile.stderr', 'run.stderr', 'program/program.stderr', 'program/debugger.stderr'):\n        path = directory / name\n        if not path.is_file() or any(p.is_symlink() for p in (path, *path.parents)):\n            continue\n        lines = path.read_text(errors='replace').splitlines()\n        for tag, pattern in DIAGNOSTIC_RULES.items():\n            matched = [i for i, line in enumerate(lines, 1) if re.search(pattern, line)]\n            if matched:\n                tags.append({'tag': tag, 'basis': 'heuristic_pattern_not_verified_root_cause',\n                             'pattern': pattern, 'line_numbers': matched, 'evidence': _binding(path)})\n    return tags",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L23"
+    },
+    {
+      "id": "workflow.task_telemetry:_evidence",
+      "module": "workflow.task_telemetry",
+      "name": "_evidence",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 117,
+      "end_line": 120,
+      "signature": "_evidence(directory)",
+      "summary": "",
+      "calls": [
+        "workflow.task_telemetry:_binding"
+      ],
+      "called_by": [
+        "workflow.task_telemetry:_native",
+        "workflow.task_telemetry:_subprocess"
+      ],
+      "unresolved_calls": [
+        "any",
+        "directory.rglob",
+        "p.is_file",
+        "p.is_symlink",
+        "parent.is_symlink",
+        "sorted"
+      ],
+      "prompts": [],
+      "source": "def _evidence(directory):\n    return [_binding(p) for p in sorted(directory.rglob('*')) if p.is_file() and not p.is_symlink()\n            and p.suffix not in ('.class', '.jar')\n            and not any(parent.is_symlink() for parent in p.parents)]",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L117"
+    },
+    {
+      "id": "workflow.task_telemetry:_files",
+      "module": "workflow.task_telemetry",
+      "name": "_files",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 51,
+      "end_line": 60,
+      "signature": "_files(root)",
+      "summary": "Prune library checkouts/private banks; do not traverse symlink directories.",
+      "calls": [],
+      "called_by": [
+        "workflow.task_telemetry:collect_telemetry"
+      ],
+      "unresolved_calls": [
+        "(Path(current) / d).is_symlink",
+        "Path",
+        "os.walk",
+        "path.is_symlink",
+        "sorted"
+      ],
+      "prompts": [],
+      "source": "def _files(root):\n    \"\"\"Prune library checkouts/private banks; do not traverse symlink directories.\"\"\"\n    for current, directories, names in os.walk(root, followlinks=False):\n        directories[:] = [d for d in sorted(directories) if d not in\n                          ('.git', 'repository.git', 'source', 'bank', '__pycache__')\n                          and not (Path(current) / d).is_symlink()]\n        for name in sorted(names):\n            path = Path(current) / name\n            if not path.is_symlink():\n                yield path",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L51"
+    },
+    {
+      "id": "workflow.task_telemetry:_identity",
+      "module": "workflow.task_telemetry",
+      "name": "_identity",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 63,
+      "end_line": 79,
+      "signature": "_identity(directory, request)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.task_telemetry:_subprocess"
+      ],
+      "unresolved_calls": [
+        "any",
+        "int",
+        "p.name.startswith",
+        "parent.name.startswith",
+        "parent.name[6:].isdigit",
+        "request.get",
+        "unit.rsplit"
+      ],
+      "prompts": [],
+      "source": "def _identity(directory, request):\n    identity = {'case_id': request.get('case_id'), 'trial_id': None,\n                'condition': request.get('condition'), 'fix_round': None,\n                'attempt_directory': directory.name}\n    for parent in directory.parents:\n        if parent.name.startswith('round_') and parent.name[6:].isdigit():\n            identity['fix_round'] = int(parent.name[6:])\n            unit = parent.parent.name\n            if '--' in unit:\n                identity['case_id'], identity['trial_id'] = unit.rsplit('--', 1)\n            identity['condition'] = parent.parent.parent.name\n            break\n    if identity['fix_round'] is not None:\n        identity['phase'] = 'initial' if identity['fix_round'] == 0 else 'code_repair'\n    else:\n        identity['phase'] = 'control' if any(p.name.startswith('control_') for p in directory.parents) else 'proposal'\n    return identity",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L63"
+    },
+    {
+      "id": "workflow.task_telemetry:_native",
+      "module": "workflow.task_telemetry",
+      "name": "_native",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 157,
+      "end_line": 179,
+      "signature": "_native(directory, entry)",
+      "summary": "",
+      "calls": [
+        "workflow.task_telemetry:_categories",
+        "workflow.task_telemetry:_evidence",
+        "workflow.task_telemetry:_read",
+        "workflow.task_telemetry:_tokens"
+      ],
+      "called_by": [
+        "workflow.task_telemetry:collect_telemetry"
+      ],
+      "unresolved_calls": [
+        "(result.get('budget') or {}).get",
+        "categories.append",
+        "failure.get",
+        "failure.get('failure', {}).get",
+        "outcome.get",
+        "request.get",
+        "request.get('native_context', {}).get",
+        "reservation.get",
+        "result.get",
+        "settings.get",
+        "str"
+      ],
+      "prompts": [],
+      "source": "def _native(directory, entry):\n    result = _read(directory / 'result.json') or _read(directory / 'response.json')\n    outcome = _read(directory / 'outcome.json')\n    request = _read(directory / 'request.json')\n    failure = _read(directory / 'failure.json')\n    reservation, settings = _read(directory / 'reservation.json'), _read(directory / 'settings.json')\n    status = outcome.get('status', 'in_progress_or_interrupted')\n    categories = _categories('provider', {'status': 'completed' if status == 'completed' else status}, result, directory)\n    if result and status != 'completed':\n        categories += _categories('provider', {'status': 'completed'}, result, directory)\n    if failure.get('failure', {}).get('type'):\n        categories.append('provider_' + failure['failure']['type'])\n    return {'kind': 'provider', 'phase': request.get('native_context', {}).get('stage'),\n            **entry, 'directory': str(directory), 'process_status': status,\n            'started_at': outcome.get('started_at', result.get('started_at')),\n            'finished_at': outcome.get('finished_at', result.get('finished_at')),\n            'seconds': outcome.get('seconds', result.get('seconds')),\n            'response_status': result.get('response_status'), 'response_id': result.get('response_id'),\n            'model': result.get('model_version', request.get('model')), 'tokens': _tokens(result),\n            'budget': result.get('budget'), 'error_categories': categories,\n            'reservation_id': (result.get('budget') or {}).get('reservation_id', reservation.get('reservation_id')),\n            'budget_ledger': settings.get('budget_ledger'),\n            'error_type': outcome.get('error_type'), 'evidence': _evidence(directory)}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L157"
+    },
+    {
+      "id": "workflow.task_telemetry:_read",
+      "module": "workflow.task_telemetry",
+      "name": "_read",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 39,
+      "end_line": 43,
+      "signature": "_read(path)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.task_telemetry:_native",
+        "workflow.task_telemetry:_subprocess",
+        "workflow.task_telemetry:collect_telemetry"
+      ],
+      "unresolved_calls": [
+        "ValueError",
+        "any",
+        "isinstance",
+        "json.loads",
+        "p.is_symlink",
+        "path.is_file",
+        "path.read_text"
+      ],
+      "prompts": [],
+      "source": "def _read(path):\n    result = json.loads(path.read_text()) if path.is_file() and not any(p.is_symlink() for p in (path, *path.parents)) else {}\n    if not isinstance(result, dict):\n        raise ValueError('Expected an evidence object')\n    return result",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L39"
+    },
+    {
+      "id": "workflow.task_telemetry:_subprocess",
+      "module": "workflow.task_telemetry",
+      "name": "_subprocess",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 123,
+      "end_line": 154,
+      "signature": "_subprocess(directory)",
+      "summary": "",
+      "calls": [
+        "workflow.task_telemetry:_categories",
+        "workflow.task_telemetry:_diagnostics",
+        "workflow.task_telemetry:_evidence",
+        "workflow.task_telemetry:_identity",
+        "workflow.task_telemetry:_read",
+        "workflow.task_telemetry:_tokens"
+      ],
+      "called_by": [
+        "workflow.task_telemetry:collect_telemetry"
+      ],
+      "unresolved_calls": [
+        "(provider.get('budget') or {}).get",
+        "categories.append",
+        "failure.get",
+        "failure.get('failure', {}).get",
+        "invocation.get",
+        "isinstance",
+        "payload.get",
+        "process.get",
+        "provider.get",
+        "rejected.get",
+        "request.get",
+        "reservation.get",
+        "settings.get",
+        "str"
+      ],
+      "prompts": [],
+      "source": "def _subprocess(directory):\n    request = _read(directory / 'request.json')\n    process = _read(directory / 'process.json')\n    payload = process.get('payload') or {}\n    payload = payload if isinstance(payload, dict) else {}\n    kind = 'provider' if 'system' in request and 'prompt' in request else 'checker'\n    audit = directory / 'provider_audit'\n    provider = _read(audit / 'result.json') or _read(audit / 'response.json') or payload\n    failure = _read(audit / 'failure.json')\n    reservation, settings = _read(audit / 'reservation.json'), _read(audit / 'settings.json')\n    invocation = _read(directory / 'invocation.json')\n    rejected = _read(directory / 'rejected.json')\n    categories = _categories(kind, process, provider if kind == 'provider' else payload, directory)\n    if failure.get('failure', {}).get('type'):\n        categories.append('provider_' + failure['failure']['type'])\n    if rejected.get('status'):\n        categories.append(rejected['status'])\n    return {'kind': kind, **_identity(directory, request), 'directory': str(directory),\n            'process_status': process.get('status', 'in_progress_or_interrupted'),\n            'returncode': process.get('returncode'), 'started_at': process.get('started_at', invocation.get('started_at')),\n            'finished_at': process.get('finished_at'), 'seconds': process.get('seconds'),\n            'response_status': provider.get('response_status') if kind == 'provider' else None,\n            'response_id': provider.get('response_id') if kind == 'provider' else None,\n            'model': provider.get('model_version', request.get('model')),\n            'tokens': _tokens(provider) if kind == 'provider' else None,\n            'budget': provider.get('budget') if kind == 'provider' else None,\n            'reservation_id': (provider.get('budget') or {}).get('reservation_id', reservation.get('reservation_id')),\n            'budget_ledger': settings.get('budget_ledger'),\n            'error_categories': categories, 'error_type': process.get('error_type'),\n            'diagnostic_tags': _diagnostics(directory) if kind == 'checker' else [],\n            'verdict': {key: payload.get(key) for key in ('execution_pass', 'oracle_pass', 'target_reached')} if kind == 'checker' else None,\n            'evidence': _evidence(directory)}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L123"
+    },
+    {
+      "id": "workflow.task_telemetry:_tokens",
+      "module": "workflow.task_telemetry",
+      "name": "_tokens",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 82,
+      "end_line": 85,
+      "signature": "_tokens(payload)",
+      "summary": "",
+      "calls": [],
+      "called_by": [
+        "workflow.task_telemetry:_native",
+        "workflow.task_telemetry:_subprocess"
+      ],
+      "unresolved_calls": [
+        "payload.get",
+        "type",
+        "usage.get"
+      ],
+      "prompts": [],
+      "source": "def _tokens(payload):\n    usage = payload.get('usage') or {}\n    return {key: usage.get(key) if type(usage.get(key)) is int and usage[key] >= 0 else None\n            for key in TOKEN_KEYS}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L82"
+    },
+    {
+      "id": "workflow.task_telemetry:collect_telemetry",
+      "module": "workflow.task_telemetry",
+      "name": "collect_telemetry",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 182,
+      "end_line": 242,
+      "signature": "collect_telemetry(root)",
+      "summary": "Read saved evidence only. Unknown usage/time stays null, never fabricated.",
+      "calls": [
+        "workflow.task_telemetry:_binding",
+        "workflow.task_telemetry:_files",
+        "workflow.task_telemetry:_native",
+        "workflow.task_telemetry:_read",
+        "workflow.task_telemetry:_subprocess"
+      ],
+      "called_by": [
+        "workflow.task_telemetry:main"
+      ],
+      "unresolved_calls": [
+        "(state.get('provider_evidence') or {}).get",
+        "Path",
+        "Path(call).resolve",
+        "Path(root).resolve",
+        "attempts.append",
+        "datetime.now",
+        "datetime.now(timezone.utc).isoformat",
+        "entries.get",
+        "errors.append",
+        "len",
+        "list",
+        "p.parent.name.startswith",
+        "path.parent.name.startswith",
+        "prepared.get",
+        "row.get",
+        "sorted",
+        "state.get",
+        "state_path.is_file",
+        "str",
+        "sum",
+        "tasks.append",
+        "type"
+      ],
+      "prompts": [],
+      "source": "def collect_telemetry(root):\n    \"\"\"Read saved evidence only. Unknown usage/time stays null, never fabricated.\"\"\"\n    root = Path(root).resolve(strict=True)\n    paths = list(_files(root))\n    entries, tasks, errors = {}, [], []\n    for path in paths:\n        if path.name == 'prepared.json' and path.parent.name.startswith('entry_'):\n            try:\n                prepared = _read(path)\n                for phase in prepared.get('phases', {}):\n                    state_path = path.parent / (phase + '.state.json')\n                    state = _read(state_path)\n                    call = (state.get('provider_evidence') or {}).get('call_directory') or state.get('provider_call_directory')\n                    context = {'entry_id': prepared.get('id'), 'entry_phase': phase,\n                               'state_status': state.get('status', 'not_started'),\n                               'state_evidence': _binding(state_path) if state_path.is_file() else None}\n                    if call:\n                        entries[str(Path(call).resolve())] = context\n                    tasks.append({'kind': 'readme_phase', **context, 'directory': str(path.parent),\n                                  'started_at': state.get('started_at'), 'finished_at': state.get('finished_at'),\n                                  'seconds': state.get('seconds'), 'provider_call_directory': call})\n            except (ValueError, OSError, TypeError) as exc:\n                errors.append({'path': str(path), 'error_type': type(exc).__name__})\n    attempts = []\n    directories = sorted({p.parent for p in paths if p.name == 'request.json'\n                          and (p.parent.name.startswith(('provider_', 'attempt_', 'execution_'))\n                               or p.parent.name == 'model_attempt') and p.parent.name != 'provider_audit'})\n    for directory in directories:\n        try:\n            attempts.append(_subprocess(directory))\n        except (ValueError, OSError, TypeError) as exc:\n            errors.append({'path': str(directory), 'error_type': type(exc).__name__})\n    native = sorted({p.parent for p in paths if p.name == 'request.json' and p.parent.name.startswith('call-')})\n    for directory in native:\n        try:\n            attempts.append(_native(directory, entries.get(str(directory), {})))\n        except (ValueError, OSError, TypeError) as exc:\n            errors.append({'path': str(directory), 'error_type': type(exc).__name__})\n    for path in paths:\n        if path.name == 'result.json' and '--' in path.parent.name:\n            try:\n                row = _read(path)\n            except (ValueError, OSError) as exc:\n                errors.append({'path': str(path), 'error_type': type(exc).__name__})\n                continue\n            tasks.append({key: row.get(key) for key in ('arm', 'case_id', 'trial_id', 'status',\n                          'first_attempt_pass', 'first_pass_round', 'last_checked_round')} |\n                         {'kind': 'audience_unit', 'evidence': _binding(path)})\n    providers = [a for a in attempts if a['kind'] == 'provider']\n    totals = {key: {'reported_sum': sum(a['tokens'][key] or 0 for a in providers),\n                    'calls_without_value': sum(a['tokens'][key] is None for a in providers)} for key in TOKEN_KEYS}\n    return {'schema_version': 1, 'generated_at': datetime.now(timezone.utc).isoformat(), 'root': str(root),\n            'scope': 'Local private evidence index. Links may expose checker/private fixture outputs; do not publish wholesale.',\n            'limits': ['Read-only derived index, not new evaluation or accounting evidence.',\n                       'Provider attempts are distinct from fix_round; retries do not add repair rounds.',\n                       'Output tokens already include reasoning; non-reasoning may include formatting tokens.',\n                       'Unknown historical timestamps/usage stay null; error categories are descriptive, not score changes.',\n                       'Diagnostic tags are literal heuristic matches with evidence/line numbers, not verified root causes or model grading.',\n                       'This is a live snapshot; writing evidence may be partial. Rerun after the worker stops.'],\n            'tasks': tasks, 'attempts': attempts, 'provider_attempts': len(providers),\n            'reported_tokens': totals, 'scan_errors': errors}",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L182"
+    },
+    {
+      "id": "workflow.task_telemetry:main",
+      "module": "workflow.task_telemetry",
+      "name": "main",
+      "kind": "function",
+      "path": "workflow/task_telemetry.py",
+      "line": 245,
+      "end_line": 257,
+      "signature": "main()",
+      "summary": "",
+      "calls": [
+        "workflow.task_telemetry:collect_telemetry"
+      ],
+      "called_by": [],
+      "unresolved_calls": [
+        "Path",
+        "argparse.ArgumentParser",
+        "json.dump",
+        "json.dumps",
+        "len",
+        "output.open",
+        "output.parent.mkdir",
+        "output.resolve",
+        "parser.add_argument",
+        "parser.parse_args",
+        "print",
+        "str",
+        "stream.write"
+      ],
+      "prompts": [],
+      "source": "def main():\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--root', required=True)\n    parser.add_argument('--output', required=True, help='New JSON snapshot; existing reports are preserved')\n    args = parser.parse_args()\n    result = collect_telemetry(args.root)\n    output = Path(args.output)\n    output.parent.mkdir(parents=True, exist_ok=True)\n    with output.open('x') as stream:\n        json.dump(result, stream, indent=2, allow_nan=False)\n        stream.write('\\n')\n    print(json.dumps({'output': str(output.resolve()), 'attempts': len(result['attempts']),\n                      'tasks': len(result['tasks']), 'scan_errors': result['scan_errors']}))",
+      "aliases": [],
+      "source_url": "https://github.com/ZhuochengShang/AIDEAL/blob/evaluation/2026-09-22-rdpro-full-pipeline/workflow/task_telemetry.py#L245"
+    },
+    {
       "id": "workflow.treatment_bundles:bundle_proposals",
       "module": "workflow.treatment_bundles",
       "name": "bundle_proposals",
@@ -18752,6 +19257,7 @@
     "workflow.improvement_batches:invoke": "workflow.execution:invoke",
     "workflow.improvement_batches:load": "workflow.ablation:load",
     "workflow.improvement_batches:ownership": "workflow.execution:ownership",
+    "workflow.improvement_batches:proposal_response_error": "workflow.improvement_suggestions:proposal_response_error",
     "workflow.improvement_batches:verify_artifact": "workflow.ablation:verify_artifact",
     "workflow.improvement_context:_check_worktree": "workflow.treatment_versions:_check_worktree",
     "workflow.improvement_context:_engine_config_module": "workflow.preparation:_engine_config_module",

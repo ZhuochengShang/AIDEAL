@@ -59,6 +59,20 @@ def entries(data=BASE):
 
 
 class SpanTests(unittest.TestCase):
+    def test_both_authoring_templates_label_mined_examples_as_unexecuted(self):
+        root = Path(__file__).resolve().parents[1]
+        templates = [root / 'prompts/readme_entry.md',
+                     root / 'vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_entry.md']
+        self.assertEqual(templates[0].read_text(), templates[1].read_text())
+        for path in templates:
+            with self.subTest(template=str(path)):
+                text = path.read_text()
+                lead = text.split('{test_examples}', 1)[0]
+                self.assertIn('not executed by\nthis authoring step', lead)
+                self.assertNotIn('these compile and pass', text)
+                self.assertNotIn('either compiles', text)
+                self.assertIn('not proof\n   that it compiled or passed', text)
+
     def test_fenced_heading_is_not_entry_and_footer_preserved(self):
         records = entries()
         self.assertEqual([e['id'] for e in records], ['A.run', 'B.run'])

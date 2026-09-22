@@ -1,10 +1,12 @@
 """Execute explicitly prepared, guarded README sessions in isolated outputs."""
 from contextlib import contextmanager
+from datetime import datetime, timezone
 import fcntl
 import json
 import os
 from pathlib import Path
 import subprocess
+import time
 import uuid
 
 from .readme_authoring import REPORT_MARKER, digest, engine_imports
@@ -107,7 +109,8 @@ def phase(directory, name, request, invoke, contract):
             raise ValueError('Saved phase response changed')
         verify_provider_evidence(state.get('provider_evidence'), state['text'], request, contract)
         return state['text']
-    atomic_json(state_path, {'status': 'started', 'request_sha256': expected})
+    started_at, started = datetime.now(timezone.utc).isoformat(), time.monotonic()
+    atomic_json(state_path, {'status': 'started', 'request_sha256': expected, 'started_at': started_at})
     try:
         result = invoke(request['system'], request['prompt'])
         text = result['text']
@@ -116,10 +119,15 @@ def phase(directory, name, request, invoke, contract):
         verify_provider_evidence(result.get('provider_evidence'), text, request, contract)
     except Exception as exc:
         atomic_json(state_path, {'status': 'failed_or_uncertain', 'request_sha256': expected,
-                                 'error_type': type(exc).__name__})
+                                 'error_type': type(exc).__name__, 'started_at': started_at,
+                                 'finished_at': datetime.now(timezone.utc).isoformat(),
+                                 'seconds': time.monotonic() - started,
+                                 'provider_call_directory': getattr(exc, 'call_directory', None)})
         raise
     atomic_json(state_path, {'status': 'complete', 'request_sha256': expected,
                              'text': text, 'text_sha256': digest(text),
+                             'started_at': started_at, 'finished_at': datetime.now(timezone.utc).isoformat(),
+                             'seconds': time.monotonic() - started,
                              'provider_evidence': result['provider_evidence']})
     return text
 

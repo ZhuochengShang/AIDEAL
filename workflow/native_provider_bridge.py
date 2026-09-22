@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import re
+import time
 import uuid
 
 from . import openai_codex_adapter
@@ -89,6 +90,7 @@ def invoke_native(spec, system, user):
             raise NativeBridgeError('Stage evidence directory belongs to a different immutable contract') from None
     call_dir = root / ('call-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S') + '-' + uuid.uuid4().hex)
     call_dir.mkdir()
+    started_at, started = datetime.now(timezone.utc).isoformat(), time.monotonic()
     request = {'model': MODEL, 'system': system, 'prompt': user,
                'max_output_tokens': contract['max_output_tokens'], 'temperature': 0,
                'native_context': {'stage': contract['stage'], 'contract_sha256': contract['identity_sha256']}}
@@ -107,9 +109,15 @@ def invoke_native(spec, system, user):
         if guarded_native_contract(spec) != contract:
             raise NativeBridgeError('Native contract changed during the provider call')
         _write(call_dir / 'outcome.json', {'status': 'completed', 'request_sha256': digest(request),
-                                         'result_sha256': digest(record)})
+                                         'result_sha256': digest(record), 'started_at': started_at,
+                                         'finished_at': datetime.now(timezone.utc).isoformat(),
+                                         'seconds': time.monotonic() - started})
         return record
     except Exception as exc:
         _write(call_dir / 'outcome.json', {'status': 'failed_closed', 'error_type': type(exc).__name__,
-                                         'request_sha256': digest(request)})
-        raise NativeBridgeError(f'Native audited call failed ({type(exc).__name__}); evidence: {call_dir}') from None
+                                         'request_sha256': digest(request), 'started_at': started_at,
+                                         'finished_at': datetime.now(timezone.utc).isoformat(),
+                                         'seconds': time.monotonic() - started})
+        error = NativeBridgeError(f'Native audited call failed ({type(exc).__name__}); evidence: {call_dir}')
+        error.call_directory = str(call_dir)
+        raise error from None

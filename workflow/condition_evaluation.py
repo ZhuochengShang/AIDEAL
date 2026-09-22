@@ -27,7 +27,9 @@ def _attempt_evidence(root, prefix):
         if not directory.is_dir() or re.fullmatch(re.escape(prefix) + r'\d{3,}', directory.name) is None:
             raise ValueError('Unexpected condition attempt directory')
         receipts.append({'directory': str(directory), 'files': {
-            name: bind(directory / name) for name in ('request.json', 'process.json', 'stdout.txt', 'stderr.txt')
+            name: bind(directory / name) for name in ('request.json', 'process.json', 'stdout.txt', 'stderr.txt',
+                'invocation.json', *(p.relative_to(directory).as_posix()
+                    for p in sorted((directory / 'provider_audit').glob('*.json'))))
             if (directory / name).exists()}})
     return receipts
 

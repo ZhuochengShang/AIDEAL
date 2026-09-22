@@ -1,10 +1,10 @@
-# RDPro broader-study implementation — prepared, not executed
+# RDPro — verified source and recorded five-condition execution
 
-This branch adds audited GPT-5.3-Codex README authoring, selective section updates and the broader RDPro study preparation. **No audience results or paid calls exist for the new study yet.** Its cost estimate is $35–$47 in the low/planning scenarios; the proposed shared $100 guard awaits approval.
+The prepared source matches a fresh clone of official Bitbucket Beast/RDPro 0.10.1 byte-for-byte. The user requested the five-condition, 32-task, three-trial run (480 units). Exact prompts, outputs, code, attempts, tokens, timing, errors and results are being bound to the run before execution.
 
-[New study scope, cost and progress](studies/rdpro/2026-09-22-full-pipeline/README.md) · [README session guide](docs/README_SESSIONS.md) · [Other public study repositories](studies/README.md)
+[Source verification](studies/rdpro/2026-09-22-full-pipeline/provenancePUBLIC.md) · [Recording, scope and estimated duration](studies/rdpro/2026-09-22-full-pipeline/RECORDED_RUN.md) · [Study design](studies/rdpro/2026-09-22-full-pipeline/README.md)
 
-The completed pilot and five other baseline preparations remain below as separate evidence.
+New results are pending. The completed pilot and five other baseline preparations remain below as separate evidence.
 
 # AIDEAL — shared evaluation and library studies
 
