@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "status": "unverified",
+  "source": "development evidence only",
+  "hints": [
+    {
+      "function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/Feature.scala:191:readType",
+      "evidence_ids": [
+        "error-1"
+      ],
+      "error_contains": "required: java.io.ObjectInput",
+      "likely_cause": "The call is passing a raw `Array[Byte]` where the API expects an `ObjectInput` stream abstraction.",
+      "fix_steps": [
+        "Construct an `ObjectInput` implementation (commonly `ObjectInputStream`) from byte content before calling `Feature.readType`.",
+        "Verify the byte content was serialized in a format compatible with `readType` (it immediately reads a type ordinal byte).",
+        "If using imports like `edu.ucr.cs.bdlab.beast.geolite._`, keep `Feature.readType(...)` explicit to avoid confusion with similarly named methods."
+      ],
+      "suggested_fix_code": "import java.io.{ByteArrayInputStream, ObjectInputStream}\nimport edu.ucr.cs.bdlab.beast.geolite.Feature\n\nval bytes: Array[Byte] = ???\nval in = new ObjectInputStream(new ByteArrayInputStream(bytes))\nval dt = Feature.readType(in)",
+      "validation": "Recompile the probe and add a round-trip check where bytes are produced by the corresponding writer path, then decoded with `Feature.readType`.",
+      "hint_id": "b6c83ccd3706a0ec891f",
+      "source_batch": "batch-0001",
+      "status": "unverified"
+    },
+    {
+      "function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala:68:readType",
+      "evidence_ids": [
+        "error-2"
+      ],
+      "error_contains": "required: java.io.ObjectInput",
+      "likely_cause": "A byte array is being used directly, but `RasterSchemaHelper.readType` requires an `ObjectInput` receiver.",
+      "fix_steps": [
+        "Wrap the bytes in an `ObjectInput` before calling `RasterSchemaHelper.readType`.",
+        "Confirm serialized bytes follow the expected type-ordinal encoding used by the helper.",
+        "Use fully qualified/object-qualified invocation (`RasterSchemaHelper.readType`) when both schema and feature helpers are imported."
+      ],
+      "suggested_fix_code": "import java.io.{ByteArrayInputStream, ObjectInputStream}\nimport edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper\n\nval bytes: Array[Byte] = ???\nval in = new ObjectInputStream(new ByteArrayInputStream(bytes))\nval dt = RasterSchemaHelper.readType(in)",
+      "validation": "Compile and run a small test that writes a known type with the matching writer and verifies `RasterSchemaHelper.readType` reconstructs it.",
+      "hint_id": "1ce9c79beef375d8d908",
+      "source_batch": "batch-0001",
+      "status": "unverified"
+    },
+    {
+      "function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:219:rescale",
+      "evidence_ids": [
+        "error-3"
+      ],
+      "error_contains": "not enough arguments for method rescale",
+      "likely_cause": "The method requires both width and height, but only one positional argument was supplied.",
+      "fix_steps": [
+        "Pass both `newRasterWidth` and `newRasterHeight` integers to `rescale`.",
+        "If the intent is uniform scaling, compute both dimensions first and pass both explicitly.",
+        "Check constructor arguments for `RasterMetadata` are still valid after the intended resize."
+      ],
+      "suggested_fix_code": "val md = new RasterMetadata(0,0,12,10,4,5,4326,new java.awt.geom.AffineTransform())\nval resized = md.rescale(6, 5)",
+      "validation": "Recompile and assert the returned metadata has the requested raster dimensions and preserves geographic coverage semantics.",
+      "hint_id": "43d4300f41b247e5d4a9",
+      "source_batch": "batch-0001",
+      "status": "unverified"
+    },
+    {
+      "function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:61:numTiles",
+      "evidence_ids": [
+        "error-4"
+      ],
+      "error_contains": "Int does not take parameters",
+      "likely_cause": "A parameterless method returning `Int` was called with `()`, which Scala treats as applying parameters to the resulting `Int`.",
+      "fix_steps": [
+        "Call `numTiles` without parentheses: `metadata.numTiles`.",
+        "Optionally switch to a wrapper like `numTilesOf(metadata)` if function-style usage is preferred.",
+        "Check for similar parameterless accessors (`numTilesX`, `numTilesY`) used with `()` and remove parentheses there too."
+      ],
+      "suggested_fix_code": "val md = new RasterMetadata(0,0,12,10,4,5,4326,new java.awt.geom.AffineTransform())\nval n = md.numTiles",
+      "validation": "Recompile and run a quick assertion that `numTiles == numTilesX * numTilesY` on representative metadata.",
+      "hint_id": "2300b4678d47558d0a12",
+      "source_batch": "batch-0001",
+      "status": "unverified"
+    }
+  ]
+}

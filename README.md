@@ -1,4 +1,17 @@
-# AIDEAL
+# AIDEAL — RDPro Codex evaluation
+
+This is **`evaluation/rdpro-codex-v1`**, the dedicated review branch for the completed RDPro pilot. It starts from toolkit commit `8083e3b27c05b899b8a4941377ab0abc5c81dcbb`; GitHub `main` remains the toolkit release.
+
+- [RDPro evaluation: setup, five conditions and results](studies/rdpro/codex_v1/README.md)
+- [Actual checker, JVM harness and offline tests](studies/rdpro/codex_v1/harness/README.md)
+- [Audited result summary](studies/rdpro/codex_v1/RESULTS.md)
+- [Exact RDPro treatment branch names and commits](studies/rdpro/codex_v1/source_versions.json)
+
+The five RDPro source branches belong to the separate local library repository. This AIDEAL branch records their identities, the evaluation code, treatment artifacts and a reviewed result export. It does not contain the private fixture bank, expected answers, runtime binaries or complete machine-bound evidence. Repeating the original experiment requires those local inputs; the included synthetic harness tests run independently.
+
+The pilot resolved 40 model tasks after 120 trusted controls validated. No generated error hint was delivered, so the hints-only arm's extra pass cannot establish a hint benefit. The study README explains this and the other limitations.
+
+The toolkit guide follows below. `python scripts/aideal verify` checks this branch's complete integrity inventory. The source-only `scripts/build_publication_manifest.py` intentionally rejects study exports; do not use it to overwrite this branch's inventory.
 
 [Codex pilot and shared budget](docs/OPENAI_CODEX_PILOT.md) · [Gemini Flash settings](docs/GEMINI_FLASH.md) · [Legacy-code review](docs/LEGACY_CODE_REVIEW.md)
 
@@ -6,7 +19,7 @@ AIDEAL prepares and evaluates changes that may help language models use a softwa
 
 The toolkit records source versions, model inputs, checker controls, execution attempts, and scores needed to review a comparison. It supports five treatment conditions, an original/refactor pair, or all six conditions. A separate three-README evaluator remains available.
 
-**This repository provides the framework, not a completed effectiveness claim.** Offline tests check controller behavior. Local library controls and regression probes check selected implementations and harness behavior. Neither establishes a model improvement on an independently completed benchmark. Private study inputs, model responses, runtime JARs, and machine-bound experiment evidence are not included here.
+**The framework and this small pilot do not establish a general effectiveness claim.** Offline tests check controller behavior. Local library controls and regression probes check selected implementations and harness behavior. This branch includes the reviewed RDPro pilot summary and selected generated treatments; private study inputs, complete request/response transcripts, runtime JARs and machine-bound experiment evidence remain local.
 
 ## Read first
 
