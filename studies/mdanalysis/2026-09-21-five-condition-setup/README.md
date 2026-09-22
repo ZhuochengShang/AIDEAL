@@ -7,7 +7,7 @@ The date identifies the setup start, 2026-09-21; preparation continued after mid
 
 ## What is shared and what differs
 
-Shared AIDEAL owns [workflow design](../../../docs/SUMMARY.md), [prompts](../../../prompts), [language harness skeletons](../../../templates/harness), [settings](../../../docs/CONFIGURATION.md), [scoring](../../../docs/SCORING.md), [version handling](../../../docs/VERSIONS.md) and [output conventions](../../../docs/OUTPUTS.md). The private companion repository owns the five library source branches. Access to AIDEAL does not grant access to that repository.
+Shared AIDEAL owns [workflow design](../../../docs/SUMMARY.md), [prompts](../../../prompts), [language harness skeletons](../../../templates/harness), [settings](../../../docs/CONFIGURATION.md), [scoring](../../../docs/SCORING.md), [version handling](../../../docs/VERSIONS.md) and [output conventions](../../../docs/OUTPUTS.md). The public companion repository owns the five library source branches. Both repositories can be cloned without an access grant.
 Companion GitHub Actions remain disabled during preparation; existing upstream workflows are not a validated study pipeline.
 
 | Condition | Intended difference from original | Actual state |

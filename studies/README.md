@@ -1,6 +1,6 @@
 # Five-condition library preparations
 
-These studies share the AIDEAL controller and have separate private source repositories. **Setup only: all five conditions per library currently share one source baseline. Treatments and evaluations are pending.** No model was selected and these new preparations made zero model calls; historical experiments are separate.
+These studies share the AIDEAL controller and have separate public source repositories. **Setup only: all five conditions per library currently share one source baseline. Treatments and evaluations are pending.** No model was selected and these new preparations made zero model calls; historical experiments are separate.
 
 | Library | Setup guide | Companion source repository | State |
 | --- | --- | --- | --- |
@@ -16,7 +16,7 @@ The date labels the setup start, 2026-09-21; preparation continued after midnigh
 
 The companion `main` pages are navigation; preparation branches contain exact upstream source-tree snapshots with new commit identities. Five names at one baseline do not imply five treatments. Each guide records the exact upstream and snapshot identity, discovery scope, prerequisites, optional worktrees and attachment instructions.
 
-AIDEAL's prompts, skeletons and score definitions are shared. Each library still needs validated runtime/checkers, independent held-out tasks and controls, reviewed treatments, source-bound condition builds, chosen model/budgets and a new local freeze before generation or scoring. Source licenses remain in each companion repository. Repository access is separate from access to shared AIDEAL.
+AIDEAL's prompts, skeletons and score definitions are shared. Each library still needs validated runtime/checkers, independent held-out tasks and controls, reviewed treatments, source-bound condition builds, chosen model/budgets and a new local freeze before generation or scoring. Source licenses remain in each companion repository. Both the companions and shared AIDEAL have public read access.
 
 ## Separate completed RDPro pilot
 

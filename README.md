@@ -2,6 +2,8 @@
 
 This branch, `setup/2026-09-21-library-five-conditions`, connects one shared AIDEAL evaluator to the source repositories for all six registered libraries. The existing RDPro pilot is preserved. SedonaDB, MDAnalysis, tslearn, mir_eval and Thumbnailator each have a new baseline-only five-condition preparation; their treatments, independent benchmark adapters and evaluations are pending.
 
+AIDEAL and all six companion source repositories are public.
+
 Start with the [library index](studies/README.md) for source versions, configuration, implementation links and future output locations. Each companion repository has a navigation-only `main` and five source branches: Original, README only, Alias only, Error hints only and Combined. All five new conditions start at the same per-library baseline; no generated treatment or measured result is implied by a branch name. No model was called during this setup.
 
 ## Completed RDPro pilot

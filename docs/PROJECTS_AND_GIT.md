@@ -13,6 +13,6 @@
 
 The five new preparations currently share one baseline commit per library. Their names reserve the intended conditions; no treatment or evaluation result exists yet. The source snapshots retain exact upstream trees, with new snapshot commit IDs and upstream provenance recorded in each guide. Older worktrees, jobs and evidence are preserved separately.
 
-Researchers clone AIDEAL and the relevant companion repository. A fork is optional if they need their own writable remote. Five forks are unnecessary. Private companions require separate repository access. Use [version handling](VERSIONS.md) and each study's guide for named worktrees and local attachment; do not switch a running study's checkout.
+Researchers clone AIDEAL and the relevant companion repository. A fork is optional if they need their own writable remote. Five forks are unnecessary. AIDEAL and all six companion source repositories have public read access. Use [version handling](VERSIONS.md) and each study's guide for named worktrees and local attachment; do not switch a running study's checkout.
 
 The [preparation index](../studies/index.json) records readiness. Runtime validation, independent held-out tasks and controls, tested treatments and a new frozen protocol are required before a matched run. Shared source alone does not supply a library-specific correctness oracle.
