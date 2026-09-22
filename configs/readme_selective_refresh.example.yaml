@@ -1,12 +1,14 @@
+# Prepared schema example only; no run or study result is implied.
+# See docs/README_SESSIONS.md for document provenance and isolated preparation.
 # This block can be added to your existing AIDEAL YAML.
 # Its paths resolve relative to this YAML file, not the legacy workspace root.
 readme_evaluation:
-  design: three_readme  # Omission preserves these legacy names.
+  design: selective_refresh
   bank: ../bank/tasks.json
   documents:
-    Original README: [../documents/original.md]
-    Generated README: [../documents/generated.md]
-    Repaired README: [../documents/repaired.md]
+    Unchanged generated README: [../documents/generated_base.md]
+    Selected API refresh: [../documents/selected_refresh.md]
+    Full README refresh: [../documents/full_refresh.md]
   source:
     revision: PIN_THE_SOURCE_COMMIT
     # Include executed library binaries, dependencies and source provenance.

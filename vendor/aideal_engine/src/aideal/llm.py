@@ -138,6 +138,13 @@ def usage_delta(before: dict) -> dict:
 def invoke_text(spec: ModelSpec, system: str, user: str) -> str:
     """One-shot text completion; returns the model's text content and adds the
     provider-reported token usage to the module accumulator."""
+    if spec.provider.lower() == "aideal-codex-audited":
+        from workflow.native_provider_bridge import invoke_native
+        record = invoke_native(spec, system, user)
+        _record_usage(spec, record.get("usage", {}))
+        return record["code"]
+    if getattr(spec, "bridge", None) is not None:
+        raise ValueError("Audited bridge configuration cannot use a direct provider")
     llm = get_chat_model(spec)
     _wait_for_provider_slot(spec)
     from .provider_deadline import provider_deadline
@@ -158,6 +165,24 @@ def invoke_text(spec: ModelSpec, system: str, user: str) -> str:
         raise
     print(f"[provider] complete wall_s={time.monotonic()-started:.1f}", file=sys.stderr, flush=True)
     u = getattr(resp, "usage_metadata", None) or {}
+    _record_usage(spec, u)
+    c = resp.content
+    if isinstance(c, str):
+        return c
+    if isinstance(c, list):
+        # Responses API text blocks preserve their text, without Python reprs.
+        parts = []
+        for b in c:
+            if isinstance(b, dict):
+                parts.append(b.get("text") or b.get("content") or "")
+            elif isinstance(b, str):
+                parts.append(b)
+        return "".join(parts)
+    return str(c)
+
+
+def _record_usage(spec, u):
+    """Output token usage already includes reasoning; never add it twice."""
     _USAGE["calls"] += 1
     _USAGE["input_tokens"] += int(u.get("input_tokens") or 0)
     _USAGE["output_tokens"] += int(u.get("output_tokens") or 0)
@@ -167,18 +192,3 @@ def invoke_text(spec: ModelSpec, system: str, user: str) -> str:
     m["calls"] += 1
     m["input_tokens"] += int(u.get("input_tokens") or 0)
     m["output_tokens"] += int(u.get("output_tokens") or 0)
-    c = resp.content
-    if isinstance(c, str):
-        return c
-    if isinstance(c, list):
-        # Responses-API (codex) and some providers return CONTENT BLOCKS —
-        # [{'type':'text','text':...}, ...]. str(list) here poisoned codex
-        # snippets ("[{'type': 'text', ...") — join the text blocks instead.
-        parts = []
-        for b in c:
-            if isinstance(b, dict):
-                parts.append(b.get("text") or b.get("content") or "")
-            elif isinstance(b, str):
-                parts.append(b)
-        return "".join(parts)
-    return str(c)

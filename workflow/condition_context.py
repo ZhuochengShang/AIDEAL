@@ -12,8 +12,10 @@ def public_context(frozen, arm, case, previous=None):
     # only the receiver or method. Keep retrieval useful under either spelling.
     retrieval_terms = sorted({term for api in case['target_apis']
                               for term in (api, '.'.join(api.split('.')[-2:]), api.split('.')[-1])})
-    docs, exposure = select_documentation(condition['documents'], retrieval_terms,
-                                           common.get('documentation_max_characters', 32000))
+    selection = common.get('documentation_selection')
+    targets = case['target_apis'] if selection is not None else retrieval_terms
+    docs, exposure = select_documentation(condition['documents'], targets,
+                                           common.get('documentation_max_characters', 32000), selection)
     exposure['retrieval_terms'] = retrieval_terms
     prompt = audience_prompt(case, docs, previous)
     receipt = {'documentation': exposure, 'alias': None,

@@ -7,7 +7,8 @@ Use explicit inputs for each stage. AIDEAL does not choose a library, hosted mod
 | [aideal.example.yaml](../configs/aideal.example.yaml) | `attach`, `prepare-study`, native engine | Source/tests, original docs, outputs, native model roles and development scaffold |
 | [improvements.example.yaml](../configs/improvements.example.yaml) | `propose-library`, `propose-improvements` | Development command/model, output and transport budgets |
 | [condition_evaluation.example.yaml](../configs/condition_evaluation.example.yaml) | `freeze-conditions`, `run-conditions` | Matched conditions, bank/model/budgets, source/runtime identities and adapters |
-| [readme_evaluation.example.yaml](../configs/readme_evaluation.example.yaml) | `freeze-evaluation`, `run-evaluation` | Separate three-document comparison on one backend |
+| [readme_evaluation.example.yaml](../configs/readme_evaluation.example.yaml) / [selective refresh](../configs/readme_selective_refresh.example.yaml) | `freeze-evaluation`, `run-evaluation` | Explicit three-document design on one backend |
+| [Audited README sessions](README_SESSIONS.md) | `workflow.readme_authoring`, `workflow.readme_session` | Pinned definition/base/context manifest, exact author/reviewer/fixer contracts and shared budget |
 
 ## Library configuration
 
@@ -23,7 +24,7 @@ Attachment creates draft scaffolds and `.aideal/` instrumentation in isolated wo
 
 ## Development proposals
 
-`preview-library` writes coverage and bounded batch contexts from the attachment. Batch size, context/catalogue/error budgets are command options; omissions are disclosed. Use exact `file:line:name` IDs when names are ambiguous. Development errors are optional explicit inputs and must not come from held-out evaluation.
+`preview-library` writes coverage and bounded batch contexts from the attachment. Batch size, context/catalogue/error budgets are command options; omissions are disclosed. Use exact `file:line:name` IDs when names are ambiguous. Development errors are optional explicit inputs and must not come from held-out evaluation. Scala rows also carry source-backed `receiver`, `owner_kind`, `owner_path`, `qualified_receiver`, `source_qualified_name` and `qualification_status`. These facts preserve original discovery IDs and filters. Local or unsupported sites remain explicitly unresolved; a bare `qualified_name` is not receiver proof.
 
 `propose-library --preview PREVIEW/manifest.json --model-config MODEL.yaml --output PROPOSALS` calls the configured development adapter. `--max-batches` bounds one invocation. Provider-attempt limits persist per batch across resumption. Exact requests, failed attempts and completion bindings are retained; changed identities require a new output directory.
 
@@ -52,6 +53,31 @@ The checker receives code, private case/oracle/target information and a backend 
 ```
 
 It may publish `adjudication_artifacts`: exact path/hash/size bindings to raw verdict evidence, verified during validation/resume. Public feedback must not reveal hidden answers. A receipt is an attestation by the trusted adapter; source/build correspondence, runtime origins and library regressions must substantiate its routing.
+
+## Audited native authoring and README designs
+
+The optional `aideal-codex-audited` native provider requires an exact bridge contract, active controller hashes, a new `study-v2` ledger identity, explicit stage/output limits, and a separate evidence directory per phase role. `study-v2` permits a configured ceiling up to $100; legacy schema-1 ledgers retain their original maximum of $5 and cannot be upgraded in place. Preparation is offline; executing a session calls the provider and remains fail-closed on incomplete or uncertain responses. See [README_SESSIONS.md](README_SESSIONS.md) for the full portable schema and commands.
+
+The separate `readme_evaluation.design` is `three_readme` by default or `selective_refresh` explicitly. Selective refresh requires exactly `Unchanged generated README`, `Selected API refresh`, and `Full README refresh`, in that comparison order. Names are selected from the frozen config, including `--condition` filters, paired reports and the unchanged-document baseline. Never mix names or rewrite an older freeze. For the new prepared recipe, the last condition means fresh full authoring from the common skeleton/facts followed by the same selected-entry refresh. The label alone does not enforce or prove that provenance. This design does not add alias/hint branches.
+
+## Optional qualified-section retrieval
+
+Both evaluation protocols accept an explicit `common.documentation_selection` mapping:
+
+```yaml
+common:
+  documentation_selection:
+    policy: qualified_sections
+    api_headings:
+      library.Reader.readType: library.Reader.readType [object]
+      library.Grid.resize: library.Grid.resize [class]
+```
+
+This is a fragment: map **every** declared bank API exactly, using its full API spelling plus ` [class]` or ` [object]`. The mapping is reviewed provenance; it does not infer receiver ownership. Omission preserves the prior retrieval policy and prompt/exposure bytes.
+
+An exact API heading wins over repeated method names elsewhere. Duplicate exact headings reject the selection, and fenced headings do not count. If an exact heading is absent, only unstructured sections can match the full API, receiver/method or bare method in specificity order; a different explicitly qualified API section cannot substitute. One matched section is selected per target. Distinct target sections receive balanced character quotas, with unused space from short sections redistributed. Oversized sections are clipped with exact source ranges and full/clipped coverage in the receipt. When relevant sections fit, unrelated filler is omitted. With no match, the original ordered prefix is supplied within the cap and missing target coverage stays explicit.
+
+Use the same frozen policy/mapping/cap across compared documents. Changing this policy changes model exposure and requires a new freeze. See [documentation_selection.py](../workflow/documentation_selection.py); character caps do not guarantee equal token counts.
 
 ## Credentials and execution
 

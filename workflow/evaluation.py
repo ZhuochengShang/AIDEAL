@@ -11,7 +11,7 @@ import re
 from .ablation import digest, load, verify_artifact
 from .execution import atomic_json, invoke, next_directory, ownership
 from .evaluation_setup import (
-    CONDITIONS, SYSTEM, adapter_request, verified_outcome,
+    CONDITIONS, SYSTEM, adapter_request, verified_outcome, conditions_for,
     read_config, validate_bank, freeze_evaluation, open_frozen, assert_review_released,
     _checked_execution,
 )
@@ -30,13 +30,17 @@ def audience_prompt(case, documentation, previous=None):
     return '\n\n'.join(sections)
 
 
-def select_documentation(paths, targets, max_characters):
-    """Same deterministic heading retrieval for every condition; log actual exposure.
+def select_documentation(paths, targets, max_characters, selection=None):
+    """Select bounded public documentation using a default or explicit policy.
 
-    Short documents are delivered in full. Long documents rank level-two sections
-    by exact API-name mentions, with stable file order breaking ties. No LLM
-    selects text, and no test answer enters retrieval.
+    Without an explicit policy, short documents are delivered in full and long
+    documents rank H2 sections by API-name occurrence count, with stable source
+    order breaking ties. The opt-in qualified_sections policy logs target-level
+    coverage. No LLM selects text and no private answer enters retrieval.
     """
+    if selection is not None:
+        from .documentation_selection import select_qualified_sections
+        return select_qualified_sections(paths, targets, max_characters, selection)
     text = '\n\n'.join(Path(p).read_text() for p in paths)
     chunks = re.split(r'(?m)(?=^## )', text)
     selected = []
@@ -67,7 +71,8 @@ def run_evaluation(study, output, condition=None, max_units=None, retry_provider
     frozen = open_frozen(study)
     cfg, bank = frozen['config'], frozen['bank']
     common = cfg['common']
-    if condition is not None and condition not in CONDITIONS:
+    conditions = conditions_for(cfg)
+    if condition is not None and condition not in conditions:
         raise ValueError('Unknown documentation condition')
     output = Path(output).resolve()
     with ownership(output):
@@ -77,7 +82,7 @@ def run_evaluation(study, output, condition=None, max_units=None, retry_provider
         atomic_json(identity, {'study_sha256': frozen['study_sha256']})
         rows = _load_completed_rows(output)
         report(frozen, list(rows.values()))  # Validate resumed rows before any model call.
-        schedule = [(a, c, t) for a in CONDITIONS for c in bank['cases'] for t in common['trial_ids']]
+        schedule = [(a, c, t) for a in conditions for c in bank['cases'] for t in common['trial_ids']]
         random.Random(common.get('ordering_seed', 42)).shuffle(schedule)
         processed = 0
         for arm, case, trial in schedule:
@@ -94,7 +99,8 @@ def run_evaluation(study, output, condition=None, max_units=None, retry_provider
             directory = output / arm / f"{case['id']}--{trial}"
             directory.mkdir(parents=True, exist_ok=True)
             docs, exposure = select_documentation(cfg['documents'][arm], case['target_apis'],
-                                                  common.get('documentation_max_characters', 32000))
+                                                  common.get('documentation_max_characters', 32000),
+                                                  common.get('documentation_selection'))
             atomic_json(directory / 'documentation_exposure.json', exposure)
             row = _run_unit(frozen, arm, case, trial, docs, directory, retry_provider)
             atomic_json(directory / 'result.json', row)

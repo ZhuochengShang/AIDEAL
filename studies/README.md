@@ -18,6 +18,10 @@ The companion `main` pages are navigation; preparation branches contain exact up
 
 AIDEAL's prompts, skeletons and score definitions are shared. Each library still needs validated runtime/checkers, independent held-out tasks and controls, reviewed treatments, source-bound condition builds, chosen model/budgets and a new local freeze before generation or scoring. Source licenses remain in each companion repository. Both the companions and shared AIDEAL have public read access.
 
+## New broader RDPro preparation
+
+[September 22 full-pipeline study](rdpro/2026-09-22-full-pipeline/README.md): 280 qualified documentation families, 16 runtime API targets, a validated 32-task baseline bank, five treatment conditions and a separate selective-versus-full README update comparison. Offline preparation only; model authoring, treatments and audience evaluation are pending. Planned API cost for both comparisons is $35–$47, with a $95 high-output sensitivity and a proposed $100 stopping limit.
+
 ## Separate completed RDPro pilot
 
 [RDPro study and results](rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md) · [AIDEAL-RDPro source versions](https://github.com/ZhuochengShang/AIDEAL-RDPro)

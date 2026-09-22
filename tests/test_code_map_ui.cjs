@@ -70,13 +70,16 @@ test('published function view links to the exact GitHub source line', () => {
   go('#workflow.evaluation%3Arun_evaluation');
   const source = walk(e.detail).find(n => n.tagName === 'A' && n.textContent === 'Open this definition on GitHub');
   assert.ok(source);
-  assert.match(source.href, /^https:\/\/github\.com\/ZhuochengShang\/AIDEAL\/blob\/main\/workflow\/evaluation\.py#L\d+$/);
+  const data = JSON.parse(fs.readFileSync(path.join(root, 'docs/function_map.json'), 'utf8'));
+  const expected = data.functions.find(row => row.id === 'workflow.evaluation:run_evaluation').source_url;
+  assert.equal(source.href, expected);
+  assert.ok(source.href.startsWith(data.source_base_url + '/workflow/evaluation.py#L'));
 });
 
 test('development and library preparation link the implemented condition runner', () => {
   const {elements: e, go} = app();
   go('#path-development');
-  assert.equal(e.entries.children.length, 4);
+  assert.equal(e.entries.children.length, 5);
   assert.match(e['other-tools'].textContent, /Other development tools/);
   for (const id of ['treatment_preview', 'treatment_proposal', 'treatment_versions', 'source_refactors']) {
     go('#stage-' + id);
@@ -107,11 +110,24 @@ test('old function aliases work and stage history restores the correct workflow'
   go('#stage-legacy_author');
   assert.equal(e.functions.classList.contains('hidden'), true);
   assert.match(e['path-intro'].textContent, /separate development workflow/);
-  const panel = walk(e.entries).find(n => n.dataset.stage === 'legacy_author');
+  const panel = walk(e['other-tools']).find(n => n.dataset.stage === 'legacy_author');
   assert.equal(panel.open, true);
   assert.equal(panel.parentElement.open, true);
   go('#path-evaluation');
   assert.equal(e.entries.children.length, 3);
+});
+
+test('audited authoring stages navigate to the explicit prepare and run route', () => {
+  const {elements: e, go} = app();
+  for (const id of ['readme_prepare', 'readme_session', 'native_audited_bridge', 'readme_receipts']) {
+    go('#stage-' + id);
+    assert.equal(e.functions.classList.contains('hidden'), true);
+    const panel = walk(e.entries).find(n => n.dataset.stage === id);
+    assert.ok(panel);
+    assert.equal(panel.open, true);
+    assert.match(e.entries.textContent, /prepare_readme_session/);
+    assert.match(e.entries.textContent, /run_readme_session/);
+  }
 });
 
 test('full reference searches helpers and explains stale removed-function links', () => {

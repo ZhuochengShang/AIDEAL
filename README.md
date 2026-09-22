@@ -1,6 +1,14 @@
+# RDPro broader-study implementation — prepared, not executed
+
+This branch adds audited GPT-5.3-Codex README authoring, selective section updates and the broader RDPro study preparation. **No audience results or paid calls exist for the new study yet.** Its cost estimate is $35–$47 in the low/planning scenarios; the proposed shared $100 guard awaits approval.
+
+[New study scope, cost and progress](studies/rdpro/2026-09-22-full-pipeline/README.md) · [README session guide](docs/README_SESSIONS.md) · [Other public study repositories](studies/README.md)
+
+The completed pilot and five other baseline preparations remain below as separate evidence.
+
 # AIDEAL — shared evaluation and library studies
 
-This branch, `setup/2026-09-21-library-five-conditions`, connects one shared AIDEAL evaluator to the source repositories for all six registered libraries. The existing RDPro pilot is preserved. SedonaDB, MDAnalysis, tslearn, mir_eval and Thumbnailator each have a new baseline-only five-condition preparation; their treatments, independent benchmark adapters and evaluations are pending.
+The earlier setup branch, `setup/2026-09-21-library-five-conditions`, connects one shared AIDEAL evaluator to the source repositories for all six registered libraries. The existing RDPro pilot is preserved. SedonaDB, MDAnalysis, tslearn, mir_eval and Thumbnailator each have a new baseline-only five-condition preparation; their treatments, independent benchmark adapters and evaluations are pending.
 
 AIDEAL and all six companion source repositories are public.
 

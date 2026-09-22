@@ -21,7 +21,8 @@
       "title": "Validate three-README inputs",
       "track": "three_readme",
       "entry_points": [
-        "workflow.evaluation_setup:read_config"
+        "workflow.evaluation_setup:read_config",
+        "workflow.evaluation_setup:conditions_for"
       ],
       "prompts": [],
       "harness": "None; configuration inspection does not execute commands.",
@@ -32,7 +33,8 @@
       ],
       "limitations": [
         "Input documents and independently designed tasks must already exist.",
-        "Evaluation-block paths use the YAML directory; bank reference/oracle paths use the bank directory."
+        "Evaluation-block paths use the YAML directory; bank reference/oracle paths use the bank directory.",
+        "Explicit selective_refresh uses unchanged generated, selected API refresh and full README refresh; omitted design preserves legacy labels."
       ]
     },
     {
@@ -110,7 +112,8 @@
       "limitations": [
         "Receives public task/contract/docs and permitted retry feedback; no hidden oracle/reference fields.",
         "This path uses inline prompts, not aideal.prompts.load.",
-        "Same audience model handles initial solutions and snippet repairs."
+        "Same audience model handles initial solutions and snippet repairs.",
+        "Optional qualified_sections uses exact reviewed API headings and records balanced/clipped target exposure; omission preserves legacy behavior."
       ]
     },
     {
@@ -452,7 +455,8 @@
       ],
       "limitations": [
         "Only explicitly selected development errors; known held-out labels rejected, unlabelled logs require operator selection.",
-        "Default 12 APIs and 60,000 context characters; source windows may include whole small files."
+        "Default 12 APIs and 60,000 context characters; source windows may include whole small files.",
+        "Scala receiver facts are lexical and source-backed; original IDs and discovery scope remain unchanged, unsupported/local sites stay unresolved."
       ]
     },
     {
@@ -607,6 +611,7 @@
       "role": "configured development or audience model",
       "entry_points": [
         "workflow.openai_codex_adapter:main",
+        "workflow.openai_codex_adapter:invoke",
         "workflow.openai_codex_adapter:response_record",
         "workflow.openai_codex_adapter:_failure"
       ],
@@ -644,11 +649,129 @@
         "Shared ledger and persistent sibling .lock identity; request/settings hashes and token-cost receipts"
       ],
       "limitations": [
-        "At most $5 across calls sharing this ledger, at pinned standard token rates before tax.",
+        "Legacy-v1 schema1 is capped at $5; new explicit study-v2 schema2 supports a configured cap up to $100 with immutable study identity. No existing ledger is upgraded.",
         "Ambiguous errors and missing/nonfinal usage retain the full conservative reservation.",
         "Use --budget-ledger=/absolute/path as one argument; bind source files, not mutable ledger contents.",
         "This local guard excludes other clients/ledgers and deliberate accounting-file changes.",
         "Related functions are curated links; dynamic instance calls may remain unresolved in the static graph."
+      ]
+    },
+    {
+      "id": "readme_prepare",
+      "title": "Prepare exact qualified README requests",
+      "track": "audited_readme",
+      "status": "implemented",
+      "role": null,
+      "entry_points": [
+        "workflow.readme_authoring:prepare_readme_session",
+        "workflow.readme_authoring:validate_definitions",
+        "workflow.readme_spans:inspect_sections",
+        "workflow.scala_owners:owner_at_line"
+      ],
+      "prompts": [
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_entry.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/deep_dive.md",
+        "vendor/aideal_engine/src/aideal/default_prompts/aideal/docfix_rewrite.md"
+      ],
+      "harness": "No library execution; explicit source/profile/base manifest and audited native text route.",
+      "outputs": [
+        "session.json, base.md, entry_NNNN/prepared.json"
+      ],
+      "limitations": [
+        "No provider call. Source/base/context/definition/role identities are explicit.",
+        "Full authoring plans one call per selected family; refresh plans a fresh reviewer deep-dive then fixer rewrite.",
+        "No legacy journals/cache reuse; unselected base bytes are preserved.",
+        "Implemented and checked offline; a prepared new study is not a completed hosted-model result."
+      ]
+    },
+    {
+      "id": "readme_session",
+      "title": "Execute prepared full or refresh phases",
+      "track": "audited_readme",
+      "status": "implemented",
+      "role": "Explicit author, reviewer and fixer",
+      "entry_points": [
+        "workflow.readme_session:run_readme_session",
+        "workflow.readme_session:phase",
+        "workflow.readme_spans:compose"
+      ],
+      "prompts": [],
+      "harness": "No library execution; explicit source/profile/base manifest and audited native text route.",
+      "outputs": [
+        "Exact phase requests and states, candidate.md",
+        "README.md and completion.json only when selected entries complete"
+      ],
+      "limitations": [
+        "Started/failed/uncertain phases require explicit reconciliation; no automatic charged-call repeat.",
+        "Final status is authored_not_execution_validated; no compiler/oracle run.",
+        "Implemented and checked offline; a prepared new study is not a completed hosted-model result."
+      ]
+    },
+    {
+      "id": "native_audited_bridge",
+      "title": "Route native text through a pinned shared budget",
+      "track": "audited_readme",
+      "status": "implemented",
+      "role": "Configured native model role",
+      "entry_points": [
+        "workflow.native_provider_bridge:guarded_native_contract",
+        "workflow.native_provider_bridge:invoke_native",
+        "aideal.llm:invoke_text"
+      ],
+      "prompts": [],
+      "harness": "No library execution; explicit source/profile/base manifest and audited native text route.",
+      "outputs": [
+        "Stage contract and unique call request/settings/reservation/response/result/outcome files"
+      ],
+      "limitations": [
+        "Explicit aideal-codex-audited provider and new study-v2 ledger required.",
+        "Complete nonempty settled output only; never fallback to a direct provider.",
+        "Implemented and checked offline; a prepared new study is not a completed hosted-model result."
+      ]
+    },
+    {
+      "id": "readme_receipts",
+      "title": "Verify completed phase provider evidence",
+      "track": "audited_readme",
+      "status": "implemented",
+      "role": null,
+      "entry_points": [
+        "workflow.readme_receipts:receipt_binding",
+        "workflow.readme_receipts:verify_provider_evidence",
+        "workflow.readme_receipts:_ledger_binding"
+      ],
+      "prompts": [],
+      "harness": "No library execution; explicit source/profile/base manifest and audited native text route.",
+      "outputs": [
+        "Byte-bound seven-file receipt, stage contract and settled ledger-row identity"
+      ],
+      "limitations": [
+        "Read-only validation before reuse; exact prompt/text/result/settings linkage required.",
+        "Provider receipts establish recorded origin and accounting, not truth of documentation.",
+        "Implemented and checked offline; a prepared new study is not a completed hosted-model result."
+      ]
+    },
+    {
+      "id": "qualified_documentation",
+      "title": "Select exact qualified API sections",
+      "track": "shared_evaluation",
+      "status": "implemented",
+      "role": null,
+      "entry_points": [
+        "workflow.documentation_selection:validate_documentation_selection",
+        "workflow.documentation_selection:markdown_sections",
+        "workflow.documentation_selection:select_qualified_sections"
+      ],
+      "prompts": [],
+      "harness": "Optional common.documentation_selection policy qualified_sections; no model or checker call.",
+      "outputs": [
+        "Selected documentation text with source ranges, clipping and target coverage"
+      ],
+      "limitations": [
+        "Explicit complete API-to-class/object heading map; source ownership is a reviewed input.",
+        "Exact headings win; other qualified API sections cannot substitute for a missing target.",
+        "Balanced character budgets across distinct matched target sections, or ordered-prefix fallback with absent coverage.",
+        "Omitted selection config retains legacy retrieval; new policies require a new freeze."
       ]
     }
   ],
@@ -817,6 +940,51 @@
       "from": "codex_provider",
       "to": "codex_budget",
       "kind": "mandatory_budget_guard"
+    },
+    {
+      "from": "legacy_inventory",
+      "to": "readme_prepare",
+      "kind": "explicit"
+    },
+    {
+      "from": "readme_prepare",
+      "to": "readme_session",
+      "kind": "explicit"
+    },
+    {
+      "from": "readme_session",
+      "to": "native_audited_bridge",
+      "kind": "automatic"
+    },
+    {
+      "from": "native_audited_bridge",
+      "to": "codex_provider",
+      "kind": "automatic"
+    },
+    {
+      "from": "readme_session",
+      "to": "readme_receipts",
+      "kind": "automatic"
+    },
+    {
+      "from": "readme_receipts",
+      "to": "codex_budget",
+      "kind": "read_only"
+    },
+    {
+      "from": "readme_session",
+      "to": "comparison_setup",
+      "kind": "explicit"
+    },
+    {
+      "from": "qualified_documentation",
+      "to": "comparison_audience",
+      "kind": "automatic"
+    },
+    {
+      "from": "qualified_documentation",
+      "to": "condition_run",
+      "kind": "automatic"
     }
   ],
   "review_paths": [
@@ -867,7 +1035,9 @@
           "status": "implemented"
         }
       ],
-      "extra_stage_ids": []
+      "extra_stage_ids": [
+        "qualified_documentation"
+      ]
     },
     {
       "id": "development",
@@ -891,13 +1061,27 @@
         },
         {
           "id": "write-readme",
-          "title": "Generate README",
-          "function": "aideal.readme_generation:find_or_create",
-          "summary": "Use source, tests and original documentation to author API entries.",
-          "inputs": "API scope, source/test evidence, documentation and author model",
-          "outputs": "Configured README and generation state",
+          "title": "Prepare audited README",
+          "function": "workflow.readme_authoring:prepare_readme_session",
+          "summary": "Freeze exact qualified source/base/context inputs and role contracts without calling a model.",
+          "inputs": "Pinned manifest, immutable base, frozen context and explicit native bridge roles",
+          "outputs": "Exact requests and isolated session identity",
           "stage_ids": [
-            "legacy_author"
+            "readme_prepare"
+          ],
+          "status": "implemented"
+        },
+        {
+          "id": "run-readme-session",
+          "title": "Run prepared authoring",
+          "function": "workflow.readme_session:run_readme_session",
+          "summary": "Author entries or deep-dive then rewrite selected spans with verified provider and budget receipts.",
+          "inputs": "Prepared session and shared study-v2 ledger",
+          "outputs": "Candidate entries and authored_not_execution_validated README",
+          "stage_ids": [
+            "readme_session",
+            "native_audited_bridge",
+            "readme_receipts"
           ],
           "status": "implemented"
         },
@@ -930,6 +1114,7 @@
         }
       ],
       "extra_stage_ids": [
+        "legacy_author",
         "treatment_preview",
         "treatment_proposal",
         "treatment_versions",
@@ -1049,7 +1234,9 @@
           "status": "implemented"
         }
       ],
-      "extra_stage_ids": []
+      "extra_stage_ids": [
+        "qualified_documentation"
+      ]
     }
   ]
 }

@@ -15,6 +15,12 @@ Read the [workflow](SUMMARY.md) and [condition matrix](VERSIONS.md), then follow
 | Optional Codex provider | [openai_codex_adapter.py](../workflow/openai_codex_adapter.py), [provider_budget.py](../workflow/provider_budget.py), [pilot guide](OPENAI_CODEX_PILOT.md) | Are final-answer phases selected, request settings recorded, and the shared reservation made before HTTP? |
 | Scores | `report_conditions` in [condition_reporting.py](../workflow/condition_reporting.py) | Are denominators, matched pairs, unresolved units and costs retained? |
 
+## Audited authoring and refresh
+
+Follow [readme_authoring.py](../workflow/readme_authoring.py) for exact input/role bindings, [scala_owners.py](../workflow/scala_owners.py) for conservative lexical receivers, and [readme_spans.py](../workflow/readme_spans.py) for byte preservation. [readme_session.py](../workflow/readme_session.py) invokes the explicit [native bridge](../workflow/native_provider_bridge.py); [readme_receipts.py](../workflow/readme_receipts.py) checks saved provider/ledger evidence before a completed phase is reused. [Session tests](../tests/test_readme_authoring.py) exercise alteration, uncertain dispatch and preservation without a provider call.
+
+For `selective_refresh`, start at `conditions_for` in [evaluation_setup.py](../workflow/evaluation_setup.py), then follow the frozen names into [evaluation.py](../workflow/evaluation.py) and [reporting.py](../workflow/reporting.py). [Design tests](../tests/test_evaluation_designs.py) retain legacy defaults and reject mixed names. See [configuration and output contracts](README_SESSIONS.md).
+
 ## Native documentation development
 
 The native engine has a separate [CLI](../vendor/aideal_engine/src/aideal/cli.py). `readme_agent.py` and `doc_checks.py` are explicit compatibility facades; implementation lives in smaller modules.

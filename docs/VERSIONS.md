@@ -15,7 +15,7 @@ Attachment pins a clean library baseline and creates isolated worktrees. A check
 
 `five_arm` selects the first five; `refactor_pair` Original and Refactor only; `six_arm` all six. Combined excludes refactoring. This is not a full factorial design. Alias interface text is part of the alias treatment; keep it narrow and identical in Combined.
 
-The separate three-README protocol uses `Original README`, `Generated README`, and `Repaired README` on one backend. Those names/frozen records are not interchangeable with this matrix.
+The separate three-README protocol defaults to `Original README`, `Generated README`, and `Repaired README` on one backend. Explicit `readme_evaluation.design: selective_refresh` instead uses `Unchanged generated README`, `Selected API refresh`, and `Full README refresh`, with the unchanged generated base as baseline. These document identities and frozen records are not interchangeable with the source-treatment matrix. See [audited README sessions](README_SESSIONS.md); prepared candidates are not evaluated results.
 
 ## Authoritative records
 

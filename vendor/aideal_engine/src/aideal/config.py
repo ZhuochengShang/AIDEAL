@@ -16,6 +16,7 @@ except ImportError as exc:  # pragma: no cover
 class ModelSpec:
     provider: str
     model: str
+    bridge: dict | None = None
 
 
 @dataclass
@@ -219,7 +220,7 @@ def load_config(config_path: str | Path | None = None) -> AidealConfig:
     checks = raw.get("checks", {})
 
     registry = {
-        name: ModelSpec(provider=m["provider"], model=m["model"])
+        name: ModelSpec(provider=m["provider"], model=m["model"], bridge=m.get("bridge"))
         for name, m in models.get("registry", {}).items()
     }
 

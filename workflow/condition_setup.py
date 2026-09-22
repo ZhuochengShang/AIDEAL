@@ -18,8 +18,9 @@ MODULES = CONTROLLER_MODULES + ('condition_inputs.py', 'condition_context.py',
           'treatment_versions.py', 'worktrees.py')
 
 
-def _controller():
-    return {name: file_hash(Path(__file__).with_name(name)) for name in MODULES}
+def _controller(cfg=None):
+    optional = ('documentation_selection.py',) if cfg and 'documentation_selection' in cfg['common'] else ()
+    return {name: file_hash(Path(__file__).with_name(name)) for name in MODULES + optional}
 
 
 def read_condition_config(path):
@@ -46,6 +47,9 @@ def read_condition_config(path):
             raise ValueError(field + ' must be a positive integer')
     _text(cfg.get('holdout_review'), 'Holdout review')
     bank = read_bank(Path(cfg['bank']), cfg, refs)
+    if 'documentation_selection' in cfg['common']:
+        from .documentation_selection import validate_documentation_selection
+        validate_documentation_selection(cfg['common']['documentation_selection'], bank['api_names'])
     backends = {}
     for arm, condition in cfg['conditions'].items():
         _mapping(condition, arm)
@@ -71,7 +75,7 @@ def read_condition_config(path):
         refs.extend(bind(p) for p in source['artifacts'])
         backends[arm] = backend_identity(condition)
     match_treatments(cfg, backends)
-    controller = _controller()
+    controller = _controller(cfg)
     refs.extend(bind(Path(__file__).with_name(name)) for name in controller)
     return {'protocol': PROTOCOL, 'config': cfg, 'bank': bank, 'backends': backends,
             'artifacts': list({r['path']: r for r in refs}.values()),
@@ -134,7 +138,7 @@ def controls(case):
 
 
 def verify_inputs(payload):
-    if payload.get('controller_sha256') != _controller():
+    if payload.get('controller_sha256') != _controller(payload['config']):
         raise ValueError('Condition controller changed; freeze a new study')
     if not all(verify_artifact(r) for r in payload['artifacts']):
         raise ValueError('Condition study input artifacts changed')
