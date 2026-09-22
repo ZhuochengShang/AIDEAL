@@ -1,11 +1,11 @@
-# AIDEAL — RDPro Codex evaluation
+# AIDEAL — RDPro · GPT-5.3-Codex · five conditions · 2026-09-21
 
-This is **`evaluation/rdpro-codex-v1`**, the dedicated review branch for the completed RDPro pilot. It starts from toolkit commit `8083e3b27c05b899b8a4941377ab0abc5c81dcbb`; GitHub `main` remains the toolkit release.
+This is **`evaluation/2026-09-21-rdpro-gpt-5.3-codex-five-conditions`**, the dedicated review branch for the completed RDPro pilot. It starts from toolkit commit `8083e3b27c05b899b8a4941377ab0abc5c81dcbb`; GitHub `main` remains the toolkit release.
 
-- [RDPro evaluation: setup, five conditions and results](studies/rdpro/codex_v1/README.md)
-- [Actual checker, JVM harness and offline tests](studies/rdpro/codex_v1/harness/README.md)
-- [Audited result summary](studies/rdpro/codex_v1/RESULTS.md)
-- [Exact RDPro treatment branch names and commits](studies/rdpro/codex_v1/source_versions.json)
+- [RDPro evaluation: setup, five conditions and results](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md)
+- [Actual checker, JVM harness and offline tests](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness/README.md)
+- [Audited result summary](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/RESULTS.md)
+- [Exact RDPro treatment branch names and commits](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/source_versions.json)
 
 The five RDPro source branches belong to the separate local library repository. This AIDEAL branch records their identities, the evaluation code, treatment artifacts and a reviewed result export. It does not contain the private fixture bank, expected answers, runtime binaries or complete machine-bound evidence. Repeating the original experiment requires those local inputs; the included synthetic harness tests run independently.
 

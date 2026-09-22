@@ -1,4 +1,10 @@
-# RDPro Codex pilot: review package
+# RDPro · GPT-5.3-Codex · five-condition pilot · 2026-09-21
+
+**Study name:** `2026-09-21-rdpro-gpt-5.3-codex-five-conditions`
+
+The name records the experiment date in America/Los_Angeles, library, model and comparison design. The five conditions are Original, Generated README only, Aliases only, Error hints only and Combined. Each has four microtasks and four puzzles: 40 task-condition evaluations, with one trial and at most one repair.
+
+Older `_v1` filenames in the local evidence are historical storage labels. They are not RDPro versions or model versions. Their paths stay unchanged because the frozen study binds them. Use this descriptive study name and frozen identity `ed877ae454bc10bc69e27ed7cdc42b59d398f7919ad10ad94084b3dd08706f95` when comparing future experiments.
 
 This package records a completed **five-condition, eight-case, one-trial pilot** using GPT-5.3-Codex. The independent audit verified all **40 terminal audience outcomes**, all **120 trusted controls**, and the saved source/runtime/request/checker identities. Completed includes failures: **22 of 40 units passed within the one-repair budget**.
 
@@ -19,7 +25,7 @@ This is a **portable review export, not a standalone rerun configuration**. Priv
 | [artifact_manifest.json](artifact_manifest.json) | Byte hashes, original-README omission and export exclusions |
 | [harness/README.md](harness/README.md) | Frozen checker/build sources and offline tests; requirements for a separately provisioned rerun |
 
-The branch `evaluation/rdpro-codex-v1` adds this study export and its reviewed harness to the published toolkit. Its **complete branch inventory** is maintained separately by the branch publication process and includes study-export files. The `main` branch retains its original toolkit/source-only manifest policy. This package's artifact manifest covers the named evidence artifacts; it is not a substitute for that complete branch inventory.
+The branch `evaluation/2026-09-21-rdpro-gpt-5.3-codex-five-conditions` adds this study export and its reviewed harness to the published toolkit. Its **complete branch inventory** is maintained separately by the branch publication process and includes study-export files. The `main` branch retains its original toolkit/source-only manifest policy. This package's artifact manifest covers the named evidence artifacts; it is not a substitute for that complete branch inventory.
 
 ## What changed across conditions
 

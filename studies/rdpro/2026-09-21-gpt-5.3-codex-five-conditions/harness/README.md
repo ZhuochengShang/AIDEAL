@@ -20,14 +20,14 @@ Use Python 3.10 or newer, Git, and the repository's base dependency, PyYAML (`py
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 \
-PYTHONPATH="$PWD:$PWD/studies/rdpro/codex_v1/harness" \
+PYTHONPATH="$PWD:$PWD/studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness" \
 python -m unittest discover \
-  -s studies/rdpro/codex_v1/harness -p test_adapter.py -v
+  -s studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness -p test_adapter.py -v
 
 PYTHONDONTWRITEBYTECODE=1 \
-PYTHONPATH="$PWD:$PWD/studies/rdpro/codex_v1/harness" \
+PYTHONPATH="$PWD:$PWD/studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness" \
 python -m unittest discover \
-  -s studies/rdpro/codex_v1/harness/development -p test_codex_preparation.py -v
+  -s studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness/development -p test_codex_preparation.py -v
 ```
 
 The preparation test retains its original import statement; `PYTHONPATH` supplies the relocated harness and the repository's `workflow` package. These tests use synthetic data and temporary files. Compiler/JVM operations are mocked. Two preparation tests create temporary local Git repositories to check branch and source tampering. No provider, JVM, RDPro function or network request runs.
