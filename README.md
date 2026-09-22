@@ -6,8 +6,11 @@ This is **`evaluation/2026-09-21-rdpro-gpt-5.3-codex-five-conditions`**, the ded
 - [Actual checker, JVM harness and offline tests](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness/README.md)
 - [Audited result summary](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/RESULTS.md)
 - [Exact RDPro treatment branch names and commits](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/source_versions.json)
+- [Separate RDPro source repository](https://github.com/ZhuochengShang/AIDEAL-RDPro) · [one-clone/five-worktree guide](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md#one-clone-five-worktrees)
 
-The five RDPro source branches belong to the separate local library repository. This AIDEAL branch records their identities, the evaluation code, treatment artifacts and a reviewed result export. It does not contain the private fixture bank, expected answers, runtime binaries or complete machine-bound evidence. Repeating the original experiment requires those local inputs; the included synthetic harness tests run independently.
+The five RDPro condition source versions are mapped to dated refs in the companion [AIDEAL-RDPro repository](https://github.com/ZhuochengShang/AIDEAL-RDPro). It publishes new clean snapshot commits with source trees identical to the measured versions; malformed historical Git ancestry is not shipped. This AIDEAL branch supplies the shared prompts, protocol/settings, checker/tests and audited results; it retains the original measured source identities and selected treatment artifacts. A new run must use a new local freeze bound to the publication commits. It does not contain the private fixture bank, expected answers, runtime binaries or complete machine-bound evidence. Repeating the original experiment requires those local inputs; the included synthetic harness tests run independently.
+
+The five remote condition refs have been verified against their published snapshot commits, whose trees match the measured versions.
 
 The pilot resolved 40 model tasks after 120 trusted controls validated. No generated error hint was delivered, so the hints-only arm's extra pass cannot establish a hint benefit. The study README explains this and the other limitations.
 
