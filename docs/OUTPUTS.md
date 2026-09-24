@@ -51,6 +51,33 @@ python -m aideal.cli --config /path/to/workspace/configs/aideal.yaml \
 
 `--show-code` includes snippet details and output tails. Retries overwrite the per-API test file; this development path does not retain each complete round as a separate source file. Select a different configured work directory for a new experiment; use `--resume` only with the same identity. These checks are separate from held-out condition evaluation.
 
+## Audited README sessions
+
+The explicit [session workflow](README_SESSIONS.md) uses a new directory for each prepared full/refresh plan, separate from the legacy native work directory:
+
+```text
+SESSION/
+  base.md                              immutable copy of the supplied base
+  session.json                         exact inputs, prompts, roles and hashes; no call at preparation
+  entry_0000/
+    prepared.json
+    entry.request.json / entry.state.json       full-author phase
+    deep_dive.request.json / deep_dive.state.json  refresh reviewer phase
+    rewrite.request.json / rewrite.state.json   refresh fixer phase
+    candidate.md                       complete selected entry only
+  README.md                            composed only after every selected entry completes
+  completion.json                      authored_not_execution_validated; no library executed
+
+STAGE_EVIDENCE/
+  contract.json
+  call-<UTC>-<unique-id>/
+    contract.json / request.json / settings.json / reservation.json
+    response.json / result.json / outcome.json
+    failure.json                       only when an adapter failure is recorded
+```
+
+The two phase layouts are alternatives, not files present in every entry. Interrupted calls may lack response/result files. A shared mutable budget JSON and sibling `.lock` live outside the stage directories; do not bind their changing full bytes into frozen command artifacts. Completed phase state binds exact provider receipts and its settled ledger row. Missing or altered evidence blocks reuse. No generated program, compiler run or numerical pass is implied by `candidate.md` or a complete README.
+
 ## Development proposals and versions
 
 | Path | Meaning / creation condition |

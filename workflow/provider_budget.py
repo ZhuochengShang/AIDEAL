@@ -33,17 +33,28 @@ def _integer(value):
 
 
 class BudgetLedger:
-    def __init__(self, path, max_cost_usd='5'):
+    def __init__(self, path, max_cost_usd='5', *, policy='legacy-v1', study_id=None):
         self.path = Path(path).expanduser().resolve()
+        if policy not in ('legacy-v1', 'study-v2'):
+            raise BudgetError('Unknown explicit budget policy')
+        if policy == 'legacy-v1' and study_id is not None:
+            raise BudgetError('Legacy ledgers do not accept a study identity')
+        if policy == 'study-v2':
+            import re
+            if not isinstance(study_id, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._:-]{0,127}', study_id):
+                raise BudgetError('Study policy requires a stable nonempty study_id')
+        ceiling = 100 if policy == 'study-v2' else 5
         try:
             cap = Decimal(str(max_cost_usd)) * 1_000_000_000
-            if not cap.is_finite() or cap <= 0 or cap > 5_000_000_000 or cap != cap.to_integral_value():
+            if not cap.is_finite() or cap <= 0 or cap > ceiling * 1_000_000_000 or cap != cap.to_integral_value():
                 raise ValueError
             cap = int(cap)
         except (InvalidOperation, ValueError):
-            raise BudgetError('Budget must be positive, at most $5, and precise to nanodollars') from None
+            raise BudgetError(f'Budget must be positive, at most ${ceiling}, and precise to nanodollars') from None
         self.identity = {'schema_version': 1, 'model': MODEL, 'max_cost_nanousd': cap,
                          'prices_nanousd_per_token': PRICES, 'framing_tokens': FRAMING_TOKENS}
+        if policy == 'study-v2':
+            self.identity.update(schema_version=2, policy=policy, study_id=study_id)
 
     def _save(self, data):
         fd, name = tempfile.mkstemp(prefix=self.path.name + '.', suffix='.tmp', dir=self.path.parent)

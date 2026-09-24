@@ -1,0 +1,95 @@
+# New source-guided protocol. Use NEW branches, validation and run directories.
+# Existing JSON-hint or frozen studies cannot be resumed with changed settings.
+# Paths resolve relative to this YAML. Replace every placeholder before freezing.
+condition_evaluation:
+  schema_version: 2
+  design: five_arm  # five_arm excludes refactor_only; refactor_pair uses original/refactor_only.
+  bank: ../bank/held_out_tasks.json
+  model:
+    name: PIN_THE_AUDIENCE_MODEL
+    command: [/path/to/python, /path/to/AIDEAL_workflow/workflow/model_adapter.py]
+    artifacts: [/path/to/AIDEAL_workflow/workflow/model_adapter.py]
+  common:
+    temperature: 0.0
+    max_output_tokens: 8192  # Total provider output, including reasoning where applicable.
+    repair_max_output_tokens: 8192  # Independent of input/context size; no silent growth.
+    repair_context: distilled  # Deterministic extraction, not another LLM call.
+    minimum_hint_coverage: 1.0  # Refuse a freeze if any selected API has no annotation.
+    max_snippet_fixes: 2  # R0 followed by up to R1 and R2; same allowance for measured arms.
+    provider_attempt_limit: 2
+    execution_timeout_s: 150
+    provider_timeout_s: 180
+    trial_ids: [trial_01]
+    ordering_seed: 42
+    documentation_max_characters: 24000
+    alias_max_characters: 4000
+    hint_max_characters: 4000
+    source_access: false  # No general source browsing. Only matched source annotations in hint arms.
+  development_case_ids: []
+  holdout_review: >-
+    REPLACE with actual task/document/error-log development overlap review.
+    Development hints must not be learned from this held-out bank.
+  # Canonical IDs refer to declaration lines BEFORE annotation insertion.
+  # List every selected API; numbers below are placeholders for your inventory.
+  api_function_ids: {package.Library.function: "src/Library.scala:100:function"}
+  # Optional attribution inventory for callable helpers outside the task targets.
+  # It does not add tasks or change the evaluation denominator.
+  # source_api_function_ids: {package.Library.helper: "src/Library.scala:150:helper"}
+  # Optional subset for a new follow-up comparison. All five configured backends
+  # still undergo control validation; only listed arms receive audience trials.
+  # measured_conditions: [error_hints_only, combined]
+  conditions:
+    original:
+      documents: [../original_documentation.txt]
+      source:
+        worktree: ../Original/source
+        revision: PIN_BASELINE_COMMIT
+        branch: aideal/original
+        artifacts: [../runtime/original/build_identity.json, ../runtime/original/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+    readme_only:
+      documents: [../README only/source/.aideal/treatments/README.md]
+      source:
+        worktree: ../README only/source
+        revision: PIN_README_TREATMENT_COMMIT
+        branch: aideal/readme-only
+        artifacts: [../runtime/original/build_identity.json, ../runtime/original/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+    alias_only:
+      documents: [../original_documentation.txt]
+      alias_interface: ../Alias only/source/.aideal/treatments/ALIASES.md
+      source:
+        worktree: ../Alias only/source
+        revision: PIN_ALIAS_TREATMENT_COMMIT
+        branch: aideal/alias-only
+        artifacts: [../runtime/alias/build_identity.json, ../runtime/alias/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/alias/runtime.json]
+    error_hints_only:
+      documents: [../original_documentation.txt]
+      source_hints: [src/Library.scala]  # Relative paths in this arm's source worktree.
+      source:
+        worktree: ../Error hints only/source
+        revision: PIN_HINT_TREATMENT_COMMIT
+        branch: aideal/source-hints
+        artifacts: [../runtime/original/build_identity.json, ../runtime/original/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+    combined:
+      documents: [../Combined/source/.aideal/treatments/README.md]
+      alias_interface: ../Combined/source/.aideal/treatments/ALIASES.md
+      source_hints: [src/Library.scala]  # Identical annotations to error_hints_only.
+      source:
+        worktree: ../Combined/source
+        revision: PIN_COMBINED_TREATMENT_COMMIT
+        branch: aideal/source-hints-combined
+        artifacts: [../runtime/alias/build_identity.json, ../runtime/alias/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/alias/runtime.json]

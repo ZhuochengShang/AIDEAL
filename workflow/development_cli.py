@@ -4,6 +4,20 @@ from pathlib import Path
 
 
 def add_development_commands(sub):
+    for command, help_text, options in (
+        ('preview-source-hints', 'Harvest pinned Original development R0 failures; no model call',
+         ('manifest', 'output')),
+        ('propose-source-hints', 'Ask the development model for source-grounded error guidance',
+         ('preview', 'model-config', 'output')),
+        ('validate-source-hints', 'Replay misuse, correction, valid and unrelated-error controls',
+         ('proposal', 'validation-plan', 'output')),
+        ('install-source-hints', 'Commit validated annotations into new Error Hints and Combined branches',
+         ('validation', 'targets', 'output')),
+    ):
+        p = sub.add_parser(command, help=help_text)
+        for option in options:
+            p.add_argument('--' + option, required=True)
+        p.set_defaults(development_handler=True)
     p = sub.add_parser('preview-library', help='Save bounded batches covering the configured public API inventory')
     p.add_argument('--study', required=True)
     p.add_argument('--output', required=True)
@@ -72,6 +86,18 @@ def add_development_commands(sub):
 
 def run_development_command(args):
     from .ablation import load
+    if args.command == 'preview-source-hints':
+        from .source_hint_development import build_development_preview
+        return build_development_preview(args.manifest, args.output)
+    if args.command == 'propose-source-hints':
+        from .source_hint_development import propose_source_hints
+        return propose_source_hints(args.preview, args.model_config, args.output)
+    if args.command == 'validate-source-hints':
+        from .source_hint_development import validate_source_hint_development
+        return validate_source_hint_development(args.proposal, args.validation_plan, args.output)
+    if args.command == 'install-source-hints':
+        from .source_hint_installation import install_source_hints
+        return install_source_hints(args.validation, args.targets, args.output)
     if args.command == 'preview-library':
         from .improvement_batches import preview_library_improvements
         return preview_library_improvements(args.study, args.output,

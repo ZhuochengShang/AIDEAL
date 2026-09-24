@@ -27,6 +27,41 @@ This is a **portable review export, not a standalone rerun configuration**. Priv
 
 The branch `evaluation/2026-09-21-rdpro-gpt-5.3-codex-five-conditions` adds this study export and its reviewed harness to the published toolkit. Its **complete branch inventory** is maintained separately by the branch publication process and includes study-export files. The `main` branch retains its original toolkit/source-only manifest policy. This package's artifact manifest covers the named evidence artifacts; it is not a substitute for that complete branch inventory.
 
+## Shared evaluation, separate RDPro source
+
+The five remote condition refs have been verified against their published snapshot commits, whose trees match the measured versions.
+
+AIDEAL holds the shared [development prompt](development_system_prompt.txt), [public task contracts](public_tasks.json), [model/budget settings](protocol.json), [checker and offline tests](harness/README.md), [condition runner](../../../workflow/condition_evaluation.py) and [audited results](RESULTS.md). The companion [AIDEAL-RDPro repository](https://github.com/ZhuochengShang/AIDEAL-RDPro) holds clean source snapshots of the five RDPro conditions below. This keeps one evaluation implementation and protocol across all source versions.
+
+| Condition | RDPro remote branch | Published snapshot commit | Historical measured commit |
+|---|---|---|---|
+| Original | [`study/2026-09-21-gpt-5.3-codex/original`](https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/original) | [`5ee41a6dc37e`](https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/5ee41a6dc37ebe5f63bf7a3a0b74c5483460b9c8) | `547f7f912131` |
+| Generated README only | [`study/2026-09-21-gpt-5.3-codex/readme-only`](https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/readme-only) | [`41a302b39dd7`](https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/41a302b39dd7d9260842827d22bf7fa48dadcad7) | `7ab580c744db` |
+| Aliases only | [`study/2026-09-21-gpt-5.3-codex/alias-only`](https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/alias-only) | [`80ba93d32e9a`](https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/80ba93d32e9aff65fa12e730abb66a67663b9e35) | `dcaff7fbe2ce` |
+| Error hints only | [`study/2026-09-21-gpt-5.3-codex/error-hints-only`](https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/error-hints-only) | [`1f9e07195264`](https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/1f9e0719526455a6a89751869281df91eabeb5c0) | `bc55f6b312c0` |
+| Combined | [`study/2026-09-21-gpt-5.3-codex/combined`](https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/combined) | [`cdb03c2e8343`](https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/cdb03c2e8343c80c48ab60d268c9ad3013e3570b) | `0db05e0f5a49` |
+
+**Identical source trees, different commit history.** A malformed historical Git tree (`90b33f9e36ee3d4f833f496f37c50530aba8571c`) has a `duplicateEntries` error. To avoid distributing that invalid ancestry, the companion repository uses a new baseline snapshot commit and four treatment descendants. Each published tree ID equals its measured condition's tree ID, preserving filenames, file bytes and modes; the original historical ancestry is not shipped. Historical measured commits and local `aideal/...` branch names remain unchanged in [source_versions.json](source_versions.json). The new `published_revision` fields identify the downloadable snapshots, not the original measured executions.
+
+The source-root `README.md` and any companion-repository navigation README are **not the selected generated README treatment**. README-only and Combined use `.aideal/treatments/README.md`, whose exact selected bytes are also exported as [GENERATED_README.md](GENERATED_README.md). Original, Aliases-only and Error-hints-only use the separately selected original documentation, still omitted here. Alias-enabled conditions additionally compile `cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/AidealAliases0001.scala` and expose `.aideal/treatments/ALIASES.md`; hint-enabled conditions select `.aideal/treatments/error_hints.json` after a matching checked failure.
+
+### One clone, five worktrees
+
+After the remote refs are available, these commands create five source worktrees at the published snapshot commits. Their trees match the measured versions; their commit identities differ. Run them from an empty parent directory:
+
+```sh
+git clone --branch main --no-checkout https://github.com/ZhuochengShang/AIDEAL-RDPro.git AIDEAL-RDPro
+git -C AIDEAL-RDPro worktree add -b study/2026-09-21-gpt-5.3-codex/original ../rdpro-original 5ee41a6dc37ebe5f63bf7a3a0b74c5483460b9c8
+git -C AIDEAL-RDPro worktree add -b study/2026-09-21-gpt-5.3-codex/readme-only ../rdpro-readme-only 41a302b39dd7d9260842827d22bf7fa48dadcad7
+git -C AIDEAL-RDPro worktree add -b study/2026-09-21-gpt-5.3-codex/alias-only ../rdpro-alias-only 80ba93d32e9aff65fa12e730abb66a67663b9e35
+git -C AIDEAL-RDPro worktree add -b study/2026-09-21-gpt-5.3-codex/error-hints-only ../rdpro-error-hints-only 1f9e0719526455a6a89751869281df91eabeb5c0
+git -C AIDEAL-RDPro worktree add -b study/2026-09-21-gpt-5.3-codex/combined ../rdpro-combined cdb03c2e8343c80c48ab60d268c9ad3013e3570b
+```
+
+The checkout names above are examples. These commands provide source worktrees for inspection and building; they do not create AIDEAL attachment/application records, dependency manifests, private inputs or a runnable configuration. Use the shared [harness tests and prerequisites](harness/README.md) for the 16 offline checks. Full repetition still needs the private bank/control programs, original documentation, pinned Java/Scala/Spark dependencies, treatment installation metadata, rebuilt source-bound backends and a new local configuration/freeze. The new commit IDs must be recorded in that new freeze; historical source receipts must not be relabeled or rewritten. The current preparation recipe also expects the historical bank/documentation pointer and selected README provenance described in that guide; there is no automatic bootstrap from this review export.
+
+`run-conditions --condition original` selects an arm in a supplied freeze; it does not switch branches, and the controller still verifies every configured backend. Reusing a run output resumes saved work. A fresh output starts new model generation with the configured shared budget; it is a new stochastic run, not a deterministic replay of the historical outputs.
+
 ## What changed across conditions
 
 | Condition | Solver documentation | Library source | Additive public context |
@@ -37,7 +72,7 @@ The branch `evaluation/2026-09-21-rdpro-gpt-5.3-codex-five-conditions` adds this
 | Error hints only | Original README | Original | Hints eligible after matching checked failure |
 | Combined | Same Generated README | Same wrappers | Same interface and eligible hints |
 
-The separate source-refactor study is excluded. The original source remains at baseline `547f7f912131a8032f6b5d26991415a5faf05cef`. The other measured commits are listed in [source_versions.json](source_versions.json). Those are commits in the separate RDPro library repository, **not commits in the AIDEAL toolkit branch**; source directories are not silently bundled here. The aliases target `cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/AidealAliases0001.scala`. Installed README/interface/hint metadata lives under `.aideal/treatments/` in its assigned arms.
+The separate source-refactor study is excluded. The original source remains at baseline `547f7f912131a8032f6b5d26991415a5faf05cef`. The other measured commits are listed in [source_versions.json](source_versions.json). Those historical measured commits are mapped to new tree-identical snapshot commits in the companion [AIDEAL-RDPro source refs](https://github.com/ZhuochengShang/AIDEAL-RDPro) above, **not commits in the AIDEAL toolkit branch**. Historical ancestry is not shipped; source directories are not duplicated in this evaluation export. The aliases target `cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/AidealAliases0001.scala`. Installed README/interface/hint metadata lives under `.aideal/treatments/` in its assigned arms.
 
 The original documentation contains local home paths and is **omitted without rewriting it**. Its exact hash/size remain in the manifest. The included Generated README passed the export path/credential checks and remains byte-identical. It was reused from an earlier artifact, not authored by the Codex proposal and not replaced with the earlier repaired README. It lacks dedicated `readType` coverage; the experiment did not repair that omission after seeing results.
 

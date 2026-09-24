@@ -1,5 +1,6 @@
 """Explicit, bounded development inputs; never import or execute library code."""
 from dataclasses import replace
+from functools import lru_cache
 import glob
 import json
 from pathlib import Path, PurePosixPath
@@ -10,6 +11,7 @@ from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json
 from .preparation import _engine_config_module
 from .treatment_versions import _run as _git, _check_worktree
+from .scala_owners import _tokens as _scala_tokens, owner_at_line
 
 
 def alias_target(value):
@@ -101,6 +103,49 @@ def _development_errors(path, definitions, max_characters=12000):
     return rows, bind(path), omitted
 
 
+@lru_cache(maxsize=128)
+def _scala_package(source):
+    """Accept leading, unbraced package declarations; ignore comments/literals."""
+    tokens = _scala_tokens(source)
+    cursor, packages = 0, []
+    while cursor < len(tokens) and tokens[cursor].value == 'package':
+        line = tokens[cursor].line
+        cursor += 1
+        parts = []
+        while cursor < len(tokens) and tokens[cursor].line == line and tokens[cursor].value != ';':
+            parts.append(tokens[cursor].value)
+            cursor += 1
+        if (not parts or any(not re.fullmatch(r'[A-Za-z_$][\w$]*', part)
+                             for part in parts[::2])
+                or len(parts) % 2 != 1 or any(part != '.' for part in parts[1::2])):
+            raise ValueError('Unsupported Scala package declaration')
+        packages.append(''.join(parts))
+        if cursor < len(tokens) and tokens[cursor].value == ';':
+            cursor += 1
+    if any(token.value == 'package' for token in tokens[cursor:]):
+        raise ValueError('Non-leading Scala package declarations require explicit resolution')
+    return '.'.join(packages)
+
+
+def _scala_receiver_facts(source, line, name):
+    """Add lexical facts without redefining discovery identity or public scope."""
+    facts = dict.fromkeys(('receiver', 'owner_kind', 'owner_path', 'qualified_receiver',
+                           'source_qualified_name', 'owner_declaration'))
+    try:
+        owner = owner_at_line(source, line, name)
+        package = _scala_package(source)
+    except ValueError as exc:
+        return {**facts, 'qualification_status': 'unresolved', 'qualification_reason': str(exc)}
+    qualified = '.'.join(filter(None, (package, owner['owner_path'])))
+    declaration_line = owner['declaration_line']
+    return {**owner, 'qualified_receiver': qualified,
+            'source_qualified_name': qualified + '.' + name,
+            'owner_declaration': {'line': declaration_line,
+                                  'text': source.splitlines()[declaration_line - 1]},
+            'qualification_status': 'resolved_lexical',
+            'qualification_reason': 'Direct named-owner member; not a type, visibility or dispatch proof.'}
+
+
 def _library_inputs(study, apis=None):
     """Discover the full pinned public surface without importing target code."""
     study, root, attachment = original_checkout(study)
@@ -132,13 +177,19 @@ def _library_inputs(study, apis=None):
     from aideal.api_discovery import public_api_details
     # Resolve discovery inside the pinned checkout, not the caller's mutable repo.
     local = replace(cfg, root=root, source_globs=[glob.escape(str(p)) for p in files], test_globs=[])
-    definitions = []
+    definitions, scala_sources = [], {}
     for row in public_api_details(local):
         if row['visibility'] != 'public':
             continue
         row = {**row, 'id': f"{row['file']}:{row['line']}:{row['qualified_name']}"}
         if apis and not {row['id'], row['qualified_name'], row['name']}.intersection(apis):
             continue
+        if Path(row['file']).suffix == '.scala':
+            if row['file'] not in scala_sources:
+                scala_sources[row['file']] = (root / row['file']).read_text()
+            # Keep the original id/qualified_name and selection semantics. These
+            # additional facts disambiguate receivers for the model only.
+            row.update(_scala_receiver_facts(scala_sources[row['file']], row['line'], row['name']))
         definitions.append(row)
     definitions.sort(key=lambda r: (r['file'], r['line'], r['id']))
     if apis:

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baseline_revision": "547f7f912131a8032f6b5d26991415a5faf05cef",
   "treatment_version": "1b9b32f4968314207470d5d9ed52ec1175f8fa1e26df06deb5ad5f86cc6a8468",
-  "mapping_note": "Paths are relative to the original attached study layout, not directories bundled in this export. These are commits in the separate RDPro library repository, not commits in the AIDEAL toolkit branch.",
+  "mapping_note": "Paths and library_revision/library_branch/library_tree remain historical measured identities. Published revisions are new clean snapshot commits with the same source trees; historical ancestry is not distributed. Remote refs and published_revision identify the separate RDPro publication, not a replacement frozen identity.",
   "conditions": [
     {
       "condition": "original",
@@ -11,7 +11,13 @@
       "library_branch": "aideal/original",
       "library_tree": "757142fe21ba53b1388880d6abc7423aff844295",
       "code_tree_sha256": "f6c21f46db0f1872e5c9dd068e6719f8f3a649aeca05558a87179d79235cf3ff",
-      "installed_artifact_paths": {}
+      "installed_artifact_paths": {},
+      "published_revision": "5ee41a6dc37ebe5f63bf7a3a0b74c5483460b9c8",
+      "published_tree": "757142fe21ba53b1388880d6abc7423aff844295",
+      "source_tree_matches_measured": true,
+      "remote_ref": "refs/heads/study/2026-09-21-gpt-5.3-codex/original",
+      "remote_branch_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/original",
+      "remote_commit_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/5ee41a6dc37ebe5f63bf7a3a0b74c5483460b9c8"
     },
     {
       "condition": "readme_only",
@@ -22,7 +28,13 @@
       "code_tree_sha256": "f6c21f46db0f1872e5c9dd068e6719f8f3a649aeca05558a87179d79235cf3ff",
       "installed_artifact_paths": {
         ".aideal/treatments/README.md": "readme"
-      }
+      },
+      "published_revision": "41a302b39dd7d9260842827d22bf7fa48dadcad7",
+      "published_tree": "957cbf1e741f3df545b3f82d69e6d62fbee3d905",
+      "source_tree_matches_measured": true,
+      "remote_ref": "refs/heads/study/2026-09-21-gpt-5.3-codex/readme-only",
+      "remote_branch_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/readme-only",
+      "remote_commit_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/41a302b39dd7d9260842827d22bf7fa48dadcad7"
     },
     {
       "condition": "alias_only",
@@ -34,7 +46,13 @@
       "installed_artifact_paths": {
         "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/AidealAliases0001.scala": "alias",
         ".aideal/treatments/ALIASES.md": "alias_interface"
-      }
+      },
+      "published_revision": "80ba93d32e9aff65fa12e730abb66a67663b9e35",
+      "published_tree": "fd7aeaa1abe5a0df5ad0752fdbe261bf88cb6dba",
+      "source_tree_matches_measured": true,
+      "remote_ref": "refs/heads/study/2026-09-21-gpt-5.3-codex/alias-only",
+      "remote_branch_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/alias-only",
+      "remote_commit_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/80ba93d32e9aff65fa12e730abb66a67663b9e35"
     },
     {
       "condition": "error_hints_only",
@@ -45,7 +63,13 @@
       "code_tree_sha256": "f6c21f46db0f1872e5c9dd068e6719f8f3a649aeca05558a87179d79235cf3ff",
       "installed_artifact_paths": {
         ".aideal/treatments/error_hints.json": "error_hints"
-      }
+      },
+      "published_revision": "1f9e0719526455a6a89751869281df91eabeb5c0",
+      "published_tree": "69a1977ec580e6ba598a9cab1710d63244863279",
+      "source_tree_matches_measured": true,
+      "remote_ref": "refs/heads/study/2026-09-21-gpt-5.3-codex/error-hints-only",
+      "remote_branch_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/error-hints-only",
+      "remote_commit_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/1f9e0719526455a6a89751869281df91eabeb5c0"
     },
     {
       "condition": "combined",
@@ -59,9 +83,28 @@
         ".aideal/treatments/ALIASES.md": "alias_interface",
         ".aideal/treatments/error_hints.json": "error_hints",
         ".aideal/treatments/README.md": "readme"
-      }
+      },
+      "published_revision": "cdb03c2e8343c80c48ab60d268c9ad3013e3570b",
+      "published_tree": "7f54895634b3bf85d5eb91c314f3c4068a6f431a",
+      "source_tree_matches_measured": true,
+      "remote_ref": "refs/heads/study/2026-09-21-gpt-5.3-codex/combined",
+      "remote_branch_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/tree/study/2026-09-21-gpt-5.3-codex/combined",
+      "remote_commit_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro/commit/cdb03c2e8343c80c48ab60d268c9ad3013e3570b"
     }
   ],
   "refactor_excluded": true,
-  "original_checkout_unchanged": true
+  "original_checkout_unchanged": true,
+  "source_repository": {
+    "url": "https://github.com/ZhuochengShang/AIDEAL-RDPro",
+    "clone_url": "https://github.com/ZhuochengShang/AIDEAL-RDPro.git",
+    "publication_status": "verified_published",
+    "measured_commits_unchanged": true,
+    "publication_mode": "tree_identical_clean_snapshots",
+    "historical_ancestry_included": false,
+    "historical_object_issue": {
+      "tree": "90b33f9e36ee3d4f833f496f37c50530aba8571c",
+      "git_fsck_error": "duplicateEntries"
+    },
+    "navigation_note": "The companion repository navigation README is not the selected generated README. Historical local branch names remain in library_branch; remote_ref identifies each published condition."
+  }
 }

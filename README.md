@@ -1,13 +1,55 @@
-# AIDEAL — RDPro · GPT-5.3-Codex · five conditions · 2026-09-21
+# AIDEAL — source-embedded error guidance
 
-This is **`evaluation/2026-09-21-rdpro-gpt-5.3-codex-five-conditions`**, the dedicated review branch for the completed RDPro pilot. It starts from toolkit commit `8083e3b27c05b899b8a4941377ab0abc5c81dcbb`; GitHub `main` remains the toolkit release.
+This branch publishes the September 24 update to AIDEAL's development and
+evaluation code. It preserves the previously published README generation,
+selective README evaluation, alias development and experiment recording tools.
+
+The new workflow collects failures from a separate Original development R0 run,
+proposes function-specific guidance, checks the proposed correction with four
+execution controls, and commits validated comments beside the affected functions
+in new Error Hints only and Combined branches. Evaluation retrieves a note only
+after a matching failure. It also records incomplete model responses separately
+and supports a compact repair context with an independent repair output limit.
+
+- [Source-hint development, validation and installation](docs/SOURCE_EMBEDDED_ERROR_GUIDANCE.md)
+- [Failure attribution, repair context and output handling](docs/SOURCE_GUIDED_REPAIRS.md)
+- [Release scope and software checks](docs/SOURCE_HINT_RELEASE.md)
+- [Example configuration](configs/source_guided_evaluation.example.yaml)
+- [All six libraries and their source branches](studies/README.md)
+
+**Experiment status:** the source-hint software is available, but actual RDPro
+source annotations and the separate 192-trial rerun remain pending. Publishing
+this code does not start a model run or convert historical JSON-hint outcomes
+into source-embedded-hint results. Use a new validated freeze for the new protocol.
+
+## Earlier RDPro pipeline publication
+
+The prepared source matches a fresh clone of official Bitbucket Beast/RDPro 0.10.1 byte-for-byte. The user requested the five-condition, 32-task, three-trial run (480 units). Exact prompts, outputs, code, attempts, tokens, timing, errors and results are being bound to the run before execution.
+
+[Source verification](studies/rdpro/2026-09-22-full-pipeline/provenancePUBLIC.md) · [Recording, scope and estimated duration](studies/rdpro/2026-09-22-full-pipeline/RECORDED_RUN.md) · [Study design](studies/rdpro/2026-09-22-full-pipeline/README.md)
+
+The following study links preserve the earlier published setup and evidence.
+Their preparation-time status is historical, not a live experiment monitor.
+
+## Shared evaluation and library studies
+
+The earlier setup branch, `setup/2026-09-21-library-five-conditions`, connects one shared AIDEAL evaluator to the source repositories for all six registered libraries. The existing RDPro pilot is preserved. SedonaDB, MDAnalysis, tslearn, mir_eval and Thumbnailator each have a new baseline-only five-condition preparation; their treatments, independent benchmark adapters and evaluations are pending.
+
+AIDEAL and all six companion source repositories are public.
+
+Start with the [library index](studies/README.md) for source versions, configuration, implementation links and future output locations. Each companion repository has a navigation-only `main` and five source branches: Original, README only, Alias only, Error hints only and Combined. All five new conditions start at the same per-library baseline; no generated treatment or measured result is implied by a branch name. No model was called during this setup.
+
+## Completed RDPro pilot
 
 - [RDPro evaluation: setup, five conditions and results](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md)
 - [Actual checker, JVM harness and offline tests](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness/README.md)
 - [Audited result summary](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/RESULTS.md)
 - [Exact RDPro treatment branch names and commits](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/source_versions.json)
+- [Separate RDPro source repository](https://github.com/ZhuochengShang/AIDEAL-RDPro) · [one-clone/five-worktree guide](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md#one-clone-five-worktrees)
 
-The five RDPro source branches belong to the separate local library repository. This AIDEAL branch records their identities, the evaluation code, treatment artifacts and a reviewed result export. It does not contain the private fixture bank, expected answers, runtime binaries or complete machine-bound evidence. Repeating the original experiment requires those local inputs; the included synthetic harness tests run independently.
+The five RDPro condition source versions are mapped to dated refs in the companion [AIDEAL-RDPro repository](https://github.com/ZhuochengShang/AIDEAL-RDPro). It publishes new clean snapshot commits with source trees identical to the measured versions; malformed historical Git ancestry is not shipped. This AIDEAL branch supplies the shared prompts, protocol/settings, checker/tests and audited results; it retains the original measured source identities and selected treatment artifacts. A new run must use a new local freeze bound to the publication commits. It does not contain the private fixture bank, expected answers, runtime binaries or complete machine-bound evidence. Repeating the original experiment requires those local inputs; the included synthetic harness tests run independently.
+
+The five remote condition refs have been verified against their published snapshot commits, whose trees match the measured versions.
 
 The pilot resolved 40 model tasks after 120 trusted controls validated. No generated error hint was delivered, so the hints-only arm's extra pass cannot establish a hint benefit. The study README explains this and the other limitations.
 

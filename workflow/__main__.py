@@ -5,7 +5,6 @@ from pathlib import Path
 
 from .ablation import ARMS, load
 from .reporting import verify
-from .evaluation_setup import CONDITIONS
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -44,7 +43,7 @@ def main():
     p = sub.add_parser('run-evaluation', help='Execute/resume a frozen three-README experiment')
     p.add_argument('--study', required=True, help='Path to frozen.json')
     p.add_argument('--output', required=True, help='Separate run directory; reuse it to resume')
-    p.add_argument('--condition', choices=CONDITIONS)
+    p.add_argument('--condition', help='Exact condition label from the frozen README design')
     p.add_argument('--max-units', type=int, help='Bound work this invocation without changing the denominator')
     p.add_argument('--retry-provider', action='store_true', help='Explicitly allow another bounded batch of transport attempts; preserve all prior calls')
     args = parser.parse_args()

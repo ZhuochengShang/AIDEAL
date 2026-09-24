@@ -1,0 +1,38 @@
+# Prepared schema example only; no run or study result is implied.
+# See docs/README_SESSIONS.md for document provenance and isolated preparation.
+# This block can be added to your existing AIDEAL YAML.
+# Its paths resolve relative to this YAML file, not the legacy workspace root.
+readme_evaluation:
+  design: selective_refresh
+  bank: ../bank/tasks.json
+  documents:
+    Unchanged generated README: [../documents/generated_base.md]
+    Selected API refresh: [../documents/selected_refresh.md]
+    Full README refresh: [../documents/full_refresh.md]
+  source:
+    revision: PIN_THE_SOURCE_COMMIT
+    # Include executed library binaries, dependencies and source provenance.
+    artifacts: [../runtime/build_identity.json, ../runtime/library.jar]
+  model:
+    name: PIN_THE_AUDIENCE_MODEL
+    command: [/path/to/python, /path/to/AIDEAL_workflow/workflow/model_adapter.py]
+    artifacts: [/path/to/AIDEAL_workflow/workflow/model_adapter.py]
+  adapter:
+    # A trusted library/language adapter implementing the documented JSON protocol.
+    command: [/path/to/python, ../adapter/execute.py]
+    artifacts: [../adapter/execute.py, ../adapter/runtime.json, ../adapter/harness.scala]
+  common:
+    temperature: 0.0
+    max_output_tokens: 4096
+    max_snippet_fixes: 0
+    provider_attempt_limit: 2
+    execution_timeout_s: 150
+    provider_timeout_s: 180
+    trial_ids: [trial_01]
+    ordering_seed: 42
+    documentation_max_characters: 24000
+    source_access: false
+  development_case_ids: []
+  holdout_review: >-
+    Replace this with the actual document provenance, development overlap review,
+    and remaining independence limitations. A different task ID alone is not proof.

@@ -20,10 +20,10 @@ REQUEST = {'model': 'gpt-5.3-codex', 'system': 'Return raw Scala only.',
            'prompt': 'Implement solve.', 'max_output_tokens': 2048, 'temperature': 0}
 
 
-def message(text='', phase=None, refusal=None):
+def message(text='', phase=None, refusal=None, status='completed'):
     parts = [{'type': 'output_text', 'text': text, 'annotations': []}] if refusal is None else [
         {'type': 'refusal', 'refusal': refusal}]
-    return {'type': 'message', 'id': 'msg_test', 'role': 'assistant', 'status': 'completed',
+    return {'type': 'message', 'id': 'msg_test', 'role': 'assistant', 'status': status,
             'phase': phase, 'content': parts}
 
 
@@ -44,6 +44,7 @@ class CodexAdapterTests(unittest.TestCase):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
         self.path = Path(self.directory.name) / 'budget.json'
+        self.audit_counter = 0
         self.client = MagicMock()
         self.client.__enter__.return_value = self.client
         self.client.responses.create.return_value = response()
@@ -54,7 +55,9 @@ class CodexAdapterTests(unittest.TestCase):
                 patch.dict('os.environ', {'OPENAI_API_KEY': 'test-private-key'}, clear=True), \
                 patch('sys.stdin', io.StringIO(json.dumps(request or REQUEST))), \
                 contextlib.redirect_stdout(output):
-            adapter.main(['--budget-ledger=' + str(self.path), '--max-cost-usd=' + limit])
+            self.audit_counter += 1
+            adapter.main(['--budget-ledger=' + str(self.path), '--max-cost-usd=' + limit,
+                          '--audit-directory=' + str(self.path.parent / ('audit_' + str(self.audit_counter)))])
         return json.loads(output.getvalue()), constructor
 
     def read(self):
@@ -85,6 +88,33 @@ class CodexAdapterTests(unittest.TestCase):
         self.assertEqual(result['budget']['charged_nanousd'], 80 * 1750 + 20 * 175 + 30 * 14000)
         self.assertEqual(result['model_version'], 'gpt-5.3-codex')
         self.assertEqual(result['response_id'], 'resp_test')
+
+    def test_cli_audits_returned_non_solution_response(self):
+        self.client.responses.create.return_value = response(status='failed')
+        returned, _ = self.invoke()
+        audit = self.path.parent / 'audit_1'
+        result = json.loads((audit / 'result.json').read_text())
+        self.assertEqual(returned, result)
+        self.assertFalse(result['solution_state']['executable'])
+        self.assertEqual('failed', result['response_status'])
+        self.assertEqual(23, result['usage']['reasoning_tokens'])
+        self.assertEqual('settled', result['budget']['state'])
+        self.assertLessEqual(result['started_at'], result['finished_at'])
+        self.assertGreaterEqual(result['seconds'], 0)
+        self.assertEqual(REQUEST, json.loads((audit / 'request.json').read_text()))
+        self.assertNotIn('test-private-key', ''.join(p.read_text() for p in audit.glob('*.json')))
+
+    def test_cli_persists_sanitized_failure_and_reservation(self):
+        self.client.responses.create.side_effect = TimeoutError('test-private-key secret')
+        with self.assertRaises(RuntimeError):
+            self.invoke()
+        audit = self.path.parent / 'audit_1'
+        failure = json.loads((audit / 'failure.json').read_text())
+        reservation = json.loads((audit / 'reservation.json').read_text())
+        self.assertEqual(reservation['reservation_id'], failure['reservation_id'])
+        self.assertEqual('TimeoutError', failure['failure']['type'])
+        self.assertGreaterEqual(failure['seconds'], 0)
+        self.assertNotIn('test-private-key', ''.join(p.read_text() for p in audit.glob('*.json')))
 
     def test_final_answer_excludes_commentary_and_preserves_message_metadata(self):
         self.client.responses.create.return_value = response(output=[
@@ -126,6 +156,9 @@ class CodexAdapterTests(unittest.TestCase):
         self.assertTrue(result['truncated'])
         self.assertEqual(result['incomplete_reason'], 'max_output_tokens')
         self.assertEqual(result['code'], 'def solve =')
+        self.assertEqual(result['response_kind'], 'incomplete_model_output')
+        self.assertEqual(result['solution_state']['reason'], 'max_output_tokens')
+        self.assertFalse(result['solution_state']['executable'])
         self.assertEqual(result['budget']['state'], 'settled')
         self.client.responses.create.assert_called_once()
 
@@ -136,15 +169,28 @@ class CodexAdapterTests(unittest.TestCase):
         self.assertEqual(result['budget']['state'], 'uncertain')
         self.assertEqual(result['budget']['reserved_nanousd'], result['budget']['charged_nanousd'])
 
-    def test_failed_cancelled_and_pending_statuses_are_provider_failures(self):
+    def test_failed_cancelled_and_pending_statuses_remain_auditable_without_retry(self):
         for status in ('failed', 'cancelled', 'queued', 'in_progress'):
             with self.subTest(status=status):
                 self.client.responses.create.return_value = response(status=status)
-                with self.assertRaisesRegex(RuntimeError, 'non-solution status'):
-                    self.invoke()
+                result, _ = self.invoke()
+                self.assertFalse(result['solution_state']['executable'])
+                self.assertEqual(result['solution_state']['status'],
+                                 'provider_failure' if status in ('failed', 'cancelled') else 'incomplete')
+                self.assertEqual(result['code'], 'def solve = 1')
+                self.assertEqual(result['usage']['output_tokens'], 30)
                 row = self.read()['records'][-1]
                 self.assertEqual(row['response_status'], status)
                 self.assertEqual(row['state'], 'settled' if status in ('failed', 'cancelled') else 'uncertain')
+
+    def test_completed_response_with_incomplete_message_does_not_run(self):
+        self.client.responses.create.return_value = response(output=[
+            message('def solve =', 'final_answer', status='incomplete')])
+        result, _ = self.invoke()
+        self.assertEqual(result['code'], 'def solve =')
+        self.assertEqual(result['solution_state']['reason'], 'message_incomplete')
+        self.assertFalse(result['solution_state']['executable'])
+        self.client.responses.create.assert_called_once()
 
     def test_error_during_ledger_failure_recording_does_not_leak_original_sdk_error(self):
         self.client.responses.create.side_effect = TimeoutError('test-private-key in raw body')
@@ -196,13 +242,13 @@ class CodexAdapterTests(unittest.TestCase):
         with patch.object(openai, 'OpenAI') as constructor, \
                 patch('sys.stdin', io.StringIO(json.dumps({**REQUEST, 'model': 'gpt-other'}))), \
                 self.assertRaisesRegex(ValueError, 'requires model'):
-            adapter.main(['--budget-ledger=' + str(self.path)])
+            adapter.main(['--budget-ledger=' + str(self.path), '--audit-directory=' + str(self.path.parent / 'audit')])
         constructor.assert_not_called()
 
     def test_no_key_creates_no_ledger(self):
         with patch.dict('os.environ', {}, clear=True), patch('sys.stdin', io.StringIO(json.dumps(REQUEST))), \
                 self.assertRaisesRegex(RuntimeError, 'OPENAI_API_KEY'):
-            adapter.main(['--budget-ledger=' + str(self.path)])
+            adapter.main(['--budget-ledger=' + str(self.path), '--audit-directory=' + str(self.path.parent / 'audit')])
         self.assertFalse(self.path.exists())
 
     def test_tool_output_and_hidden_reasoning_are_never_executed_or_exposed(self):

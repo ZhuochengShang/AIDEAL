@@ -2,6 +2,7 @@
 from pathlib import Path
 
 from .ablation import bind, digest, load
+from .source_hints import strip_source_hints, index_source_hints
 from .evaluation_setup import (_mapping, _path, _string_list, _text, _valid_identifier,
                                assert_review_released)
 from .treatment_versions import _run, _trees, _check_worktree
@@ -12,6 +13,16 @@ DESIGNS = {'five_arm': FIVE_ARMS, 'refactor_pair': ('original', 'refactor_only')
 ALIAS_ARMS = ('alias_only', 'combined')
 HINT_ARMS = ('error_hints_only', 'combined')
 README_ARMS = ('readme_only', 'combined')
+
+
+def measured_conditions(cfg):
+    """Audience scope; every declared backend still participates in validation."""
+    return tuple(cfg.get('measured_conditions', cfg['conditions']))
+
+
+def source_api_function_ids(cfg):
+    """The attribution catalog may include helpers outside the scored task bank."""
+    return cfg.get('source_api_function_ids', cfg['api_function_ids'])
 
 
 def bind_command(item, name, base, refs):
@@ -72,6 +83,17 @@ def read_bank(path, cfg, refs):
     if len(set(mapping.values())) != len(mapping):
         raise ValueError('Qualified function IDs must be distinct')
     cfg['api_function_ids'] = mapping
+    if 'source_api_function_ids' in cfg:
+        if cfg['schema_version'] != 2:
+            raise ValueError('source_api_function_ids requires schema_version 2')
+        catalog = _mapping(cfg['source_api_function_ids'], 'source_api_function_ids')
+        for name, value in catalog.items():
+            _text(name, 'Source API name')
+            _text(value, 'Source function ID')
+        if any(catalog.get(name) != identity for name, identity in mapping.items()):
+            raise ValueError('Source API catalog must preserve every task-bank API identity')
+        if len(set(catalog.values())) != len(catalog):
+            raise ValueError('Source API catalog function IDs must be distinct')
     return bank
 
 
@@ -129,19 +151,30 @@ def match_treatments(cfg, backends):
     for arm, c in conditions.items():
         if arm not in README_ARMS and signatures[arm] != original:
             raise ValueError(f'{arm} must receive the original documentation bytes')
-        for field, allowed in (('alias_interface', ALIAS_ARMS), ('error_hints', HINT_ARMS)):
+        hint_field = 'source_hints' if cfg['schema_version'] == 2 else 'error_hints'
+        obsolete = 'error_hints' if cfg['schema_version'] == 2 else 'source_hints'
+        if obsolete in c:
+            raise ValueError(f'{arm}: {obsolete} is not part of this protocol')
+        for field, allowed in (('alias_interface', ALIAS_ARMS), (hint_field, HINT_ARMS)):
             if (field in c) != (arm in allowed):
                 raise ValueError(f'{arm}: unexpected or missing {field}')
         if arm in ('readme_only', 'error_hints_only'):
-            if backends[arm]['code_tree_sha256'] != backends['original']['code_tree_sha256']:
+            if not _matching_implementation(cfg, backends, 'original', arm):
                 raise ValueError(f'{arm} must retain the original backend code tree')
     if 'combined' in conditions:
         if signatures['readme_only'] != signatures['combined']:
             raise ValueError('Combined must reuse the README-only documentation bytes')
-        for field, arm in (('alias_interface', 'alias_only'), ('error_hints', 'error_hints_only')):
+        for field, arm in (('alias_interface', 'alias_only'),):
             if bind(conditions[arm][field])['sha256'] != bind(conditions['combined'][field])['sha256']:
                 raise ValueError('Combined must reuse the individual ' + field + ' bytes')
-        if backends['combined']['code_tree_sha256'] != backends['alias_only']['code_tree_sha256']:
+        if cfg['schema_version'] == 2:
+            left = _hint_content(conditions['error_hints_only'], source_api_function_ids(cfg))
+            right = _hint_content(conditions['combined'], source_api_function_ids(cfg))
+            if left != right:
+                raise ValueError('Combined must reuse the individual source guidance')
+        elif bind(conditions['error_hints_only']['error_hints'])['sha256'] != bind(conditions['combined']['error_hints'])['sha256']:
+            raise ValueError('Combined must reuse the individual error_hints bytes')
+        if not _matching_implementation(cfg, backends, 'alias_only', 'combined'):
             raise ValueError('Combined must reuse the alias-only backend code tree')
         if backends['alias_only']['code_tree_sha256'] == backends['original']['code_tree_sha256']:
             raise ValueError('Alias treatment requires a changed backend code tree')
@@ -150,3 +183,34 @@ def match_treatments(cfg, backends):
             raise ValueError('Alias-only must add wrappers without modifying baseline tracked files')
     if 'refactor_only' in conditions and backends['refactor_only']['code_tree_sha256'] == backends['original']['code_tree_sha256']:
         raise ValueError('Refactor-only requires a changed backend with the original target IDs')
+
+
+def _matching_implementation(cfg, backends, baseline, treatment):
+    """Allow only removal of validated annotation comment blocks in hint arms.
+
+    Git still binds the actual source bytes. This comparison does not certify
+    runtime equivalence; reference and negative controls run for every backend.
+    """
+    left, right = backends[baseline]['code_files'], backends[treatment]['code_files']
+    if left == right:
+        return True
+    condition = cfg['conditions'][treatment]
+    if cfg['schema_version'] != 2 or treatment not in HINT_ARMS or set(left) != set(right):
+        return False
+    base = Path(cfg['conditions'][baseline]['source']['worktree'])
+    root = Path(condition['source']['worktree'])
+    permitted = {str(Path(p)) for p in condition['source_hints']}
+    for path in left:
+        if left[path] == right[path]:
+            continue
+        if path not in permitted or left[path][0] != right[path][0]:
+            return False
+        if strip_source_hints((root / path).read_bytes().decode('utf-8')) != (base / path).read_bytes().decode('utf-8'):
+            return False
+    return True
+
+
+def _hint_content(condition, function_ids):
+    index = index_source_hints(condition['source']['worktree'], condition['source_hints'], function_ids)
+    fields = ('function_id', 'requirement_id', 'requirement', 'signature', 'action', 'validation', 'diagnostic', 'status')
+    return sorted((tuple(str(row.get(k)) for k in fields) for row in index['records']))

@@ -36,6 +36,12 @@ flowchart TD
 
 The library-batch path can cover selected definitions through multiple bounded requests. It reports omissions/truncation; it does not send every source file in one prompt or guarantee that every API needs a treatment. Alias names and destinations are checked before installation. Refactor suggestions require cited evidence and remain review candidates, not automatically applied patches.
 
+## Explicit README authoring sessions
+
+The [audited session path](README_SESSIONS.md) freezes a qualified definition manifest, immutable base and supplied context before any call. Full authoring makes one prepared entry call. Refresh makes one fresh deep-dive plus one rewrite per selected family; all non-selected bytes remain unchanged. It uses the existing native prompt loader with explicit author/reviewer/fixer contracts through the shared budgeted bridge, without legacy progress/cache reuse or execution-based acceptance. Exact phase receipts and settled ledger rows are checked before resume.
+
+The separate three-document evaluator can compare an unchanged generated base, selected API refresh and full README refresh using an explicit `selective_refresh` design. In the prepared full-refresh recipe, full authoring runs again from the common skeleton/facts, followed by the same selected-entry refresh; it is not a refresh of every existing entry. New sessions and this comparison are prepared capabilities; actual completion requires saved provider/checker results.
+
 ## Prompts and model calls
 
 | Purpose | Runtime prompt source | Configured role |

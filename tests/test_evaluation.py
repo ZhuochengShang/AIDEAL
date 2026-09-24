@@ -370,7 +370,8 @@ print(json.dumps(dict(execution_pass=True,
 
     def test_identical_copied_controller_accepts_frozen_identity(self):
         frozen = self.freeze()
-        expected_names = {'evaluation.py', 'evaluation_setup.py', 'execution.py', 'reporting.py', 'ablation.py'}
+        expected_names = {'evaluation.py', 'evaluation_setup.py', 'execution.py', 'reporting.py', 'ablation.py',
+                          'generation.py', 'repair_context.py', 'response_status.py'}
         identity = load(frozen)['controller_sha256']
         self.assertEqual(expected_names, set(identity))
         controller = Path(evaluation_setup.__file__).parent

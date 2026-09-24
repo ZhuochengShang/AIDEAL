@@ -1,0 +1,46 @@
+# Attachment example only; no runnable evaluator or selected model.
+# Copy to <preparation-workspace>/configs/aideal.yaml.
+# Replace /absolute/path/to/source with your clean PREPARATION branch checkout.
+# source_path is your shell variable in the guide, not a YAML setting/interpolation.
+# Relative paths resolve from the config file's grandparent, not the shell cwd.
+extends: ["java"]
+project:
+  name: "Thumbnailator"
+  language: "Java"
+codebase:
+  source_globs:
+    - "/absolute/path/to/source/src/main/java/**/*.java"
+  test_globs:
+    - "/absolute/path/to/source/src/test/java/**/*.java"
+  surface_filter: all
+  intent:
+    use_llm: false
+files:
+  original_readme:
+    - "/absolute/path/to/source/README.md"
+  llm_readme: docs/LLM_readme.md
+  error_log: logs/error_log.jsonl
+models:
+  registry:
+    setup_disabled:
+      provider: disabled
+      model: not_selected
+  roles:
+    author: setup_disabled
+    audience: setup_disabled
+    fixer: setup_disabled
+comprehension:
+  execute:
+    scaffold: null
+    command: null
+    imports: []
+    execution_context: Unvalidated language skeleton; no library runtime or correctness oracle installed.
+evaluation:
+  model: null
+  temperature: null
+  max_output_tokens: null
+  max_snippet_fixes: null
+  provider_attempt_limit: null
+  execution_timeout_s: null
+  trial_ids: null
+  prompt_sha256: null

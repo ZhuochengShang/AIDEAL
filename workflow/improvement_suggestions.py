@@ -40,6 +40,27 @@ def _model_settings(path):
     return {**model, 'temperature': temperature}
 
 
+def proposal_response_error(result, model=None):
+    """Do not install syntactically valid partial/refused provider suggestions."""
+    payload = result.get('payload')
+    if result.get('status') != 'ok' or not isinstance(payload, dict):
+        return 'provider_attempt_failed'
+    if not isinstance(payload.get('code'), str) or not payload['code'].strip():
+        return 'provider_empty_or_invalid_output'
+    status = payload.get('response_status')
+    if ((status is not None and status != 'completed') or payload.get('truncated')
+            or payload.get('incomplete_reason')):
+        return 'provider_incomplete_or_noncompleted'
+    if payload.get('refusals') or payload.get('response_kind') in ('refusal', 'empty_model_output'):
+        return 'provider_refusal_or_empty_output'
+    if model == 'gpt-5.3-codex':
+        if status != 'completed':
+            return 'provider_completion_status_missing'
+        if not isinstance(payload.get('budget'), dict) or payload['budget'].get('state') != 'settled':
+            return 'provider_usage_unsettled'
+    return None
+
+
 def validate_suggestions(value, context, *, reserved_names=None):
     """Validate referential/schema integrity, without claiming code correctness."""
     if not isinstance(value, dict):
@@ -139,13 +160,17 @@ def propose_improvements(preview_path, model_config, output, *, readme=None):
                'max_output_tokens': settings['max_output_tokens']}
     # invoke stores exact system/user messages and full adapter stdout/stderr.
     result = invoke(settings['command'], request, output / 'model_attempt', settings['timeout_s'])
-    if result['status'] != 'ok' or not isinstance(result.get('payload'), dict) or not isinstance(result['payload'].get('code'), str):
-        raise ValueError('Development model failed; attempt evidence is preserved')
+    error = proposal_response_error(result, settings['name'])
+    if error:
+        atomic_json(output / 'model_attempt/rejected.json', {'status': 'invalid_provider_response', 'reason': error})
+        raise ValueError('Development model response rejected: ' + error + '; attempt evidence is preserved')
     return _finish_proposal(preview, attachment, output, result, readme_ref, output / 'model_attempt')
 
 
 def _finish_proposal(preview, attachment, output, result, readme_ref, attempt):
     """Persist review artifacts from a recorded result; never install or execute them."""
+    if proposal_response_error(result):
+        raise ValueError('Incomplete, refused or invalid proposal response')
     if not all(verify_artifact(ref) for ref in preview['artifacts']):
         raise ValueError('Source changed during generation; do not install these suggestions')
     original_checkout(preview['study'])

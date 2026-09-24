@@ -33,6 +33,14 @@ Pair conditions `a` and `b` only on the same case/trial. Let `M_ab,k` count pair
 
 The provisional value describes a completed subset and can be biased by execution order/selective completion. Final lift is a descriptive within-budget accuracy difference. Reports include all pairs but do not infer causal significance, confidence intervals or broad generalization.
 
+## Separate selective-refresh comparison
+
+The three-document evaluator's explicit `selective_refresh` design compares `Unchanged generated README`, `Selected API refresh`, and `Full README refresh` on the same backend. The unchanged generated document is the first baseline; all three pairs are reported separately for microtasks and puzzles. Case/trial denominators and snippet-repair budgets remain fixed. The prepared last condition uses fresh full authoring followed by the same selected-entry refresh; full-authoring variability is part of that procedure. It is not equivalent to rewriting every entry of the unchanged document. This is a documentation comparison, not the five source-treatment conditions.
+
+A complete authoring session only yields `authored_not_execution_validated`. Its author/deep-dive/rewrite usage must remain distinguishable from audience solve/repair usage, even when one study budget ledger covers both. A freshly prepared comparison has no score until its independent controls and audience runs exist. The older three-document runner retains its existing checkpoint evidence limitations; do not infer the stronger condition-runner receipt checks solely from its condition names.
+
+The optional `qualified_sections` retrieval policy uses reviewed exact API headings and balanced target-section character budgets. Inspect its actual ranges, clipping and missing-target coverage for each condition. A missing target falls back to public unstructured content, not another qualified API section; absent matches remain absent coverage. Retrieval policy is shared and frozen, while each document can expose different amounts of relevant text. See [configuration](CONFIGURATION.md#optional-qualified-section-retrieval).
+
 ## Resources and interpretation
 
 Reports total provider calls, provider/checker wall time and valid provider-reported token usage across attempts. Missing usage stays explicit. Control costs remain in validation evidence, separate from audience generation. Documentation, aliases and hints have separate character caps; these are not token budgets or proof of equal prompt lengths.

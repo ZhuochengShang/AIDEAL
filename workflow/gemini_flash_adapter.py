@@ -23,13 +23,6 @@ def response_record(response):
             'tool_use_prompt_tokens': usage.tool_use_prompt_token_count,
             'total_tokens': usage.total_token_count,
         })
-    candidate = (response.candidates or [None])[0]
-    reason = getattr(candidate, 'finish_reason', None)
-    record['finish_reason'] = getattr(reason, 'value', reason)
-    record['finish_message'] = getattr(candidate, 'finish_message', None)
-    record['truncated'] = record['finish_reason'] == 'MAX_TOKENS'
-    block = getattr(response.prompt_feedback, 'block_reason', None)
-    record['prompt_block_reason'] = getattr(block, 'value', block)
     return record
 
 

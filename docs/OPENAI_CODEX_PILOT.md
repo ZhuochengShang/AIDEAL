@@ -1,4 +1,4 @@
-# Codex adapter with a shared pilot budget
+# Codex adapter and shared study budgets
 
 This separate adapter uses `gpt-5.3-codex` through the OpenAI Responses API.
 Install both new modules, `workflow/openai_codex_adapter.py` and
@@ -49,8 +49,11 @@ failures, after accounting for any known usage.
 
 ## Budget behavior
 
-The default and maximum cap is **$5 shared across all calls using this ledger**.
-A smaller cap is allowed initially; changing it on resume is rejected. Monetary
+The default `legacy-v1` policy retains schema 1 and a maximum of **$5 shared across calls using its ledger**. A smaller cap is allowed initially; changing it on resume is rejected. The historical pilot used this policy.
+
+A new explicit `study-v2` policy permits a configured ceiling up to **$100**, requires a stable `study_id`, and uses schema 2. Use a new ledger path; an existing ledger cannot change its schema, cap, model or study identity. For command adapters, add `--budget-policy=study-v2 --study-id=YOUR_NEW_STUDY --max-cost-usd=100` to the equals-form ledger command. These flags authorize accounting policy only; they do not generate or evaluate a study. The native bridge requires this explicit policy; see [audited README sessions](README_SESSIONS.md).
+
+Monetary
 arithmetic uses integer nanodollars. Fixed standard prices are $1.75 per million
 uncached input tokens, $0.175 cached input, and $14 output, verified against the
 [model specification](https://developers.openai.com/api/docs/models/gpt-5.3-codex).
@@ -79,14 +82,20 @@ status, error code and request ID; raw error bodies and chained SDK tracebacks a
 suppressed. Other clients, different ledger paths, provider pricing changes, or
 manual ledger alteration fall outside this local guard.
 
+## Audited native text route
+
+[Native `invoke_text`](../vendor/aideal_engine/src/aideal/llm.py) routes only an explicit `aideal-codex-audited` model registry entry through [native_provider_bridge.py](../workflow/native_provider_bridge.py). The bridge verifies source/policy hashes, writes exact request/settings/reservation evidence before HTTP, then saves response/result/outcome records. It requires completed nonempty output with accounted usage; incomplete, refused, uncertain or changed-contract results fail closed with evidence retained. There is no direct-provider fallback.
+
+The same route serves prepared author, reviewer and fixer phases with separate stage directories and one immutable budget identity. [readme_receipts.py](../workflow/readme_receipts.py) verifies complete saved phase evidence against the settled ledger row on resume. This capability is implemented and tested offline; it does not claim that a newly prepared study has executed.
+
 ## Offline verification
 
 ```bash
 python -m unittest discover -s tests -v
-python -S -m unittest discover -s tests -v
+python -S -m unittest discover -s tests -p 'test_provider_budget.py' -v
 ```
 
-Tests mock the provider client. Budget tests use only the standard library and
+The full suite requires base dependencies. The second command checks only the standard-library budget suite without site packages. Tests mock the provider client. Budget tests use only the standard library and
 include competing processes. Without the optional SDK, adapter tests skip while
 budget tests still run. No provider request is needed for either test command.
 The installed SDK's Responses types are used when available.
