@@ -237,7 +237,8 @@ def score(bank, trial_ids, rows, *, study_sha256, max_snippet_fixes=5,
           arms=None, baseline="original"):
     """One latest adjudicated row per case/trial/arm, not raw attempt history.
 
-    Provider-pending, not-run, and missing-oracle results remain unresolved.
+    Provider-pending, incomplete/refused/empty generations, not-run, and missing-oracle
+    results remain unresolved, retaining the selected denominator.
     Do not accept an exit marker as semantic correctness.
     """
     arms = tuple(ARMS if arms is None else arms)
@@ -253,7 +254,9 @@ def score(bank, trial_ids, rows, *, study_sha256, max_snippet_fixes=5,
             raise ValueError("Unmatched study/arm")
         if r["case_id"] not in case_by_id or r["trial_id"] not in trial_ids or key in by_key:
             raise ValueError("Unknown/duplicate case or trial")
-        if r["status"] not in {"pass", "fail", "provider_pending", "not_run", "unverified"}:
+        if r["status"] not in {"pass", "fail", "provider_pending", "not_run", "unverified",
+                                "generation_incomplete", "generation_refusal", "generation_empty",
+                                "generation_provider_failure"}:
             raise ValueError("Unknown result status")
         if r.get("first_attempt_pass") is True and r["status"] != "pass":
             raise ValueError("An initial semantic pass must be a verified pass outcome")

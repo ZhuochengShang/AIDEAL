@@ -91,7 +91,8 @@ class FlashAdapterTests(unittest.TestCase):
     def test_empty_reasoning_only_retains_billed_usage(self):
         record = adapter.response_record(response('', reason='MAX_TOKENS', visible=0))
         self.assertEqual(record['code'], '')
-        self.assertEqual(record['response_kind'], 'empty_model_output')
+        self.assertEqual(record['response_kind'], 'incomplete_model_output')
+        self.assertFalse(record['solution_state']['executable'])
         self.assertEqual(record['usage']['output_tokens'], 23)
         self.assertEqual(record['usage']['thinking_tokens'], 23)
         self.assertTrue(record['truncated'])
@@ -99,7 +100,9 @@ class FlashAdapterTests(unittest.TestCase):
     def test_truncated_code_is_preserved_without_retry(self):
         record, _, client = self.invoke(result=response('def solve =', reason='MAX_TOKENS'))
         self.assertEqual(record['code'], 'def solve =')
-        self.assertEqual(record['response_kind'], 'solution')
+        self.assertEqual(record['response_kind'], 'incomplete_model_output')
+        self.assertEqual(record['solution_state']['reason'], 'max_output_tokens')
+        self.assertFalse(record['solution_state']['executable'])
         self.assertTrue(record['truncated'])
         client.models.generate_content.assert_called_once()
 
@@ -112,6 +115,8 @@ class FlashAdapterTests(unittest.TestCase):
         self.assertIsNone(record['finish_reason'])
         self.assertFalse(record['truncated'])
         self.assertNotIn('usage', record)
+        self.assertEqual(record['solution_state']['status'], 'refusal')
+        self.assertFalse(record['solution_state']['executable'])
 
     def test_unreported_breakdown_remains_unknown(self):
         record = adapter.response_record(response(thoughts=None, visible=None))

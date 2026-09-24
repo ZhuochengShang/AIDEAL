@@ -1,12 +1,37 @@
-# RDPro — verified source and recorded five-condition execution
+# AIDEAL — source-embedded error guidance
+
+This branch publishes the September 24 update to AIDEAL's development and
+evaluation code. It preserves the previously published README generation,
+selective README evaluation, alias development and experiment recording tools.
+
+The new workflow collects failures from a separate Original development R0 run,
+proposes function-specific guidance, checks the proposed correction with four
+execution controls, and commits validated comments beside the affected functions
+in new Error Hints only and Combined branches. Evaluation retrieves a note only
+after a matching failure. It also records incomplete model responses separately
+and supports a compact repair context with an independent repair output limit.
+
+- [Source-hint development, validation and installation](docs/SOURCE_EMBEDDED_ERROR_GUIDANCE.md)
+- [Failure attribution, repair context and output handling](docs/SOURCE_GUIDED_REPAIRS.md)
+- [Release scope and software checks](docs/SOURCE_HINT_RELEASE.md)
+- [Example configuration](configs/source_guided_evaluation.example.yaml)
+- [All six libraries and their source branches](studies/README.md)
+
+**Experiment status:** the source-hint software is available, but actual RDPro
+source annotations and the separate 192-trial rerun remain pending. Publishing
+this code does not start a model run or convert historical JSON-hint outcomes
+into source-embedded-hint results. Use a new validated freeze for the new protocol.
+
+## Earlier RDPro pipeline publication
 
 The prepared source matches a fresh clone of official Bitbucket Beast/RDPro 0.10.1 byte-for-byte. The user requested the five-condition, 32-task, three-trial run (480 units). Exact prompts, outputs, code, attempts, tokens, timing, errors and results are being bound to the run before execution.
 
 [Source verification](studies/rdpro/2026-09-22-full-pipeline/provenancePUBLIC.md) · [Recording, scope and estimated duration](studies/rdpro/2026-09-22-full-pipeline/RECORDED_RUN.md) · [Study design](studies/rdpro/2026-09-22-full-pipeline/README.md)
 
-New results are pending. The completed pilot and five other baseline preparations remain below as separate evidence.
+The following study links preserve the earlier published setup and evidence.
+Their preparation-time status is historical, not a live experiment monitor.
 
-# AIDEAL — shared evaluation and library studies
+## Shared evaluation and library studies
 
 The earlier setup branch, `setup/2026-09-21-library-five-conditions`, connects one shared AIDEAL evaluator to the source repositories for all six registered libraries. The existing RDPro pilot is preserved. SedonaDB, MDAnalysis, tslearn, mir_eval and Thumbnailator each have a new baseline-only five-condition preparation; their treatments, independent benchmark adapters and evaluations are pending.
 

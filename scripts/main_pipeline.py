@@ -302,7 +302,7 @@ class Pipeline:
         attachment = load(self.study/'attachment.json')
         model = self.yaml.safe_load((self.root/'configs/improvement-model.yaml').read_text())['model']
         model = {'name': model['name'], 'command': model['command'], 'artifacts': [str(self.engine/'workflow'/p) for p in
-                        ('openai_codex_adapter.py', 'provider_budget.py')]}
+                        ('openai_codex_adapter.py', 'provider_budget.py', 'response_status.py')]}
         conditions = {}
         for arm in FIVE_ARMS:
             row = backends[arm]; source = Path(row['worktree'])

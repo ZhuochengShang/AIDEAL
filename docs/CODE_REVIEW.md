@@ -15,6 +15,28 @@ Read the [workflow](SUMMARY.md) and [condition matrix](VERSIONS.md), then follow
 | Optional Codex provider | [openai_codex_adapter.py](../workflow/openai_codex_adapter.py), [provider_budget.py](../workflow/provider_budget.py), [pilot guide](OPENAI_CODEX_PILOT.md) | Are final-answer phases selected, request settings recorded, and the shared reservation made before HTTP? |
 | Scores | `report_conditions` in [condition_reporting.py](../workflow/condition_reporting.py) | Are denominators, matched pairs, unresolved units and costs retained? |
 
+## Source-embedded error guidance
+
+Follow the [development and installation workflow](SOURCE_EMBEDDED_ERROR_GUIDANCE.md)
+and [repair protocol](SOURCE_GUIDED_REPAIRS.md) in this order:
+
+1. [source_hint_development.py](../workflow/source_hint_development.py) collects
+   Original development R0 evidence, records the author request and verifies four
+   replay controls. Its prompt is [source_hint_development.md](../prompts/source_hint_development.md).
+2. [source_hint_proposals.py](../workflow/source_hint_proposals.py) prepares
+   annotation-only files. [source_hint_installation.py](../workflow/source_hint_installation.py)
+   rechecks validation and commits identical notes into two new branches.
+3. [source_hints.py](../workflow/source_hints.py) parses the pinned comments;
+   [failure_diagnosis.py](../workflow/failure_diagnosis.py) locates the actual
+   failing function and requirement before retrieval.
+4. [repair_context.py](../workflow/repair_context.py) preserves the relevant
+   program and guidance. [response_status.py](../workflow/response_status.py) and
+   [generation.py](../workflow/generation.py) keep incomplete output out of execution
+   while retaining its provider evidence and usage.
+
+The generic freeze validates backends and source identities. It does not certify
+a hint's correction independently of the development validator and installer.
+
 ## Audited authoring and refresh
 
 Follow [readme_authoring.py](../workflow/readme_authoring.py) for exact input/role bindings, [scala_owners.py](../workflow/scala_owners.py) for conservative lexical receivers, and [readme_spans.py](../workflow/readme_spans.py) for byte preservation. [readme_session.py](../workflow/readme_session.py) invokes the explicit [native bridge](../workflow/native_provider_bridge.py); [readme_receipts.py](../workflow/readme_receipts.py) checks saved provider/ledger evidence before a completed phase is reused. [Session tests](../tests/test_readme_authoring.py) exercise alteration, uncertain dispatch and preservation without a provider call.

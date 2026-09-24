@@ -18,7 +18,7 @@ _CONDITION_DESIGNS = {
     'selective_refresh': ('Unchanged generated README', 'Selected API refresh', 'Full README refresh'),
 }
 CONTROLLER_MODULES = ('evaluation.py', 'evaluation_setup.py', 'execution.py',
-                      'reporting.py', 'ablation.py')
+                      'reporting.py', 'ablation.py', 'response_status.py', 'repair_context.py', 'generation.py')
 SYSTEM = ('Write a solution using the supplied library documentation and task contract. '
           'Return only the requested source code, without Markdown fences. '
           'Do not read files, contact services, inspect hidden tests, or replace library functions. '
@@ -107,6 +107,12 @@ def _validate_common(common, model):
     for name, value in integers.items():
         if type(value) is not int or value < 1:
             raise ValueError(f'Positive integer required: {name}')
+    if 'repair_max_output_tokens' in common:
+        cap = common['repair_max_output_tokens']
+        if type(cap) is not int or cap < 1:
+            raise ValueError('repair_max_output_tokens must be a positive integer')
+    if common.get('repair_context', 'full') not in ('full', 'distilled'):
+        raise ValueError('repair_context must be full or distilled')
     repairs = common.get('max_snippet_fixes')
     if type(repairs) is not int or repairs < 0:
         raise ValueError('Declare a nonnegative integer repair budget')

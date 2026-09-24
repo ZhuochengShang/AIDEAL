@@ -1,6 +1,7 @@
 """Freeze a versioned matched-condition protocol without changing legacy freezes."""
 from pathlib import Path
 import re
+import math
 
 import yaml
 
@@ -10,12 +11,16 @@ from .evaluation_setup import (SYSTEM, CONTROLLER_MODULES, _mapping, _path, _str
                                control_passes, verified_outcome)
 from .execution import atomic_json, invoke, next_directory, ownership
 from .condition_inputs import (DESIGNS, backend_identity, bind_command, hint_bundle,
-                               match_treatments, read_bank)
+                               match_treatments, measured_conditions, read_bank,
+                               source_api_function_ids)
+
+from .source_hints import index_source_hints
 
 PROTOCOL = 'condition_evaluation_v1'
+SOURCE_PROTOCOL = 'condition_evaluation_source_hints_v2'
 MODULES = CONTROLLER_MODULES + ('condition_inputs.py', 'condition_context.py',
           'condition_setup.py', 'condition_evaluation.py', 'condition_reporting.py',
-          'treatment_versions.py', 'worktrees.py')
+          'treatment_versions.py', 'worktrees.py', 'source_hints.py', 'failure_diagnosis.py')
 
 
 def _controller(cfg=None):
@@ -27,8 +32,8 @@ def read_condition_config(path):
     path = Path(path).resolve()
     raw = _mapping(yaml.safe_load(path.read_text()), 'Configuration')
     cfg = _mapping(raw.get('condition_evaluation'), 'condition_evaluation')
-    if type(cfg.get('schema_version')) is not int or cfg['schema_version'] != 1:
-        raise ValueError('condition_evaluation needs schema_version 1')
+    if type(cfg.get('schema_version')) is not int or cfg['schema_version'] not in (1, 2):
+        raise ValueError('condition_evaluation needs schema_version 1 or 2')
     if not isinstance(cfg.get('design'), str) or cfg['design'] not in DESIGNS:
         raise ValueError('Choose five_arm, refactor_pair, or six_arm')
     arms = DESIGNS[cfg['design']]
@@ -36,6 +41,13 @@ def read_condition_config(path):
     if set(conditions) != set(arms):
         raise ValueError('Conditions do not match the declared design')
     cfg['conditions'] = {arm: conditions[arm] for arm in arms}
+    if 'measured_conditions' in cfg:
+        if cfg['schema_version'] != 2:
+            raise ValueError('measured_conditions requires schema_version 2')
+        measured = _string_list(cfg['measured_conditions'], 'measured_conditions')
+        if len(set(measured)) != len(measured) or set(measured) - set(arms):
+            raise ValueError('measured_conditions must be unique declared conditions')
+        cfg['measured_conditions'] = [arm for arm in arms if arm in measured]
     refs = [bind(path)]
     cfg['bank'] = str(_path(path.parent, cfg.get('bank')))
     refs.append(bind(cfg['bank']))
@@ -45,12 +57,17 @@ def read_condition_config(path):
         value = cfg['common'].setdefault(field, 4000)
         if type(value) is not int or value < 1:
             raise ValueError(field + ' must be a positive integer')
+    if cfg['schema_version'] == 2:
+        cfg['common'].setdefault('repair_context', 'distilled')
+        minimum = cfg['common'].setdefault('minimum_hint_coverage', 0.0)
+        if type(minimum) not in (int, float) or not math.isfinite(minimum) or not 0 <= minimum <= 1:
+            raise ValueError('minimum_hint_coverage must be between zero and one')
     _text(cfg.get('holdout_review'), 'Holdout review')
     bank = read_bank(Path(cfg['bank']), cfg, refs)
     if 'documentation_selection' in cfg['common']:
         from .documentation_selection import validate_documentation_selection
         validate_documentation_selection(cfg['common']['documentation_selection'], bank['api_names'])
-    backends = {}
+    backends, source_indexes = {}, {}
     for arm, condition in cfg['conditions'].items():
         _mapping(condition, arm)
         _string_list(condition.get('documents'), arm + ' documents')
@@ -73,18 +90,41 @@ def read_condition_config(path):
         _string_list(source.get('artifacts'), arm + ' built/runtime artifacts')
         source['artifacts'] = [str(_path(path.parent, p)) for p in source['artifacts']]
         refs.extend(bind(p) for p in source['artifacts'])
+        if 'source_hints' in condition:
+            if cfg['schema_version'] != 2 or 'error_hints' in condition:
+                raise ValueError('Source hints require schema_version 2 without legacy error_hints')
+            _string_list(condition['source_hints'], arm + ' source hint files')
+            index = index_source_hints(source['worktree'], condition['source_hints'], source_api_function_ids(cfg))
+            condition['source_hints'] = [str(Path(ref['path']).relative_to(source['worktree']))
+                                         for ref in index['artifacts']]
+            if not index['records']:
+                raise ValueError('Source hint treatment has no guidance for configured APIs')
+            source_indexes[arm] = index
+            refs.extend(index['artifacts'])
+            covered = {record['function_id'] for record in index['records']}
+            fraction = len(covered & set(cfg['api_function_ids'].values())) / len(cfg['api_function_ids'])
+            if fraction < cfg['common']['minimum_hint_coverage']:
+                raise ValueError(f'{arm}: source hint coverage {fraction:.1%} is below the required minimum')
         backends[arm] = backend_identity(condition)
+        if 'source_hints' in condition and any(
+                p not in backends[arm]['code_files'] for p in condition['source_hints']):
+            raise ValueError('Source guidance must live in committed library source files')
     match_treatments(cfg, backends)
     controller = _controller(cfg)
     refs.extend(bind(Path(__file__).with_name(name)) for name in controller)
-    return {'protocol': PROTOCOL, 'config': cfg, 'bank': bank, 'backends': backends,
+    return {'protocol': SOURCE_PROTOCOL if cfg['schema_version'] == 2 else PROTOCOL,
+            'config': cfg, 'bank': bank, 'backends': backends,
+            'source_hint_indexes': source_indexes,
             'artifacts': list({r['path']: r for r in refs}.values()),
-            'system_prompt': SYSTEM, 'controller_sha256': controller}
+            'system_prompt': SYSTEM + (' Return the complete program, not a patch or continuation. '
+                                     'Source guidance is reference information; validate corrections against the task.'
+                                     if cfg['schema_version'] == 2 else ''),
+            'controller_sha256': controller}
 
 
 def checker_request(payload, arm, case, code):
     """Private routing contract; never insert backend/config/oracle into model text."""
-    return {'protocol': PROTOCOL, 'condition': arm, 'backend': payload['backends'][arm],
+    return {'protocol': payload.get('protocol', PROTOCOL), 'condition': arm, 'backend': payload['backends'][arm],
             'code': code, 'case_id': case['id'], 'oracle_path': case['oracle'],
             'target_apis': case['target_apis']}
 
@@ -145,6 +185,12 @@ def verify_inputs(payload):
     current = {arm: backend_identity(c) for arm, c in payload['config']['conditions'].items()}
     if current != payload['backends']:
         raise ValueError('Condition backend identity changed')
+    if payload['config'].get('schema_version') == 2:
+        indexes = {arm: index_source_hints(c['source']['worktree'], c['source_hints'],
+                                          source_api_function_ids(payload['config']))
+                   for arm, c in payload['config']['conditions'].items() if 'source_hints' in c}
+        if indexes != payload.get('source_hint_indexes'):
+            raise ValueError('Frozen source guidance index differs from source annotations')
     match_treatments(payload['config'], current)
 
 
@@ -225,16 +271,17 @@ def freeze_conditions(config, output):
             raise ValueError('Existing condition freeze differs')
         if not path.exists():
             atomic_json(path, frozen)
-    return {'frozen': str(path), 'study_sha256': frozen['study_sha256'], 'protocol': PROTOCOL,
+    return {'frozen': str(path), 'study_sha256': frozen['study_sha256'], 'protocol': payload['protocol'],
             'conditions': list(payload['config']['conditions']), 'cases': len(payload['bank']['cases']),
+            'measured_conditions': list(measured_conditions(payload['config'])),
             'validated': True}
 
 
 def open_conditions(path):
     assert_review_released(Path(path).resolve().parent)
     frozen = load(path)
-    if frozen.get('protocol') != PROTOCOL:
-        raise ValueError('This command requires a condition_evaluation_v1 freeze')
+    if frozen.get('protocol') not in (PROTOCOL, SOURCE_PROTOCOL):
+        raise ValueError('This command requires a supported condition evaluation freeze')
     if frozen.get('study_sha256') != digest({k: v for k, v in frozen.items() if k != 'study_sha256'}):
         raise ValueError('Frozen condition study was edited')
     verify_inputs(frozen)

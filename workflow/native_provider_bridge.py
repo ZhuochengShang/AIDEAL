@@ -13,6 +13,7 @@ from .provider_budget import BudgetLedger, MODEL, digest
 
 PROVIDER = 'aideal-codex-audited'
 CONTROLLER_FILES = ('workflow/provider_budget.py', 'workflow/openai_codex_adapter.py',
+                    'workflow/response_status.py',
                     'workflow/native_provider_bridge.py', 'vendor/aideal_engine/src/aideal/llm.py',
                     'vendor/aideal_engine/src/aideal/config.py')
 FIELDS = {'policy', 'study_id', 'stage', 'budget_ledger', 'max_cost_usd',

@@ -8,7 +8,7 @@ from pathlib import Path
 import random
 import re
 
-from .ablation import digest, load, verify_artifact
+from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json, invoke, next_directory, ownership
 from .evaluation_setup import (
     CONDITIONS, SYSTEM, adapter_request, verified_outcome, conditions_for,
@@ -16,6 +16,9 @@ from .evaluation_setup import (
     _checked_execution,
 )
 from .reporting import report, write_report
+from .generation import (STOPPED_STATUSES, attempts, generation_record, mark_generation, model_response,
+                         output_limit, rounds, save_generation, selected_response, verify_generation)
+from .repair_context import compact_previous, public_failure
 
 # Setup functions remain importable here for existing study launchers. They are
 # imports, not second implementations; new callers may import evaluation_setup.
@@ -82,6 +85,8 @@ def run_evaluation(study, output, condition=None, max_units=None, retry_provider
         atomic_json(identity, {'study_sha256': frozen['study_sha256']})
         rows = _load_completed_rows(output)
         report(frozen, list(rows.values()))  # Validate resumed rows before any model call.
+        for (arm, case_id, trial), row in rows.items():
+            _verify_readme_row(frozen, row, output / arm / f'{case_id}--{trial}')
         schedule = [(a, c, t) for a in conditions for c in bank['cases'] for t in common['trial_ids']]
         random.Random(common.get('ordering_seed', 42)).shuffle(schedule)
         processed = 0
@@ -89,7 +94,7 @@ def run_evaluation(study, output, condition=None, max_units=None, retry_provider
             key = (arm, case['id'], trial)
             if condition and arm != condition:
                 continue
-            if rows.get(key, {}).get('status') in ('pass', 'fail'):
+            if rows.get(key, {}).get('status') in STOPPED_STATUSES:
                 continue
             if max_units is not None and processed >= max_units:
                 break
@@ -103,6 +108,7 @@ def run_evaluation(study, output, condition=None, max_units=None, retry_provider
                                                   common.get('documentation_selection'))
             atomic_json(directory / 'documentation_exposure.json', exposure)
             row = _run_unit(frozen, arm, case, trial, docs, directory, retry_provider)
+            _verify_readme_row(frozen, row, directory)
             atomic_json(directory / 'result.json', row)
             rows[key] = row
             summary = report(frozen, list(rows.values()))
@@ -117,6 +123,16 @@ def run_evaluation(study, output, condition=None, max_units=None, retry_provider
         return summary
 
 
+def _readme_request(frozen, case, documentation, previous, round_number):
+    cfg, common = frozen['config'], frozen['config']['common']
+    receipt = None
+    if previous and common.get('repair_context') == 'distilled':
+        previous, receipt = compact_previous(previous)
+    return {'system': frozen['system_prompt'], 'prompt': audience_prompt(case, documentation, previous),
+            'model': cfg['model']['name'], 'temperature': common['temperature'],
+            'max_output_tokens': output_limit(common, round_number)}, receipt
+
+
 def _run_unit(frozen, arm, case, trial, documentation, directory, retry_provider=False):
     cfg = frozen['config']
     common = cfg['common']
@@ -125,33 +141,39 @@ def _run_unit(frozen, arm, case, trial, documentation, directory, retry_provider
     previous = None
     for round_number in range(common['max_snippet_fixes'] + 1):
         root = directory / f'round_{round_number:02d}'
-        request = {'system': frozen['system_prompt'], 'prompt': audience_prompt(case, documentation, previous),
-                   'model': cfg['model']['name'], 'temperature': common['temperature'],
-                   'max_output_tokens': common['max_output_tokens']}
+        request, repair_receipt = _readme_request(frozen, case, documentation, previous, round_number)
+        if repair_receipt is not None:
+            atomic_json(root / 'repair_context.json', repair_receipt)
         # Never include hidden oracle paths, references, or expected values in this request.
         response = _request_solution(cfg, request, root, retry_provider)
         if response is None:
             row['status'] = 'provider_pending'
+            break
+        if not mark_generation(row, response, round_number):
             break
         code = response['code']
         if code.strip().startswith('```'):
             match = re.fullmatch(r'\s*```[^\n]*\n(.*?)\n```\s*', code, re.S)
             if match:
                 code = match[1]
-        _, result = _checked_execution(cfg, case, code, root, prefix='execution_')
+        destination, result = _checked_execution(cfg, case, code, root, prefix='execution_')
         passed = verified_outcome(result)
         if passed is None:
             row['status'] = 'unverified'
             break
         row.update({k: result['payload'][k] for k in ('execution_pass', 'oracle_pass', 'target_reached')})
+        row.update(last_checked_round=round_number, code_sha256=digest(code),
+                   adjudication={'process': bind(destination / 'process.json'),
+                                 'request': bind(destination / 'request.json')})
         if passed:
             row.update(status='pass', first_attempt_pass=round_number == 0, first_pass_round=round_number)
             break
         row['status'] = 'fail'
         # Adapter public feedback must not reveal hidden inputs/expected answers.
         # Complete compiler/runtime logs remain saved in the execution directory.
-        previous = {'code': code, 'feedback': result['payload'].get('public_feedback', 'Independent checks did not pass.')}
+        previous = previous_result(code, result['payload'], 'Independent checks did not pass.')
     row['resources'] = _collect_resources(directory)
+    row['round_evidence'] = rounds(directory)
     return row
 
 
@@ -171,35 +193,135 @@ def _load_completed_rows(output):
 
 
 def _model_response(result):
-    """One schema check shared by cached and newly returned provider responses."""
-    payload = result.get('payload')
-    if result.get('status') == 'ok' and isinstance(payload, dict) and isinstance(payload.get('code'), str):
-        return payload
-    return None
+    """Compatibility entry point shared by cached and new provider responses."""
+    return model_response(result)
 
 
 def _request_solution(cfg, request, root, retry_provider):
-    """Reuse a saved response before spending a bounded transport allowance."""
+    """Reuse any model outcome; only transport failures consume retry allowance."""
     common = cfg['common']
-    for record in sorted(root.glob('provider_*/process.json')):
-        if load(record.parent / 'request.json') != request:
-            raise ValueError('Resumed prompt differs from recorded prompt')
-        response = _model_response(load(record))
-        if response is not None:
-            return response
-    # An interrupted request might already have reached the provider. Retain it
-    # and count it toward the allowance instead of quietly starting from zero.
-    attempted = len(list(root.glob('provider_*')))
-    limit = common['provider_attempt_limit']
-    if retry_provider:
-        limit += attempted
+    providers = attempts(root, 'provider_')
+    selected = selected_response(providers, request)
+    if selected is not None:
+        response, files = selected
+        save_generation(root, response, files)
+        return response
+    if (root / 'generation.json').exists():
+        raise ValueError('Saved generation evidence lacks a provider response')
+    attempted = len(providers)
+    limit = common['provider_attempt_limit'] + (attempted if retry_provider else 0)
     for _ in range(attempted, limit):
-        result = invoke(cfg['model']['command'], request, next_directory(root, 'provider_'),
-                        common['provider_timeout_s'])
+        destination = next_directory(root, 'provider_')
+        result = invoke(cfg['model']['command'], request, destination, common['provider_timeout_s'])
         response = _model_response(result)
         if response is not None:
+            save_generation(root, response, {'request.json': bind(destination / 'request.json'),
+                                            'process.json': bind(destination / 'process.json')})
             return response
     return None
+
+
+def previous_result(code, payload, fallback='Independent checks failed.'):
+    previous = {'code': code, 'feedback': payload.get('public_feedback', fallback)}
+    failure = public_failure(payload)
+    if failure is not None:
+        previous['public_failure'] = failure
+    return previous
+
+
+_RESULT_FIELDS = ('status', 'first_attempt_pass', 'first_pass_round', 'last_checked_round',
+                  'code_sha256', 'adjudication', 'execution_pass', 'oracle_pass', 'target_reached',
+                  'generation_status', 'generation_reason', 'last_generation_round')
+
+
+def verify_result_fields(row, expected):
+    for key in _RESULT_FIELDS:
+        if (key in row) != (key in expected) or row.get(key) != expected.get(key):
+            raise ValueError('Saved result differs from the replayed generation/checker verdict: ' + key)
+
+
+def _verify_readme_row(frozen, row, directory):
+    """Rebuild requests and outcomes from raw attempts before any resume."""
+    cfg, common = frozen['config'], frozen['config']['common']
+    if row.get('round_evidence') != rounds(directory):
+        raise ValueError('Saved condition attempt evidence changed')
+    if row.get('resources') != _collect_resources(directory):
+        raise ValueError('Saved condition resource totals differ from attempt evidence')
+    evidence = row['round_evidence']
+    if not evidence or [r['round'] for r in evidence] != list(range(len(evidence))):
+        raise ValueError('Saved evidence has missing or unexpected rounds')
+    if len(evidence) > common['max_snippet_fixes'] + 1:
+        raise ValueError('Saved result exceeds the common repair budget')
+    case = next(c for c in frozen['bank']['cases'] if c['id'] == row['case_id'])
+    docs, exposure = select_documentation(cfg['documents'][row['arm']], case['target_apis'],
+                                          common.get('documentation_max_characters', 32000),
+                                          common.get('documentation_selection'))
+    if load(directory / 'documentation_exposure.json') != exposure:
+        raise ValueError('Saved documentation exposure differs from the frozen prompt')
+    expected = {'status': 'not_run', 'first_attempt_pass': False}
+    previous = None
+    for item in evidence:
+        number = item['round']
+        request, repair_receipt = _readme_request(frozen, case, docs, previous, number)
+        if repair_receipt is not None:
+            if 'repair_context' not in item or load(item['repair_context']['path']) != repair_receipt:
+                raise ValueError('Saved repair context differs from the frozen prompt')
+        elif 'repair_context' in item:
+            raise ValueError('Unexpected saved repair context')
+        selected = selected_response(item['providers'], request)
+        if selected is None:
+            if item['executions'] or item.get('generation'):
+                raise ValueError('Execution/generation evidence lacks a provider response')
+            expected['status'] = 'provider_pending'
+        else:
+            response, files = selected
+            executable = mark_generation(expected, response, number)
+            if not executable:
+                if item['executions']:
+                    raise ValueError('Nonexecutable generation has execution evidence')
+                verify_generation(item, response, files)
+            else:
+                code = _candidate_body(response['code'])
+                checker = adapter_request(case, code)
+                checked = None
+                for attempt in item['executions']:
+                    records = attempt['files']
+                    if 'request.json' in records and load(records['request.json']['path']) != checker:
+                        raise ValueError('Saved checker candidate differs from the provider response')
+                    if 'process.json' in records:
+                        if 'request.json' not in records:
+                            raise ValueError('Saved checker process lacks its request')
+                        process = load(records['process.json']['path'])
+                        outcome = verified_outcome(process)
+                        if checked is not None:
+                            raise ValueError('Saved execution follows an already checked outcome')
+                        if outcome is not None:
+                            checked = (outcome, process, records)
+                verify_generation(item, response, files)
+                if checked is None:
+                    expected['status'] = 'unverified'
+                else:
+                    outcome, process, records = checked
+                    expected.update({k: process['payload'][k] for k in ('execution_pass', 'oracle_pass', 'target_reached')})
+                    expected.update(status='pass' if outcome else 'fail', last_checked_round=number,
+                                    code_sha256=digest(code), adjudication={k: records[v] for k, v in
+                                                                         [('process', 'process.json'), ('request', 'request.json')]})
+                    if outcome:
+                        expected.update(first_attempt_pass=number == 0, first_pass_round=number)
+                    previous = previous_result(code, process['payload'], 'Independent checks did not pass.')
+        if number < len(evidence) - 1 and expected['status'] != 'fail':
+            raise ValueError('Saved repair follows a stopped or already passing round')
+    if expected['status'] == 'fail' and len(evidence) != common['max_snippet_fixes'] + 1:
+        raise ValueError('Saved failure has not exhausted the common repair budget')
+    verify_result_fields(row, expected)
+
+
+def _candidate_body(code):
+    if code.strip().startswith('```'):
+        match = re.fullmatch(r'\s*```[^\n]*\n(.*?)\n```\s*', code, re.S)
+        if match:
+            return match[1]
+    return code
 
 
 def _collect_resources(directory):

@@ -11,8 +11,10 @@ import time
 
 if __package__:
     from .provider_budget import BudgetLedger, MODEL, digest
+    from .response_status import classify_record
 else:
     from provider_budget import BudgetLedger, MODEL, digest
+    from response_status import classify_record
 
 
 def response_record(response):
@@ -32,7 +34,7 @@ def response_record(response):
     record = {'code': code, 'model_version': response.model, 'response_id': response.id,
               'response_status': status, 'incomplete_reason': reason,
               'truncated': reason == 'max_output_tokens', 'refusals': refusals,
-              'response_kind': 'solution' if code else ('refusal' if refusals else 'empty_model_output'),
+              'completion_metadata_expected': True,
               'messages': messages, 'error_code': getattr(response.error, 'code', None)}
     usage = response.usage
     if usage is not None:
@@ -42,7 +44,7 @@ def response_record(response):
                            'non_reasoning_output_tokens': usage.output_tokens - reasoning if type(reasoning) is int else None,
                            'cached_input_tokens': getattr(usage.input_tokens_details, 'cached_tokens', None),
                            'total_tokens': usage.total_tokens}
-    return record
+    return classify_record(record)
 
 
 def _failure(exc):
@@ -120,10 +122,8 @@ def invoke(request, ledger, *, audit=None):
                   started_at=started_at, finished_at=datetime.now(timezone.utc).isoformat(),
                   seconds=time.monotonic() - started)
     emit('result', record)
-    if record['response_status'] not in ('completed', 'incomplete'):
-        raise RuntimeError('Codex provider returned non-solution status: ' + json.dumps({
-            'response_status': record['response_status'], 'response_id': record['response_id'],
-            'budget': receipt})) from None
+    # Returned non-final responses remain auditable evidence. The caller checks
+    # solution_state before execution, without silently retrying a paid request.
     return record
 
 

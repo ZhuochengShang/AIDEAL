@@ -5,6 +5,7 @@ from pathlib import Path
 from .ablation import ARMS, file_hash, load, score
 from .evaluation_setup import CONDITIONS, conditions_for
 from .execution import atomic_json
+from .generation import generation_counts
 
 
 def verify(root):
@@ -55,6 +56,7 @@ def report(frozen, rows):
         resources[condition]['calls_without_usage'] = sum(v.get('calls_without_usage', 0) for v in values)
     return {'study_sha256': frozen['study_sha256'], 'conditions': list(conditions),
             'metrics': metrics, 'paired_comparisons': pairs,
+            'generation_classifications': generation_counts(rows, conditions),
             'resources': resources, 'all_complete': all(metrics[a][k]['unresolved'] == 0 for a in conditions for k in ('micro', 'puzzle')),
             'scope': frozen['bank'].get('scope_note', ''), 'holdout_review': frozen['config']['holdout_review']}
 
@@ -84,5 +86,12 @@ def write_report(output, summary):
         lines.append(f"| {p['baseline']} → {p['treatment']} | {p['kind']} | {p['recoveries']} | {p['regressions']} | {p['paired_completed']}/{p['selected']} | {lift_text} |")
     lines += ['', '## Scope and independence', '', summary['holdout_review'], '',
               'Resource accounting and exact input identity: `report.json`. Full model requests, responses, compiler/runtime logs and oracle checks are under each condition folder.', '']
+    lines += ['', '## Generation stops (unresolved)', '',
+              '| Condition | Incomplete | Refusal | Empty | Provider failure |',
+              '|---|---|---|---|---|']
+    for arm, counts in summary['generation_classifications'].items():
+        values = [counts['generation_' + name] for name in ('incomplete', 'refusal', 'empty', 'provider_failure')]
+        lines.append('| ' + arm + ' | ' + ' | '.join(str(value) for value in values) + ' |')
+    lines += ['', 'These stopped generations were not compiled or executed. They retain the fixed denominator and are not verified API failures.']
     (output / 'REPORT.md').write_text('\n'.join(lines))
 
