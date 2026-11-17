@@ -1,5 +1,7 @@
 # AIDEAL experiment guide
 
+[Latest health check, fixes and cleanup](HEALTH_CHECK.md).
+
 Updated November 17, 2026. **API and documentation correction in progress. The previous launch plan is blocked. No new model calls or subject-program executions occurred during this audit.**
 
 ## 1. Start here
@@ -168,7 +170,7 @@ Each library has five refs under `study/2026-11-17-latest-stable-canonical/`: `o
 
 The [AIDEAL study branch](https://github.com/ZhuochengShang/AIDEAL/tree/study%2F2026-11-17-latest-stable-canonical) carries the correction and review package. Main, measured history and the old evaluator release remain unchanged. Local/cluster/GitHub copies are compared by the sync manifest, not just filenames.
 
-**Do not run the prior launch commands.** First finish and review the corrected inventory/documents, migrate qualified IDs, regenerate the plan and obtain the requested pre-run review. [RUNBOOK.md](RUNBOOK.md) retains earlier commands with this hold clearly marked.
+**Do not run the prior launch commands.** First finish and review the corrected inventory/documents, migrate qualified IDs, regenerate the plan and obtain the requested pre-run review. [RUNBOOK.md](RUNBOOK.md) provides current read-only checks and links to the earlier commands as history.
 
 
 ### Verified custom Spark namespace

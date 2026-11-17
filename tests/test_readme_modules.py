@@ -285,6 +285,24 @@ Use an optional value.
         self.assertEqual(1, result['api_entries'])
         self.assertIn('destination', self.cfg.llm_readme.read_text())
 
+    def test_generation_resume_binds_api_origin_implementation(self):
+        self.python_source()
+        self.cfg.raw['codebase']['api_origin'] = {
+            'source_roots': ['src'], 'library_namespaces': ['api'],
+            'external_namespaces': ['builtins', 'math']}
+        target = ENGINE / 'aideal/api_origin.py'
+        original_read = Path.read_bytes
+        def changed_origin_bytes(path):
+            content = original_read(path)
+            return content + b'\n# Synthetic ownership implementation change.\n' if path == target else content
+        with self.fake_models() as calls:
+            self.readme.find_or_create(self.cfg, generate=True, max_generated=0)
+            before = len(calls)
+            with patch.object(Path, 'read_bytes', changed_origin_bytes):
+                with self.assertRaisesRegex(ValueError, 'fingerprint changed'):
+                    self.readme.find_or_create(self.cfg, generate=True, max_generated=0, resume=True)
+            self.assertEqual(before, len(calls))
+
     def test_generation_identity_covers_the_moved_implementations(self):
         tree = ast.parse((ENGINE / 'aideal/readme_generation.py').read_text())
         node = next(n for n in ast.walk(tree) if isinstance(n, ast.Assign)

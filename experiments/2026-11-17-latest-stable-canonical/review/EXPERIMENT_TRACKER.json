@@ -2024,10 +2024,11 @@
       "version": "0.10.1",
       "entries_generated": 0,
       "status": "INPUTS_REQUIRE_CORRECTION",
-      "distillation_requests_prepared": 2,
+      "distillation_requests_prepared": 0,
       "output_readme_available": false,
       "prior_entries_prepared": 708,
-      "entries_prepared": null
+      "entries_prepared": null,
+      "prior_distillation_requests_prepared": 2
     },
     {
       "library": "mdanalysis",
@@ -2035,10 +2036,11 @@
       "version": "2.11.0",
       "entries_generated": 0,
       "status": "INPUTS_REQUIRE_CORRECTION",
-      "distillation_requests_prepared": 1,
+      "distillation_requests_prepared": 0,
       "output_readme_available": false,
       "prior_entries_prepared": 435,
-      "entries_prepared": null
+      "entries_prepared": null,
+      "prior_distillation_requests_prepared": 1
     },
     {
       "library": "tslearn",
@@ -2046,10 +2048,11 @@
       "version": "0.10.0",
       "entries_generated": 0,
       "status": "INPUTS_REQUIRE_CORRECTION",
-      "distillation_requests_prepared": 1,
+      "distillation_requests_prepared": 0,
       "output_readme_available": false,
       "prior_entries_prepared": 116,
-      "entries_prepared": null
+      "entries_prepared": null,
+      "prior_distillation_requests_prepared": 1
     },
     {
       "library": "mir_eval",
@@ -2057,10 +2060,11 @@
       "version": "0.8.2",
       "entries_generated": 0,
       "status": "INPUTS_REQUIRE_CORRECTION",
-      "distillation_requests_prepared": 1,
+      "distillation_requests_prepared": 0,
       "output_readme_available": false,
       "prior_entries_prepared": 125,
-      "entries_prepared": null
+      "entries_prepared": null,
+      "prior_distillation_requests_prepared": 1
     },
     {
       "library": "thumbnailator",
@@ -2068,10 +2072,11 @@
       "version": "0.4.21",
       "entries_generated": 0,
       "status": "INPUTS_REQUIRE_CORRECTION",
-      "distillation_requests_prepared": 1,
+      "distillation_requests_prepared": 0,
       "output_readme_available": false,
       "prior_entries_prepared": 94,
-      "entries_prepared": null
+      "entries_prepared": null,
+      "prior_distillation_requests_prepared": 1
     },
     {
       "library": "sedonadb",
@@ -2079,10 +2084,11 @@
       "version": "0.5.0",
       "entries_generated": 0,
       "status": "INPUTS_REQUIRE_CORRECTION",
-      "distillation_requests_prepared": 1,
+      "distillation_requests_prepared": 0,
       "output_readme_available": false,
       "prior_entries_prepared": 217,
-      "entries_prepared": null
+      "entries_prepared": null,
+      "prior_distillation_requests_prepared": 1
     }
   ],
   "stage_definitions": {
@@ -2198,5 +2204,42 @@
   "selection_total": null,
   "prior_prepared_jobs": 14,
   "prepared_jobs": 0,
-  "inventory_correction": "api-audit/AUDIT_STATUS.json"
+  "inventory_correction": "api-audit/AUDIT_STATUS.json",
+  "revision_steps": [
+    {
+      "id": "full_public_inventory",
+      "status": "REQUIRED_NOT_COMPLETE",
+      "description": "Reconcile public definitions and exposures, including MDAnalysis Cython, reexports and inherited owners."
+    },
+    {
+      "id": "retained_wrapper_targets",
+      "status": "REQUIRED_NOT_COMPLETE",
+      "description": "Resolve uncertain body/origin evidence; map proven wrappers to retained library targets."
+    },
+    {
+      "id": "qualified_identity_pipeline",
+      "status": "REQUIRED_NOT_COMPLETE",
+      "description": "Keep distinct owners through selection, README entry keys, task IDs, completion checks and installation."
+    },
+    {
+      "id": "qualified_document_mapping",
+      "status": "REQUIRED_NOT_COMPLETE",
+      "description": "Bind version-matched original documents to qualified APIs and approve retrieval/context policy."
+    },
+    {
+      "id": "new_bank_and_plan",
+      "status": "REQUIRED_NOT_COMPLETE",
+      "description": "Freeze the corrected shared bank, pilot inputs, output namespace, costs and replacement plan."
+    },
+    {
+      "id": "user_prerun_review",
+      "status": "REQUIRED_NOT_COMPLETE",
+      "description": "Obtain explicit review of the replacement inputs before any model/program run."
+    },
+    {
+      "id": "pilots_and_matched_protocol",
+      "status": "NOT_RUN_OR_APPROVED",
+      "description": "Run approved end-to-end pilots; separately finalize five-condition and puzzle task/oracle protocols."
+    }
+  ]
 }

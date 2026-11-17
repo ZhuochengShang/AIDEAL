@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIDEAL health check</title><style>body{max-width:1150px;margin:32px auto;padding:0 24px;font:16px/1.6 system-ui;color:#203549}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:9px;border:1px solid #cbd8e4;text-align:left}th{background:#edf3f8}pre{background:#edf3f8;padding:16px;overflow:auto}a{color:#1264a3}</style><main><h1>AIDEAL health check</h1>
+<p>Checked November 17, 2026, 02:24 PM PST. <strong>The checked software paths pass; the replacement experiment is not ready to launch.</strong> Its source/API selection and documentation mapping still need revision. No model call or subject-library execution occurred during this check.</p>
+<h2>What was checked and fixed</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Result</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shared discovery, preparation, evaluation and recovery code</td>
+<td>171 selected offline tests passed before the fix</td>
+<td><a href="review/health/tests/AUDIT.md">Test audit</a></td>
+</tr>
+<tr>
+<td>Direct README resume</td>
+<td>Fixed a missing ownership-module fingerprint; 56 affected tests passed afterward</td>
+<td><a href="review/health/tests/POST_INSTALL_RESULTS.json">Post-install results</a></td>
+</tr>
+<tr>
+<td>Six stable library pins</td>
+<td>All six remain latest stable; official tag commits match</td>
+<td><a href="review/health/upstream.md">Versions and official links</a></td>
+</tr>
+<tr>
+<td>Subject source checkouts</td>
+<td>All six match their pinned commit/tree with clean tracked source files</td>
+<td><a href="review/health/ALIGNMENT.json">Alignment audit</a></td>
+</tr>
+<tr>
+<td>Library branches</td>
+<td>All 30 expected condition branches match their untreated baseline snapshots</td>
+<td><a href="review/health/ALIGNMENT.json">Alignment audit</a></td>
+</tr>
+<tr>
+<td>Repository visibility</td>
+<td>AIDEAL and all six subject repositories are public</td>
+<td><a href="review/health/GITHUB_VISIBILITY.json">Visibility audit</a></td>
+</tr>
+<tr>
+<td>Review pages and tracker</td>
+<td>Corrected stale current counts, historical commands and broken archive navigation</td>
+<td><a href="review/health/AUDIT.md">Documentation audit</a></td>
+</tr>
+<tr>
+<td>Cleanup</td>
+<td>Removed 4,936 verified cache/duplicate files, totaling 85,172,087 bytes</td>
+<td><a href="review/health/CLEANUP.json">Exact cleanup ledger</a></td>
+</tr>
+<tr>
+<td>Experiment state</td>
+<td>No matching active job; launch remains blocked</td>
+<td><a href="review/health/ALIGNMENT.json">Cluster state in alignment audit</a></td>
+</tr>
+</tbody>
+</table>
+<p>The broad and focused test sets overlap; do not add their totals as unique tests. Three controller-copy tests were deliberately excluded because they would copy the credential scratch file. The tests use synthetic adapters and mocked models, not real library or model experiments. Existing setup controls remain historical evidence and do not prove that every API or optional dependency works.</p>
+<h3>Resume fix</h3>
+<p>Direct README generation previously omitted <code>api_origin.py</code> from its engine fingerprint. Changing ownership-filter implementation could therefore reuse old README entries when the selected signatures stayed the same. The corrected fingerprint rejects that stale resume before another model call. The launcher already tracked all engine files; this fix covers direct engine/CLI use as well. <a href="review/health/tests/ORIGIN_FINGERPRINT_REGRESSION.json">Baseline/corrected proof</a>.</p>
+<h2>Current plan and remaining work</h2>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Required work</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Discover library-owned APIs; retain Beast's custom Spark subpackage</td>
+<td>Ownership filter implemented and tested</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Reconcile full public exposures, including Cython, re-exports and inheritance</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Reduce overloads within each qualified owner; map wrappers to retained targets</td>
+<td>Pending; old global-name selector is not the replacement policy</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Carry qualified IDs through README entries, task IDs, completion checks and installation</td>
+<td>Pending</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Bind corrected original documents to those IDs and freeze the new bank</td>
+<td>Pending; 1,695 is superseded preparation data</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Rebuild prompts/configurations, cost estimate and launch fingerprints</td>
+<td>Pending the approved bank</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Review the six small pilot inputs before any live call</td>
+<td>User review required</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Run approved R0 and README authoring, then the five-condition repair/deep-dive study</td>
+<td>Not started</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="EXPERIMENT_GUIDE.md">experiment guide</a>, <a href="review/EXPERIMENT_TRACKER.html">tracker</a>, <a href="review/api-audit/API_AUDIT.html">API audit</a> and <a href="RUNBOOK.md">read-only runbook</a> identify the current state. All five new condition refs still point to untreated baselines. Existing branches alone do not establish README, alias or hint installation.</p>
+<h2>Cleanup boundary</h2>
+<p>Deleted files were regenerable Python/Finder caches or temporary copies whose bytes matched retained canonical files. Seven frozen cluster releases were verified before and after their unmanifested bytecode caches were removed. Measured results, paid model responses, fixtures, source versions, dependencies and Git history were retained. Fifteen unique temporary files were preserved.</p>
+<p>The working checkout remains on <code>main</code> with pre-existing local changes. This audit did not reset, discard or sweep those changes into a commit. Before the new fix, all 228 approved workflow files matched the published study snapshot. The new two-file fix is published separately on that study branch. The frozen evaluator remains unchanged; current development updates live under <code>review/api-audit/code_updates/</code> in the portable review package.</p>
+<h2>Verify or repeat safely</h2>
+<p>From this review folder, <code>python3 verify_snapshot.py</code> checks the current portable-file hashes. The final sync manifest identifies the published package. The initial alignment receipt deliberately describes the snapshot at audit start; it is not relabelled as the later commit.</p>
+<p>To repeat the focused offline checks on this Mac without overwriting the saved test receipts, copy the runner into a fresh temporary directory:</p>
+<pre><code class="language-bash">AIDEAL_CHECK_DIR=$(mktemp -d /tmp/aideal-check.XXXXXX)
+cp &quot;/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/health/tests/run_post_install_checks.py&quot; &quot;$AIDEAL_CHECK_DIR/&quot;
+PYTHONDONTWRITEBYTECODE=1 /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python &quot;$AIDEAL_CHECK_DIR/run_post_install_checks.py&quot;
+</code></pre>
+<p>This runner checks the Mac working checkout and saves receipts in the temporary directory. It does not launch a study. Use VS Code Remote SSH for future approved long runs in the cluster environment; a new native Mac scientific runtime has not been validated.</p>
+</main></html>

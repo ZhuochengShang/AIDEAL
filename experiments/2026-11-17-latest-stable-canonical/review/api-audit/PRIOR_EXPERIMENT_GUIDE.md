@@ -4,19 +4,19 @@ Updated November 17, 2026. **READY_FOR_USER_REVIEW. No paid run has started.** T
 
 ## 1. Open the current evidence
 
-- [Review home](review/REVIEW_HOME.html): one page linking the complete package.
-- [Runbook](RUNBOOK.md): cluster/local and VS Code commands, with the user-review gate before any live execution.
-- [Snapshot verifier](verify_snapshot.py): checks packaged file hashes against the final sync manifest.
-- [All 1,695 prepared task inputs](review/CURRENT_BANK.html): exact available Original prompts/context, selected declarations, profiles and scaffolds.
-- [Six single-API pilot previews](review/PILOT_REVIEW.html): one per library, with available prompts and explicit placeholders for future dependent stages.
-- [Experiment tracker](review/EXPERIMENT_TRACKER.html): all six libraries, five conditions, R0/R1/R2 and document-revision stages; historical cohorts are separate.
-- [API decision browser](review/API_SELECTION.html): every selected, omitted and unresolved source/SQL review record.
-- [Documentation coverage](review/DOC_COVERAGE.html): per-target CSVs and the shared denominator policy.
-- [Compile/run evidence](review/READINESS.html): 25 expected operator-control outcomes, with saved programs, standard output, errors and execution receipts.
+- [Review home](../../review/REVIEW_HOME.html): one page linking the complete package.
+- [Runbook](../../RUNBOOK.md): cluster/local and VS Code commands, with the user-review gate before any live execution.
+- [Snapshot verifier](../../verify_snapshot.py): checks packaged file hashes against the final sync manifest.
+- [All 1,695 prepared task inputs](../../review/CURRENT_BANK.html): exact available Original prompts/context, selected declarations, profiles and scaffolds.
+- [Six single-API pilot previews](../../review/PILOT_REVIEW.html): one per library, with available prompts and explicit placeholders for future dependent stages.
+- [Experiment tracker](../../review/EXPERIMENT_TRACKER.html): all six libraries, five conditions, R0/R1/R2 and document-revision stages; historical cohorts are separate.
+- [API decision browser](../../review/API_SELECTION.html): every selected, omitted and unresolved source/SQL review record.
+- [Documentation coverage](../../review/DOC_COVERAGE.html): per-target CSVs and the shared denominator policy.
+- [Compile/run evidence](../../review/READINESS.html): 25 expected operator-control outcomes, with saved programs, standard output, errors and execution receipts.
 
 These are static review pages. They display text and do not execute captured programs or contact a model. Private reference solutions and credentials are excluded from audience material. Source bodies in the API audit are reviewer evidence, not audience context.
 
-The [full guide history](HISTORY.md) preserves earlier baseline tables, the 171-name RDPro selection, the stopped 629/719 queue, source expansion and historical terminal instructions. The [historical bank landing page](review/HISTORICAL_BANKS.html) identifies the existing large task browser without duplicating its payload.
+The [full guide history](../../HISTORY.md) preserves earlier baseline tables, the 171-name RDPro selection, the stopped 629/719 queue, source expansion and historical terminal instructions. The [historical bank landing page](../../review/HISTORICAL_BANKS.html) identifies the existing large task browser without duplicating its payload.
 
 ## 2. Current versions and selected API scope
 
@@ -30,7 +30,7 @@ The [full guide history](HISTORY.md) preserves earlier baseline tables, the 171-
 | SedonaDB |0.5.0|226 registered SQL names|217|SQL registry/alias audit and native controls verified|
 | **Total** |||**1,695**|**Ready for review; no paid run**|
 
-![Latest stable API selection](review/figures/07_stable_api_selection.svg)
+![Latest stable API selection](../../review/figures/07_stable_api_selection.svg)
 
 Five source inventories contain 5,252 public definition sites. The selection first excludes identified forwarding/facade/no-body cases and quarantines unresolved body classifications. It then chooses the largest-parameter eligible declaration for each bare name across that library's languages. Deterministic ties use language, path, line and site identity. No selected RDPro name appears in both Scala and Java.
 
@@ -38,13 +38,13 @@ Python public classes remain API targets. Callable arity excludes implicit `self
 
 SedonaDB uses its public SQL registry rather than Rust helper-function counts. Nine explicit aliases are removed from 226 registered names, leaving 217. SQL runtime-defined signatures and the unbounded variadic `RS_Stack` do not receive invented finite maximum arities. The singular/plural interior-ring pair is retained: sharing a kernel does not establish equivalence across all supported backends.
 
-The [5,478-record API browser](review/API_SELECTION.html) combines 5,252 source sites and 226 SQL names. The [SQL evidence](review/audit/sedonadb-sql/SQL_CANONICAL_ALIAS_AUDIT.json) and [source-scope reconciliation](review/audit/latest-source/SOURCE_SCOPE_RECONCILIATION.json) explain every policy boundary.
+The [5,478-record API browser](../../review/API_SELECTION.html) combines 5,252 source sites and 226 SQL names. The [SQL evidence](../../review/audit/sedonadb-sql/SQL_CANONICAL_ALIAS_AUDIT.json) and [source-scope reconciliation](../../review/audit/latest-source/SOURCE_SCOPE_RECONCILIATION.json) explain every policy boundary.
 
 This is a conservative structural interface policy, **not a proof of arbitrary semantic independence**. Same-name alternatives can do different work; their omission follows the requested name rule. Unknown source bodies are excluded rather than asserted safe. The 708 selected RDPro names include 90 names from the historical 171; those historical counts describe a different selection.
 
-![Actual declaration-site histogram across source libraries](review/figures/09_latest_source_name_histograms.svg)
+![Actual declaration-site histogram across source libraries](../../review/figures/09_latest_source_name_histograms.svg)
 
-Exact bins and per-name counts are in [chart data](review/figures/chart_data.json). This histogram precedes body exclusions/name election and explains why source-site and target-name counts differ.
+Exact bins and per-name counts are in [chart data](../../review/figures/chart_data.json). This histogram precedes body exclusions/name election and explains why source-site and target-name counts differ.
 
 ## 3. Original documents and fair comparison
 
@@ -61,9 +61,9 @@ Freeze the selected set **S** before any generation. Let **D** be targets with d
 | SedonaDB |217|212|5|
 | **Total** |**1,695**|**477**|**1,218**|
 
-![Current original-document evidence](review/figures/08_latest_original_document_coverage.svg)
+![Current original-document evidence](../../review/figures/08_latest_original_document_coverage.svg)
 
-The pinned engine's `doc_code_mentions` detector checks name mentions in code context. Common names can match another owner. These are evidence labels, not manual certification of signature correctness, documentation completeness or prose quality. No detected evidence does not establish that no useful prose exists. [Per-API CSVs and receipts](review/DOC_COVERAGE.html) retain the exact audit.
+The pinned engine's `doc_code_mentions` detector checks name mentions in code context. Common names can match another owner. These are evidence labels, not manual certification of signature correctness, documentation completeness or prose quality. No detected evidence does not establish that no useful prose exists. [Per-API CSVs and receipts](../../review/DOC_COVERAGE.html) retain the exact audit.
 
 Original bundles match the selected releases:
 
@@ -95,9 +95,9 @@ Every condition receives the same qualified target declaration: owner/name, sign
 
 The prepared 14-job plan has SHA256 `7aef275e71077749dd53c83eb701496e4f8a43fa8b54e2bf4a79c9b9227e0255`. Preparation does not authorize execution. The user-review hold applies before any paid run.
 
-The [readiness page](review/READINESS.html) shows six RDPro outcomes, nine scientific Python outcomes, three Thumbnailator outcomes and seven SedonaDB outcomes. A successful setup check includes correct rejection of intentionally wrong assertions or missing witnesses; these are **not 25 successful benchmarks**. The first Java negative fixture failed compilation because of an unreachable statement. That operator attempt is retained, and corrected conditional fixtures passed their expected gates without changing library code.
+The [readiness page](../../review/READINESS.html) shows six RDPro outcomes, nine scientific Python outcomes, three Thumbnailator outcomes and seven SedonaDB outcomes. A successful setup check includes correct rejection of intentionally wrong assertions or missing witnesses; these are **not 25 successful benchmarks**. The first Java negative fixture failed compilation because of an unreachable statement. That operator attempt is retained, and corrected conditional fixtures passed their expected gates without changing library code.
 
-All six libraries have saved program/output evidence. [The byte-verified inventory](review/runtime_evidence/INDEX.json) includes 93 files; 24 scientific files were reused from existing identical copies. SedonaDB records per-case exit status/verdict in its actual control receipt, not a nonexistent `execution.json`. No execution metadata is fabricated.
+All six libraries have saved program/output evidence. [The byte-verified inventory](../../review/runtime_evidence/INDEX.json) includes 93 files; 24 scientific files were reused from existing identical copies. SedonaDB records per-case exit status/verdict in its actual control receipt, not a nonexistent `execution.json`. No execution metadata is fabricated.
 
 Runtime identity details matter:
 
@@ -121,7 +121,7 @@ These controls verify setup and the configured execution gates. They do not prov
 
 All conditions use the same target manifest and common declaration/runtime context. Alias and error-hint code is a treatment; introducing a wrapper as an alias must not silently add a new target or change which canonical implementation is measured. That mapping and any behavior preservation need separate tests and receipts before treatment evaluation.
 
-![Branches and isolated outputs](review/figures/04_branch_separation.svg)
+![Branches and isolated outputs](../../review/figures/04_branch_separation.svg)
 
 The stage tracker distinguishes:
 
@@ -133,7 +133,7 @@ The stage tracker distinguishes:
 
 Provider retries/resume attempts are not R1/R2. A saved `attempt_0002` can be a provider retry or restart, so use the recorded round and request provenance. Reusing a compatible response must not charge its tokens twice.
 
-![Repair rounds and document revision](review/figures/06_repair_rounds.svg)
+![Repair rounds and document revision](../../review/figures/06_repair_rounds.svg)
 
 The six pilot previews show one selected API per library and the available exact inputs. A repair request needs the actual earlier program/error; document revision needs actual evidence; fresh evaluation needs an actual revised document. Those dependent artifacts do not yet exist and must not be presented as delivered prompts or model outputs. Educational examples must be explicitly marked scripted or illustrative.
 
@@ -152,7 +152,7 @@ The five main conditions stay unchanged. README only and Combined proceed from t
 
 ## 6. Data bank, inputs and outputs
 
-The [current bank](review/CURRENT_BANK.html) exposes all 1,695 prepared Original task inputs across seven language/library banks. Inspect the exact selected target, retrieved original context, system/user messages, public input description, scaffold/profile and source identity. The [pilot page](review/PILOT_REVIEW.html) provides a smaller walkthrough using the same underlying artifacts.
+The [current bank](../../review/CURRENT_BANK.html) exposes all 1,695 prepared Original task inputs across seven language/library banks. Inspect the exact selected target, retrieved original context, system/user messages, public input description, scaffold/profile and source identity. The [pilot page](../../review/PILOT_REVIEW.html) provides a smaller walkthrough using the same underlying artifacts.
 
 | Artifact | Available now | Available only after the relevant approved stage |
 |---|---|---|
@@ -170,7 +170,7 @@ Save complete delivered requests, model responses, rendered programs, standard o
 
 Large fixtures stay on the cluster at recorded paths with hashes. Repeated data directories must not be casually rewritten or regenerated across conditions. Keep reviewer-only answers outside audience/README author prompts; source-informed diagnostics should not silently become audience memory.
 
-The historical task browser remains in the November 16 local study and retains 3,712 task/design records across 27 banks. It includes 1,806 earlier R0 attempts and the stopped expanded RDPro scope. Its versions/targets/protocols differ; [historical cohort details](HISTORY.md) and the separate tracker tab prevent aggregation with this new denominator.
+The historical task browser remains in the November 16 local study and retains 3,712 task/design records across 27 banks. It includes 1,806 earlier R0 attempts and the stopped expanded RDPro scope. Its versions/targets/protocols differ; [historical cohort details](../../HISTORY.md) and the separate tracker tab prevent aggregation with this new denominator.
 
 ## 7. Public branches, cluster and local copies
 
@@ -187,9 +187,9 @@ All six library repositories publish five refs under `study/2026-11-17-latest-st
 | [Thumbnailator](https://github.com/ZhuochengShang/AIDEAL-Thumbnailator/branches) |c9d99613878b|62a5fff8f577|
 | [SedonaDB](https://github.com/ZhuochengShang/AIDEAL-SedonaDB/branches) |751453f04cd6|64d0e42731f4|
 
-Full commit/tree mappings are in the [publication receipt](review/audit/latest-readiness/LIBRARY_PUBLICATION.json). Public snapshot commits are parentless and preserve the exact official upstream trees, including licenses and Git submodule entries. They are not falsely described as the official commit IDs.
+Full commit/tree mappings are in the [publication receipt](../../review/audit/latest-readiness/LIBRARY_PUBLICATION.json). Public snapshot commits are parentless and preserve the exact official upstream trees, including licenses and Git submodule entries. They are not falsely described as the official commit IDs.
 
-The cluster source checkouts remain detached at official stable commits; the five study refs point to their identical-tree public snapshots. [Alignment evidence](review/audit/latest-readiness/CLUSTER_ALIGNMENT.json) records both identities. Later installation creates commits on treatment refs without changing the pinned source checkout. README-only and Combined must receive identical generated document bytes. Branch existence is not treatment installation.
+The cluster source checkouts remain detached at official stable commits; the five study refs point to their identical-tree public snapshots. [Alignment evidence](../../review/audit/latest-readiness/CLUSTER_ALIGNMENT.json) records both identities. Later installation creates commits on treatment refs without changing the pinned source checkout. README-only and Combined must receive identical generated document bytes. Branch existence is not treatment installation.
 
 Every experiment pins an evaluator directory, input/source/document identities and separate mutable outputs. Changing a branch or convenience pointer does not alter frozen inputs. Old refs, source snapshots and historical results are preserved; no force-push or replacement of historical evidence is part of this study.
 
@@ -197,7 +197,7 @@ The current canonical local folder is `03_Experiments/2026-11-17-latest-stable-c
 
 ## 8. Review commands: Mac versus cluster
 
-These commands inspect files. They do not launch the study. The [runbook](RUNBOOK.md) separates inspection, offline trace, proposed live pilots and the held full queue. Do not execute its live commands before approval.
+These commands inspect files. They do not launch the study. The [runbook](../../RUNBOOK.md) separates inspection, offline trace, proposed live pilots and the held full queue. Do not execute its live commands before approval.
 
 After the final manifest is present, verify this package from its root with:
 
@@ -249,7 +249,7 @@ An empty initial condition diff is expected while treatments are uninstalled. Ru
 | Native control/demo execution |Runs real programs even if model replies are scripted|
 | Saved launch script or `--run` |Runs or resumes jobs and can spend provider credits|
 
-The prepared launch remains on hold. Do not start any pilot, native demo or paid experiment as part of browsing this review. Old stopped-queue pause/resume examples are preserved only in [HISTORY.md](HISTORY.md), not as current instructions.
+The prepared launch remains on hold. Do not start any pilot, native demo or paid experiment as part of browsing this review. Old stopped-queue pause/resume examples are preserved only in [HISTORY.md](../../HISTORY.md), not as current instructions.
 
 After a separately approved future launch, follow the exact paths in its plan and per-attempt receipts. Observe only the intended supervisor/worker identities; do not kill broad process classes or reset checkpoints. Changing source, model, prompt, selection, runtime, fixtures or repair policy requires a newly versioned plan/output identity.
 
@@ -263,33 +263,33 @@ Record elapsed provider time, native compilation/execution time, end-to-end job 
 
 The first prepared stage has 1,695 Original requests, 1,695 README-entry requests and seven distillations: **3,397 requests before retries**. Historical per-library token means imply 8.54 million input and 1.50 million output tokens, approximately **$4.39**. RDPro's estimate uses only 16 old pilot targets. An explicit larger-context scenario is **$12.76**. These are scenarios, not spending caps or forecasts for every later treatment/repair stage.
 
-The verified standard sequential Gemini 3.1 Flash-Lite prices are $0.25 per million input tokens and $1.50 per million output tokens including thinking. Batch rates are not assumed. [Exact forecast data](review/audit/latest-readiness/COST_FORECAST.json) retains assumptions; [Google's pricing page](https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite) is the external source checked on November 17, 2026.
+The verified standard sequential Gemini 3.1 Flash-Lite prices are $0.25 per million input tokens and $1.50 per million output tokens including thinking. Batch rates are not assumed. [Exact forecast data](../../review/audit/latest-readiness/COST_FORECAST.json) retains assumptions; [Google's pricing page](https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite) is the external source checked on November 17, 2026.
 
 Actual costs must come from saved provider receipts, including failed/retried calls. A request in flight or missing usage is unknown, not zero. Compatible checkpoint replay preserves paid evidence and must not double-count tokens.
 
 ## 10. Exact evaluator code to review
 
-The following locations were parsed from the frozen a6 release, not guessed from the developer checkout. [The complete function index](review/audit/latest-readiness/EVALUATOR_FUNCTION_INDEX.json) records the inspected files. Links open the packaged evaluator; the labels give exact source lines for VS Code review.
+The following locations were parsed from the frozen a6 release, not guessed from the developer checkout. [The complete function index](../../review/audit/latest-readiness/EVALUATOR_FUNCTION_INDEX.json) records the inspected files. Links open the packaged evaluator; the labels give exact source lines for VS Code review.
 
 | Flow step | Exact function/location in the pinned snapshot | What to inspect |
 |---|---|---|
-| Prepare Original |[run_original_micro.py:41](evaluator/scripts/run_original_micro.py#L41) — `prepare`|Manifest, relocated inventory, fixture/scaffold and input identity|
-| Dispatch registry |[api_registry.py:12](evaluator/vendor/aideal_engine/src/aideal/api_registry.py#L12) — `configured_api_details`|Compiler, source-audit or SQL input boundary|
-| Read source audit |[api_source_registry.py:132](evaluator/vendor/aideal_engine/src/aideal/api_source_registry.py#L132) — `source_audited_details`|Source SHA/tree/file bounds and elected identities|
-| Canonical election |[api_canonical_selection.py:153](evaluator/vendor/aideal_engine/src/aideal/api_canonical_selection.py#L153) — `select_canonical_implementations`|Fail-closed body categories, max arity, ties and exclusions|
-| Original context |[doc_check_sources.py:138](evaluator/vendor/aideal_engine/src/aideal/doc_check_sources.py#L138) — `_relevant_original_texts`|Deterministic evidence/retrieval boundary and missing context|
-| Target context |[doc_check_execution.py:75](evaluator/vendor/aideal_engine/src/aideal/doc_check_execution.py#L75) — `_requested_target_context`|Shared exact target identity added to audience context|
-| Native flow |[doc_check_execution.py:98](evaluator/vendor/aideal_engine/src/aideal/doc_check_execution.py#L98) — `_comprehension_execute`|Prompt, scaffold, native execution and saved evidence|
-| Repair loop |[doc_check_execution.py:473](evaluator/vendor/aideal_engine/src/aideal/doc_check_execution.py#L473) — `for attempt`|R0 gets no historical failure memory; actual retries use permitted feedback|
-| Native command |[execution.py:37](evaluator/vendor/aideal_engine/src/aideal/execution.py#L37) — `run_command`|Timeouts, process output and execution status|
-| Prepare README |[run_readme_generation.py:67](evaluator/scripts/run_readme_generation.py#L67) — `prepare`|Selected facts, inputs and generation identity|
-| Generate README |[readme_generation.py:83](evaluator/vendor/aideal_engine/src/aideal/readme_generation.py#L83) — `find_or_create`|Distillation/entry generation and persisted state|
-| Record author calls |[readme_recording.py:55](evaluator/vendor/aideal_engine/src/aideal/readme_recording.py#L55) — `invoke`|Exact author request/response and usage receipts|
-| Install README |[install_generated_readme.py:46](evaluator/scripts/install_generated_readme.py#L46) — `install`|Expected public parent ref, document identity and identical treatment bytes|
-| Supervise jobs |[run_cluster_experiment.py:66](evaluator/scripts/run_cluster_experiment.py#L66) — `supervise`|Unique output ownership, attempts and stop handling|
-| Report costs |[report_experiment_costs.py:103](evaluator/scripts/report_experiment_costs.py#L103) — `build_report`|Real usage versus unknown/replayed units and scenarios|
+| Prepare Original |[run_original_micro.py:41](../../evaluator/scripts/run_original_micro.py#L41) — `prepare`|Manifest, relocated inventory, fixture/scaffold and input identity|
+| Dispatch registry |[api_registry.py:12](../../evaluator/vendor/aideal_engine/src/aideal/api_registry.py#L12) — `configured_api_details`|Compiler, source-audit or SQL input boundary|
+| Read source audit |[api_source_registry.py:132](../../evaluator/vendor/aideal_engine/src/aideal/api_source_registry.py#L132) — `source_audited_details`|Source SHA/tree/file bounds and elected identities|
+| Canonical election |[api_canonical_selection.py:153](../../evaluator/vendor/aideal_engine/src/aideal/api_canonical_selection.py#L153) — `select_canonical_implementations`|Fail-closed body categories, max arity, ties and exclusions|
+| Original context |[doc_check_sources.py:138](../../evaluator/vendor/aideal_engine/src/aideal/doc_check_sources.py#L138) — `_relevant_original_texts`|Deterministic evidence/retrieval boundary and missing context|
+| Target context |[doc_check_execution.py:75](../../evaluator/vendor/aideal_engine/src/aideal/doc_check_execution.py#L75) — `_requested_target_context`|Shared exact target identity added to audience context|
+| Native flow |[doc_check_execution.py:98](../../evaluator/vendor/aideal_engine/src/aideal/doc_check_execution.py#L98) — `_comprehension_execute`|Prompt, scaffold, native execution and saved evidence|
+| Repair loop |[doc_check_execution.py:473](../../evaluator/vendor/aideal_engine/src/aideal/doc_check_execution.py#L473) — `for attempt`|R0 gets no historical failure memory; actual retries use permitted feedback|
+| Native command |[execution.py:37](../../evaluator/vendor/aideal_engine/src/aideal/execution.py#L37) — `run_command`|Timeouts, process output and execution status|
+| Prepare README |[run_readme_generation.py:67](../../evaluator/scripts/run_readme_generation.py#L67) — `prepare`|Selected facts, inputs and generation identity|
+| Generate README |[readme_generation.py:83](../../evaluator/vendor/aideal_engine/src/aideal/readme_generation.py#L83) — `find_or_create`|Distillation/entry generation and persisted state|
+| Record author calls |[readme_recording.py:55](../../evaluator/vendor/aideal_engine/src/aideal/readme_recording.py#L55) — `invoke`|Exact author request/response and usage receipts|
+| Install README |[install_generated_readme.py:46](../../evaluator/scripts/install_generated_readme.py#L46) — `install`|Expected public parent ref, document identity and identical treatment bytes|
+| Supervise jobs |[run_cluster_experiment.py:66](../../evaluator/scripts/run_cluster_experiment.py#L66) — `supervise`|Unique output ownership, attempts and stop handling|
+| Report costs |[report_experiment_costs.py:103](../../evaluator/scripts/report_experiment_costs.py#L103) — `build_report`|Real usage versus unknown/replayed units and scenarios|
 
-Prompt sources: [native program request](evaluator/prompts/comprehension_write_exec.md), [README distillation](evaluator/prompts/readme_distill.md), [README entry](evaluator/prompts/readme_entry.md), [deep dive](evaluator/prompts/deep_dive.md). Templates are not proof that a request has been delivered; use the current task preview or actual saved request as appropriate.
+Prompt sources: [native program request](../../evaluator/prompts/comprehension_write_exec.md), [README distillation](../../evaluator/prompts/readme_distill.md), [README entry](../../evaluator/prompts/readme_entry.md), [deep dive](../../evaluator/prompts/deep_dive.md). Templates are not proof that a request has been delivered; use the current task preview or actual saved request as appropriate.
 
 ## 11. Architecture and review gate
 
