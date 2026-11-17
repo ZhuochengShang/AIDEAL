@@ -60,6 +60,39 @@ class OriginTests(unittest.TestCase):
         self.assertEqual({"library_defined":2},result["counts"])
         self.assertEqual({"mapPixels","toString"},{r["name"]for r in result["included"]})
 
+    def test_beast_namespace_overrides_broad_spark_external_rule(self):
+        policy=self.cfg.raw["codebase"]["api_origin"]
+        policy["library_namespaces"]=["edu.ucr.cs.bdlab","org.apache.spark.beast"]
+        rows=[self.row(qualified_name="org.apache.spark.beast.CustomRDD.map",owner="org.apache.spark.beast.CustomRDD",is_override=True),
+              self.row(qualified_name="org.apache.spark.beast.sql.CustomSQL.map",owner="org.apache.spark.beast.sql.CustomSQL",is_override=True),
+              self.row(qualified_name="org.apache.spark.RDD.map",owner="org.apache.spark.RDD")]
+        audit=audit_api_origins(self.cfg,rows)
+        self.assertEqual({"library_defined":2,"external_defined":1},audit["counts"])
+        self.assertEqual(["org.apache.spark.beast"],audit["decisions"][0]["most_specific_namespace_matches"])
+
+    def test_narrow_library_namespace_still_requires_owned_source_file(self):
+        self.cfg.raw["codebase"]["api_origin"]["library_namespaces"]=["org.apache.spark.beast"]
+        outside=self.root/"outside.scala";outside.write_text("package org.apache.spark.beast")
+        row=self.row(qualified_name="org.apache.spark.beast.CustomRDD.map",file="outside.scala",file_sha256=sha(outside))
+        decision=audit_api_origins(self.cfg,[row])["decisions"][0]
+        self.assertEqual("unresolved",decision["status"])
+        self.assertEqual("defining_file_outside_source_roots",decision["reason"])
+
+    def test_more_specific_external_namespace_beats_broad_library_rule(self):
+        self.cfg.raw["codebase"]["api_origin"]["external_namespaces"].append("ownlib.vendor")
+        row=self.row(qualified_name="ownlib.vendor.Dependency.map",owner="ownlib.vendor.Dependency")
+        decision=audit_api_origins(self.cfg,[row])["decisions"][0]
+        self.assertEqual("external_defined",decision["status"])
+        self.assertEqual(["ownlib.vendor"],decision["most_specific_namespace_matches"])
+
+    def test_identical_specific_namespace_on_both_sides_remains_conflict(self):
+        policy=self.cfg.raw["codebase"]["api_origin"]
+        policy["library_namespaces"]=["org.apache.spark.beast"]
+        policy["external_namespaces"].append("org.apache.spark.beast")
+        decision=audit_api_origins(self.cfg,[self.row(qualified_name="org.apache.spark.beast.CustomRDD.map")])["decisions"][0]
+        self.assertEqual("unresolved",decision["status"])
+        self.assertEqual("conflicting_namespace_rules",decision["reason"])
+
     def test_external_defining_owner_beats_local_exposure_and_same_bare_name(self):
         rows=[self.row(),self.row(qualified_name="ownlib.Tools.map",inherited=True,
                                 defining_owner="org.apache.spark.rdd.RDD",site_id="spark-map"),

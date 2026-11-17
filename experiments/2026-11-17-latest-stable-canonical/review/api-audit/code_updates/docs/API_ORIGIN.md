@@ -22,7 +22,7 @@ accepted. Check that they cover every intended production source directory.
 codebase:
   api_origin:
     source_roots: [source]
-    library_namespaces: [edu.ucr.cs.bdlab]
+    library_namespaces: [edu.ucr.cs.bdlab, org.apache.spark.beast]
     external_namespaces:
       - java
       - javax
@@ -44,6 +44,23 @@ All three keys must be explicit lists. Source roots and library namespaces must
 be nonempty. Namespace matching respects qualified-name boundaries: `ownlib`
 does not match `ownlibrary`. External namespaces are project configuration,
 not hard-coded library-specific exclusions.
+
+The most specific matching qualified namespace wins. For example, the custom
+`org.apache.spark.beast` and `org.apache.spark.beast.sql` definitions use the
+library rule above even though `org.apache.spark` is an external rule. Unrelated
+Spark definitions remain external. A more specific external rule likewise
+overrides a broader library rule. If the same most-specific prefix occurs on
+both sides, ownership stays unresolved (`conflicting_namespace_rules`). A winning
+library namespace still requires an owned source file and valid applicable hashes.
+The policy version is `source_file_and_declaring_namespace_v2`, so ownership
+receipts distinguish this rule from the earlier overlap-conflict policy.
+
+The pinned Beast 0.10.1 source has four production files under this custom
+Spark namespace: `cg/src/main/scala/org/apache/spark/beast/CRSServer.scala`,
+`SparkSQLRegistration.scala`, `sql/EnvelopeDataType.scala`, and
+`sql/GeometryDataType.scala`. Two additional matching files are tests, not
+additional production APIs. Keep the production/test source-scope rules separate
+from this ownership rule.
 
 ## Discovery and audit
 
@@ -118,6 +135,6 @@ The actual discovered names are `LocalRDD`, `map`, and `mapPixels`; imported
 proves an external `map` declaration cannot supply documentation-selection
 evidence to a custom `map` declaration.
 
-The staged validation includes 20 origin tests and 22 existing offline
+The staged validation includes 24 origin tests and 22 existing offline
 discovery/compiler-registry contracts, all passing. No provider, compiler,
 subject-library execution or measured experiment is required by these tests.

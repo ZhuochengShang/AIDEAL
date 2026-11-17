@@ -1,11 +1,11 @@
 {
   "status": "PASS",
-  "observed_at": "2026-11-17T21:56:52.047913+00:00",
-  "tests_run": 42,
+  "observed_at": "2026-11-17T22:06:42.055820+00:00",
+  "tests_run": 46,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "origin_tests": 20,
+  "origin_tests": 24,
   "existing_contract_tests": 22,
   "subject_library_imports": 0,
   "subject_executions": 0,
@@ -13,46 +13,59 @@
   "canonical_source_mutations": 0,
   "frozen_release_mutations": 0,
   "test_python": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 16.0.0 (clang-1600.0.26.6)]",
-  "test_dependency": "PyYAML6.0.3 installed only in stage/test-deps",
+  "test_dependency": "Reused PyYAML6.0.3 from the prior isolated test-deps directory",
   "baseline": {
     "source_root": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow",
-    "api_discovery_sha256": "b737ea5b65d278685fbfe55f70cc31d91fd80d918efc25374e186f912eb72147",
-    "source_mutations": false
+    "files": [
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_origin.py",
+        "sha256": "21281e77fff003f33b7e6b95ef7786c1b58f91adc0c7b6b5c50a311487a480b6"
+      },
+      {
+        "path": "tests/test_api_origin.py",
+        "sha256": "88f75961063eb33c033bab841e33542b11de5aff2732d3feda6445269c266c16"
+      },
+      {
+        "path": "docs/API_ORIGIN.md",
+        "sha256": "bf517749a42aaf5385251d6e4c909605a3dc406763e25e4be180ebd6ed88c138"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_discovery.py",
+        "sha256": "be0484f46c0d296a30e04c2ad7f7cabdd76d959bf16ab417c853cb629b455899"
+      }
+    ],
+    "api_discovery_sha256": "be0484f46c0d296a30e04c2ad7f7cabdd76d959bf16ab417c853cb629b455899",
+    "api_origin_sha256": "21281e77fff003f33b7e6b95ef7786c1b58f91adc0c7b6b5c50a311487a480b6",
+    "installed_publication": "114dc"
   },
   "staged_modules": {
-    "api_origin": "/private/tmp/aideal-api-origin-filter-2026-11-17/files/vendor/aideal_engine/src/aideal/api_origin.py",
-    "api_discovery": "/private/tmp/aideal-api-origin-filter-2026-11-17/files/vendor/aideal_engine/src/aideal/api_discovery.py"
+    "api_origin": "/private/tmp/aideal-origin-namespace-refinement/files/vendor/aideal_engine/src/aideal/api_origin.py",
+    "api_discovery": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/api_discovery.py"
   },
   "files": [
     {
       "path": "docs/API_ORIGIN.md",
-      "sha256": "bf517749a42aaf5385251d6e4c909605a3dc406763e25e4be180ebd6ed88c138",
-      "bytes": 6348
+      "sha256": "6992313c5d57dfc882bcb330a3a2c41d9a5785a788be100ba72b93e798cb94aa",
+      "bytes": 7474
     },
     {
       "path": "tests/test_api_origin.py",
-      "sha256": "88f75961063eb33c033bab841e33542b11de5aff2732d3feda6445269c266c16",
-      "bytes": 12659
-    },
-    {
-      "path": "vendor/aideal_engine/src/aideal/api_discovery.py",
-      "sha256": "be0484f46c0d296a30e04c2ad7f7cabdd76d959bf16ab417c853cb629b455899",
-      "bytes": 15441
+      "sha256": "60d1d44ef0398f9491fdd485525c1bdacda96e845e209674e91f630cf6473e46",
+      "bytes": 15111
     },
     {
       "path": "vendor/aideal_engine/src/aideal/api_origin.py",
-      "sha256": "21281e77fff003f33b7e6b95ef7786c1b58f91adc0c7b6b5c50a311487a480b6",
-      "bytes": 8336
+      "sha256": "e3c6bccb236e40f8f6ca38767921966c4285986b126459feacc104897de6ad89",
+      "bytes": 8717
     }
   ],
-  "patch_sha256": "9a1be3ecdbe0f394e40410024462a5077df2d80b95363d71be5203c28f916c2c",
-  "synthetic_example": "SYNTHETIC_DISCOVERY_EXAMPLE.json",
-  "synthetic_example_sha256": "d2207a94e8fcf5c22150e8f7d29c2aa25adc6abdd7578dac110be906ff6b1056",
-  "reviewer_findings_resolved": [
-    "same-file hash claim bypass",
-    "conflicting defining-owner fields",
-    "relative/nested Python defining-owner and constructor normalization",
-    "symlink-loop error handling"
-  ],
-  "counts_claim": "No new final API counts computed. Prior selected-count totals remain withdrawn pending revised owner/source policy."
+  "policy_version": "source_file_and_declaring_namespace_v2",
+  "changed_files": 3,
+  "prior_tests": 42,
+  "new_namespace_tests": 4,
+  "patch_sha256": "34c6de42561cef6a1cf4bdf6d8ee26814d2af89cc881d9277cbe581e6a50f048",
+  "source_namespace_evidence": "BEAST_NAMESPACE_EVIDENCE.json",
+  "actual_custom_production_files": 4,
+  "additional_test_files": 2,
+  "frozen_config_mutations": 0
 }

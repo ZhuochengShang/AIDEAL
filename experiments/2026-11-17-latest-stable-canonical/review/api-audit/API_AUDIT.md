@@ -108,3 +108,8 @@ A wrapper cannot disappear without a retained target mapping. A call to an exter
 ## 6. Execution state
 
 The earlier study is held for source/documentation correction. Current API tasks, costs and selected counts are superseded preparation evidence. Original R0 and README generation require a new inventory/disposition/selection review and fresh input fingerprints. No provider calls, audience programs or new treatment evaluations ran during this audit.
+
+
+### Verified custom Spark namespace
+
+Beast defines four production files under org.apache.spark.beast, including its custom SQL data types. The most specific configured namespace rule preserves these custom definitions while excluding ordinary Spark APIs. The origin filter retained all 31 recorded declarations from those four files in a read-only source check; this is not a final benchmark count. See [the origin rules](code_updates/docs/API_ORIGIN.md) and [the real source check](code_updates/BEAST_REAL_SOURCE_ORIGIN_CHECK.json).

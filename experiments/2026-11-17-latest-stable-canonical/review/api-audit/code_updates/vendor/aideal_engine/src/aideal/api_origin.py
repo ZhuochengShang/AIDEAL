@@ -6,7 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 
-POLICY_VERSION = "source_file_and_declaring_namespace_v1"
+POLICY_VERSION = "source_file_and_declaring_namespace_v2"
 
 
 def _hash(value):
@@ -98,7 +98,11 @@ def audit_api_origins(cfg, rows):
                     "policy_sha256": policy_hash, "status": "unresolved", "reason": "missing_defining_evidence"}
         own = [p for p in policy["library_namespaces"] if _namespace_match(namespace, p)]
         external = [p for p in policy["external_namespaces"] if _namespace_match(namespace, p)]
-        decision.update(library_namespace_matches=own, external_namespace_matches=external)
+        own_specificity = max(map(len, own), default=-1)
+        external_specificity = max(map(len, external), default=-1)
+        specificity = max(own_specificity, external_specificity)
+        decision.update(library_namespace_matches=own, external_namespace_matches=external,
+                        most_specific_namespace_matches=sorted({p for p in own + external if len(p) == specificity}))
         exposure_only = bool(row.get("inherited") or row.get("import_only") or row.get("is_inherited"))
         module_claim = owner_claims.get("defining_module")
         owner_conflict = (len(set(normalized_owners)) > 1 or
@@ -106,9 +110,9 @@ def audit_api_origins(cfg, rows):
                            not all(_namespace_match(value, module_claim) for value in normalized_owners)))
         if owner_conflict:
             decision["reason"] = "conflicting_defining_owner_evidence"
-        elif own and external:
+        elif own and external and own_specificity == external_specificity:
             decision["reason"] = "conflicting_namespace_rules"
-        elif external:
+        elif external_specificity > own_specificity:
             decision.update(status="external_defined", reason="external_declaring_namespace")
         elif row.get("definition_kind") == "registered_sql" and not (explicit_owner and row.get("defining_file")):
             decision["reason"] = "registered_sql_requires_defining_source_binding"

@@ -169,3 +169,8 @@ Each library has five refs under `study/2026-11-17-latest-stable-canonical/`: `o
 The [AIDEAL study branch](https://github.com/ZhuochengShang/AIDEAL/tree/study%2F2026-11-17-latest-stable-canonical) carries the correction and review package. Main, measured history and the old evaluator release remain unchanged. Local/cluster/GitHub copies are compared by the sync manifest, not just filenames.
 
 **Do not run the prior launch commands.** First finish and review the corrected inventory/documents, migrate qualified IDs, regenerate the plan and obtain the requested pre-run review. [RUNBOOK.md](RUNBOOK.md) retains earlier commands with this hold clearly marked.
+
+
+### Verified custom Spark namespace
+
+Beast defines four production files under org.apache.spark.beast, including its custom SQL data types. The most specific configured namespace rule preserves these custom definitions while excluding ordinary Spark APIs. The origin filter retained all 31 recorded declarations from those four files in a read-only source check; this is not a final benchmark count. See [the origin rules](review/api-audit/code_updates/docs/API_ORIGIN.md) and [the real source check](review/api-audit/code_updates/BEAST_REAL_SOURCE_ORIGIN_CHECK.json).
