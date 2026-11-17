@@ -31,8 +31,14 @@ def git(repo, *args, data=None, env=None):
 
 
 def original_identity(repo):
-    return {'head': git(repo, 'rev-parse', 'HEAD').decode().strip(),
-            'branch': git(repo, 'symbolic-ref', '--quiet', 'HEAD').decode().strip(),
+    head = git(repo, 'rev-parse', 'HEAD').decode().strip()
+    try:
+        branch = git(repo, 'symbolic-ref', '--quiet', 'HEAD').decode().strip()
+    except subprocess.CalledProcessError as error:
+        if error.returncode != 1:  # 1 means HEAD is not a symbolic reference.
+            raise
+        branch = None
+    return {'head': head, 'branch': branch,
             'working_diff_sha256': sha(git(repo, 'diff', '--binary')),
             'index_diff_sha256': sha(git(repo, 'diff', '--cached', '--binary'))}
 
@@ -127,6 +133,7 @@ def preflight_generation(manifest_path):
     """Catch branch and Git identity blockers before starting paid generation."""
     spec = json.loads(Path(manifest_path).read_text())
     repo = Path(spec['repository']).resolve()
+    original_identity(repo)
     checked = {line[7:] for line in git(repo, 'worktree', 'list', '--porcelain').decode().splitlines()
                if line.startswith('branch ')}
     for name, old in spec['branches'].items():

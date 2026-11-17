@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / 'vendor/aideal_engine/src'))
 
 import yaml
 from aideal.config import load_config
+from aideal.api_registry import relocated_inventory_binding
 from aideal.api_discovery import public_api_details, public_api_surface
 from aideal.doc_check_sources import _load_manifest
 from aideal.profile import profile_path, require_profile
@@ -81,9 +82,15 @@ def prepare(spec, destination, model, scope='surface', sample=None, reuse_from=N
     raw.pop('extends', None)
     inventory = (raw.get('codebase') or {}).get('api_inventory')
     inventory_path = (original.root / inventory).resolve() if inventory else None
+    canonical_bound = False
     if inventory_path is not None:
-        write_once(destination / 'inputs/api_inventory.json', inventory_path.read_bytes())
+        relocated_inventory = relocated_inventory_binding(original)
+        content = relocated_inventory[0] if relocated_inventory is not None else inventory_path.read_bytes()
+        canonical_bound = bool(json.loads(content).get('canonical_selection'))
+        write_once(destination / 'inputs/api_inventory.json', content)
         raw['codebase']['api_inventory'] = 'inputs/api_inventory.json'
+        if relocated_inventory is not None:
+            raw['codebase']['api_inventory_sha256'] = relocated_inventory[1]
     files = raw.setdefault('files', {})
     files['original_readme'] = [str(p) for p in original.original_readme_files]
     files['prompts_dir'] = str((original.root / files.get('prompts_dir', 'prompts')).resolve())
@@ -102,9 +109,11 @@ def prepare(spec, destination, model, scope='surface', sample=None, reuse_from=N
     relocated = public_api_surface(cfg)
     if set(names) - relocated:
         raise ValueError('Relocated source paths no longer contain the frozen README scope')
-    manifest = {'identity_kind': 'bare_name_family', 'scope': scope, 'sample': sample,
+    manifest = {'identity_kind': 'canonical_selected_target' if canonical_bound else 'bare_name_family',
+                'scope': scope, 'sample': sample,
                 'scope_count': scope_count, 'selected_count': len(names), 'names': names,
-                'note': 'One entry per bare API name; same-name declarations remain grouped. Source definitions are explicit; no overload-complete claim.',
+                'note': ('One entry per selected public target. Its exact declaration or registered SQL operation is frozen by the canonical-selection receipt; each definition list contains only that selected target.'
+                         if canonical_bound else 'One entry per bare API name; same-name declarations remain grouped. Source definitions are explicit; no overload-complete claim.'),
                 'definitions': {name: [d for d in details if d['name'] == name] for name in names}}
     write_once(destination / 'inputs/api_manifest.json', (json.dumps(manifest, indent=2) + '\n').encode())
     inputs = list(original.original_readme_files) + [profile_path(original)]

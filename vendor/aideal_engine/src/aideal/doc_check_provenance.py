@@ -77,7 +77,7 @@ def _comprehension_fingerprint_components(
         "doc_check_puzzles.py", "readme_format.py", "readme_evidence.py",
         "readme_catalogue.py", "api_visibility.py", "api_examples.py",
         "scaffold_generation.py", "api_intent.py", "api_overloads.py",
-        "api_signatures.py", "api_discovery.py", "api_registry.py",
+        "api_signatures.py", "api_discovery.py", "api_registry.py", "api_sql_canonical.py", "api_source_registry.py", "api_canonical_selection.py",
         "readme_generation.py", "readme_recording.py",
         "readme_validation.py", "readme_replay.py")]
     from .experiment_identity import extra_components

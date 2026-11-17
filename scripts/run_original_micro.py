@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / 'vendor/aideal_engine/src'))
 
 import yaml
 from aideal.config import load_config
+from aideal.api_registry import relocated_inventory_binding
 from aideal.doc_check_comprehension import comprehension_check
 from aideal.doc_check_sources import _load_manifest
 from aideal.doc_check_provenance import _sha256_files
@@ -80,6 +81,11 @@ def prepare(spec, destination, model, sample, *, max_fix_rounds=0, api=None, mod
 
     raw = deepcopy(original.raw)
     raw.pop('extends', None)
+    relocated_inventory = relocated_inventory_binding(original)
+    if relocated_inventory is not None:
+        content, checksum = relocated_inventory
+        write_once(destination / 'inputs/api_inventory.json', content)
+        raw['codebase'].update(api_inventory='inputs/api_inventory.json', api_inventory_sha256=checksum)
     files = raw.setdefault('files', {})
     # Retain original documentation inputs. All output-bearing paths are new.
     files['original_readme'] = [str(p) for p in original.original_readme_files]
@@ -123,6 +129,8 @@ def prepare(spec, destination, model, sample, *, max_fix_rounds=0, api=None, mod
     # Refuse resume if code, documentation, fixtures, or runner contents changed.
     # Symlinks save disk space; these hashes bind their contents to this run.
     inputs = list(original.original_readme_files)
+    if relocated_inventory is not None:
+        inputs.append(destination / 'inputs/api_inventory.json')
     for pattern in original.source_globs:
         inputs.extend(Path(p) for p in glob.glob(str(original.root / pattern), recursive=True))
     for value in execution.get('sample_data', {}).values():

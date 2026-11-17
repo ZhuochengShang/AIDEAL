@@ -172,7 +172,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             "api_intent.py",
             "api_overloads.py",
             "api_signatures.py",
-            "api_discovery.py", "api_registry.py",
+            "api_discovery.py", "api_registry.py", "api_sql_canonical.py", "api_source_registry.py", "api_canonical_selection.py",
             "readme_generation.py", "readme_recording.py",
             "readme_validation.py", "readme_replay.py", "doc_check_sources.py")]
         _generation_payload = {

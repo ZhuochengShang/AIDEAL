@@ -21,6 +21,79 @@ from .doc_check_provenance import (
 )
 
 
+def _canonical_prompt_targets(cfg) -> dict[str, dict] | None:
+    """Expose only frozen public declaration identities, never source bodies.
+
+    Canonical selection in the API manifest is the sole opt-in. The registry
+    validates its complete hash-bound receipt before any target is returned.
+    This requests a declaration; it does not establish which overload ran.
+    """
+    import hashlib
+    import json
+    from .api_registry import configured_api_details
+    from .experiment_identity import digest_native
+
+    codebase = cfg.raw.get("codebase", {})
+    locator = codebase.get("api_inventory")
+    if not locator:
+        return None
+    content = (cfg.root / locator).read_bytes()
+    manifest = json.loads(content)
+    if not any(field.startswith("canonical_") for field in manifest):
+        return None
+    if hashlib.sha256(content).hexdigest() != codebase.get("api_inventory_sha256"):
+        raise ValueError("Canonical prompt target requires the frozen API inventory checksum")
+    details = configured_api_details(cfg)
+    if not manifest.get("canonical_selection"):
+        raise ValueError("Canonical prompt target requires a complete selection binding")
+    targets = {}
+    for row in details:
+        if row["name"] in targets:
+            raise ValueError("Canonical prompt target must have exactly one definition per name")
+        # Explicit allowlist: descriptions, bodies, audit evidence, examples,
+        # and implementations are not audience task metadata.
+        target = {
+            "schema_version": 1,
+            "selection_policy_version": manifest["canonical_selection_policy_version"],
+            "selection_receipt_sha256": manifest["canonical_selection_sha256"],
+            "selected_site_id": row["site_id"],
+            "qualified_name": row["qualified_name"],
+            "owner": row["owner"],
+            "signature": row["signature"],
+            "parameters": [{"name": param["name"], "type": param["type"]}
+                           for param in row["params"]],
+            "parameter_count": len(row["params"]),
+        }
+        if row.get("target_kind") == "registered_sql":
+            target.update(target_kind="registered_sql", parameters=[], parameter_count=None,
+                          parameter_count_status=row["parameter_count_status"])
+        target["target_fingerprint"] = digest_native(target)
+        targets[row["name"]] = target
+    return targets
+
+
+def _requested_target_context(execution_context: str, target: dict | None) -> str:
+    if target is None:
+        return execution_context
+    if target.get("target_kind") == "registered_sql":
+        block = ("Requested registered SQL operation:\n"
+                 f"SQL name: {target['qualified_name']}\n"
+                 f"Documented call patterns: {target['signature']}\n"
+                 f"Arity status: {target['parameter_count_status']}\n"
+                 "Call this registered SQL operation using a documented call pattern; no finite maximum arity is asserted.")
+        return execution_context + ("\n\n" if execution_context else "") + block
+    parameters = "; ".join(f"{param['name']}: {param['type']}" for param in target["parameters"])
+    block = (
+        "Requested target declaration (frozen canonical selection):\n"
+        f"Qualified name: {target['qualified_name']}\n"
+        f"Owner: {target['owner']}\n"
+        f"Declaration: {target['signature']}\n"
+        f"Parameters in declaration order ({target['parameter_count']}): {parameters or '(none)'}\n"
+        "Write the requested call against this owner and declaration, with its indicated parameter list."
+    )
+    return execution_context + ("\n\n" if execution_context else "") + block
+
+
 @exclusive_work_dir
 def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_source: str,
                            show_code: bool = False, class_context: bool = False,
@@ -211,6 +284,15 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         max_fix_rounds=max_fix_rounds, manifest_sha256=manifest_sha256,
         document_sha256=doc_sha256, scaffold_file=scaffold_file,
         sample_data=sample_data, class_context=class_context, timeout=timeout)
+    canonical_targets = _canonical_prompt_targets(cfg)
+    if canonical_targets is not None:
+        fingerprint_components["canonical_requested_targets"] = {
+            "protocol_version": 1, "targets_sha256": digest_native(canonical_targets),
+            "targets_count": len(canonical_targets),
+        }
+        missing = sorted({entry.name for entry in inventory} - set(canonical_targets))
+        if missing:
+            raise ValueError("Requested APIs lack a canonical target declaration: " + repr(missing))
     experiment_fingerprint = digest_native(fingerprint_components)
 
     # Crash-proof progress: one JSONL row per finished API, flushed as it
@@ -387,6 +469,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         prev_sig, same_sig = None, 0   # stuck detector state (per API)
         import sys as _sys
         receiver = _receiver_hint(entry.name, owner_map)
+        requested_target = (canonical_targets or {}).get(entry.name)
         for attempt in range(1 + max_fix_rounds):
             # A condition's first attempt must be documentation-only. Historical
             # error-log feedback would leak earlier treatments into A1/A2 even
@@ -409,7 +492,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                                  available_inputs=available_inputs,
                                  receiver=receiver or "(receiver type not resolved)",
                                  known_failures=known or "(none yet)",
-                                 execution_context=ex.get("execution_context", ""),
+                                 execution_context=_requested_target_context(
+                                     ex.get("execution_context", ""), requested_target),
                                  exec_hints=ex.get("exec_hints", ""),
                                  io_hints=io_hints_text)
                 prompt_hashes.append(_hashlib.sha256(_json.dumps(delivered_prompt).encode()).hexdigest())
@@ -420,6 +504,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                     "attempt_number": evidence_number,
                     "provider": selected_model.provider, "model": selected_model.model,
                     "system": delivered_prompt[0], "user": delivered_prompt[1],
+                    **({"requested_target_declaration": requested_target}
+                       if requested_target is not None else {}),
                 }, ensure_ascii=False, indent=2), encoding="utf-8")
                 raw_response = invoke_text(selected_model, *delivered_prompt)
                 (evidence_dir / "response.txt").write_text(raw_response, encoding="utf-8")
