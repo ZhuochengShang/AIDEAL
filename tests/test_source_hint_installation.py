@@ -93,7 +93,7 @@ class SourceHintInstallationTests(unittest.TestCase):
 
     def install(self):
         # The development verifier has separate replay/identity integration tests.
-        with patch('workflow.source_hint_installation._validated',
+        with patch('workflow.source_hint_development.verify_development_validation',
                    return_value=copy.deepcopy(self.validation)):
             return install_source_hints(self.validation_path, self.plan_path, self.output)
 

@@ -3,6 +3,8 @@
 
 def validate_refactors(rows, functions):
     """Check literal source citations, not equivalence or implementation safety."""
+    # Check each proposed change against the function IDs and literal source windows
+    # included in the model request.
     if not isinstance(rows, list) or len(rows) > 20:
         raise ValueError('refactors must be a bounded list')
     required = {'title', 'function_ids', 'source_evidence', 'rationale',

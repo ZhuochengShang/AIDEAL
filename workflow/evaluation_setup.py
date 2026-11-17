@@ -10,15 +10,11 @@ import re
 import yaml
 
 from .ablation import bind, digest, file_hash, load, verify_artifact
-from .execution import atomic_json, invoke, next_directory, ownership
+from .execution import atomic_json, checked_attempt_directory, invoke, ownership
 
 CONDITIONS = ('Original README', 'Generated README', 'Repaired README')
-_CONDITION_DESIGNS = {
-    'three_readme': CONDITIONS,
-    'selective_refresh': ('Unchanged generated README', 'Selected API refresh', 'Full README refresh'),
-}
-CONTROLLER_MODULES = ('evaluation.py', 'evaluation_setup.py', 'execution.py',
-                      'reporting.py', 'ablation.py', 'response_status.py', 'repair_context.py', 'generation.py')
+CONTROLLER_MODULES = ('evaluation.py', 'evaluation_runner.py', 'evaluation_readme.py', 'evaluation_setup.py', 'execution.py',
+                      'evaluation_report.py', 'ablation.py', 'response_status.py', 'repair_context.py', 'evaluation_program_generation.py')
 SYSTEM = ('Write a solution using the supplied library documentation and task contract. '
           'Return only the requested source code, without Markdown fences. '
           'Do not read files, contact services, inspect hidden tests, or replace library functions. '
@@ -26,6 +22,8 @@ SYSTEM = ('Write a solution using the supplied library documentation and task co
 
 
 def _path(base, value):
+    # Expand the configured path and resolve relative paths against base.
+    # Return an absolute Path for validation and file binding.
     _text(value, 'Artifact path')
     p = Path(value).expanduser()
     return (base / p).resolve() if not p.is_absolute() else p.resolve()
@@ -33,6 +31,8 @@ def _path(base, value):
 
 def assert_review_released(directory):
     """Honor an explicit review hold before executing any study work."""
+    # Look for a review hold in the given directory or its parent.
+    # Raise an error before the caller starts or resumes study work.
     directory = Path(directory).resolve()
     for parent in (directory, directory.parent):
         hold = parent / 'REVIEW_HOLD.json'
@@ -43,57 +43,47 @@ def assert_review_released(directory):
 def _valid_identifier(value):
     # Case/trial names become directory names joined with "--". Reserve that
     # separator to prevent two different case/trial pairs sharing an output.
+    # Return whether this case or trial ID is safe to use in a folder name.
     return (isinstance(value, str) and '--' not in value
             and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*', value) is not None)
 
 
 def _mapping(value, name):
+    # Require a dictionary at the named configuration field. Return the
+    # same object so callers can resolve fields in place.
     if not isinstance(value, dict):
         raise ValueError(f'{name}: expected a mapping')
     return value
 
 
 def _text(value, name, allow_empty=False):
+    # Require a string and, by default, at least one non-whitespace
+    # character. Use name to identify the failing field in any error.
     if not isinstance(value, str) or (not allow_empty and not value.strip()):
         raise ValueError(f'{name}: expected {"a string" if allow_empty else "a nonempty string"}')
     return value
 
 
 def _string_list(value, name, allow_empty=False):
+    # Require a list of nonempty strings. allow_empty controls whether
+    # the list itself may have zero items.
     if (not isinstance(value, list) or (not allow_empty and not value)
             or any(not isinstance(v, str) or not v.strip() for v in value)):
         raise ValueError(f'{name}: expected a list of nonempty strings')
     return value
 
 
-def conditions_for(config):
-    """Return the ordered, explicit documentation design; preserve legacy defaults."""
-    config = _mapping(config, 'readme_evaluation')
-    design = config.get('design', 'three_readme')
-    if not isinstance(design, str) or design not in _CONDITION_DESIGNS:
-        raise ValueError('Unknown readme_evaluation design; use three_readme or selective_refresh')
-    conditions = _CONDITION_DESIGNS[design]
-    documents = _mapping(config.get('documents'), 'Documentation conditions')
-    if set(documents) != set(conditions):
-        raise ValueError('Supply all three explicitly named documentation conditions for ' + design)
-    return conditions
-
-
-def _controller_modules(common=None):
-    optional = ('documentation_selection.py',) if common and 'documentation_selection' in common else ()
-    return CONTROLLER_MODULES + optional
-
-
-def _controller_hashes(common=None):
+def _controller_hashes(modules=CONTROLLER_MODULES):
     """Identify this controller installation, independent of its location."""
-    return {name: file_hash(Path(__file__).with_name(name)) for name in _controller_modules(common)}
+    # Return one SHA-256 hash per controller module. The freeze uses
+    # these hashes to identify the exact source it ran with.
+    return {name: file_hash(Path(__file__).with_name(name)) for name in modules}
 
 
 def _validate_common(common, model):
     """Reject ambiguous budgets before creating files or launching commands."""
-    if 'documentation_selection' in common:
-        from .documentation_selection import validate_documentation_selection
-        validate_documentation_selection(common['documentation_selection'])
+    # Check the settings shared by all conditions, including limits,
+    # timeouts, and trial IDs, before any adapter can run.
     source_access = common.get('source_access', False)
     if type(source_access) is not bool:
         raise ValueError('source_access must be a boolean')
@@ -132,13 +122,16 @@ def _validate_common(common, model):
 
 def read_config(path):
     """Evaluation paths are relative to this YAML file; legacy intake is unchanged."""
+    # Read the README experiment YAML and its held-out task bank. Resolve
+    # the file references and return the configuration and frozen file bindings.
     path = Path(path).resolve()
     raw = _mapping(yaml.safe_load(path.read_text()), 'Configuration')
     cfg = _mapping(raw.get('readme_evaluation'), 'readme_evaluation')
-    conditions_for(cfg)
     base = path.parent
     cfg['bank'] = str(_path(base, cfg.get('bank')))
     documents = _mapping(cfg.get('documents'), 'Documentation conditions')
+    if set(documents) != set(CONDITIONS):
+        raise ValueError('Supply all three explicitly named documentation conditions as lists')
     for name, paths in documents.items():
         _string_list(paths, f'{name} documentation paths')
     cfg['documents'] = {name: [str(_path(base, p)) for p in paths]
@@ -209,11 +202,8 @@ def read_config(path):
         refs.extend(bind(p) for p in c['target_negative_controls'])
     if micro_scope != api_scope or not any(c['kind'] == 'puzzle' for c in cases):
         raise ValueError('Bank must cover its declared micro API scope and include puzzles')
-    if 'documentation_selection' in common:
-        from .documentation_selection import validate_documentation_selection
-        validate_documentation_selection(common['documentation_selection'], api_scope)
     # Bind controller code as well as study inputs; changes require a new freeze.
-    controller = {name: bind(Path(__file__).with_name(name)) for name in _controller_modules(common)}
+    controller = {name: bind(Path(__file__).with_name(name)) for name in CONTROLLER_MODULES}
     refs.extend(controller.values())
     unique = {r['path']: r for r in refs}
     return {'config': cfg, 'bank': bank, 'artifacts': list(unique.values()), 'system_prompt': SYSTEM,
@@ -222,12 +212,16 @@ def read_config(path):
 
 def adapter_request(case, code):
     """Private request to the trusted checker; never forward it to the model."""
+    # Package the candidate program, task ID, target APIs, and private
+    # oracle location for the checker.
     return {'code': code, 'case_id': case['id'], 'oracle_path': case['oracle'],
             'target_apis': case['target_apis']}
 
 
 def verified_outcome(process):
     """Return True/False for a checked solution, or None for a checker failure."""
+    # Require a successful checker process and consistent boolean flags.
+    # A verdict passes only if execution, correctness, and target use all pass.
     p = process.get('payload')
     keys = ('execution_pass', 'oracle_pass', 'target_reached')
     if process['status'] != 'ok' or not isinstance(p, dict) or any(type(p.get(k)) is not bool for k in keys):
@@ -243,9 +237,9 @@ def _checked_execution(cfg, case, code, parent, *, prefix):
     Controls and audience solutions share this resume rule. Infrastructure
     failures keep their evidence and receive a fresh numbered attempt.
     """
-    completed = sorted(parent.glob(prefix + '*/process.json'))
-    reusable = [p for p in completed if verified_outcome(load(p)) is not None]
-    directory = reusable[-1].parent if reusable else next_directory(parent, prefix)
+    # Choose the attempt folder, send the private request to the checker,
+    # and return the folder together with its saved process result.
+    directory = checked_attempt_directory(parent, prefix, verified_outcome)
     result = invoke(cfg['adapter']['command'], adapter_request(case, code), directory,
                     cfg['common']['execution_timeout_s'])
     return directory, result
@@ -253,6 +247,8 @@ def _checked_execution(cfg, case, code, parent, *, prefix):
 
 def control_passes(role, result):
     """A wrong-output control must run; a compiler error cannot validate an oracle."""
+    # Check the expected behavior for this control role. A reference should
+    # pass. Negative controls must demonstrate the intended rejection.
     outcome = verified_outcome(result)
     if role == 'reference':
         return outcome is True
@@ -266,8 +262,19 @@ def control_passes(role, result):
     raise ValueError(f'Unknown control role: {role}')
 
 
+def controls(case):
+    """List reference, wrong-output, and missing-target controls in receipt order."""
+    # Put the reference first, followed by wrong-output and missing-target
+    # programs. The caller uses this order to label the saved control records.
+    return ([('reference', case['reference'])]
+            + [('wrong_output', path) for path in case['negative_controls']]
+            + [('no_target_call', path) for path in case.get('target_negative_controls', [])])
+
+
 def validate_bank(payload, output):
     """Actually execute reference and negative solutions, keeping all evidence."""
+    # Execute each stored control through the shared checker. Save progress
+    # as validation.json and return the validation record.
     output = Path(output).resolve()
     assert_review_released(output.parent)
     cfg = payload['config']
@@ -279,9 +286,7 @@ def validate_bank(payload, output):
         atomic_json(identity, {'fingerprint': fingerprint})
         records = []
         for case in payload['bank']['cases']:
-            controls = [('reference', case['reference'])] + [('wrong_output', p) for p in case['negative_controls']]
-            controls += [('no_target_call', p) for p in case.get('target_negative_controls', [])]
-            for index, (role, path) in enumerate(controls):
+            for index, (role, path) in enumerate(controls(case)):
                 parent = output / case['id'] / ('reference' if index == 0 else f'negative_{index}')
                 directory, result = _checked_execution(
                     cfg, case, Path(path).read_text(), parent, prefix='attempt_')
@@ -300,6 +305,8 @@ def validate_bank(payload, output):
 
 def freeze_evaluation(config, output):
     """Validate actual controls, then save a new immutable study description."""
+    # Validate the README study’s task bank and check the input hashes again.
+    # Write frozen.json and return its path, identity, and task count.
     output = Path(output).resolve()
     assert_review_released(output)
     payload = read_config(config)
@@ -319,18 +326,19 @@ def freeze_evaluation(config, output):
         else:
             atomic_json(destination, frozen)
     return {'frozen': str(destination), 'study_sha256': frozen['study_sha256'],
-            'cases': len(payload['bank']['cases']), 'conditions': list(conditions_for(payload['config'])), 'validated': True}
+            'cases': len(payload['bank']['cases']), 'conditions': list(CONDITIONS), 'validated': True}
 
 
 def open_frozen(path):
     """Reject changed inputs; never silently rebind an old run to edited code."""
+    # Verify the saved freeze’s study hash, controller source, bound inputs,
+    # and control files before returning it to the runner.
     frozen = load(path)
     if frozen['study_sha256'] != digest({k: v for k, v in frozen.items() if k != 'study_sha256'}):
         raise ValueError('Frozen study was edited')
-    conditions_for(frozen['config'])
     if 'controller_sha256' not in frozen:
         raise ValueError('Frozen study lacks controller identity; validate and freeze a new study')
-    if frozen['controller_sha256'] != _controller_hashes(frozen['config']['common']):
+    if frozen['controller_sha256'] != _controller_hashes():
         raise ValueError('Running controller changed; validate and freeze a new study')
     refs = frozen['artifacts'] + [r['evidence'] for r in frozen['validation']['controls']]
     if not frozen['validation']['validated'] or not all(verify_artifact(r) for r in refs):

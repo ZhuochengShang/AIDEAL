@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from workflow.condition_context import public_context
+from workflow.evaluation_context import public_context
 
 
 class QualifiedDocumentationTests(unittest.TestCase):

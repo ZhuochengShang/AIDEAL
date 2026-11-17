@@ -15,8 +15,8 @@ def _subsume_overloads(recs: list[dict],
                        deprioritize: tuple = ()) -> tuple[list[dict], list[tuple[dict, dict]]]:
     """Telescoping-overload analysis for ONE name's definition sites.
 
-    Same function, different parameter lists: within the SAME file (one class
-    family), an overload whose parameter types are a proper prefix of a longer
+    Same function, different parameter lists: within the SAME file and known
+    owner, an overload whose parameter types are a proper prefix of a longer
     sibling's is a convenience form of that sibling (it delegates with
     defaults) — the catalog needs only the LONGEST form ("needed longest
     parameters"), e.g. `foo(x)` and `foo(x,y)` are one function documented as
@@ -31,9 +31,13 @@ def _subsume_overloads(recs: list[dict],
     def _types(r: dict) -> tuple:
         return tuple((p.get("type") or "?") for p in r["params"])
 
-    by_file: dict[str, list[dict]] = {}
+    by_file: dict[tuple, list[dict]] = {}
     for r in recs:
-        by_file.setdefault(r["file"], []).append(r)
+        # AST-derived Python identities distinguish unrelated methods in one
+        # file. Keep legacy grouping where the language scanner has no owner.
+        family = (r["file"], r.get("module", ""), r.get("owner", ""),
+                  r.get("qualified_name", r.get("name", "")))
+        by_file.setdefault(family, []).append(r)
     subsumed: list[tuple[dict, dict]] = []
     losers: set[int] = set()
     for group in by_file.values():

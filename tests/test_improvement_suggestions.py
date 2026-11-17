@@ -84,6 +84,54 @@ print(json.dumps({'code':json.dumps(result),'model_version':'synthetic','usage':
             preview_improvements(self.study, self.repo / 'new-preview', apis=['scaled'])
         self.assertFalse((self.repo / 'new-preview').exists())
 
+    def test_discovered_qualified_python_id_works_for_source_and_native_hints(self):
+        from workflow.source_hints import insert_source_hint, index_source_hints, strip_source_hints
+        from workflow.native_hints import patch_message
+        from workflow.source_hint_development import _facts
+        package = self.repo / 'src/package'
+        package.mkdir()
+        (package / '__init__.py').write_text('')
+        original = ('class Worker:\n    def resize(self, width):\n'
+                    '        if width <= 0:\n            raise ValueError("Width must be positive.")\n'
+                    '        return width\n')
+        (package / 'api.py').write_text(original)
+        subprocess.run(['git', '-C', str(self.repo), 'add', 'src/package'], check=True,
+                       capture_output=True)
+        subprocess.run(['git', '-C', str(self.repo), 'commit', '-qm', 'Class API fixture'], check=True,
+                       capture_output=True)
+        study = self.root / 'class-study'
+        attach(self.repo, self.repo / 'configs/aideal.yaml', study)
+        preview = load(preview_improvements(study, self.root / 'class-preview', apis=['resize'])['preview'])
+        api = preview['context']['apis'][0]
+        identity = api['id']
+        self.assertEqual('src/package/api.py:2:package.api.Worker.resize', identity)
+        self.assertEqual(identity, _facts(Path(preview['source_root']), identity)['function_id'])
+        fields = {'requirement_id': 'positive_width', 'requirement': 'Width must be positive.',
+                  'diagnostic': 'Width must be positive.', 'action': 'Pass a width greater than zero.',
+                  'validation': 'Check zero and positive widths.'}
+        annotated = insert_source_hint(original, identity, fields, source_path=api['file'])
+        destination = self.root / 'annotated' / api['file']
+        destination.parent.mkdir(parents=True)
+        destination.write_text(annotated)
+        index = index_source_hints(self.root / 'annotated', [api['file']], {api['qualified_name']: identity})
+        self.assertEqual(identity, index['records'][0]['function_id'])
+        self.assertEqual(original, strip_source_hints(annotated))
+        hint = {**fields, 'function_id': identity, 'error_line': 4,
+                'original_message': 'Width must be positive.'}
+        native, message = patch_message(original, api['file'], hint)
+        self.assertIn('[AIDEAL fix:positive_width]', message)
+        self.assertIn(message, native)
+        bare = api['file'] + ':2:resize'
+        self.assertEqual(native, patch_message(original, api['file'], {**hint, 'function_id': bare})[0])
+        for wrong in (identity.replace('Worker', 'Other'), identity.replace('package.api.', 'wrong.api.')):
+            with self.subTest(wrong=wrong):
+                with self.assertRaisesRegex(ValueError, 'module or owner'):
+                    insert_source_hint(original, wrong, fields, source_path=api['file'])
+                with self.assertRaisesRegex(ValueError, 'module or owner'):
+                    patch_message(original, api['file'], {**hint, 'function_id': wrong})
+                with self.assertRaisesRegex(ValueError, 'module or owner'):
+                    _facts(Path(preview['source_root']), wrong)
+
     def test_preview_does_not_run_git_filters(self):
         marker = self.root / 'FILTER_EXECUTED'
         script = self.root / 'git_filter.py'

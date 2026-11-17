@@ -11,11 +11,11 @@ from unittest.mock import patch
 import yaml
 
 from workflow.ablation import digest, load
-from workflow.condition_context import public_context
+from workflow.evaluation_context import public_context
 from workflow.condition_evaluation import run_conditions
-from workflow.condition_inputs import DESIGNS
-from workflow.condition_reporting import report_conditions
-from workflow.condition_setup import freeze_conditions, open_conditions, read_condition_config
+from workflow.evaluation_inputs import DESIGNS
+from workflow.evaluation_report import report_conditions
+from workflow.evaluation_freeze import freeze_conditions, open_conditions, read_condition_config
 
 
 class ConditionEvaluationTests(unittest.TestCase):
@@ -207,7 +207,7 @@ print(json.dumps({'code':code,'usage':{'input_tokens':7,'output_tokens':3}}))
             self.cfg = deepcopy(baseline)
             change()
             self.write_config()
-            with patch('workflow.condition_setup.invoke') as invoke:
+            with patch('workflow.evaluation_freeze.invoke') as invoke:
                 with self.assertRaises(ValueError):
                     self.freeze()
                 invoke.assert_not_called()
@@ -241,7 +241,7 @@ print(json.dumps({'code':code,'usage':{'input_tokens':7,'output_tokens':3}}))
         study = self.freeze()
         bad = {'status': 'ok', 'payload': {'execution_pass': True, 'oracle_pass': True,
                                          'target_reached': True, 'backend_sha256': 'wrong'}}
-        with patch('workflow.condition_setup.invoke', return_value=bad):
+        with patch('workflow.evaluation_freeze.invoke', return_value=bad):
             summary = run_conditions(study, self.root / 'run')
         self.assertFalse(summary['all_complete'])
         self.assertEqual(12, sum(m['unresolved'] for kinds in summary['metrics'].values() for m in kinds.values()))
@@ -279,7 +279,7 @@ print(json.dumps({'code':code,'usage':{'input_tokens':7,'output_tokens':3}}))
         self.assertEqual(11, sum(m['unresolved'] for kinds in summary['metrics'].values() for m in kinds.values()))
         self.assertTrue(all(p['final_lift_percentage_points'] is None for p in summary['paired_comparisons']))
         self.write_json(self.root / 'REVIEW_HOLD.json', {'reason': 'Synthetic hold'})
-        with patch('workflow.condition_setup.invoke') as checker:
+        with patch('workflow.evaluation_freeze.invoke') as checker:
             with self.assertRaisesRegex(ValueError, 'paused'):
                 self.freeze()
             checker.assert_not_called()

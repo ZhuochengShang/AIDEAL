@@ -21,12 +21,26 @@ ARMS = {
 }
 
 
+def bytes_sha256(data):
+    # Fingerprint bytes already in memory, such as a source file or proposed patch.
+    return hashlib.sha256(data).hexdigest()
+
+
 def digest(value):
-    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
-                                     allow_nan=False).encode()).hexdigest()
+    # Sort keys and omit formatting spaces so equivalent JSON values produce the same
+    # SHA-256 fingerprint.
+    return bytes_sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
+                                  allow_nan=False).encode())
+
+
+def seal_record(value):
+    # Copy the record and add a hash of the original fields for later verification.
+    return {**value, 'sha256': digest(value)}
 
 
 def file_hash(path):
+    # Hash the exact file bytes in chunks so large artifacts do not have to fit in
+    # memory.
     h = hashlib.sha256()
     with Path(path).open("rb") as f:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
@@ -36,16 +50,20 @@ def file_hash(path):
 
 def load(path):
     """Read a UTF-8 JSON artifact."""
+    # Decode the file into Python values, such as a dictionary for a saved study.
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
 def save(path, value):
+    # Create missing parent folders and write indented JSON for later inspection.
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
 
 
 def bind(path):
+    # Keep the resolved location, byte count and fingerprint together as a reference
+    # to this file.
     path = Path(path).resolve()
     if not path.is_file():
         raise ValueError(f"Missing artifact: {path}")
@@ -53,6 +71,8 @@ def bind(path):
 
 
 def verify_artifact(ref):
+    # Compare the saved fingerprint with the current file. A missing file or a byte
+    # change invalidates the reference.
     return Path(ref["path"]).is_file() and file_hash(ref["path"]) == ref["sha256"]
 
 
@@ -62,6 +82,8 @@ def approval_valid(proposal, decision):
     A trusted operator must record an actual human decision. Never synthesize
     a decision from a model response or an actor string.
     """
+    # Check that the recorded approval refers to this exact proposal and that its
+    # reviewed files still match their fingerprints.
     return bool(decision and decision.get("decision") == "approve"
                 and decision.get("proposal_sha256") == digest(proposal)
                 and decision.get("human_decision_reference")
@@ -70,6 +92,8 @@ def approval_valid(proposal, decision):
 
 
 def bank_errors(bank, api_names):
+    # Collect issues with the shared task bank. Micro cases together must cover the
+    # original API list, and the bank also needs puzzle cases.
     errors, ids, micro = [], set(), set()
     expected_apis = set(api_names)
     cases = bank.get("cases", [])
@@ -113,6 +137,8 @@ def bank_errors(bank, api_names):
 
 
 def preflight(plan, bank, proposal=None, decision=None):
+    # Combine bank checks with plan, artifact, approval and adapter checks. Return the
+    # list of issues before any evaluation starts.
     errors = bank_errors(bank, plan["api_names"])
     if len(set(plan["api_names"])) != len(plan["api_names"]):
         errors.append("Duplicate API names")
@@ -147,6 +173,8 @@ def preflight(plan, bank, proposal=None, decision=None):
 
 
 def freeze(plan, bank, output, proposal=None, decision=None):
+    # Run the readiness checks first. On success, write the inputs and their shared
+    # fingerprint to a new file and return the saved record.
     errors = preflight(plan, bank, proposal, decision)
     if errors:
         raise ValueError("Preflight failed:\n" + "\n".join(errors))
@@ -160,6 +188,8 @@ def freeze(plan, bank, output, proposal=None, decision=None):
 
 def treatment_inputs(plan, arm):
     """Explicit prompt/artifact routing; a future runner must use this route."""
+    # Look up which factors this arm enables. Use the original README when the README
+    # treatment is off, and omit disabled alias and hint inputs.
     readme, aliases, hints = ARMS[arm]
     t = plan["treatments"]
     return {"readme": t["improved_readme" if readme else "original_readme"],
@@ -171,6 +201,8 @@ def treatment_inputs(plan, arm):
 
 def diagnostic_excerpt(stderr, max_chars=6000):
     """Message-first context, not the first characters of a long path."""
+    # Select nearby lines around recognizable error messages, then cap the text and
+    # record whether it was shortened.
     lines = stderr.splitlines()
     positions = [i for i, line in enumerate(lines) if re.search(
         r"error\b|exception\b|caused by:|cannot find symbol|symbol:|location:|found\s*:|required\s*:",
@@ -185,6 +217,8 @@ def diagnostic_excerpt(stderr, max_chars=6000):
 
 def automatic_hint(stderr):
     """Conservative triage, not a source-verified diagnosis or fix."""
+    # Take the first matching error category and return its suggested next check. The
+    # rule offers a starting point for investigation.
     rules = [
         (r"ambiguous|overloaded method", "ambiguous-overload",
          "Inspect the available overloads. Supply a value or explicit type matching the documented constructor; avoid an untyped null."),
@@ -211,6 +245,8 @@ def automatic_hint(stderr):
 def capture_attempt(directory, *, test_code, stdout, stderr, delivered_prompt,
                     diagnosis="", fix_hint="", metadata=None):
     """Capture in a NEW attempt directory, so failed attempts cannot disappear."""
+    # Create a fresh attempt folder. Keep the full program, prompt and logs there and
+    # return the manifest that identifies those files.
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=False)
     generated_hint = None
@@ -235,12 +271,18 @@ def capture_attempt(directory, *, test_code, stdout, stderr, delivered_prompt,
 
 def score(bank, trial_ids, rows, *, study_sha256, max_snippet_fixes=5,
           arms=None, baseline="original"):
+    # Input: the fixed task bank, trial IDs and current per-condition results.
+    # Validate result identities, then count micro and puzzle outcomes separately.
+    # Return first-attempt/final success and paired changes; missing or unresolved
+    # units remain in the selected denominator. No model call or execution occurs.
     """One latest adjudicated row per case/trial/arm, not raw attempt history.
 
     Provider-pending, incomplete/refused/empty generations, not-run, and missing-oracle
     results remain unresolved, retaining the selected denominator.
     Do not accept an exit marker as semantic correctness.
     """
+    # Each key identifies one result by condition, case and trial. Validate those
+    # identities before computing the report.
     arms = tuple(ARMS if arms is None else arms)
     if not arms or len(set(arms)) != len(arms) or baseline not in arms:
         raise ValueError("Invalid condition matrix/baseline")
@@ -269,6 +311,8 @@ def score(bank, trial_ids, rows, *, study_sha256, max_snippet_fixes=5,
         if r["status"] == "pass" and r.get("first_attempt_pass") is not (r["first_pass_round"] == 0):
             raise ValueError("Inconsistent first-attempt and recovery outcome")
         by_key[key] = r
+    # Missing rows are represented as not_run so the denominator still includes every
+    # selected case and trial.
     reports = {}
     for arm in arms:
         reports[arm] = {}
@@ -286,6 +330,8 @@ def score(bank, trial_ids, rows, *, study_sha256, max_snippet_fixes=5,
                      "within_budget_lower_bound_pct": 100 * counts["pass"] / n if n else None,
                      "final_within_budget_pct": 100 * counts["pass"] / n if n and terminal == n else None}
             baseline_rows = [by_key.get((baseline, k[1], k[2]), {}) for k in keys]
+            # Compare this condition with the baseline only when both have a verified
+            # result for the same case and trial.
             paired = [(a, b) for a, b in zip(selected, baseline_rows)
                       if a["status"] in {"pass", "fail"} and b.get("status") in {"pass", "fail"}]
             value["paired_completed"] = len(paired)

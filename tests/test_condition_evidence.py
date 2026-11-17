@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 import test_condition_evaluation as fixtures
 from workflow.ablation import load
+from workflow.evaluation_program_generation import rounds
 from workflow import condition_evaluation as runner
 
 
@@ -63,7 +64,7 @@ class ConditionEvidenceTests(unittest.TestCase):
         value = load(process)
         value['payload']['code'] = 'correct'
         process.write_text(json.dumps(value))
-        row['round_evidence'] = runner._round_evidence(path.parent)
+        row['round_evidence'] = rounds(path.parent, exposure=True)
         path.write_text(json.dumps(row))
         self.assert_resume_rejects('checker candidate differs')
 
@@ -73,7 +74,7 @@ class ConditionEvidenceTests(unittest.TestCase):
         value = load(exposure)
         value['public_prompt_characters'] += 1
         exposure.write_text(json.dumps(value))
-        row['round_evidence'] = runner._round_evidence(path.parent)
+        row['round_evidence'] = rounds(path.parent, exposure=True)
         row['context_exposures'] = [item['exposure'] for item in row['round_evidence']]
         path.write_text(json.dumps(row))
         self.assert_resume_rejects('exposure differs from the frozen prompt')

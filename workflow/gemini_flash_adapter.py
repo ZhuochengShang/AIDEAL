@@ -13,6 +13,8 @@ else:
 
 def response_record(response):
     """Retain evaluator-compatible totals and distinguish visible/reasoning usage."""
+    # Start with the shared Gemini response record, then add the provider's separate
+    # token counts for visible output, thinking and other usage when available.
     record = base_response_record(response)
     usage = response.usage_metadata
     if usage is not None:
@@ -27,6 +29,8 @@ def response_record(response):
 
 
 def main(argv=None):
+    # Read one evaluator request from standard input. The CLI options choose the
+    # thinking level and HTTP timeout for this one call.
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--thinking-level', choices=('low', 'minimal'), default='low')
     parser.add_argument('--timeout-ms', type=int, default=120000,
@@ -66,6 +70,8 @@ def main(argv=None):
                 max_output_tokens=cap, candidate_count=1,
                 thinking_config=types.ThinkingConfig(
                     thinking_level=args.thinking_level, include_thoughts=False)))
+    # Record the effective request settings with the normalized output so the
+    # controller can identify this call later.
     record = response_record(response)
     record['adapter_settings'] = settings
     record['adapter_settings_sha256'] = hashlib.sha256(json.dumps(

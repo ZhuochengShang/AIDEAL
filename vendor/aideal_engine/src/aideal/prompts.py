@@ -26,6 +26,15 @@ def prompts_dir(cfg: AidealConfig) -> Path:
     return (cfg.root / sub).resolve()
 
 
+def prompt_path(cfg: AidealConfig, name: str) -> Path:
+    # Find the template selected by this project's prompt-directory setting.
+    # Use the vendored default when the project has no matching override.
+    # Return the path used for both prompt rendering and generation identity.
+    """Resolve the exact template used for both rendering and input identity."""
+    path = prompts_dir(cfg) / f"{name}.md"
+    return path if path.exists() else DEFAULT_PROMPTS / f"{name}.md"
+
+
 def load(cfg: AidealConfig, name: str, **kwargs) -> tuple[str, str]:
     """Read prompts/<name>.md, fill placeholders, return (system, user).
 
@@ -37,9 +46,7 @@ def load(cfg: AidealConfig, name: str, **kwargs) -> tuple[str, str]:
     are auto-filled from the project profile; other placeholders come from
     kwargs.
     """
-    path = prompts_dir(cfg) / f"{name}.md"
-    if not path.exists():
-        path = DEFAULT_PROMPTS / f"{name}.md"
+    path = prompt_path(cfg, name)
     text = path.read_text(encoding="utf-8")
 
     profile = load_profile(cfg)

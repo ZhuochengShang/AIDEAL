@@ -23,6 +23,10 @@ def run(cfg: AidealConfig, apis: list[str] | None = None,
                 full_doc: bool | None = None,
                 doc_scope: str | None = None,
                 manifest: str | None = None) -> dict:
+    # Select failed APIs and diagnose their source, documentation and latest errors.
+    # Rewrite an entry, then test whether an audience program can use the new text.
+    # Record each repair round; keep a passing entry or restore the original.
+    # Document-repair rounds and program-repair rounds have separate limits.
     """Doc-repair routing over failed APIs. Returns a report dict.
 
     doc_rounds=1 → the classic single pass (diagnose → rewrite → retry).
@@ -332,6 +336,7 @@ def run(cfg: AidealConfig, apis: list[str] | None = None,
                     break
             def validate_draft():
                 value = comprehension_check(cfg, api=name, execute=True,
+                                        show_code=True,
                                         max_fix_rounds=retry_rounds,
                                         timeout_s=timeout_s,
                                         doc_source=doc_source,
@@ -355,9 +360,9 @@ def run(cfg: AidealConfig, apis: list[str] | None = None,
             rrec["retry_status"] = m.get("status", "fail")
             rrec["error_category"] = m.get("error_category")
             det = (retry.get("details") or {}).get(name)
-            err_text = ""
+            err_text = m.get("error", "") or ""
             if isinstance(det, dict):
-                err_text = det.get("error", "") or ""
+                err_text = det.get("error", "") or err_text
             elif isinstance(det, str):
                 err_text = det
             new_sig = helpers._err_sig(m.get("error_category") or "", err_text)
@@ -401,7 +406,7 @@ def run(cfg: AidealConfig, apis: list[str] | None = None,
                 cur_cat = m.get('error_category') or cur_cat
                 if isinstance(det, dict):
                     cur_snippet = str(det.get('code') or cur_snippet)[:2000]
-                    cur_frames = ', '.join(det.get('frames', []) or []) or cur_frames
+                    cur_frames = ', '.join(det.get('frames') or m.get('codebase_frames') or []) or cur_frames
                 prev_err_sig = new_sig
             checkpoint()
             _flush()

@@ -5,6 +5,8 @@ import glob as globmod
 import re
 from pathlib import Path
 from .config import AidealConfig
+from .prompts import prompt_path
+from .readme_validation import validate_entry, is_complete_entry
 from .api_discovery import (
     public_api_details,
     public_api_surface,
@@ -24,7 +26,7 @@ from .readme_format import (
 )
 
 
-def distilled_readme_context(cfg: AidealConfig, *, refresh: bool = False) -> str:
+def distilled_readme_context(cfg: AidealConfig, *, refresh: bool = False, recorder=None) -> str:
     """Summarize the original README ONCE into a compact, reusable context note.
 
     Cached next to the LLM readme; reused across every entry generation so the
@@ -35,15 +37,14 @@ def distilled_readme_context(cfg: AidealConfig, *, refresh: bool = False) -> str
                 "fresh from the signature and project profile only.")
     cache = cfg.llm_readme.parent / "original_readme_notes.md"
     newest = max(p.stat().st_mtime for p in cfg.original_readme_files)
-    if cache.exists() and not refresh and cache.stat().st_mtime >= newest:
+    if recorder is None and cache.exists() and not refresh and cache.stat().st_mtime >= newest:
         return cache.read_text(encoding="utf-8")
     from .llm import invoke_text
     from .prompts import load as load_prompt
     raw = cfg.original_readme_text(limit=150000)  # all baseline docs, summarized once
-    note = invoke_text(
-        cfg.model_for_role("author"),
-        *load_prompt(cfg, "aideal/readme_distill", original_readme=raw),
-    ).strip()
+    messages = load_prompt(cfg, "aideal/readme_distill", original_readme=raw)
+    note = (recorder.invoke(cfg.model_for_role("author"), *messages, phase="distill")
+            if recorder is not None else invoke_text(cfg.model_for_role("author"), *messages)).strip()
     cache.parent.mkdir(parents=True, exist_ok=True)
     cache.write_text(note, encoding="utf-8")
     return note
@@ -80,7 +81,12 @@ def _original_readme_snippets(cfg: AidealConfig, names, max_per_api: int = 2,
 
 
 def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int = 10,
-                   force: bool = False, resume: bool = False) -> dict:
+                   force: bool = False, resume: bool = False,
+                   api_names: list[str] | None = None, recorder=None) -> dict:
+    # Find the configured LLM README, create a skeleton, or generate API entries.
+    # Generation uses API facts, examples and documentation through author prompts.
+    # Save the README and generation state; resume only when its inputs match.
+    # Creating documentation does not execute or validate its examples.
     """Return status of the LLM readme; create a skeleton if missing.
 
     If the readme already exists it is returned as-is, UNLESS `force=True`
@@ -105,6 +111,13 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         if d["visibility"] == "public" and d["name"] in allowed:
             by_name.setdefault(d["name"], []).append(d)
     surface = sorted(by_name)
+    if api_names is not None:
+        if not api_names or len(api_names) != len(set(api_names)):
+            raise ValueError("README API scope must contain unique names")
+        missing = set(api_names) - set(surface)
+        if missing:
+            raise ValueError("README scope contains undiscovered APIs: " + ", ".join(sorted(missing)))
+        surface = sorted(api_names)
     lang = cfg.language.lower()
     _intro = ("Generated skeleton — fill the TODOs." if not generate
               else "Generated from the API surface, project profile, and distilled docs.")
@@ -140,6 +153,10 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         _author = cfg.model_for_role("author")
         _source_files = [Path(p) for pattern in cfg.source_globs for p in
                          globmod.glob(str(cfg.root / pattern), recursive=True)]
+        _test_files = [Path(p) for pattern in cfg.test_globs for p in
+                       globmod.glob(str(cfg.root / pattern), recursive=True)]
+        _prompt_files = [prompt_path(cfg, f"aideal/{name}") for name in
+                         ("readme_distill", "readme_entry")]
         _profile_sub = cfg.raw.get("files", {}).get(
             "project_profile", "configs/project_profile.yaml")
         _profile_path = (cfg.root / _profile_sub).resolve()
@@ -155,16 +172,22 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             "api_intent.py",
             "api_overloads.py",
             "api_signatures.py",
-            "api_discovery.py",
-            "readme_generation.py")]
+            "api_discovery.py", "api_registry.py",
+            "readme_generation.py", "readme_recording.py",
+            "readme_validation.py", "readme_replay.py", "doc_check_sources.py")]
         _generation_payload = {
-            "schema": 2,
+            "schema": 3,
             "project": cfg.project_name,
             "language": cfg.language,
             "author": f"{_author.provider}:{_author.model}",
             "config": cfg.raw,
             "project_profile": _generation_files_hash([_profile_path], cfg.root),
+            "api_inventory": _generation_files_hash(
+                [cfg.root / cfg.raw["codebase"]["api_inventory"]]
+                if cfg.raw.get("codebase", {}).get("api_inventory") else [], cfg.root),
             "source": _generation_files_hash(_source_files, cfg.root),
+            "tests": _generation_files_hash(_test_files, cfg.root),
+            "prompts": _generation_files_hash(_prompt_files, cfg.root),
             "engine": _generation_files_hash(_engine_files, _engine_dir),
             "interpreter": {
                 "executable": _os.path.realpath(_sysmod.executable),
@@ -200,10 +223,14 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                 raise ValueError(
                     "cannot resume README generation: source/config/model fingerprint changed; "
                     "start a fresh run with --force")
-            existing_complete = {
-                e.name: e for e in parse_readme(cfg.llm_readme)
-                if e.name in targets and "TODO" not in e.body
-            }
+            # Recorded runs reconstruct every entry from verified call receipts,
+            # including entries finished before the final document was replaced.
+            if recorder is None:
+                existing_complete = {
+                    e.name: e for e in parse_readme(cfg.llm_readme)
+                    if e.name in targets and is_complete_entry(
+                        e.body, e.name, [r.get("description") for r in by_name[e.name]])
+                }
         resumed_entries = len(existing_complete)
 
         def _write_generation_state(*, complete: bool = False) -> None:
@@ -213,6 +240,8 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                 "completed_count": len(existing_complete),
                 "completed_apis": sorted(existing_complete),
                 "complete": complete,
+                "readme_sha256": (_hashlib.sha256(cfg.llm_readme.read_bytes()).hexdigest()
+                                   if complete and cfg.llm_readme.is_file() else None),
             }
             tmp = state_path.with_suffix(".json.tmp")
             tmp.write_text(_json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -234,7 +263,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         # distil the original README ONCE; reuse the note for every entry.
         # --force also re-distils (so prompt/cap changes take effect, since the
         # mtime-based cache wouldn't otherwise notice a prompt change).
-        readme_ctx = distilled_readme_context(cfg, refresh=force)
+        readme_ctx = distilled_readme_context(cfg, refresh=force, recorder=recorder)
         # index real usage from the existing test suite ONCE (ground-truth examples)
         test_index = api_test_examples(cfg)
         # ...and the VERBATIM per-API code blocks from the original readme, so the
@@ -260,7 +289,11 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         total = len(targets)
         # stream each entry to disk as it completes: progress is visible and a
         # crash mid-run keeps everything generated so far (resumable by hand).
-        with cfg.llm_readme.open("w", encoding="utf-8") as fh:
+        # Keep the previous README intact until the whole new snapshot exists.
+        # Recorded successful calls survive interruption and replay on resume.
+        pending_readme = (cfg.llm_readme.with_suffix(cfg.llm_readme.suffix + ".pending")
+                          if recorder is not None else cfg.llm_readme)
+        with pending_readme.open("w", encoding="utf-8") as fh:
             fh.write(header)
             for i, name in enumerate(targets, 1):
                 if name in existing_complete:
@@ -291,6 +324,25 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                     "source_doc": _doc,
                     "overloads": [r["signature"] for r in maximals[1:]][:5],
                 }
+                # Compiler/AST identities survive into the actual author prompt,
+                # including nested owners and every same-name declaration site.
+                # Keep the existing signature and overload order unchanged.
+                def _identity(record):
+                    metadata = {key: record[key] for key in
+                                ("qualified_name", "owner", "owner_kind") if record.get(key)}
+                    source = {key: record[key] for key in
+                              ("file", "line", "site_id", "file_sha256") if record.get(key) is not None}
+                    if source:
+                        metadata["source"] = source
+                    return metadata
+                facts.update(_identity(primary))
+                sites = [{"signature": record["signature"], **_identity(record)} for record in recs]
+                if any(_identity(record) for record in recs):
+                    facts["definition_sites"] = sites
+                    facts["definition_site_count"] = len(sites)
+                    facts["definition_sites_truncated"] = False
+                    facts["overloads_total"] = len(maximals) - 1
+                    facts["overloads_truncated"] = len(maximals) - 1 > len(facts["overloads"])
                 examples = test_index.get(name, [])
                 if examples:
                     tests_text = "\n\n".join(
@@ -326,19 +378,22 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                 orig_examples_text = ("\n\n".join(_orig) if _orig
                                       else "(no verbatim code example for this API in the original readme)")
                 try:
-                    entry = invoke_text(
-                        cfg.model_for_role("author"),
-                        *load_prompt(cfg, "aideal/readme_entry", api_name=name,
-                                     api_facts=_json.dumps(facts, ensure_ascii=False, indent=2),
-                                     original_readme_context=readme_ctx,
-                                     original_examples=orig_examples_text,
-                                     test_examples=tests_text,
-                                     template=skeleton),
-                    ).strip()
-                    if (f"## API Test: `{name}`" not in entry or "TODO" in entry):
-                        raise ValueError("author returned an incomplete or wrong-API entry")
+                    messages = load_prompt(cfg, "aideal/readme_entry", api_name=name,
+                                           api_facts=_json.dumps(facts, ensure_ascii=False, indent=2),
+                                           original_readme_context=readme_ctx,
+                                           original_examples=orig_examples_text,
+                                           test_examples=tests_text,
+                                           template=skeleton)
+                    entry = (recorder.invoke(cfg.model_for_role("author"), *messages,
+                                             phase="entry", api=name,
+                                             source_docs=[r.get("description") for r in recs])
+                             if recorder is not None else invoke_text(
+                                 cfg.model_for_role("author"), *messages)).strip()
+                    validate_entry(entry, name, [r.get("description") for r in recs])
                     status = "ok"
                 except Exception as e:  # fell back to skeleton — record why, don't hide it
+                    if recorder is not None:
+                        raise  # A recorded run stops at its first failed call.
                     failures.append({"api": name, "error": f"{type(e).__name__}: {e}"})
                     entry = skeleton
                     status = "FALLBACK"
@@ -353,6 +408,8 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                     )
                 _write_generation_state()
                 print(f"[{i}/{total}] {name} … {status}", file=_sys.stderr)
+        if recorder is not None:
+            pending_readme.replace(cfg.llm_readme)
         _write_generation_state(complete=(len(existing_complete) == len(targets)))
         # eager: build the readme-DERIVED io_hints / preamble now (config value
         # `auto`), so the readme bundle ships complete and in sync. Best-effort —
@@ -380,7 +437,8 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         "action": "created_skeleton" if not generate else "created_generated",
         "path": str(cfg.llm_readme),
         "api_entries": len(targets),
-        "used_original_readme": [str(p.relative_to(cfg.root)) for p in cfg.original_readme_files],
+        "used_original_readme": [str(p.relative_to(cfg.root)) if p.is_relative_to(cfg.root)
+                                 else str(p) for p in cfg.original_readme_files],
         "note": "fill TODOs or rerun with --generate (uses the author model)",
     }
     if generate:

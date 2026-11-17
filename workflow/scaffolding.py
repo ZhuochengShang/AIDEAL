@@ -16,6 +16,8 @@ TEMPLATES = {
 
 def scaffold_spec(config):
     """Read a configured harness or render a language-only, fail-closed skeleton."""
+    # Load the YAML settings and return the config plus the harness text, filename and
+    # source reference. Prefer an explicitly configured file.
     config = Path(config).expanduser().resolve()
     engine = _engine_config_module()
     cfg = engine.load_config(config)
@@ -56,6 +58,8 @@ def scaffold_spec(config):
 
 def write_scaffold(worktree, repository, study, cfg, spec):
     """Write the same instrumentation to every condition; never overwrite .aideal."""
+    # Create a fresh .aideal directory in this condition worktree and place the shared
+    # harness there. Return the draft workspace record.
     worktree, repository, study = (Path(p).resolve() for p in (worktree, repository, study))
     destination = worktree / '.aideal'
     # Exclusive creation also rejects a pre-existing file or symlink.
@@ -65,6 +69,9 @@ def write_scaffold(worktree, repository, study, cfg, spec):
     harness.write_text(spec['text'], encoding='utf-8')
 
     def relocate(value):
+        # Keep a source or test path inside the repository relative to its new
+        # worktree. Paths outside the repository still point to their original
+        # locations.
         path = (cfg.root / value).resolve()
         if path == repository or repository in path.parents:
             return str(worktree / path.relative_to(repository))

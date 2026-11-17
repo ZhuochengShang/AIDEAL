@@ -40,7 +40,13 @@ def run_command(command, *, cwd, env, timeout):
     blocked = Path(cwd) / '.aideal_unreconciled_process.json'
     if blocked.exists():
         raise CleanupError(f'Unreconciled process evidence at {blocked}; execution blocked')
-    proc = subprocess.Popen(command, shell=True, cwd=cwd, env=env,
+    # The controller needs provider credentials; generated test programs do not.
+    # Copy first so removing credentials never changes the model caller's env.
+    child_env = dict(env)
+    for name in tuple(child_env):
+        if name.endswith(('_API_KEY', '_API_TOKEN', '_ACCESS_TOKEN', '_SECRET_ACCESS_KEY')):
+            child_env.pop(name)
+    proc = subprocess.Popen(command, shell=True, cwd=cwd, env=child_env,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             text=True, start_new_session=True)
     try:

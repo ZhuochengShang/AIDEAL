@@ -11,7 +11,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from workflow.evaluation import _run_unit
+from workflow.evaluation_readme import _ReadmePolicy
+from workflow.evaluation_runner import run_unit
 from workflow.evaluation_setup import validate_bank
 
 
@@ -55,7 +56,7 @@ print(json.dumps({'execution_pass':True, 'oracle_pass':request['code']=='correct
                 return validate_bank({'config': self.cfg, 'bank': {'cases': [self.case]}}, output)
         frozen = {'config': self.cfg, 'system_prompt': 'Synthetic only', 'study_sha256': 'synthetic'}
         with patch('workflow.evaluation._request_solution', return_value={'code': code}):
-            return _run_unit(frozen, 'Original README', self.case, 'trial', 'docs', output)
+            return run_unit(_ReadmePolicy(frozen), 'Original README', self.case, 'trial', output, 'docs')
 
     def call_count(self):
         return len(self.calls.read_text().splitlines()) if self.calls.exists() else 0

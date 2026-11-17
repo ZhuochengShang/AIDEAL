@@ -246,6 +246,82 @@ class DocCheckModuleTests(unittest.TestCase):
                 if outcome == 'timeout':
                     self.assertEqual('timeout', result['metrics']['f']['error_category'])
 
+    def test_native_provider_stop_preserves_exact_attempts_and_resumes_append_only(self):
+        self.cfg.comprehension['execute']['stop_on_provider_error'] = True
+        inventory = [ApiEntry(name, 'Return input', '', 'Documentation for ' + name)
+                     for name in ('f', 'g', 'h')]
+        raw_response = '```python\nprint("DONE")  # exact response, including café\n```\n'
+        output = 'DONE\nfull execution stdout\n'
+        diagnostic = 'full execution stderr\n'
+
+        def run(responses, resume=False):
+            with ExitStack() as stack:
+                stack.enter_context(redirect_stderr(io.StringIO()))
+                provider = stack.enter_context(patch('aideal.llm.invoke_text', side_effect=responses))
+                executor = stack.enter_context(patch('aideal.execution.run_command',
+                    return_value=subprocess.CompletedProcess('synthetic', 0, output, diagnostic)))
+                stack.enter_context(patch('subprocess.run', side_effect=AssertionError('Unexpected external process')))
+                stack.enter_context(patch.object(doc_check_execution, 'public_api_details', return_value=[]))
+                stack.enter_context(patch.object(doc_check_execution, 'public_api_surface', return_value={'f', 'g', 'h'}))
+                stack.enter_context(patch('aideal.readme_agent.public_api_details', return_value=[]))
+                result = doc_check_execution._comprehension_execute(
+                    self.cfg, inventory, 0, 42, 'original', max_fix_rounds=0, resume=resume)
+                return result, list(provider.call_args_list), executor.call_count
+
+        result, calls, executions = run([raw_response, RuntimeError('synthetic billing outage')])
+        self.assertEqual((2, 1), (len(calls), executions))
+        self.assertEqual({'f', 'g'}, set(result['metrics']))
+        self.assertEqual((3, 2, 1), tuple(result['run'][key] for key in
+            ('selected_api_count', 'attempted_api_count', 'remaining_api_count')))
+        self.assertFalse(result['run']['complete'])
+        self.assertTrue(result['run']['stopped_on_provider_error'])
+        self.assertEqual('selected_apis_incomplete', result['score_scope'])
+        self.assertEqual(0.333, result['score'])  # Existing selected-API denominator.
+        self.assertEqual(2, result['coverage']['executed'])
+        self.assertEqual(['h'], result['coverage']['untested_intended'])
+        checkpoint = Path(result['run']['checkpoint'])
+        rows = [json.loads(line) for line in checkpoint.read_text().splitlines()]
+        self.assertEqual(['f', 'g'], [row['name'] for row in rows])
+        self.assertEqual('llm-error', rows[-1]['error_category'])
+
+        first_dir = Path(result['metrics']['f']['attempt_evidence'][0])
+        failed_dir = Path(result['metrics']['g']['attempt_evidence'][0])
+        for directory, call in zip((first_dir, failed_dir), calls):
+            request = json.loads((directory / 'request.json').read_text())
+            self.assertEqual(call.args[1:], (request['system'], request['user']))
+            self.assertEqual('no-provider', request['model'])
+            self.assertEqual(0, request['round'])
+            self.assertNotIn('api_key', request)
+            self.assertNotIn('env', request)
+        self.assertEqual(raw_response, (first_dir / 'response.txt').read_text())
+        self.assertEqual(output, (first_dir / 'stdout.txt').read_text())
+        self.assertEqual(diagnostic, (first_dir / 'stderr.txt').read_text())
+        self.assertEqual(0, json.loads((first_dir / 'execution.json').read_text())['exit_code'])
+        self.assertIn('print("DONE")', (first_dir / 'Generated.py').read_text())
+        self.assertFalse((failed_dir / 'execution.json').exists())
+        self.assertEqual('error', json.loads((failed_dir / 'provider.json').read_text())['status'])
+        old_evidence = {path: path.read_bytes() for directory in (first_dir, failed_dir)
+                        for path in directory.iterdir() if path.is_file()}
+
+        resumed, calls, executions = run([raw_response, raw_response], resume=True)
+        self.assertEqual((2, 2), (len(calls), executions))
+        self.assertTrue(resumed['run']['complete'])
+        self.assertEqual(1, resumed['run']['resumed_apis'])
+        self.assertEqual(1.0, resumed['score'])
+        self.assertEqual(first_dir, Path(resumed['metrics']['f']['attempt_evidence'][0]))
+        self.assertEqual('attempt_0002', Path(resumed['metrics']['g']['attempt_evidence'][0]).name)
+        self.assertEqual(['f', 'g', 'g', 'h'],
+                         [json.loads(line)['name'] for line in checkpoint.read_text().splitlines()])
+        for path, contents in old_evidence.items():
+            self.assertEqual(contents, path.read_bytes())
+
+        # Existing configurations keep scheduling after provider failures.
+        self.cfg.comprehension['execute'].pop('stop_on_provider_error')
+        default, calls, executions = run([RuntimeError('synthetic outage'), raw_response, raw_response])
+        self.assertEqual((3, 2), (len(calls), executions))
+        self.assertFalse(default['run']['stopped_on_provider_error'])
+        self.assertEqual({'f', 'g', 'h'}, set(default['metrics']))
+
     def test_public_grading_and_puzzle_entrypoints_use_mocked_boundaries(self):
         with patch('aideal.profile.require_profile', return_value={}), \
              patch('aideal.llm.invoke_text', side_effect=['f(1)', 'PASS: documented']) as provider, \
@@ -262,6 +338,51 @@ class DocCheckModuleTests(unittest.TestCase):
             self.assertIsNone(result['score'])
             self.assertIn('--dry-run', runner.call_args.args[0])
             self.assertIn('two words', runner.call_args.args[0])
+
+    def test_document_repair_uses_latest_native_failure_in_the_next_diagnosis(self):
+        from aideal import doc_repair
+        from aideal.error_log import ErrorLog
+        ErrorLog(self.cfg.error_log).append(function='f', status='fail', error='original failure',
+            code='original_code()', error_category='runtime')
+        diagnoses = []
+
+        def prompt(cfg, name, **fields):
+            if name == 'aideal/docfix_diagnose':
+                diagnoses.append(fields)
+            return name, json.dumps(fields)
+
+        snippets = iter(['first_attempt()', 'latest_failed_attempt()', 'third_attempt()', 'fourth_attempt()'])
+
+        def provider(spec, system, user):
+            if system == 'aideal/docfix_diagnose':
+                return 'ROOT CAUSE: observed failure ' + str(len(diagnoses))
+            if system == 'aideal/docfix_rewrite':
+                return '## API Test: `f`\n### Goal\nReturn input.\n### Prompt Snippet\nf(1)\n'
+            if system == 'aideal/comprehension_write_exec':
+                return next(snippets)
+            raise AssertionError('Unexpected model prompt ' + system)
+
+        runs = [subprocess.CompletedProcess('synthetic', 1, '', 'ValueError: ' + error)
+                for error in ('first failure', 'latest failure', 'third failure', 'fourth failure')]
+        with ExitStack() as stack:
+            stack.enter_context(redirect_stderr(io.StringIO()))
+            stack.enter_context(patch('aideal.profile.require_profile', return_value={}))
+            stack.enter_context(patch('aideal.prompts.load', side_effect=prompt))
+            stack.enter_context(patch('aideal.llm.invoke_text', side_effect=provider))
+            executor = stack.enter_context(patch('aideal.execution.run_command', side_effect=runs))
+            stack.enter_context(patch('subprocess.run', side_effect=AssertionError('Unexpected external process')))
+            stack.enter_context(patch.object(doc_repair, 'repair_identity', return_value='offline-repair'))
+            stack.enter_context(patch('aideal.docfix._fabricated_members', return_value=[]))
+            stack.enter_context(patch('aideal.fixreport.auto_report', return_value=None))
+            result = doc_repair.run(self.cfg, apis=['f'], retry_rounds=1, doc_rounds=2,
+                                   doc_stuck=0, report_path=self.root / 'repair.json')
+        self.assertEqual(4, executor.call_count)
+        self.assertEqual(2, len(diagnoses))
+        self.assertEqual('original failure', diagnoses[0]['error'])
+        self.assertIn('latest failure', diagnoses[1]['error'])
+        self.assertNotIn('original failure', diagnoses[1]['error'])
+        self.assertEqual('latest_failed_attempt()', diagnoses[1]['snippet'])
+        self.assertEqual('still-failing (entry reverted)', result['apis']['f']['status'])
 
 
 if __name__ == '__main__':

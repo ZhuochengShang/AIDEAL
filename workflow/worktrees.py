@@ -8,6 +8,8 @@ from .scaffolding import scaffold_spec, write_scaffold
 
 
 def _git(directory, *arguments):
+    # Run Git with the supplied working directory and arguments. Return its text
+    # output or report the command failure.
     result = subprocess.run(
         ['git', '-C', str(directory), *arguments], capture_output=True, text=True,
     )
@@ -23,6 +25,8 @@ def attach(repository, config, output):
     each worktree contains the library source for one condition. All five begin
     at the same commit. Treatment preparation/evaluation are subsequent stages.
     """
+    # Check the supplied checkout and record its commit as the baseline. Create a
+    # separate study clone and one source worktree per condition.
     repository = Path(repository).expanduser().resolve()
     output = Path(output).expanduser().resolve()
     root = Path(_git(repository, 'rev-parse', '--show-toplevel')).resolve()
@@ -57,6 +61,8 @@ def attach(repository, config, output):
         _git(output, 'clone', '--bare', '--no-hardlinks', '--single-branch', str(repository), str(clone))
         if _git(clone, 'rev-parse', 'HEAD') != revision:
             raise ValueError('Target revision changed during attachment; retain this output and start a new study')
+        # Start each branch at the same pinned commit and record the path to its
+        # generated harness.
         for arm, folder in CONDITION_FOLDERS.items():
             branch = 'aideal/' + arm.replace('_', '-')
             path = output / folder / 'source'

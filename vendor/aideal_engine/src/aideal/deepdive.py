@@ -60,6 +60,10 @@ def _failure_history(cfg: AidealConfig, name: str, limit: int = 5) -> str:
 
 def deep_dive_run(cfg: AidealConfig, api: str, out_dir: str = "docs/deepdive",
                   context_only: bool = False, return_text: bool = False) -> dict:
+    # Gather one API's source window, related types, call sites and failure history.
+    # Ask the fixer model for a diagnosis and save its report, usage and time.
+    # context_only inspects the prepared context without calling the model.
+    # This function diagnoses the API; it does not rewrite the README.
     from .docfix import _source_window, _type_context
     from .readme_agent import parse_readme
 

@@ -17,12 +17,16 @@ PROMPT = Path(__file__).resolve().parents[1] / 'prompts/improvement_suggestions.
 
 
 def _text(value, field, empty=False):
+    # Return the original string so callers can retain its exact content. Allow blank
+    # strings only for fields that opt in.
     if not isinstance(value, str) or (not empty and not value.strip()):
         raise ValueError(field + ' must be ' + ('text' if empty else 'nonempty text'))
     return value
 
 
 def _model_settings(path):
+    # Load the provider command and request limits from YAML. Use a temperature of
+    # zero when the setting is absent.
     config = _engine_config_module().yaml.safe_load(Path(path).read_text())
     if not isinstance(config, dict) or not isinstance(config.get('model'), dict):
         raise ValueError('Model configuration needs a model mapping')
@@ -40,29 +44,10 @@ def _model_settings(path):
     return {**model, 'temperature': temperature}
 
 
-def proposal_response_error(result, model=None):
-    """Do not install syntactically valid partial/refused provider suggestions."""
-    payload = result.get('payload')
-    if result.get('status') != 'ok' or not isinstance(payload, dict):
-        return 'provider_attempt_failed'
-    if not isinstance(payload.get('code'), str) or not payload['code'].strip():
-        return 'provider_empty_or_invalid_output'
-    status = payload.get('response_status')
-    if ((status is not None and status != 'completed') or payload.get('truncated')
-            or payload.get('incomplete_reason')):
-        return 'provider_incomplete_or_noncompleted'
-    if payload.get('refusals') or payload.get('response_kind') in ('refusal', 'empty_model_output'):
-        return 'provider_refusal_or_empty_output'
-    if model == 'gpt-5.3-codex':
-        if status != 'completed':
-            return 'provider_completion_status_missing'
-        if not isinstance(payload.get('budget'), dict) or payload['budget'].get('state') != 'settled':
-            return 'provider_usage_unsettled'
-    return None
-
-
 def validate_suggestions(value, context, *, reserved_names=None):
     """Validate referential/schema integrity, without claiming code correctness."""
+    # Index the API and error records supplied to the model. Alias targets and hint
+    # citations must point back to those inputs.
     if not isinstance(value, dict):
         raise ValueError('Model suggestions must be a JSON object')
     expected = {'aliases', 'alias_code', 'alias_interface', 'hints', 'notes'}
@@ -88,6 +73,8 @@ def validate_suggestions(value, context, *, reserved_names=None):
         if _text(alias['target_function'], 'target_function') not in functions:
             raise ValueError('Alias target was not in the model input')
         _text(alias['rationale'], 'alias.rationale')
+    # Require the interface and source together. For Python, also check that the
+    # submitted source parses and defines the proposed names.
     if aliases:
         if alias_target(context['alias_destination']) is None:
             raise ValueError('No alias destination was requested')
@@ -100,6 +87,8 @@ def validate_suggestions(value, context, *, reserved_names=None):
                 raise ValueError('Python alias source does not define each proposed name')
     elif value['alias_code'].strip() or value['alias_interface'].strip():
         raise ValueError('Alias source/interface supplied without alias records')
+    # A hint must name the same function as its cited errors and match a literal
+    # substring from every cited diagnostic.
     for hint in hints:
         required = {'function_id', 'evidence_ids', 'error_contains', 'likely_cause',
                     'fix_steps', 'suggested_fix_code', 'validation'}
@@ -128,6 +117,8 @@ def validate_suggestions(value, context, *, reserved_names=None):
 
 def _load_preview(preview_path):
     """Revalidate the pinned source and development inputs before any request."""
+    # Return the saved preview with its current study and attachment after checking
+    # the recorded checksums and baseline.
     preview_path = Path(preview_path).resolve()
     preview = load(preview_path)
     expected = preview.get('preview_sha256')
@@ -148,6 +139,8 @@ def propose_improvements(preview_path, model_config, output, *, readme=None):
     Nothing is installed by this command. Existing provider command contract is
     reused: stdout JSON with a `code` string containing the suggestion JSON.
     """
+    # For a saved single preview, create a new output folder and keep the request
+    # alongside the resulting review artifacts.
     preview, study, attachment = _load_preview(preview_path)
     settings = _model_settings(model_config)
     readme_ref = bind(readme) if readme else None
@@ -160,17 +153,15 @@ def propose_improvements(preview_path, model_config, output, *, readme=None):
                'max_output_tokens': settings['max_output_tokens']}
     # invoke stores exact system/user messages and full adapter stdout/stderr.
     result = invoke(settings['command'], request, output / 'model_attempt', settings['timeout_s'])
-    error = proposal_response_error(result, settings['name'])
-    if error:
-        atomic_json(output / 'model_attempt/rejected.json', {'status': 'invalid_provider_response', 'reason': error})
-        raise ValueError('Development model response rejected: ' + error + '; attempt evidence is preserved')
+    if result['status'] != 'ok' or not isinstance(result.get('payload'), dict) or not isinstance(result['payload'].get('code'), str):
+        raise ValueError('Development model failed; attempt evidence is preserved')
     return _finish_proposal(preview, attachment, output, result, readme_ref, output / 'model_attempt')
 
 
 def _finish_proposal(preview, attachment, output, result, readme_ref, attempt):
     """Persist review artifacts from a recorded result; never install or execute them."""
-    if proposal_response_error(result):
-        raise ValueError('Incomplete, refused or invalid proposal response')
+    # Recheck the preview after the model call. Save the validated response, then
+    # write only the artifact types present in it.
     if not all(verify_artifact(ref) for ref in preview['artifacts']):
         raise ValueError('Source changed during generation; do not install these suggestions')
     original_checkout(preview['study'])
@@ -233,6 +224,8 @@ def _finish_proposal(preview, attachment, output, result, readme_ref, attempt):
 
 def matching_fix_hints(bundle, function_id, error):
     """Return only same-function literal matches; hints never become verified here."""
+    # A legacy hint applies when both the exact function ID and the saved diagnostic
+    # substring match.
     return [{**hint, 'status': 'unverified'} for hint in bundle.get('hints', [])
             if hint.get('function_id') == function_id and isinstance(hint.get('error_contains'), str)
             and hint['error_contains'] and hint['error_contains'] in error]

@@ -15,9 +15,10 @@ import yaml
 
 from workflow import evaluation_setup
 from workflow.ablation import digest, file_hash, load
+from workflow.evaluation_program_generation import model_response, rounds
 from workflow.evaluation import (CONDITIONS, audience_prompt, freeze_evaluation,
                                  open_frozen, read_config, run_evaluation,
-                                 _load_completed_rows, _model_response, _collect_resources)
+                                 _load_completed_rows, _collect_resources)
 from workflow.execution import ownership
 from workflow.model_adapter import response_record
 
@@ -148,15 +149,59 @@ print(json.dumps({'code': 'correct' if 'TREATMENT_GOOD' in r['prompt'] else 'wro
 r=json.load(sys.stdin)
 repaired='COMPLETE PREVIOUS SOLUTION' in r['prompt']
 if repaired: assert 'wrong' in r['prompt'] and 'Independent checks failed' in r['prompt']
-print(json.dumps({'code': 'correct' if repaired else 'wrong'}))
+code = 'correct' if repaired else 'wrong'
+print(json.dumps({'code': '```python\\n' + code + '\\n```', 'response_status': 'completed'}))
 ''')
-        result = run_evaluation(self.freeze(), self.root / 'run')
+        output = self.root / 'run'
+        trace = os.environ.get('AIDEAL_TEST_TRACE') == '1'
+        if trace:
+            document = self.config['readme_evaluation']['documents']['Generated README'][0]
+            print('\nOffline trace with a simulated provider and checker.')
+            print('The test fixture supplies the README before evaluation.')
+            print('Prepared Generated README input =', repr(Path(document).read_text()))
+            print('Freeze validates the reference and wrong-output controls.')
+        result = run_evaluation(self.freeze(), output)
         self.assertTrue(result['all_complete'])
         for metrics in result['metrics'].values():
             for value in metrics.values():
                 self.assertEqual(0, value['first_attempt_correct'])
                 self.assertEqual(1, value['correct_within_budget'])
         self.assertEqual(12, sum(x['provider_calls'] for x in result['resources'].values()))
+
+        if trace:
+            # Read one task's actual saved receipts. The runner has already replayed
+            # them to verify the row before publishing result.json.
+            unit = output / 'Generated README' / 'micro--trial_01'
+            row = load(unit / 'result.json')
+            print('\nWalkthrough for Generated README / micro / trial_01')
+            for attempt in row['round_evidence']:
+                provider = attempt['providers'][0]['files']
+                checker = attempt['executions'][0]['files']
+                request = load(provider['request.json']['path'])
+                response = load(provider['process.json']['path'])['payload']
+                generation = load(attempt['generation']['path'])
+                checked_request = load(checker['request.json']['path'])
+                process = load(checker['process.json']['path'])
+                passed = evaluation_setup.verified_outcome(process)
+                print(f"\nround_{attempt['round']:02d}")
+                print('  1. Prompt sent to the model')
+                for line in request['prompt'].splitlines():
+                    print(f'     {line}')
+                print(f"  2. Raw model response = {response['code']!r}")
+                print(f"  3. Generation status = {generation['status']}. "
+                      f"Code sent to checker = {checked_request['code']!r}")
+                print(f"  4. Checker verdict = {'PASS' if passed else 'FAIL'}")
+                if passed:
+                    print('  5. Stop after the verified pass.')
+                else:
+                    print(f"  5. Feedback for repair = {process['payload']['public_feedback']!r}")
+            print(f"\n6. Verified result.json has status={row['status']}, "
+                  f"first_attempt_pass={row['first_attempt_pass']}, "
+                  f"first_pass_round={row['first_pass_round']}.")
+            micro = result['metrics']['Generated README']['micro']
+            print(f"   Report counts {micro['first_attempt_correct']}/{micro['selected']} "
+                  f"correct initially and {micro['correct_within_budget']}/{micro['selected']} "
+                  "correct within the repair budget.")
 
     def test_explicit_transport_retry_preserves_previous_calls(self):
         ready = self.root / 'provider_recovered'
@@ -184,7 +229,7 @@ print(json.dumps({'code': 'correct' if repaired else 'wrong'}))
 
     def test_review_hold_blocks_before_any_command(self):
         (self.root / 'REVIEW_HOLD.json').write_text('{"reason":"user review"}')
-        with patch('workflow.evaluation_setup.invoke') as controls, patch('workflow.evaluation.invoke') as runner:
+        with patch('workflow.evaluation_setup.invoke') as controls, patch('workflow.evaluation_program_generation.invoke') as runner:
             with self.assertRaisesRegex(ValueError, 'paused for user code review'):
                 self.freeze()
             with self.assertRaisesRegex(ValueError, 'paused for user code review'):
@@ -370,8 +415,8 @@ print(json.dumps(dict(execution_pass=True,
 
     def test_identical_copied_controller_accepts_frozen_identity(self):
         frozen = self.freeze()
-        expected_names = {'evaluation.py', 'evaluation_setup.py', 'execution.py', 'reporting.py', 'ablation.py',
-                          'generation.py', 'repair_context.py', 'response_status.py'}
+        expected_names = {'evaluation_readme.py', 'evaluation_runner.py', 'evaluation.py', 'evaluation_setup.py', 'execution.py', 'evaluation_report.py', 'ablation.py',
+                          'evaluation_program_generation.py', 'repair_context.py', 'response_status.py'}
         identity = load(frozen)['controller_sha256']
         self.assertEqual(expected_names, set(identity))
         controller = Path(evaluation_setup.__file__).parent
@@ -393,7 +438,7 @@ print(json.dumps({'study_sha256': open_frozen(sys.argv[1])['study_sha256']}))
 from pathlib import Path
 from unittest.mock import patch
 from workflow.evaluation import run_evaluation
-with patch('workflow.evaluation.invoke', side_effect=AssertionError('Unexpected model/checker call')) as runner, \\
+with patch('workflow.evaluation_program_generation.invoke', side_effect=AssertionError('Unexpected model/checker call')) as runner, \\
      patch('workflow.evaluation_setup.invoke', side_effect=AssertionError('Unexpected validation call')) as controls:
     try:
         run_evaluation(sys.argv[1], sys.argv[2], max_units=1)
@@ -430,11 +475,11 @@ print(json.dumps(result))
 
     def test_malformed_provider_payload_is_unresolved_without_crashing(self):
         for payload in (None, [], 'text', {'code': 42}):
-            self.assertIsNone(_model_response({'status': 'ok', 'payload': payload}))
+            self.assertIsNone(model_response({'status': 'ok', 'payload': payload}))
         folder = self.root / 'unit/round_00/provider_001'
         folder.mkdir(parents=True)
         (folder / 'process.json').write_text(json.dumps({'payload': [], 'seconds': 1}))
-        self.assertEqual(1, _collect_resources(self.root / 'unit')['calls_without_usage'])
+        self.assertEqual(1, _collect_resources(rounds(self.root / 'unit'))['calls_without_usage'])
 
     def test_empty_answer_preserves_usage_and_is_not_a_transport_error(self):
         response = SimpleNamespace(text=None, model_version='synthetic', usage_metadata=SimpleNamespace(

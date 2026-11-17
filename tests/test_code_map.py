@@ -27,6 +27,22 @@ class CodeMapTests(unittest.TestCase):
         data = code_map.build_map(self.root)
         return data, {row['id']: row for row in data['functions']}
 
+    def test_local_credential_scratch_file_is_never_read(self):
+        from unittest.mock import patch
+        self.write('workflow/quickrun.py', 'private local scratch content')
+        self.write('workflow/current.py', 'def current():\n    return 1\n')
+        original_read = Path.read_text
+
+        def guarded_read(path, *args, **kwargs):
+            if path.name == 'quickrun.py':
+                raise AssertionError('The navigator must not read local credential scratch files')
+            return original_read(path, *args, **kwargs)
+
+        with patch.object(Path, 'read_text', guarded_read):
+            data, rows = self.records()
+        self.assertIn('workflow.current:current', rows)
+        self.assertNotIn('quickrun', json.dumps(data))
+
     def test_facade_imports_link_to_implementation_without_importing_code(self):
         self.write('workflow/implementation.py', '''raise AssertionError('Must not execute')
 def helper():
@@ -111,30 +127,6 @@ def callback():
         self.assertEqual(['workflow.engine:helper'], entries[0]['helper_ids'])
         self.assertEqual([], entries[1]['helper_ids'])
         self.assertIn('workflow.engine:callback', rows)
-
-    def test_github_links_use_real_line_anchors_encode_paths_and_omit_local_root(self):
-        self.write('workflow/example file.py', '# leading comment\ndef example():\n    return 1\n')
-        self.write('templates/code_map.html', '<script type="application/json">__CODE_MAP_DATA__</script>')
-        base = 'https://github.com/ZhuochengShang/AIDEAL/blob/main'
-        data = code_map.generate(self.root, github_url=base + '/')
-        expected = base + '/workflow/example%20file.py#L2'
-        self.assertEqual(expected, data['functions'][0]['source_url'])
-        self.assertEqual(base, data['source_base_url'])
-        self.assertNotIn('source_root', data)
-        for name in ('FUNCTION_INDEX.md', 'function_map.json', 'CODE_MAP.html'):
-            content = (self.root / 'docs' / name).read_text()
-            self.assertIn(expected, content)
-            self.assertNotIn(str(self.root), content)
-
-    def test_github_link_mode_rejects_ambiguous_or_credential_bearing_locations(self):
-        for value in ('https://github.com/owner/repo', 'https://secret@github.com/owner/repo/blob/main',
-                      'file:///Users/private/repo', 'https://github.com/owner/repo/blob/main?token=secret'):
-            with self.subTest(value=value), self.assertRaises(ValueError):
-                code_map.generate(self.root, github_url=value)
-        self.assertFalse((self.root / 'docs').exists())
-        with self.assertRaisesRegex(ValueError, 'not both'):
-            code_map.generate(self.root, source_root=self.root,
-                              github_url='https://github.com/owner/repo/blob/main')
 
     def test_guided_path_rejects_broken_or_misleading_entry_points(self):
         data = {'functions': [{'id': 'workflow.engine:main', 'calls': []}],

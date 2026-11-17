@@ -7,16 +7,19 @@ from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json, invoke, ownership
 from .improvement_context import (alias_target, development_destination, _development_errors,
                                   _library_inputs, _semantic_context, _source_windows)
-from .improvement_suggestions import (PROMPT, _finish_proposal, _load_preview, _model_settings,
-                                     proposal_response_error)
+from .improvement_suggestions import PROMPT, _finish_proposal, _load_preview, _model_settings
 
 
 def _integer(value, name, low, high):
+    # The budgets count whole items or characters. Reject booleans and numbers outside
+    # the caller’s bounds.
     if type(value) is not int or not low <= value <= high:
         raise ValueError(f'{name} must be between {low} and {high}')
 
 
 def _alias_destination(template, number):
+    # A batch can omit alias generation. When it requests a file, give each batch its
+    # own numbered destination and validate that path.
     if template is None:
         return None
     if not isinstance(template, str) or template.count('{batch}') != 1:
@@ -29,6 +32,8 @@ def _alias_destination(template, number):
 
 def _library_overview(public, max_characters):
     """Bound the cross-batch orientation, while retaining the full catalogue on disk."""
+    # Give each model request a small overview of the rest of the library. The full
+    # catalogue is saved in the manifest.
     counts = Counter(row.get('module') or row['file'] for row in public)
     overview = {'module_count': len(counts), 'modules': [], 'omitted_modules': len(counts),
                 'api_catalog': [], 'omitted_catalog_entries': len(public),
@@ -58,6 +63,8 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
     Source discovery is static and bounded by the configured tracked file scope.
     Refactor evidence is batch-local; this is not an all-pairs semantic comparison.
     """
+    # Start with the attached baseline and apply the requested API filter. Each
+    # selected definition goes into exactly one saved batch.
     _integer(batch_size, 'batch_size', 1, 100)
     _integer(max_context_characters, 'max_context_characters', 1000, 250000)
     _integer(max_batches, 'max_batches', 1, 10000)
@@ -88,6 +95,8 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
                                 'limitations': 'Cross-batch bodies are not supplied. Discovery can miss syntax unsupported by the configured adapter.'}}
 
     def context(rows, number):
+        # Build the prompt data for these APIs. Include only development errors for
+        # this batch that fit its error budget.
         ids = {row['id'] for row in rows}
         selected_errors, used, omitted = [], 0, 0
         for error in errors:
@@ -107,6 +116,8 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
                              'omitted_error_rows': omitted,
                              'source_window_policy': 'Three preceding and up to sixty following lines; not complete function bodies.'}}
 
+    # Fill each batch in discovery order. Start the next one if adding an API would
+    # exceed the API count or serialized prompt limit.
     groups, current = [], []
     for row in definitions:
         candidate = current + [row]
@@ -162,6 +173,8 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
 
 
 def _implementation_bindings():
+    # Record hashes of the workflow and engine modules so a resumed collection uses
+    # the same implementation.
     root = Path(__file__).resolve().parents[1]
     paths = sorted((root / 'workflow').glob('*.py'))
     paths += sorted((root / 'vendor/aideal_engine/src/aideal').glob('*.py'))
@@ -169,6 +182,8 @@ def _implementation_bindings():
 
 
 def _verified_completion(path, identity):
+    # A cached result is usable only when the batch identity, completion checksum, and
+    # saved artifact bytes still agree.
     record = load(path)
     if (record.get('identity') != identity
             or record.get('completion_sha256') != digest({k: v for k, v in record.items() if k != 'completion_sha256'})
@@ -178,6 +193,8 @@ def _verified_completion(path, identity):
 
 
 def _run_batch(preview_path, settings, output, identity, run_artifacts, public_names):
+    # Handle one saved preview. Reuse finished work, or record the exact request and
+    # attempt before saving a proposal.
     preview, _, attachment = _load_preview(preview_path)
     complete = output / 'completion.json'
     if complete.exists():
@@ -205,10 +222,6 @@ def _run_batch(preview_path, settings, output, identity, run_artifacts, public_n
         raise ValueError('Library proposal inputs changed during generation; preserve this output')
     if result['status'] != 'ok' or not isinstance(result.get('payload'), dict) or not isinstance(result['payload'].get('code'), str):
         return {'status': 'model_attempt_failed', 'output': str(output), 'attempt': str(attempt)}, calls
-    error = proposal_response_error(result, settings['name'])
-    if error:
-        atomic_json(attempt / 'rejected.json', {'reason': error, 'status': 'invalid_provider_response'})
-        return {'status': 'invalid_suggestions', 'output': str(output), 'attempt': str(attempt)}, calls
     # Validate outside the emission helper so schema failures are retryable, while
     # changed source/evidence remains a hard error rather than a new model attempt.
     from .improvement_suggestions import validate_suggestions
@@ -219,7 +232,7 @@ def _run_batch(preview_path, settings, output, identity, run_artifacts, public_n
         return {'status': 'invalid_suggestions', 'output': str(output), 'attempt': str(attempt)}, calls
     value = _finish_proposal(preview, attachment, output, result, None, attempt)
     artifacts = [bind(p) for p in sorted(output.iterdir()) if p.is_file()]
-    artifacts += [bind(p) for p in sorted(attempt.rglob('*')) if p.is_file()]
+    artifacts += [bind(attempt / 'request.json'), bind(attempt / 'process.json')]
     record = {'identity': identity, 'result': value, 'artifacts': artifacts}
     record['completion_sha256'] = digest(record)
     atomic_json(complete, record)
@@ -227,12 +240,18 @@ def _run_batch(preview_path, settings, output, identity, run_artifacts, public_n
 
 
 def propose_library_improvements(manifest_path, model_config, output, *, max_batches=None):
+    # Read a saved library preview and request improvement proposals in batches.
+    # Reuse matching completed batches and retain exact requests and responses.
+    # Save collection status and flag alias-name collisions across batches.
+    # Proposals remain unvalidated; this function installs no library changes.
     """Run/resume a bounded proposal collection; install nothing and preserve failures.
 
     max_batches limits new batches attempted in this invocation. The model config's
     provider_attempt_limit (default one) bounds lifetime calls per batch, including
     failed or interrupted attempts. Resume always requires the same exact identity.
     """
+    # Check the manifest and each preview before trusting its batch paths or API list.
+    # The validated inputs identify this collection.
     manifest_path = Path(manifest_path).resolve()
     manifest = load(manifest_path)
     if (manifest.get('kind') != 'library_improvement_preview'
@@ -276,6 +295,8 @@ def propose_library_improvements(manifest_path, model_config, output, *, max_bat
     identity_hash = digest(identity)
     run_artifacts = [identity['manifest'], identity['model_configuration'], identity['prompt'],
                      *identity['model_command_artifacts'], *identity['implementation']]
+    # Lock the collection directory before accepting its saved identity or creating a
+    # new one.
     with ownership(output):
         identity_path = output / 'identity.json'
         if identity_path.exists():
@@ -289,6 +310,8 @@ def propose_library_improvements(manifest_path, model_config, output, *, max_bat
         public_names = {row['name'] for row in manifest['api_catalog']}
         alias_owners = {}
         collisions = []
+        # Completed batches are reusable. The invocation limit counts only batches
+        # that still need work.
         for batch in manifest['batches']:
             folder = output / batch['batch_id']
             if folder.is_symlink() or folder.resolve().parent != output:

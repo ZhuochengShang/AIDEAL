@@ -1,6 +1,5 @@
 """Explicit, bounded development inputs; never import or execute library code."""
 from dataclasses import replace
-from functools import lru_cache
 import glob
 import json
 from pathlib import Path, PurePosixPath
@@ -11,10 +10,11 @@ from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json
 from .preparation import _engine_config_module
 from .treatment_versions import _run as _git, _check_worktree
-from .scala_owners import _tokens as _scala_tokens, owner_at_line
 
 
 def alias_target(value):
+    # Return a normalized relative path for a supported source file, or None if
+    # aliases were not requested.
     if value is None:
         return None
     if not isinstance(value, str) or not value or '\\' in value or '\x00' in value:
@@ -28,6 +28,8 @@ def alias_target(value):
 
 
 def original_checkout(study):
+    # Resolve the recorded Original checkout, then check that its path, branch,
+    # commit, and on-disk files match the baseline.
     study = Path(study).resolve()
     attachment = load(study / 'attachment.json')
     item = attachment['worktrees']['original']
@@ -47,6 +49,8 @@ def original_checkout(study):
 
 def development_destination(study, output):
     """Keep preview/proposal outputs outside all library source checkouts."""
+    # Resolve the requested output and compare it with the original repository and
+    # every attached worktree.
     output = Path(output).resolve()
     attachment = load(Path(study) / 'attachment.json')
     roots = [Path(attachment['repository']).resolve()]
@@ -58,6 +62,8 @@ def development_destination(study, output):
 
 def _development_errors(path, definitions, max_characters=12000):
     """Only explicit development logs; never read a held-out bank or its oracles."""
+    # Return selected log rows, a hash binding for the log file, and a count of
+    # skipped rows. An absent log contributes no evidence.
     if path is None:
         return [], None, 0
     path = Path(path).resolve()
@@ -66,6 +72,8 @@ def _development_errors(path, definitions, max_characters=12000):
     for definition in definitions:
         for name in (definition['name'], definition['qualified_name'], definition['id']):
             by_name.setdefault(name, set()).add(definition['id'])
+    # Match each failure to one API and keep only bounded text from the development
+    # log.
     for number, line in enumerate(path.read_text().splitlines(), 1):
         if not line.strip():
             continue
@@ -103,51 +111,10 @@ def _development_errors(path, definitions, max_characters=12000):
     return rows, bind(path), omitted
 
 
-@lru_cache(maxsize=128)
-def _scala_package(source):
-    """Accept leading, unbraced package declarations; ignore comments/literals."""
-    tokens = _scala_tokens(source)
-    cursor, packages = 0, []
-    while cursor < len(tokens) and tokens[cursor].value == 'package':
-        line = tokens[cursor].line
-        cursor += 1
-        parts = []
-        while cursor < len(tokens) and tokens[cursor].line == line and tokens[cursor].value != ';':
-            parts.append(tokens[cursor].value)
-            cursor += 1
-        if (not parts or any(not re.fullmatch(r'[A-Za-z_$][\w$]*', part)
-                             for part in parts[::2])
-                or len(parts) % 2 != 1 or any(part != '.' for part in parts[1::2])):
-            raise ValueError('Unsupported Scala package declaration')
-        packages.append(''.join(parts))
-        if cursor < len(tokens) and tokens[cursor].value == ';':
-            cursor += 1
-    if any(token.value == 'package' for token in tokens[cursor:]):
-        raise ValueError('Non-leading Scala package declarations require explicit resolution')
-    return '.'.join(packages)
-
-
-def _scala_receiver_facts(source, line, name):
-    """Add lexical facts without redefining discovery identity or public scope."""
-    facts = dict.fromkeys(('receiver', 'owner_kind', 'owner_path', 'qualified_receiver',
-                           'source_qualified_name', 'owner_declaration'))
-    try:
-        owner = owner_at_line(source, line, name)
-        package = _scala_package(source)
-    except ValueError as exc:
-        return {**facts, 'qualification_status': 'unresolved', 'qualification_reason': str(exc)}
-    qualified = '.'.join(filter(None, (package, owner['owner_path'])))
-    declaration_line = owner['declaration_line']
-    return {**owner, 'qualified_receiver': qualified,
-            'source_qualified_name': qualified + '.' + name,
-            'owner_declaration': {'line': declaration_line,
-                                  'text': source.splitlines()[declaration_line - 1]},
-            'qualification_status': 'resolved_lexical',
-            'qualification_reason': 'Direct named-owner member; not a type, visibility or dispatch proof.'}
-
-
 def _library_inputs(study, apis=None):
     """Discover the full pinned public surface without importing target code."""
+    # Verify the saved configuration, then map its source patterns into the pinned
+    # Original worktree before discovering APIs.
     study, root, attachment = original_checkout(study)
     source = load(study / 'source.json')
     refs = source['configuration_layers']
@@ -177,19 +144,13 @@ def _library_inputs(study, apis=None):
     from aideal.api_discovery import public_api_details
     # Resolve discovery inside the pinned checkout, not the caller's mutable repo.
     local = replace(cfg, root=root, source_globs=[glob.escape(str(p)) for p in files], test_globs=[])
-    definitions, scala_sources = [], {}
+    definitions = []
     for row in public_api_details(local):
         if row['visibility'] != 'public':
             continue
         row = {**row, 'id': f"{row['file']}:{row['line']}:{row['qualified_name']}"}
         if apis and not {row['id'], row['qualified_name'], row['name']}.intersection(apis):
             continue
-        if Path(row['file']).suffix == '.scala':
-            if row['file'] not in scala_sources:
-                scala_sources[row['file']] = (root / row['file']).read_text()
-            # Keep the original id/qualified_name and selection semantics. These
-            # additional facts disambiguate receivers for the model only.
-            row.update(_scala_receiver_facts(scala_sources[row['file']], row['line'], row['name']))
         definitions.append(row)
     definitions.sort(key=lambda r: (r['file'], r['line'], r['id']))
     if apis:
@@ -205,6 +166,8 @@ def _library_inputs(study, apis=None):
 
 def _semantic_context(cfg, root, attachment):
     """Expose discovery semantics and explicit profile, never model credentials."""
+    # Resolve the configured profile path and record the supplied profile plus
+    # discovery settings for use in the prompt.
     configured = Path(cfg.raw.get('files', {}).get('project_profile', 'configs/project_profile.yaml'))
     path = (cfg.root / configured).resolve()
     repository = Path(attachment['repository']).resolve()
@@ -229,6 +192,8 @@ def _semantic_context(cfg, root, attachment):
 
 def _source_windows(root, definitions):
     """Capture bounded literal source evidence, keyed by original function ID."""
+    # Attach a short literal excerpt and its line numbers to each definition. Read and
+    # bind each source file once.
     refs, file_lines = {}, {}
     for row in definitions:
         path = root / row['file']
@@ -257,6 +222,8 @@ def _source_windows(root, definitions):
 def preview_improvements(study, output, *, alias_path=None, apis=None, development_errors=None,
                          max_apis=12, max_context_characters=60000):
     """Save the exact development context before any model command is permitted."""
+    # Prepare one preview for a small API selection. Save the prompt data and input
+    # hashes for the later proposal command.
     if type(max_apis) is not int or not 1 <= max_apis <= 100:
         raise ValueError('max_apis must be between 1 and 100')
     if type(max_context_characters) is not int or not 1000 <= max_context_characters <= 250000:

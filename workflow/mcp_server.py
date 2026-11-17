@@ -22,22 +22,30 @@ mcp = FastMCP(
 @mcp.tool()
 def attach_codebase(repository: str, config: str, output: str) -> dict:
     """Create five real branches in a separate local clone; never patch the input checkout."""
+    # Forward the repository, config and output paths to the same attachment function
+    # used by the CLI. Return its workspace record.
     return attach(repository, config, output)
 
 
 @mcp.tool()
 def inspect_study(directory: str) -> dict:
     """Inspect generated preparation records; does not launch evaluation or validate approval."""
+    # Read the draft files from the supplied directory and return the preparation
+    # summary and outstanding preflight issues.
     return prepared_study_status(directory)
 
 
 @mcp.tool()
 def operating_instructions() -> str:
     """Read the toolkit's current implementation boundaries and end-to-end instructions."""
+    # Expose the repository README as text for callers of the optional agent
+    # interface.
     return (Path(__file__).resolve().parents[1] / 'README.md').read_text(encoding='utf-8')
 
 
 def main():
+    # Start the tool server so clients can call the registered attachment, inspection
+    # and instructions tools.
     mcp.run()
 
 

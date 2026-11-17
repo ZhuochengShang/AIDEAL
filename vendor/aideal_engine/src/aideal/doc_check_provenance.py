@@ -77,7 +77,9 @@ def _comprehension_fingerprint_components(
         "doc_check_puzzles.py", "readme_format.py", "readme_evidence.py",
         "readme_catalogue.py", "api_visibility.py", "api_examples.py",
         "scaffold_generation.py", "api_intent.py", "api_overloads.py",
-        "api_signatures.py", "api_discovery.py", "readme_generation.py")]
+        "api_signatures.py", "api_discovery.py", "api_registry.py",
+        "readme_generation.py", "readme_recording.py",
+        "readme_validation.py", "readme_replay.py")]
     from .experiment_identity import extra_components
     audience = cfg.model_for_role("audience")
     fixer = cfg.model_for_role("fixer")
@@ -96,10 +98,15 @@ def _comprehension_fingerprint_components(
             "fixer": f"{fixer.provider}:{fixer.model}",
         },
         "class_context": bool(class_context),
+        # Receiver overrides affect audience prompts and must invalidate resume.
+        "owner_overrides": cfg.comprehension.get("owner_overrides", {}),
         "timeout_s": timeout,
         "execute_config": ex,
         "scaffold": _sha256_files([scaffold_file], cfg.root),
         "source": _sha256_files(source_paths, cfg.root),
+        "api_inventory": _sha256_files(
+            [cfg.root / cfg.raw["codebase"]["api_inventory"]]
+            if cfg.raw.get("codebase", {}).get("api_inventory") else [], cfg.root),
         "fixtures": _sha256_files(fixture_paths, cfg.root),
         "engine": _sha256_files(engine_paths, engine_dir),
         "interpreter": {

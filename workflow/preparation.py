@@ -17,6 +17,8 @@ CONDITION_FOLDERS = {
 
 def _engine_config_module():
     """Load the pinned engine's YAML loader, without importing its model clients."""
+    # Cache the configuration loader under its own module name. Subsequent calls reuse
+    # the same imported loader.
     name = "_aideal_workflow_engine_config"
     if name not in sys.modules:
         path = Path(__file__).resolve().parents[1] / "vendor/aideal_engine/src/aideal/config.py"
@@ -38,6 +40,8 @@ def prepare_study(config, output):
     loader's path rules. JSON files below are generated records, not replacement
     user configuration. No commands or model clients from the YAML are executed.
     """
+    # Resolve the input YAML and new output directory, then create the shared draft
+    # plan and five condition records from the loaded settings.
     config = Path(config).expanduser().resolve()
     output = Path(output).expanduser().resolve()
     if not config.is_file():
@@ -60,6 +64,8 @@ def prepare_study(config, output):
             raise ValueError(f"Unknown extends adapter: {name}")
         layers.append(adapter)
     layers.append(config)
+    # Bind the original configuration layers and documentation so later inspection can
+    # identify the exact inputs used.
     source = {
         "configuration": bind(config), "configuration_layers": [bind(p) for p in layers],
         "workspace_root": str(cfg.root), "project": cfg.project_name,
@@ -135,6 +141,8 @@ def prepare_study(config, output):
 
 def prepared_study_status(directory):
     """Report generic draft readiness without implying adapter execution exists."""
+    # Read the draft plan, bank and source records. Return the counts and preflight
+    # issues an operator can inspect before launching anything.
     directory = Path(directory).expanduser().resolve()
     plan = load(directory / "plan.draft.json")
     bank = load(directory / "bank.draft.json")

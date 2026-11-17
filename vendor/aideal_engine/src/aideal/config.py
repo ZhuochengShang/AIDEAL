@@ -16,7 +16,6 @@ except ImportError as exc:  # pragma: no cover
 class ModelSpec:
     provider: str
     model: str
-    bridge: dict | None = None
 
 
 @dataclass
@@ -108,7 +107,7 @@ class AidealConfig:
 #: Markdown keeps its image REFERENCES;
 #: the bytes stay out.
 _TEXT_DOC_EXTS = {
-    ".md", ".markdown", ".mdx", ".txt", ".rst", ".adoc", ".html",
+    ".md", ".markdown", ".mdx", ".qmd", ".txt", ".rst", ".adoc", ".html",
     # Documentation galleries commonly store executable source rendered
     # alongside prose (Sphinx-Gallery Python, Java/Scala example galleries).
     ".py", ".java", ".scala",
@@ -220,7 +219,7 @@ def load_config(config_path: str | Path | None = None) -> AidealConfig:
     checks = raw.get("checks", {})
 
     registry = {
-        name: ModelSpec(provider=m["provider"], model=m["model"], bridge=m.get("bridge"))
+        name: ModelSpec(provider=m["provider"], model=m["model"])
         for name, m in models.get("registry", {}).items()
     }
 

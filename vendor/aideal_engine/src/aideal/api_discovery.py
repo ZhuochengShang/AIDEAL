@@ -5,6 +5,7 @@ import glob as globmod
 import re
 from pathlib import Path
 from .config import AidealConfig
+from .api_registry import configured_api_details
 from .api_signatures import (
     _doc_at,
     _java_param_record,
@@ -32,6 +33,9 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
       non_override              - not an `override` (excludes inherited/interface impls)
       documented_non_override   - both (tightest intended-API set)
     Default `all` (back-compat)."""
+    registered = configured_api_details(cfg, override_filter)
+    if registered is not None:
+        return {row["name"] for row in registered}
     model = visibility_model(cfg)
     flt = (override_filter or cfg.surface_filter or "all").lower()
     if flt in ("intent_score", "intent"):
@@ -91,9 +95,15 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
 
 
 def public_api_details(cfg: AidealConfig) -> list[dict]:
+    # Scan the configured source files and describe each matching definition.
+    # Return signatures, comments, visibility and exact source locations.
+    # Keep definition sites distinct; callers choose the intended public surface.
     """Per-definition records for the surface: name, signature, params, return,
     description, visibility, file, line. One record per definition site (not
     collapsed), so overloads across classes stay distinct."""
+    registered = configured_api_details(cfg)
+    if registered is not None:
+        return registered
     model = visibility_model(cfg)
     py_identities = _python_qualified_identities(cfg) if cfg.language.lower() == "python" else {}
     file_cache: dict[str, list[str]] = {}
@@ -237,15 +247,19 @@ def surface_audit(cfg: AidealConfig) -> dict:
 def api_coverage(cfg: AidealConfig) -> dict:
     """Compare original/generated documentation coverage over a shared API scope:
 
-      S = frozen runnable public surface (visibility-correct + intent filter)
+      S = configured source API-name set (discovery + configured filters)
       O = APIs documented in the ORIGINAL bundle (evidence-based: code block /
           backticks / call-form via _doc_code_mentions — bare prose words do
           not count), resolved against S
       G = APIs with a generated LLM_readme entry, resolved against S
-      T = S ∩ O ∩ G — the SHARED manifest every pass-rate cell must consume
+      T = S ∩ O ∩ G — optional subset documented under both conditions
 
-    Coverage (|S∩O|/|S| vs |S∩G|/|S|) is a first-class result on its own;
-    pass rates are only causally comparable on T."""
+    Freeze the same S for a full-scope resource comparison, retaining APIs with
+    no original documentation. Report O and S-O separately to distinguish
+    documentation coverage from performance on already documented APIs. T
+    supports an additional conditional analysis; it is not the only fair
+    denominator. Name-level discovery and mentions do not certify runnability
+    or signature/owner-level documentation coverage."""
     from .api_intent import _doc_code_mentions
 
     S = set(public_api_surface(cfg))
@@ -268,7 +282,7 @@ def api_coverage(cfg: AidealConfig) -> dict:
                      "shared_pct_of_S": pct(T)},
         "undocumented_in_original": sorted(S - O),
         "undocumented_in_generated": sorted(S - G),
-        "original_doc_files": [str(x.relative_to(cfg.root))
+        "original_doc_files": [str(x.relative_to(cfg.root)) if x.is_relative_to(cfg.root) else str(x)
                                for x in cfg.original_readme_files],
         "original_doc_chars": len(docs_text),
     }

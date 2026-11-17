@@ -28,6 +28,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                            resume: bool = False, timeout_s: int | None = None,
                            shared_doc: str | None = None,
                            doc_scope: str = "entry") -> dict:
+    # Ask the audience model to write programs for the selected API entries.
+    # Insert each program into the configured scaffold, then build and run it.
+    # Save execution evidence and use failures for the permitted code repairs.
+    # Success follows this native runner's checks, not the portable study oracle.
     """Compile/run each API's audience snippet via the configured command.
     PASS = the program runs (success_marker present, exit 0). Real failures
     (compile/runtime) are logged with the actual error text.
@@ -176,6 +180,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     require_correctness = bool(ex.get("require_correctness", False))
     timeout = int(timeout_s or ex.get("timeout_seconds", 600) or 600)
     strip_snippet_imports = bool(ex.get("strip_snippet_imports", False))
+    # Opt in for long schedules: preserve the failed unit, then stop on a
+    # provider outage instead of sending the same failing request for every API.
+    stop_on_provider_error = bool(ex.get("stop_on_provider_error", False))
+    stopped_on_provider_error = False
     output_tail_chars = int(ex.get("output_tail_chars", 2000) or 2000)
     if max_fix_rounds is None:                                # CLI/bench override wins
         max_fix_rounds = int(ex.get("max_fix_rounds", 3) or 0)   # default 3 fixes (4 attempts)
@@ -348,7 +356,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                 "status", "attempts", "pass_round", "wall_s", "llm_calls",
                 "input_tokens", "output_tokens", "by_model", "error_category",
                 "error", "locus", "doc_chars", "document_sha256", "source",
-                "source_other_sites", "codebase_frames", "rendered_prompt_sha256")}
+                "source_other_sites", "codebase_frames", "rendered_prompt_sha256",
+                "attempt_evidence")}
             metrics[entry.name]["evidence_fingerprint"] = row.get("experiment_fingerprint")
             per_api[entry.name] = row.get("execution_evidence") or f"resumed: {row.get('status')}"
             if row.get("status") == "pass":
@@ -374,6 +383,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         last_run = {"stdout": "", "stderr": "", "exit_code": None}
         rounds_trace: list[dict] = []
         prompt_hashes = []
+        attempt_evidence = []
         prev_sig, same_sig = None, 0   # stuck detector state (per API)
         import sys as _sys
         receiver = _receiver_hint(entry.name, owner_map)
@@ -382,6 +392,17 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             # error-log feedback would leak earlier treatments into A1/A2 even
             # with max_fix_rounds=0. Only an actual retry may see failures.
             known = [] if attempt == 0 else log.failures_for(entry.name)
+            # Keep each delivered request and answer, including failed provider
+            # calls. Continue numbering on resume so earlier evidence is immutable.
+            previous_attempts = [int(p.name[8:]) for p in work_api.glob("attempt_*")
+                                 if p.is_dir() and p.name[8:].isdigit()]
+            evidence_number = max(previous_attempts, default=0) + 1
+            evidence_dir = work_api / f"attempt_{evidence_number:04d}"
+            evidence_dir.mkdir()
+            attempt_evidence.append(str(evidence_dir))
+            selected_model = writer_spec if attempt == 0 else fixer_spec
+            provider_t0 = _time.time()
+            provider_u0 = usage_snapshot()
             try:
                 delivered_prompt = load_prompt(cfg, "aideal/comprehension_write_exec",
                                  api_body=body_for(entry), api_name=entry.name,
@@ -392,14 +413,31 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                                  exec_hints=ex.get("exec_hints", ""),
                                  io_hints=io_hints_text)
                 prompt_hashes.append(_hashlib.sha256(_json.dumps(delivered_prompt).encode()).hexdigest())
-                snippet = _strip_fences(invoke_text(
-                    writer_spec if attempt == 0 else fixer_spec, *delivered_prompt),
-                    strip_imports=strip_snippet_imports)
+                # Store only the selected model and rendered messages, never
+                # model configuration objects, credentials, or environment values.
+                (evidence_dir / "request.json").write_text(_json.dumps({
+                    "api": entry.name, "round": attempt, "run_id": run_id,
+                    "attempt_number": evidence_number,
+                    "provider": selected_model.provider, "model": selected_model.model,
+                    "system": delivered_prompt[0], "user": delivered_prompt[1],
+                }, ensure_ascii=False, indent=2), encoding="utf-8")
+                raw_response = invoke_text(selected_model, *delivered_prompt)
+                (evidence_dir / "response.txt").write_text(raw_response, encoding="utf-8")
+                (evidence_dir / "provider.json").write_text(_json.dumps({
+                    "status": "returned", "wall_s": _time.time() - provider_t0,
+                    "usage": usage_delta(provider_u0),
+                }, ensure_ascii=False, indent=2), encoding="utf-8")
+                snippet = _strip_fences(raw_response, strip_imports=strip_snippet_imports)
             except Exception as llm_exc:
-                # provider error (quota/network/bad model id) must not kill a
-                # 200-API run — record it as this API's failure and move on.
+                # Preserve the failed unit before optionally stopping the outer
+                # schedule. The default still continues to the next API.
                 cat = "llm-error"
                 msg = f"{type(llm_exc).__name__}: {llm_exc}"
+                (evidence_dir / "provider.json").write_text(_json.dumps({
+                    "status": "error", "error": msg,
+                    "wall_s": _time.time() - provider_t0,
+                    "usage": usage_delta(provider_u0),
+                }, ensure_ascii=False, indent=2), encoding="utf-8")
                 last = {"cat": cat, "msg": msg, "locus": "", "code": ""}
                 rounds_trace.append({"round": attempt, "status": "fail",
                                      "category": cat, "error": msg[:160]})
@@ -413,6 +451,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                                    .replace("# AIDEAL_DATA_BINDINGS", bindings),
                                    snippet, region, placeholders)
             scala_file.write_text(scala, encoding="utf-8")
+            (evidence_dir / scala_file.name).write_text(scala, encoding="utf-8")
+            execution_t0 = _time.time()
             try:
                 # shell=True so the `scalac && jar && spark-submit` pipeline runs
                 from .execution import run_command
@@ -426,6 +466,13 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                     return b.decode("utf-8", "ignore") if isinstance(b, (bytes, bytearray)) else (b or "")
                 out, err_out, rc = _txt(e.stdout), _txt(e.stderr) + "\n[timeout]", 124
             last_run = {"stdout": out or "", "stderr": err_out or "", "exit_code": rc}
+            (evidence_dir / "stdout.txt").write_text(last_run["stdout"], encoding="utf-8")
+            (evidence_dir / "stderr.txt").write_text(last_run["stderr"], encoding="utf-8")
+            (evidence_dir / "execution.json").write_text(_json.dumps({
+                "command": cmd, "cwd": str(work_dir), "timeout_s": timeout,
+                "exit_code": rc, "wall_s": _time.time() - execution_t0,
+                "stdout_file": "stdout.txt", "stderr_file": "stderr.txt",
+            }, ensure_ascii=False, indent=2), encoding="utf-8")
             merged = (out or "") + "\n" + (err_out or "")
             ran = (rc == 0) and (success_marker in merged if success_marker else True) \
                 and not (error_marker and error_marker in merged) \
@@ -517,6 +564,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             "status": "pass" if ran else "fail",
             "attempts": len(rounds_trace),
             "rendered_prompt_sha256": prompt_hashes,
+            "attempt_evidence": attempt_evidence,
             "pass_round": next((r["round"] for r in rounds_trace
                                 if r["status"] == "pass"), None),
             "wall_s": round(_time.time() - api_t0, 1),
@@ -545,7 +593,13 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                                    "experiment_fingerprint": experiment_fingerprint,
                                    "execution_evidence": per_api[entry.name],
                                    **metrics[entry.name]}, ensure_ascii=False) + "\n")
+        if stop_on_provider_error and last.get("cat") == "llm-error":
+            stopped_on_provider_error = True
+            _sys.stderr.write("[comprehension] Provider error saved; stopping the remaining API schedule.\n")
+            _sys.stderr.flush()
+            break
     n = len(inventory)
+    attempted_n = len(metrics)
     # Doc-quality denominator excludes infra-only failures (missing-dependency runs
     # are environment noise, not documentation failures — see _classify_error). The
     # raw pass/n is kept as `score_with_infra` for transparency.
@@ -556,7 +610,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     #   executed          = the runnable subset actually compiled/run here
     raw = public_api_surface(cfg, override_filter="all")
     intended = public_api_surface(cfg)
-    covered = {e.name for e in inventory}
+    covered = set(metrics)
     return {
         "check": "comprehension",
         "mode": "execute",
@@ -564,6 +618,11 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         "run": {   # micro-benchmark header: everything a condition needs to be comparable
             "run_id": run_id,
             "api_count": n,
+            "selected_api_count": n,
+            "attempted_api_count": attempted_n,
+            "remaining_api_count": n - attempted_n,
+            "complete": attempted_n == n and not stopped_on_provider_error,
+            "stopped_on_provider_error": stopped_on_provider_error,
             "manifest_api_count": manifest_inventory_n,
             "models": {"audience": f"{writer_spec.provider}:{writer_spec.model}",
                        "fixer": f"{fixer_spec.provider}:{fixer_spec.model}"},
@@ -581,6 +640,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             "checkpoint_reuse": reuse,
             "doc_scope": doc_scope,
         },
+        # Retain the historical selected-API denominator. An interrupted score
+        # is only a lower bound; callers must check run.complete before reporting
+        # a final evaluation result. Unattempted APIs have no fabricated metrics.
+        "score_scope": "selected_apis_incomplete" if stopped_on_provider_error else "selected_apis",
         "passed": bool(scored_n) and passed_n == scored_n,
         "score": round(passed_n / scored_n, 3) if scored_n else 0.0,
         "score_with_infra": round(passed_n / n, 3) if n else 0.0,
@@ -589,7 +652,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             "raw_surface": len(raw),
             "intended_surface": len(intended),
             "surface_filter": cfg.surface_filter,
-            "executed": n,
+            "selected": n,
+            "executed": attempted_n,
             "scored": scored_n,
             "infra_excluded": infra_n,
             "untested_intended": sorted(intended - covered)[:20],

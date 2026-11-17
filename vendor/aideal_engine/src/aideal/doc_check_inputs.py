@@ -358,6 +358,24 @@ def _owner_map(cfg: AidealConfig) -> dict:
                 rf"^\s*(?:final\s+|sealed\s+|abstract\s+|case\s+)?(?:class|trait)\s+{re.escape(stem)}\b", txt, re.M))
             file_kind[f] = "static" if (has_object and not has_type) else "instance"
         owners[d["name"]] = (stem, file_kind[f])
+    # Bare names cannot distinguish companion methods or identically named
+    # methods in different types. A reviewed study may supply source-verified
+    # receiver metadata; this changes prompt guidance, never library code.
+    overrides = cfg.comprehension.get("owner_overrides", {})
+    if not isinstance(overrides, dict):
+        raise ValueError("comprehension.owner_overrides must be a mapping")
+    for name, override in overrides.items():
+        if name not in owners:
+            raise ValueError(f"owner override names an unknown Scala API: {name!r}")
+        if not isinstance(override, (list, tuple)) or len(override) != 2:
+            raise ValueError(f"owner override for {name!r} must be [owner, kind]")
+        owner, kind = override
+        if (not isinstance(owner, str) or not re.fullmatch(
+                r"[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*", owner)):
+            raise ValueError(f"owner override for {name!r} has an invalid owner")
+        if kind not in ("static", "instance"):
+            raise ValueError(f"owner override for {name!r} must use static or instance")
+        owners[name] = (owner, kind)
     return owners
 
 

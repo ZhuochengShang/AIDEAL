@@ -5,13 +5,27 @@ Adapters retain partial output for audit; callers must check ``executable`` befo
 passing it to an execution adapter. No classification retries or changes a cap.
 """
 
+import re
+
+
+def strip_code_fence(text):
+    """Unwrap one complete Markdown code block, preserving the body bytes."""
+    # Match a single fenced block around the whole response. Return the input text as-
+    # is if it does not have that form.
+    match = re.fullmatch(r'\s*```[^\n]*\n(.*?)\n```\s*', text, re.S)
+    return match[1] if match else text
+
 
 def _value(value):
     """Accept enum values from SDK records as well as their JSON representation."""
+    # Some SDK fields are enums. Read their value when present and pass through a
+    # plain string or None.
     return getattr(value, 'value', value)
 
 
 def _selected_messages(record):
+    # Prefer messages marked final_answer, with unlabeled messages as the fallback.
+    # Those messages supply completion status evidence.
     messages = record.get('messages') or []
     final = [item for item in messages if item.get('phase') == 'final_answer']
     return final or [item for item in messages if item.get('phase') is None]
@@ -25,6 +39,8 @@ def solution_state(record):
     completeness metadata remains supported, but its unverified status is stated
     explicitly in ``reason``. The input dictionary and its code are not modified.
     """
+    # Read the provider's status, stop reason and message metadata. The return value
+    # tells the evaluator whether this response can reach the checker.
     code = record.get('code')
     status = _value(record.get('response_status'))
     details = record.get('incomplete_details') or {}
@@ -39,6 +55,8 @@ def solution_state(record):
                 'code_characters': len(code) if isinstance(code, str) else 0}
 
     def result(state, reason):
+        # Build a consistent verdict dictionary and attach the evidence collected from
+        # this response. Only the complete state permits execution.
         return {'status': state, 'reason': reason, 'executable': state == 'complete',
                 'evidence': evidence}
 
@@ -83,6 +101,8 @@ def solution_state(record):
 
 def classify_record(record):
     """Attach the normalized state while retaining code, usage, and raw metadata."""
+    # Add the shared completion verdict and map its state to the response kind used in
+    # evaluation logs.
     state = solution_state(record)
     record['solution_state'] = state
     record['response_kind'] = {

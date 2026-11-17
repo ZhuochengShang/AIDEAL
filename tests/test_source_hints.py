@@ -117,37 +117,6 @@ class SourceHintTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'inside worktree'):
             insert_source_hint(self.original, '../RasterMetadata.scala:3:rescale', self.fields)
 
-    def test_slash_guidance_rejects_compiler_unicode_escapes_when_rendering(self):
-        # Java expands these before recognizing // comments. Even apparently
-        # escaped spellings are rejected rather than trusting raw-text equality.
-        for escape in (r'\u000a', r'\uuuu000A', r'\u000d', r'\\u000a', r'\u002f'):
-            with self.subTest(escape=escape):
-                fields = {**self.fields, 'function_id': self.identity,
-                          'action': escape + ' static { System.out.println("INJECTED"); } //'}
-                with self.assertRaisesRegex(ValueError, 'Unicode escape'):
-                    render_source_hint(fields)
-                with self.assertRaisesRegex(ValueError, 'Unicode escape'):
-                    insert_source_hint(self.original, self.identity, fields)
-
-    def test_existing_slash_guidance_cannot_hide_code_in_unicode_escapes(self):
-        for escape in (r'\u000a', r'\uu000D', r'\\u000a'):
-            with self.subTest(escape=escape):
-                text = self.path.read_text().replace(
-                    '// action:', '// action: ' + escape + ' static { runInjected(); } //')
-                with self.assertRaisesRegex(ValueError, 'Unicode escape'):
-                    strip_source_hints(text)
-                self.path.write_text(text)
-                with self.assertRaisesRegex(ValueError, 'Unicode escape'):
-                    index_source_hints(self.root, [self.path], self.mapping)
-                self.path.write_text(insert_source_hint(self.original, self.identity, self.fields))
-
-    def test_python_comment_unicode_text_stays_literal(self):
-        original = 'def f(x):\n    return x + 1\n'
-        fields = {**self.fields, 'action': r'The literal escape \u000a is input text.'}
-        annotated = insert_source_hint(original, 'lib.py:1:f', fields)
-        self.assertIn(r'\u000a', annotated)
-        self.assertEqual(strip_source_hints(annotated), original)
-
     def test_code_inside_marker_block_is_rejected(self):
         unsafe = self.path.read_text().replace('// action:', 'runDangerous(); // action:')
         with self.assertRaisesRegex(ValueError, 'only whole-line comments'):

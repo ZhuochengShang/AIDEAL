@@ -8,12 +8,14 @@ import re
 
 
 def _result(status, **fields):
+    # Give every diagnosis a common status field, with extra evidence when available.
     return {'status': status, **fields}
 
 
 
 def _code_only(code):
     """Mask comments and literals while preserving exact line/column offsets."""
+    # Replace matched text with spaces while keeping newlines so diagnostic positions still line up.
     pattern = re.compile(
         r'(?P<raw>(?:br|r)(?P<hashes>#+)?".*?"(?P=hashes))'
         r'|""".*?"""|\'\'\'.*?\'\'\''
@@ -24,6 +26,8 @@ def _code_only(code):
 
 def _owners(index, receiver, method):
     """Require an exact qualified owner, or an unambiguous short owner."""
+    # Look up canonical function IDs from a receiver and method name.
+    # Keep all matching short names so the caller can detect ambiguity.
     mapping = index['api_function_ids']
     full = receiver.replace('::', '.').replace('$', '') + '.' + method
     if full in mapping:
@@ -36,6 +40,7 @@ def _owners(index, receiver, method):
 
 def _receiver_ids(index, code, receiver, method):
     # A literal owner call is acceptable only if its owner is unique.
+    # Resolve a receiver directly or infer its owner from one explicit type or constructor.
     direct = _owners(index, receiver, method)
     if direct:
         return direct
@@ -56,6 +61,8 @@ def _receiver_ids(index, code, receiver, method):
 
 
 def _calls_at(index, code, line_number, column):
+    # Find mapped calls on one candidate line. A diagnostic column narrows the matches
+    # to calls covering that position.
     code = _code_only(code)
     lines = code.splitlines()
     if line_number < 1 or line_number > len(lines):
@@ -101,6 +108,7 @@ def _calls_at(index, code, line_number, column):
 
 
 def _compiler_evidence(index, code, feedback):
+    # Split compiler feedback into diagnostic blocks and locate the displayed candidate line.
     lines = feedback.splitlines()
     # Scala/Java/Python adapter public diagnostic format: file:line[:column].
     header = re.compile(r'^\s*(.+?\.(?:scala|java|py|rs)):(\d+)(?::(\d+))?:\s*(?:error:?)?')
@@ -135,6 +143,7 @@ def _compiler_evidence(index, code, feedback):
 
 def _import_call_ids(index, masked, class_name, canonical_owner):
     """Require actual calls through the imported owner or an explicit new receiver."""
+    # Return mapped API calls that use the class name or a clearly constructed instance.
     receivers = set()
     cls = re.escape(class_name)
     if re.search(r'\b(?:class|object|trait|interface|enum)\s+' + cls + r'\b', masked):
@@ -164,6 +173,8 @@ def _import_evidence(index, code, feedback):
     Supports plain Scala/Java imports. No wildcard/renamed imports, inferred
     factory types or task-target substitution. Homonymous class owners abstain.
     """
+    # Check whether the failed import has a unique known owner and an explicit call.
+    # Use both the compiler message and the echoed import line as evidence.
     masked, lines = _code_only(code), feedback.splitlines()
     imports = list(re.finditer(r'^\s*import\s+([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)+)\s*;?\s*$', masked, re.M))
     headers = [(i, re.match(r'^\s*(.+?\.(?:scala|java)):(\d+)(?::\d+)?:\s*(?:error:?)?\s*(.*)', line))
@@ -203,6 +214,7 @@ def _import_evidence(index, code, feedback):
 
 
 def _stack_evidence(index, feedback):
+    # Read stack frames from top to bottom and keep the first frame that maps to an API.
     found = []
     for line in feedback.splitlines():
         match = re.search(r'\bat\s+([\w.$]+)\.([\w$]+)\([^()]+:\d+\)', line)
@@ -223,6 +235,8 @@ def diagnose_failure(index, previous):
     and diagnostic. Its diagnostic must also occur in public_feedback. No
     private checker fields, expected outputs or oracle data enter this API.
     """
+    # Combine compatible public evidence into one function diagnosis.
+    # Return a status explaining why no unique function could be established when needed.
     if not previous:
         return _result('no_previous_failure')
     if (previous.get('incomplete') is True
