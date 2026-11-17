@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "experiment_fingerprint": "a6bab8aa036a9cca7b8fcdc562ba25ab5a0deb741aaa4e6e10fa68e05a1be398",
+  "fingerprint_components": {
+    "schema": 4,
+    "prompt_contract": {
+      "templates": {
+        "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+      },
+      "profile_sha256": "999030640d6fd5202a443c3ee92c874fc101161fda3d3a5013b50704527a78cc"
+    },
+    "transport_contract": {
+      "temperature": 0.0,
+      "google_request_timeout_s": 300.0,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630.0,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "project": "Thumbnailator",
+    "language": "Java",
+    "doc_source": "original",
+    "doc_scope": "relevant",
+    "max_fix_rounds": 2,
+    "manifest_sha256": "acd532d8913e66d436b38de9acba750f92f20e16c49dafb78b69363127a38c60",
+    "document_sha256": "3479f57c0e5ce6133bedc5367b7d5cf00e239042f61c9f887f58bd9463c10758",
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite"
+    },
+    "class_context": false,
+    "owner_overrides": {},
+    "timeout_s": 300,
+    "execute_config": {
+      "execution_context": "A Java headless harness compiled for Java 8 compatibility and run on JDK 17 is already in scope. Write statements only for the marked region. Reuse the in-memory images, output stream/path, and checked-in image paths. Exercise the target public API, assert a stable dimension/pixel/byte/file property, and print a compact witness.",
+      "region": [
+        "// TODO API_TEST_START",
+        "// TODO API_TEST_END"
+      ],
+      "strip_snippet_imports": false,
+      "output_tail_chars": 2000,
+      "success_marker": "__DONE__",
+      "error_marker": "__RUN_ERR__",
+      "work_dir": "execution",
+      "timeout_seconds": 300,
+      "max_fix_rounds": 2,
+      "auto_report": false,
+      "test_filename": "ApiTest.java",
+      "exec_hints": "Use Java 8 syntax. Prefer BufferedImage and the provided tiny PNG/JPEG fixtures. Do not open windows, URLs, cameras, or network resources. Close streams you create and avoid overwriting repository fixtures.",
+      "scaffold": "inputs/api_test_scaffold.java",
+      "build_cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/source",
+      "uberjar": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar",
+      "local_uris": false,
+      "output_dir": "execution/output",
+      "preamble": "BufferedImage sourceImage = new BufferedImage(32, 24, BufferedImage.TYPE_INT_RGB);\nGraphics2D graphics = sourceImage.createGraphics();\ngraphics.setColor(Color.BLUE);\ngraphics.fillRect(0, 0, 32, 24);\ngraphics.setColor(Color.YELLOW);\ngraphics.fillRect(8, 6, 16, 12);\ngraphics.dispose();\nBufferedImage destinationImage = new BufferedImage(16, 12, BufferedImage.TYPE_INT_RGB);\nByteArrayOutputStream imageBytes = new ByteArrayOutputStream();\nPath outputPath = Paths.get(output_dir, \"thumbnail.png\");\nFiles.createDirectories(outputPath.getParent());\n",
+      "sample_data": {
+        "grid_png": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.png",
+        "grid_jpeg": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.jpg",
+        "exif_jpeg": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Exif/original.jpg"
+      },
+      "require_correctness": true,
+      "command": "mkdir -p \"{work}/classes\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/javac --release 8 -cp \"{classpath}\" -d \"{work}/classes\" \"{test_file}\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/java -Djava.awt.headless=true -cp \"{work}/classes:{classpath}\" ApiTest",
+      "stop_on_provider_error": true,
+      "build": "",
+      "jars": "",
+      "spark_jars": ""
+    },
+    "scaffold": {
+      "sha256": "607438144e074a19b06638bc86de1b37d4db7b5b53fa62cfaf6ddc9ddb195de8",
+      "file_count": 1
+    },
+    "source": {
+      "sha256": "5ac9982665698bf56a212fb2c65fe5d48de20e24c7daf0bd6b9942ff9590249d",
+      "file_count": 79
+    },
+    "api_inventory": {
+      "sha256": "a5a46c4a5577fcc8a8509c5d05837370d7a1279962587ed4130962f175d5a147",
+      "file_count": 1
+    },
+    "fixtures": {
+      "sha256": "27c50603aa26fb4293ce9f4dae90d1ae06414f79f370b17409cf23ee8b997b32",
+      "file_count": 3
+    },
+    "engine": {
+      "sha256": "2c20721b0350b243155edab18ffe16149572cffd89a785eab7f1b471bae46a09",
+      "file_count": 35
+    },
+    "interpreter": {
+      "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+      "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+      "environment_sha256": ""
+    },
+    "canonical_requested_targets": {
+      "protocol_version": 1,
+      "targets_sha256": "ac4ba33c692aed5367054d167306fedb1378d8fba34c35a9a86963e8feeb3fe1",
+      "targets_count": 94
+    }
+  }
+}

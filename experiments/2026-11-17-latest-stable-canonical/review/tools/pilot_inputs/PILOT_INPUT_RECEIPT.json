@@ -1,0 +1,113 @@
+{
+  "status": "prepared_preview_only",
+  "created_at": "2026-11-17T20:35:03.670525+00:00",
+  "model_calls": 0,
+  "snippet_executions": 0,
+  "base_catalog": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/RUN_CATALOG.yaml",
+    "sha256": "d678c34a8521201138255161d4fbc679104b0c6470ee1d5b6a11125a33a1673d",
+    "unchanged": true
+  },
+  "pilot_catalog": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/PILOT_CATALOG.yaml",
+    "sha256": "4eb493199e81f2fd7e2d7ae0b06116bb4cbcf5220cb07fb4546efc977cb6db66",
+    "bytes": 56741
+  },
+  "cases": [
+    {
+      "bank": "rdpro_scala",
+      "api": "numTiles",
+      "manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/pilots/inputs/rdpro_scala/api_manifest.json",
+        "sha256": "8e0eec40a8bc4dd6add5ab86247ee1d2a85024bbe2de84119699d04b950e93d1",
+        "bytes": 17
+      },
+      "source_link_unchanged": true,
+      "base_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/configs/aideal.scala.yaml"
+    },
+    {
+      "bank": "mdanalysis",
+      "api": "rmsd",
+      "manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/pilots/inputs/mdanalysis/api_manifest.json",
+        "sha256": "9d21510a9dee8eb63a6bbf870bb6ced5f4e9a6b23eaef7935c2d84f62df47d60",
+        "bytes": 13
+      },
+      "source_link_unchanged": true,
+      "base_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/configs/aideal.yaml"
+    },
+    {
+      "bank": "tslearn",
+      "api": "dtw",
+      "manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/pilots/inputs/tslearn/api_manifest.json",
+        "sha256": "9d0610e9385b5ffac993717a320e4b0370a574537eed9a5ea50f6cc577e5b49f",
+        "bytes": 12
+      },
+      "source_link_unchanged": true,
+      "base_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/tslearn/configs/aideal.yaml"
+    },
+    {
+      "bank": "mir_eval",
+      "api": "f_measure",
+      "manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/pilots/inputs/mir_eval/api_manifest.json",
+        "sha256": "916d6142ffe7a6858fd4d486386ab4048625a9eb9af0dc192049cc39e3c3dbbd",
+        "bytes": 18
+      },
+      "source_link_unchanged": true,
+      "base_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mir_eval/configs/aideal.yaml"
+    },
+    {
+      "bank": "thumbnailator",
+      "api": "resize",
+      "manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/pilots/inputs/thumbnailator/api_manifest.json",
+        "sha256": "fb7e41dff95bc78116313dd1cd06d75903fa1d2f54ba1af6b77a2ed1dd48e104",
+        "bytes": 15
+      },
+      "source_link_unchanged": true,
+      "base_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/configs/aideal.yaml"
+    },
+    {
+      "bank": "sedonadb",
+      "api": "ST_Area",
+      "manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/pilots/inputs/sedonadb/api_manifest.json",
+        "sha256": "6ea23b66af266e0c87f70e3788c8e5f6905345ac9a58c35481066835341b0909",
+        "bytes": 16
+      },
+      "source_link_unchanged": true,
+      "base_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/configs/aideal.review-repairs.yaml"
+    }
+  ],
+  "sedonadb_config_change": {
+    "original": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/configs/aideal.yaml",
+      "sha256": "b1b156a0c606532430b844025a455aba645cdbe819d93eefc656388fc65afb15",
+      "unchanged": true
+    },
+    "review": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/configs/aideal.review-repairs.yaml",
+      "sha256": "778124950171c8006a33c58c6eeed70174225ef50708c3ffa72975ef0a1dd471",
+      "bytes": 2955
+    },
+    "diff": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/pilots/inputs/sedonadb-review-repairs.diff",
+      "sha256": "7d87c36176b93515d06396428aad4e62fd0254575897de6d6ff73174a57d6639",
+      "bytes": 567
+    },
+    "only_changed_field": "comprehension.execute.exec_hints",
+    "old_sentence": "No repairs are permitted in this R0 run.",
+    "new_sentence": "This review pilot permits an initial attempt and up to two code-repair attempts; stop immediately when an attempt passes.",
+    "raw_byte_change": "Exactly one sentence replacement; all other bytes preserved.",
+    "effective_repair_rounds": "Native review helper --repairs 2 overrides the unchanged base max_fix_rounds: 0."
+  },
+  "baseline_evidence_preserved": [
+    "RUN_CATALOG.yaml",
+    "review_export/BANK_INDEX.json",
+    "review_export/banks",
+    "review_export/native_previews/v2"
+  ],
+  "scope_note": "Catalog scope_note/status fields are preserved baseline provenance. The one-API manifests define pilot scope; this receipt records preview-only status. No pilot has run."
+}

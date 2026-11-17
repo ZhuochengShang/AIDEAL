@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "experiment_fingerprint": "c6ce5e218ffeb7ce5657b3207b884a4bed39b8fefbad435283c6c45b541427d5",
+  "fingerprint_components": {
+    "schema": 4,
+    "prompt_contract": {
+      "templates": {
+        "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+      },
+      "profile_sha256": "e9e77e0723de3844b30c0a357af361c7f967dfb24d9c0e53ad60d91b0686ccf6"
+    },
+    "transport_contract": {
+      "temperature": 0.0,
+      "google_request_timeout_s": 300.0,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630.0,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "project": "tslearn",
+    "language": "Python",
+    "doc_source": "original",
+    "doc_scope": "relevant",
+    "max_fix_rounds": 2,
+    "manifest_sha256": "9d803a48ff2e89b82f187077d9320b0ebfbb4823810f91a9608ed97d9753689b",
+    "document_sha256": "05d1d142921bc5279893fa772773b64be86765d1bf81c8de7d20f9fde7eee52e",
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite"
+    },
+    "class_context": false,
+    "owner_overrides": {},
+    "timeout_s": 300,
+    "execute_config": {
+      "execution_context": "A headless Python harness, balanced eight-series training data, a second series set, one-dimensional signals, labels, a small numeric matrix, repository fixture paths, and a pre-created condition-specific output directory are already in scope. Import the target explicitly.",
+      "region": [
+        "# TODO API_TEST_START",
+        "# TODO API_TEST_END"
+      ],
+      "strip_snippet_imports": false,
+      "output_tail_chars": 4000,
+      "success_marker": "__DONE__",
+      "error_marker": "__RUN_ERR__",
+      "work_dir": "execution",
+      "timeout_seconds": 300,
+      "max_fix_rounds": 2,
+      "auto_report": false,
+      "test_filename": "api_test.py",
+      "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"{test_file}\"",
+      "exec_hints": "Use small deterministic parameters. For file-writing APIs, write only below output_dir. Optional-dependency failures must remain explicit infrastructure outcomes. End with a meaningful assertion and print a compact __CHECK__ witness.",
+      "scaffold": "inputs/api_test_scaffold.py",
+      "preamble": "Path(output_dir).mkdir(parents=True, exist_ok=True)\n_trace = np.load(trace_npz)\n_balanced = np.array([0, 4, 1, 17, 3, 13, 2, 5], dtype=int)\nX = _trace[\"X_train\"][_balanced, :40, :]  # type: balanced time-series dataset ndarray (8, 40, 1)\nX2 = _trace[\"X_test\"][:4, :32, :]  # type: second dataset ndarray (4, 32, 1)\ns1 = X[0].ravel()  # type: 1-D series ndarray (40,)\ns2 = X[1].ravel()  # type: 1-D series ndarray (40,)\ny = _trace[\"y_train\"][_balanced]  # type: four balanced labels, two examples per class\ntiny_matrix = np.arange(12.0).reshape(3, 4)  # type: deterministic numeric matrix\n",
+      "sample_data": {
+        "trace_npz": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/.cached_datasets/Trace.npz"
+      },
+      "require_correctness": true,
+      "io_hints": "",
+      "local_uris": false,
+      "output_dir": "execution/output",
+      "stop_on_provider_error": true,
+      "build": ""
+    },
+    "scaffold": {
+      "sha256": "d99a16990560cf47140d1121b005430e40893e384ef66faaa04a5c13f5cf806a",
+      "file_count": 1
+    },
+    "source": {
+      "sha256": "3e2157704011d5a9c4122c760eea2b52ba882703bea7a57aa1cb71ee168db545",
+      "file_count": 67
+    },
+    "api_inventory": {
+      "sha256": "ca5ec7425a5c9623ee4beed2b8e9f08999a75b17741db19d7c5aba6ccd42f927",
+      "file_count": 1
+    },
+    "fixtures": {
+      "sha256": "756d1e1693be66b29dfda1415e621ef93f9643f80be70a4625de9f41b01f49c4",
+      "file_count": 1
+    },
+    "engine": {
+      "sha256": "2c20721b0350b243155edab18ffe16149572cffd89a785eab7f1b471bae46a09",
+      "file_count": 35
+    },
+    "interpreter": {
+      "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+      "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+      "environment_sha256": ""
+    },
+    "canonical_requested_targets": {
+      "protocol_version": 1,
+      "targets_sha256": "4b84ea2c10b28a71b6a2ca62bfe4d916da60cf901a6ff2efc61cf7ea0342a80b",
+      "targets_count": 116
+    }
+  }
+}

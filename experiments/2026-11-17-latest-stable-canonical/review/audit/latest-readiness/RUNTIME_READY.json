@@ -1,0 +1,208 @@
+{
+  "checked_at": "2026-11-17T20:13:43.079562+00:00",
+  "kind": "isolated stable runtime readiness; offline infrastructure evidence, not measured audience scores",
+  "passed": true,
+  "actual_model_calls": 0,
+  "python_environment": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable",
+  "python": "3.12.15 (main, Oct  7 2026, 04:52:47) [GCC 8.5.0 20210514 (Red Hat 8.5.0-29)]",
+  "subject_versions": {
+    "MDAnalysis": "2.11.0",
+    "MDAnalysisTests": "2.11.0",
+    "tslearn": "0.10.0",
+    "mir_eval": "0.8.2"
+  },
+  "selected_attribute_resolution": {
+    "mdanalysis": {
+      "selected_apis": 435,
+      "resolved_apis": 435,
+      "unique_modules": 89,
+      "imported_modules": 89
+    },
+    "tslearn": {
+      "selected_apis": 116,
+      "resolved_apis": 116,
+      "unique_modules": 33,
+      "imported_modules": 33
+    },
+    "mir_eval": {
+      "selected_apis": 125,
+      "resolved_apis": 125,
+      "unique_modules": 16,
+      "imported_modules": 16
+    }
+  },
+  "native_controls": {
+    "passed": true,
+    "cases_verified": 9,
+    "executed_release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504",
+    "final_release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32",
+    "native_code_equivalence": true,
+    "scope": {
+      "files_checked": 72,
+      "passed": true,
+      "excluded_changed_scripts": [
+        "scripts/install_generated_readme.py",
+        "scripts/run_readme_generation.py"
+      ],
+      "reason": "README authoring and generated-README installation entrypoints are not invoked by these original native-scaffold controls. Engine source/config/schema and all other scripts, including run_original_micro.py and preflight_cluster_libraries.py, are byte-identical."
+    }
+  },
+  "environment_settings": {
+    "PYTHONPATH": "unset",
+    "PYTHONHOME": "unset",
+    "KERAS_BACKEND": "torch",
+    "CUDA_VISIBLE_DEVICES": "",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMBA_NUM_THREADS": "1",
+    "MPLBACKEND": "Agg"
+  },
+  "dependency_versions": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "scikit-learn": "1.7.2",
+    "numba": "0.66.0",
+    "torch": "2.15.0+cpu",
+    "keras": "3.15.1",
+    "cesium": "0.12.4",
+    "rdkit": "2026.9.2",
+    "gsd": "5.0.1",
+    "pyedr": "0.8.0",
+    "pooch": "1.9.0",
+    "ml_dtypes": "0.7.0"
+  },
+  "missing_optional_dependencies": [
+    "tensorflow",
+    "stumpy",
+    "gemmi",
+    "netCDF4",
+    "chemfiles",
+    "parmed",
+    "pytng",
+    "imdclient",
+    "waterdynamics",
+    "pathsimanalysis",
+    "mdahole2",
+    "mdaencore"
+  ],
+  "explicit_scope_limits": [
+    {
+      "api": "MDAnalysis.fetch.pdb.from_PDB",
+      "reason": "pooch imports successfully; network fetch requires a per-case permitted remote input and is not exercised by offline infrastructure checks."
+    },
+    {
+      "api": "MDAnalysis.coordinates.chemfiles.check_chemfiles_version",
+      "reason": "The version-check API can validly report absence; no chemfiles input format is used in this preflight."
+    },
+    {
+      "scope": "All selected modules/attributes resolve and representative numerical/fixture/native controls pass. This is not proof that every selected API accepts every possible input or optional format."
+    }
+  ],
+  "receipts": {
+    "source_wheel_provenance.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/source_wheel_provenance.json",
+      "sha256": "a7c0212a18b94ed5844a5dfc27a2dd1266804ba030bd0fb5783458355bab6c55",
+      "bytes": 10477
+    },
+    "final_source_guard.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/final_source_guard.json",
+      "sha256": "1ee12bcdcf0aea243915ac88594b7212692d32a94a7e0c0d14e7dfca9ac79827",
+      "bytes": 5974
+    },
+    "final_wheel_preflight.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/final_wheel_preflight.json",
+      "sha256": "a30dedb94e5ea8a7375a00f6bbfddc741cd0cc15c3f6aeabc2562ee028780c70",
+      "bytes": 6437
+    },
+    "selected_api_dependencies.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/selected_api_dependencies.json",
+      "sha256": "1234ba2ef1b0505ece1a47b824fd10399712b1e7ec43833d8b5bb4a539f1448f",
+      "bytes": 341769
+    },
+    "shapelet_runtime_controls.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/shapelet_runtime_controls.json",
+      "sha256": "c66f2af269896bf196055a13bb5b974813de61bda74c7a3e097a6a77da860d51",
+      "bytes": 1913
+    },
+    "selected_optional_controls.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/selected_optional_controls.json",
+      "sha256": "f96fc70688fc209ef3e1e7124292a04f3c2b9ee42e60f4a05c46578af9fb593b",
+      "bytes": 4752
+    },
+    "fixture-source-comparison.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/fixture-source-comparison.json",
+      "sha256": "f0462286cc89b2e0775f7ba8eb9562aeed71aeba31f1968fd8f874d7573548aa",
+      "bytes": 2794
+    },
+    "readonly_xtc_control.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/readonly_xtc_control.json",
+      "sha256": "ec2a47b63ac75be8fb9a3b7785e43ff42c3a85635a4140d90f5c77c544ddb467",
+      "bytes": 1554
+    },
+    "final-pip-freeze.txt": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/final-pip-freeze.txt",
+      "sha256": "04db499dd2e8fa8125c9c5d0206d34d3948a9dc2e269917c526e1dbaacd62679",
+      "bytes": 1393
+    },
+    "final-requirements-requested.txt": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/final-requirements-requested.txt",
+      "sha256": "ff0a3293f82252bbf143f496743ad01bd24a6760a2ca196f9dca2d002152c704",
+      "bytes": 250
+    },
+    "torch-cpu-install-report.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/torch-cpu-install-report.json",
+      "sha256": "24e1e263de2b9737bf4af750a5aa8bbb871d7a12d470dc532ef335bfc9056671",
+      "bytes": 76068
+    },
+    "keras-install-report.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/keras-install-report.json",
+      "sha256": "ed37b6660e32f88010f11a42f8f7c6ca55eecca953b6dcc61cb93182c503ccd8",
+      "bytes": 97296
+    },
+    "selected-optional-install-report.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/selected-optional-install-report.json",
+      "sha256": "8470b1cbcad10e4f8506e21b5fe24efa586a68313cb58701438e4eba12b210bb",
+      "bytes": 276474
+    },
+    "native_release_equivalence.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native_release_equivalence.json",
+      "sha256": "29db812d6e6783f9c082f31e6d910252bcc04532b284dcdc1c8f229064c79170",
+      "bytes": 22179
+    },
+    "scientific-native-controls/summary.json": {
+      "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/scientific-native-controls/summary.json",
+      "sha256": "fc911ae574ac6411a1f184a330db8181ad6038366c1494869a28fb4aa05b6870",
+      "bytes": 11323
+    }
+  },
+  "rdpro": {
+    "fresh_stable_source_build": true,
+    "source_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+    "selected_definitions_linked": 708,
+    "selected_unique_owners": 212,
+    "class_jar": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/rdpro-stable-source-build/artifacts/beast-stable-production-0.10.1.jar",
+      "sha256": "862c98c70924194e4feb7fb72f1b028aea03bd63009fff16ebe4f0f77fbf0625",
+      "bytes": 2872761,
+      "entries": 900
+    },
+    "build_receipt": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/rdpro-stable-source-build/build_receipt.json",
+      "sha256": "a840bdc6164f2a971832534c997ade0b9db925bda41f00d4cb08046d219af289",
+      "bytes": 162284
+    },
+    "runtime_controls": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/rdpro-stable-source-build/checks/runtime_controls.json",
+      "sha256": "55175eb820726e6abd7691874d8c14ca39895f7b85b77dab618961db7eb0f442",
+      "bytes": 285106
+    },
+    "runtime_classpath": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/rdpro-stable-source-build/runtime_classpath.json",
+      "sha256": "e14413ffc2bd929f47b459d3199c0257663411b0f241170502313a9d00cc70b2",
+      "bytes": 46983
+    },
+    "native_scala_java_scaffold_controls": "Owned separately by parent agent."
+  }
+}

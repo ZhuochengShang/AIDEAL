@@ -1,0 +1,118 @@
+# AIDEAL framework defaults (codebase-agnostic).
+#
+# Every project's configs/aideal.yaml is deep-merged ON TOP of this file, with
+# any `extends:` adapters merged in between. Projects therefore only need to
+# state wiring (paths/globs) and codebase-specific execution config; the generic
+# knobs below are inherited and can be overridden key-by-key.
+#
+# Nothing here is meant to be edited per project — override in the project file
+# instead. These are the values that were previously copied into every config.
+
+codebase:
+  # Intended-API estimation. surface_filter + threshold are part of the
+  # EXPERIMENTAL DESIGN and are stated explicitly in each project file; the
+  # generic scoring machinery lives here.
+  intent:
+    weights: {}                 # empty => generic defaults (documented +2, tested +3,
+                                # mentioned_in_docs +4, non_override +1, override -3,
+                                # internal_path -5, boilerplate_name -4)
+    manual_include: []
+    manual_exclude: []
+    exclude_name_patterns: []
+    use_llm: false
+    refresh_llm: false
+  intended_api:                 # token-efficient `intended_llm` filter knobs
+    static_include_threshold: 8
+    static_exclude_threshold: 1
+    batch_size: 25
+    cache: docs/intended_api_decisions.json
+    refresh: false
+
+files:                          # default workspace layout (paths are project-relative)
+  project_profile: configs/project_profile.yaml
+  prompts_dir: prompts
+  llm_readme: docs/LLM_readme.md
+  notes_to_self: docs/notes_to_self.md
+  integration_tasks: configs/integration_tasks.yaml
+  aliases: aliases/aliases.json
+  error_log: logs/error_log.jsonl
+
+models:
+  registry:
+    gpt-4o:         { provider: openai,    model: gpt-4o }
+    gpt-4o-mini:    { provider: openai,    model: gpt-4o-mini }
+    codex-5.3:      { provider: codex,     model: gpt-5.3-codex }
+    gemini-2.5-pro: { provider: google,    model: gemini-2.5-pro }
+    gemini-3.1-pro: { provider: google,    model: gemini-3.1-pro-preview }
+    gemini-3.2-pro: { provider: google,    model: gemini-3.2-pro-preview }
+    claude-sonnet:  { provider: anthropic, model: claude-sonnet-4-6 }
+    qwen:           { provider: ollama,    model: qwen3:32b }
+    llama3:         { provider: ollama,    model: llama3 }
+  roles:
+    author: gpt-4o-mini
+    audience: gpt-4o
+
+runtime:
+  target: local
+  local: {}
+
+checks:
+  required_sections:            # the AIDEAL doc format every API entry must satisfy
+    - "Signature"
+    - "Goal"
+    - "Parameters"
+    - "Input"
+    - "Output"
+    - "Valid Call Patterns|Valid Access Patterns"
+    - "LLM Instruction Prompt"
+    - "Prompt Snippet"
+    - "Common Failure Modes"
+    - "Fix Code Hint"
+  comprehension_apis_sampled: 5
+
+docfix:
+  # Safety guard for source-aware README repair. Rewrites are rejected if their
+  # snippets call members that are neither on the project API surface nor in
+  # the allowed vocabulary below.
+  #
+  # PRIMARY (general, no curation): allow_repo_called_members mines every
+  # `.name(` the TARGET CODEBASE itself calls in its sources/tests — the
+  # repo's own usage vocabulary is the ecosystem allowlist, for any language.
+  allow_repo_called_members: true
+  # SECONDARY (escape hatches): named category sets whose CONTENTS live here
+  # and in adapter/project layers (deep-merged) — no more editing Python to
+  # onboard an ecosystem. Projects choose which categories apply:
+  allowed_member_categories: [language_core]
+  member_categories:
+    language_core: [println, print, require, assert, format, mkString, toString,
+      map, flatMap, filter, foreach, collect, count, take, first, reduce, fold,
+      foldLeft, sum, min, max, size, length, nonEmpty, isEmpty, head, headOption,
+      last, getOrElse, get, exists, forall, contains, indexOf, sortBy, sorted,
+      zip, zipWithIndex, toArray, toList, toSeq, toSet, toMap, distinct, sliding,
+      grouped, apply, update, close, cache, persist, coalesce, repartition, keys,
+      values, trim, split, replace, startsWith, endsWith, toDouble, toInt, toLong,
+      toFloat, abs, floor, ceil, round, find, getPath, getName, getClass,
+      asInstanceOf, isInstanceOf, mkdirs, listFiles, delete, getConstructor,
+      newInstance, getFileSystem, resolve, isNaN, isInfinite, isFinite, toRadians,
+      toDegrees, sqrt, pow, sin, cos, tan, atan2, fill, range, empty, ofDim]
+  allowed_members: []
+
+comprehension:
+  execute:                      # framework-generic execute controls (markers, limits)
+    execution_context: >-
+      A runnable test harness is already in scope. Use only the variables,
+      fixtures, imports, and setup described in the task and project profile.
+      Do not create a new application/session/context unless the task explicitly
+      says one is required.
+    region: ["// TODO API_TEST_START", "// TODO API_TEST_END"]
+    strip_snippet_imports: false
+    output_tail_chars: 2000
+    success_marker: "__DONE__"
+    error_marker: "__RUN_ERR__"
+    work_dir: .aideal_exec
+    timeout_seconds: 600
+    max_fix_rounds: 1
+    # After every --execute / fix-docs run, also write the READABLE analysis
+    # (docs/fix_report_<run>.md + fix_report_latest.md via `aideal fix-report`):
+    # improvement verdict, same-issue-not-solved, clusters, per-API why-failed.
+    auto_report: true

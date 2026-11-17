@@ -1,0 +1,413 @@
+codebase:
+  intent:
+    weights: {}
+    manual_include: []
+    manual_exclude: []
+    exclude_name_patterns: []
+    use_llm: false
+    refresh_llm: false
+  intended_api:
+    static_include_threshold: 8
+    static_exclude_threshold: 1
+    batch_size: 25
+    cache: docs/intended_api_decisions.json
+    refresh: false
+    require_llm: false
+    selection_limit: 0
+  public_def_regex: ^\s*(?:(?:(?:public|protected|private|static|final|abstract|synchronized|native|strictfp|default)\s+)+(?:<[^>{};]+>\s+)?(?:[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^>{};]+>)?(?:\[\])*\s+)?|(?!(?:if|for|while|switch|return|throw|new|assert)\b)(?:<[^>{};]+>\s+)?[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^>{};]+>)?(?:\[\])*\s+)([A-Za-z_$][A-Za-z0-9_$]*)\s*(?=\()
+  exclude_names:
+  - main
+  - toString
+  - equals
+  - hashCode
+  - clone
+  - finalize
+  source_globs:
+  - source/src/main/java/**/*.java
+  test_globs:
+  - source/src/test/java/**/*.java
+  surface_filter: all
+  api_inventory: inputs/api_inventory.json
+  api_inventory_sha256: 2f16fa86bae8390f48d8b3f9635b819b376f90bc8ed2f5678c738bb31fd7fcbb
+files:
+  project_profile: configs/project_profile.yaml
+  prompts_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/prompts
+  llm_readme: docs/catalog-unused-for-original.md
+  notes_to_self: docs/notes_to_self.md
+  integration_tasks: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/configs/integration_tasks.yaml
+  aliases: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/aliases/aliases.json
+  error_log: logs/error_log.jsonl
+  original_readme:
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/README.md
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/allclasses-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/allclasses-noframe.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/constant-values.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/deprecated-list.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/help-doc.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/index-all.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/index.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/ThumbnailParameter.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/Thumbnailator.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/Thumbnails.Builder.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/Thumbnails.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/builders/BufferedImageBuilder.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/builders/ThumbnailParameterBuilder.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/builders/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/builders/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/builders/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Canvas.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Caption.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Colorize.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Flip.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/ImageFilter.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Pipeline.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Rotation.Rotator.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Rotation.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/SwapDimensions.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Transparency.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/Watermark.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/filters/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/AbsoluteSize.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/Coordinate.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/Position.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/Positions.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/Region.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/RelativeSize.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/Size.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/geometry/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/makers/FixedSizeThumbnailMaker.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/makers/ScaledThumbnailMaker.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/makers/ThumbnailMaker.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/makers/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/makers/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/makers/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/name/ConsecutivelyNumberedFilenames.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/name/Rename.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/name/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/name/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/name/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/AbstractResizer.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/BicubicResizer.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/BilinearResizer.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/DefaultResizerFactory.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/FixedResizerFactory.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/NullResizer.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/ProgressiveBilinearResizer.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/Resizer.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/ResizerFactory.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/Resizers.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/AlphaInterpolation.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/Antialiasing.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/Dithering.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/Rendering.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/ResizerConfiguration.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/ScalingMode.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/configurations/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/resizers/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/FileThumbnailTask.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/SourceSinkThumbnailTask.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/StreamThumbnailTask.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/ThumbnailTask.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/UnsupportedFormatException.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/AbstractImageSink.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/AbstractImageSource.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/BufferedImageSink.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/BufferedImageSource.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/FileImageSink.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/FileImageSource.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/ImageSink.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/ImageSource.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/InputStreamImageSource.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/OutputStreamImageSink.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/URLImageSource.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/io/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/tasks/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/BufferedImages.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/Configurations.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/ThumbnailatorUtils.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/ExifFilterUtils.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/ExifUtils.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/IfdStructure.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/IfdType.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/Orientation.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/exif/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/package-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/package-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/net/coobird/thumbnailator/util/package-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/overview-frame.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/overview-summary.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/overview-tree.html
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs/serialized-form.html
+models:
+  registry:
+    selected:
+      provider: google
+      model: gemini-3.1-flash-lite
+  roles:
+    author: selected
+    audience: selected
+    fixer: selected
+runtime:
+  target: local
+  local: {}
+checks:
+  required_sections:
+  - Signature
+  - Goal
+  - Parameters
+  - Input
+  - Output
+  - Valid Call Patterns|Valid Access Patterns
+  - LLM Instruction Prompt
+  - Prompt Snippet
+  - Common Failure Modes
+  - Fix Code Hint
+  comprehension_apis_sampled: 5
+docfix:
+  allow_repo_called_members: true
+  allowed_member_categories:
+  - language_core
+  - java_core
+  member_categories:
+    language_core:
+    - println
+    - print
+    - require
+    - assert
+    - format
+    - mkString
+    - toString
+    - map
+    - flatMap
+    - filter
+    - foreach
+    - collect
+    - count
+    - take
+    - first
+    - reduce
+    - fold
+    - foldLeft
+    - sum
+    - min
+    - max
+    - size
+    - length
+    - nonEmpty
+    - isEmpty
+    - head
+    - headOption
+    - last
+    - getOrElse
+    - get
+    - exists
+    - forall
+    - contains
+    - indexOf
+    - sortBy
+    - sorted
+    - zip
+    - zipWithIndex
+    - toArray
+    - toList
+    - toSeq
+    - toSet
+    - toMap
+    - distinct
+    - sliding
+    - grouped
+    - apply
+    - update
+    - close
+    - cache
+    - persist
+    - coalesce
+    - repartition
+    - keys
+    - values
+    - trim
+    - split
+    - replace
+    - startsWith
+    - endsWith
+    - toDouble
+    - toInt
+    - toLong
+    - toFloat
+    - abs
+    - floor
+    - ceil
+    - round
+    - find
+    - getPath
+    - getName
+    - getClass
+    - asInstanceOf
+    - isInstanceOf
+    - mkdirs
+    - listFiles
+    - delete
+    - getConstructor
+    - newInstance
+    - getFileSystem
+    - resolve
+    - isNaN
+    - isInfinite
+    - isFinite
+    - toRadians
+    - toDegrees
+    - sqrt
+    - pow
+    - sin
+    - cos
+    - tan
+    - atan2
+    - fill
+    - range
+    - empty
+    - ofDim
+    java_core:
+    - of
+    - valueOf
+    - parse
+    - builder
+    - build
+    - create
+    - add
+    - addAll
+    - remove
+    - clear
+    - put
+    - putAll
+    - get
+    - set
+    - contains
+    - containsKey
+    - containsValue
+    - iterator
+    - stream
+    - collect
+    - map
+    - filter
+    - forEach
+    - size
+    - length
+    - isEmpty
+    - toArray
+    - toList
+    - toSet
+    - toMap
+    - orElse
+    - orElseGet
+    - getAsInt
+    - getAsLong
+    - getAsDouble
+    - close
+    - flush
+    - read
+    - write
+  allowed_members: []
+comprehension:
+  execute:
+    execution_context: A Java headless harness compiled for Java 8 compatibility and
+      run on JDK 17 is already in scope. Write statements only for the marked region.
+      Reuse the in-memory images, output stream/path, and checked-in image paths.
+      Exercise the target public API, assert a stable dimension/pixel/byte/file property,
+      and print a compact witness.
+    region:
+    - // TODO API_TEST_START
+    - // TODO API_TEST_END
+    strip_snippet_imports: false
+    output_tail_chars: 2000
+    success_marker: __DONE__
+    error_marker: __RUN_ERR__
+    work_dir: execution
+    timeout_seconds: 300
+    max_fix_rounds: 2
+    auto_report: false
+    test_filename: ApiTest.java
+    exec_hints: Use Java 8 syntax. Prefer BufferedImage and the provided tiny PNG/JPEG
+      fixtures. Do not open windows, URLs, cameras, or network resources. Close streams
+      you create and avoid overwriting repository fixtures.
+    scaffold: inputs/api_test_scaffold.java
+    build_cwd: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/source
+    uberjar: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar
+    local_uris: false
+    output_dir: execution/output
+    preamble: 'BufferedImage sourceImage = new BufferedImage(32, 24, BufferedImage.TYPE_INT_RGB);
+
+      Graphics2D graphics = sourceImage.createGraphics();
+
+      graphics.setColor(Color.BLUE);
+
+      graphics.fillRect(0, 0, 32, 24);
+
+      graphics.setColor(Color.YELLOW);
+
+      graphics.fillRect(8, 6, 16, 12);
+
+      graphics.dispose();
+
+      BufferedImage destinationImage = new BufferedImage(16, 12, BufferedImage.TYPE_INT_RGB);
+
+      ByteArrayOutputStream imageBytes = new ByteArrayOutputStream();
+
+      Path outputPath = Paths.get(output_dir, "thumbnail.png");
+
+      Files.createDirectories(outputPath.getParent());
+
+      '
+    sample_data:
+      grid_png: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.png
+      grid_jpeg: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.jpg
+      exif_jpeg: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Exif/original.jpg
+    require_correctness: true
+    command: mkdir -p "{work}/classes" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/javac
+      --release 8 -cp "{classpath}" -d "{work}/classes" "{test_file}" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/java
+      -Djava.awt.headless=true -cp "{work}/classes:{classpath}" ApiTest
+    stop_on_provider_error: true
+    build: ''
+    jars: ''
+    spark_jars: ''
+  class_context: false
+  relevant_doc_chars: 12000
+project:
+  language: Java
+  name: Thumbnailator
+provenance:
+  source_revision: c9d99613878bbbf1f4d9369585b4cb5352c3b474
+  source_tree: bea09a3170bf507338dc89214598e7ac45cdc107
+  source_version: 0.4.21
+  source_tag: 0.4.21
+  source_provenance_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/source-provenance/thumbnailator.json
+  runtime_validation: PENDING final runtime controls and loaded-config registry verification
+  selection_scope:
+    selected_api_names: 94
+    public_declaration_sites: 319
+    public_bare_names: 145
+    selection_policy: Frozen structural body audit; quarantine unknown/wrappers; globally
+      retain highest arity per bare name with deterministic ties.
+    semantic_equivalence_guarantee: false
+    sampling: none within the frozen selected set
+    manifest_path: inputs/api_manifest.json
+    canonical_selection_receipt: canonical-selection.json
+    manifest_file_sha256: 5ea8a11e5c955062b37ee80e28e11c668b2bbc3cd7323ca1619bd78d14ca0c41
+    ordered_names_sha256: 6f2fadf6ad08a6492e99ea4b44a7e83e9be9c7c4e8b64f67375e49115887e0c7
+  paid_calls_started: false

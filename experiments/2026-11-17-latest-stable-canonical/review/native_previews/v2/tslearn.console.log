@@ -1,0 +1,1155 @@
+
+1. Inputs supplied by the developer
+-----------------------------------
+PREVIEW ONLY. No model request or snippet execution.
+Library: tslearn; API: dtw; maximum repairs: 2.
+Original documentation is supplied, not generated.
+This uses the native loop used by run_original_micro.py.
+Output folder: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn
+
+Original documentation actually selected for the prompt
+-------------------------------------------------------
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/dtw.rst =====
+.. _dtw:
+
+Dynamic Time Warping
+====================
+
+Dynamic Time Warping (DTW) [1]_ is a similarity measure between time series.
+Let us consider two time series :math:`x = (x_0, \dots, x_{n-1})` and
+:math:`y = (y_0, \dots, y_{m-1})` of respective lengths :math:`n` and
+:math:`m`.
+Here, all elements :math:`x_i` and :math:`y_j` are assumed to lie in the same
+:math:`d`-dimensional space.
+In ``tslearn``, such time series would be represented as arrays of respective
+shapes `(n, d)` and `(m, d)` and DTW can be computed using the following code:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw, dtw_path
+
+    dtw_score = dtw(x, y)
+    # Or, if the path is also an important information:
+    optimal_path, dtw_score = dtw_path(x, y)
+
+
+Optimization problem
+--------------------
+
+DTW between :math:`x` and :math:`y` is formulated as the following
+optimization problem:
+
+.. math::
+
+    DTW(x, y) = \min_\pi \sqrt{ \sum_{(i, j) \in \pi} d(x_i, y_j)^2 }
+
+
+where :math:`\pi = [\pi_0, \dots , \pi_K]` is a path that satisfies the
+following properties:
+
+* it is a list of index pairs :math:`\pi_k = (i_k, j_k)` with
+  :math:`0 \leq i_k < n` and :math:`0 \leq j_k < m`
+* :math:`\pi_0 = (0, 0)` and :math:`\pi_K = (n - 1, m - 1)`
+* for all :math:`k > 0` , :math:`\pi_k = (i_k, j_k)` is related to
+  :math:`\pi_{k-1} = (i_{k-1}, j_{k-1})` as follows:
+
+  * :math:`i_{k-1} \leq i_k \leq i_{k-1} + 1`
+  * :math:`j_{k-1} \leq j_k \leq j_{k-1} + 1`
+
+Here, a path can be seen as a temporal alignment of time series such that
+Euclidean distance between aligned (ie. resampled) time series is minimal.
+
+The following image exhibits the DTW path (in white) for a given pair of time
+series, on top of the cross-similarity matrix that stores :math:`d(x_i, y_j)`
+values.
+
+.. figure:: ../auto_examples/metrics/images/thumb/sphx_glr_plot_dtw_thumb.svg
+    :width: 30%
+    :align: center
+
+Code to produce such visualization is available in our :ref:`gallery of examples <sphx_glr_auto_examples_metrics_plot_dtw.py>`.
+
+Algorithmic solution
+--------------------
+
+There exists an :math:`O(mn)` algorithm to compute the exact optimum for this
+problem (pseudo-code is provided for time series indexed from 1 for
+simplicity):
+
+.. code-block:: python
+
+    def dtw(x, y):
+        # Initialization
+        for i = 1..n
+            for j = 1..m
+                C[i, j] = inf
+
+        C[0, 0] = 0.
+
+       # Main loop
+       for i = 1..n
+            for j = 1..m
+                dist = d(x_i, y_j) ** 2
+                C[i, j] = dist + min(C[i-1, j], C[i, j-1], C[i-1, j-1])
+
+       return sqrt(C[n, m])
+
+
+Using a different ground metric
+-------------------------------
+
+By default, ``tslearn`` uses squared Euclidean distance as the base metric
+(i.e. :math:`d(\cdot, \cdot)` in the optimization problem above is the
+Euclidean distance). If one wants to use another ground metric, the code
+would then be:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw_path_from_metric
+    path, cost = dtw_path_from_metric(x, y, metric=compatible_metric)
+
+
+in which case the optimization problem that would be solved would be:
+
+.. math::
+
+    DTW(x, y) = \min_\pi \sum_{(i, j) \in \pi} \tilde{d}(x_i, y_j)
+
+
+where :math:`\tilde{d}(\cdot, \cdot)` is the user-defined ground metric,
+denoted ``compatible_metric`` in the code snippet above.
+
+
+Properties
+----------
+
+Dynamic Time Warping holds the following properties:
+
+* :math:`\forall x, y, DTW(x, y) \geq 0`
+* :math:`\forall x, DTW(x, x) = 0`
+
+However, mathematically speaking, DTW is not a valid distance since it does
+not satisfy the triangular inequality.
+
+Additional constraints
+----------------------
+
+The set of temporal deformations to which DTW is invariant can be reduced by
+setting additional constraints on the set of acceptable paths.
+These constraints typically consists in forcing paths to lie close to the
+diagonal.
+
+First, the Sakoe-Chiba band is parametrized by a radius :math:`r` (number of
+off-diagonal elements to consider, also called warping window size sometimes), 
+as illustrated below:
+
+.. figure:: ../_static/img/sakoe_chiba.png
+    :width: 30%
+    :align: center
+
+    :math:`n = m = 10, r = 3`. Diagonal is marked in grey for better
+    readability.
+
+The corresponding code would be:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw
+    cost = dtw(x, y, global_constraint="sakoe_chiba", sakoe_chiba_radius=3)
+
+
+Second, the Itakura parallelogram sets a maximum slope :math:`s` for alignment
+paths, which leads to a parallelogram-shaped constraint:
+
+.. figure:: ../_static/img/itakura.png
+    :width: 30%
+    :align: center
+
+    :math:`n = m = 10, s = 2`. Diagonal is marked in grey for better
+    readability.
+
+The corresponding code would be:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw
+    cost = dtw(x, y, global_constraint="itakura", itakura_max_slope=2.)
+
+
+Alternatively, one can put an upper bound on the warping path length so as to
+discard complex paths, as described in [2]_:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw_limited_warping_length
+    cost = dtw_limited_warping_length(x, y, max_length)
+
+
+.. _dtw-barycenters:
+
+Barycenters
+-----------
+
+Computing barycenter (also known as Fréchet means) of a set :math:`\mathcal{D}`
+for DTW corresponds to the following optimization problem:
+
+.. math::
+
+    \min_\mu \sum_{x \in \mathcal{D}} DTW(\mu, x)^2
+
+
+Optimizing this quantity can be done through the DTW Barycenter Averaging (DBA)
+algorithm presented in [3]_.
+
+.. code-block:: python
+
+    from tslearn.barycenters import dtw_barycenter_averaging
+    b = dtw_barycenter_averaging(dataset)
+
+
+This is the algorithm at stake when invoking
+:class:`tslearn.clustering.TimeSeriesKMeans` with
+``metric="dtw"``.
+
+.. _dtw-softdtw:
+
+soft-DTW
+--------
+
+DTW is not differentiable with respect to its inputs because of the
+non-differentiability of the ``min`` operation.
+A differentiable extension has been presented in [4]_ in which the ``min``
+operator is replaced by ``soft-min``, using the log-sum-exp formulation:
+
+.. math::
+
+    \text{soft-min}_\gamma(a_1, \dots, a_n) =
+        - \gamma \log \sum_i e^{-a_i / \gamma}
+
+
+soft-DTW hence depends on a hyper-parameter :math:`\gamma` that controls the
+smoothing of the resulting metric (squared DTW corresponds to the limit case
+:math:`\gamma \rightarrow 0`).
+
+.. code-block:: python
+
+    from tslearn.metrics import soft_dtw
+    soft_dtw_score = soft_dtw(x, y, gamma=.1)
+
+
+When a strictly positive value is set for :math:`\gamma`, the corresponding
+alignment matrix corresponds to a blurred version of the DTW one:
+
+.. figure:: ../_static/img/softdtw_alignment.png
+    :width: 30%
+    :align: center
+
+
+Also, barycenters for soft-DTW can be estimated through gradient descent:
+
+.. code-block:: python
+
+    from tslearn.barycenters import softdtw_barycenter
+    b = softdtw_barycenter(dataset, gamma=.1)
+
+
+This is the algorithm at stake when invoking
+:class:`tslearn.clustering.TimeSeriesKMeans` with
+``metric="softdtw"``.
+
+
+.. minigallery:: tslearn.metrics.dtw tslearn.metrics.dtw_path tslearn.metrics.soft_dtw tslearn.metrics.soft_dtw_alignment tslearn.metrics.dtw_path_from_metric tslearn.metrics.dtw_limited_warping_length tslearn.barycenters.softdtw_barycenter
+    :add-heading: Examples Involving DTW variants
+    :heading-level: -
+
+
+.. raw:: html
+
+    <div style="clear: both;" />
+
+References
+----------
+
+.. [1] H. Sakoe, S. Chiba, "Dynamic programming algorithm optimization for
+       spoken word recognition," IEEE Transactions on Acoustics, Speech and
+       Signal Processing, vol. 26(1), pp. 43--49, 1978.
+.. [2] Z. Zhang, R. Tavenard, A. Bailly, X. Tang, P. Tang, T. Corpetti
+       Dynamic time warping under limited warping path length.
+       Information Sciences, vol. 393, pp. 91--107, 2017.
+.. [3] F. Petitjean, A. Ketterlin & P. Gancarski. A global averaging method
+       for dynamic time warping, with applications to clustering. Pattern
+       Recognition, Elsevier, 2011, Vol. 44, Num. 3, pp. 678-693
+.. [4] M. Cuturi, M. Blondel "Soft-DTW: a Differentiable Loss Function for
+       Time-Series," ICML 2017.
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/backend.rst =====
+.. _backend:
+
+Backend selection and use
+=========================
+
+``tslearn`` proposes different backends (`NumPy` and `PyTorch`)
+to compute time series metrics such as `DTW` and `Soft-DTW`.
+The `PyTorch` backend can be used to compute gradients of
+metric functions thanks to automatic differentiation. The `PyTorch`
+backend requires the `pytorch package to be installed. <https://pytorch.org/get-started/locally/>`__.
+
+Backend selection
+-----------------
+
+A backend can be instantiated using the function ``instantiate_backend``.
+To specify which backend should be instantiated (`NumPy` or `PyTorch`),
+this function accepts four different kind of input parameters:
+
+* a string equal to ``"numpy"`` or ``"pytorch"``.
+* a `NumPy` array or a `Torch` tensor.
+* a Backend instance. The input backend is then returned.
+* ``None`` or anything else than mentioned previously. The backend `NumPy` is then instantiated.
+
+Examples
+~~~~~~~~
+
+If the input is the string ``"numpy"``, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> from tslearn.backend import instantiate_backend
+    >>> be = instantiate_backend("numpy")
+    >>> print(be.backend_string)
+    "numpy"
+
+If the input is the string ``"pytorch"``, the ``PyTorchBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend("pytorch")
+    >>> print(be.backend_string)
+    "pytorch"
+
+If the input is a `NumPy` array, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> be = instantiate_backend(np.array([0]))
+    >>> print(be.backend_string)
+    "numpy"
+
+If the input is a `Torch` tensor, the ``PyTorchBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> import torch
+    >>> be = instantiate_backend(torch.tensor([0]))
+    >>> print(be.backend_string)
+    "pytorch"
+
+If the input is a Backend instance, the input backend is returned.
+
+.. code-block:: python
+
+    >>> print(be.backend_string)
+    "pytorch"
+    >>> be = instantiate_backend(be)
+    >>> print(be.backend_string)
+    "pytorch"
+
+If the input is ``None``, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend(None)
+    >>> print(be.backend_string)
+    "numpy"
+
+If the input is anything else, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend("Hello, World!")
+    >>> print(be.backend_string)
+    "numpy"
+
+The function ``instantiate_backend`` accepts any number of input parameters, including zero.
+To select which backend should be instantiated (`NumPy` or `PyTorch`),
+a for loop is performed on the inputs until a backend is selected.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend(1, None, "Hello, World!", torch.tensor([0]), "numpy")
+    >>> print(be.backend_string)
+    "pytorch"
+
+If none of the inputs are related to `NumPy` or `PyTorch`, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend(1, None, "Hello, World!")
+    >>> print(be.backend_string)
+    "numpy"
+
+Use the backends
+----------------
+
+The names of the attributes and methods of the backends
+are inspired by the `NumPy` backend.
+
+Examples
+~~~~~~~~
+
+Create backend objects.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend("pytorch")
+    >>> mat = be.array([[0 , 1], [2, 3]], dtype=float)
+    >>> print(mat)
+    tensor([[0., 1.],
+            [2., 3.]], dtype=torch.float64)
+
+Use backend functions.
+
+.. code-block:: python
+
+    >>> norm = be.linalg.norm(mat)
+    >>> print(norm)
+    tensor(3.7417, dtype=torch.float64)
+
+Choose the backend used by metric functions
+-------------------------------------------
+
+`tslearn`'s metric functions have an optional input 
+
+Original documentation files considered
+---------------------------------------
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/README.md
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/_templates/class.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/_templates/function.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/_templates/module.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/_templates/numpydoc_docstring.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/backend.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/citing.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/conf.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Beef/Beef.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Beef/Beef_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Beef/Beef_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Car/Car.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Car/Car_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Car/Car_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Coffee/Coffee.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Coffee/Coffee_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Coffee/Coffee_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/ECG200/ECG200.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/ECG200/ECG200_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/ECG200/ECG200_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/FaceFour/FaceFour.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/FaceFour/FaceFour_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/FaceFour/FaceFour_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/GunPoint/GunPoint.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/GunPoint/GunPoint_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/GunPoint/GunPoint_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Lightning2/Lightning2.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Lightning2/Lightning2_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Lightning2/Lightning2_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Lightning7/Lightning7.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Lightning7/Lightning7_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Lightning7/Lightning7_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/OliveOil/OliveOil.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/OliveOil/OliveOil_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/OliveOil/OliveOil_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Plane/Plane.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Plane/Plane_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/Plane/Plane_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/SyntheticControl/SyntheticControl.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/SyntheticControl/SyntheticControl_TEST.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/datasets/SyntheticControl/SyntheticControl_TRAIN.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/dependencies.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/autodiff/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/autodiff/plot_soft_dtw_loss_for_pytorch_nn.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/classification/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/classification/plot_early_classification.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/classification/plot_foundation_linear_probe.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/classification/plot_shapelet_distances.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/classification/plot_shapelet_locations.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/classification/plot_shapelets.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/classification/plot_svm.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/plot_DBSCAN.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/plot_barycenter_interpolate.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/plot_barycenters.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/plot_kernel_kmeans.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/plot_kmeans.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/plot_kshape.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/clustering/plot_silhouette.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/forecasting/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/forecasting/plot_VARIMA.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/forecasting/plot_foundation_forecasting.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/forecasting/plot_foundation_model_zoo.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_ctw.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_dtw.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_dtw_custom_metric.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_frechet.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_lb_keogh.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_lcss.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_lcss_custom_metric.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_sdtw.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/metrics/plot_softdtw_path.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/misc/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/misc/plot_distance_and_matrix_profile.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/misc/plot_matrix_profile.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/misc/plot_preproc.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/misc/plot_sax.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/misc/plot_serialize_models.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/neighbors/README.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/neighbors/plot_knn_search.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/neighbors/plot_knnts_sklearn.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/neighbors/plot_neighbors.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/neighbors/plot_sax_mindist_knn.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/sample_data/Xi_0.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/sample_data/Xi_1.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/examples/sample_data/Xi_ref.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.barycenters.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.clustering.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.datasets.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.early_classification.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.forecasting.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.foundation.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.generators.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.matrix_profile.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.metrics.performance.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.metrics.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.neighbors.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.neural_network.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.piecewise.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.preprocessing.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.shapelets.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.svm.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gen_modules/tslearn.utils.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/gettingstarted.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/index.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/installation.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/integration_other_software.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/quickstart.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/reference.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/requirements_rtd.txt
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/clustering.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/dtw.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/early.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/kernel.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/lcss.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/matrix-profile.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/shapelets.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/userguide.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/variablelength.rst
+
+2. Configuration and selected API
+---------------------------------
+{
+  "resolved_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn/configs/aideal.yaml",
+  "manifest": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn/inputs/api_manifest.json",
+  "api": "dtw",
+  "model": "gemini-3.1-flash-lite",
+  "provider": "google",
+  "google_sdk_attempts": null,
+  "max_fix_rounds": 2,
+  "doc_source": "original",
+  "doc_scope": "relevant",
+  "class_context": false,
+  "test_filename": "api_test.py",
+  "execution_timeout_s": 300,
+  "output_folder": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn"
+}
+
+Execution scaffold supplied to AIDEAL
+-------------------------------------
+"""Shared infrastructure-only scaffold for tslearn's frozen canonical API study.
+
+This exact infrastructure file is shared by all study conditions. It intentionally imports no
+tested tslearn API because discovering the public import is part of the
+audience task in every cell.
+"""
+
+from pathlib import Path
+import sys
+import traceback
+
+import numpy as np
+
+
+def run():
+    # Typed repository fixture path and condition-specific output directory:
+    # AIDEAL_DATA_BINDINGS
+
+    # Keep audience imports local so they cannot shadow fixture construction.
+    def api_test():
+        # TODO API_TEST_START
+        # TODO API_TEST_END
+        pass
+
+    api_test()
+
+
+if __name__ == "__main__":
+    try:
+        run()
+        print("__DONE__")
+    except Exception as exc:  # noqa: BLE001 - execution boundary
+        sys.stderr.write("__RUN_ERR__ " + type(exc).__name__ + ": " + str(exc) + "\n")
+        traceback.print_exc()
+        raise SystemExit(1)
+
+
+Function call chain and code-review entry points
+------------------------------------------------
+scripts.run_original_micro.prepare -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/scripts/run_original_micro.py:41
+aideal.config.load_config -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/config.py:201
+aideal.doc_check_sources._comprehension_inventory -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_sources.py:215
+aideal.doc_check_comprehension.comprehension_check -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_comprehension.py:15
+aideal.doc_check_execution._comprehension_execute -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_execution.py:97
+aideal.prompts.load -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/prompts.py:38
+aideal.llm.invoke_text -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/llm.py:138
+aideal.doc_check_inputs._fill_scaffold -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_inputs.py:27
+aideal.execution.run_command -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/execution.py:37
+aideal.doc_check_errors._classify_error -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_errors.py:63
+aideal.error_log.ErrorLog.append -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/error_log.py:68
+aideal.error_log.ErrorLog.failures_for -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/error_log.py:113
+
+Selected prompt template
+------------------------
+/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write_exec.md
+
+Actual loop in doc_check_execution.py
+-------------------------------------
+line 473: for attempt in range(1 + max_fix_rounds):
+max_fix_rounds=2 -> at most 3 requests, R0 through R2.
+R0 uses audience. R1/R2 use fixer with previously recorded failures.
+Pass ends the loop immediately. No repair is forced in live mode.
+Interactive view: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn/TRACE.html
+[comprehension] APIs to execute: 1 of 1 (doc_source=original, doc_scope=relevant)
+
+Preview R0 exact system prompt
+------------------------------
+You write Python code that will be spliced into a runnable test harness.
+A headless Python harness, balanced eight-series training data, a second series set, one-dimensional signals, labels, a small numeric matrix, repository fixture paths, and a pre-created condition-specific output directory are already in scope. Import the target explicitly.
+
+Requested target declaration (frozen canonical selection):
+Qualified name: tslearn.metrics._dtw.dtw
+Owner: 
+Declaration: def dtw(s1, s2, global_constraint=None, sakoe_chiba_radius=None, itakura_max_slope=None, be=None)
+Parameters in declaration order (6): s1: ; s2: ; global_constraint: ; sakoe_chiba_radius: ; itakura_max_slope: ; be: 
+Write the requested call against this owner and declaration, with its indicated parameter list.
+
+Pick the input variable(s) whose type matches the API's parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: An expert Python time-series machine-learning engineer using tslearn and scikit-learn conventions. Write small deterministic executable checks for every frozen selected public API identity, including low-level backend helpers.
+Project: tslearn (Python) - A scientific machine-learning toolkit for time-series data, including distance and alignment metrics, clustering, classification, forecasting, barycenters, preprocessing, shapelets, serialization, and backend helpers.
+Domain: time-series machine learning
+Target users: time-series researchers and data scientists; ML engineers familiar with NumPy and scikit-learn; coding agents generating executable time-series workflows
+Use cases: Compute time-series distances, similarities, alignments, and barycenters.; Train compact clustering, classification, and forecasting estimators.; Convert, normalize, resample, serialize, and inspect time-series datasets.; Exercise public NumPy and PyTorch backend helpers with small arrays.
+Constraints: Use only the checked-in Trace fixture and deterministic in-memory derivatives.; Do not download datasets, plot interactively, or access the network.; Keep estimator sizes, iteration counts, and thread counts small.; Import the target explicitly; the shared scaffold does not pre-import tested APIs.; Assert a falsifiable property and print the configured correctness witness.; Use every name in the frozen 116-name canonical manifest without sampling; selection is structural filtering and same-name maximum arity, not a proof of arbitrary semantic equivalence.
+
+Preview R0 exact user prompt
+----------------------------
+Documentation:
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/user_guide/dtw.rst =====
+.. _dtw:
+
+Dynamic Time Warping
+====================
+
+Dynamic Time Warping (DTW) [1]_ is a similarity measure between time series.
+Let us consider two time series :math:`x = (x_0, \dots, x_{n-1})` and
+:math:`y = (y_0, \dots, y_{m-1})` of respective lengths :math:`n` and
+:math:`m`.
+Here, all elements :math:`x_i` and :math:`y_j` are assumed to lie in the same
+:math:`d`-dimensional space.
+In ``tslearn``, such time series would be represented as arrays of respective
+shapes `(n, d)` and `(m, d)` and DTW can be computed using the following code:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw, dtw_path
+
+    dtw_score = dtw(x, y)
+    # Or, if the path is also an important information:
+    optimal_path, dtw_score = dtw_path(x, y)
+
+
+Optimization problem
+--------------------
+
+DTW between :math:`x` and :math:`y` is formulated as the following
+optimization problem:
+
+.. math::
+
+    DTW(x, y) = \min_\pi \sqrt{ \sum_{(i, j) \in \pi} d(x_i, y_j)^2 }
+
+
+where :math:`\pi = [\pi_0, \dots , \pi_K]` is a path that satisfies the
+following properties:
+
+* it is a list of index pairs :math:`\pi_k = (i_k, j_k)` with
+  :math:`0 \leq i_k < n` and :math:`0 \leq j_k < m`
+* :math:`\pi_0 = (0, 0)` and :math:`\pi_K = (n - 1, m - 1)`
+* for all :math:`k > 0` , :math:`\pi_k = (i_k, j_k)` is related to
+  :math:`\pi_{k-1} = (i_{k-1}, j_{k-1})` as follows:
+
+  * :math:`i_{k-1} \leq i_k \leq i_{k-1} + 1`
+  * :math:`j_{k-1} \leq j_k \leq j_{k-1} + 1`
+
+Here, a path can be seen as a temporal alignment of time series such that
+Euclidean distance between aligned (ie. resampled) time series is minimal.
+
+The following image exhibits the DTW path (in white) for a given pair of time
+series, on top of the cross-similarity matrix that stores :math:`d(x_i, y_j)`
+values.
+
+.. figure:: ../auto_examples/metrics/images/thumb/sphx_glr_plot_dtw_thumb.svg
+    :width: 30%
+    :align: center
+
+Code to produce such visualization is available in our :ref:`gallery of examples <sphx_glr_auto_examples_metrics_plot_dtw.py>`.
+
+Algorithmic solution
+--------------------
+
+There exists an :math:`O(mn)` algorithm to compute the exact optimum for this
+problem (pseudo-code is provided for time series indexed from 1 for
+simplicity):
+
+.. code-block:: python
+
+    def dtw(x, y):
+        # Initialization
+        for i = 1..n
+            for j = 1..m
+                C[i, j] = inf
+
+        C[0, 0] = 0.
+
+       # Main loop
+       for i = 1..n
+            for j = 1..m
+                dist = d(x_i, y_j) ** 2
+                C[i, j] = dist + min(C[i-1, j], C[i, j-1], C[i-1, j-1])
+
+       return sqrt(C[n, m])
+
+
+Using a different ground metric
+-------------------------------
+
+By default, ``tslearn`` uses squared Euclidean distance as the base metric
+(i.e. :math:`d(\cdot, \cdot)` in the optimization problem above is the
+Euclidean distance). If one wants to use another ground metric, the code
+would then be:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw_path_from_metric
+    path, cost = dtw_path_from_metric(x, y, metric=compatible_metric)
+
+
+in which case the optimization problem that would be solved would be:
+
+.. math::
+
+    DTW(x, y) = \min_\pi \sum_{(i, j) \in \pi} \tilde{d}(x_i, y_j)
+
+
+where :math:`\tilde{d}(\cdot, \cdot)` is the user-defined ground metric,
+denoted ``compatible_metric`` in the code snippet above.
+
+
+Properties
+----------
+
+Dynamic Time Warping holds the following properties:
+
+* :math:`\forall x, y, DTW(x, y) \geq 0`
+* :math:`\forall x, DTW(x, x) = 0`
+
+However, mathematically speaking, DTW is not a valid distance since it does
+not satisfy the triangular inequality.
+
+Additional constraints
+----------------------
+
+The set of temporal deformations to which DTW is invariant can be reduced by
+setting additional constraints on the set of acceptable paths.
+These constraints typically consists in forcing paths to lie close to the
+diagonal.
+
+First, the Sakoe-Chiba band is parametrized by a radius :math:`r` (number of
+off-diagonal elements to consider, also called warping window size sometimes), 
+as illustrated below:
+
+.. figure:: ../_static/img/sakoe_chiba.png
+    :width: 30%
+    :align: center
+
+    :math:`n = m = 10, r = 3`. Diagonal is marked in grey for better
+    readability.
+
+The corresponding code would be:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw
+    cost = dtw(x, y, global_constraint="sakoe_chiba", sakoe_chiba_radius=3)
+
+
+Second, the Itakura parallelogram sets a maximum slope :math:`s` for alignment
+paths, which leads to a parallelogram-shaped constraint:
+
+.. figure:: ../_static/img/itakura.png
+    :width: 30%
+    :align: center
+
+    :math:`n = m = 10, s = 2`. Diagonal is marked in grey for better
+    readability.
+
+The corresponding code would be:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw
+    cost = dtw(x, y, global_constraint="itakura", itakura_max_slope=2.)
+
+
+Alternatively, one can put an upper bound on the warping path length so as to
+discard complex paths, as described in [2]_:
+
+.. code-block:: python
+
+    from tslearn.metrics import dtw_limited_warping_length
+    cost = dtw_limited_warping_length(x, y, max_length)
+
+
+.. _dtw-barycenters:
+
+Barycenters
+-----------
+
+Computing barycenter (also known as Fréchet means) of a set :math:`\mathcal{D}`
+for DTW corresponds to the following optimization problem:
+
+.. math::
+
+    \min_\mu \sum_{x \in \mathcal{D}} DTW(\mu, x)^2
+
+
+Optimizing this quantity can be done through the DTW Barycenter Averaging (DBA)
+algorithm presented in [3]_.
+
+.. code-block:: python
+
+    from tslearn.barycenters import dtw_barycenter_averaging
+    b = dtw_barycenter_averaging(dataset)
+
+
+This is the algorithm at stake when invoking
+:class:`tslearn.clustering.TimeSeriesKMeans` with
+``metric="dtw"``.
+
+.. _dtw-softdtw:
+
+soft-DTW
+--------
+
+DTW is not differentiable with respect to its inputs because of the
+non-differentiability of the ``min`` operation.
+A differentiable extension has been presented in [4]_ in which the ``min``
+operator is replaced by ``soft-min``, using the log-sum-exp formulation:
+
+.. math::
+
+    \text{soft-min}_\gamma(a_1, \dots, a_n) =
+        - \gamma \log \sum_i e^{-a_i / \gamma}
+
+
+soft-DTW hence depends on a hyper-parameter :math:`\gamma` that controls the
+smoothing of the resulting metric (squared DTW corresponds to the limit case
+:math:`\gamma \rightarrow 0`).
+
+.. code-block:: python
+
+    from tslearn.metrics import soft_dtw
+    soft_dtw_score = soft_dtw(x, y, gamma=.1)
+
+
+When a strictly positive value is set for :math:`\gamma`, the corresponding
+alignment matrix corresponds to a blurred version of the DTW one:
+
+.. figure:: ../_static/img/softdtw_alignment.png
+    :width: 30%
+    :align: center
+
+
+Also, barycenters for soft-DTW can be estimated through gradient descent:
+
+.. code-block:: python
+
+    from tslearn.barycenters import softdtw_barycenter
+    b = softdtw_barycenter(dataset, gamma=.1)
+
+
+This is the algorithm at stake when invoking
+:class:`tslearn.clustering.TimeSeriesKMeans` with
+``metric="softdtw"``.
+
+
+.. minigallery:: tslearn.metrics.dtw tslearn.metrics.dtw_path tslearn.metrics.soft_dtw tslearn.metrics.soft_dtw_alignment tslearn.metrics.dtw_path_from_metric tslearn.metrics.dtw_limited_warping_length tslearn.barycenters.softdtw_barycenter
+    :add-heading: Examples Involving DTW variants
+    :heading-level: -
+
+
+.. raw:: html
+
+    <div style="clear: both;" />
+
+References
+----------
+
+.. [1] H. Sakoe, S. Chiba, "Dynamic programming algorithm optimization for
+       spoken word recognition," IEEE Transactions on Acoustics, Speech and
+       Signal Processing, vol. 26(1), pp. 43--49, 1978.
+.. [2] Z. Zhang, R. Tavenard, A. Bailly, X. Tang, P. Tang, T. Corpetti
+       Dynamic time warping under limited warping path length.
+       Information Sciences, vol. 393, pp. 91--107, 2017.
+.. [3] F. Petitjean, A. Ketterlin & P. Gancarski. A global averaging method
+       for dynamic time warping, with applications to clustering. Pattern
+       Recognition, Elsevier, 2011, Vol. 44, Num. 3, pp. 678-693
+.. [4] M. Cuturi, M. Blondel "Soft-DTW: a Differentiable Loss Function for
+       Time-Series," ICML 2017.
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs/backend.rst =====
+.. _backend:
+
+Backend selection and use
+=========================
+
+``tslearn`` proposes different backends (`NumPy` and `PyTorch`)
+to compute time series metrics such as `DTW` and `Soft-DTW`.
+The `PyTorch` backend can be used to compute gradients of
+metric functions thanks to automatic differentiation. The `PyTorch`
+backend requires the `pytorch package to be installed. <https://pytorch.org/get-started/locally/>`__.
+
+Backend selection
+-----------------
+
+A backend can be instantiated using the function ``instantiate_backend``.
+To specify which backend should be instantiated (`NumPy` or `PyTorch`),
+this function accepts four different kind of input parameters:
+
+* a string equal to ``"numpy"`` or ``"pytorch"``.
+* a `NumPy` array or a `Torch` tensor.
+* a Backend instance. The input backend is then returned.
+* ``None`` or anything else than mentioned previously. The backend `NumPy` is then instantiated.
+
+Examples
+~~~~~~~~
+
+If the input is the string ``"numpy"``, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> from tslearn.backend import instantiate_backend
+    >>> be = instantiate_backend("numpy")
+    >>> print(be.backend_string)
+    "numpy"
+
+If the input is the string ``"pytorch"``, the ``PyTorchBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend("pytorch")
+    >>> print(be.backend_string)
+    "pytorch"
+
+If the input is a `NumPy` array, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> be = instantiate_backend(np.array([0]))
+    >>> print(be.backend_string)
+    "numpy"
+
+If the input is a `Torch` tensor, the ``PyTorchBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> import torch
+    >>> be = instantiate_backend(torch.tensor([0]))
+    >>> print(be.backend_string)
+    "pytorch"
+
+If the input is a Backend instance, the input backend is returned.
+
+.. code-block:: python
+
+    >>> print(be.backend_string)
+    "pytorch"
+    >>> be = instantiate_backend(be)
+    >>> print(be.backend_string)
+    "pytorch"
+
+If the input is ``None``, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend(None)
+    >>> print(be.backend_string)
+    "numpy"
+
+If the input is anything else, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend("Hello, World!")
+    >>> print(be.backend_string)
+    "numpy"
+
+The function ``instantiate_backend`` accepts any number of input parameters, including zero.
+To select which backend should be instantiated (`NumPy` or `PyTorch`),
+a for loop is performed on the inputs until a backend is selected.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend(1, None, "Hello, World!", torch.tensor([0]), "numpy")
+    >>> print(be.backend_string)
+    "pytorch"
+
+If none of the inputs are related to `NumPy` or `PyTorch`, the ``NumPyBackend`` is instantiated.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend(1, None, "Hello, World!")
+    >>> print(be.backend_string)
+    "numpy"
+
+Use the backends
+----------------
+
+The names of the attributes and methods of the backends
+are inspired by the `NumPy` backend.
+
+Examples
+~~~~~~~~
+
+Create backend objects.
+
+.. code-block:: python
+
+    >>> be = instantiate_backend("pytorch")
+    >>> mat = be.array([[0 , 1], [2, 3]], dtype=float)
+    >>> print(mat)
+    tensor([[0., 1.],
+            [2., 3.]], dtype=torch.float64)
+
+Use backend functions.
+
+.. code-block:: python
+
+    >>> norm = be.linalg.norm(mat)
+    >>> print(norm)
+    tensor(3.7417, dtype=torch.float64)
+
+Choose the backend used by metric functions
+-------------------------------------------
+
+`tslearn`'s metric functions have an optional input 
+
+Available input path variables already in scope (choose the matching one(s) by type):
+Pre-loaded and already in scope — use these directly, do NOT re-load:
+- _trace: (see preamble)
+- _balanced: (see preamble)
+- X: balanced time-series dataset ndarray (8, 40, 1)
+- X2: second dataset ndarray (4, 32, 1)
+- s1: 1-D series ndarray (40,)
+- s2: 1-D series ndarray (40,)
+- y: four balanced labels, two examples per class
+- tiny_matrix: deterministic numeric matrix
+(raw input path strings also in scope if needed: trace_npz, output_dir)
+
+RECEIVER — call `dtw` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `dtw` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Python syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language's normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ dtw ` followed by the witness, using the language's normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `dtw`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `dtw` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `dtw` is the writer; keep the
+body focused on `dtw` so the run isolates that one call.
+Use small deterministic parameters. For file-writing APIs, write only below output_dir. Optional-dependency failures must remain explicit infrastructure outcomes. End with a meaningful assertion and print a compact __CHECK__ witness.
+
+Preview complete
+----------------
+{
+  "library": "tslearn",
+  "api": "dtw",
+  "mode": "preview",
+  "status": "preview",
+  "complete": false,
+  "requests": 0,
+  "model_calls": 0,
+  "snippet_executions": 0,
+  "repair_rounds_allowed": 2,
+  "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn/execution/run_dtw/attempt_0001/request.json",
+  "stop_reason": "Exact R0 request captured before provider invocation; no response, code, verdict, or repair was produced.",
+  "future_rounds": "R1/R2 prompts depend on actual prior code and execution failures and do not exist in this preview."
+}
+Interactive view: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn/TRACE.html
+Walkthrough stopped. Read /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/tslearn/trace.log

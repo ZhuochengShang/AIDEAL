@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "experiment_fingerprint": "ea9096d40b34ea3dee9c187e80d45e870b2aacf68727c59bfb5ea90f35dc921c",
+  "fingerprint_components": {
+    "schema": 4,
+    "prompt_contract": {
+      "templates": {
+        "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+      },
+      "profile_sha256": "55ee531479c5a75095417b025bd39738c0e24af53bdc3d29e7d66a2e401dfe0f"
+    },
+    "transport_contract": {
+      "temperature": 0.0,
+      "google_request_timeout_s": 300.0,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630.0,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "project": "SedonaDB 0.5.0 canonical SQL Original R0",
+    "language": "Python",
+    "doc_source": "original",
+    "doc_scope": "relevant",
+    "max_fix_rounds": 2,
+    "manifest_sha256": "161d08263a60ba2f6420b9db0ada88c64ebc8fabd3976c3d5d9b455cb49501ce",
+    "document_sha256": "a6db376154bcf4e5574577321e7c71ccf072d13b71d62991b4afa7dc2b0520a8",
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite"
+    },
+    "class_context": false,
+    "owner_overrides": {},
+    "timeout_s": 60,
+    "execute_config": {
+      "execution_context": "Write Python statements only. A SedonaDB connection named sd is already provided. The target is a SQL function, not a Python method: call it inside sd.sql(\"SELECT ...\"). Materialize with .to_arrow_table(), which returns a real pyarrow.Table. Read a scalar with table.column(\"name\")[0].as_py() or rows with table.to_pylist(). Setup SQL may use sd.sql(...).execute(). The adapter requires the target SQL function to be called and materialized. Do not import another database or replace sd. Use Python assert with a falsifiable documented expectation and then print the exact target __CHECK__ witness.",
+      "region": [
+        "# TODO API_TEST_START",
+        "# TODO API_TEST_END"
+      ],
+      "strip_snippet_imports": false,
+      "output_tail_chars": 2000,
+      "success_marker": "__DONE__",
+      "error_marker": "__RUN_ERR__",
+      "work_dir": "execution",
+      "timeout_seconds": 60,
+      "max_fix_rounds": 2,
+      "auto_report": false,
+      "scaffold": "inputs/api_test_scaffold.py",
+      "test_filename": "ApiTest.py",
+      "build": "",
+      "command": "\"/home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/bin/python\" \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/runtime/run_snippet.py\" \"{test_file}\"",
+      "output_dir": "execution/output",
+      "local_uris": false,
+      "sample_data": {
+        "raster_cea_tif": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/cea.tif",
+        "raster_test4_tif": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/test4.tiff"
+      },
+      "preamble": "",
+      "io_hints": "",
+      "require_correctness": true,
+      "check_marker": "__CHECK__",
+      "exec_hints": "Use individual SQL statements. Paths raster_cea_tif and raster_test4_tif are available local fixture files; output_dir is available for tiny outputs. Use only these paths when a documented operation needs a file. Tiny SQL VALUES and documented constructors are available for in-memory inputs. Do not use remote URLs. This review pilot permits an initial attempt and up to two code-repair attempts; stop immediately when an attempt passes.",
+      "stop_on_provider_error": true
+    },
+    "scaffold": {
+      "sha256": "e82aa1fd214560047aa9d4bcbd617c191c386f23eae885e00d206c4b0f55c723",
+      "file_count": 1
+    },
+    "source": {
+      "sha256": "4903d78db2141085c203b6210b560af976056621a7d531f6f8743fcfd98bc6ef",
+      "file_count": 696
+    },
+    "api_inventory": {
+      "sha256": "8bc8a228fd6d475360f97a81eddb406c2580c3eb5406d640bc0169b69958de87",
+      "file_count": 1
+    },
+    "fixtures": {
+      "sha256": "7333103f8588b0b620660d12cd7f51e643ea9a47b1b62d60ee94a08e70cb019a",
+      "file_count": 2
+    },
+    "engine": {
+      "sha256": "2c20721b0350b243155edab18ffe16149572cffd89a785eab7f1b471bae46a09",
+      "file_count": 35
+    },
+    "interpreter": {
+      "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+      "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+      "environment_sha256": ""
+    },
+    "canonical_requested_targets": {
+      "protocol_version": 1,
+      "targets_sha256": "bee941a020e80bd83cbba31d3e96090ea10a22f25c70e09b02751850027063ee",
+      "targets_count": 217
+    }
+  }
+}

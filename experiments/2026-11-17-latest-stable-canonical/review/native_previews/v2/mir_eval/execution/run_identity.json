@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "experiment_fingerprint": "bca8fb0260c168575321a11bceb579020f0054eba408ac39c3350e670f9fd897",
+  "fingerprint_components": {
+    "schema": 4,
+    "prompt_contract": {
+      "templates": {
+        "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+      },
+      "profile_sha256": "4360078492c0f41b9ba0eedd8384cb316bce3c0c3c990282181b81143396c442"
+    },
+    "transport_contract": {
+      "temperature": 0.0,
+      "google_request_timeout_s": 300.0,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630.0,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "project": "mir_eval",
+    "language": "Python",
+    "doc_source": "original",
+    "doc_scope": "relevant",
+    "max_fix_rounds": 2,
+    "manifest_sha256": "198741589ecd00bd697277c81c8553a34cf55c21d03867fd3be7ba94227e2ac6",
+    "document_sha256": "c18ca1d3c941b3c16e12d04ed7703e248943a2dad12a9052c23bb612375373f5",
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite"
+    },
+    "class_context": false,
+    "owner_overrides": {},
+    "timeout_s": 300,
+    "execute_config": {
+      "execution_context": "A runnable headless Python harness is already in scope. Write statements only for the marked function body. Reuse the small arrays, labels, and repository fixture paths already defined; import the target from its public mir_eval module, call it, validate a deterministic property with assert, and print a compact witness. Do not download or play audio.",
+      "region": [
+        "# TODO API_TEST_START",
+        "# TODO API_TEST_END"
+      ],
+      "strip_snippet_imports": false,
+      "output_tail_chars": 2000,
+      "success_marker": "__DONE__",
+      "error_marker": "__RUN_ERR__",
+      "work_dir": "execution",
+      "timeout_seconds": 300,
+      "max_fix_rounds": 2,
+      "auto_report": false,
+      "test_filename": "api_test.py",
+      "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"{test_file}\"",
+      "exec_hints": "mir_eval functions generally accept NumPy event times, intervals, labels, frequencies, or source matrices. Keep plotting headless. For I/O functions use only the configured files under source/tests/data. Avoid deprecated aliases when the documented public function is available.",
+      "scaffold": "inputs/api_test_scaffold.py",
+      "local_uris": false,
+      "output_dir": "execution/output",
+      "preamble": "times = np.array([0.0, 0.5, 1.0, 1.5, 2.0])  # type: numpy.ndarray event/frame times\nref_events = np.array([0.0, 0.5, 1.0, 1.5])  # type: numpy.ndarray reference events\nest_events = np.array([0.02, 0.48, 1.03, 1.52])  # type: numpy.ndarray estimated events\nref_intervals = np.array([[0.0, 0.5], [0.5, 1.0], [1.0, 1.5], [1.5, 2.0]])  # type: numpy.ndarray reference intervals\nest_intervals = np.array([[0.0, 0.48], [0.48, 1.02], [1.02, 1.48], [1.48, 2.0]])  # type: numpy.ndarray estimated intervals\nref_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] reference labels\nest_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] estimated labels\nref_freqs = np.array([440.0, 440.0, 0.0, 523.25, 523.25])  # type: numpy.ndarray reference frequencies\nest_freqs = np.array([442.0, 438.0, 0.0, 525.0, 520.0])  # type: numpy.ndarray estimated frequencies\nref_sources = np.vstack([np.sin(2*np.pi*3*times), np.cos(2*np.pi*2*times)])  # type: numpy.ndarray reference sources\nest_sources = ref_sources + 0.001  # type: numpy.ndarray estimated sources\n",
+      "sample_data": {
+        "beat_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.txt",
+        "beat_estimate_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/est00.txt",
+        "chord_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/chord/ref00.lab",
+        "melody_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/melody/ref00.txt"
+      },
+      "require_correctness": true,
+      "stop_on_provider_error": true,
+      "build": ""
+    },
+    "scaffold": {
+      "sha256": "785329178f1742f96f9d1922dfc8e97403757c39b6736c434f1f5f2ef8fe8da7",
+      "file_count": 1
+    },
+    "source": {
+      "sha256": "332e10850183c8605d023025aded3b0452f9e85a1c0a74df767713f4acbaea75",
+      "file_count": 19
+    },
+    "api_inventory": {
+      "sha256": "80fbd65f9ad9b7113005414a1691a1520684d1b1f1b8e92292c7722e59f73c97",
+      "file_count": 1
+    },
+    "fixtures": {
+      "sha256": "bb3cf9e4ca8f442c9bd8f94a1b9e06859a3c92189e1a58a2d754b92f239431de",
+      "file_count": 4
+    },
+    "engine": {
+      "sha256": "2c20721b0350b243155edab18ffe16149572cffd89a785eab7f1b471bae46a09",
+      "file_count": 35
+    },
+    "interpreter": {
+      "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+      "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+      "environment_sha256": ""
+    },
+    "canonical_requested_targets": {
+      "protocol_version": 1,
+      "targets_sha256": "12e1807e1a8deef1f7ae05ec3948db7d024dffed301a0e91f49fa3dc3b10758a",
+      "targets_count": 125
+    }
+  }
+}
