@@ -1,0 +1,53 @@
+class MDAnalysis.core.topologyattrs.Bonds(values, types=None, guessed=False, order=None)[source]
+
+Bonds between two atoms
+
+Must be initialised by a list of zero based tuples. These indices refer to the atom indices. E.g., ` [(0, 1), (1, 2), (2, 3)]`
+
+Also adds the bonded_atoms, fragment and fragments attributes.
+
+ bonded_atoms()[source]
+
+An AtomGroup of all Atoms bonded to this Atom.
+
+ fragindex()[source]
+
+The index (ID) of the fragment this Atom is part of.
+
+Added in version 0.20.0.
+
+ fragindices()[source]
+
+The fragment indices of all Atoms in this AtomGroup.
+
+A numpy.ndarray with shape=(n_atoms,) and dtype=numpy.int64.
+
+Added in version 0.20.0.
+
+ fragment()[source]
+
+An AtomGroup representing the fragment this Atom is part of.
+
+A fragment is a group of atoms which are interconnected by Bonds, i.e., there exists a path along one or more Bonds between any pair of Atoms within a fragment. Thus, a fragment typically corresponds to a molecule.
+
+Added in version 0.9.0.
+
+ fragments()[source]
+
+Read-only tuple of fragments.
+
+Contains all fragments that any Atom in this AtomGroup is part of.
+
+A fragment is a group of atoms which are interconnected by Bonds, i.e., there exists a path along one or more Bonds between any pair of Atoms within a fragment. Thus, a fragment typically corresponds to a molecule.
+
+Note
+
+The contents of the fragments may extend beyond the contents of this AtomGroup.
+
+Added in version 0.9.0.
+
+ n_fragments()[source]
+
+The number of unique fragments the Atoms of this AtomGroup are part of.
+
+Added in version 0.20.0.

@@ -1,0 +1,1298 @@
+13.3.3. Topology attribute objects — MDAnalysis.core.topologyattrs
+
+Common TopologyAttr instances that are used by most topology parsers.
+
+TopologyAttrs are used to contain attributes such as atom names or resids. These are usually read by the TopologyParser.
+
+References
+
+ class MDAnalysis.core.topologyattrs.AltLocs(vals, guessed=False)[source]
+
+AltLocs for each atom
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.Angles(values, types=None, guessed=False, order=None)[source]
+
+Angles between three atoms
+
+Initialise with a list of 3 long tuples E.g., [(0, 1, 2), (1, 2, 3), (2, 3, 4)]
+
+These indices refer to the atom indices.
+
+ class MDAnalysis.core.topologyattrs.Aromaticities(values, guessed=False)[source]
+
+Aromaticity
+
+ dtype
+
+alias of bool
+
+ class MDAnalysis.core.topologyattrs.AtomAttr(values, guessed=False)[source]
+
+Base class for atom attributes.
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ get_segments(sg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ set_atoms(ag, values)[source]
+
+Set atom attributes for a given AtomGroup
+
+ set_residues(rg, values)[source]
+
+Set residue attributes for a given ResidueGroup
+
+ set_segments(sg, values)[source]
+
+Set segmentattributes for a given SegmentGroup
+
+ class MDAnalysis.core.topologyattrs.AtomStringAttr(vals, guessed=False)[source]
+
+ set_atoms(ag, values)[source]
+
+Set atom attributes for a given AtomGroup
+
+ class MDAnalysis.core.topologyattrs.Atomids(values, guessed=False)[source]
+
+ID for each atom.
+
+ dtype
+
+alias of int
+
+ class MDAnalysis.core.topologyattrs.Atomindices[source]
+
+Globally unique indices for each atom in the group.
+
+If the group is an AtomGroup, then this gives the index for each atom in the group. This is the unambiguous identifier for each atom in the topology, and it is not alterable.
+
+If the group is a ResidueGroup or SegmentGroup, then this gives the indices of each atom represented in the group in a 1-D array, in the order of the elements in that group.
+
+ dtype
+
+alias of int
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+Get segment attributes for a given SegmentGroup
+
+ set_atoms(ag, values)[source]
+
+Set atom attributes for a given AtomGroup
+
+ class MDAnalysis.core.topologyattrs.Atomnames(vals, guessed=False)[source]
+
+Name for each atom.
+
+ chi1_selection(n_name='N', ca_name='CA', cb_name='CB', cg_name='CG CG1 OG OG1 SG')[source]
+
+Select AtomGroup corresponding to the chi1 sidechain dihedral N-CA-CB-*G. The gamma atom is taken to be the heavy atom in the gamma position. If more than one heavy atom is present (e.g. CG1 and CG2), the one with the lower number is used (CG1).
+
+Warning
+
+This numbering of chi1 atoms here in following with the IUPAC 1970 rules. However, it should be noted that analyses which use dihedral angles may have different definitions. For example, the MDAnalysis.analysis.dihedrals.Janin class does not incorporate amino acids where the gamma atom is not carbon, into its chi1 selections.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+cb_name (str (optional)) – name for the beta-carbon atom
+
+cg_name (str (optional)) – name for the gamma-carbon atom
+
+Returns:
+
+4-atom selection in the correct order. If no CB and/or CG is found then this method returns None.
+
+Return type:
+
+AtomGroup
+
+Added in version 0.7.5.
+
+Changed in version 1.0.0: Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ chi1_selections(n_name='N', ca_name='CA', cb_name='CB', cg_name='CG CG1 OG OG1 SG')[source]
+
+Select list of AtomGroups corresponding to the chi1 sidechain dihedral N-CA-CB-CG.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+cb_name (str (optional)) – name for the beta-carbon atom
+
+cg_name (str (optional)) – name for the gamma-carbon atom
+
+Returns:
+
+List of AtomGroups – 4-atom selections in the correct order. If no CB and/or CG is found then the corresponding item in the list is None.
+
+.. versionadded:: 1.0.0
+
+ dtype
+
+alias of object
+
+ omega_selection(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select AtomGroup corresponding to the omega protein backbone dihedral CA-C-N’-CA’.
+
+omega describes the -C-N- peptide bond. Typically, it is trans (180 degrees) although cis-bonds (0 degrees) are also occasionally observed (especially near Proline).
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+AtomGroup – 4-atom selection in the correct order. If no C’ found in the previous residue (by resid) then this method returns None.
+
+.. versionchanged:: 1.0.0 – Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ omega_selections(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select list of AtomGroups corresponding to the omega protein backbone dihedral CA-C-N’-CA’.
+
+omega describes the -C-N- peptide bond. Typically, it is trans (180 degrees) although cis-bonds (0 degrees) are also occasionally observed (especially near Proline).
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+List of AtomGroups – 4-atom selections in the correct order. If no C’ found in the previous residue (by resid) then the corresponding item in the list is None.
+
+.. versionadded:: 1.0.0
+
+ phi_selection(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select AtomGroup corresponding to the phi protein backbone dihedral C’-N-CA-C.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+AtomGroup – 4-atom selection in the correct order. If no C’ found in the previous residue (by resid) then this method returns None.
+
+.. versionchanged:: 1.0.0 – Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ phi_selections(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select list of AtomGroups corresponding to the phi protein backbone dihedral C’-N-CA-C.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+list of AtomGroups – 4-atom selections in the correct order. If no C’ found in the previous residue (by resid) then corresponding item in the list is None.
+
+.. versionadded:: 1.0.0
+
+ psi_selection(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select AtomGroup corresponding to the psi protein backbone dihedral N-CA-C-N’.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+AtomGroup – 4-atom selection in the correct order. If no N’ found in the following residue (by resid) then this method returns None.
+
+.. versionchanged:: 1.0.0 – Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ psi_selections(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select list of AtomGroups corresponding to the psi protein backbone dihedral N-CA-C-N’.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+List of AtomGroups – 4-atom selections in the correct order. If no N’ found in the following residue (by resid) then the corresponding item in the list is None.
+
+.. versionadded:: 1.0.0
+
+ class MDAnalysis.core.topologyattrs.Atomtypes(vals, guessed=False)[source]
+
+Type for each atom
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.Bonds(values, types=None, guessed=False, order=None)[source]
+
+Bonds between two atoms
+
+Must be initialised by a list of zero based tuples. These indices refer to the atom indices. E.g., ` [(0, 1), (1, 2), (2, 3)]`
+
+Also adds the bonded_atoms, fragment and fragments attributes.
+
+ bonded_atoms()[source]
+
+An AtomGroup of all Atoms bonded to this Atom.
+
+ fragindex()[source]
+
+The index (ID) of the fragment this Atom is part of.
+
+Added in version 0.20.0.
+
+ fragindices()[source]
+
+The fragment indices of all Atoms in this AtomGroup.
+
+A numpy.ndarray with shape=(n_atoms,) and dtype=numpy.int64.
+
+Added in version 0.20.0.
+
+ fragment()[source]
+
+An AtomGroup representing the fragment this Atom is part of.
+
+A fragment is a group of atoms which are interconnected by Bonds, i.e., there exists a path along one or more Bonds between any pair of Atoms within a fragment. Thus, a fragment typically corresponds to a molecule.
+
+Added in version 0.9.0.
+
+ fragments()[source]
+
+Read-only tuple of fragments.
+
+Contains all fragments that any Atom in this AtomGroup is part of.
+
+A fragment is a group of atoms which are interconnected by Bonds, i.e., there exists a path along one or more Bonds between any pair of Atoms within a fragment. Thus, a fragment typically corresponds to a molecule.
+
+Note
+
+The contents of the fragments may extend beyond the contents of this AtomGroup.
+
+Added in version 0.9.0.
+
+ n_fragments()[source]
+
+The number of unique fragments the Atoms of this AtomGroup are part of.
+
+Added in version 0.20.0.
+
+ class MDAnalysis.core.topologyattrs.CMaps(values, types=None, guessed=False, order=None)[source]
+
+A connection between five atoms .. versionadded:: 1.0.0
+
+ class MDAnalysis.core.topologyattrs.ChainIDs(vals, guessed=False)[source]
+
+ChainID per atom
+
+Note
+
+This is an attribute of the Atom, not Residue or Segment
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.Charges(values, guessed=False)[source]
+
+ center_of_charge(wrap=False, unwrap=False, compound='group')[source]
+
+Center of (absolute) charge of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i \vert q_i \vert \boldsymbol r_i} {\sum_i \vert q_i \vert}\]
+
+where \(q_i\) is the charge and \(\boldsymbol r_i\) the position of atom \(i\) in the given MDAnalysis.core.groups.AtomGroup. Centers of charge per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the charges of a compound sum up to zero, the center of mass coordinates of that compound will be nan (not a number).
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', the center of mass of all atoms in the group will be returned as a single position vector. Otherwise, the centers of mass of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+center – Position vector(s) of the center(s) of charge of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d coordinate array of shape (n, 3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Note
+
+This method can only be accessed if the underlying topology has information about atomic charges.
+
+Added in version 2.2.0.
+
+ dipole_moment(**kwargs)[source]
+
+Dipole moment of the group or compounds in a group.
+
+ \[\mu = |\boldsymbol{\mu}| = \sqrt{ \sum_{i=1}^{D} \mu^2 }\]
+
+Where \(D\) is the number of dimensions, in this case 3.
+
+Computes the dipole moment of Atoms in the group. Dipole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is a net charge, the magnitude of the dipole moment is dependent on the center chosen. See dipole_vector().
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Dipole moment(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ dipole_vector(wrap=False, unwrap=False, compound='group', center='mass')[source]
+
+Dipole vector of the group.
+
+ \[\boldsymbol{\mu} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+Computes the dipole vector of Atoms in the group. Dipole vector per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that the magnitude of the dipole moment is independent of the center chosen unless the species has a net charge. In the case of a charged group the dipole moment can be later adjusted with:
+
+ \[\boldsymbol{\mu}_{COC} = \boldsymbol{\mu}_{COM} + q_{ag}\mathbf{r}_{COM} - q_{ag}\boldsymbol{r}_{COC}\]
+
+Where \(\mathbf{r}_{COM}\) is the center of mass and \(\mathbf{r}_{COC}\) is the center of charge.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Dipole vector(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ dtype
+
+alias of float
+
+ get_residues(rg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ get_segments(sg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ quadrupole_moment(**kwargs)[source]
+
+Quadrupole moment of the group according to [1].
+
+ \[Q = \sqrt{\frac{2}{3}{\hat{\mathsf{Q}}}:{\hat{\mathsf{Q}}}}\]
+
+where the quadrupole moment is calculated from the tensor double contraction of the traceless quadropole tensor \(\hat{\mathsf{Q}}\)
+
+Computes the quadrupole moment of Atoms in the group. Quadrupole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole moment is dependant on the center chosen and cannot be translated.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Quadrupole moment(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ quadrupole_tensor(wrap=False, unwrap=False, compound='group', center='mass')[source]
+
+Traceless quadrupole tensor of the group or compounds.
+
+This tensor is first computed as the outer product of vectors from a reference point to some atom, and multiplied by the atomic charge. The tensor of each atom is then summed to produce the quadrupole tensor of the group:
+
+ \[\mathsf{Q} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} ) \otimes ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+The traceless quadrupole tensor, \(\hat{\mathsf{Q}}\), is then taken from:
+
+ \[\hat{\mathsf{Q}} = \frac{3}{2} \mathsf{Q} - \frac{1}{2} tr(\mathsf{Q})\]
+
+Computes the quadrupole tensor of Atoms in the group. Tensor per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole tensor is dependent on the center (e.g., \(\mathbf{r}_{COM}\)) chosen and cannot be translated.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Quadrupole tensor(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single tensor of shape (3,3). Otherwise, the output will be a 1d array of shape (n,3,3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ total_charge(compound='group')[source]
+
+Total charge of (compounds of) the group.
+
+Computes the total charge of Atoms in the group. Total charges per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Parameters:
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'},) – optional If ‘group’, the total charge of all atoms in the group will be returned as a single value. Otherwise, the total charges per Segment, Residue, molecule, or fragment will be returned as a 1d array. Note that, in any case, only the charges of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+Total charge of (compounds of) the group. If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+float or numpy.ndarray
+
+Changed in version 0.20.0: Added compound parameter
+
+ class MDAnalysis.core.topologyattrs.Dihedrals(values, types=None, guessed=False, order=None)[source]
+
+A connection between four sequential atoms
+
+ class MDAnalysis.core.topologyattrs.Elements(vals, guessed=False)[source]
+
+Element for each atom
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.Epsilon14s(values, guessed=False)[source]
+
+The epsilon LJ parameter for 1-4 interactions
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.Epsilons(values, guessed=False)[source]
+
+The epsilon LJ parameter
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.FormalCharges(values, guessed=False)[source]
+
+Formal charge on each atom
+
+ dtype
+
+alias of int
+
+ class MDAnalysis.core.topologyattrs.GBScreens(values, guessed=False)[source]
+
+Generalized Born screening factor
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.ICodes(vals, guessed=False)[source]
+
+Insertion code for Atoms
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.Impropers(values, types=None, guessed=False, order=None)[source]
+
+An imaginary dihedral between four atoms
+
+ class MDAnalysis.core.topologyattrs.Masses(values, guessed=False)[source]
+
+ align_principal_axis(axis, vector)[source]
+
+Align principal axis with index axis with vector.
+
+Parameters:
+
+axis ({0, 1, 2}) – Index of the principal axis (0, 1, or 2), as produced by principal_axes().
+
+vector (array_like) – Vector to align principal axis with.
+
+Notes
+
+To align the long axis of a channel (the first principal axis, i.e. axis = 0) with the z-axis:
+
+u.atoms.align_principal_axis(0, [0,0,1])
+u.atoms.write("aligned.pdb")
+
+ asphericity(wrap=False, unwrap=False, compound='group')[source]
+
+Asphericity.
+
+See [Dima2004b] for background information.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – Which type of component to keep together during unwrapping.
+
+Added in version 0.7.7.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 0.20.0: Added unwrap and compound parameter
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Changed in version 2.5.0: Added calculation for any compound type
+
+ center_of_mass(wrap=False, unwrap=False, compound='group')[source]
+
+Center of mass of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i m_i \boldsymbol r_i}{\sum m_i}\]
+
+where \(m_i\) is the mass and \(\boldsymbol r_i\) the position of atom \(i\) in the given MDAnalysis.core.groups.AtomGroup. Centers of mass per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the masses of a compound sum up to zero, the center of mass coordinates of that compound will be nan (not a number).
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'},) – optional If 'group', the center of mass of all atoms in the group will be returned as a single position vector. Otherwise, the centers of mass of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+center – Position vector(s) of the center(s) of mass of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d coordinate array of shape (n, 3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Note
+
+This method can only be accessed if the underlying topology has information about atomic masses.
+
+Changed in version 0.8: Added pbc parameter
+
+Changed in version 0.19.0: Added compound parameter
+
+Changed in version 0.20.0: Added 'molecules' and 'fragments' compounds; added unwrap parameter
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ dtype
+
+alias of float64
+
+ get_residues(rg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ get_segments(sg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ gyration_moments(wrap=False, unwrap=False, compound='group')[source]
+
+Moments of the gyration tensor.
+
+The moments are defined as the eigenvalues of the gyration tensor.
+
+ \[\mathsf{T} = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{r}_\mathrm{i} - \mathbf{r}_\mathrm{COM})(\mathbf{r}_\mathrm{i} - \mathbf{r}_\mathrm{COM})\]
+
+Where \(\mathbf{r}_\mathrm{COM}\) is the center of mass.
+
+See [Dima2004a] for background information.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – Which type of component to keep together during unwrapping.
+
+Returns:
+
+principle_moments_of_gyration – Gyration vector(s) of (compounds of) the group in \(Å^2\). If compound was set to 'group', the output will be a single vector of length 3. Otherwise, the output will be a 2D array of shape (n,3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.5.0.
+
+ moment_of_inertia(wrap=False, unwrap=False, compound='group')[source]
+
+Moment of inertia tensor relative to center of mass.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers and tensor of inertia.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'},) – optional compound determines the behavior of wrap. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+moment_of_inertia – Moment of inertia tensor as a 3 x 3 numpy array.
+
+Return type:
+
+numpy.ndarray
+
+Notes
+
+The moment of inertia tensor \(\mathsf{I}\) is calculated for a group of \(N\) atoms with coordinates \(\mathbf{r}_i,\ 1 \le i \le N\) relative to its center of mass from the relative coordinates
+
+ \[\mathbf{r}'_i = \mathbf{r}_i - \frac{1}{\sum_{i=1}^{N} m_i} \sum_{i=1}^{N} m_i \mathbf{r}_i\]
+
+as
+
+ \[\mathsf{I} = \sum_{i=1}^{N} m_i \Big[(\mathbf{r}'_i\cdot\mathbf{r}'_i) \sum_{\alpha=1}^{3} \hat{\mathbf{e}}_\alpha \otimes \hat{\mathbf{e}}_\alpha - \mathbf{r}'_i \otimes \mathbf{r}'_i\Big]\]
+
+where \(\hat{\mathbf{e}}_\alpha\) are Cartesian unit vectors, or in Cartesian coordinates
+
+ \[I_{\alpha,\beta} = \sum_{k=1}^{N} m_k \Big(\big(\sum_{\gamma=1}^3 (x'^{(k)}_{\gamma})^2 \big)\delta_{\alpha,\beta} - x'^{(k)}_{\alpha} x'^{(k)}_{\beta} \Big).\]
+
+where \(x'^{(k)}_{\alpha}\) are the Cartesian coordinates of the relative coordinates \(\mathbf{r}'_k\).
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 0.20.0: Added unwrap parameter
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ principal_axes(wrap=False)[source]
+
+Calculate the principal axes from the moment of inertia.
+
+e1,e2,e3 = AtomGroup.principal_axes()
+
+The eigenvectors are sorted by eigenvalue, i.e. the first one corresponds to the highest eigenvalue and is thus the first principal axes.
+
+The eigenvectors form a right-handed coordinate system.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+Returns:
+
+axis_vectors – 3 x 3 array with v[0] as first, v[1] as second, and v[2] as third eigenvector.
+
+Return type:
+
+array
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 1.0.0: Always return principal axes in right-hand convention.
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ radius_of_gyration(wrap=False, **kwargs)[source]
+
+Radius of gyration.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ shape_parameter(wrap=False, unwrap=False, compound='group')[source]
+
+Shape parameter.
+
+See [Dima2004a] for background information.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – Which type of component to keep together during unwrapping.
+
+Added in version 0.7.7.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0. Superfluous kwargs were removed.
+
+Changed in version 2.5.0: Added calculation for any compound type
+
+ total_mass(compound='group')[source]
+
+Total mass of (compounds of) the group.
+
+Computes the total mass of Atoms in the group. Total masses per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Parameters:
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'},) – optional If 'group', the total mass of all atoms in the group will be returned as a single value. Otherwise, the total masses per Segment, Residue, molecule, or fragment will be returned as a 1d array. Note that, in any case, only the masses of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+Total mass of (compounds of) the group. If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+float or numpy.ndarray
+
+Changed in version 0.20.0: Added compound parameter
+
+ class MDAnalysis.core.topologyattrs.Molnums(values, guessed=False)[source]
+
+Index of molecule from 0
+
+ dtype
+
+alias of int64
+
+ class MDAnalysis.core.topologyattrs.Moltypes(vals, guessed=False)[source]
+
+Name of the molecule type
+
+Two molecules that share a molecule type share a common template topology.
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.NonbondedIndices(values, guessed=False)[source]
+
+Nonbonded index (AMBER)
+
+ dtype
+
+alias of int
+
+ class MDAnalysis.core.topologyattrs.Occupancies(values, guessed=False)[source]
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.RMin14s(values, guessed=False)[source]
+
+The Rmin/2 LJ parameter for 1-4 interactions
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.RMins(values, guessed=False)[source]
+
+The Rmin/2 LJ parameter
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.RSChirality(values, guessed=False)[source]
+
+R/S chirality
+
+ class MDAnalysis.core.topologyattrs.Radii(values, guessed=False)[source]
+
+Radii for each atom
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.RecordTypes(vals, guessed=False)[source]
+
+For PDB-like formats, indicates if ATOM or HETATM
+
+Defaults to ‘ATOM’
+
+Changed in version 0.20.0: Now stores array of dtype object rather than boolean mapping
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.Resids(values, guessed=False)[source]
+
+Residue ID
+
+ dtype
+
+alias of int
+
+ class MDAnalysis.core.topologyattrs.ResidueAttr(values, guessed=False)[source]
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+By default, the values for each residue present in the set of segments are returned in a single array. This behavior can be overriden in child attributes.
+
+ set_atoms(ag, values)[source]
+
+Set atom attributes for a given AtomGroup
+
+ set_residues(rg, values)[source]
+
+Set residue attributes for a given ResidueGroup
+
+ set_segments(sg, values)[source]
+
+Set segmentattributes for a given SegmentGroup
+
+ class MDAnalysis.core.topologyattrs.ResidueStringAttr(vals, guessed=False)[source]
+
+ set_residues(ag, values)[source]
+
+Set residue attributes for a given ResidueGroup
+
+ class MDAnalysis.core.topologyattrs.Resindices[source]
+
+Globally unique resindices for each residue in the group.
+
+If the group is an AtomGroup, then this gives the resindex for each atom in the group. This unambiguously determines each atom’s residue membership. Resetting these values changes the residue membership of the atoms.
+
+If the group is a ResidueGroup or SegmentGroup, then this gives the resindices of each residue represented in the group in a 1-D array, in the order of the elements in that group.
+
+ dtype
+
+alias of int
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+Get segment attributes for a given SegmentGroup
+
+ set_residues(rg, values)[source]
+
+Set residue attributes for a given ResidueGroup
+
+ class MDAnalysis.core.topologyattrs.Resnames(vals, guessed=False)[source]
+
+ dtype
+
+alias of object
+
+ sequence(**kwargs)[source]
+
+Returns the amino acid sequence.
+
+The format of the sequence is selected with the keyword format:
+
+format
+ |
+description
+ |
+
+‘SeqRecord’
+ |
+Bio.SeqRecord.SeqRecord (default)
+ |
+
+‘Seq’
+ |
+Bio.Seq.Seq
+ |
+
+‘string’
+ |
+string
+ |
+
+The sequence is returned by default (keyword format = 'SeqRecord') as a Bio.SeqRecord.SeqRecord instance, which can then be further processed. In this case, all keyword arguments (such as the id string or the name or the description) are directly passed to Bio.SeqRecord.SeqRecord.
+
+If the keyword format is set to 'Seq', all kwargs are ignored and a Bio.Seq.Seq instance is returned. The difference to the record is that the record also contains metadata and can be directly used as an input for other functions in Bio.
+
+If the keyword format is set to 'string', all kwargs are ignored and a Python string is returned.
+
+Example: Write FASTA file
+
+Use Bio.SeqIO.write(), which takes sequence records:
+
+import Bio.SeqIO
+
+# get the sequence record of a protein component of a Universe
+protein = u.select_atoms("protein")
+record = protein.sequence(id="myseq1", name="myprotein")
+
+Bio.SeqIO.write(record, "single.fasta", "fasta")
+
+A FASTA file with multiple entries can be written with
+
+Bio.SeqIO.write([record1, record2, ...], "multi.fasta", "fasta")
+
+Parameters:
+
+format (string, optional) –
+
+"string": return sequence as a string of 1-letter codes
+
+"Seq": return a Bio.Seq.Seq instance
+
+"SeqRecord": return a Bio.SeqRecord.SeqRecord instance
+
+Default is "SeqRecord"
+
+id (optional) – Sequence ID for SeqRecord (should be different for different sequences)
+
+name (optional) – Name of the protein.
+
+description (optional) – Short description of the sequence.
+
+kwargs (optional) – Any other keyword arguments that are understood by class:Bio.SeqRecord.SeqRecord.
+
+Raises:
+
+ValueError –
+
+1-letter IUPAC protein amino acid code; make sure to only –
+
+select protein residues. –
+
+TypeError –
+
+ImportError –
+
+Added in version 0.9.0.
+
+Changed in version 2.7.0: Biopython is now an optional dependency
+
+ class MDAnalysis.core.topologyattrs.Resnums(values, guessed=False)[source]
+
+ dtype
+
+alias of int
+
+ class MDAnalysis.core.topologyattrs.Segids(vals, guessed=False)[source]
+
+ dtype
+
+alias of object
+
+ class MDAnalysis.core.topologyattrs.Segindices[source]
+
+Globally unique segindices for each segment in the group.
+
+If the group is an AtomGroup, then this gives the segindex for each atom in the group. This unambiguously determines each atom’s segment membership. It is not possible to set these, since membership in a segment is an attribute of each atom’s residue.
+
+If the group is a ResidueGroup or SegmentGroup, then this gives the segindices of each segment represented in the group in a 1-D array, in the order of the elements in that group.
+
+ dtype
+
+alias of int
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+Get segment attributes for a given SegmentGroup
+
+ set_segments(sg, values)[source]
+
+Set segmentattributes for a given SegmentGroup
+
+ class MDAnalysis.core.topologyattrs.SegmentAttr(values, guessed=False)[source]
+
+Base class for segment attributes.
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+Get segment attributes for a given SegmentGroup
+
+ set_atoms(ag, values)[source]
+
+Set atom attributes for a given AtomGroup
+
+ set_residues(rg, values)[source]
+
+Set residue attributes for a given ResidueGroup
+
+ set_segments(sg, values)[source]
+
+Set segmentattributes for a given SegmentGroup
+
+ class MDAnalysis.core.topologyattrs.SegmentStringAttr(vals, guessed=False)[source]
+
+ set_segments(ag, values)[source]
+
+Set segmentattributes for a given SegmentGroup
+
+ class MDAnalysis.core.topologyattrs.SolventRadii(values, guessed=False)[source]
+
+Intrinsic solvation radius
+
+ dtype
+
+alias of float
+
+ class MDAnalysis.core.topologyattrs.Tempfactors(values, guessed=False)[source]
+
+Tempfactor for atoms
+
+ bfactor(**kwargs)[source]
+
+Bfactor alias with warning
+
+ bfactor_setter(**kwargs)[source]
+
+Bfactor alias with warning
+
+ bfactors(**kwargs)[source]
+
+Bfactor alias with warning
+
+ bfactors_setter(**kwargs)[source]
+
+Bfactor alias with warning
+
+ dtype
+
+alias of float
+
+ group
+
+alias of SegmentGroup
+
+ class MDAnalysis.core.topologyattrs.TopologyAttr(values, guessed=False)[source]
+
+Base class for Topology attributes.
+
+Note
+
+This class is intended to be subclassed, and mostly amounts to a skeleton. The methods here should be present in all TopologyAttr child classes, but by default they raise appropriate exceptions.
+
+ attrname
+
+the name used for the attribute when attached to a Topology object
+
+Type:
+
+str
+
+ singular
+
+name for the attribute on a singular object (Atom/Residue/Segment)
+
+Type:
+
+str
+
+ per_object
+
+If there is a strict mapping between Component and Attribute
+
+Type:
+
+str
+
+ dtype
+
+Type to coerce this attribute to be. For string use ‘object’
+
+Type:
+
+int/float/object
+
+ top
+
+handle for the Topology object TopologyAttr is associated with
+
+Type:
+
+Topology
+
+ classmethod are_values_missing(values)[source]
+
+check if an attribute has a missing value
+
+Added in version 2.8.0.
+
+ copy()[source]
+
+Return a deepcopy of this attribute
+
+ classmethod from_blank(n_atoms=None, n_residues=None, n_segments=None, values=None)[source]
+
+Create a blank version of this TopologyAttribute
+
+Parameters:
+
+n_atoms (int, optional) – Size of the TopologyAttribute atoms
+
+n_residues (int, optional) – Size of the TopologyAttribute residues
+
+n_segments (int, optional) – Size of the TopologyAttribute segments
+
+values (optional) – Initial values for the TopologyAttribute
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+Get segment attributes for a given SegmentGroup
+
+ property is_guessed
+
+Bool of if the source of this information is a guess
+
+ set_atoms(ag, values)[source]
+
+Set atom attributes for a given AtomGroup
+
+ set_residues(rg, values)[source]
+
+Set residue attributes for a given ResidueGroup
+
+ set_segments(sg, values)[source]
+
+Set segmentattributes for a given SegmentGroup
+
+ class MDAnalysis.core.topologyattrs.UreyBradleys(values, types=None, guessed=False, order=None)[source]
+
+Angles between two atoms
+
+Initialise with a list of 2 long tuples
+
+These indices refer to the atom indices.
+
+Added in version 1.0.0.

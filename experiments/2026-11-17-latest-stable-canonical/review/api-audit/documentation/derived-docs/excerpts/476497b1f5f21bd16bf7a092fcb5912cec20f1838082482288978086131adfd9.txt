@@ -1,0 +1,35 @@
+mir_eval.util.adjust_events(events, labels=None, t_min=0.0, t_max=None, label_prefix='__')
+
+Adjust the given list of event times to span the range [t_min, t_max].
+
+Any event times outside of the specified range will be removed.
+
+If the times do not span [t_min, t_max], additional events will be added with the prefix label_prefix.
+
+Parameters:
+
+eventsnp.ndarray
+
+Array of event times (seconds)
+
+labelslist or None
+
+List of labels (Default value = None)
+
+t_minfloat or None
+
+Minimum valid event time. (Default value = 0.0)
+
+t_maxfloat or None
+
+Maximum valid event time. (Default value = None)
+
+label_prefixstr
+
+Prefix string to use for synthetic labels (Default value = ‘__’)
+
+Returns:
+
+new_timesnp.ndarray
+
+Event times corrected to the given range.

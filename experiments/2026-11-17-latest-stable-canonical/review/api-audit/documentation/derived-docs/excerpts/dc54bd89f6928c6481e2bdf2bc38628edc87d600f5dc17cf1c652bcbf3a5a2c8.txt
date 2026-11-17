@@ -1,0 +1,23 @@
+MDAnalysis.lib.mdamath.sarrus_det(matrix: ndarray[tuple[Any, ...], dtype[_ScalarT]]) → float | ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Computes the determinant of a 3x3 matrix according to the rule of Sarrus.
+
+If an array of 3x3 matrices is supplied, determinants are computed per matrix and returned as an appropriately shaped numpy array.
+
+Parameters:
+
+matrix (numpy.ndarray) – An array of shape (..., 3, 3) with the 3x3 matrices residing in the last two dimensions.
+
+Returns:
+
+det – The determinant(s) of matrix. If matrix.shape == (3, 3), the determinant will be returned as a scalar. If matrix.shape == (..., 3, 3), the determinants will be returned as a numpy.ndarray of shape (...,) and dtype numpy.float64.
+
+Return type:
+
+float or numpy.ndarray
+
+Raises:
+
+ValueError: – If matrix has less than two dimensions or its last two dimensions are not of shape (3, 3).
+
+Added in version 0.20.0.

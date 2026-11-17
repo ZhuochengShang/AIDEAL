@@ -1,0 +1,65 @@
+class MDAnalysis.analysis.atomicdistances.AtomicDistances(ag1, ag2, pbc=True, **kwargs)[source]
+
+Class to calculate atomic distances between two AtomGroups over a trajectory.
+
+Parameters:
+
+ag1 (AtomGroup) – AtomGroup with the same number of atoms
+
+ag2 (AtomGroup) – AtomGroup with the same number of atoms
+
+pbc (bool, optional) – If True, calculates atomic distances with periodic boundary conditions (PBCs). Setting pbc to False, calculates atomic distances without considering PBCs. Defaults to True.
+
+ results.distances
+
+The distances \(|ag1[i] - ag2[i]|\) for all \(i\) from \(0\) to n_atoms \(- 1\) for each frame over the trajectory.
+
+Type:
+
+numpy.ndarray
+
+ n_frames
+
+Number of frames included in the analysis.
+
+Type:
+
+int
+
+ n_atoms
+
+Number of atoms in each atom group.
+
+Type:
+
+int
+
+Added in version 2.5.0.
+
+Changed in version 2.11.0:
+
+Distance data are now made available in results.distances instead of results and results is now a Results instance; this fixes an API issue (see Issue #4819) in a backwards-incompatible manner.
+
+Enabled parallel execution with the multiprocessing and dask backends; use the new method get_supported_backends() to see all supported backends.
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.

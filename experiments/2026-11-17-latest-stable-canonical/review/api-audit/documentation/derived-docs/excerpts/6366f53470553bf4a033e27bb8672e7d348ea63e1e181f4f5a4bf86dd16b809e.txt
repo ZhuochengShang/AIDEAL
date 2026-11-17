@@ -1,0 +1,49 @@
+early_classification_cost(X, y)[source]
+
+Compute early classification score.
+
+The score is computed as:
+
+ \[1 - acc + \alpha \frac{1}{n} \sum_i t_i\]
+
+where \(\alpha\) is the trade-off parameter (self.cost_time_parameter) and \(t_i\) are prediction timestamps.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Vector to be scored, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+yarray-like, shape = (n_samples) or (n_samples, n_outputs)
+
+True labels for X.
+
+Returns:
+
+float
+
+Early classification cost (a positive number, the lower the better)
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [3, 2, 1, 1, 2, 3],
+...                                   [3, 2, 1, 1, 2, 3]])
+>>> y = [0, 0, 0, 1, 1, 1, 0, 0]
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=1000.,
+...                                  cost_time_parameter=.1,
+...                                  random_state=0)
+>>> model.fit(dataset, y)
+NonMyopicEarlyClassifier(...)
+>>> preds, pred_times = model.predict_class_and_earliness(dataset)
+>>> preds
+array([0, 0, 0, 1, 1, 1, 0, 0])
+>>> pred_times
+array([4, 4, 4, 4, 4, 4, 1, 1])
+>>> float(model.early_classification_cost(dataset, y))
+0.325

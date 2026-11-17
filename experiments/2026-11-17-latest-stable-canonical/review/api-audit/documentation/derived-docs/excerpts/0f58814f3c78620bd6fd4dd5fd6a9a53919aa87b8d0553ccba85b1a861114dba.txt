@@ -1,0 +1,36 @@
+mir_eval.beat.cemgil(reference_beats, estimated_beats, cemgil_sigma=0.04)
+
+Cemgil’s score, computes a gaussian error of each estimated beat. Compares against the original beat times and all metrical variations.
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+cemgil_sigmafloat
+
+Sigma parameter of gaussian error windows (Default value = 0.04)
+
+Returns:
+
+cemgil_scorefloat
+
+Cemgil’s score for the original reference beats
+
+cemgil_maxfloat
+
+The best Cemgil score for all metrical variations
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> cemgil_score, cemgil_max = mir_eval.beat.cemgil(reference_beats,
+                                                    estimated_beats)

@@ -1,0 +1,29 @@
+_define_run_frames(trajectory, start=None, stop=None, step=None, frames=None) → slice | ndarray[source]
+
+Defines limits for the whole run, as passed by self.run() arguments
+
+Parameters:
+
+trajectory (mda.Reader) – a trajectory Reader
+
+start (int, optional) – start frame of analysis, by default None
+
+stop (int, optional) – stop frame of analysis, by default None
+
+step (int, optional) – number of frames to skip between each analysed frame, by default None
+
+frames (array_like, optional) – array of integers or booleans to slice trajectory; cannot be combined with start, stop, step; by default None
+
+Returns:
+
+Appropriate slicer for the trajectory that would give correct iteraction order via trajectory[slicer]
+
+Return type:
+
+Union[slice, np.ndarray]
+
+Raises:
+
+ValueError – if both frames and at least one of start, stop, or step is provided (i.e. set to not None value).
+
+Added in version 2.8.0.

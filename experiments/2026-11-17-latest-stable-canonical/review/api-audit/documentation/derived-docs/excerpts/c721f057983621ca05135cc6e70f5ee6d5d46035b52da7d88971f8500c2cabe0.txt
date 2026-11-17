@@ -1,0 +1,11 @@
+save(filename)
+
+Save a grid object to filename and add “.pickle” extension.
+
+Internally, this calls Grid.export(filename, format="python"). A grid can be regenerated from the saved data with
+
+g = Grid(filename="grid.pickle")
+
+Note
+
+The pickle format depends on the Python version and therefore it is not guaranteed that a grid saved with, say, Python 2.7 can also be read with Python 3.5. The OpenDX format is a better alternative for portability.

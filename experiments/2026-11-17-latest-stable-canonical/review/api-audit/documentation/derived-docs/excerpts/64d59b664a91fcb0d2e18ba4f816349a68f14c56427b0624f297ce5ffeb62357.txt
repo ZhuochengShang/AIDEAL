@@ -1,0 +1,45 @@
+tslearn.metrics.performance.mse(y_true, y_pred, ts_weights=None, timestamps_weights=None, multioutput='uniform_average')[source]
+
+Mean squared error (MSE)
+
+MSE is a measure of the prediction accuracy for forecasting and regression tasks that computes the average of the squared deviations between ground truth and predicted values.
+
+Parameters:
+
+y_true: array like, shape (n_ts, sz, d)
+
+Target dataset of ground_truth values
+
+y_pred: array like, shape (n_ts, sz, d)
+
+Estimated dataset of predicted values. Must have the same shape as y_true after conversion to a time series dataset.
+
+ts_weights: array like, shape (n_ts,) or None (default: None)
+
+Weights to apply to the time-series in the datasets if non-uniform. Use none for uniform weights.
+
+timestamps_weights: array like, shape (sz,) or None (default: None)
+
+Weights to apply to the timestamps of each-time series if non-uniform. Use none for uniform weights.
+
+multioutput: {‘uniform_average’, ‘raw_values’} or array-like, shape (d,) (default: ‘uniform_average’)
+
+for multivariate timeseries, defines the aggregation of per feature results, if any.
+
+‘raw_values’:
+
+no aggregation, result is per feature
+
+‘uniform_average’:
+
+errors of all features are averaged with uniform weights
+
+array-like:
+
+errors of all features are averaged using the given weights
+
+Returns:
+
+float or array-like, shape (d,)
+
+If multioutput is ‘raw_values’, then mean squared error is returned for each feature. Otherwise, the average of each feature is returned.

@@ -1,3 +1,9 @@
+# Current hold — do not launch the prior plan
+
+API and documentation correction is required. The old 1,695-target bank and costs are superseded preparation evidence. No new runs have started; the approved replacement count is pending. The cluster PRELAUNCH_CHECKS status is `requires_api_surface_revision`. The commands below are preserved preparation history and are not authorized replacement launch commands. See [the current guide](EXPERIMENT_GUIDE.md).
+
+---
+
 # Review and run commands
 
 **Current state: held for your review.** The commands in sections 1–3 only inspect or prepare previews. Sections 4–6 are instructions for a later explicitly approved run; they have not been executed.

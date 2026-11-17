@@ -1,0 +1,29 @@
+MDAnalysis.lib.distances.undo_augment(results, translation, nreal)
+
+Translate augmented indices back to original indices.
+
+Parameters:
+
+results (numpy.ndarray) – Array of dtype numpy.int64 containing coordinate indices, including “augmented” indices.
+
+translation (numpy.ndarray) – Index map of dtype numpy.int64 linking the augmented indices to the original particle indices such that translation[augmented_index] = original_index.
+
+nreal (int) – Number of real coordinates, i.e., indices in results equal or larger than this need to be mapped to their real counterpart.
+
+Returns:
+
+results – Modified input results with all the augmented indices translated to their corresponding initial original indices.
+
+Return type:
+
+numpy.ndarray
+
+Note
+
+Modifies the results array in place.
+
+See also
+
+augment_coordinates()
+
+Added in version 0.19.0.

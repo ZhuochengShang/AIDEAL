@@ -1,0 +1,19 @@
+class MDAnalysis.topology.tpr.utils.TPXUnpacker(data)[source]
+
+Extend the standard XDR unpacker for the specificity of TPX files.
+
+ do_string()[source]
+
+Emulate gmx_fio_do_string
+
+gmx_fio_do_string reads a string from a XDR file. On the contrary to the python unpack_string, gmx_fio_do_string reads the size as an unsigned integer before reading the actual string.
+
+See <gromacs-2016-src>/src/gromacs/fileio/gmx_system_xdr.c:454
+
+ unpack_int64()[source]
+
+ unpack_uchar()[source]
+
+ unpack_uint64()[source]
+
+ unpack_ushort()[source]

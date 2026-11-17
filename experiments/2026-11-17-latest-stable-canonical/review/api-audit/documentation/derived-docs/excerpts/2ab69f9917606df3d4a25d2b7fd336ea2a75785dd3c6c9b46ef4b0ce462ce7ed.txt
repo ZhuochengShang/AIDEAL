@@ -1,0 +1,7 @@
+close()[source]
+
+Close trajectory; any further access will raise an IOError.
+
+Note
+
+The underlying scipy.io.netcdf module may open netcdf files with mmap if mmap=True was set. Hence any reference to an array must be removed before the file can be closed.

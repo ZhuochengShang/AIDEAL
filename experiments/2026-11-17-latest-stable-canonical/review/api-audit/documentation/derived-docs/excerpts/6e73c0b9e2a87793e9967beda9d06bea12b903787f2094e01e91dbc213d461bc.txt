@@ -1,0 +1,18 @@
+MDAnalysis.lib.mdamath.dihedral(ab: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], bc: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], cd: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Returns the dihedral angle in radians between vectors connecting A,B,C,D.
+
+The dihedral measures the rotation around bc:
+
+  ab
+A---->B
+       \ bc
+       _\'
+         C---->D
+           cd
+
+The dihedral angle is restricted to the range -π <= x <= π.
+
+Added in version 0.8.
+
+Changed in version 0.11.0: Moved into lib.mdamath

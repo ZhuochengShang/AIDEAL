@@ -1,0 +1,43 @@
+MDAnalysis.analysis.encore.similarity.ces_convergence(original_ensemble, window_size, select='name CA', clustering_method=None, ncores=1)[source]
+
+Use the CES to evaluate the convergence of the ensemble/trajectory. CES will be calculated between the whole trajectory contained in an ensemble and windows of such trajectory of increasing sizes, so that the similarity values should gradually drop to zero. The rate at which the value reach zero will be indicative of how much the trajectory keeps on resampling the same regions of the conformational space, and therefore of convergence.
+
+Parameters:
+
+original_ensemble (Universe object) – ensemble containing the trajectory whose convergence has to estimated
+
+window_size (int) – Size of window to be used, in number of frames
+
+select (str, optional) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+clustering_method (MDAnalysis.analysis.encore.clustering.ClusteringMethod) – A single or a list of instances of the ClusteringMethod classes from the clustering module. Different parameters for the same clustering method can be explored by adding different instances of the same clustering class.
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1).
+
+Returns:
+
+out – array of shape (number_of_frames / window_size, preference_values).
+
+Return type:
+
+np.array
+
+Example
+
+To calculate the convergence of a trajectory using the clustering ensemble similarity method a Universe object is created from a topology file and the trajectory. The topology- and trajectory files used are obtained from the MDAnalysis test suite for two different simulations of the protein AdK. Here the simplest case of evaluating the convergence is illustrated by splitting the trajectory into a window_size of 10 frames:
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> ens1 = Universe(PSF,DCD)
+>>> ces_conv = encore.ces_convergence(ens1, 10)
+>>> print(ces_conv)
+[[0.48194205]
+ [0.40284672]
+ [0.31699026]
+ [0.25220447]
+ [0.19829817]
+ [0.14642725]
+ [0.09911411]
+ [0.05667391]
+ [0.        ]]

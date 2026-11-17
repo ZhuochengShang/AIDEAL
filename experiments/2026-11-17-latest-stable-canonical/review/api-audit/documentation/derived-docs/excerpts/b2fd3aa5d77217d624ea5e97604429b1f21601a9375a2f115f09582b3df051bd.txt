@@ -1,0 +1,24 @@
+tslearn.utils.check_equal_size(dataset, be=None)[source]
+
+Check if all time series in the dataset have the same size.
+
+Parameters:
+
+dataset: array-like
+
+The dataset to check.
+
+Returns:
+
+bool
+
+Whether all time series in the dataset have the same size.
+
+Examples
+
+>>> check_equal_size([[1, 2, 3], [4, 5, 6], [5, 3, 2]])
+True
+>>> check_equal_size([[1, 2, 3, 4], [4, 5, 6], [5, 3, 2]])
+False
+>>> check_equal_size([])
+True

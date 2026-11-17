@@ -1,0 +1,191 @@
+class MDAnalysis.converters.RDKitInferring.MDAnalysisInferrer(max_iter: int = 200, sanitize: bool = True)[source]
+
+Bond order and formal charge inferring as originally implemented for the RDKit converter. This algorithm only relies on the topology with explicit hydrogens to assign bond orders and formal charges.
+
+ max_iter
+
+Maximum number of iterations to standardize conjugated systems. See _rebuild_conjugated_bonds()
+
+Type:
+
+int
+
+ sanitize
+
+Whether to sanitize the molecule or not.
+
+Type:
+
+bool
+
+ MONATOMIC_CATION_CHARGES
+
+Charges that should be assigned to monatomic cations. Maps atomic number to their formal charge. Anion charges are directly handled by the code using the typical valence of the atom.
+
+Type:
+
+ClassVar[Dict[int, int]]
+
+ STANDARDIZATION_REACTIONS
+
+Reactions uses by _standardize_patterns() to fix challenging cases must have single reactant and product, and cannot add any atom.
+
+Type:
+
+ClassVar[List[str]]
+
+Notes
+
+There are some molecules containing specific substructures that this inferrer cannot currently tackle correctly. See Issue #3339 for more info.
+
+Added in version 2.10.0.
+
+ static _apply_reactions(reactions: List[ChemicalReaction], reactant: Mol) → None[source]
+
+Applies a series of unimolecular reactions to a molecule. The reactions must not add any atom to the product. The molecule is modified inplace.
+
+Parameters:
+
+reactions (List[rdkit.Chem.rdChemReactions.ChemicalReaction]) – Reactions from SMARTS. Each reaction is applied until no more transformations can be made.
+
+reactant (rdkit.Chem.rdchem.Mol) – The molecule to transform inplace
+
+ classmethod _atom_sorter(atom: Atom) → Tuple[int, int][source]
+
+Sorts atoms in the molecule in a way that makes it easy for the bond order and charge infering code to get the correct state on the first try. Currently sorts by number of unpaired electrons, then by number of heavy atom neighbors (i.e. atoms at the edge first).
+
+ static _get_nb_unpaired_electrons(atom: Atom) → List[int][source]
+
+Calculate the number of unpaired electrons (NUE) of an atom
+
+Parameters:
+
+atom (rdkit.Chem.rdchem.Atom) – The atom for which the NUE will be computed
+
+Returns:
+
+nue – The NUE for each possible valence of the atom
+
+Return type:
+
+List[int]
+
+ classmethod _infer_bo_and_charges(mol: Mol) → None[source]
+
+Infer bond orders and formal charges from a molecule.
+
+Since most MD topology files don’t explicitly retain information on bond orders or charges, it has to be guessed from the topology. This is done by looping over each atom and comparing its expected valence to the current valence to get the Number of Unpaired Electrons (NUE). If an atom has a negative NUE, it needs a positive formal charge (-NUE). If two neighbouring atoms have UEs, the bond between them most likely has to be increased by the value of the smallest NUE. If after this process, an atom still has UEs, it needs a negative formal charge of -NUE.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule is modified inplace and must have all hydrogens added
+
+Notes
+
+This algorithm is order dependant. For example, for a carboxylate group R-C(-O)-O the first oxygen read will receive a double bond and the other one will be charged. It will also affect more complex conjugated systems.
+
+ _rebuild_conjugated_bonds(mol: Mol, max_iter: int | None = None) → None[source]
+
+Rebuild conjugated bonds without negatively charged atoms at the beginning and end of the conjugated system
+
+Depending on the order in which atoms are read during the conversion, the _infer_bo_and_charges() function might write conjugated systems with a double bond less and both edges of the system as anions instead of the usual alternating single and double bonds. This function corrects this behaviour by using an iterative procedure. The problematic molecules always follow the same pattern: anion[-*=*]n-anion instead of *=[*-*=]n*, where n is the number of successive single and double bonds. The goal of the iterative procedure is to make n as small as possible by consecutively transforming anion-*=* into *=*-anion until it reaches the smallest pattern with n=1. This last pattern is then transformed anion-*=*-anion to *=*-*=*. Since anion-*=* is the same as *=*-anion in terms of SMARTS, we can control that we don’t transform the same triplet of atoms back and forth by adding their indices to a list. This function also handles conjugated systems with triple bonds. The molecule needs to be kekulized first to also cover systems with aromatic rings.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule to transform, modified inplace
+
+max_iter (Optional[int]) –
+Maximum number of iterations to standardize conjugated systems.
+
+Deprecated since version 2.10.0: Will be removed in 3.0, use inferrer=MDAnalysisInferrer(max_iter=...) instead.
+
+Notes
+
+The molecule is modified inplace
+
+ _standardize_patterns(mol: Mol, max_iter: int | None = None) → Mol[source]
+
+Standardizes functional groups
+
+Uses _rebuild_conjugated_bonds() to standardize conjugated systems, and SMARTS reactions for other functional groups. Due to the way reactions work, we first have to split the molecule by fragments. Then, for each fragment, we apply the standardization reactions. Finally, the fragments are recombined.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule to standardize
+
+max_iter (Optional[int]) –
+Maximum number of iterations to standardize conjugated systems.
+
+Deprecated since version 2.10.0: Will be removed in 3.0, use inferrer=MDAnalysisInferrer(max_iter=...) instead.
+
+Returns:
+
+mol – The standardized molecule
+
+Return type:
+
+rdkit.Chem.rdchem.Mol
+
+Notes
+
+The following functional groups are transformed in this order:
+
+Name
+ |
+Reaction
+ |
+
+conjugated
+ |
+[*-:1]-[*:2]=[*:3]-[*-:4]>>[*+0:1]=[*:2]-[*:3]=[*+0:4]
+ |
+
+conjugated N+
+ |
+[N;X3;v3:1]-[*:2]=[*:3]-[*-:4]>>[N+:1]=[*:2]-[*:3]=[*+0:4]
+ |
+
+conjugated O-
+ |
+[O:1]=[#6+0,#7+:2]-[*:3]=[*:4]-[*-:5]>>[O-:1]-[*:2]=[*:3]-[*:4]=[*+0:5]
+ |
+
+conjug. S=O
+ |
+[O-:1]-[S;D4;v4:2]-[*:3]=[*:4]-[*-:5]>>[O+0:1]=[*:2]=[*:3]-[*:4]=[*+0:5]
+ |
+
+Cterm
+ |
+[C-;X2;H0:1]=[O:2]>>[C+0:1]=[O:2]
+ |
+
+Nterm
+ |
+[N-;X2;H1;$(N-[*^3]):1]>>[N+0:1]
+ |
+
+keto-enolate
+ |
+[#6-:1]-[#6:2]=[O:3]>>[#6+0:1]=[#6:2]-[O-:3]
+ |
+
+arginine
+ |
+[C-;v3:1]-[#7+0;v3;H2:2]>>[#6+0:1]=[#7+:2]
+ |
+
+histidine
+ |
+[#6+0;H0:1]=[#6+0:2]-[#7;X3:3]-[#6-;X3:4]>>[#6:1]=[#6:2]-[#7+:3]=[#6+0:4]
+ |
+
+sulfone
+ |
+[S;D4;!v6:1]-[*-:2]>>[S;v6:1]=[*+0:2]
+ |
+
+charged N
+ |
+[#7+0;X3:1]-[*-:2]>>[#7+:1]=[*+0:2]
+ |

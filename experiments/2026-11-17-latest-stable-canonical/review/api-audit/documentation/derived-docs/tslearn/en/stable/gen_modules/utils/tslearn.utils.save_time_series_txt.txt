@@ -1,0 +1,30 @@
+save_time_series_txt
+
+ tslearn.utils.save_time_series_txt(fname, dataset, fmt='%.18e')[source]
+
+Writes a time series dataset to disk.
+
+Parameters:
+
+fnamestring
+
+Path to the file in which time series should be written.
+
+datasetarray-like
+
+The dataset of time series to be saved.
+
+fmtstring (default: “%.18e”)
+
+Format to be used to write each value.
+
+See also
+
+load_time_series_txt
+
+Load time series from disk
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4], [1, 2, 3]])
+>>> save_time_series_txt("tmp-tslearn-test.txt", dataset)

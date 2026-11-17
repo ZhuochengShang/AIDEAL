@@ -1,6 +1,18 @@
 {
-  "status": "awaiting_user_review",
+  "status": "requires_api_surface_revision",
   "new_study_model_calls": 0,
   "launch_authorized": false,
-  "instruction": "User requires review before any new run; do not create approval file or start supervisor."
+  "instruction": "User requires review before any new run; do not create approval file or start supervisor.",
+  "inventory_review": {
+    "scope": "Entire Beast repository, reported by module; all six libraries",
+    "name_policy": "Keep distinct owners; largest-parameter overload only within the same API",
+    "issues": [
+      "Unresolved source classification was incorrectly treated as sufficient reason to remove APIs",
+      "Python extension/re-export/inherited surface is not complete",
+      "Source Sphinx stubs and tslearn dataset pollution understate or obscure original documentation",
+      "External dependency APIs require defining-source provenance filtering"
+    ],
+    "generation_allowed": false,
+    "evaluation_allowed": false
+  }
 }

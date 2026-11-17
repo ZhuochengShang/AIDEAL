@@ -1,0 +1,48 @@
+tslearn.shapelets.grabocka_params_to_shapelet_size_dict(n_ts, ts_sz, n_classes, l, r)[source]
+
+Compute number and length of shapelets.
+
+This function uses the heuristic from [1].
+
+Parameters:
+
+n_ts: int
+
+Number of time series in the dataset
+
+ts_sz: int
+
+Length of time series in the dataset
+
+n_classes: int
+
+Number of classes in the dataset
+
+l: float
+
+Fraction of the length of time series to be used for base shapelet length
+
+r: int
+
+Number of different shapelet lengths to use
+
+Returns:
+
+dict
+
+Dictionary giving, for each shapelet length, the number of such shapelets to be generated
+
+References
+
+ [1]
+J. Grabocka et al. Learning Time-Series Shapelets. SIGKDD 2014.
+
+Examples
+
+>>> d = grabocka_params_to_shapelet_size_dict(
+...         n_ts=100, ts_sz=100, n_classes=3, l=0.1, r=2)
+>>> keys = sorted(d.keys())
+>>> print(keys)
+[10, 20]
+>>> print([d[k] for k in keys])
+[4, 4]

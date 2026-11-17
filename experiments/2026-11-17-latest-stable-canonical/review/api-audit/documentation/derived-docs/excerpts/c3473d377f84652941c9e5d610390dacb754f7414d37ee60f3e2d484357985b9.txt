@@ -1,0 +1,19 @@
+MDAnalysis.analysis.base._filter_baseanalysis_kwargs(function, kwargs)[source]
+
+Create two dictionaries with kwargs separated for function and AnalysisBase
+
+Parameters:
+
+function (callable) – function to be called
+
+kwargs (dict) – keyword argument dictionary
+
+Returns:
+
+base_args (dict) – dictionary of AnalysisBase kwargs
+
+kwargs (dict) – kwargs without AnalysisBase kwargs
+
+Raises:
+
+ValueError – if function has the same kwargs as AnalysisBase

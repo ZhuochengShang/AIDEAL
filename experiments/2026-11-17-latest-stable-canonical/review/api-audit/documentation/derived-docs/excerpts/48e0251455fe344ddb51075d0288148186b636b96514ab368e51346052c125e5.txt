@@ -1,0 +1,15 @@
+class MDAnalysis.analysis.encore.clustering.ClusteringMethod.AffinityPropagationNative(damping=0.9, preference=-1.0, max_iter=500, convergence_iter=50, add_noise=True)[source]
+
+Interface to the natively implemented Affinity propagation procedure.
+
+Parameters:
+
+damping (float, optional) – Damping factor (default is 0.9). Parameter for the Affinity Propagation for clustering.
+
+preference (float, optional) – Preference parameter used in the Affinity Propagation algorithm for clustering (default -1.0). A high preference value results in many clusters, a low preference will result in fewer numbers of clusters.
+
+max_iter (int, optional) – Maximum number of iterations for affinity propagation (default is 500).
+
+convergence_iter (int, optional) – Minimum number of unchanging iterations to achieve convergence (default is 50). Parameter in the Affinity Propagation for clustering.
+
+add_noise (bool, optional) – Apply noise to similarity matrix before running clustering (default is True)

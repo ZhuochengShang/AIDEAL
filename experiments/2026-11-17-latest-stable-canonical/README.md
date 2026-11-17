@@ -1,14 +1,7 @@
-# AIDEAL latest-stable experiment review
+# Current study review
 
-**Held for your review. No Gemini runs have started in this study.**
+**Correction required; no new model runs.**
 
-- [Experiment guide](EXPERIMENT_GUIDE.md)
-- [Step-by-step local, cluster and debug commands](RUNBOOK.md)
-- [Interactive review home](review/REVIEW_HOME.html)
-- [All 1,695 prepared API tasks](review/CURRENT_BANK.html)
-- [Six proposed one-API pilots](review/PILOT_REVIEW.html)
-- [Current and historical progress](review/EXPERIMENT_TRACKER.html)
-- [Real compilation/execution evidence](review/READINESS.html)
-- [Versions and locations](STUDY_LOCK.json)
+Start with [EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) or its [HTML view](EXPERIMENT_GUIDE.html). Inspect the [source, documentation and reduction audit](review/api-audit/API_AUDIT.html), then the [progress tracker](review/EXPERIMENT_TRACKER.html). The earlier 1,695-target plan remains blocked.
 
-On GitHub, download/clone this branch to open the interactive HTML pages locally. GitHub displays their source rather than running them. The Markdown guide and evidence remain browsable online.
+[Exact version lock](STUDY_LOCK.json) · [Verify the package](verify_snapshot.py) · [Historical results](HISTORY.md).

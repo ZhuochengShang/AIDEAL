@@ -1,0 +1,46 @@
+MDAnalysis.lib.util.blocks_of(a, n, m)[source]
+
+Extract a view of (n, m) blocks along the diagonal of the array a.
+
+Parameters:
+
+a (numpy.ndarray) – Input array, must be C contiguous and at least 2D.
+
+n (int) – Size of block in first dimension.
+
+m (int) – Size of block in second dimension.
+
+Returns:
+
+view – A view of the original array with shape (nblocks, n, m), where nblocks is the number of times the miniblocks of shape (n, m) fit in the original.
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If the supplied n and m don’t divide a into an integer number of blocks or if a is not C contiguous.
+
+Examples
+
+>>> import numpy as np
+>>> from MDAnalysis.lib.util import blocks_of
+>>> arr = np.arange(16).reshape(4, 4)
+>>> view = blocks_of(arr, 2, 2)
+>>> view[:] = 100
+>>> arr
+array([[100, 100,   2,   3],
+       [100, 100,   6,   7],
+       [  8,   9, 100, 100],
+       [ 12,  13, 100, 100]])
+
+Notes
+
+n, m must divide a into an identical integer number of blocks. Please note that if the block size is larger than the input array, this number will be zero, resulting in an empty view!
+
+Uses strides and therefore requires that the array is C contiguous.
+
+Returns a view, so editing this modifies the original array.
+
+Added in version 0.12.0.

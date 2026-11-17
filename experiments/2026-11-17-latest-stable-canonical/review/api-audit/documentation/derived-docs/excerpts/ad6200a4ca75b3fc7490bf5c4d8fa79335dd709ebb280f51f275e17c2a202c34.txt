@@ -1,0 +1,39 @@
+mir_eval.util.intervals_to_samples(intervals, labels, offset=0, sample_size=0.1, fill_value=None)
+
+Convert an array of labeled time intervals to annotated samples.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, d)
+
+An array of time intervals, as returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals(). The i th interval spans time intervals[i, 0] to intervals[i, 1].
+
+labelslist, shape=(n,)
+
+The annotation for each interval
+
+offsetfloat > 0
+
+Phase offset of the sampled time grid (in seconds) (Default value = 0)
+
+sample_sizefloat > 0
+
+duration of each sample to be generated (in seconds) (Default value = 0.1)
+
+fill_valuetype(labels[0])
+
+Object to use for the label with out-of-range time points. (Default value = None)
+
+Returns:
+
+sample_timeslist
+
+list of sample times
+
+sample_labelslist
+
+array of labels for each generated sample
+
+Notes
+
+Intervals will be rounded down to the nearest multiple of sample_size.

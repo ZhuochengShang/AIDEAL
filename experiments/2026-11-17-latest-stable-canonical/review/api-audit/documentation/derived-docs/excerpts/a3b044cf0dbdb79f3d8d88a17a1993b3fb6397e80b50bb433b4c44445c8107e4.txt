@@ -1,0 +1,17 @@
+guess_dihedrals(angles=None)[source]
+
+Given a list of Angles, find all dihedrals that exist between atoms.
+
+Works by assuming that if (1,2,3) is an angle, and 3 & 4 are bonded, then (1,2,3,4) must be a dihedral.
+
+Parameters:
+
+angles (Angles) – from which dihedrals should be guessed
+
+Returns:
+
+List of tuples defining the dihedrals. Suitable for use in u._topology
+
+Return type:
+
+list of tuples

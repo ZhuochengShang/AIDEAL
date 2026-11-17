@@ -1,0 +1,201 @@
+class MDAnalysis.coordinates.LAMMPS.DATAWriter(filename, convert_units=True, **kwargs)[source]
+
+Write out the current time step as a LAMMPS DATA file.
+
+This writer supports the sections Atoms, Masses, Velocities, Bonds, Angles, Dihedrals, and Impropers. This writer will write the header and these sections (if applicable). Atoms section is written in the “full” sub-style if charges are available or “molecular” sub-style if they are not. Molecule id is set to 0 for all atoms.
+
+Note
+
+This writer assumes “conventional” or “real” LAMMPS units where length is measured in Angstroms and velocity is measured in Angstroms per femtosecond. To write in different units, specify lengthunit
+
+If atom types are not already positive integers, the user must set them to be positive integers, because the writer will not automatically assign new types.
+
+To preserve numerical atom types when writing a selection, the Masses section will have entries for each atom type up to the maximum atom type. If the universe does not contain atoms of some type in {1, … max(atom_types)}, then the mass for that type will be set to 1.
+
+In order to write bonds, each selected bond type must be explicitly set to an integer >= 1.
+
+Set up a DATAWriter
+
+Parameters:
+
+filename (str) – output filename
+
+convert_units (bool, optional) – units are converted to the MDAnalysis base format; [True]
+
+ close()
+
+Close the trajectory file.
+
+ convert_dimensions_to_unitcell(ts, inplace=True)
+
+Read dimensions from timestep ts and return appropriate unitcell.
+
+The default is to return [A,B,C,alpha,beta,gamma]; if this is not appropriate then this method has to be overriden.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ has_valid_coordinates(criteria, x)
+
+Returns True if all values are within limit values of their formats.
+
+Due to rounding, the test is asymmetric (and min is supposed to be negative):
+
+min < x <= max
+
+Parameters:
+
+criteria (dict) – dictionary containing the max and min values in native units
+
+x (numpy.ndarray) – (x, y, z) coordinates of atoms selected to be written out
+
+Return type:
+
+bool
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(selection, frame=None)[source]
+
+Write selection at current trajectory frame to file.
+
+The sections for Atoms, Masses, Velocities, Bonds, Angles, Dihedrals, and Impropers (if these are defined) are written. The Atoms section is written in the “full” sub-style if charges are available or “molecular” sub-style if they are not. Molecule id in atoms section is set to to 0.
+
+No other sections are written to the DATA file. As of this writing, other sections are not parsed into the topology by the DATAReader.
+
+Note
+
+If the selection includes a partial fragment, then only the bonds, angles, etc. whose atoms are contained within the selection will be included.
+
+Parameters:
+
+selection (AtomGroup or Universe) – MDAnalysis AtomGroup (selection or Universe.atoms) or also Universe
+
+frame (int (optional)) – optionally move to frame number frame

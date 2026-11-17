@@ -1,0 +1,47 @@
+class MDAnalysis.lib.picklable_file_io.GzipPicklable(name, mode='rb')[source]
+
+Gzip file object (read-only) that can be pickled.
+
+This class provides a file-like object (as returned by gzip.open(), namely gzip.GzipFile) that, unlike standard Python file objects, can be pickled. Only read mode is supported.
+
+When the file is pickled, filename and position of the open file handle in the file are saved. On unpickling, the file is opened by filename, and the file is seeked to the saved position. This means that for a successful unpickle, the original file still has to be accessible with its filename.
+
+Note
+
+This class only supports reading files in binary mode. If you need to open to open a compressed file in text mode, use the gzip_pickle_open().
+
+Parameters:
+
+name (str) – either a text or byte string giving the name (and the path if the file isn’t in the current working directory) of the file to be opened.
+
+mode (str) – can only be ‘r’, ‘rb’ to make pickle work.
+
+Example
+
+>>> import pickle
+>>> from MDAnalysis.tests.datafiles import MMTF_gz
+>>> file = GzipPicklable(MMTF_gz)
+>>> _ = file.readline()
+>>> file_pickled = pickle.loads(pickle.dumps(file))
+>>> print(file.tell(), file_pickled.tell())
+1218 1218
+
+See also
+
+FileIOPicklable, BufferIOPicklable, TextIOPicklable, BZ2Picklable
+
+Added in version 2.0.0.
+
+Constructor for the GzipFile class.
+
+At least one of fileobj and filename must be given a non-trivial value.
+
+The new class instance is based on fileobj, which can be a regular file, an io.BytesIO object, or any other object which simulates a file. It defaults to None, in which case filename is opened to provide a file object.
+
+When fileobj is not None, the filename argument is only used to be included in the gzip file header, which may include the original filename of the uncompressed file. It defaults to the filename of fileobj, if discernible; otherwise, it defaults to the empty string, and in this case the original filename is not included in the header.
+
+The mode argument can be any of ‘r’, ‘rb’, ‘a’, ‘ab’, ‘w’, ‘wb’, ‘x’, or ‘xb’ depending on whether the file will be read or written. The default is the mode of fileobj if discernible; otherwise, the default is ‘rb’. A mode of ‘r’ is equivalent to one of ‘rb’, and similarly for ‘w’ and ‘wb’, ‘a’ and ‘ab’, and ‘x’ and ‘xb’.
+
+The compresslevel argument is an integer from 0 to 9 controlling the level of compression; 1 is fastest and produces the least compression, and 9 is slowest and produces the most compression. 0 is no compression at all. The default is 9.
+
+The mtime argument is an optional numeric timestamp to be written to the last modification time field in the stream when compressing. If omitted or None, the current time is used.

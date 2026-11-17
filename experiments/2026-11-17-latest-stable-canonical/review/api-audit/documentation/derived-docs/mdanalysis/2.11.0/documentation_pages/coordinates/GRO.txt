@@ -1,0 +1,162 @@
+7.8. GRO file format — MDAnalysis.coordinates.GRO
+
+Classes to read and write Gromacs GRO coordinate files; see the notes on the GRO format which includes a conversion routine for the box.
+
+7.8.1. Writing GRO files
+
+By default any written GRO files will renumber the atom ids to move sequentially from 1. This can be disabled, and instead the original atom ids kept, by using the reindex=False keyword argument. This is useful when writing a subsection of a larger Universe while wanting to preserve the original identities of atoms.
+
+For example:
+
+>>> u = mda.Universe()`
+
+>>> u.atoms.write('out.gro', reindex=False)
+
+# OR
+>>> with mda.Writer('out.gro', reindex=False) as w:
+...     w.write(u.atoms)
+
+7.8.2. Classes
+
+ class MDAnalysis.coordinates.GRO.GROReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Reader for the Gromacs GRO structure format.
+
+Note
+
+This Reader will only read the first frame present in a file.
+
+Note
+
+GRO files with zeroed 3 entry unit cells (i.e. 0.0 0.0 0.0) are read as missing unit cell information. In these cases dimensions will be set to None.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 2.0.0: Reader now only parses boxes defined with 3 or 9 fields. Reader now reads a 3 entry zero unit cell (i.e. [0, 0, 0]) as a being without dimension information (i.e. will the timestep dimension to None).
+
+ Writer(filename, n_atoms=None, **kwargs)[source]
+
+Returns a CRDWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output GRO file
+
+Return type:
+
+GROWriter
+
+ units = {'length': 'nm', 'time': None, 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.GRO.GROWriter(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+GRO Writer that conforms to the Trajectory API.
+
+Will attempt to write the following information from the topology:
+
+atom name (defaults to ‘X’)
+
+resnames (defaults to ‘UNK’)
+
+resids (defaults to ‘1’)
+
+Note
+
+The precision is hard coded to three decimal places.
+
+Note
+
+When dimensions are missing (i.e. set to None), a zero width unit cell box will be written (i.e. [0.0, 0.0, 0.0]).
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 0.13.0: Now strictly writes positions with 3dp precision. and velocities with 4dp. Removed the convert_dimensions_to_unitcell method, use Timestep.triclinic_dimensions instead. Now now writes velocities where possible.
+
+Changed in version 0.18.0: Added reindex keyword argument to allow original atom ids to be kept.
+
+Changed in version 2.0.0: Raises a warning when writing timestep with missing dimension information (i.e. set to None).
+
+Set up a GROWriter with a precision of 3 decimal places.
+
+Parameters:
+
+filename (str) – output filename
+
+n_atoms (int (optional)) – number of atoms
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+reindex (bool (optional)) – By default, all the atoms were reindexed to have a atom id starting from 1. [True] However, this behaviour can be turned off by specifying reindex =False.
+
+Note
+
+To use the reindex keyword, user can follow the two examples given below.:
+
+u = mda.Universe()
+
+Usage 1:
+
+u.atoms.write('out.gro', reindex=False)
+
+Usage 2:
+
+with mda.Writer('out.gro', reindex=False) as w:
+    w.write(u.atoms)
+
+ fmt = {'box_orthorhombic': '{box[0]:10.5f} {box[1]:9.5f} {box[2]:9.5f}\n', 'box_triclinic': '{box[0]:10.5f} {box[4]:9.5f} {box[8]:9.5f} {box[1]:9.5f} {box[2]:9.5f} {box[3]:9.5f} {box[5]:9.5f} {box[6]:9.5f} {box[7]:9.5f}\n', 'n_atoms': '{0:5d}\n', 'xyz': '{resid:>5d}{resname:<5.5s}{name:>5.5s}{index:>5d}{pos[0]:8.3f}{pos[1]:8.3f}{pos[2]:8.3f}\n', 'xyz_v': '{resid:>5d}{resname:<5.5s}{name:>5.5s}{index:>5d}{pos[0]:8.3f}{pos[1]:8.3f}{pos[2]:8.3f}{vel[0]:8.4f}{vel[1]:8.4f}{vel[2]:8.4f}\n'}
+
+format strings for the GRO file (all include newline); precision of 3 decimal places is hard-coded here.
+
+ units = {'length': 'nm', 'time': None, 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)[source]
+
+Write selection at current trajectory frame to file.
+
+Parameters:
+
+obj (AtomGroup or Universe)
+
+Note
+
+The GRO format only allows 5 digits for resid and atom number. If these numbers become larger than 99,999 then this routine will chop off the leading digits.
+
+Changed in version 0.7.6: resName and atomName are truncated to a maximum of 5 characters
+
+Changed in version 0.16.0: frame kwarg has been removed
+
+Changed in version 2.0.0: Deprecated support for calling with Timestep has nwo been removed. Use AtomGroup or Universe as an input instead.
+
+7.8.3. Developer notes: GROWriter format strings
+
+The GROWriter class has a GROWriter.fmt attribute, which is a dictionary of different strings for writing lines in .gro files. These are as follows:
+
+n_atoms
+
+For the first line of the gro file, supply the number of atoms in the system. E.g.:
+
+fmt['n_atoms'].format(42)
+
+xyz
+
+An atom line without velocities. Requires that the ‘resid’, ‘resname’, ‘name’, ‘index’ and ‘pos’ keys be supplied. E.g.:
+
+fmt['xyz'].format(resid=1, resname='SOL', name='OW2', index=2, pos=(0.0, 1.0, 2.0))
+
+xyz_v
+
+As above, but with velocities. Needs an additional keyword ‘vel’.
+
+box_orthorhombic
+
+The final line of the gro file which gives box dimensions. Requires the box keyword to be given, which should be the three cartesian dimensions. E.g.:
+
+fmt['box_orthorhombic'].format(box=(10.0, 10.0, 10.0))
+
+box_triclinic
+
+As above, but for a non orthorhombic box. Requires the box keyword, but this time as a length 9 vector. This is a flattened version of the (3,3) triclinic vector representation of the unit cell. The rearrangement into the odd gromacs order is done automatically.

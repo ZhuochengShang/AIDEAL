@@ -1,0 +1,13 @@
+MDAnalysis.topology.tables.kv2dict(s, convertor: Any = <class 'str'>)[source]
+
+Primitive ad-hoc parser of a key-value record list.
+
+The string s should contain each key-value pair on a separate line (separated by newline). The first white space after the key separates key and value.
+
+Empty lines are allowed.
+
+Comment lines (starting with #) are allowed.
+
+Leading whitespace is ignored.
+
+The convertor is a function that converts its single argument to a valid Python type. The default is str() but other possibilities are int() (for integers) or float() for floating point numbers.

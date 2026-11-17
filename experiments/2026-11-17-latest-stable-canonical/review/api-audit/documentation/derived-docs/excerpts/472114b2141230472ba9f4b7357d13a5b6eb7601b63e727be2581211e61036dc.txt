@@ -1,0 +1,44 @@
+class MDAnalysis.core.topologyobjects.TopologyDict(topologygroup)[source]
+
+A customised dictionary designed for sorting the bonds, angles and dihedrals present in a group of atoms.
+
+Usage:
+
+topologydict = TopologyDict(members)
+
+TopologyDicts are also built lazily from a TopologyGroup.topDict attribute.
+
+The TopologyDict collects all the selected topology type from the atoms and categorises them according to the types of the atoms within. A TopologyGroup containing all of a given bond type can be made by querying with the appropriate key. The keys to the TopologyDict are a tuple of the atom types that the bond represents and can be viewed using the keys() method.
+
+For example, from a system containing pure ethanol
+
+>>> td = u.bonds.topDict
+>>> td.keys()
+[('C', 'C'),
+ ('C', 'H'),
+ ('O', 'H'),
+ ('C', 'O')]
+>>> td['C', 'O']
+< TopologyGroup containing 912 bonds >
+
+Note
+
+The key for a bond is taken from the type attribute of the atoms.
+
+Getting and setting types of bonds is done smartly, so a C-C-H angle is considered identical to a H-C-C angle.
+
+Duplicate entries are automatically removed upon creation and combination of different Dicts. This means a bond between atoms 1 and 2 will only ever appear once in a dict despite both atoms 1 and 2 having the bond in their bond attribute.
+
+Two TopologyDict instances can be combined using addition and it will not create any duplicate bonds in the process.
+
+Parameters:
+
+members – A list of TopologyObject instances
+
+Added in version 0.8.
+
+Changed in version 0.9.0: Changed initialisation to use a list of TopologyObject instances instead of list of atoms; now used from within TopologyGroup instead of accessed from AtomGroup.
+
+ keys()[source]
+
+Returns a list of the different types of available bonds

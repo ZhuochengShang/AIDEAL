@@ -1,0 +1,21 @@
+shape_parameter(wrap=False, unwrap=False, compound='group')[source]
+
+Shape parameter.
+
+See [Dima2004a] for background information.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – Which type of component to keep together during unwrapping.
+
+Added in version 0.7.7.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0. Superfluous kwargs were removed.
+
+Changed in version 2.5.0: Added calculation for any compound type

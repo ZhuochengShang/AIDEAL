@@ -1,0 +1,11 @@
+MDAnalysis.lib.transformations.translation_from_matrix(matrix)[source]
+
+Return translation vector from translation matrix.
+
+>>> from MDAnalysis.lib.transformations import (translation_matrix,
+...     translation_from_matrix)
+>>> import numpy as np
+>>> v0 = np.random.random(3) - 0.5
+>>> v1 = translation_from_matrix(translation_matrix(v0))
+>>> np.allclose(v0, v1)
+True

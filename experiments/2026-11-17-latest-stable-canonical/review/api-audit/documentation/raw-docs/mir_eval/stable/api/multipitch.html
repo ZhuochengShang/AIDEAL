@@ -1,0 +1,748 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="readthedocs-addons-api-version" content="1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mir_eval.multipitch &mdash; mir_eval 0.8.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=dbee5847"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mir_eval.onset" href="onset.html" />
+    <link rel="prev" title="mir_eval.melody" href="melody.html" /> 
+<script async type="text/javascript" src="/_/static/javascript/readthedocs-addons.js"></script><meta name="readthedocs-project-slug" content="mir-eval" /><meta name="readthedocs-version-slug" content="stable" /><meta name="readthedocs-resolver-filename" content="/api/multipitch.html" /><meta name="readthedocs-http-status" content="200" /></head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mir_eval
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">mir_eval</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="alignment.html">mir_eval.alignment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.absolute_error"><code class="docutils literal notranslate"><span class="pre">absolute_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.percentage_correct"><code class="docutils literal notranslate"><span class="pre">percentage_correct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.percentage_correct_segments"><code class="docutils literal notranslate"><span class="pre">percentage_correct_segments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.karaoke_perceptual_metric"><code class="docutils literal notranslate"><span class="pre">karaoke_perceptual_metric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="beat.html">mir_eval.beat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.trim_beats"><code class="docutils literal notranslate"><span class="pre">trim_beats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.f_measure"><code class="docutils literal notranslate"><span class="pre">f_measure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.cemgil"><code class="docutils literal notranslate"><span class="pre">cemgil()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.goto"><code class="docutils literal notranslate"><span class="pre">goto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.p_score"><code class="docutils literal notranslate"><span class="pre">p_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.continuity"><code class="docutils literal notranslate"><span class="pre">continuity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.information_gain"><code class="docutils literal notranslate"><span class="pre">information_gain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="chord.html">mir_eval.chord</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.InvalidChordException"><code class="docutils literal notranslate"><span class="pre">InvalidChordException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.pitch_class_to_semitone"><code class="docutils literal notranslate"><span class="pre">pitch_class_to_semitone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.scale_degree_to_semitone"><code class="docutils literal notranslate"><span class="pre">scale_degree_to_semitone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.scale_degree_to_bitmap"><code class="docutils literal notranslate"><span class="pre">scale_degree_to_bitmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.quality_to_bitmap"><code class="docutils literal notranslate"><span class="pre">quality_to_bitmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.reduce_extended_quality"><code class="docutils literal notranslate"><span class="pre">reduce_extended_quality()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.validate_chord_label"><code class="docutils literal notranslate"><span class="pre">validate_chord_label()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.split"><code class="docutils literal notranslate"><span class="pre">split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.join"><code class="docutils literal notranslate"><span class="pre">join()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.encode"><code class="docutils literal notranslate"><span class="pre">encode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.encode_many"><code class="docutils literal notranslate"><span class="pre">encode_many()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.rotate_bitmap_to_root"><code class="docutils literal notranslate"><span class="pre">rotate_bitmap_to_root()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.rotate_bitmaps_to_roots"><code class="docutils literal notranslate"><span class="pre">rotate_bitmaps_to_roots()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.weighted_accuracy"><code class="docutils literal notranslate"><span class="pre">weighted_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.thirds"><code class="docutils literal notranslate"><span class="pre">thirds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.thirds_inv"><code class="docutils literal notranslate"><span class="pre">thirds_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.triads"><code class="docutils literal notranslate"><span class="pre">triads()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.triads_inv"><code class="docutils literal notranslate"><span class="pre">triads_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.tetrads"><code class="docutils literal notranslate"><span class="pre">tetrads()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.tetrads_inv"><code class="docutils literal notranslate"><span class="pre">tetrads_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.root"><code class="docutils literal notranslate"><span class="pre">root()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.mirex"><code class="docutils literal notranslate"><span class="pre">mirex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.majmin"><code class="docutils literal notranslate"><span class="pre">majmin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.majmin_inv"><code class="docutils literal notranslate"><span class="pre">majmin_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.sevenths"><code class="docutils literal notranslate"><span class="pre">sevenths()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.sevenths_inv"><code class="docutils literal notranslate"><span class="pre">sevenths_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.directional_hamming_distance"><code class="docutils literal notranslate"><span class="pre">directional_hamming_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.overseg"><code class="docutils literal notranslate"><span class="pre">overseg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.underseg"><code class="docutils literal notranslate"><span class="pre">underseg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.seg"><code class="docutils literal notranslate"><span class="pre">seg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.merge_chord_intervals"><code class="docutils literal notranslate"><span class="pre">merge_chord_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chord.html#mir_eval.chord.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="melody.html">mir_eval.melody</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.validate_voicing"><code class="docutils literal notranslate"><span class="pre">validate_voicing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.hz2cents"><code class="docutils literal notranslate"><span class="pre">hz2cents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.freq_to_voicing"><code class="docutils literal notranslate"><span class="pre">freq_to_voicing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.constant_hop_timebase"><code class="docutils literal notranslate"><span class="pre">constant_hop_timebase()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.resample_melody_series"><code class="docutils literal notranslate"><span class="pre">resample_melody_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.to_cent_voicing"><code class="docutils literal notranslate"><span class="pre">to_cent_voicing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.voicing_recall"><code class="docutils literal notranslate"><span class="pre">voicing_recall()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.voicing_false_alarm"><code class="docutils literal notranslate"><span class="pre">voicing_false_alarm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.voicing_measures"><code class="docutils literal notranslate"><span class="pre">voicing_measures()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.raw_pitch_accuracy"><code class="docutils literal notranslate"><span class="pre">raw_pitch_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.raw_chroma_accuracy"><code class="docutils literal notranslate"><span class="pre">raw_chroma_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.overall_accuracy"><code class="docutils literal notranslate"><span class="pre">overall_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mir_eval.multipitch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.resample_multipitch"><code class="docutils literal notranslate"><span class="pre">resample_multipitch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.frequencies_to_midi"><code class="docutils literal notranslate"><span class="pre">frequencies_to_midi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.midi_to_chroma"><code class="docutils literal notranslate"><span class="pre">midi_to_chroma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.compute_num_freqs"><code class="docutils literal notranslate"><span class="pre">compute_num_freqs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.compute_num_true_positives"><code class="docutils literal notranslate"><span class="pre">compute_num_true_positives()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.compute_accuracy"><code class="docutils literal notranslate"><span class="pre">compute_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.compute_err_score"><code class="docutils literal notranslate"><span class="pre">compute_err_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.metrics"><code class="docutils literal notranslate"><span class="pre">metrics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.multipitch.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="onset.html">mir_eval.onset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#mir_eval.onset.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#mir_eval.onset.f_measure"><code class="docutils literal notranslate"><span class="pre">f_measure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#mir_eval.onset.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pattern.html">mir_eval.pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.standard_FPR"><code class="docutils literal notranslate"><span class="pre">standard_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.establishment_FPR"><code class="docutils literal notranslate"><span class="pre">establishment_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.occurrence_FPR"><code class="docutils literal notranslate"><span class="pre">occurrence_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.three_layer_FPR"><code class="docutils literal notranslate"><span class="pre">three_layer_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.first_n_three_layer_P"><code class="docutils literal notranslate"><span class="pre">first_n_three_layer_P()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.first_n_target_proportion_R"><code class="docutils literal notranslate"><span class="pre">first_n_target_proportion_R()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="segment.html">mir_eval.segment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.validate_boundary"><code class="docutils literal notranslate"><span class="pre">validate_boundary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.validate_structure"><code class="docutils literal notranslate"><span class="pre">validate_structure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.detection"><code class="docutils literal notranslate"><span class="pre">detection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.deviation"><code class="docutils literal notranslate"><span class="pre">deviation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.pairwise"><code class="docutils literal notranslate"><span class="pre">pairwise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.rand_index"><code class="docutils literal notranslate"><span class="pre">rand_index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.ari"><code class="docutils literal notranslate"><span class="pre">ari()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.mutual_information"><code class="docutils literal notranslate"><span class="pre">mutual_information()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.nce"><code class="docutils literal notranslate"><span class="pre">nce()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.vmeasure"><code class="docutils literal notranslate"><span class="pre">vmeasure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hierarchy.html">mir_eval.hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.validate_hier_intervals"><code class="docutils literal notranslate"><span class="pre">validate_hier_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.tmeasure"><code class="docutils literal notranslate"><span class="pre">tmeasure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.lmeasure"><code class="docutils literal notranslate"><span class="pre">lmeasure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="separation.html">mir_eval.separation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_sources"><code class="docutils literal notranslate"><span class="pre">bss_eval_sources()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_sources_framewise"><code class="docutils literal notranslate"><span class="pre">bss_eval_sources_framewise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_images"><code class="docutils literal notranslate"><span class="pre">bss_eval_images()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_images_framewise"><code class="docutils literal notranslate"><span class="pre">bss_eval_images_framewise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tempo.html">mir_eval.tempo</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.validate_tempi"><code class="docutils literal notranslate"><span class="pre">validate_tempi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.detection"><code class="docutils literal notranslate"><span class="pre">detection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transcription.html">mir_eval.transcription</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.validate_intervals"><code class="docutils literal notranslate"><span class="pre">validate_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.match_note_offsets"><code class="docutils literal notranslate"><span class="pre">match_note_offsets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.match_note_onsets"><code class="docutils literal notranslate"><span class="pre">match_note_onsets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.match_notes"><code class="docutils literal notranslate"><span class="pre">match_notes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.precision_recall_f1_overlap"><code class="docutils literal notranslate"><span class="pre">precision_recall_f1_overlap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.average_overlap_ratio"><code class="docutils literal notranslate"><span class="pre">average_overlap_ratio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.onset_precision_recall_f1"><code class="docutils literal notranslate"><span class="pre">onset_precision_recall_f1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.offset_precision_recall_f1"><code class="docutils literal notranslate"><span class="pre">offset_precision_recall_f1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transcription_velocity.html">mir_eval.transcription_velocity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.match_notes"><code class="docutils literal notranslate"><span class="pre">match_notes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.precision_recall_f1_overlap"><code class="docutils literal notranslate"><span class="pre">precision_recall_f1_overlap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key.html">mir_eval.key</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.validate_key"><code class="docutils literal notranslate"><span class="pre">validate_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.split_key_string"><code class="docutils literal notranslate"><span class="pre">split_key_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.weighted_score"><code class="docutils literal notranslate"><span class="pre">weighted_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">mir_eval.util</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.index_labels"><code class="docutils literal notranslate"><span class="pre">index_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.generate_labels"><code class="docutils literal notranslate"><span class="pre">generate_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intervals_to_samples"><code class="docutils literal notranslate"><span class="pre">intervals_to_samples()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.interpolate_intervals"><code class="docutils literal notranslate"><span class="pre">interpolate_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.sort_labeled_intervals"><code class="docutils literal notranslate"><span class="pre">sort_labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.f_measure"><code class="docutils literal notranslate"><span class="pre">f_measure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intervals_to_boundaries"><code class="docutils literal notranslate"><span class="pre">intervals_to_boundaries()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.boundaries_to_intervals"><code class="docutils literal notranslate"><span class="pre">boundaries_to_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.adjust_intervals"><code class="docutils literal notranslate"><span class="pre">adjust_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.adjust_events"><code class="docutils literal notranslate"><span class="pre">adjust_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intersect_files"><code class="docutils literal notranslate"><span class="pre">intersect_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.merge_labeled_intervals"><code class="docutils literal notranslate"><span class="pre">merge_labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.match_events"><code class="docutils literal notranslate"><span class="pre">match_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.validate_intervals"><code class="docutils literal notranslate"><span class="pre">validate_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.validate_events"><code class="docutils literal notranslate"><span class="pre">validate_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.validate_frequencies"><code class="docutils literal notranslate"><span class="pre">validate_frequencies()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.has_kwargs"><code class="docutils literal notranslate"><span class="pre">has_kwargs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.filter_kwargs"><code class="docutils literal notranslate"><span class="pre">filter_kwargs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intervals_to_durations"><code class="docutils literal notranslate"><span class="pre">intervals_to_durations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.hz_to_midi"><code class="docutils literal notranslate"><span class="pre">hz_to_midi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.midi_to_hz"><code class="docutils literal notranslate"><span class="pre">midi_to_hz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.deprecated"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">mir_eval.io</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_delimited"><code class="docutils literal notranslate"><span class="pre">load_delimited()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_events"><code class="docutils literal notranslate"><span class="pre">load_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_labeled_events"><code class="docutils literal notranslate"><span class="pre">load_labeled_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_intervals"><code class="docutils literal notranslate"><span class="pre">load_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals"><code class="docutils literal notranslate"><span class="pre">load_labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_time_series"><code class="docutils literal notranslate"><span class="pre">load_time_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_patterns"><code class="docutils literal notranslate"><span class="pre">load_patterns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_wav"><code class="docutils literal notranslate"><span class="pre">load_wav()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_valued_intervals"><code class="docutils literal notranslate"><span class="pre">load_valued_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_key"><code class="docutils literal notranslate"><span class="pre">load_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_tempo"><code class="docutils literal notranslate"><span class="pre">load_tempo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_ragged_time_series"><code class="docutils literal notranslate"><span class="pre">load_ragged_time_series()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sonify.html">mir_eval.sonify</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.clicks"><code class="docutils literal notranslate"><span class="pre">clicks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.time_frequency"><code class="docutils literal notranslate"><span class="pre">time_frequency()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.pitch_contour"><code class="docutils literal notranslate"><span class="pre">pitch_contour()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.chroma"><code class="docutils literal notranslate"><span class="pre">chroma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.chords"><code class="docutils literal notranslate"><span class="pre">chords()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="display.html">mir_eval.display</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.segments"><code class="docutils literal notranslate"><span class="pre">segments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.labeled_intervals"><code class="docutils literal notranslate"><span class="pre">labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.IntervalFormatter"><code class="docutils literal notranslate"><span class="pre">IntervalFormatter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.hierarchy"><code class="docutils literal notranslate"><span class="pre">hierarchy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.events"><code class="docutils literal notranslate"><span class="pre">events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.pitch"><code class="docutils literal notranslate"><span class="pre">pitch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.multipitch"><code class="docutils literal notranslate"><span class="pre">multipitch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.piano_roll"><code class="docutils literal notranslate"><span class="pre">piano_roll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.separation"><code class="docutils literal notranslate"><span class="pre">separation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.ticker_notes"><code class="docutils literal notranslate"><span class="pre">ticker_notes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.ticker_pitch"><code class="docutils literal notranslate"><span class="pre">ticker_pitch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changes.html">Changes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-8">v0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-7">v0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-6">v0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-5">v0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-4">v0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-3">v0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-2">v0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-1">v0.1</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mir_eval</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">mir_eval.multipitch</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/multipitch.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mir_eval.multipitch">
+<span id="mir-eval-multipitch"></span><h1>mir_eval.multipitch<a class="headerlink" href="#module-mir_eval.multipitch" title="Link to this heading"></a></h1>
+<p>The goal of multiple f0 (multipitch) estimation and tracking is to identify
+all of the active fundamental frequencies in each time frame in a complex music
+signal.</p>
+<section id="conventions">
+<h2>Conventions<a class="headerlink" href="#conventions" title="Link to this heading"></a></h2>
+<p>Multipitch estimates are represented by a timebase and a corresponding list
+of arrays of frequency estimates. Frequency estimates may have any number of
+frequency values, including 0 (represented by an empty array). Time values are
+in units of seconds and frequency estimates are in units of Hz.</p>
+<p>The timebase of the estimate time series should ideally match the timebase of
+the reference time series, but if this is not the case, the estimate time
+series is resampled using a nearest neighbor interpolation to match the
+estimate. Time values in the estimate time series that are outside of the range
+of the reference time series are given null (empty array) frequencies.</p>
+<p>By default, a frequency is “correct” if it is within 0.5 semitones of a
+reference frequency. Frequency values are compared by first mapping them to
+log-2 semitone space, where the distance between semitones is constant.
+Chroma-wrapped frequency values are computed by taking the log-2 frequency
+values modulo 12 to map them down to a single octave. A chroma-wrapped
+frequency estimate is correct if it’s single-octave value is within 0.5
+semitones of the single-octave reference frequency.</p>
+<p>The metrics are based on those described in
+<a class="footnote-reference brackets" href="#poliner2007" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and <a class="footnote-reference brackets" href="#bay2009" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mir_eval.multipitch.metrics" title="mir_eval.multipitch.metrics"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.multipitch.metrics()</span></code></a>: Precision, Recall, Accuracy,
+Substitution, Miss, False Alarm, and Total Error scores based both on raw
+frequency values and values mapped to a single octave (chroma).</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="poliner2007" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>G. E. Poliner, and D. P. W. Ellis, “A Discriminative
+Model for Polyphonic Piano Transription”, EURASIP Journal on Advances in
+Signal Processing, 2007(1):154-163, Jan. 2007.</p>
+</aside>
+<aside class="footnote brackets" id="bay2009" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Bay, M., Ehmann, A. F., &amp; Downie, J. S. (2009). Evaluation of
+Multiple-F0 Estimation and Tracking Systems. In ISMIR (pp. 315-320).</p>
+</aside>
+</aside>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.validate">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_freqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.validate" title="Link to this definition"></a></dt>
+<dd><p>Check that the time and frequency inputs are well-formed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ref_time</strong><span class="classifier">np.ndarray</span></dt><dd><p>reference time stamps in seconds</p>
+</dd>
+<dt><strong>ref_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>reference frequencies in Hz</p>
+</dd>
+<dt><strong>est_time</strong><span class="classifier">np.ndarray</span></dt><dd><p>estimate time stamps in seconds</p>
+</dd>
+<dt><strong>est_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>estimated frequencies in Hz</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.resample_multipitch">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">resample_multipitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_times</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.resample_multipitch" title="Link to this definition"></a></dt>
+<dd><p>Resamples multipitch time series to a new timescale using nearest
+neighbor interpolation. Values in <code class="docutils literal notranslate"><span class="pre">target_times</span></code> outside the range
+of <code class="docutils literal notranslate"><span class="pre">times</span></code> return no pitch estimate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>times</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array of time stamps</p>
+</dd>
+<dt><strong>frequencies</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>List of np.ndarrays of frequency values</p>
+</dd>
+<dt><strong>target_times</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array of target time stamps</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>frequencies_resampled</strong><span class="classifier">list of numpy arrays</span></dt><dd><p>Frequency list of lists resampled to new timebase</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.frequencies_to_midi">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">frequencies_to_midi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">440.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.frequencies_to_midi" title="Link to this definition"></a></dt>
+<dd><p>Convert frequencies to continuous MIDI values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>frequencies</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>Original frequency values</p>
+</dd>
+<dt><strong>ref_frequency</strong><span class="classifier">float</span></dt><dd><p>reference frequency in Hz.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>frequencies_midi</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>Continuous MIDI frequency values.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.midi_to_chroma">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">midi_to_chroma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies_midi</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.midi_to_chroma" title="Link to this definition"></a></dt>
+<dd><p>Wrap MIDI frequencies to a single octave (chroma).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>frequencies_midi</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>Continuous MIDI note frequency values.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>frequencies_chroma</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>Midi values wrapped to one octave.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.compute_num_freqs">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">compute_num_freqs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.compute_num_freqs" title="Link to this definition"></a></dt>
+<dd><p>Compute the number of frequencies for each time point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>frequencies</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>Frequency values</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>num_freqs</strong><span class="classifier">np.ndarray</span></dt><dd><p>Number of frequencies at each time point.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.compute_num_true_positives">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">compute_num_true_positives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chroma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.compute_num_true_positives" title="Link to this definition"></a></dt>
+<dd><p>Compute the number of true positives in an estimate given a reference.
+A frequency is correct if it is within a quartertone of the
+correct frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ref_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>reference frequencies (MIDI)</p>
+</dd>
+<dt><strong>est_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>estimated frequencies (MIDI)</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">float</span></dt><dd><p>Window size, in semitones</p>
+</dd>
+<dt><strong>chroma</strong><span class="classifier">bool</span></dt><dd><p>If True, computes distances modulo n.
+If True, <code class="docutils literal notranslate"><span class="pre">ref_freqs</span></code> and <code class="docutils literal notranslate"><span class="pre">est_freqs</span></code> should be wrapped modulo n.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>true_positives</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array the same length as ref_freqs containing the number of true
+positives.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.compute_accuracy">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">compute_accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true_positives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_est</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.compute_accuracy" title="Link to this definition"></a></dt>
+<dd><p>Compute accuracy metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>true_positives</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array containing the number of true positives at each time point.</p>
+</dd>
+<dt><strong>n_ref</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array containing the number of reference frequencies at each time
+point.</p>
+</dd>
+<dt><strong>n_est</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array containing the number of estimate frequencies at each time point.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>precision</strong><span class="classifier">float</span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">sum(true_positives)/sum(n_est)</span></code></p>
+</dd>
+<dt><strong>recall</strong><span class="classifier">float</span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">sum(true_positives)/sum(n_ref)</span></code></p>
+</dd>
+<dt><strong>acc</strong><span class="classifier">float</span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">sum(true_positives)/sum(n_est</span> <span class="pre">+</span> <span class="pre">n_ref</span> <span class="pre">-</span> <span class="pre">true_positives)</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.compute_err_score">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">compute_err_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true_positives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_est</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.compute_err_score" title="Link to this definition"></a></dt>
+<dd><p>Compute error score metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>true_positives</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array containing the number of true positives at each time point.</p>
+</dd>
+<dt><strong>n_ref</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array containing the number of reference frequencies at each time
+point.</p>
+</dd>
+<dt><strong>n_est</strong><span class="classifier">np.ndarray</span></dt><dd><p>Array containing the number of estimate frequencies at each time point.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>e_sub</strong><span class="classifier">float</span></dt><dd><p>Substitution error</p>
+</dd>
+<dt><strong>e_miss</strong><span class="classifier">float</span></dt><dd><p>Miss error</p>
+</dd>
+<dt><strong>e_fa</strong><span class="classifier">float</span></dt><dd><p>False alarm error</p>
+</dd>
+<dt><strong>e_tot</strong><span class="classifier">float</span></dt><dd><p>Total error</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.metrics">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_freqs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.metrics" title="Link to this definition"></a></dt>
+<dd><p>Compute multipitch metrics. All metrics are computed at the ‘macro’ level
+such that the frame true positive/false positive/false negative rates are
+summed across time and the metrics are computed on the combined values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ref_time</strong><span class="classifier">np.ndarray</span></dt><dd><p>Time of each reference frequency value</p>
+</dd>
+<dt><strong>ref_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>List of np.ndarrays of reference frequency values</p>
+</dd>
+<dt><strong>est_time</strong><span class="classifier">np.ndarray</span></dt><dd><p>Time of each estimated frequency value</p>
+</dd>
+<dt><strong>est_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>List of np.ndarrays of estimate frequency values</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Additional keyword arguments which will be passed to the
+appropriate metric or preprocessing functions.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>precision</strong><span class="classifier">float</span></dt><dd><p>Precision (TP/(TP + FP))</p>
+</dd>
+<dt><strong>recall</strong><span class="classifier">float</span></dt><dd><p>Recall (TP/(TP + FN))</p>
+</dd>
+<dt><strong>accuracy</strong><span class="classifier">float</span></dt><dd><p>Accuracy (TP/(TP + FP + FN))</p>
+</dd>
+<dt><strong>e_sub</strong><span class="classifier">float</span></dt><dd><p>Substitution error</p>
+</dd>
+<dt><strong>e_miss</strong><span class="classifier">float</span></dt><dd><p>Miss error</p>
+</dd>
+<dt><strong>e_fa</strong><span class="classifier">float</span></dt><dd><p>False alarm error</p>
+</dd>
+<dt><strong>e_tot</strong><span class="classifier">float</span></dt><dd><p>Total error</p>
+</dd>
+<dt><strong>precision_chroma</strong><span class="classifier">float</span></dt><dd><p>Chroma precision</p>
+</dd>
+<dt><strong>recall_chroma</strong><span class="classifier">float</span></dt><dd><p>Chroma recall</p>
+</dd>
+<dt><strong>accuracy_chroma</strong><span class="classifier">float</span></dt><dd><p>Chroma accuracy</p>
+</dd>
+<dt><strong>e_sub_chroma</strong><span class="classifier">float</span></dt><dd><p>Chroma substitution error</p>
+</dd>
+<dt><strong>e_miss_chroma</strong><span class="classifier">float</span></dt><dd><p>Chroma miss error</p>
+</dd>
+<dt><strong>e_fa_chroma</strong><span class="classifier">float</span></dt><dd><p>Chroma false alarm error</p>
+</dd>
+<dt><strong>e_tot_chroma</strong><span class="classifier">float</span></dt><dd><p>Chroma total error</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ref_time</span><span class="p">,</span> <span class="n">ref_freqs</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_ragged_time_series</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;reference.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_time</span><span class="p">,</span> <span class="n">est_freqs</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_ragged_time_series</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;estimated.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metris_tuple</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">multipitch</span><span class="o">.</span><span class="n">metrics</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">ref_time</span><span class="p">,</span> <span class="n">ref_freqs</span><span class="p">,</span> <span class="n">est_time</span><span class="p">,</span> <span class="n">est_freqs</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.multipitch.evaluate">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.multipitch.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_freqs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.multipitch.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluate two multipitch (multi-f0) transcriptions, where the first is
+treated as the reference (ground truth) and the second as the estimate to
+be evaluated (prediction).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ref_time</strong><span class="classifier">np.ndarray</span></dt><dd><p>Time of each reference frequency value</p>
+</dd>
+<dt><strong>ref_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>List of np.ndarrays of reference frequency values</p>
+</dd>
+<dt><strong>est_time</strong><span class="classifier">np.ndarray</span></dt><dd><p>Time of each estimated frequency value</p>
+</dd>
+<dt><strong>est_freqs</strong><span class="classifier">list of np.ndarray</span></dt><dd><p>List of np.ndarrays of estimate frequency values</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Additional keyword arguments which will be passed to the
+appropriate metric or preprocessing functions.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>scores</strong><span class="classifier">dict</span></dt><dd><p>Dictionary of scores, where the key is the metric name (str) and
+the value is the (float) score achieved.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ref_time</span><span class="p">,</span> <span class="n">ref_freq</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_ragged_time_series</span><span class="p">(</span><span class="s1">&#39;ref.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_time</span><span class="p">,</span> <span class="n">est_freq</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_ragged_time_series</span><span class="p">(</span><span class="s1">&#39;est.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">multipitch</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ref_time</span><span class="p">,</span> <span class="n">ref_freq</span><span class="p">,</span>
+<span class="gp">... </span>                                      <span class="n">est_time</span><span class="p">,</span> <span class="n">est_freq</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="melody.html" class="btn btn-neutral float-left" title="mir_eval.melody" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="onset.html" class="btn btn-neutral float-right" title="mir_eval.onset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2014, Colin Raffel et al..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

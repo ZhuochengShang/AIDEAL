@@ -1,0 +1,55 @@
+mir_eval.key.weighted_score(reference_key, estimated_key)
+
+Compute a heuristic score which is weighted according to the relationship of the reference and estimated key, as follows:
+
+Relationship
+ |
+Score
+ |
+
+Same key and mode
+ |
+1.0
+ |
+
+Estimated key is a perfect fifth above reference key
+ |
+0.5
+ |
+
+Relative major/minor (same key signature)
+ |
+0.3
+ |
+
+Parallel major/minor (same key)
+ |
+0.2
+ |
+
+Other
+ |
+0.0
+ |
+
+Parameters:
+
+reference_keystr
+
+Reference key string.
+
+estimated_keystr
+
+Estimated key string.
+
+Returns:
+
+scorefloat
+
+Score representing how closely related the keys are.
+
+Examples
+
+>>> ref_key = mir_eval.io.load_key('ref.txt')
+>>> est_key = mir_eval.io.load_key('est.txt')
+>>> score = mir_eval.key.weighted_score(ref_key, est_key)

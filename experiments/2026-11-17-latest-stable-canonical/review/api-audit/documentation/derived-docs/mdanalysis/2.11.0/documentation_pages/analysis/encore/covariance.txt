@@ -1,0 +1,77 @@
+4.3.7.1.5. Covariance calculation — encore.covariance
+
+The module contains functions to estimate the covariance matrix of an ensemble of structures.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ MDAnalysis.analysis.encore.covariance.covariance_matrix(ensemble, select='name CA', estimator=<function shrinkage_covariance_estimator>, weights='mass', reference=None)[source]
+
+Calculates (optionally mass weighted) covariance matrix
+
+Parameters:
+
+ensemble (Universe object) – The structural ensemble
+
+select (str (optional)) – Atom selection string in the MDAnalysis format.
+
+estimator (function (optional)) – Function that estimates the covariance matrix. It requires at least a “coordinates” numpy array (of shape (N,M,3), where N is the number of frames and M the number of atoms). See ml_covariance_estimator and shrinkage_covariance_estimator for reference.
+
+weights (str/array_like (optional)) – specify weights. If 'mass' then chose masses of ensemble atoms, if None chose uniform weights
+
+reference (MDAnalysis.Universe object (optional)) – Use the distances to a specific reference structure rather than the distance to the mean.
+
+Returns:
+
+cov_mat – Covariance matrix
+
+Return type:
+
+numpy.array
+
+ MDAnalysis.analysis.encore.covariance.ml_covariance_estimator(coordinates, reference_coordinates=None)[source]
+
+Standard maximum likelihood estimator of the covariance matrix.
+
+Parameters:
+
+coordinates (numpy.array) – Flattened array of coordiantes
+
+reference_coordinates (numpy.array) – Optional reference to use instead of mean
+
+Returns:
+
+cov_mat – Estimate of covariance matrix
+
+Return type:
+
+numpy.array
+
+ MDAnalysis.analysis.encore.covariance.shrinkage_covariance_estimator(coordinates, reference_coordinates=None, shrinkage_parameter=None)[source]
+
+Shrinkage estimator of the covariance matrix using the method described in
+
+Improved Estimation of the Covariance Matrix of Stock Returns With an Application to Portfolio Selection. Ledoit, O.; Wolf, M., Journal of Empirical Finance, 10, 5, 2003
+
+This implementation is based on the matlab code made available by Olivier Ledoit on his website: http://www.ledoit.net/ole2_abstract.htm
+
+Parameters:
+
+coordinates (numpy.array) – Flattened array of coordinates
+
+reference_coordinates (numpy.array) – Optional reference to use instead of mean
+
+shrinkage_parameter (None or float) – Optional shrinkage parameter
+
+Returns:
+
+cov_mat – Covariance matrix
+
+Return type:
+
+nump.array

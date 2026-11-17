@@ -1,0 +1,311 @@
+7.23. AMBER trajectories — MDAnalysis.coordinates.TRJ
+
+AMBER can write ASCII trajectories (“traj”) and binary trajectories (“netcdf”). MDAnalysis supports reading of both formats and writing for the binary trajectories.
+
+Note
+
+Support for AMBER is still somewhat experimental and feedback and contributions are highly appreciated. Use the Issue Tracker or get in touch on the GitHub Discussions.
+
+Units
+
+AMBER trajectories are assumed to be in the following units:
+
+lengths in Angstrom (Å)
+
+time in ps (but see below)
+
+7.23.1. Binary NetCDF trajectories
+
+The AMBER netcdf format make use of NetCDF (Network Common Data Form) format. Such binary trajectories are recognized in MDAnalysis by the ‘.ncdf’ suffix and read by the NCDFReader.
+
+Binary trajectories can also contain velocities and forces, and can record the exact time step. In principle, the trajectories can be in different units than the AMBER defaults of ångström and picoseconds but at the moment MDAnalysis only supports those and will raise a NotImplementedError if anything else is detected.
+
+ class MDAnalysis.coordinates.TRJ.NCDFReader(filename, n_atoms=None, mmap=None, **kwargs)[source]
+
+Reader for AMBER NETCDF format (version 1.0).
+
+AMBER binary trajectories are automatically recognised by the file extension “.ncdf”.
+
+The number of atoms (n_atoms) does not have to be provided as it can be read from the trajectory. The trajectory reader can randomly access frames and therefore supports direct indexing (with 0-based frame indices) and full-feature trajectory iteration, including slicing.
+
+Velocities are autodetected and read into the Timestep._velocities attribute.
+
+Forces are autodetected and read into the Timestep._forces attribute.
+
+Periodic unit cell information is detected and used to populate the Timestep.dimensions attribute. (If no unit cell is available in the trajectory, then Timestep.dimensions will return [0,0,0,0,0,0]).
+
+Current limitations:
+
+only trajectories with time in ps and lengths in Angstroem are processed
+
+The NCDF reader uses scipy.io.netcdf and therefore scipy must be installed. It supports the mmap keyword argument (when reading): mmap=True is memory efficient and directly maps the trajectory on disk to memory (using the mmap); mmap=False may consume large amounts of memory because it loads the whole trajectory into memory but it might be faster. The default is mmap=None and then default behavior of scipy.io.netcdf_file prevails, i.e. True when filename is a file name, False when filename is a file-like object.
+
+See also
+
+NCDFWriter
+
+Changed in version 0.10.0: Added ability to read Forces
+
+Changed in version 0.11.0: Frame labels now 0-based instead of 1-based. kwarg delta renamed to dt, for uniformity with other Readers.
+
+Changed in version 0.17.0: Uses scipy.io.netcdf and supports the mmap kwarg.
+
+Changed in version 0.20.0: Now reads scale_factors for all expected AMBER convention variables. Timestep variables now adhere standard MDAnalysis units, with lengths of angstrom, time of ps, velocity of angstrom/ps and force of kJ/(mol*Angstrom). It is noted that with 0.19.2 and earlier versions, velocities would have often been reported in values of angstrom/AKMA time units instead (Issue #2323).
+
+Changed in version 1.0.0: Support for reading degrees units for cell_angles has now been removed (Issue #2327)
+
+Changed in version 2.0.0: Now use a picklable scipy.io.netcdf_file– NCDFPicklable. Reading of dt now defaults to 1.0 ps if dt cannot be extracted from the first two frames of the trajectory. Writer() now also sets convert_units, velocities, forces and scale_factor information for the NCDFWriter.
+
+ Writer(filename, **kwargs)[source]
+
+Returns a NCDFWriter for filename with the same parameters as this NCDF.
+
+All values can be changed through keyword arguments.
+
+Parameters:
+
+filename (str) – filename of the output NCDF trajectory
+
+n_atoms (int (optional)) – number of atoms
+
+remarks (str (optional)) – string that is stored in the title field
+
+convert_units (bool (optional)) – True: units are converted to the AMBER base format
+
+velocities (bool (optional)) – Write velocities into the trajectory
+
+forces (bool (optional)) – Write forces into the trajectory
+
+scale_time (float (optional)) – Scale factor for time units
+
+scale_cell_lengths (float (optional)) – Scale factor for cell lengths
+
+scale_cell_angles (float (optional)) – Scale factor for cell angles
+
+scale_coordinates (float (optional)) – Scale factor for coordinates
+
+scale_velocities (float (optional)) – Scale factor for velocities
+
+scale_forces (float (optional)) – Scale factor for forces
+
+Return type:
+
+NCDFWriter
+
+ close()[source]
+
+Close trajectory; any further access will raise an IOError.
+
+Note
+
+The underlying scipy.io.netcdf module may open netcdf files with mmap if mmap=True was set. Hence any reference to an array must be removed before the file can be closed.
+
+ static parse_n_atoms(filename, **kwargs)[source]
+
+Read the coordinate file and deduce the number of atoms
+
+Returns:
+
+n_atoms – the number of atoms in the coordinate file
+
+Return type:
+
+int
+
+Raises:
+
+NotImplementedError – when the number of atoms can’t be deduced
+
+ units = {'force': 'kcal/(mol*Angstrom)', 'length': 'Angstrom', 'time': 'ps', 'velocity': 'Angstrom/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.TRJ.NCDFWriter(filename, n_atoms, remarks=None, convert_units=True, velocities=False, forces=False, scale_time=None, scale_cell_lengths=None, scale_cell_angles=None, scale_coordinates=None, scale_velocities=None, scale_forces=None, **kwargs)[source]
+
+Writer for AMBER NETCDF format (version 1.0).
+
+AMBER binary trajectories are automatically recognised by the file extension “.ncdf” or “.nc”.
+
+Velocities are written out if they are detected in the input Timestep. The trajectories are always written with ångström for the lengths and picoseconds for the time (and hence Å/ps for velocities and kilocalorie/mole/Å for forces).
+
+Scale factor variables for time, velocities, cell lengths, cell angles, coordinates, velocities, or forces can be passed into the writer. If so, they will be written to the NetCDF file. In this case, the trajectory data will be written to the NetCDF file divided by the scale factor value. By default, scale factor variables are not written. The only exception is for velocities, where it is set to 20.455, replicating the default behaviour of AMBER.
+
+Unit cell information is written if available.
+
+Parameters:
+
+filename (str) – name of output file
+
+n_atoms (int) – number of atoms in trajectory file
+
+convert_units (bool (optional)) – True: units are converted to the AMBER base format; [True]
+
+velocities (bool (optional)) – Write velocities into the trajectory [False]
+
+forces (bool (optional)) – Write forces into the trajectory [False]
+
+scale_time (float (optional)) – Scale factor for time units [None]
+
+scale_cell_lengths (float (optional)) – Scale factor for cell lengths [None]
+
+scale_cell_angles (float (optional)) – Scale factor for cell angles [None]
+
+scale_coordinates (float (optional)) – Scale factor for coordinates [None]
+
+scale_velocities (float (optional)) – Scale factor for velocities [20.455]
+
+scale_forces (float (optional)) – Scale factor for forces [None]
+
+Note
+
+MDAnalysis uses scipy.io.netcdf to access AMBER files, which are in netcdf 3 format. Although scipy.io.netcdf is very fast at reading these files, it is very slow when writing, and it becomes slower the longer the files are. On the other hand, the netCDF4 package (which requires the compiled netcdf library to be installed) is fast at writing but slow at reading. Therefore, we try to use netCDF4 for writing if available but otherwise fall back to the slower scipy.io.netcdf.
+
+AMBER users might have a hard time getting netCDF4 to work with a conda-based installation (as discussed in Issue #506) because of the way that AMBER itself handles netcdf: When the AMBER environment is loaded, the following can happen when trying to import netCDF4:
+
+>>> import netCDF4
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/scratch2/miniconda/envs/py35/lib/python3.5/site-packages/netCDF4/__init__.py", line 3, in <module>
+    from ._netCDF4 import *
+ImportError: /scratch2/miniconda/envs/py35/lib/python3.5/site-packages/netCDF4/_netCDF4.cpython-35m-x86_64-linux-gnu.so: undefined symbol: nc_inq_var_fletcher32
+
+The reason for this (figured out via ldd) is that AMBER builds its own NetCDF library that it now inserts into LD_LIBRARY_PATH without the NetCDF4 API and HDF5 bindings. Since the conda version of netCDF4 was built against the full NetCDF package, the one ld tries to link to at runtime (because AMBER requires LD_LIBRARY_PATH) is missing some symbols. Removing AMBER from the environment fixes the import but is not really a convenient solution for users of AMBER.
+
+At the moment there is no obvious solution if one wants to use netCDF4 and AMBER in the same shell session. If you need the fast writing capabilities of netCDF4 then you need to unload your AMBER environment before importing MDAnalysis.
+
+Raises:
+
+FutureWarning – When writing. The NCDFWriter currently does not write any scale_factor values for the data variables. Whilst not in breach of the AMBER NetCDF standard, this behaviour differs from that of most AMBER writers, especially for velocities which usually have a scale_factor of 20.455. In MDAnalysis 2.0, the NCDFWriter will enforce scale_factor writing to either match user inputs (either manually defined or via the NCDFReader) or those as written by AmberTools’s sander under default operation.
+
+See also
+
+NCDFReader
+
+Changed in version 0.10.0: Added ability to write velocities and forces
+
+Changed in version 0.11.0: kwarg delta renamed to dt, for uniformity with other Readers
+
+Changed in version 0.17.0: Use fast netCDF4 for writing but fall back to slow scipy.io.netcdf if netCDF4 is not available.
+
+Changed in version 0.20.1: Changes the cell_angles unit to the AMBER NetCDF convention standard of degree instead of the degrees written in previous version of MDAnalysis (Issue #2327).
+
+Changed in version 2.0.0: dt, start, and step keywords were unused and are no longer set. Writing of scale_factor values has now been implemented. By default only velocities write a scale_factor of 20.455 (echoing the behaviour seen from AMBER).
+
+ close()[source]
+
+Close the trajectory file.
+
+ is_periodic(ts)[source]
+
+Test if timestep ts contains a periodic box.
+
+Parameters:
+
+ts (Timestep) – Timestep instance containing coordinates to be written to trajectory file
+
+Returns:
+
+Return True if ts contains a valid simulation box
+
+Return type:
+
+bool
+
+ units = {'force': 'kcal/(mol*Angstrom)', 'length': 'Angstrom', 'time': 'ps', 'velocity': 'Angstrom/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.TRJ.NCDFPicklable(filename, mode='r', mmap=None, version=1, maskandscale=False)[source]
+
+NetCDF file object (read-only) that can be pickled.
+
+This class provides a file-like object (as returned by scipy.io.netcdf_file) that, unlike standard Python file objects, can be pickled. Only read mode is supported.
+
+When the file is pickled, filename and mmap of the open file handle in the file are saved. On unpickling, the file is opened by filename, and the mmap file is loaded. This means that for a successful unpickle, the original file still has to be accessible with its filename.
+
+Note
+
+This class subclasses scipy.io.netcdf_file, please see the scipy netcdf API documentation for more information on the parameters and how the class behaviour.
+
+Parameters:
+
+filename (str or file-like) – a filename given a text or byte string.
+
+mmap (None or bool, optional) – Whether to mmap filename when reading. True when filename is a file name, False when filename is a file-like object.
+
+version ({1, 2}, optional) – Sets the netcdf file version to read / write. 1 is classic, 2 is 64-bit offset format. Default is 1 (but note AMBER ncdf requires 2).
+
+maskandscale (bool, optional) – Whether to automatically scale and mask data. Default is False.
+
+Example
+
+f = NCDFPicklable(NCDF)
+print(f.variables['coordinates'].data)
+f.close()
+
+can also be used as context manager:
+
+with NCDFPicklable(NCDF) as f:
+    print(f.variables['coordinates'].data)
+
+See also
+
+MDAnalysis.lib.picklable_file_io.FileIOPicklable, MDAnalysis.lib.picklable_file_io.BufferIOPicklable, MDAnalysis.lib.picklable_file_io.TextIOPicklable, MDAnalysis.lib.picklable_file_io.GzipPicklable, MDAnalysis.lib.picklable_file_io.BZ2Picklable
+
+Added in version 2.0.0.
+
+Initialize netcdf_file from fileobj (str or file-like).
+
+7.23.2. ASCII TRAJ trajectories
+
+ASCII AMBER TRJ coordinate files (as defined in AMBER TRJ format) are handled by the TRJReader. It is also possible to directly read bzip2 or gzip compressed files.
+
+AMBER ASCII trajectories are recognised by the suffix ‘.trj’, ‘.mdcrd’ or ‘.crdbox (possibly with an additional ‘.gz’ or ‘.bz2’).
+
+Note
+
+In the AMBER community, these trajectories are often saved with the suffix ‘.crd’ but this extension conflicts with the CHARMM CRD format and MDAnalysis will not correctly autodetect AMBER “.crd” trajectories. Instead, explicitly provide the format="TRJ" argument to Universe:
+
+u = MDAnalysis.Universe("top.prmtop", "traj.crd", format="TRJ")
+
+In this way, the AMBER TRJReader is used.
+
+Limitations
+
+Periodic boxes are only stored as box lengths A, B, C in an AMBER trajectory; the reader always assumes that these are orthorhombic boxes.
+
+The trajectory does not contain time information so we simply set the time step to 1 ps (or the user could provide it as kwarg dt)
+
+Trajectories with fewer than 4 atoms probably fail to be read (BUG).
+
+If the trajectory contains exactly one atom then it is always assumed to be non-periodic (for technical reasons).
+
+Velocities are currently not supported as ASCII trajectories.
+
+ class MDAnalysis.coordinates.TRJ.TRJReader(filename, n_atoms=None, **kwargs)[source]
+
+AMBER trajectory reader.
+
+Reads the ASCII formatted AMBER TRJ format. Periodic box information is auto-detected.
+
+The number of atoms in a timestep must be provided in the n_atoms keyword because it is not stored in the trajectory header and cannot be reliably autodetected. The constructor raises a ValueError if n_atoms is left at its default value of None.
+
+The length of a timestep is not stored in the trajectory itself but can be set by passing the dt keyword argument to the constructor; it is assumed to be in ps. The default value is 1 ps.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based. kwarg delta renamed to dt, for uniformity with other Readers
+
+ close()[source]
+
+Close trj trajectory file if it was open.
+
+ property n_frames
+
+Number of frames (obtained from reading the whole trajectory).
+
+ open_trajectory()[source]
+
+Open the trajectory for reading and load first frame.
+
+ units = {'length': 'Angstrom', 'time': 'ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

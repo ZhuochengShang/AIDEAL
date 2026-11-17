@@ -1,0 +1,25 @@
+static _set_user_grid(gridcenter, xdim, ydim, zdim, smin, smax)[source]
+
+Helper function to set the grid dimensions to user defined values
+
+Parameters:
+
+gridcenter (numpy ndarray, float32) – 3 element ndarray containing the x, y and z coordinates of the grid box center
+
+xdim (float) – Box edge length in the x dimension
+
+ydim (float) – Box edge length in the y dimension
+
+zdim (float) – Box edge length in the y dimension
+
+smin (numpy ndarray, float32) – Minimum x,y,z coordinates for the input selection
+
+smax (numpy ndarray, float32) – Maximum x,y,z coordinates for the input selection
+
+Returns:
+
+umin (numpy ndarray, float32) – Minimum x,y,z coordinates of the user defined grid
+
+umax (numpy ndarray, float32) – Maximum x,y,z coordinates of the user defined grid
+
+Changed in version 2.0.0: Now a staticmethod of DensityAnalysis.

@@ -1,0 +1,43 @@
+mir_eval.display.events(times, labels=None, base=None, height=None, ax=None, text_kw=None, prop_cycle=None, **kwargs)
+
+Plot event times as a set of vertical lines
+
+Parameters:
+
+timesnp.ndarray, shape=(n,)
+
+event times, in the format returned by mir_eval.io.load_events() or mir_eval.io.load_labeled_events().
+
+labelslist, shape=(n,), optional
+
+event labels, in the format returned by mir_eval.io.load_labeled_events().
+
+basenumber
+
+The vertical position of the base of the line. By default, this will be the bottom of the plot.
+
+heightnumber
+
+The height of the lines. By default, this will be the top of the plot (minus base). .. note:: If either base or height are provided, both must be provided.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the segmentation. If none is provided, a new set of axes is created.
+
+text_kwdict
+
+If labels is provided, the properties of the text objects can be specified here. See matplotlib.pyplot.Text for valid parameters
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to pass to matplotlib.pyplot.vlines.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes

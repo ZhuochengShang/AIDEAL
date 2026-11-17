@@ -1,0 +1,23 @@
+search(self, float[, : ] search_coords)
+
+Search a group of atoms against initialized coordinates
+
+Creates a new grid with the query atoms and searches against the initialized coordinates. The search is exclusive i.e. only the pairs (i, j) such that atom[i] from query atoms and atom[j] from the initialized set of coordinates is stored as neighbors.
+
+PBC-aware/non PBC-aware calculations are automatically enabled during the instantiation of :class:FastNS.
+
+Parameters:
+
+search_coords (numpy.ndarray) – Query coordinates of shape (N, 3) where N is the number of queries
+
+Returns:
+
+results – An NSResults object holding neighbor search results, which can be accessed by its methods get_pairs() and get_pair_distances().
+
+Return type:
+
+NSResults
+
+Note
+
+For non-PBC aware calculations, the current implementation doesn’t work if any of the query coordinates lies outside the box supplied to FastNS.

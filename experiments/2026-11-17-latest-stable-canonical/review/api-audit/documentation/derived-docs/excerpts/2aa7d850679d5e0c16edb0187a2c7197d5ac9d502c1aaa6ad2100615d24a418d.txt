@@ -1,0 +1,19 @@
+class MDAnalysis.coordinates.NAMDBIN.NAMDBINWriter(filename, n_atoms=None, **kwargs)[source]
+
+Writer for NAMD binary coordinate files.
+
+Note
+
+Does not handle writing to bz2 or gz compressed file types.
+
+Added in version 1.0.0.
+
+Parameters:
+
+filename (str or NamedStream) – name of the output file or a stream
+
+n_atoms (int) – number of atoms for the output coordinate
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

@@ -1,0 +1,189 @@
+class MDAnalysis.core.topologyobjects.TopologyGroup(bondidx, universe, btype=None, type=None, guessed=None, order=None)[source]
+
+A container for a groups of bonds.
+
+All bonds of a certain types can be retrieved from within the TopologyGroup by querying with a tuple of types:
+
+tg2 = tg.select_bonds([key])
+
+Where key describes the desired bond as a tuple of the involved Atom types, as defined by the .type Atom attribute). A list of available keys can be displayed using the types() method.
+
+Alternatively, all the bonds which are in a given AtomGroup can be extracted using atomgroup_intersection():
+
+tg2 = tg.atomgroup_intersection(ag)
+
+This allows the keyword strict to be given, which forces all members of all bonds to be inside the AtomGroup passed to it.
+
+Finally, a TopologyGroup can be sliced similarly to AtomGroups:
+
+tg2 = tg[5:10]
+
+The bonds(), angles() and dihedrals() methods offer a “shortcut” to the Cython distance calculation functions in MDAnalysis.lib.distances.
+
+TopologyGroups can be combined with TopologyGroups of the same bond type (ie can combine two angle containing TopologyGroups).
+
+Added in version 0.8.
+
+Changed in version 0.9.0: Overhauled completely: (1) Added internal TopologyDict accessible by the topDict attribute. (2) selectBonds() allows the topDict to be queried with tuple of types. (3) Added atomgroup_intersection() to allow bonds which are in a given AtomGroup to be retrieved.
+
+Changed in version 0.10.0: Added from_indices() constructor, allowing class to be created from indices. Can now create empty Group. Renamed dump_contents() to to_indices()
+
+Changed in version 0.11.0: Added values method to return the size of each object in this group Deprecated selectBonds method in favour of select_bonds
+
+Changed in version 0.19.0: Empty TopologyGroup now returns correctly shaped empty array via indices property and to_indices()
+
+ angles(result=None, pbc=False)[source]
+
+Calculates the angle in radians formed between a bond between atoms 1 and 2 and a bond between atoms 2 & 3
+
+Parameters:
+
+result (array_like) – allows a predefined results array to be used, note that this will be overwritten
+
+pbc (bool) – apply periodic boundary conditions when calculating angles [False] this is important when connecting vectors between atoms might require minimum image convention
+
+Returns:
+
+angles (ndarray)
+
+.. versionchanged :: 0.9.0 – Added pbc option (default False)
+
+ property atom1
+
+The first atom in each TopologyObject in this Group
+
+ property atom2
+
+The second atom in each TopologyObject in this Group
+
+ property atom3
+
+The third atom in each TopologyObject in this Group
+
+ property atom4
+
+The fourth atom in each TopologyObject in this Group
+
+ atomgroup_intersection(ag, **kwargs)[source]
+
+Retrieve all bonds from within this TopologyGroup that are within the AtomGroup which is passed.
+
+Parameters:
+
+ag (AtomGroup) – The :class:~MDAnalysis.core.groups.AtomGroup to intersect with.
+
+strict (bool) – Only retrieve bonds which are completely contained within the AtomGroup. [False]
+
+Added in version 0.9.0.
+
+ bonds(pbc=False, result=None)[source]
+
+Calculates the distance between all bonds in this TopologyGroup
+
+Keywords:
+
+pbc
+
+apply periodic boundary conditions when calculating distance [False]
+
+result
+
+allows a predefined results array to be used, note that this will be overwritten
+
+Uses cython implementation
+
+ dihedrals(result=None, pbc=False)[source]
+
+Calculate the dihedral angle in radians for this topology group.
+
+Defined as the angle between a plane formed by atoms 1, 2 and 3 and a plane formed by atoms 2, 3 and 4.
+
+Parameters:
+
+result (array_like) – allows a predefined results array to be used, note that this will be overwritten
+
+pbc (bool) – apply periodic boundary conditions when calculating angles [False] this is important when connecting vectors between atoms might require minimum image convention
+
+Returns:
+
+angles (ndarray)
+
+.. versionchanged:: 0.9.0 – Added pbc option (default False)
+
+ dump_contents()
+
+Return a data structure with atom indices describing the bonds.
+
+This format should be identical to the original contents of the entries in universe._topology. Note that because bonds are sorted as they are initialised, the order that atoms are defined in each entry might be reversed.
+
+Returns:
+
+indices (tuple) – A tuple of tuples which define the contents of this TopologyGroup in terms of the atom numbers. (0 based index within u.atoms)
+
+.. versionadded:: 0.9.0
+
+.. versionchanged:: 0.10.0 – Renamed from “dump_contents” to “to_indices”
+
+ property indices
+
+all bond indices
+
+See also
+
+to_indices
+
+function that just returns indices
+
+ selectBonds(selection)
+
+Retrieves a selection from this topology group based on types.
+
+ select_bonds(selection)[source]
+
+Retrieves a selection from this topology group based on types.
+
+ to_indices()[source]
+
+Return a data structure with atom indices describing the bonds.
+
+This format should be identical to the original contents of the entries in universe._topology. Note that because bonds are sorted as they are initialised, the order that atoms are defined in each entry might be reversed.
+
+Returns:
+
+indices (tuple) – A tuple of tuples which define the contents of this TopologyGroup in terms of the atom numbers. (0 based index within u.atoms)
+
+.. versionadded:: 0.9.0
+
+.. versionchanged:: 0.10.0 – Renamed from “dump_contents” to “to_indices”
+
+ property topDict
+
+Returns the TopologyDict for this topology group.
+
+This is used for the select_bonds method when fetching a certain type of bond.
+
+This is a cached property so will be generated the first time it is accessed.
+
+ types()[source]
+
+Return a list of the bond types in this TopologyGroup
+
+ property universe
+
+The Universe that we belong to
+
+ values(**kwargs)[source]
+
+Return the size of each object in this Group
+
+Keywords:
+
+pbc
+
+apply periodic boundary conditions when calculating distance [False]
+
+result
+
+allows a predefined results array to be used, note that this will be overwritten
+
+Added in version 0.11.0.

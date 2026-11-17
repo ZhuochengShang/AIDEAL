@@ -1,0 +1,61 @@
+MDAnalysis.analysis.encore.similarity.dres(ensembles, select='name CA', dimensionality_reduction_method=None, distance_matrix=None, nsamples=1000, estimate_error=False, bootstrapping_samples=100, ncores=1, calc_diagonal=False, allow_collapsed_result=True)[source]
+
+Calculates the Dimensional Reduction Ensemble Similarity (DRES) between ensembles using the Jensen-Shannon divergence as described in [2].
+
+Parameters:
+
+ensembles (list) – List of ensemble objects for similarity measurements
+
+select (str, optional) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+dimensionality_reduction_method – A single or a list of instances of the DimensionalityReductionMethod classes from the dimensionality_reduction module. Different parameters for the same method can be explored by adding different instances of the same dimensionality reduction class. Provided methods are the Stochastic Proximity Embedding (default) and the Principal Component Analysis.
+
+distance_matrix (encore.utils.TriangularMatrix) – conformational distance matrix, It will be calculated on the fly from the ensemble data if it is not provided.
+
+nsamples (int, optional) – Number of samples to be drawn from the ensembles (default is 1000). This is used to resample the density estimates and calculate the Jensen-Shannon divergence between ensembles.
+
+estimate_error (bool, optional) – Whether to perform error estimation (default is False)
+
+bootstrapping_samples (int, optional) – number of samples to be used for estimating error.
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1).
+
+calc_diagonal (bool, optional) – Whether to calculate the diagonal of the similarity scores (i.e. the simlarities of every ensemble against itself). If this is False (default), 0.0 will be used instead.
+
+allow_collapsed_result (bool, optional) – Whether a return value of a list of one value should be collapsed into just the value.
+
+Returns:
+
+dres, details – dres contains the similarity values, arranged in numpy.array. If one number of dimensions is provided as an integer, the output will be a 2-dimensional square symmetrical numpy.array. The order of the matrix elements depends on the order of the input ensemble: for instance, if
+
+ensemble = [ens1, ens2, ens3]
+
+then the matrix elements [0,2] and [2,0] will both contain the similarity value between ensembles ens1 and ens3. Elaborating on the previous example, if n ensembles are given and m methods are provided the output will be a list of m arrays ordered by the input sequence of methods, each with a n*x*n symmetrical similarity matrix.
+
+details provide an array of the reduced_coordinates.
+
+Return type:
+
+numpy.array, numpy.array
+
+Notes
+
+To calculate the similarity, the method first projects the ensembles into lower dimensions by using the Stochastic Proximity Embedding (or others) algorithm. A gaussian kernel-based density estimation method is then used to estimate the probability density for each ensemble which is then used to compute the Jensen-Shannon divergence between each pair of ensembles.
+
+In the Jensen-Shannon divergence the upper bound of ln(2) signifies no similarity between the two ensembles, the lower bound, 0.0, signifies identical ensembles. However, due to the stochastic nature of the dimensional reduction in dres(), two identical ensembles will not necessarily result in an exact 0.0 estimate of the similarity but will be very close. For the same reason, calculating the similarity with the dres() twice will not result in two identical numbers; small differences have to be expected.
+
+Examples
+
+To calculate the Dimensional Reduction Ensemble similarity, two ensembles are created as Universe objects from a topology file and two trajectories. The topology- and trajectory files used are obtained from the MDAnalysis test suite for two different simulations of the protein AdK. To use a different dimensional reduction methods, simply set the parameter dimensionality_reduction_method. Likewise, different parameters for the same clustering method can be explored by adding different instances of the same method class. Here the simplest case of comparing just two instances of Universe is illustrated:
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> ens1 = Universe(PSF,DCD)
+>>> ens2 = Universe(PSF,DCD2)
+>>> DRES, details = encore.dres([ens1,ens2])
+>>> PCA_method = encore.PrincipalComponentAnalysis(dimension=2)
+>>> DRES, details = encore.dres([ens1,ens2],
+...                             dimensionality_reduction_method=PCA_method)
+
+In addition to the quantitative similarity estimate, the dimensional reduction can easily be visualized, see the Example section in MDAnalysis.analysis.encore.dimensionality_reduction.reduce_dimensionality`

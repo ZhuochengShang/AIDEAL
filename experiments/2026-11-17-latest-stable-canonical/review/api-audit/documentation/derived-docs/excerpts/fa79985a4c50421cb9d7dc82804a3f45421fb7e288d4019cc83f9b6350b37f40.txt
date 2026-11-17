@@ -1,0 +1,39 @@
+add_auxiliary(aux_spec: str | Dict[str, str] = None, auxdata: str | AuxReader = None, format: str = None, **kwargs) → None
+
+Add auxiliary data to be read alongside trajectory.
+
+Auxiliary data may be any data timeseries from the trajectory additional to that read in by the trajectory reader. auxdata can be an AuxReader instance, or the data itself as e.g. a filename; in the latter case an appropriate AuxReader is guessed from the data/file format. An appropriate format may also be directly provided as a key word argument.
+
+On adding, the AuxReader is initially matched to the current timestep of the trajectory, and will be updated when the trajectory timestep changes (through a call to next() or jumping timesteps with trajectory[i]).
+
+The representative value(s) of the auxiliary data for each timestep (as calculated by the AuxReader) are stored in the current timestep in the ts.aux namespace under aux_spec; e.g. to add additional pull force data stored in pull-force.xvg:
+
+u = MDAnalysis.Universe(PDB, XTC)
+u.trajectory.add_auxiliary('pull', 'pull-force.xvg')
+
+The representative value for the current timestep may then be accessed as u.trajectory.ts.aux.pull or u.trajectory.ts.aux['pull'].
+
+The following applies to energy readers like the EDRReader.
+
+All data that is present in the (energy) file can be added by omitting aux_spec like so:
+
+u.trajectory.add_auxiliary(auxdata="ener.edr")
+
+aux_spec is expected to be a dictionary that maps the desired attribute name in the ts.aux namespace to the precise data to be added as identified by a data_selector:
+
+term_dict = {"temp": "Temperature", "epot": "Potential"}
+u.trajectory.add_auxiliary(term_dict, "ener.edr")
+
+Adding this data can be useful, for example, to filter trajectory frames based on non-coordinate data like the potential energy of each time step. Trajectory slicing allows working on a subset of frames:
+
+selected_frames = np.array([ts.frame for ts in u.trajectory
+                            if ts.aux.epot < some_threshold])
+subset = u.trajectory[selected_frames]
+
+See also
+
+remove_auxiliary()
+
+Note
+
+Auxiliary data is assumed to be time-ordered, with no duplicates. See the Auxiliary API.

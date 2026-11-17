@@ -1,0 +1,13 @@
+classmethod _infer_bo_and_charges(mol: Mol) → None[source]
+
+Infer bond orders and formal charges from a molecule.
+
+Since most MD topology files don’t explicitly retain information on bond orders or charges, it has to be guessed from the topology. This is done by looping over each atom and comparing its expected valence to the current valence to get the Number of Unpaired Electrons (NUE). If an atom has a negative NUE, it needs a positive formal charge (-NUE). If two neighbouring atoms have UEs, the bond between them most likely has to be increased by the value of the smallest NUE. If after this process, an atom still has UEs, it needs a negative formal charge of -NUE.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule is modified inplace and must have all hydrogens added
+
+Notes
+
+This algorithm is order dependant. For example, for a carboxylate group R-C(-O)-O the first oxygen read will receive a double bond and the other one will be charged. It will also affect more complex conjugated systems.

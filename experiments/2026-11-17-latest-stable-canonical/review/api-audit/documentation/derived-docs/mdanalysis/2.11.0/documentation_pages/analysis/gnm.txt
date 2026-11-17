@@ -1,0 +1,223 @@
+4.8.1.1. Elastic network analysis of MD trajectories — MDAnalysis.analysis.gnm
+
+Author:
+
+Benjamin Hall <benjamin.a.hall@ucl.ac.uk>
+
+Year:
+
+2011
+
+Copyright:
+
+Lesser GNU Public License v2.1 or later
+
+Analyse a trajectory using elastic network models, following the approach of [1].
+
+An example is provided in the MDAnalysis Cookbook, listed as GNMExample.
+
+The basic approach is to pass a trajectory to GNMAnalysis and then run the analysis:
+
+u = MDAnalysis.Universe(PSF, DCD)
+C = MDAnalysis.analysis.gnm.GNMAnalysis(u, ReportVector="output.txt")
+
+C.run()
+output = zip(*C.results)
+
+with open("eigenvalues.dat", "w") as outputfile:
+    for item in output[1]:
+        outputfile.write(item + "\n")
+
+The results are found in GNMAnalysis.results, which can be used for further processing (see [1]).
+
+References
+
+4.8.1.1.1. Analysis tasks
+
+ class MDAnalysis.analysis.gnm.GNMAnalysis(universe, select='protein and name CA', cutoff=7.0, ReportVector=None, Bonus_groups=None)[source]
+
+Basic tool for GNM analysis.
+
+Each frame is treated as a novel structure and the GNM calculated. By default, this stores the dominant eigenvector and its associated eigenvalue; either can be used to monitor conformational change in a simulation.
+
+Parameters:
+
+universe (Universe) – Analyze the full trajectory in the universe.
+
+select (str (optional)) – MDAnalysis selection string
+
+cutoff (float (optional)) – Consider selected atoms within the cutoff as neighbors for the Gaussian network model.
+
+ReportVector (str (optional)) – filename to write eigenvectors to, by default no output is written
+
+Bonus_groups (tuple) – This is a tuple of selection strings that identify additional groups (such as ligands). The center of mass of each group will be added as a single point in the ENM (it is a popular way of treating small ligands such as drugs). You need to ensure that none of the atoms in Bonus_groups is contained in selection as this could lead to double counting. No checks are applied.
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvalues
+
+calculated eigenvalues
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvectors
+
+calculated eigenvectors
+
+Type:
+
+numpy.ndarray
+
+See also
+
+closeContactGNMAnalysis
+
+Changed in version 0.16.0: Made generate_output() a private method _generate_output().
+
+Changed in version 1.0.0: Changed selection keyword to select
+
+Changed in version 2.0.0: Use AnalysisBase as parent class and store results as attributes times, eigenvalues and eigenvectors of the results attribute.
+
+Changed in version 2.8.0: Enabled parallel execution with the multiprocessing and dask backends; use the new method get_supported_backends() to see all supported backends.
+
+Changed in version 2.11.0: Fixed incorrect stacking of results from multiprocessing. Previously results.eigenvectors would silently return an array of the wrong shape. It now correctly use np.vstack for reducing the eigenvectors from multiple workers.
+
+ generate_kirchoff()[source]
+
+Generate the Kirchhoff matrix of contacts.
+
+This generates the neighbour matrix by generating a grid of near-neighbours and then calculating which are are within the cutoff.
+
+Returns:
+
+the resulting Kirchhoff matrix
+
+Return type:
+
+array
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ class MDAnalysis.analysis.gnm.closeContactGNMAnalysis(universe, select='protein', cutoff=4.5, ReportVector=None, weights='size')[source]
+
+GNMAnalysis only using close contacts.
+
+This is a version of the GNM where the Kirchoff matrix is constructed from the close contacts between individual atoms in different residues.
+
+Parameters:
+
+universe (Universe) – Analyze the full trajectory in the universe.
+
+select (str (optional)) – MDAnalysis selection string
+
+cutoff (float (optional)) – Consider selected atoms within the cutoff as neighbors for the Gaussian network model.
+
+ReportVector (str (optional)) – filename to write eigenvectors to, by default no output is written
+
+weights ({"size", None} (optional)) – If set to “size” (the default) then weight the contact by \(1/\sqrt{N_i N_j}\) where \(N_i\) and \(N_j\) are the number of atoms in the residues \(i\) and \(j\) that contain the atoms that form a contact.
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvalues
+
+calculated eigenvalues
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvectors
+
+calculated eigenvectors
+
+Type:
+
+numpy.ndarray
+
+Notes
+
+The MassWeight option has now been removed.
+
+See also
+
+GNMAnalysis
+
+Changed in version 0.16.0: Made generate_output() a private method _generate_output().
+
+Deprecated since version 0.16.0: Instead of MassWeight=True use weights="size".
+
+Changed in version 1.0.0: MassWeight option (see above deprecation entry). Changed selection keyword to select
+
+Changed in version 2.0.0: Use AnalysisBase as parent class and store results as attributes times, eigenvalues and eigenvectors of the results attribute.
+
+ generate_kirchoff()[source]
+
+Generate the Kirchhoff matrix of contacts.
+
+This generates the neighbour matrix by generating a grid of near-neighbours and then calculating which are are within the cutoff.
+
+Returns:
+
+the resulting Kirchhoff matrix
+
+Return type:
+
+array
+
+4.8.1.1.2. Utility functions
+
+The following functions are used internally and are typically not directly needed to perform the analysis.
+
+ MDAnalysis.analysis.gnm.generate_grid(positions, cutoff)[source]
+
+Simple grid search.
+
+An alternative to searching the entire list of each atom; divide the structure into cutoff sized boxes This way, for each particle you only need to search the neighbouring boxes to find the particles within the cutoff.
+
+Observed a 6x speed up for a smallish protein with ~300 residues; this should get better with bigger systems.
+
+Parameters:
+
+positions (array) – coordinates of the atoms
+
+cutoff (float) – find particles with distance less than cutoff from each other; the grid will consist of boxes with sides of at least length cutoff
+
+ MDAnalysis.analysis.gnm.order_list(w)[source]
+
+Returns a dictionary showing the order of eigenvalues (which are reported scrambled normally)
+
+Changed in version 0.16.0: removed unused function backup_file()

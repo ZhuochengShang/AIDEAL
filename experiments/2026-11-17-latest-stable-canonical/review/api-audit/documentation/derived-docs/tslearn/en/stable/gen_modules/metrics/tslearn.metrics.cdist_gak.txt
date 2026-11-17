@@ -1,0 +1,61 @@
+cdist_gak
+
+ tslearn.metrics.cdist_gak(dataset1, dataset2=None, sigma=1.0, n_jobs=None, verbose=0, be=None)[source]
+
+Compute cross-similarity matrix using Global Alignment kernel (GAK). Note that GAK is a kernel, the larger GAK values mean more similar time series.
+
+GAK was originally presented in [1].
+
+Parameters:
+
+dataset1array-like, shape=(n_ts1, sz1, d) or (n_ts1, sz1) or (sz1,)
+
+A dataset of time series. If shape is (n_ts1, sz1), the dataset is composed of univariate time series. If shape is (sz1,), the dataset is composed of a unique univariate time series.
+
+dataset2None or array-like, shape=(n_ts2, sz2, d) or (n_ts2, sz2) or (sz2,) (default: None)
+
+Another dataset of time series. If None, self-similarity of dataset1 is returned. If shape is (n_ts2, sz2), the dataset is composed of univariate time series. If shape is (sz2,), the dataset is composed of a unique univariate time series.
+
+sigmafloat (default 1.)
+
+Bandwidth of the internal gaussian kernel used for GAK
+
+n_jobsint or None, optional (default=None)
+
+The number of jobs to run in parallel. None means 1 unless in a joblib.parallel_backend context. -1 means using all processors. See scikit-learns’ Glossary for more details.
+
+verboseint, optional (default=0)
+
+The verbosity level: if non zero, progress messages are printed. Above 50, the output is sent to stdout. The frequency of the messages increases with the verbosity level. If it more than 10, all iterations are reported. Glossary for more details.
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+array-like, shape=(n_ts1, n_ts2)
+
+Cross-similarity matrix.
+
+See also
+
+gak
+
+Compute Global Alignment kernel
+
+References
+
+ [1]
+M. Cuturi, “Fast global alignment kernels,” ICML 2011.
+
+Examples
+
+>>> cdist_gak([[1, 2, 2, 3], [1., 2., 3., 4.]], sigma=2.)
+array([[1.        , 0.65629661],
+       [0.65629661, 1.        ]])
+>>> cdist_gak([[1, 2, 2], [1., 2., 3., 4.]],
+...           [[1, 2, 2, 3], [1., 2., 3., 4.], [1, 2, 2, 3]],
+...           sigma=2.)
+array([[0.71059484, 0.29722877, 0.71059484],
+       [0.65629661, 1.        , 0.65629661]])

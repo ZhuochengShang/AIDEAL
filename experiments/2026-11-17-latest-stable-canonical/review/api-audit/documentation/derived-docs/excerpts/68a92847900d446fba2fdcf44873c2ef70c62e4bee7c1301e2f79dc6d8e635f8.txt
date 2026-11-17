@@ -1,0 +1,23 @@
+MDAnalysis.analysis.encore.covariance.shrinkage_covariance_estimator(coordinates, reference_coordinates=None, shrinkage_parameter=None)[source]
+
+Shrinkage estimator of the covariance matrix using the method described in
+
+Improved Estimation of the Covariance Matrix of Stock Returns With an Application to Portfolio Selection. Ledoit, O.; Wolf, M., Journal of Empirical Finance, 10, 5, 2003
+
+This implementation is based on the matlab code made available by Olivier Ledoit on his website: http://www.ledoit.net/ole2_abstract.htm
+
+Parameters:
+
+coordinates (numpy.array) – Flattened array of coordinates
+
+reference_coordinates (numpy.array) – Optional reference to use instead of mean
+
+shrinkage_parameter (None or float) – Optional shrinkage parameter
+
+Returns:
+
+cov_mat – Covariance matrix
+
+Return type:
+
+nump.array

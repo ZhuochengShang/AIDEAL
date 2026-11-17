@@ -1,0 +1,99 @@
+class MDAnalysis.coordinates.TNG.TNGReader(filename: str, convert_units: bool = True, **kwargs)[source]
+
+Reader for the TNG format
+
+The TNG format [1] is a format used in GROMACS for storage of trajectory and topology information. This reader is are based on the pytng package for reading TNG files. The reader is directed to the pytng documentation and TNG specification for further reading.
+
+The TNG format allows a wide range of compression algorithms and unlike the compressed XTC format can also store velocities and forces in addition to positions.
+
+The contents of the special blocks (positions, box, velocities, forces) are read into the timestep if present. Additional blocks are read into the ts.data dictionary if they are available at the current frame.
+
+Added in version 2.4.0.
+
+Initialize a TNG trajectory
+
+Parameters:
+
+filename (str) – filename of the trajectory
+
+convert_units (bool (optional)) – convert into MDAnalysis units
+
+ Writer()[source]
+
+Writer for TNG files
+
+Raises:
+
+NotImplementedError – Currently there is not writer for TNG files pending implementation upstream in pytng.
+
+ property additional_blocks: List[str]
+
+list of the additional (non-special) blocks that are being read from the trajectory. This may be exclude some blocks present in the file if they do not fall on the same trajectory stride as the positions and velocities.
+
+Returns:
+
+additional_blocks – The additional block names in the TNG trajectory
+
+Return type:
+
+list
+
+ property blocks: List[str]
+
+list of the blocks that are in the file
+
+Returns:
+
+blocks – The block names present in the TNG trajectory
+
+Return type:
+
+list
+
+ close()[source]
+
+close the reader
+
+ property n_frames: int
+
+number of frames in trajectory
+
+Returns:
+
+n_frames – The number of data containing frames in the trajectory
+
+Return type:
+
+int
+
+ static parse_n_atoms(filename: str) → int[source]
+
+parse the number of atoms in the TNG trajectory file
+
+Parameters:
+
+filename (str) – The name of the TNG file
+
+Returns:
+
+n_atoms – The number of atoms in the TNG file
+
+Return type:
+
+int
+
+ property special_blocks: List[str]
+
+list of the special blocks that are in the file
+
+Returns:
+
+special_blocks – The special block names (positions, box, velocities, forces) present in the TNG trajectory
+
+Return type:
+
+list
+
+ units = {'force': 'kJ/(mol*nm)', 'length': 'nm', 'time': 'second', 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

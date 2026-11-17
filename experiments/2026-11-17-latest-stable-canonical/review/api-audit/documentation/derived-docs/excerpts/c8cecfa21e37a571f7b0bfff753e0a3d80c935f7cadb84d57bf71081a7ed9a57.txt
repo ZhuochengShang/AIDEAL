@@ -1,0 +1,19 @@
+apply(func: Callable, computations: list) → list[source]
+
+map function func to all tasks in the computations list
+
+Main method that will get called when using an instance of BackendBase. It is equivalent to running [func(item) for item in computations] while using the parallel backend capabilities.
+
+Parameters:
+
+func (Callable) – function to be called on each of the tasks in computations list
+
+computations (list) – computation tasks to apply function to
+
+Returns:
+
+list of results of the function
+
+Return type:
+
+list

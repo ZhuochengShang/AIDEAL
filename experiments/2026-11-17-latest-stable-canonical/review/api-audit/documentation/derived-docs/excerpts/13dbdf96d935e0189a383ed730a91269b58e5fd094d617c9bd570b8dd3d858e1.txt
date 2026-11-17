@@ -1,0 +1,29 @@
+gyration_moments(wrap=False, unwrap=False, compound='group')[source]
+
+Moments of the gyration tensor.
+
+The moments are defined as the eigenvalues of the gyration tensor.
+
+ \[\mathsf{T} = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{r}_\mathrm{i} - \mathbf{r}_\mathrm{COM})(\mathbf{r}_\mathrm{i} - \mathbf{r}_\mathrm{COM})\]
+
+Where \(\mathbf{r}_\mathrm{COM}\) is the center of mass.
+
+See [Dima2004a] for background information.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – Which type of component to keep together during unwrapping.
+
+Returns:
+
+principle_moments_of_gyration – Gyration vector(s) of (compounds of) the group in \(Å^2\). If compound was set to 'group', the output will be a single vector of length 3. Otherwise, the output will be a 2D array of shape (n,3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.5.0.

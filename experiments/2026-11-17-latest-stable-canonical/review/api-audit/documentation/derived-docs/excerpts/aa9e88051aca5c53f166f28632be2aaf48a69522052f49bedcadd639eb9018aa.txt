@@ -1,0 +1,24 @@
+property unique
+
+Return a SegmentGroup containing sorted and unique Segments only.
+
+Examples
+
+>>> sg = u.segments[[2, 1, 2, 2, 1, 0]]
+>>> sg
+<SegmentGroup with 6 segments>
+>>> sg.ix
+array([2, 1, 2, 2, 1, 0])
+>>> sg2 = sg.unique
+>>> sg2
+<SegmentGroup with 3 segments>
+>>> sg2.ix
+array([0, 1, 2])
+>>> sg2.unique is sg2
+False
+
+Added in version 0.16.0.
+
+Changed in version 0.19.0: If the SegmentGroup is already unique, SegmentGroup.unique now returns the group itself instead of a copy.
+
+Changed in version 2.0.0: This function now always returns a copy.

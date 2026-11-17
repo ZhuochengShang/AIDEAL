@@ -1,0 +1,28 @@
+mir_eval.chord.rotate_bitmap_to_root(bitmap, chord_root)
+
+Circularly shift a relative bitmap to its absolute pitch classes.
+
+For clarity, the best explanation is an example. Given ‘G:Maj’, the root and quality map are as follows:
+
+root=5
+quality=[1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0]  # Relative chord shape
+
+After rotating to the root, the resulting bitmap becomes:
+
+abs_quality = [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1]  # G, B, and D
+
+Parameters:
+
+bitmapnp.ndarray, shape=(12,)
+
+Bitmap of active notes, relative to the given root.
+
+chord_rootint
+
+Absolute pitch class number.
+
+Returns:
+
+bitmapnp.ndarray, shape=(12,)
+
+Absolute bitmap of active pitch classes.

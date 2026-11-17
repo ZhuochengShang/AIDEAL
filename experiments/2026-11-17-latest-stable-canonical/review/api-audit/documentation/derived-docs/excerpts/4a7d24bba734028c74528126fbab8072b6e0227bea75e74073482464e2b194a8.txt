@@ -1,0 +1,27 @@
+mir_eval.chord.encode_many(chord_labels, reduce_extended_chords=False)
+
+Translate a set of chord labels to numerical representations for sane evaluation.
+
+Parameters:
+
+chord_labelslist
+
+Set of chord labels to encode.
+
+reduce_extended_chordsbool
+
+Whether to map the upper voicings of extended chords (9’s, 11’s, 13’s) to semitone extensions. (Default value = False)
+
+Returns:
+
+root_numbernp.ndarray, dtype=int
+
+Absolute semitone of the chord’s root.
+
+interval_bitmapnp.ndarray, dtype=int
+
+12-dim vector of relative semitones in the given chord quality.
+
+bass_numbernp.ndarray, dtype=int
+
+Relative semitones of the chord’s bass notes.

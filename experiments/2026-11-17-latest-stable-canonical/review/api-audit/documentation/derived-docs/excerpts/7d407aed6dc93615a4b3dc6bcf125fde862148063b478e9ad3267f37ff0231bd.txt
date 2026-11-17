@@ -1,0 +1,34 @@
+tslearn.utils.to_seglearn_dataset(X)[source]
+
+Transform a tslearn-compatible dataset into a seglearn dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz, d)
+
+tslearn-formatted dataset to be cast to seglearn format
+
+Returns:
+
+array of arrays, shape=(n_ts, )
+
+seglearn-formatted dataset. i-th sub-array in the list has shape (sz_i, d)
+
+Examples
+
+>>> tslearn_arr = numpy.random.randn(10, 16, 1)
+>>> seglearn_arr = to_seglearn_dataset(tslearn_arr)
+>>> seglearn_arr.shape
+(10, 16, 1)
+>>> tslearn_arr = numpy.random.randn(10, 16, 2)
+>>> seglearn_arr = to_seglearn_dataset(tslearn_arr)
+>>> seglearn_arr.shape
+(10, 16, 2)
+>>> tslearn_arr = [numpy.random.randn(16, 2), numpy.random.randn(10, 2)]
+>>> seglearn_arr = to_seglearn_dataset(tslearn_arr)
+>>> seglearn_arr.shape
+(2,)
+>>> seglearn_arr[0].shape
+(16, 2)
+>>> seglearn_arr[1].shape
+(10, 2)

@@ -1,0 +1,56 @@
+class MDAnalysis.core.selection.SelectionParser(*p, **k)[source]
+
+A small parser for selection expressions. Demonstration of recursive descent parsing using Precedence climbing (see http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm). Transforms expressions into nested Selection tree.
+
+For reference, the grammar that we parse is
+
+E(xpression)--> Exp(0)
+Exp(p) -->      P {B Exp(q)}
+P -->           U Exp(q) | "(" E ")" | v
+B(inary) -->    "and" | "or"
+U(nary) -->     "not"
+T(erms) -->     segid [value]
+                | resname [value]
+                | resid [value]
+                | name [value]
+                | type [value]
+
+ expect(token)[source]
+
+Anticipate and remove a given token
+
+ parse(selectstr, selgroups, periodic=None, atol=1e-08, rtol=1e-05, sorted=True, rdkit_kwargs=None, smarts_kwargs=None)[source]
+
+Create a Selection object from a string.
+
+Parameters:
+
+selectstr (str) – The string that describes the selection
+
+selgroups (AtomGroups) – AtomGroups to be used in group selections
+
+periodic (bool, optional) – for distance based selections, whether to consider periodic boundary conditions
+
+atol (float, optional) – The absolute tolerance parameter for float comparisons. Passed to numpy.isclose().
+
+rtol (float, optional) – The relative tolerance parameter for float comparisons. Passed to numpy.isclose().
+
+sorted (bool, optional) – Whether to sorted the output AtomGroup.
+
+rdkit_kwargs (dict, optional) – Arguments passed to the RDKitConverter when using selection based on SMARTS queries
+
+smarts_kwargs (dict, optional) – Arguments passed internally to RDKit’s GetSubstructMatches.
+
+Returns:
+
+The appropriate Selection object. Use the .apply method on
+
+this to perform the selection.
+
+Raises:
+
+SelectionError – If anything goes wrong in creating the Selection object.
+
+Changed in version 2.0.0: Added atol and rtol keywords to select float values. Added rdkit_kwargs to pass arguments to the RDKitConverter
+
+Changed in version 2.2.0: Added smarts_kwargs argument, allowing users to pass a a dictionary of arguments to RDKit’s GetSubstructMatches.

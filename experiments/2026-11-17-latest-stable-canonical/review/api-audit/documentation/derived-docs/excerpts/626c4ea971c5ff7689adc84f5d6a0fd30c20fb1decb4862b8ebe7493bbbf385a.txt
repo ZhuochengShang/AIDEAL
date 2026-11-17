@@ -1,0 +1,398 @@
+class tslearn.piecewise.PiecewiseAggregateApproximation(n_segments=1)[source]
+
+Piecewise Aggregate Approximation (PAA) transformation.
+
+PAA was originally presented in [1].
+
+Parameters:
+
+n_segmentsint (default: 1)
+
+Number of PAA segments to compute
+
+References
+
+ [1]
+E. Keogh & M. Pazzani. Scaling up dynamic time warping for datamining applications. SIGKDD 2000, pp. 285–289.
+
+Examples
+
+>>> paa = PiecewiseAggregateApproximation(n_segments=3)
+>>> data = [[-1., 2., 0.1, -1., 1., -1.], [1., 3.2, -1., -3., 1., -1.]]
+>>> paa_data = paa.fit_transform(data)
+>>> paa_data.shape
+(2, 3, 1)
+>>> paa_data
+array([[[ 0.5 ],
+        [-0.45],
+        [ 0.  ]],
+
+       [[ 2.1 ],
+        [-2.  ],
+        [ 0.  ]]])
+>>> float(paa.distance_paa(paa_data[0], paa_data[1]))
+3.15039...
+>>> float(paa.distance(data[0], data[1]))
+3.15039...
+>>> paa.inverse_transform(paa_data)
+array([[[ 0.5 ],
+        [ 0.5 ],
+        [-0.45],
+        [-0.45],
+        [ 0.  ],
+        [ 0.  ]],
+
+       [[ 2.1 ],
+        [ 2.1 ],
+        [-2.  ],
+        [-2.  ],
+        [ 0.  ],
+        [ 0.  ]]])
+
+Methods
+
+distance(ts1, ts2)
+ |
+Compute distance between PAA representations as defined in [1].
+ |
+
+distance_paa(paa1, paa2)
+ |
+Compute distance between PAA representations as defined in [1].
+ |
+
+fit(X[, y])
+ |
+Fit a PAA representation.
+ |
+
+fit_transform(X[, y])
+ |
+Fit a PAA representation and transform the data accordingly.
+ |
+
+from_hdf5(path)
+ |
+Load model from a HDF5 file.
+ |
+
+from_json(path)
+ |
+Load model from a JSON file.
+ |
+
+from_pickle(path)
+ |
+Load model from a pickle file.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+inverse_transform(X)
+ |
+Compute time series corresponding to given PAA representations.
+ |
+
+set_output(*[, transform])
+ |
+Set output container.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+to_hdf5(path)
+ |
+Save model to a HDF5 file.
+ |
+
+to_json(path)
+ |
+Save model to a JSON file.
+ |
+
+to_pickle(path)
+ |
+Save model to a pickle file.
+ |
+
+transform(X[, y])
+ |
+Transform a dataset of time series into its PAA representation.
+ |
+
+ distance(ts1, ts2)[source]
+
+Compute distance between PAA representations as defined in [1].
+
+Parameters:
+
+ts1array-like
+
+A time series
+
+ts2array-like
+
+Another time series
+
+Returns:
+
+float
+
+PAA distance
+
+References
+
+ [1] (1,2)
+E. Keogh & M. Pazzani. Scaling up dynamic time warping for datamining applications. SIGKDD 2000, pp. 285–289.
+
+ distance_paa(paa1, paa2)[source]
+
+Compute distance between PAA representations as defined in [1].
+
+Parameters:
+
+paa1array-like
+
+PAA representation of a time series
+
+paa2array-like
+
+PAA representation of another time series
+
+Returns:
+
+float
+
+PAA distance
+
+References
+
+ [1] (1,2)
+E. Keogh & M. Pazzani. Scaling up dynamic time warping for datamining applications. SIGKDD 2000, pp. 285–289.
+
+ fit(X, y=None)[source]
+
+Fit a PAA representation.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset
+
+Returns:
+
+PiecewiseAggregateApproximation
+
+self
+
+ fit_transform(X, y=None, **fit_params)[source]
+
+Fit a PAA representation and transform the data accordingly.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset
+
+Returns:
+
+numpy.ndarray of shape (n_ts, n_segments, d)
+
+PAA-Transformed dataset
+
+ classmethod from_hdf5(path)[source]
+
+Load model from a HDF5 file. Requires h5py http://docs.h5py.org/
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ classmethod from_json(path)[source]
+
+Load model from a JSON file.
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ classmethod from_pickle(path)[source]
+
+Load model from a pickle file.
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ inverse_transform(X)[source]
+
+Compute time series corresponding to given PAA representations.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz_paa, d)
+
+A dataset of PAA series.
+
+Returns:
+
+numpy.ndarray of shape (n_ts, sz_original_ts, d)
+
+A dataset of time series corresponding to the provided representation.
+
+ set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ to_hdf5(path)[source]
+
+Save model to a HDF5 file. Requires h5py http://docs.h5py.org/
+
+Parameters:
+
+pathstr
+
+Full file path. File must not already exist.
+
+Raises:
+
+FileExistsError
+
+If a file with the same path already exists.
+
+ to_json(path)[source]
+
+Save model to a JSON file.
+
+Parameters:
+
+pathstr
+
+Full file path.
+
+ to_pickle(path)[source]
+
+Save model to a pickle file.
+
+Parameters:
+
+pathstr
+
+Full file path.
+
+ transform(X, y=None)[source]
+
+Transform a dataset of time series into its PAA representation.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset
+
+Returns:
+
+numpy.ndarray of shape (n_ts, n_segments, d)
+
+PAA-Transformed dataset

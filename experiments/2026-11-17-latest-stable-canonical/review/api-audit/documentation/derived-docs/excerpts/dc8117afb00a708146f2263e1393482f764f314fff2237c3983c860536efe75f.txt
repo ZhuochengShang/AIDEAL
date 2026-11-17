@@ -1,0 +1,45 @@
+mir_eval.tempo.detection(reference_tempi, reference_weight, estimated_tempi, tol=0.08)
+
+Compute the tempo detection accuracy metric.
+
+Parameters:
+
+reference_tempinp.ndarray, shape=(2,)
+
+Two non-negative reference tempi
+
+reference_weightfloat > 0
+
+The relative strength of reference_tempi[0] vs reference_tempi[1].
+
+estimated_tempinp.ndarray, shape=(2,)
+
+Two non-negative estimated tempi.
+
+tolfloat in [0, 1]:
+
+The maximum allowable deviation from a reference tempo to count as a hit. |est_t - ref_t| <= tol * ref_t (Default value = 0.08)
+
+Returns:
+
+p_scorefloat in [0, 1]
+
+Weighted average of recalls: reference_weight * hits[0] + (1 - reference_weight) * hits[1]
+
+one_correctbool
+
+True if at least one reference tempo was correctly estimated
+
+both_correctbool
+
+True if both reference tempi were correctly estimated
+
+Raises:
+
+ValueError
+
+If the input tempi are ill-formed
+
+If the reference weight is not in the range [0, 1]
+
+If tol < 0 or tol > 1.

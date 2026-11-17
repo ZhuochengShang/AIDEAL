@@ -1,0 +1,227 @@
+5.10. ITP topology parser
+
+Reads a GROMACS ITP or TOP file to build the system. The topology will contain atom IDs, segids, residue IDs, residue names, atom names, atom types, charges, chargegroups, masses, moltypes, and molnums. Any masses that are in the file will be read; any missing values will be guessed. Bonds, angles, dihedrals and impropers are also read from the file.
+
+If an ITP file is passed without a [ molecules ] directive, passing infer_system=True (the default option) will create a Universe with 1 molecule of each defined moleculetype. If a [ molecules ] section is present, infer_system is ignored.
+
+If files are included with the #include directive, they will also be read. If they are not in the working directory, ITPParser will look for them in the include_dir directory. By default, this is set to include_dir="/usr/local/gromacs/share/gromacs/top/". Variables can be defined with the #define directive in files, or by passing in keyword arguments.
+
+Examples
+
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import ITP_tip5p
+
+#  override charge of HW2 atom (defined in file as HW2_CHARGE)
+u = mda.Universe(ITP_tip5p, HW2_CHARGE=2, infer_system=True)
+
+Note
+
+AMBER also uses topology files with the .top extension. To use ITPParser to read GROMACS top files, pass topology_format='ITP'.
+
+import MDAnalysis as mda
+u = mda.Universe('topol.top', topology_format='ITP')
+
+5.10.1. Preprocessor variables
+
+ITP files are often defined with lines that depend on whether a keyword flag is given. For example, this modified TIP5P water file:
+
+[ moleculetype ]
+; molname       nrexcl
+SOL             2
+
+#ifndef HW1_CHARGE
+    #define HW1_CHARGE 0.241
+#endif
+
+#define HW2_CHARGE 0.241
+
+[ atoms ]
+; id    at type res nr  residu name     at name         cg nr   charge
+1       opls_118     1       SOL              OW             1       0
+2       opls_119     1       SOL             HW1             1       HW1_CHARGE
+3       opls_119     1       SOL             HW2             1       HW2_CHARGE
+4       opls_120     1       SOL             LP1             1      -0.241
+5       opls_120     1       SOL             LP2             1      -0.241
+#ifdef EXTRA_ATOMS  ; added for keyword tests
+6       opls_120     1       SOL             LP3             1      -0.241
+7       opls_120     1       SOL             LP4             1       0.241
+#endif
+
+Define these preprocessor variables by passing keyword arguments. Any arguments that you pass in override any variables defined in the file. For example, the universe below will have charges of 3 for the HW1 and HW2 atoms:
+
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import ITP_tip5p
+
+u = mda.Universe(ITP_tip5p, EXTRA_ATOMS=True, HW1_CHARGE=3, HW2_CHARGE=3)
+
+These keyword variables are case-sensitive. Note that if you set keywords to False or None, they will be treated as if they are not defined in #ifdef conditions.
+
+For example, the universe below will only have 5 atoms.
+
+u = mda.Universe(ITP_tip5p, EXTRA_ATOMS=False)
+
+5.10.2. Classes
+
+ class MDAnalysis.topology.ITPParser.ITPParser(filename)[source]
+
+Read topology information from a GROMACS ITP or TOP file.
+
+Creates a Topology with the following Attributes: - ids - names - types - masses - charges - chargegroups - resids - resnames - segids - moltypes - molnums - bonds - angles - dihedrals - impropers
+
+Note
+
+By default, atomtypes and masses will be guessed on Universe creation if they are not read from the input file. This may change in release 3.0. See Guesser modules for more information.
+
+Changed in version 2.2.0: no longer adds angles for water molecules with SETTLE constraint
+
+Changed in version 2.8.0: Removed mass guessing (attributes guessing takes place now through universe.guess_TopologyAttrs() API). Added guessed elements if all elements are valid to preserve partial mass guessing behavior
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ parse(include_dir='/usr/local/gromacs/share/gromacs/top/', infer_system=True, **kwargs)[source]
+
+Parse ITP file into Topology
+
+Parameters:
+
+include_dir (str, optional) – A directory in which to look for other files included from the original file, if the files are not first found in the current directory. Default: “/usr/local/gromacs/share/gromacs/top/”
+
+infer_system (bool, optional (default True)) – If a [ molecules ] directive is not found within the the topology file, create a Topology with one of every [ moleculetype ] defined. If a [ molecules ] directive is found, this keyword is ignored.
+
+Return type:
+
+MDAnalysis Topology object
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

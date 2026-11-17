@@ -1,0 +1,13 @@
+MDAnalysis.lib.util.store_init_arguments(func)[source]
+
+Decorator to store arguments passed to the init method of a class.
+
+Arguments are stored as a dictionary in cls._kwargs.
+
+Notes
+
+Only does a shallow copy, if the arguments are changed by the class after passing through the decorator this will be reflected in the stored arguments.
+
+If not empty, args is not unpacked and stored as-is in the dictionary. If no args are passed, then no arg entry will be stored in the dictionary.
+
+Added in version 2.2.0.

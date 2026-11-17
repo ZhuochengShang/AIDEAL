@@ -1,0 +1,17 @@
+set_coords(coords: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], cutoff: float | None = None) → None[source]
+
+Constructs KDTree from the coordinates
+
+Wrapping of coordinates to the primary unit cell is enforced before any distance evaluations. If periodic boundary conditions are enabled, then duplicate particles are generated in the vicinity of the box. An additional array mapping is also generated which can be later used to trace the origin of duplicate particle coordinates.
+
+For non-periodic calculations, cutoff should not be provided the parameter is only required for periodic calculations.
+
+Parameters:
+
+coords (array_like) – Coordinate array of shape (N, 3) for N atoms.
+
+cutoff (float) – Specified cutoff distance to create duplicate images Typically equivalent to the desired search radius or the maximum of the desired cutoff radius. Relevant images corresponding to every atom which lies within cutoff distance from either of the box boundary will be generated.
+
+See also
+
+MDAnalysis.lib.distances.augment_coordinates

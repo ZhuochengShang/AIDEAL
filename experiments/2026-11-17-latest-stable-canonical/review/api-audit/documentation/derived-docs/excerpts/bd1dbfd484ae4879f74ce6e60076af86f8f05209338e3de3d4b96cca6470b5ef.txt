@@ -1,0 +1,29 @@
+mir_eval.io.load_labeled_events(filename, delimiter='\\s+', comment='#')
+
+Import labeled time-stamp events from an annotation file. The file should consist of two columns; the first having numeric values corresponding to the event times and the second having string labels for each event. This is primarily useful for processing labeled events which lack duration, such as beats with metric beat number or onsets with an instrument label.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+event_timesnp.ndarray
+
+array of event times (float)
+
+labelslist of str
+
+list of labels

@@ -1,0 +1,33 @@
+set_weights(weights, layer_name=None)[source]
+
+Set model weights (or weights for a given layer if layer_name is provided).
+
+Parameters:
+
+weights: list of ndarrays
+
+Weights to set for the model / target layer
+
+layer_name: str or None (default: None)
+
+Name of the layer for which weights should be set. If None, all model weights are set. Available layer names with weights are:
+
+“shapelets_i_j” with i an integer for the shapelet id and j an integer for the dimension
+
+“classification” for the final classification layer
+
+Examples
+
+>>> from tslearn.generators import random_walk_blobs
+>>> X, y = random_walk_blobs(n_ts_per_blob=10, sz=16, d=1, n_blobs=3)
+>>> clf = LearningShapelets(n_shapelets_per_size={3: 1}, max_iter=1,
+...                     verbose=0)
+>>> _ = clf.fit(X, y)
+>>> weights_shapelet = [
+...     numpy.array([[[1], [2], [3]]])
+... ]
+>>> clf.set_weights(weights_shapelet, layer_name="shapelets_0")
+>>> clf.shapelets_as_time_series_
+array([[[1.],
+        [2.],
+        [3.]]])

@@ -1,0 +1,195 @@
+class MDAnalysis.coordinates.TRR.TRRWriter(filename, n_atoms, convert_units=True, dt=None, **kwargs)[source]
+
+Writer for the Gromacs TRR format.
+
+The Gromacs TRR trajectory format is a lossless format. The TRR format can store velocities and forces in addition to the coordinates. It is also used by other Gromacs tools to store and process other data such as modes from a principal component analysis.
+
+If the data dictionary of a Timestep contains the key ‘lambda’ the corresponding value will be used as the lambda value for written TRR file. If None is found the lambda is set to 0.
+
+If the data dictionary of a Timestep contains the key ‘step’ the corresponding value will be used as the step value for the written TRR file. If the dictionary does not contain ‘step’, then the step is set to the Timestep frame attribute.
+
+Parameters:
+
+filename (str) – filename of trajectory
+
+n_atoms (int) – number of atoms to be written
+
+convert_units (bool (optional)) – convert from MDAnalysis units to format specific units
+
+dt (float (optional)) – timestep in MDAnalysis units to write trajectory with; if dt is None, time for a frame is set from the timestep; else, the time for a frame is dt * frame
+
+**kwargs (dict) – General writer arguments
+
+ close()
+
+close trajectory
+
+ convert_dimensions_to_unitcell(ts, inplace=True)
+
+Read dimensions from timestep ts and return appropriate unitcell.
+
+The default is to return [A,B,C,alpha,beta,gamma]; if this is not appropriate then this method has to be overriden.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ has_valid_coordinates(criteria, x)
+
+Returns True if all values are within limit values of their formats.
+
+Due to rounding, the test is asymmetric (and min is supposed to be negative):
+
+min < x <= max
+
+Parameters:
+
+criteria (dict) – dictionary containing the max and min values in native units
+
+x (numpy.ndarray) – (x, y, z) coordinates of atoms selected to be written out
+
+Return type:
+
+bool
+
+ units = {'force': 'kJ/(mol*nm)', 'length': 'nm', 'time': 'ps', 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)
+
+Write current timestep, using the supplied obj.
+
+Parameters:
+
+obj (AtomGroup or Universe) – write coordinate information associate with obj
+
+Note
+
+The size of the obj must be the same as the number of atoms provided when setting up the trajectory.
+
+Changed in version 2.0.0: Deprecated support for Timestep argument to write has now been removed. Use AtomGroup or Universe as an input instead.

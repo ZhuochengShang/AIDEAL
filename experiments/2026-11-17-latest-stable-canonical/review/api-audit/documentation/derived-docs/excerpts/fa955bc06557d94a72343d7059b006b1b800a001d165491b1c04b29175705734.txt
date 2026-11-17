@@ -1,0 +1,353 @@
+class MDAnalysis.analysis.pca.PCA(universe, select='all', align=False, mean=None, n_components=None, **kwargs)[source]
+
+Principal component analysis on an MD trajectory.
+
+After initializing and calling method with a universe or an atom group, principal components ordering the atom coordinate data by decreasing variance will be available for analysis. As an example::
+
+pca = PCA(universe, select='backbone').run()
+pca_space = pca.transform(universe.select_atoms('backbone'), 3)
+
+generates the principal components of the backbone of the atomgroup and then transforms those atomgroup coordinates by the direction of those variances. Please refer to the PCA Tutorial for more detailed instructions. When using mean selections, the first frame of the selected trajectory slice is used as a reference.
+
+Parameters:
+
+universe (Universe) – Universe
+
+select (string, optional) – A valid selection statement for choosing a subset of atoms from the atomgroup.
+
+align (boolean, optional) – If True, the trajectory will be aligned to a reference structure.
+
+mean (array_like, optional) – Optional reference positions to be be used as the mean of the covariance matrix.
+
+n_components (int, optional) – The number of principal components to be saved, default saves all principal components
+
+verbose (bool (optional)) – Show detailed progress of the calculation if set to True.
+
+ results.p_components
+
+Principal components of the feature space, representing the directions of maximum variance in the data. The column vector p_components[:, i] is the eigenvector corresponding to the variance[i].
+
+Added in version 2.0.0.
+
+Type:
+
+array, (n_atoms * 3, n_components)
+
+ p_components
+
+Alias to the results.p_components.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.p_components instead.
+
+Type:
+
+array, (n_atoms * 3, n_components)
+
+ results.variance
+
+Raw variance explained by each eigenvector of the covariance matrix.
+
+Added in version 2.0.0.
+
+Type:
+
+array (n_components, )
+
+ variance
+
+Alias to the results.variance.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.variance instead.
+
+Type:
+
+array (n_components, )
+
+ results.cumulated_variance
+
+Percentage of variance explained by the selected components and the sum of the components preceding it. If a subset of components is not chosen then all components are stored and the cumulated variance will converge to 1.
+
+Added in version 2.0.0.
+
+Type:
+
+array, (n_components, )
+
+ cumulated_variance
+
+Alias to the results.cumulated_variance.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.cumulated_variance instead.
+
+Type:
+
+array, (n_components, )
+
+Notes
+
+Computation can be sped up by supplying precalculated mean positions.
+
+Changed in version 0.19.0: The start frame is used when performing selections and calculating mean positions. Previously the 0th frame was always used.
+
+Changed in version 1.0.0: n_components now limits the correct axis of p_components. cumulated_variance now accurately represents the contribution of each principal component and does not change when n_components is given. If n_components is not None or is less than the number of p_components, cumulated_variance will not sum to 1. align=True now correctly aligns the trajectory and computes the correct means and covariance matrix.
+
+Changed in version 2.0.0: mean_atoms removed, as this did not reliably contain the mean positions. mean input now accepts coordinate arrays instead of atomgroup. p_components, variance and cumulated_variance are now stored in a MDAnalysis.analysis.base.Results instance.
+
+Changed in version 2.8.0: self.run() can now appropriately use frames parameter (bug described by #4425 and fixed by #4423). Previously, behaviour was to manually iterate through self._trajectory, which would incorrectly handle cases where the frame argument was passed.
+
+ cumulative_overlap(other, i=0, n_components=None)[source]
+
+Compute the cumulative overlap of a vector in a subspace.
+
+This is not symmetric. The cumulative overlap measures the overlap of the chosen vector in this instance, in the other subspace.
+
+Please cite [Yang2008] if you use this function.
+
+Parameters:
+
+other (PCA) – Another PCA class. This must have already been run.
+
+i (int, optional) – The index of eigenvector to be analysed.
+
+n_components (int, optional) – number of components in other to compute for the cumulative overlap. None computes all of them.
+
+Returns:
+
+Cumulative overlap of the chosen vector in this instance to the other subspace. 0 indicates that they are mutually orthogonal, whereas 1 indicates that they are identical.
+
+Return type:
+
+float
+
+See also
+
+cumulative_overlap()
+
+Added in version 1.0.0.
+
+ classmethod get_supported_backends()
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ project_single_frame(components=None, group=None, anchor=None)[source]
+
+Computes a function to project structures onto selected PCs
+
+Applies Inverse-PCA transform to the PCA atomgroup. Optionally, calculates one displacement vector per residue to extrapolate the transform to atoms not in the PCA atomgroup.
+
+Parameters:
+
+components (int, array, optional) – Components to be projected onto. The default None maps onto all components.
+
+group (AtomGroup, optional) – The AtomGroup containing atoms to be projected. The projection applies to whole residues in group. The atoms in the PCA class are not affected by this argument. The default None does not extrapolate the projection to non-PCA atoms.
+
+anchor (string, optional) – The string to select the PCA atom whose displacement vector is applied to non-PCA atoms in a residue. The anchor selection is applied to group.The resulting atomselection must have exactly one PCA atom in each residue of group. The default None does not extrapolate the projection to non-PCA atoms.
+
+Returns:
+
+The resulting function f(ts) takes as input a Timestep ts, and returns ts with the projected structure
+
+Warning
+
+The transformation function takes a Timestep as input because this is required for Trajectory transformations (“on-the-fly” transformations). However, the inverse-PCA transformation is applied on the atoms of the Universe that was used for the PCA. It is expected that the ts is from the same Universe but this is currently not checked.
+
+Return type:
+
+function
+
+Notes
+
+When the PCA class is run for an atomgroup, the principal components are cached. The trajectory can then be projected onto one or more of these principal components. Since the principal components are sorted in the order of decreasing explained variance, the first few components capture the essential molecular motion.
+
+If N is the number of atoms in the PCA group, each component has the length 3N. A PCA score \(w\_i\), along component \(u\_i\), is calculated for a set of coordinates \((r(t))\) of the same atoms. The PCA scores are then used to transform the structure, \((r(t))\) at a timestep, back to the original space.
+
+ \[\begin{split}w_{i}(t) = ({\textbf r}(t) - \bar{{\textbf r}}) \cdot {\textbf u}_i \\ {\textbf r'}(t) = (w_{i}(t) \cdot {\textbf u}_i^T) + \bar{{\textbf r}}\end{split}\]
+
+For each residue, the projection can be extended to atoms that were not part of PCA by applying the displacement vector of a PCA atom to all the atoms in the residue. This could be useful to preserve the bond distance between a PCA atom and other non-PCA atoms in a residue.
+
+If there are r residues and n non-PCA atoms in total, the displacement vector has the size 3r. This needs to be broadcasted to a size 3n. An extrapolation trick is used to shape the array, since going over each residue for each frame can be expensive. Non-PCA atoms’ displacement vector is calculated with fancy indexing on the anchors’ displacement vector. index_extrapolate saves which atoms belong to which anchors. If there are two non-PCA atoms in the first anchor’s residue and three in the second anchor’s residue, index_extrapolate is [0, 0, 1, 1, 1]
+
+Examples
+
+Run PCA class before using this function. For backbone PCA, run:
+
+pca = PCA(universe, select='backbone').run()
+
+Obtain a transformation function to project the backbone trajectory onto the first principal component:
+
+project = pca.project_single_frame(components=0)
+
+To project onto the first two components, run:
+
+project = pca.project_single_frame(components=[0,1])
+
+Alternatively, the transformation can be applied to PCA atoms and extrapolated to other atoms according to the CA atom’s translation in each residue:
+
+all = u.select_atoms('all')
+project = pca.project_single_frame(components=0,
+                                   group=all, anchor='name CA')
+
+Finally, apply the transformation function to a timestep:
+
+project(u.trajectory.ts)
+
+or apply the projection to the universe:
+
+u.trajectory.add_transformations(project)
+
+Added in version 2.2.0.
+
+ rmsip(other, n_components=None)[source]
+
+Compute the root mean square inner product between subspaces.
+
+This is only symmetric if the number of components is the same for both instances. The RMSIP effectively measures how correlated the vectors of this instance are to those of other.
+
+Please cite [Amadei1999] and [Leo-Macias2004] if you use this function.
+
+Parameters:
+
+other (PCA) – Another PCA class. This must have already been run.
+
+n_components (int or tuple of ints, optional) – number of components to compute for the inner products. None computes all of them.
+
+Returns:
+
+Root mean square inner product of the selected subspaces. 0 indicates that they are mutually orthogonal, whereas 1 indicates that they are identical.
+
+Return type:
+
+float
+
+Examples
+
+You can compare the RMSIP between different intervals of the same trajectory. For example, to compare similarity within the top three principal components:
+
+>>> first_interval = pca.PCA(u, select="backbone").run(start=0, stop=25)
+>>> second_interval = pca.PCA(u, select="backbone").run(start=25, stop=50)
+>>> last_interval = pca.PCA(u, select="backbone").run(start=75)
+>>> round(first_interval.rmsip(second_interval, n_components=3), 6)
+0.381476
+>>> round(first_interval.rmsip(last_interval, n_components=3), 6)
+0.174782
+
+See also
+
+rmsip()
+
+Added in version 1.0.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.
+
+ transform(atomgroup, n_components=None, start=None, stop=None, step=None, verbose=False)[source]
+
+Apply the dimensionality reduction on a trajectory
+
+Parameters:
+
+atomgroup (AtomGroup or Universe) – The AtomGroup or Universe containing atoms to be PCA transformed.
+
+n_components (int, optional) – The number of components to be projected onto. The default None maps onto all components.
+
+start (int, optional) – The frame to start on for the PCA transform. The default None becomes 0, the first frame index.
+
+stop (int, optional) – Frame index to stop PCA transform. The default None becomes the total number of frames in the trajectory. Iteration stops before this frame number, which means that the trajectory would be read until the end.
+
+step (int, optional) – Include every step frames in the PCA transform. If set to None (the default) then every frame is analyzed (i.e., same as step=1).
+
+verbose (bool, optional) – verbose = True option displays a progress bar for the iterations of transform. verbose = False disables the progress bar, just returns the pca_space array when the calculations are finished.
+
+Returns:
+
+pca_space
+
+Return type:
+
+array, shape (n_frames, n_components)
+
+Changed in version 0.19.0: Transform now requires that run() has been called before, otherwise a ValueError is raised.
+
+Changed in version 2.8.0: Transform now has shows a tqdm progressbar, which can be toggled on with verbose = True, or off with verbose = False

@@ -1,0 +1,57 @@
+MDAnalysis.analysis.helix_analysis.helix_analysis(positions, ref_axis=(0, 0, 1))[source]
+
+Calculate helix properties from atomic coordinates.
+
+Each property is calculated from a sliding window of 4 atoms, from i to i+3. Any property whose name begins with ‘local’ is a property of a sliding window.
+
+Parameters:
+
+positions (numpy.ndarray of shape (N, 3)) – Atomic coordinates.
+
+ref_axis (array-like of length 3, optional) – The reference axis used to calculate the tilt of the vector of best fit, and the local screw angles.
+
+Returns:
+
+local_twistsarray, shape (N-3,)
+
+local twist angle from atom i+1 to i+2
+
+local_nres_per_turnarray, shape (N-3,)
+
+number of residues per turn, based on local_twist
+
+local_axesarray, shape (N-3, 3)
+
+the length-wise helix axis of the local window
+
+local_bendsarray, shape (N-6,)
+
+the angles between local helix angles, 3 windows apart
+
+local_heightsarray, shape (N-3,)
+
+the rise of each local helix
+
+local_helix_directionsarray, shape (N-2, 3)
+
+the unit vector from each local origin to atom i+1
+
+local_originsarray, shape (N-2, 3)
+
+the projected origin for each helix
+
+all_bendsarray, shape (N-3, N-3)
+
+angles between each local axis
+
+global_axisarray, shape (3,)
+
+vector of best fit through origins, pointing at the first origin.
+
+local_screw_anglesarray, shape (N-2,)
+
+cylindrical azimuth angle to plane of global_axis and ref_axis
+
+Return type:
+
+dict with the following keys

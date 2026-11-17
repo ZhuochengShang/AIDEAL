@@ -1,0 +1,7 @@
+_reopen()[source]
+
+reopen trajectory
+
+Note
+
+If the driver and comm arguments were used to open the hdf5 file (specifically, driver="mpio") then this method does not close and open the file like most readers because the information about the MPI communicator would be lost; instead it rewinds the trajectory back to the first timstep.

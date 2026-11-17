@@ -1,0 +1,64 @@
+center(weights, wrap=False, unwrap=False, compound='group')
+
+Weighted center of (compounds of) the group
+
+Computes the weighted center of Atoms in the group. Weighted centers per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the weights of a compound sum up to zero, the coordinates of that compound’s weighted center will be nan (not a number).
+
+Parameters:
+
+weights (array_like or None) – Weights to be used. Setting weights=None is equivalent to passing identical weights for all atoms of the group.
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not 'group' the center of each compound will be calculated without moving any Atoms to keep the compounds intact. Instead, the resulting position vectors will be moved to the primary unit cell after calculation. Default [False].
+
+unwrap (bool, optional) –
+
+If True, compounds will be unwrapped before computing their
+
+centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – If 'group', the weighted center of all atoms in the group will be returned as a single position vector. Else, the weighted centers of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+center – Position vector(s) of the weighted center(s) of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments', 'residues', 'molecules', or 'fragments', the output will be a 2d array of shape (n, 3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If compound is not one of 'group', 'segments', 'residues', 'molecules', or 'fragments'.
+
+ValueError – If both ‘wrap’ and ‘unwrap’ set to true.
+
+NoDataError – If compound is 'molecule' but the topology doesn’t contain molecule information (molnums) or if compound is 'fragments' but the topology doesn’t contain bonds.
+
+Examples
+
+To find the center of charge of a given AtomGroup:
+
+>>> sel = u.select_atoms('prop mass > 4.0')
+>>> sel.center(sel.charges)
+array([-0.22925091, -0.04771193, -0.16728489])
+
+To find the centers of mass per residue of all CA Atoms:
+
+ >>> sel = u.select_atoms('name CA')
+ >>> sel.center(sel.masses, compound='residues')
+ array([[ 11.66462231,   8.39347267,  -8.98323059],
+       [ 11.41483879,   5.43442154,  -6.51348448],
+       [  8.95975494,   5.61292315,  -3.61323047],
+       [  8.29006767,   3.07599092,  -0.79665166],
+       [  5.01112604,   3.76389837,   1.130355  ],
+       ...
+
+Changed in version 0.19.0: Added compound parameter
+
+Changed in version 0.20.0: Added 'molecules' and 'fragments' compounds
+
+Changed in version 0.20.0: Added unwrap parameter
+
+Changed in version 1.0.0: Removed flags affecting default behaviour
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.

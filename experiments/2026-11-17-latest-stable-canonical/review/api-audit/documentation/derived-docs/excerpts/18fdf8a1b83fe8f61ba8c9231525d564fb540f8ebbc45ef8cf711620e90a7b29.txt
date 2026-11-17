@@ -1,0 +1,11 @@
+convert_length(unit='Angstrom')[source]
+
+Convert Grid object to the new unit.
+
+Parameters:
+
+unit (str (optional)) – unit that the grid should be converted to: one of “Angstrom”, “nm”
+
+Notes
+
+This changes the edges but will not change the density; it is the user’s responsibility to supply the appropriate unit if the Grid object is constructed from a density. It is suggested to start from a histogram and a length unit and use make_density().

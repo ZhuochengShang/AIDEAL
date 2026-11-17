@@ -1,0 +1,33 @@
+mir_eval.separation.evaluate(reference_sources, estimated_sources, **kwargs)
+
+Compute all metrics for the given reference and estimated signals.
+
+NOTE: This will always compute mir_eval.separation.bss_eval_images() for any valid input and will additionally compute mir_eval.separation.bss_eval_sources() for valid input with fewer than 3 dimensions.
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl[, nchan])
+
+matrix containing true sources
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl[, nchan])
+
+matrix containing estimated sources
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated source
+>>> scores = mir_eval.separation.evaluate(reference_sources,
+...                                       estimated_sources)

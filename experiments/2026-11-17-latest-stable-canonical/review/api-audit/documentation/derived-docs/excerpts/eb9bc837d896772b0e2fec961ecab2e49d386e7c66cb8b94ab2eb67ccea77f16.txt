@@ -1,0 +1,28 @@
+guess_TopologyAttrs(context=None, to_guess=None, force_guess=None, error_if_missing=True, **kwargs)[source]
+
+Guess and add attributes through a specific context-aware guesser.
+
+Parameters:
+
+context (str or Guesser class) – For calling a matching guesser class for this specific context
+
+to_guess (Optional[list[str]]) –
+TopologyAttrs to be guessed. These TopologyAttrs will be wholly guessed if they don’t exist in the Universe. If they already exist in the Universe, only empty or missing values will be guessed.
+
+Warning
+
+In MDAnalysis 2.x, types and masses are being automatically guessed if they are missing (to_guess=('types, 'masses')). However, starting with release 3.0 no guessing will be done by default and it will be up to the user to request guessing using to_guess and force_guess.
+
+force_guess (Optional[list[str]]) – TopologyAttrs in this list will be force guessed. If the TopologyAttr does not already exist in the Universe, this has no effect. If the TopologyAttr does already exist, all values will be overwritten by guessed values.
+
+error_if_missing (bool) – If True, raise an error if the guesser cannot guess the attribute due to missing TopologyAttrs used as the inputs for guessing. If False, a warning will be raised instead. Errors will always be raised if an attribute is in the force_guess list, even if this parameter is set to False.
+
+**kwargs (extra arguments to be passed to the guesser class)
+
+Examples
+
+To guess masses and types attributes:
+
+u.guess_TopologyAttrs(context='default', to_guess=['masses', 'types'])
+
+Added in version 2.8.0.

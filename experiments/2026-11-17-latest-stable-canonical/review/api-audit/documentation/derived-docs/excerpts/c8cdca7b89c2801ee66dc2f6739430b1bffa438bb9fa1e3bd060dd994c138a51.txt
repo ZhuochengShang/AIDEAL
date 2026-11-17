@@ -1,0 +1,42 @@
+get_early_predict_proba_generator(n_ts=1)[source]
+
+Allows streaming incoming timestamps of a time series and retrieving current probability estimates as well as estimated delay before prediction timestamps.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+n_ts: int (default 1)
+
+The number of time series that will be predicted by the generator
+
+Returns:
+
+generator
+
+Use the send method of the generator to stream timestamps as they become available and retrieve associated prediction probalities and delays. This method takes an array-like, shape (n_ts, n_timestamps, n_features), representing freshly aquired data for all timeseries as input. This new data is concatenated with previously sent data, if any, to output the predicted probability estimates and estimated delays before optimal prediction timestamps for all timeseries based all on available data (same output as early_predict_proba()). Use n_timestamps = 1 for step by step feeding.
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [3, 2, 1, 1, 2, 3],
+...                                   [3, 2, 1, 1, 2, 3]])
+>>> y = [0, 0, 0, 1, 1, 1, 0, 0]
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=1000.,
+...                                  cost_time_parameter=.1,
+...                                  random_state=0).fit(dataset, y)
+>>> incoming_timestamps = np.array([1, 2, 3, 3, 1, 2]).reshape(6, 1, 1, 1)
+>>> gen = model.get_early_predict_proba_generator()
+>>> for x in incoming_timestamps:
+...     print(gen.send(x))
+(array([[1., 0.]]), array([3]))
+(array([[1., 0.]]), array([2]))
+(array([[1., 0.]]), array([1]))
+(array([[0., 1.]]), array([0]))
+(array([[0., 1.]]), array([0]))
+(array([[0., 1.]]), array([0]))

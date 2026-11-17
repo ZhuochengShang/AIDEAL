@@ -1,0 +1,7 @@
+_prepare()[source]
+
+Set things up before the analysis loop begins.
+
+Notes
+
+self.results is initialized already in self.__init__() with an empty instance of MDAnalysis.analysis.results.Results object. You can still call your attributes as if they were usual ones, Results just keeps track of that to be able to run a proper aggregation after a parallel run, if necessary.

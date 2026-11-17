@@ -1,0 +1,84 @@
+tslearn.metrics.ctw_path(s1, s2, max_iter=100, n_components=None, global_constraint=None, sakoe_chiba_radius=None, itakura_max_slope=None, verbose=False, be=None)[source]
+
+Compute Canonical Time Warping (CTW) similarity measure between (possibly multidimensional) time series and return the alignment path, the canonical correlation analysis (sklearn) object and the similarity.
+
+Canonical Time Warping is a method to align time series under rigid registration of the feature space. It should not be confused with Dynamic Time Warping (DTW), though CTW uses DTW.
+
+It is not required that both time series share the same size, nor the same dimension (CTW will find a subspace that best aligns feature spaces). CTW was originally presented in [1].
+
+Parameters:
+
+s1array-like, shape=(sz1, d) or (sz1,)
+
+A time series. If shape is (sz1,), the time series is assumed to be univariate.
+
+s2array-like, shape=(sz2, d) or (sz2,)
+
+Another time series. If shape is (sz2,), the time series is assumed to be univariate.
+
+max_iterint (default: 100)
+
+Number of iterations for the CTW algorithm. Each iteration
+
+n_componentsint (default: None)
+
+Number of components to be used for Canonical Correlation Analysis. If None, the lower minimum number of features between s1 and s2 is used.
+
+global_constraint{“itakura”, “sakoe_chiba”} or None (default: None)
+
+Global constraint to restrict admissible paths for DTW calls.
+
+sakoe_chiba_radiusint or None (default: None)
+
+Radius to be used for Sakoe-Chiba band global constraint. If None and global_constraint is set to “sakoe_chiba”, a radius of 1 is used. If both sakoe_chiba_radius and itakura_max_slope are set, global_constraint is used to infer which constraint to use among the two. In this case, if global_constraint corresponds to no global constraint, a RuntimeWarning is raised and no global constraint is used.
+
+itakura_max_slopefloat or None (default: None)
+
+Maximum slope for the Itakura parallelogram constraint. If None and global_constraint is set to “itakura”, a maximum slope of 2. is used. If both sakoe_chiba_radius and itakura_max_slope are set, global_constraint is used to infer which constraint to use among the two. In this case, if global_constraint corresponds to no global constraint, a RuntimeWarning is raised and no global constraint is used.
+
+verbosebool (default: False)
+
+If True, scores are printed at each iteration of the algorithm.
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+list of integer pairs
+
+Matching path represented as a list of index pairs. In each pair, the first index corresponds to s1 and the second one corresponds to s2
+
+sklearn.decomposition.CCA
+
+The Canonical Correlation Analysis object used to align time series at convergence.
+
+float
+
+Similarity score
+
+See also
+
+ctw
+
+Get only the similarity score for CTW
+
+References
+
+ [1]
+F. Zhou and F. Torre, “Canonical time warping for alignment of human behavior”. NIPS 2009.
+
+Examples
+
+>>> path, cca, dist = ctw_path([1, 2, 3], [1., 2., 2., 3.])
+>>> path
+[(0, 0), (1, 1), (1, 2), (2, 3)]
+>>> type(cca)
+<class 'sklearn.cross_decomposition...CCA'>
+>>> float(dist)
+0.0
+>>> path, cca, dist = ctw_path([1, 2, 3],
+...                            [[1., 1.], [2., 2.], [2., 2.], [3., 3.]])
+>>> float(dist)
+0.0

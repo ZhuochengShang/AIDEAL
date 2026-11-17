@@ -1,0 +1,94 @@
+class MDAnalysis.coordinates.TRJ.NCDFWriter(filename, n_atoms, remarks=None, convert_units=True, velocities=False, forces=False, scale_time=None, scale_cell_lengths=None, scale_cell_angles=None, scale_coordinates=None, scale_velocities=None, scale_forces=None, **kwargs)[source]
+
+Writer for AMBER NETCDF format (version 1.0).
+
+AMBER binary trajectories are automatically recognised by the file extension “.ncdf” or “.nc”.
+
+Velocities are written out if they are detected in the input Timestep. The trajectories are always written with ångström for the lengths and picoseconds for the time (and hence Å/ps for velocities and kilocalorie/mole/Å for forces).
+
+Scale factor variables for time, velocities, cell lengths, cell angles, coordinates, velocities, or forces can be passed into the writer. If so, they will be written to the NetCDF file. In this case, the trajectory data will be written to the NetCDF file divided by the scale factor value. By default, scale factor variables are not written. The only exception is for velocities, where it is set to 20.455, replicating the default behaviour of AMBER.
+
+Unit cell information is written if available.
+
+Parameters:
+
+filename (str) – name of output file
+
+n_atoms (int) – number of atoms in trajectory file
+
+convert_units (bool (optional)) – True: units are converted to the AMBER base format; [True]
+
+velocities (bool (optional)) – Write velocities into the trajectory [False]
+
+forces (bool (optional)) – Write forces into the trajectory [False]
+
+scale_time (float (optional)) – Scale factor for time units [None]
+
+scale_cell_lengths (float (optional)) – Scale factor for cell lengths [None]
+
+scale_cell_angles (float (optional)) – Scale factor for cell angles [None]
+
+scale_coordinates (float (optional)) – Scale factor for coordinates [None]
+
+scale_velocities (float (optional)) – Scale factor for velocities [20.455]
+
+scale_forces (float (optional)) – Scale factor for forces [None]
+
+Note
+
+MDAnalysis uses scipy.io.netcdf to access AMBER files, which are in netcdf 3 format. Although scipy.io.netcdf is very fast at reading these files, it is very slow when writing, and it becomes slower the longer the files are. On the other hand, the netCDF4 package (which requires the compiled netcdf library to be installed) is fast at writing but slow at reading. Therefore, we try to use netCDF4 for writing if available but otherwise fall back to the slower scipy.io.netcdf.
+
+AMBER users might have a hard time getting netCDF4 to work with a conda-based installation (as discussed in Issue #506) because of the way that AMBER itself handles netcdf: When the AMBER environment is loaded, the following can happen when trying to import netCDF4:
+
+>>> import netCDF4
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/scratch2/miniconda/envs/py35/lib/python3.5/site-packages/netCDF4/__init__.py", line 3, in <module>
+    from ._netCDF4 import *
+ImportError: /scratch2/miniconda/envs/py35/lib/python3.5/site-packages/netCDF4/_netCDF4.cpython-35m-x86_64-linux-gnu.so: undefined symbol: nc_inq_var_fletcher32
+
+The reason for this (figured out via ldd) is that AMBER builds its own NetCDF library that it now inserts into LD_LIBRARY_PATH without the NetCDF4 API and HDF5 bindings. Since the conda version of netCDF4 was built against the full NetCDF package, the one ld tries to link to at runtime (because AMBER requires LD_LIBRARY_PATH) is missing some symbols. Removing AMBER from the environment fixes the import but is not really a convenient solution for users of AMBER.
+
+At the moment there is no obvious solution if one wants to use netCDF4 and AMBER in the same shell session. If you need the fast writing capabilities of netCDF4 then you need to unload your AMBER environment before importing MDAnalysis.
+
+Raises:
+
+FutureWarning – When writing. The NCDFWriter currently does not write any scale_factor values for the data variables. Whilst not in breach of the AMBER NetCDF standard, this behaviour differs from that of most AMBER writers, especially for velocities which usually have a scale_factor of 20.455. In MDAnalysis 2.0, the NCDFWriter will enforce scale_factor writing to either match user inputs (either manually defined or via the NCDFReader) or those as written by AmberTools’s sander under default operation.
+
+See also
+
+NCDFReader
+
+Changed in version 0.10.0: Added ability to write velocities and forces
+
+Changed in version 0.11.0: kwarg delta renamed to dt, for uniformity with other Readers
+
+Changed in version 0.17.0: Use fast netCDF4 for writing but fall back to slow scipy.io.netcdf if netCDF4 is not available.
+
+Changed in version 0.20.1: Changes the cell_angles unit to the AMBER NetCDF convention standard of degree instead of the degrees written in previous version of MDAnalysis (Issue #2327).
+
+Changed in version 2.0.0: dt, start, and step keywords were unused and are no longer set. Writing of scale_factor values has now been implemented. By default only velocities write a scale_factor of 20.455 (echoing the behaviour seen from AMBER).
+
+ close()[source]
+
+Close the trajectory file.
+
+ is_periodic(ts)[source]
+
+Test if timestep ts contains a periodic box.
+
+Parameters:
+
+ts (Timestep) – Timestep instance containing coordinates to be written to trajectory file
+
+Returns:
+
+Return True if ts contains a valid simulation box
+
+Return type:
+
+bool
+
+ units = {'force': 'kcal/(mol*Angstrom)', 'length': 'Angstrom', 'time': 'ps', 'velocity': 'Angstrom/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

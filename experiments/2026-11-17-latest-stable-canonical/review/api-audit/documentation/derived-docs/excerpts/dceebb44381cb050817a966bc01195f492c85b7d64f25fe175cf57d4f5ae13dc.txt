@@ -1,0 +1,32 @@
+mir_eval.beat.information_gain(reference_beats, estimated_beats, bins=41)
+
+Get the information gain - K-L divergence of the beat error histogram to a uniform histogram
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+binsint
+
+Number of bins in the beat error histogram (Default value = 41)
+
+Returns:
+
+information_gain_scorefloat
+
+Entropy of beat error histogram
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> information_gain = mir_eval.beat.information_gain(reference_beats,
+                                                      estimated_beats)

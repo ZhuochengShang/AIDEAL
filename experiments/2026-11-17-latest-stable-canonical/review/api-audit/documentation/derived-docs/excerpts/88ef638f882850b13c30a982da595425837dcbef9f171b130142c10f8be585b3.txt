@@ -1,0 +1,34 @@
+mir_eval.pattern.three_layer_FPR(reference_patterns, estimated_patterns)
+
+Three Layer F1 Score, Precision and Recall. As described by Meridith.
+
+Parameters:
+
+reference_patternslist
+
+The reference patterns in the format returned by mir_eval.io.load_patterns()
+
+estimated_patternslist
+
+The estimated patterns in the same format
+
+Returns:
+
+f_measurefloat
+
+The three-layer F1 Score
+
+precisionfloat
+
+The three-layer Precision
+
+recallfloat
+
+The three-layer Recall
+
+Examples
+
+>>> ref_patterns = mir_eval.io.load_patterns("ref_pattern.txt")
+>>> est_patterns = mir_eval.io.load_patterns("est_pattern.txt")
+>>> F, P, R = mir_eval.pattern.three_layer_FPR(ref_patterns,
+...                                            est_patterns)

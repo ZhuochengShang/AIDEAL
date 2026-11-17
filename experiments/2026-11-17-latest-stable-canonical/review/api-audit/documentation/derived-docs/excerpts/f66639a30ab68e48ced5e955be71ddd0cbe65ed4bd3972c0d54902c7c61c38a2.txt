@@ -1,0 +1,29 @@
+class MDAnalysis.coordinates.TRZ.TRZWriter(filename, n_atoms, title='TRZ', convert_units=True)[source]
+
+Writes a TRZ format trajectory.
+
+Note
+
+Binary TRZ trajectories are always written in little-endian byte order.
+
+Deprecated since version 2.7.0: The TRZ Reader and Writer are deprecated as of version 2.7.0 and will be removed in version 3.0.0.
+
+Create a TRZWriter
+
+Parameters:
+
+filename (str) – name of output file
+
+n_atoms (int) – number of atoms in trajectory
+
+title (str (optional)) – title of the trajectory; the title must be 80 characters or shorter, a longer title raises a ValueError exception.
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+ close()[source]
+
+Close if it was open
+
+ units = {'length': 'nm', 'time': 'ps', 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

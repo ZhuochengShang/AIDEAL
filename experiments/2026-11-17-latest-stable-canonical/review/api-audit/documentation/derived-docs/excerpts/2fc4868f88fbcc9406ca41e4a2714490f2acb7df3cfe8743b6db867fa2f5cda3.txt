@@ -1,0 +1,167 @@
+class MDAnalysis.analysis.dihedrals.Ramachandran(atomgroup, c_name='C', n_name='N', ca_name='CA', check_protein=True, **kwargs)[source]
+
+Calculate \(\phi\) and \(\psi\) dihedral angles of selected residues.
+
+\(\phi\) and \(\psi\) angles will be calculated for each residue corresponding to atomgroup for each time step in the trajectory. A ResidueGroup is generated from atomgroup which is compared to the protein to determine if it is a legitimate selection.
+
+Parameters:
+
+atomgroup (AtomGroup or ResidueGroup) – atoms for residues for which \(\phi\) and \(\psi\) are calculated
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+check_protein (bool (optional)) – whether to raise an error if the provided atomgroup is not a subset of protein atoms
+
+Example
+
+For standard proteins, the default arguments will suffice to run a Ramachandran analysis:
+
+r = Ramachandran(u.select_atoms('protein')).run()
+
+For proteins with non-standard residues, or for calculating dihedral angles for other linear polymers, you can switch off the protein checking and provide your own atom names in place of the typical peptide backbone atoms:
+
+r = Ramachandran(u.atoms, c_name='CX', n_name='NT', ca_name='S',
+                 check_protein=False).run()
+
+The above analysis will calculate angles from a “phi” selection of CX’-NT-S-CX and “psi” selections of NT-S-CX-NT’.
+
+Raises:
+
+ValueError – If the selection of residues is not contained within the protein and check_protein is True
+
+Note
+
+If check_protein is True and the residue selection is beyond the scope of the protein and, then an error will be raised. If the residue selection includes the first or last residue, then a warning will be raised and they will be removed from the list of residues, but the analysis will still run. If a \(\phi\) or \(\psi\) selection cannot be made, that residue will be removed from the analysis.
+
+Changed in version 1.0.0: added c_name, n_name, ca_name, and check_protein keyword arguments
+
+Changed in version 2.0.0: angles results are now stored in a MDAnalysis.analysis.base.Results instance.
+
+Changed in version 2.8.0: introduced get_supported_backends() allowing for parallel execution on multiprocessing and dask backends.
+
+ results.angles
+
+Contains the time steps of the \(\phi\) and \(\psi\) angles for each residue as an n_frames×n_residues×2 numpy.ndarray with content [[[phi, psi], [residue 2], ...], [time step 2], ...].
+
+Added in version 2.0.0.
+
+ angles
+
+Alias to the results.angles attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.angles instead.
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ plot(ax=None, ref=False, **kwargs)[source]
+
+Plots data into standard Ramachandran plot.
+
+Each time step in Ramachandran.results.angles is plotted onto the same graph.
+
+Parameters:
+
+ax (matplotlib.axes.Axes) – If no ax is supplied or set to None then the plot will be added to the current active axes.
+
+ref (bool, optional) – Adds a general Ramachandran plot which shows allowed and marginally allowed regions
+
+kwargs (optional) – All other kwargs are passed to matplotlib.pyplot.scatter().
+
+Returns:
+
+ax – Axes with the plot, either ax or the current axes.
+
+Return type:
+
+matplotlib.axes.Axes
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.

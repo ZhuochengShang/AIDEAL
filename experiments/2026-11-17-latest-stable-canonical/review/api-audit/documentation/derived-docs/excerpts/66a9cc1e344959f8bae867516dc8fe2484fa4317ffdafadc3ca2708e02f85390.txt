@@ -1,0 +1,23 @@
+write(xyz, box, step, time, precision=1000.0)
+
+write one frame to the XTC file
+
+Parameters:
+
+xyz (array_like, shape=(n_atoms, 3)) – cartesion coordinates
+
+box (array_like, shape=(3, 3)) – Box vectors for this frame
+
+step (int) – current step number, 1 indexed
+
+time (float) – current time
+
+precision (float (optional)) – precision of saved trajectory, see Notes
+
+Notes
+
+Gromacs specifies the precision a little bit strange. The coordinates will be multiplied by precision and then converted to an integer. This means a precision of 1000 yields an accuracy of 3 decimal places.
+
+Raises:
+
+IOError –

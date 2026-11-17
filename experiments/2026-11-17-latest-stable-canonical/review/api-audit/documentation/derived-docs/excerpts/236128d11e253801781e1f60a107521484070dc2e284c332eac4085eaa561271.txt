@@ -1,0 +1,60 @@
+MDAnalysis.lib.util.deprecate(*args, **kwargs)[source]
+
+Issues a DeprecationWarning, adds warning to old_name’s docstring, rebinds old_name.__name__ and returns the new function object.
+
+This function may also be used as a decorator.
+
+It adds a restructured text .. deprecated:: release block with the sphinx deprecated role to the end of the docs. The message is added under the deprecation block and contains the release in which the function was deprecated.
+
+Parameters:
+
+func (function) – The function to be deprecated.
+
+old_name (str, optional) – The name of the function to be deprecated. Default is None, in which case the name of func is used.
+
+new_name (str, optional) – The new name for the function. Default is None, in which case the deprecation message is that old_name is deprecated. If given, the deprecation message is that old_name is deprecated and new_name should be used instead.
+
+release (str) – Release in which the function was deprecated. This is given as a keyword argument for technical reasons but is required; a ValueError is raised if it is missing.
+
+remove (str, optional) – Release for which removal of the feature is planned.
+
+message (str, optional) – Additional explanation of the deprecation. Displayed in the docstring after the warning.
+
+Returns:
+
+old_func – The deprecated function.
+
+Return type:
+
+function
+
+Examples
+
+When deprecate() is used as a function as in the following example,
+
+oldfunc = deprecate(func, release="0.19.0", remove="1.0",
+                    message="Do it yourself instead.")
+
+then oldfunc will return a value after printing DeprecationWarning; func is still available as it was before.
+
+When used as a decorator, func will be changed and issue the warning and contain the deprecation note in the do string.
+
+@deprecate(release="0.19.0", remove="1.0",
+           message="Do it yourself instead.")
+def func():
+    \"\"\"Just pass\"\"\"
+    pass
+
+The resulting doc string (help(func)) will look like:
+
+`func` is deprecated!
+
+Just pass.
+
+.. deprecated:: 0.19.0
+   Do it yourself instead.
+   `func` will be removed in 1.0.
+
+(It is possible but confusing to change the name of func with the decorator so it is not recommended to use the new_func keyword argument with the decorator.)
+
+Added in version 0.19.0.

@@ -1,0 +1,29 @@
+mir_eval.alignment.percentage_correct(reference_timestamps, estimated_timestamps, window=0.3)
+
+Compute the percentage of correctly predicted timestamps. A timestamp is predicted correctly if its position doesn’t deviate more than the window parameter from the ground truth timestamp.
+
+Parameters:
+
+reference_timestampsnp.ndarray
+
+reference timestamps, in seconds
+
+estimated_timestampsnp.ndarray
+
+estimated timestamps, in seconds
+
+windowfloat
+
+Window size, in seconds (Default value = .3)
+
+Returns:
+
+pcfloat
+
+Percentage of correct timestamps
+
+Examples
+
+>>> reference_timestamps = mir_eval.io.load_events('reference.txt')
+>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')
+>>> pc = mir_eval.align.percentage_correct(reference_onsets, estimated_timestamps, window=0.2)

@@ -1,0 +1,384 @@
+mir_eval.io
+
+Functions for loading annotations from files in different formats.
+
+ mir_eval.io.load_delimited(filename, converters, delimiter='\\s+', comment='#')
+
+Load data from an annotation file where columns are delimited. The number of columns is inferred from the length of the provided converters list.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+converterslist of functions
+
+Each entry in column n of the file will be cast by the function converters[n].
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+columnstuple of lists
+
+Each list in this tuple corresponds to values in one of the columns in the file.
+
+Examples
+
+>>> # Load in a one-column list of event times (floats)
+>>> load_delimited('events.txt', [float])
+>>> # Load in a list of labeled events, separated by commas
+>>> load_delimited('labeled_events.csv', [float, str], ',')
+
+ mir_eval.io.load_events(filename, delimiter='\\s+', comment='#')
+
+Import time-stamp events from an annotation file. The file should consist of a single column of numeric values corresponding to the event times. This is primarily useful for processing events which lack duration, such as beats or onsets.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+event_timesnp.ndarray
+
+array of event times (float)
+
+ mir_eval.io.load_labeled_events(filename, delimiter='\\s+', comment='#')
+
+Import labeled time-stamp events from an annotation file. The file should consist of two columns; the first having numeric values corresponding to the event times and the second having string labels for each event. This is primarily useful for processing labeled events which lack duration, such as beats with metric beat number or onsets with an instrument label.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+event_timesnp.ndarray
+
+array of event times (float)
+
+labelslist of str
+
+list of labels
+
+ mir_eval.io.load_intervals(filename, delimiter='\\s+', comment='#')
+
+Import intervals from an annotation file. The file should consist of two columns of numeric values corresponding to start and end time of each interval. This is primarily useful for processing events which span a duration, such as segmentation, chords, or instrument activation.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+intervalsnp.ndarray, shape=(n_events, 2)
+
+array of event start and end times
+
+ mir_eval.io.load_labeled_intervals(filename, delimiter='\\s+', comment='#')
+
+Import labeled intervals from an annotation file. The file should consist of three columns: Two consisting of numeric values corresponding to start and end time of each interval and a third corresponding to the label of each interval. This is primarily useful for processing events which span a duration, such as segmentation, chords, or instrument activation.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+intervalsnp.ndarray, shape=(n_events, 2)
+
+array of event start and end time
+
+labelslist of str
+
+list of labels
+
+ mir_eval.io.load_time_series(filename, delimiter='\\s+', comment='#')
+
+Import a time series from an annotation file. The file should consist of two columns of numeric values corresponding to the time and value of each sample of the time series.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+timesnp.ndarray
+
+array of timestamps (float)
+
+valuesnp.ndarray
+
+array of corresponding numeric values (float)
+
+ mir_eval.io.load_patterns(filename)
+
+Load the patterns contained in the filename and puts them into a list of patterns, each pattern being a list of occurrence, and each occurrence being a list of (onset, midi) pairs.
+
+The input file must be formatted as described in MIREX 2013: http://www.music-ir.org/mirex/wiki/2013:Discovery_of_Repeated_Themes_%26_Sections
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+The input file path containing the patterns of a given piece using the MIREX 2013 format.
+
+Returns:
+
+pattern_listlist
+
+The list of patterns, containing all their occurrences, using the following format:
+
+onset_midi = (onset_time, midi_number)
+occurrence = [onset_midi1, ..., onset_midiO]
+pattern = [occurrence1, ..., occurrenceM]
+pattern_list = [pattern1, ..., patternN]
+
+where N is the number of patterns, M[i] is the number of occurrences of the i th pattern, and O[j] is the number of onsets in the j’th occurrence. E.g.:
+
+occ1 = [(0.5, 67.0), (1.0, 67.0), (1.5, 67.0), (2.0, 64.0)]
+occ2 = [(4.5, 65.0), (5.0, 65.0), (5.5, 65.0), (6.0, 62.0)]
+pattern1 = [occ1, occ2]
+
+occ1 = [(10.5, 67.0), (11.0, 67.0), (11.5, 67.0), (12.0, 64.0),
+        (12.5, 69.0), (13.0, 69.0), (13.5, 69.0), (14.0, 67.0),
+        (14.5, 76.0), (15.0, 76.0), (15.5, 76.0), (16.0, 72.0)]
+occ2 = [(18.5, 67.0), (19.0, 67.0), (19.5, 67.0), (20.0, 62.0),
+        (20.5, 69.0), (21.0, 69.0), (21.5, 69.0), (22.0, 67.0),
+        (22.5, 77.0), (23.0, 77.0), (23.5, 77.0), (24.0, 74.0)]
+pattern2 = [occ1, occ2]
+
+pattern_list = [pattern1, pattern2]
+
+ mir_eval.io.load_wav(path, mono=True)
+
+Load a .wav file as a numpy array using scipy.io.wavfile.
+
+Warning
+
+This function is deprecatred in mir_eval 0.8.1 and will be removed in 0.9.0. We recommend using a dedicated audio IO library such as soundfile instead.
+
+Parameters:
+
+pathstr or os.Pathlike
+
+Path to a .wav file
+
+monobool
+
+If the provided .wav has more than one channel, it will be converted to mono if mono=True. (Default value = True)
+
+Returns:
+
+audio_datanp.ndarray
+
+Array of audio samples, normalized to the range [-1., 1.]
+
+fsint
+
+Sampling rate of the audio data
+
+ mir_eval.io.load_valued_intervals(filename, delimiter='\\s+', comment='#')
+
+Import valued intervals from an annotation file. The file should consist of three columns: Two consisting of numeric values corresponding to start and end time of each interval and a third, also of numeric values, corresponding to the value of each interval. This is primarily useful for processing events which span a duration and have a numeric value, such as piano-roll notes which have an onset, offset, and a pitch value.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+intervalsnp.ndarray, shape=(n_events, 2)
+
+Array of event start and end times
+
+valuesnp.ndarray, shape=(n_events,)
+
+Array of values
+
+ mir_eval.io.load_key(filename, delimiter='\\s+', comment='#')
+
+Load key labels from an annotation file. The file should consist of two string columns: One denoting the key scale degree (semitone), and the other denoting the mode (major or minor). The file should contain only one row.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+keystr
+
+Key label, in the form '(key) (mode)'
+
+ mir_eval.io.load_tempo(filename, delimiter='\\s+', comment='#')
+
+Load tempo estimates from an annotation file in MIREX format. The file should consist of three numeric columns: the first two correspond to tempo estimates (in beats-per-minute), and the third denotes the relative confidence of the first value compared to the second (in the range [0, 1]). The file should contain only one row.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+tempinp.ndarray, non-negative
+
+The two tempo estimates
+
+weightfloat [0, 1]
+
+The relative importance of tempi[0] compared to tempi[1]
+
+ mir_eval.io.load_ragged_time_series(filename, dtype=<class 'float'>, delimiter='\\s+', header=False, comment='#')
+
+Load data from a delimited time series annotation file with a variable number of columns.
+
+This function assumes that column 0 contains time stamps and columns 1 through n contain values. n may be variable from time stamp to time stamp.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+dtypefunction
+
+Data type to apply to values columns.
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+headerbool
+
+Indicates whether a header row is present or not. By default, assumes no header is present.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+timesnp.ndarray
+
+array of timestamps (float)
+
+valueslist of np.ndarray
+
+list of arrays of corresponding values
+
+Examples
+
+>>> # Load a ragged list of tab-delimited multi-f0 midi notes
+>>> times, vals = load_ragged_time_series('multif0.txt', dtype=int,
+                                          delimiter='\t')
+>>> # Load a raggled list of space delimited multi-f0 values with a header
+>>> times, vals = load_ragged_time_series('labeled_events.csv',
+                                          header=True)

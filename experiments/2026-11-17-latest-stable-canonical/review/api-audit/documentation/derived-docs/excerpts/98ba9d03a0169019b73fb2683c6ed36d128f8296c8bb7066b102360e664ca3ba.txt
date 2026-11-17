@@ -1,0 +1,30 @@
+mir_eval.melody.voicing_false_alarm(ref_voicing, est_voicing)
+
+Compute the voicing false alarm rates given two voicing indicator sequences, one as reference (truth) and the other as the estimate (prediction). The sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference boolean voicing array
+
+est_voicingnp.ndarray
+
+Estimated boolean voicing array
+
+Returns:
+
+vx_false_alarmfloat
+
+Voicing false alarm rate, the fraction of unvoiced frames in ref indicated as voiced in est
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> false_alarm = mir_eval.melody.voicing_false_alarm(ref_v, est_v)

@@ -1,0 +1,30 @@
+tslearn.utils.to_tsfresh_dataset(X)[source]
+
+Transform a tslearn-compatible dataset into a tsfresh dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz, d)
+
+tslearn-formatted dataset to be cast to tsfresh format
+
+Returns:
+
+Pandas data-frame
+
+tsfresh-formatted dataset (“flat” data frame, as described there)
+
+Notes
+
+Conversion from/to tsfresh format requires pandas to be installed.
+
+Examples
+
+>>> tslearn_arr = numpy.random.randn(1, 16, 1)
+>>> tsfresh_df = to_tsfresh_dataset(tslearn_arr)
+>>> tsfresh_df.shape
+(16, 3)
+>>> tslearn_arr = numpy.random.randn(1, 16, 2)
+>>> tsfresh_df = to_tsfresh_dataset(tslearn_arr)
+>>> tsfresh_df.shape
+(16, 4)

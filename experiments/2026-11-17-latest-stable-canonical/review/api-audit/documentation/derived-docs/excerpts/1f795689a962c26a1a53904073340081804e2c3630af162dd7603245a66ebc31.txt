@@ -1,0 +1,37 @@
+pack_into_box(box=None, inplace=True)
+
+Shift all Atoms in this group to the primary unit cell.
+
+Parameters:
+
+box (array_like) – Box dimensions, can be either orthogonal or triclinic information. Cell dimensions must be in an identical to format to those returned by MDAnalysis.coordinates.timestep.Timestep.dimensions, [lx, ly, lz, alpha, beta, gamma]. If None, uses these timestep dimensions.
+
+inplace (bool) – True to change coordinates in place.
+
+Returns:
+
+coords – Shifted atom coordinates.
+
+Return type:
+
+numpy.ndarray
+
+Notes
+
+All atoms will be moved so that they lie between 0 and boxlength \(L_i\) in all dimensions, i.e. the lower left corner of the simulation box is taken to be at (0,0,0):
+
+ \[x_i' = x_i - \left\lfloor\frac{x_i}{L_i}\right\rfloor\]
+
+The default is to take unit cell information from the underlying Timestep instance. The optional argument box can be used to provide alternative unit cell information (in the MDAnalysis standard format [Lx, Ly, Lz, alpha, beta, gamma]).
+
+Works with either orthogonal or triclinic box types.
+
+Note
+
+pack_into_box() is identical to wrap() with all default keywords.
+
+Note
+
+AtomGroup.pack_into_box() is currently faster than ResidueGroup.pack_into_box() or SegmentGroup.pack_into_box().
+
+Added in version 0.8.

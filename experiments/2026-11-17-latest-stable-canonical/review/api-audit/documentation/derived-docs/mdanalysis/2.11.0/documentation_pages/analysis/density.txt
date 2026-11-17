@@ -1,0 +1,772 @@
+4.9.1. Generating densities from trajectories — MDAnalysis.analysis.density
+
+Author:
+
+Oliver Beckstein
+
+Year:
+
+2011
+
+Copyright:
+
+Lesser GNU Public License v2.1+
+
+The module provides classes and functions to generate and represent volumetric data, in particular densities.
+
+Changed in version 2.0.0: Deprecated density_from_Universe(), density_from_PDB(), and Bfactor2RMSF() have now been removed.
+
+4.9.1.1. Generating a density from a MD trajectory
+
+A common use case is to analyze the solvent density around a protein of interest. The density is calculated with DensityAnalysis in the fixed coordinate system of the simulation unit cell. It is therefore necessary to orient and fix the protein with respect to the box coordinate system. In practice this means centering and superimposing the protein, frame by frame, on a reference structure and translating and rotating all other components of the simulation with the protein. In this way, the solvent will appear in the reference frame of the protein.
+
+An input trajectory must
+
+have been centered on the protein of interest;
+
+have all molecules made whole that have been broken across periodic boundaries [1];
+
+have the solvent molecules remapped so that they are closest to the solute (this is important when using triclinic unit cells such as a dodecahedron or a truncated octahedron) [1].
+
+have a fixed frame of reference; for instance, by superimposing a protein on a reference structure so that one can study the solvent density around it [2].
+
+To generate the density of water molecules around a protein (assuming that the trajectory is already appropriately treated for periodic boundary artifacts and is suitably superimposed to provide a fixed reference frame) [3]
+
+from MDAnalysis.analysis.density import DensityAnalysis
+u = Universe(TPR, XTC)
+ow = u.select_atoms("name OW")
+D = DensityAnalysis(ow, delta=1.0)
+D.run()
+D.results.density.convert_density('TIP4P')
+D.results.density.export("water.dx", type="double")
+
+The positions of all water oxygens (the AtomGroup ow) are histogrammed on a grid with spacing delta = 1 Å. Initially the density is measured in \(\text{Å}^{-3}\). With the Density.convert_density() method, the units of measurement are changed. In the example we are now measuring the density relative to the literature value of the TIP4P water model at ambient conditions (see the values in MDAnalysis.units.water for details). Finally, the density is written as an OpenDX compatible file that can be read in VMD, Chimera, or PyMOL.
+
+The Density object is accessible as the DensityAnalysis.results.density attribute. In particular, the data for the density is stored as a NumPy array in Density.grid, which can be processed in any manner.
+
+4.9.1.2. Creating densities
+
+The DensityAnalysis class generates a Density from an atomgroup.
+
+ class MDAnalysis.analysis.density.DensityAnalysis(atomgroup, delta=1.0, metadata=None, padding=2.0, gridcenter=None, xdim=None, ydim=None, zdim=None)[source]
+
+Volumetric density analysis.
+
+The trajectory is read, frame by frame, and the atoms in atomgroup are histogrammed on a 3D grid with spacing delta.
+
+Parameters:
+
+atomgroup (AtomGroup or UpdatingAtomGroup) – Group of atoms (such as all the water oxygen atoms) being analyzed. This can be an UpdatingAtomGroup for selections that change every time step.
+
+delta (float (optional)) – Bin size for the density grid in ångström (same in x,y,z).
+
+padding (float (optional)) – Increase histogram dimensions by padding (on top of initial box size) in ångström. Padding is ignored when setting a user defined grid.
+
+gridcenter (numpy ndarray, float32 (optional)) – 3 element numpy array detailing the x, y and z coordinates of the center of a user defined grid box in ångström.
+
+xdim (float (optional)) – User defined x dimension box edge in ångström.
+
+ydim (float (optional)) – User defined y dimension box edge in ångström.
+
+zdim (float (optional)) – User defined z dimension box edge in ångström.
+
+ results.density
+
+A Density instance containing a physical density of units \(Angstrom^{-3}\).
+
+After the analysis (see the run() method), the resulting density is stored in the results.density attribute as a Density instance. Note: this replaces the now deprecated density attribute.
+
+Type:
+
+Density
+
+ density
+
+Alias to the results.density.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.density instead.
+
+Type:
+
+Density
+
+Raises:
+
+ValueError – if AtomGroup is empty and no user defined grid is provided, or if the user defined grid is not or incorrectly provided
+
+UserWarning – if AtomGroup is empty and a user defined grid is provided
+
+See also
+
+pmda.density.DensityAnalysis
+
+A parallel version of DensityAnalysis
+
+Notes
+
+If the gridcenter and x/y/zdim arguments are not provided, DensityAnalysis will attempt to automatically generate a gridbox from the atoms in ‘atomgroup’ (See Examples).
+
+Normal AtomGroup instances represent a static selection of atoms. If you want dynamically changing selections (such as “name OW and around 4.0 (protein and not name H*)”, i.e., the water oxygen atoms that are within 4 Å of the protein heavy atoms) then create an UpdatingAtomGroup (see Examples).
+
+DensityAnalysis will fail when the AtomGroup instance does not contain any selection of atoms, even when updating is set to True. In such a situation, user defined box limits can be provided to generate a Density. Although, it remains the user’s responsibility to ensure that the provided grid limits encompass atoms to be selected on all trajectory frames.
+
+Examples
+
+A common use case is to analyze the solvent density around a protein of interest. The density is calculated with DensityAnalysis in the fixed coordinate system of the simulation unit cell. It is therefore necessary to orient and fix the protein with respect to the box coordinate system. In practice this means centering and superimposing the protein, frame by frame, on a reference structure and translating and rotating all other components of the simulation with the protein. In this way, the solvent will appear in the reference frame of the protein.
+
+An input trajectory must
+
+have been centered on the protein of interest;
+
+have all molecules made whole that have been broken across periodic boundaries [1];
+
+have the solvent molecules remapped so that they are closest to the solute (this is important when using triclinic unit cells such as a dodecahedron or a truncated octahedron) [1];
+
+have a fixed frame of reference; for instance, by superimposing a protein on a reference structure so that one can study the solvent density around it [2].
+
+Generate the density
+
+To generate the density of water molecules around a protein (assuming that the trajectory is already appropriately treated for periodic boundary artifacts and is suitably superimposed to provide a fixed reference frame) [3], first create the DensityAnalysis object by supplying an AtomGroup, then use the run() method:
+
+from MDAnalysis.analysis import density
+u = Universe(TPR, XTC)
+ow = u.select_atoms("name OW")
+D = density.DensityAnalysis(ow, delta=1.0)
+D.run()
+D.results.density.convert_density('TIP4P')
+
+The positions of all water oxygens are histogrammed on a grid with spacing delta = 1 Å and stored as a Density object in the attribute DensityAnalysis.results.density.
+
+Working with a density
+
+A Density contains a large number of methods and attributes that are listed in the documentation. Here we use the Density.convert_density() to convert the density from inverse cubic ångström to a density relative to the bulk density of TIP4P water at standard conditions. (MDAnalysis stores a number of literature values in MDAnalysis.units.water.)
+
+One can directly access the density as a 3D NumPy array through Density.grid.
+
+By default, the Density object returned contains a physical density in units of Å-3. If you are interested in recovering the underlying probability density, simply divide by the sum:
+
+probability_density = D.results.density.grid / D.results.density.grid.sum()
+
+Similarly, if you would like to recover a grid containing a histogram of atom counts, simply multiply by the volume dV of each bin (or voxel); in this case you need to ensure that the physical density is measured in Å-3 by converting it:
+
+import numpy as np
+
+# ensure that the density is A^{-3}
+D.results.density.convert_density("A^{-3}")
+
+dV = np.prod(D.results.density.delta)
+atom_count_histogram = D.results.density.grid * dV
+
+Writing the density to a file
+
+A density can be exported to different formats with Density.export() (thanks to the fact that Density is a subclass gridData.core.Grid, which provides the functionality). For example, to write a DX file water.dx that can be read with VMD, PyMOL, or Chimera:
+
+D.results.density.export("water.dx", type="double")
+
+Example: Water density in the whole simulation
+
+Basic use for creating a water density (just using the water oxygen atoms “OW”):
+
+D = DensityAnalysis(universe.select_atoms('name OW')).run()
+
+Example: Water in a binding site (updating selection)
+
+If you are only interested in water within a certain region, e.g., within a vicinity around a binding site, you can use a selection that updates every step by using an UpdatingAtomGroup:
+
+near_waters = universe.select_atoms('name OW and around 5 (resid 156 157 305)',
+              updating=True)
+D_site = DensityAnalysis(near_waters).run()
+
+Example: Small region around a ligand (manual box selection)
+
+If you are interested in explicitly setting a grid box of a given edge size and origin, you can use the gridcenter and xdim/ydim/zdim arguments. For example to plot the density of waters within 5 Å of a ligand (in this case the ligand has been assigned the residue name “LIG”) in a cubic grid with 20 Å edges which is centered on the center of mass (COM) of the ligand:
+
+# Create a selection based on the ligand
+ligand_selection = universe.select_atoms("resname LIG")
+
+# Extract the COM of the ligand
+ligand_COM = ligand_selection.center_of_mass()
+
+# Create a density of waters on a cubic grid centered on the ligand COM
+# In this case, we update the atom selection as shown above.
+ligand_waters = universe.select_atoms('name OW and around 5 resname LIG',
+                                      updating=True)
+D_water = DensityAnalysis(ligand_waters,
+                          delta=1.0,
+                          gridcenter=ligand_COM,
+                          xdim=20, ydim=20, zdim=20)
+
+(It should be noted that the padding keyword is not used when a user defined grid is assigned).
+
+Added in version 1.0.0.
+
+Changed in version 2.0.0: _set_user_grid() is now a method of DensityAnalysis. Density results are now stored in a MDAnalysis.analysis.base.Results instance.
+
+Changed in version 2.9.0: Introduced get_supported_backends() allowing for parallel execution on multiprocessing and dask backends.
+
+ static _set_user_grid(gridcenter, xdim, ydim, zdim, smin, smax)[source]
+
+Helper function to set the grid dimensions to user defined values
+
+Parameters:
+
+gridcenter (numpy ndarray, float32) – 3 element ndarray containing the x, y and z coordinates of the grid box center
+
+xdim (float) – Box edge length in the x dimension
+
+ydim (float) – Box edge length in the y dimension
+
+zdim (float) – Box edge length in the y dimension
+
+smin (numpy ndarray, float32) – Minimum x,y,z coordinates for the input selection
+
+smax (numpy ndarray, float32) – Maximum x,y,z coordinates for the input selection
+
+Returns:
+
+umin (numpy ndarray, float32) – Minimum x,y,z coordinates of the user defined grid
+
+umax (numpy ndarray, float32) – Maximum x,y,z coordinates of the user defined grid
+
+Changed in version 2.0.0: Now a staticmethod of DensityAnalysis.
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.
+
+4.9.1.3. Density object
+
+The main output of the density creation functions is a Density instance, which is derived from a gridData.core.Grid. A Density is essentially a 3D array with origin and lengths.
+
+ class MDAnalysis.analysis.density.Density(*args, **kwargs)[source]
+
+Bases: Grid
+
+Class representing a density on a regular cartesian grid.
+
+Parameters:
+
+grid (array_like) – histogram or density, typically a numpy.ndarray
+
+edges (list) – list of arrays, the lower and upper bin edges along the axes
+
+parameters (dict) –
+dictionary of class parameters; saved with Density.save(). The following keys are meaningful to the class. Meaning of the values are listed:
+
+isDensity
+
+False: grid is a histogram with counts [default]
+
+True: a density
+
+Applying Density.make_density`() sets it to True.
+
+units (dict) –
+A dict with the keys
+
+length: physical unit of grid edges (Angstrom or nm) [Angstrom]
+
+density: unit of the density if isDensity=True or None otherwise; the default is “Angstrom^{-3}” for densities (meaning \(\text{Å}^{-3}\)).
+
+metadata (dict) – a user defined dictionary of arbitrary values associated with the density; the class does not touch Density.metadata but stores it with Density.save()
+
+ grid
+
+counts or density
+
+Type:
+
+array
+
+ edges
+
+The boundaries of each cell in grid along all axes (equivalent to what numpy.histogramdd() returns).
+
+Type:
+
+list of 1d-arrays
+
+ delta
+
+Cell size in each dimension.
+
+Type:
+
+array
+
+ origin
+
+Coordinates of the center of the cell at index grid[0, 0, 0, …, 0], which is considered to be the front lower left corner.
+
+Type:
+
+array
+
+ units
+
+The units for lengths and density; change units with the method convert_length() or convert_density().
+
+Type:
+
+dict
+
+Notes
+
+The data (Density.grid) can be manipulated as a standard numpy array. Changes can be saved to a file using the Density.save() method. The grid can be restored using the Density.load() method or by supplying the filename to the constructor.
+
+The attribute Density.metadata holds a user-defined dictionary that can be used to annotate the data. It is also saved with Density.save().
+
+The Density.export() method always exports a 3D object (written in such a way to be readable in VMD, Chimera, and PyMOL), the rest should work for an array of any dimension. Note that PyMOL only understands DX files with the DX data type “double” in the “array” object (see known issues when writing OpenDX files and issue MDAnalysis/GridDataFormats#35 for details). Using the keyword type="double" for the method Density.export(), the user can ensure that the DX file is written in a format suitable for PyMOL.
+
+If the input histogram consists of counts per cell then the Density.make_density() method converts the grid to a physical density. For a probability density, divide it by Density.grid.sum() or use density=True right away in histogramdd().
+
+The user should set the parameters keyword (see docs for the constructor); in particular, if the data are already a density, one must set isDensity=True because there is no reliable way to detect if data represent counts or a density. As a special convenience, if data are read from a file and the user has not set isDensity then it is assumed that the data are in fact a density.
+
+See also
+
+gridData.core.Grid
+
+Examples
+
+Typical use:
+
+From a histogram (i.e. counts on a grid):
+
+h,edges = numpy.histogramdd(...)
+D = Density(h, edges, parameters={'isDensity': False}, units={'length': 'A'})
+D.make_density()
+
+From a saved density file (e.g. in OpenDX format), where the lengths are in Angstrom and the density in 1/A**3:
+
+D = Density("density.dx")
+
+From a saved density file (e.g. in OpenDX format), where the lengths are in Angstrom and the density is measured relative to the density of water at ambient conditions:
+
+D = Density("density.dx", units={'density': 'water'})
+
+From a saved histogram (less common, but in order to demonstrate the parameters keyword) where the lengths are in nm:
+
+D = Density("counts.dx", parameters={'isDensity': False}, units={'length': 'nm'})
+D.make_density()
+D.convert_length('Angstrom^{-3}')
+D.convert_density('water')
+
+After the final step, D will contain a density on a grid measured in ångström, with the density values itself measured relative to the density of water.
+
+Density objects can be algebraically manipulated (added, subtracted, multiplied, …) but there are no sanity checks in place to make sure that units, metadata, etc are compatible!
+
+Note
+
+It is suggested to construct the Grid object from a histogram, to supply the appropriate length unit, and to use Density.make_density() to obtain a density. This ensures that the length- and the density unit correspond to each other.
+
+ centers()
+
+Returns the coordinates of the centers of all grid cells as an iterator.
+
+See also
+
+numpy.ndindex()
+
+ check_compatible(other)
+
+Check if other can be used in an arithmetic operation.
+
+other is compatible if
+
+other is a scalar or an array-like broadcastable to the grid
+
+other is a grid defined on the same edges
+
+In order to make other compatible, resample it on the same grid as this one using resample().
+
+Parameters:
+
+other (Grid or float or int) – Another object to be used for standard arithmetic operations with this Grid
+
+Raises:
+
+TypeError – if not compatible
+
+See also
+
+resample()
+
+ convert_density(unit='Angstrom^{-3}')[source]
+
+Convert the density to the physical units given by unit.
+
+Parameters:
+
+unit (str (optional)) –
+The target unit that the density should be converted to.
+
+unit can be one of the following:
+
+name
+ |
+description of the unit
+ |
+
+Angstrom^{-3}
+ |
+particles/A**3
+ |
+
+nm^{-3}
+ |
+particles/nm**3
+ |
+
+SPC
+ |
+density of SPC water at standard conditions
+ |
+
+TIP3P
+ |
+… see MDAnalysis.units.water
+ |
+
+TIP4P
+ |
+… see MDAnalysis.units.water
+ |
+
+water
+ |
+density of real water at standard conditions (0.997 g/cm**3)
+ |
+
+Molar
+ |
+mol/l
+ |
+
+Raises:
+
+RuntimeError – If the density does not have a unit associated with it to begin with (i.e., is not a density) then no conversion can take place.
+
+ValueError – for unknown unit.
+
+Notes
+
+This method only works if there is already a length unit associated with the density; otherwise raises RuntimeError
+
+Conversions always go back to unity so there can be rounding and floating point artifacts for multiple conversions.
+
+ convert_length(unit='Angstrom')[source]
+
+Convert Grid object to the new unit.
+
+Parameters:
+
+unit (str (optional)) – unit that the grid should be converted to: one of “Angstrom”, “nm”
+
+Notes
+
+This changes the edges but will not change the density; it is the user’s responsibility to supply the appropriate unit if the Grid object is constructed from a density. It is suggested to start from a histogram and a length unit and use make_density().
+
+ convert_to(format_specifier, **kwargs)
+
+Returns an instance of the native object for a given format.
+
+Implemented formats:
+
+DX
+
+gridData.OpenDX.field (OpenDX format)
+
+MRC
+
+mrcfile.mrcinterpreter.MrcInterpreter via gridData.mrc.MRC (MRC/CCP4 format)
+
+VDB
+
+OpenVDB format, e.g., openvdb.FloatGrid or, if available, openvdb.DoubleGrid via gridData.OpenVDB.OpenVDBField
+
+Parameters:
+
+format_specifier ({"DX", "MRC", "VDB"})
+
+Return type:
+
+native object
+
+Added in version 1.2.0.
+
+ converter = {'DX': <bound method field.from_grid of <class 'gridData.OpenDX.field'>>, 'MRC': <bound method MRC.from_grid of <class 'gridData.mrc.MRC'>>, 'VDB': <bound method OpenVDBField.from_grid of <class 'gridData.OpenVDB.OpenVDBField'>>}
+
+Available converters for convert_to().
+
+ default_format = 'DX'
+
+Default format for exporting with export().
+
+ export(filename, file_format=None, type=None, typequote='"', tolerance=None)
+
+export density to file using the given format.
+
+The format can also be deduced from the suffix of the filename although the file_format keyword takes precedence.
+
+The default format for export() is ‘dx’. Use ‘dx’ for visualization.
+
+Implemented formats:
+
+dx
+
+gridData.OpenDX
+
+mrc
+
+gridData.mrc MRC/CCP4 format
+
+pickle
+
+pickle (use Grid.load() to restore); Grid.save() is simpler than export(format='python').
+
+vdb
+
+gridData.OpenVDB
+
+Parameters:
+
+filename (str) – name of the output file
+
+file_format ({'dx', 'pickle', 'mrc', 'vdb', None} (optional)) – output file format, the default is “dx”
+
+type (str (optional)) –
+for DX, set the output DX array type, e.g., “double” or “float”. By default (None), the DX type is determined from the numpy dtype of the array of the grid (and this will typically result in “double”).
+
+Added in version 0.4.0.
+
+typequote (str (optional)) –
+For DX, set the character used to quote the type string; by default this is a double-quote character, ‘”’. Custom parsers like the one from NAMD-GridForces (backend for MDFF) expect no quotes, and typequote=’’ may be used to appease them.
+
+Added in version 0.5.0.
+
+tolerance (float (optional)) –
+For VDB, values below this tolerance are treated as background (sparse), default None
+
+Added in version 1.2.0.
+
+ property interpolated
+
+B-spline function over the data grid(x,y,z).
+
+The interpolated() function allows one to obtain data values for any values of the coordinates:
+
+interpolated([x1,x2,...],[y1,y2,...],[z1,z2,...]) -> F[x1,y1,z1],F[x2,y2,z2],...
+
+The interpolation order is set in Grid.interpolation_spline_order.
+
+The interpolated function is computed once and is cached for better performance. Whenever interpolation_spline_order is modified, Grid.interpolated() is recomputed.
+
+The value for unknown data is set in Grid.interpolation_cval (TODO: also recompute when interpolation_cval value is changed.)
+
+Example
+
+Example usage for resampling:
+
+XX, YY, ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
+FF = interpolated(XX, YY, ZZ)
+
+Note
+
+Values are interpolated with a spline function. It is possible that the spline will generate values that would not normally appear in the data. For example, a density is non-negative but a cubic spline interpolation can generate negative values, especially at the boundary between 0 and high values.
+
+Internally, the function uses scipy.ndimage.map_coordinates() with mode="constant" whereby interpolated values outside the interpolated grid are determined by filling all values beyond the edge with the same constant value, defined by the interpolation_cval parameter, which when not set defaults to the minimum value in the interpolated grid.
+
+Changed in version 0.6.0: Interpolation outside the grid is now performed with mode="constant" rather than mode="nearest", eliminating extruded volumes when interpolating beyond the grid.
+
+ property interpolation_spline_order
+
+Order of the B-spline interpolation of the data.
+
+3 = cubic; 4 & 5 are also supported
+
+Only choose values that are acceptable to scipy.ndimage.spline_filter()!
+
+See also
+
+interpolated
+
+ load(filename, file_format=None, assume_volumetric=False)
+
+Load saved grid and edges from filename
+
+The load() method calls the class’s constructor method and completely resets all values, based on the loaded data.
+
+Parameters:
+
+filename (str) – Name of the file.
+
+file_format (str or None, optional) – Set the file format (e.g., “DX” or “MRC”). If None then try to guess the format.
+
+assume_volumetric (bool, optional) – Optional keyword argument that is only taken into account by the gridData.mrc.MRC file parser.
+
+Raises:
+
+ValueError – The underlying file parser raises an ValueError if it fails to parse the file.
+
+Changed in version 1.2.0: Ensure that underlying parsers consistently raise ValueError.
+
+ make_density()[source]
+
+Convert the grid (a histogram, counts in a cell) to a density (counts/volume).
+
+This method changes the grid irrevocably.
+
+For a probability density, manually divide by grid.sum().
+
+If this is already a density, then a warning is issued and nothing is done, so calling make_density multiple times does not do any harm.
+
+ resample(edges)
+
+Resample data to a new grid with edges edges.
+
+This method creates a new grid with the data from the current grid resampled to a regular grid specified by edges. The order of the interpolation is set by Grid.interpolation_spline_order: change the value before calling resample().
+
+Parameters:
+
+edges (tuple of arrays or Grid) – edges of the new grid or a Grid instance that provides Grid.edges
+
+Returns:
+
+a new Grid with the data interpolated over the new grid cells
+
+Return type:
+
+Grid
+
+Examples
+
+Providing edges (a tuple of three arrays, indicating the boundaries of each grid cell):
+
+g = grid.resample(edges)
+
+As a convenience, one can also supply another Grid as the argument for this method
+
+g = grid.resample(othergrid)
+
+and the edges are taken from Grid.edges.
+
+ resample_factor(factor)
+
+Resample to a new regular grid.
+
+Parameters:
+
+factor (float) – The number of grid cells are scaled with factor in each dimension, i.e., factor * N_i cells along each dimension i. Must be positive, and cannot result in fewer than 2 cells along a dimension.
+
+Returns:
+
+interpolated grid – The resampled data are represented on a Grid with the new grid cell sizes.
+
+Return type:
+
+Grid
+
+See also
+
+resample
+
+Changed in version 0.6.0: Previous implementations would not alter the range of the grid edges being resampled on. As a result, values at the grid edges would creep steadily inward. The new implementation recalculates the extent of grid edges for every resampling.
+
+ save(filename)
+
+Save a grid object to filename and add “.pickle” extension.
+
+Internally, this calls Grid.export(filename, format="python"). A grid can be regenerated from the saved data with
+
+g = Grid(filename="grid.pickle")
+
+Note
+
+The pickle format depends on the Python version and therefore it is not guaranteed that a grid saved with, say, Python 2.7 can also be read with Python 3.5. The OpenDX format is a better alternative for portability.
+
+Footnotes

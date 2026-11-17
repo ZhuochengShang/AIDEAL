@@ -1,0 +1,445 @@
+class MDAnalysis.analysis.density.Density(*args, **kwargs)[source]
+
+Bases: Grid
+
+Class representing a density on a regular cartesian grid.
+
+Parameters:
+
+grid (array_like) – histogram or density, typically a numpy.ndarray
+
+edges (list) – list of arrays, the lower and upper bin edges along the axes
+
+parameters (dict) –
+dictionary of class parameters; saved with Density.save(). The following keys are meaningful to the class. Meaning of the values are listed:
+
+isDensity
+
+False: grid is a histogram with counts [default]
+
+True: a density
+
+Applying Density.make_density`() sets it to True.
+
+units (dict) –
+A dict with the keys
+
+length: physical unit of grid edges (Angstrom or nm) [Angstrom]
+
+density: unit of the density if isDensity=True or None otherwise; the default is “Angstrom^{-3}” for densities (meaning \(\text{Å}^{-3}\)).
+
+metadata (dict) – a user defined dictionary of arbitrary values associated with the density; the class does not touch Density.metadata but stores it with Density.save()
+
+ grid
+
+counts or density
+
+Type:
+
+array
+
+ edges
+
+The boundaries of each cell in grid along all axes (equivalent to what numpy.histogramdd() returns).
+
+Type:
+
+list of 1d-arrays
+
+ delta
+
+Cell size in each dimension.
+
+Type:
+
+array
+
+ origin
+
+Coordinates of the center of the cell at index grid[0, 0, 0, …, 0], which is considered to be the front lower left corner.
+
+Type:
+
+array
+
+ units
+
+The units for lengths and density; change units with the method convert_length() or convert_density().
+
+Type:
+
+dict
+
+Notes
+
+The data (Density.grid) can be manipulated as a standard numpy array. Changes can be saved to a file using the Density.save() method. The grid can be restored using the Density.load() method or by supplying the filename to the constructor.
+
+The attribute Density.metadata holds a user-defined dictionary that can be used to annotate the data. It is also saved with Density.save().
+
+The Density.export() method always exports a 3D object (written in such a way to be readable in VMD, Chimera, and PyMOL), the rest should work for an array of any dimension. Note that PyMOL only understands DX files with the DX data type “double” in the “array” object (see known issues when writing OpenDX files and issue MDAnalysis/GridDataFormats#35 for details). Using the keyword type="double" for the method Density.export(), the user can ensure that the DX file is written in a format suitable for PyMOL.
+
+If the input histogram consists of counts per cell then the Density.make_density() method converts the grid to a physical density. For a probability density, divide it by Density.grid.sum() or use density=True right away in histogramdd().
+
+The user should set the parameters keyword (see docs for the constructor); in particular, if the data are already a density, one must set isDensity=True because there is no reliable way to detect if data represent counts or a density. As a special convenience, if data are read from a file and the user has not set isDensity then it is assumed that the data are in fact a density.
+
+See also
+
+gridData.core.Grid
+
+Examples
+
+Typical use:
+
+From a histogram (i.e. counts on a grid):
+
+h,edges = numpy.histogramdd(...)
+D = Density(h, edges, parameters={'isDensity': False}, units={'length': 'A'})
+D.make_density()
+
+From a saved density file (e.g. in OpenDX format), where the lengths are in Angstrom and the density in 1/A**3:
+
+D = Density("density.dx")
+
+From a saved density file (e.g. in OpenDX format), where the lengths are in Angstrom and the density is measured relative to the density of water at ambient conditions:
+
+D = Density("density.dx", units={'density': 'water'})
+
+From a saved histogram (less common, but in order to demonstrate the parameters keyword) where the lengths are in nm:
+
+D = Density("counts.dx", parameters={'isDensity': False}, units={'length': 'nm'})
+D.make_density()
+D.convert_length('Angstrom^{-3}')
+D.convert_density('water')
+
+After the final step, D will contain a density on a grid measured in ångström, with the density values itself measured relative to the density of water.
+
+Density objects can be algebraically manipulated (added, subtracted, multiplied, …) but there are no sanity checks in place to make sure that units, metadata, etc are compatible!
+
+Note
+
+It is suggested to construct the Grid object from a histogram, to supply the appropriate length unit, and to use Density.make_density() to obtain a density. This ensures that the length- and the density unit correspond to each other.
+
+ centers()
+
+Returns the coordinates of the centers of all grid cells as an iterator.
+
+See also
+
+numpy.ndindex()
+
+ check_compatible(other)
+
+Check if other can be used in an arithmetic operation.
+
+other is compatible if
+
+other is a scalar or an array-like broadcastable to the grid
+
+other is a grid defined on the same edges
+
+In order to make other compatible, resample it on the same grid as this one using resample().
+
+Parameters:
+
+other (Grid or float or int) – Another object to be used for standard arithmetic operations with this Grid
+
+Raises:
+
+TypeError – if not compatible
+
+See also
+
+resample()
+
+ convert_density(unit='Angstrom^{-3}')[source]
+
+Convert the density to the physical units given by unit.
+
+Parameters:
+
+unit (str (optional)) –
+The target unit that the density should be converted to.
+
+unit can be one of the following:
+
+name
+ |
+description of the unit
+ |
+
+Angstrom^{-3}
+ |
+particles/A**3
+ |
+
+nm^{-3}
+ |
+particles/nm**3
+ |
+
+SPC
+ |
+density of SPC water at standard conditions
+ |
+
+TIP3P
+ |
+… see MDAnalysis.units.water
+ |
+
+TIP4P
+ |
+… see MDAnalysis.units.water
+ |
+
+water
+ |
+density of real water at standard conditions (0.997 g/cm**3)
+ |
+
+Molar
+ |
+mol/l
+ |
+
+Raises:
+
+RuntimeError – If the density does not have a unit associated with it to begin with (i.e., is not a density) then no conversion can take place.
+
+ValueError – for unknown unit.
+
+Notes
+
+This method only works if there is already a length unit associated with the density; otherwise raises RuntimeError
+
+Conversions always go back to unity so there can be rounding and floating point artifacts for multiple conversions.
+
+ convert_length(unit='Angstrom')[source]
+
+Convert Grid object to the new unit.
+
+Parameters:
+
+unit (str (optional)) – unit that the grid should be converted to: one of “Angstrom”, “nm”
+
+Notes
+
+This changes the edges but will not change the density; it is the user’s responsibility to supply the appropriate unit if the Grid object is constructed from a density. It is suggested to start from a histogram and a length unit and use make_density().
+
+ convert_to(format_specifier, **kwargs)
+
+Returns an instance of the native object for a given format.
+
+Implemented formats:
+
+DX
+
+gridData.OpenDX.field (OpenDX format)
+
+MRC
+
+mrcfile.mrcinterpreter.MrcInterpreter via gridData.mrc.MRC (MRC/CCP4 format)
+
+VDB
+
+OpenVDB format, e.g., openvdb.FloatGrid or, if available, openvdb.DoubleGrid via gridData.OpenVDB.OpenVDBField
+
+Parameters:
+
+format_specifier ({"DX", "MRC", "VDB"})
+
+Return type:
+
+native object
+
+Added in version 1.2.0.
+
+ converter = {'DX': <bound method field.from_grid of <class 'gridData.OpenDX.field'>>, 'MRC': <bound method MRC.from_grid of <class 'gridData.mrc.MRC'>>, 'VDB': <bound method OpenVDBField.from_grid of <class 'gridData.OpenVDB.OpenVDBField'>>}
+
+Available converters for convert_to().
+
+ default_format = 'DX'
+
+Default format for exporting with export().
+
+ export(filename, file_format=None, type=None, typequote='"', tolerance=None)
+
+export density to file using the given format.
+
+The format can also be deduced from the suffix of the filename although the file_format keyword takes precedence.
+
+The default format for export() is ‘dx’. Use ‘dx’ for visualization.
+
+Implemented formats:
+
+dx
+
+gridData.OpenDX
+
+mrc
+
+gridData.mrc MRC/CCP4 format
+
+pickle
+
+pickle (use Grid.load() to restore); Grid.save() is simpler than export(format='python').
+
+vdb
+
+gridData.OpenVDB
+
+Parameters:
+
+filename (str) – name of the output file
+
+file_format ({'dx', 'pickle', 'mrc', 'vdb', None} (optional)) – output file format, the default is “dx”
+
+type (str (optional)) –
+for DX, set the output DX array type, e.g., “double” or “float”. By default (None), the DX type is determined from the numpy dtype of the array of the grid (and this will typically result in “double”).
+
+Added in version 0.4.0.
+
+typequote (str (optional)) –
+For DX, set the character used to quote the type string; by default this is a double-quote character, ‘”’. Custom parsers like the one from NAMD-GridForces (backend for MDFF) expect no quotes, and typequote=’’ may be used to appease them.
+
+Added in version 0.5.0.
+
+tolerance (float (optional)) –
+For VDB, values below this tolerance are treated as background (sparse), default None
+
+Added in version 1.2.0.
+
+ property interpolated
+
+B-spline function over the data grid(x,y,z).
+
+The interpolated() function allows one to obtain data values for any values of the coordinates:
+
+interpolated([x1,x2,...],[y1,y2,...],[z1,z2,...]) -> F[x1,y1,z1],F[x2,y2,z2],...
+
+The interpolation order is set in Grid.interpolation_spline_order.
+
+The interpolated function is computed once and is cached for better performance. Whenever interpolation_spline_order is modified, Grid.interpolated() is recomputed.
+
+The value for unknown data is set in Grid.interpolation_cval (TODO: also recompute when interpolation_cval value is changed.)
+
+Example
+
+Example usage for resampling:
+
+XX, YY, ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
+FF = interpolated(XX, YY, ZZ)
+
+Note
+
+Values are interpolated with a spline function. It is possible that the spline will generate values that would not normally appear in the data. For example, a density is non-negative but a cubic spline interpolation can generate negative values, especially at the boundary between 0 and high values.
+
+Internally, the function uses scipy.ndimage.map_coordinates() with mode="constant" whereby interpolated values outside the interpolated grid are determined by filling all values beyond the edge with the same constant value, defined by the interpolation_cval parameter, which when not set defaults to the minimum value in the interpolated grid.
+
+Changed in version 0.6.0: Interpolation outside the grid is now performed with mode="constant" rather than mode="nearest", eliminating extruded volumes when interpolating beyond the grid.
+
+ property interpolation_spline_order
+
+Order of the B-spline interpolation of the data.
+
+3 = cubic; 4 & 5 are also supported
+
+Only choose values that are acceptable to scipy.ndimage.spline_filter()!
+
+See also
+
+interpolated
+
+ load(filename, file_format=None, assume_volumetric=False)
+
+Load saved grid and edges from filename
+
+The load() method calls the class’s constructor method and completely resets all values, based on the loaded data.
+
+Parameters:
+
+filename (str) – Name of the file.
+
+file_format (str or None, optional) – Set the file format (e.g., “DX” or “MRC”). If None then try to guess the format.
+
+assume_volumetric (bool, optional) – Optional keyword argument that is only taken into account by the gridData.mrc.MRC file parser.
+
+Raises:
+
+ValueError – The underlying file parser raises an ValueError if it fails to parse the file.
+
+Changed in version 1.2.0: Ensure that underlying parsers consistently raise ValueError.
+
+ make_density()[source]
+
+Convert the grid (a histogram, counts in a cell) to a density (counts/volume).
+
+This method changes the grid irrevocably.
+
+For a probability density, manually divide by grid.sum().
+
+If this is already a density, then a warning is issued and nothing is done, so calling make_density multiple times does not do any harm.
+
+ resample(edges)
+
+Resample data to a new grid with edges edges.
+
+This method creates a new grid with the data from the current grid resampled to a regular grid specified by edges. The order of the interpolation is set by Grid.interpolation_spline_order: change the value before calling resample().
+
+Parameters:
+
+edges (tuple of arrays or Grid) – edges of the new grid or a Grid instance that provides Grid.edges
+
+Returns:
+
+a new Grid with the data interpolated over the new grid cells
+
+Return type:
+
+Grid
+
+Examples
+
+Providing edges (a tuple of three arrays, indicating the boundaries of each grid cell):
+
+g = grid.resample(edges)
+
+As a convenience, one can also supply another Grid as the argument for this method
+
+g = grid.resample(othergrid)
+
+and the edges are taken from Grid.edges.
+
+ resample_factor(factor)
+
+Resample to a new regular grid.
+
+Parameters:
+
+factor (float) – The number of grid cells are scaled with factor in each dimension, i.e., factor * N_i cells along each dimension i. Must be positive, and cannot result in fewer than 2 cells along a dimension.
+
+Returns:
+
+interpolated grid – The resampled data are represented on a Grid with the new grid cell sizes.
+
+Return type:
+
+Grid
+
+See also
+
+resample
+
+Changed in version 0.6.0: Previous implementations would not alter the range of the grid edges being resampled on. As a result, values at the grid edges would creep steadily inward. The new implementation recalculates the extent of grid edges for every resampling.
+
+ save(filename)
+
+Save a grid object to filename and add “.pickle” extension.
+
+Internally, this calls Grid.export(filename, format="python"). A grid can be regenerated from the saved data with
+
+g = Grid(filename="grid.pickle")
+
+Note
+
+The pickle format depends on the Python version and therefore it is not guaranteed that a grid saved with, say, Python 2.7 can also be read with Python 3.5. The OpenDX format is a better alternative for portability.

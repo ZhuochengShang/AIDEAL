@@ -1,0 +1,13 @@
+_update_frame(obj)[source]
+
+Method to initialize important attributes in writer from a AtomGroup or Universe obj.
+
+Attributes initialized/updated:
+
+PDBWriter.obj (the entity that provides topology information and coordinates, either a AtomGroup or a whole Universe)
+
+PDBWriter.trajectory (the underlying trajectory Reader)
+
+PDBWriter.timestep (the underlying trajectory Timestep)
+
+Before calling _write_next_frame() this method must be called at least once to enable extracting topology information from the current frame.

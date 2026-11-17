@@ -1,0 +1,99 @@
+class MDAnalysis.core.topologyattrs.TopologyAttr(values, guessed=False)[source]
+
+Base class for Topology attributes.
+
+Note
+
+This class is intended to be subclassed, and mostly amounts to a skeleton. The methods here should be present in all TopologyAttr child classes, but by default they raise appropriate exceptions.
+
+ attrname
+
+the name used for the attribute when attached to a Topology object
+
+Type:
+
+str
+
+ singular
+
+name for the attribute on a singular object (Atom/Residue/Segment)
+
+Type:
+
+str
+
+ per_object
+
+If there is a strict mapping between Component and Attribute
+
+Type:
+
+str
+
+ dtype
+
+Type to coerce this attribute to be. For string use ‘object’
+
+Type:
+
+int/float/object
+
+ top
+
+handle for the Topology object TopologyAttr is associated with
+
+Type:
+
+Topology
+
+ classmethod are_values_missing(values)[source]
+
+check if an attribute has a missing value
+
+Added in version 2.8.0.
+
+ copy()[source]
+
+Return a deepcopy of this attribute
+
+ classmethod from_blank(n_atoms=None, n_residues=None, n_segments=None, values=None)[source]
+
+Create a blank version of this TopologyAttribute
+
+Parameters:
+
+n_atoms (int, optional) – Size of the TopologyAttribute atoms
+
+n_residues (int, optional) – Size of the TopologyAttribute residues
+
+n_segments (int, optional) – Size of the TopologyAttribute segments
+
+values (optional) – Initial values for the TopologyAttribute
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+Get segment attributes for a given SegmentGroup
+
+ property is_guessed
+
+Bool of if the source of this information is a guess
+
+ set_atoms(ag, values)[source]
+
+Set atom attributes for a given AtomGroup
+
+ set_residues(rg, values)[source]
+
+Set residue attributes for a given ResidueGroup
+
+ set_segments(sg, values)[source]
+
+Set segmentattributes for a given SegmentGroup

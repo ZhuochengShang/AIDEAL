@@ -1,0 +1,19 @@
+predict(X=None, n=None)[source]
+
+Forecast n timestamps ahead, on the original data scale.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d) or None (default: None)
+
+Time series dataset to forecast. If None, the data passed at fit time is forecasted instead.
+
+nint or None (default: None)
+
+The number of timestamps to forecast, a.k.a. the horizon. When None, forecaster’s own default kicks in instead – 1 for most forecasters, but the whole fitted horizon for LinearProbeForecaster, which computes it in a single shot regardless of n.
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps, on the original data scale.

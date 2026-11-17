@@ -1,0 +1,17 @@
+score(X, y=None)[source]
+
+Return the coefficient of determination of the forecast.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset, with sz >= context_length + horizon.
+
+yIgnored
+
+Returns:
+
+float
+
+\(R^2\) of the forecast over all windows cut out of X.

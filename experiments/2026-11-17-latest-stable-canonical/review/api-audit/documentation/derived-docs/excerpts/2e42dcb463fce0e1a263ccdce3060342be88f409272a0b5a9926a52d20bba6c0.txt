@@ -1,0 +1,32 @@
+set_groups(atomwise_resids=None, atomwise_segids=None)[source]
+
+Set the groups (ResidueGroup, SegmentGroup) of the Universe by atomwise resids/segids.
+
+The topology will also be updated based on the provided atomwise_resids and atomwise_segids. The original resids and segids will be stored in attributes atomwise_resids_orig and/or atomwise_segids_orig if they are modified. See notes for the logic of the function.
+
+Parameters:
+
+atomwise_resids – A list of residue IDs to be set for the Universe. The length of the list should be equal to the number of atoms in the Universe. If None, the original resids will be used.
+
+atomwise_segids – A list of segment IDs to be set for the Universe. The length of the list should be equal to the number of atoms in the Universe. If None, the original segids will be used.
+
+Raises:
+
+AssertionError – If the length of the provided atomwise_resids or atomwise_segids does not match the number of atoms in the Universe.
+
+Notes
+
+First, the function will check if resids or segids is provided. If both resids and segids are not provided (None), it will do nothing. If only one of them is provided, it will use the original values for the other one. If both are provided, it will use the provided values for both resids and segids. The function will then update the topology by a new generated topology with new values of the resids and segids. Finally, the corresponding new ResidueGroup and SegmentGroup will be created by the updated topology.
+
+Examples
+
+To set custom segment IDs for the segments of the Universe:
+
+atomwise_segids = ['A', 'A', 'B', 'B']
+u.set_groups(atomwise_segids=atomwise_segids)
+
+# Now the Universe has two segments with segIDs 'A' and 'B'
+u.segments
+>>> <SegmentGroup with 2 segments>
+
+Added in version 2.10.0.

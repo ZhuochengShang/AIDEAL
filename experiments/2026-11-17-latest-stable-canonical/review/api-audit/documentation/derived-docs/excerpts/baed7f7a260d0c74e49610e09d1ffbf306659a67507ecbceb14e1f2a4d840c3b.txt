@@ -1,0 +1,11 @@
+MDAnalysis.lib.transformations.concatenate_matrices(*matrices)[source]
+
+Return concatenation of series of transformation matrices.
+
+>>> from MDAnalysis.lib.transformations import concatenate_matrices
+>>> import numpy as np
+>>> M = np.random.rand(16).reshape((4, 4)) - 0.5
+>>> np.allclose(M, concatenate_matrices(M))
+True
+>>> np.allclose(np.dot(M, M.T), concatenate_matrices(M, M.T))
+True

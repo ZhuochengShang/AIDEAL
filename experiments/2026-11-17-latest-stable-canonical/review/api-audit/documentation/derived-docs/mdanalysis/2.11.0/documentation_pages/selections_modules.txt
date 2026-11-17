@@ -1,0 +1,131 @@
+11. Selection exporters
+
+The classes in this module allow writing a selection to a file that can be read by another program to select the atoms in a MDAnalysis MDAnalysis.core.groups.AtomGroup. Such cross-package interoperability allows a user to combine their favourite tools with MDAnalysis for further visualization or simulation.
+
+ Table of supported exporters and recognized file name extensions.
+
+Name
+ |
+extension
+ |
+IO
+ |
+remarks
+ |
+
+vmd
+ |
+tcl
+ |
+w
+ |
+VMD macros, available in Representations; module MDAnalysis.selections.vmd
+ |
+
+pymol
+ |
+pml
+ |
+w
+ |
+simple PyMOL selection string; module MDAnalysis.selections.pymol
+ |
+
+gromacs
+ |
+ndx
+ |
+w
+ |
+Gromacs index file; module MDAnalysis.selections.gromacs
+ |
+
+charmm
+ |
+str
+ |
+w
+ |
+CHARMM selection of individual atoms; module MDAnalysis.selections.charmm
+ |
+
+jmol
+ |
+spt
+ |
+w
+ |
+Jmol selection commands; module MDAnalysis.selections.jmol
+ |
+
+11.1. How to write selections
+
+11.1.1. Single AtomGroup
+
+The typical situation is that one has an AtomGroup and wants to work with the same selection of atoms in a different package, for example, to visualize the atoms in VMD. First create an AtomGroup (named g in the example below) and then use its write method with the appropriate file extension (see Table of supported exporters and recognized file name extensions. for the recognized extension):
+
+g = u.select_atoms('protein")
+g.write("selections.vmd", name="mda_protein")
+
+In VMD, sourcing the file selections.vmd (written in Tcl) defines the “macro” mda_protein that contains the atom indices to select
+
+source selection.vmd
+set sel [atomselect top mda_mdanalysis]
+
+and in the GUI the macro appears in the Graphics ‣ Representations window in the list Selections: Singlewords as “mda_protein”.
+
+11.1.2. Multiple selections
+
+The write method can take additional keyword arguments, including mode. The default is mode="w", which will overwrite the provided file. If mode="a" then the selection is appended to the file.
+
+Alternatively, one may use the SelectionWriter itself as a context manager and write each AtomGroup inside the context. For example, to write multiple groups that were selected to mark different parts of a lipid bilayer to Gromacs index file named “leaflets.ndx”:
+
+with mda.selections.gromacs.SelectionWriter('leaflets.ndx', mode='w') as ndx:
+    ndx.write(upper_saturated, name='upper_sat')
+    ndx.write(lower_saturated, name='lower_sat')
+    ndx.write(upper_unsaturated, name='upper_unsat')
+    ndx.write(lower_unsaturated, name='lower_unsat')
+
+There is a separate SelectionWriter for each format, as described next.
+
+11.2. Selection writers
+
+There exist different SelectionWriterBase classes for different packages. The get_writer() function can automatically pick the appropriate one, based on the file name extension in the Table of supported exporters and recognized file name extensions..
+
+ MDAnalysis.selections.get_writer(filename: str, defaultformat: str) → SelectionWriterBase[source]
+
+Return a SelectionWriter for filename or a defaultformat.
+
+Parameters:
+
+filename (str) – name of the output file; the extension is used to guess the file format
+
+defaultformat (str) – if filename does not have an extension, use defaultformat instead
+
+Returns:
+
+SelectionWriterBase – the writer class for the detected format
+
+Return type:
+
+type
+
+Raises:
+
+NotImplementedError – for any format that is not defined
+
+Formats
+
+Each module implements a SelectionWriter for a specific format.
+
+11.2.1. VMD selections
+
+11.2.2. PyMOL selections
+
+11.2.3. Gromacs selections
+
+11.2.4. CHARMM selections
+
+11.2.5. Jmol selections
+
+11.2.6. Base classes for the selection writers

@@ -1,0 +1,46 @@
+tslearn.utils.to_time_series(ts, remove_nans=False, be=None, dtype=<class 'float'>)[source]
+
+Transforms a time series so that it fits the format used in tslearn models.
+
+Parameters:
+
+tsarray-like, shape=(sz, d) or (sz,)
+
+The time series to be transformed. If shape is (sz,), the time series is assumed to be univariate.
+
+remove_nansbool (default: False)
+
+Whether trailing NaNs at the end of the time series should be removed or not
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+dtypedata type (default: float)
+
+Data type for the returned time series, depending on the backend.
+
+Returns:
+
+ts_outarray-like, shape=(sz, d)
+
+The transformed time series. This is always guaranteed to be a new time series and never just a view into the old one.
+
+See also
+
+to_time_series_dataset
+
+Transforms a dataset of time series
+
+Examples
+
+>>> to_time_series([1, 2])
+array([[1.],
+       [2.]])
+>>> to_time_series([1, 2, numpy.nan])
+array([[ 1.],
+       [ 2.],
+       [nan]])
+>>> to_time_series([1, 2, numpy.nan], remove_nans=True)
+array([[1.],
+       [2.]])

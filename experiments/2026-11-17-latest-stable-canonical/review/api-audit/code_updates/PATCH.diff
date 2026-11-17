@@ -1,0 +1,583 @@
+--- /dev/null
++++ b/docs/API_ORIGIN.md
+@@ -0,0 +1,123 @@
++# Optional API source ownership
++
++`codebase.api_origin` filters **definition sites**, using their defining source
++file and qualified declaring namespace. It does not filter by a bare API name,
++parameter types, called functions, imports appearing in a function body, or an
++external base class. A library-defined `mapPixels` calling Spark is retained;
++a library-defined override is retained too.
++
++The option is absent by default. Existing frozen configurations, inventories,
++selection rules and outputs are unchanged unless a new configuration explicitly
++enables it. It does not establish new final API counts, change same-name owner
++selection, restore previously omitted definitions, or prove semantic equivalence.
++
++## Configuration examples
++
++These examples are prospective settings, not changes to existing experiments.
++Roots are relative to the effective configuration root; absolute roots are also
++accepted. Check that they cover every intended production source directory.
++
++```yaml
++# Entire Beast, using a source checkout at the project's source/ path.
++codebase:
++  api_origin:
++    source_roots: [source]
++    library_namespaces: [edu.ucr.cs.bdlab]
++    external_namespaces:
++      - java
++      - javax
++      - scala
++      - org.apache.spark
++      - org.locationtech.jts
++```
++
++```yaml
++# Python package example; keep the source-glob/visibility policy separately.
++codebase:
++  api_origin:
++    source_roots: [source/package/MDAnalysis]
++    library_namespaces: [MDAnalysis]
++    external_namespaces: [builtins, math, numpy, scipy, pandas]
++```
++
++All three keys must be explicit lists. Source roots and library namespaces must
++be nonempty. Namespace matching respects qualified-name boundaries: `ownlib`
++does not match `ownlibrary`. External namespaces are project configuration,
++not hard-coded library-specific exclusions.
++
++## Discovery and audit
++
++```python
++from aideal.api_discovery import (
++    api_origin_audit, public_api_details, public_api_surface, render_api_surface,
++)
++
++names = public_api_surface(cfg)
++definitions = public_api_details(cfg)
++audit = api_origin_audit(cfg)
++print(render_api_surface(cfg))
++```
++
++When enabled, normal details/surface outputs contain only `library_defined`
++sites. `api_origin_audit` retains every supplied declaration decision, including
++excluded and unresolved evidence. The rendered surface prints policy/hash,
++status counts, and excluded/unresolved identities and reasons.
++
++| Status | Example reason | Interpretation |
++|---|---|---|
++| `library_defined` | `owned_source_and_declaring_namespace` | Both the resolved source path and declaring namespace belong to the configured library. |
++| `external_defined` | `external_declaring_namespace` | An explicit external defining namespace identifies the API as a dependency API. |
++| `unresolved` | `exposure_without_defining_source` | An inherited/import-only exposure lacks actual defining-source evidence. |
++| `unresolved` | `conflicting_defining_owner_evidence` | Defining/declaring ownership claims disagree. |
++| `unresolved` | `namespace_not_classified` | No configured library/external namespace establishes ownership. |
++| `unresolved` | `defining_file_outside_source_roots` | The definition is outside the allowed roots, including a nested symlink escape. |
++| `unresolved` | `defining_file_hash_mismatch` | At least one applicable same-file hash claim is stale or contradictory. |
++
++Each included row gains an `api_origin` decision. The audit binds the policy,
++qualified identity, site/line/signature, actual source path and observed file
++SHA256 into `ownership_sha256`. Supplied file hashes are verified. If no prior
++hash was supplied, the observed hash is recorded without claiming a previous
++immutable binding. An explicitly configured source-root symlink is supported;
++a nested file symlink resolving outside all configured roots cannot be included.
++
++Readers with inherited/re-exported exposure records should supply
++`defining_file`, `defining_owner` (or `declaring_owner`), and where available
++`defining_file_sha256`. These facts describe the actual declaration, not the
++importing/calling file. A relative Python owner can be qualified through a
++matching defining module or same-file qualified identity. All hash claims tied
++to the same resolved file are checked.
++
++## Scope and limits
++
++- Existing compiler/source-audited readers already return declared source
++  sites, and Python AST discovery excludes import statements and inherited-only
++  members. Origin filtering therefore need not shrink the old selection count.
++- Ownership consumes the defining identities supplied by those readers; it is
++  not an independent replacement for their parser/provenance validation.
++- Legacy Java/Scala regex details lack qualified ownership and remain unresolved
++  when this option is enabled. Use source-bound/compiler inventories for them.
++- This is an API inclusion filter, not a filesystem read sandbox. Legacy
++  discovery can read a source-glob symlink before this later filter rejects it.
++- SQL registrations remain unchanged when the option is absent. A SQL
++  documentation page or invented `SQL` namespace is not defining-source proof.
++  Enabling it on current ownerless SQL rows yields
++  `registered_sql_requires_defining_source_binding`. Do not enable SQL origin
++  filtering until the existing Rust-registration provenance is explicitly
++  mapped to defining files/namespaces; this patch does not invent that mapping.
++- Unresolved rows remain visible for review. Excluding them from ordinary
++  discovery is not approval to launch a revised study; the separate review gate
++  and source/owner selection policy still apply.
++
++## Verified synthetic example
++
++The offline test fixture contains `from math import sqrt`, an uninstalled
++`pyspark.RDD` import, a local `mapPixels` that calls `sqrt`, and a locally
++overridden `LocalRDD.map`. Discovery parses that file without importing it.
++The actual discovered names are `LocalRDD`, `map`, and `mapPixels`; imported
++`sqrt` and inherited-only Spark members are absent. A separate same-name test
++proves an external `map` declaration cannot supply documentation-selection
++evidence to a custom `map` declaration.
++
++The staged validation includes 20 origin tests and 22 existing offline
++discovery/compiler-registry contracts, all passing. No provider, compiler,
++subject-library execution or measured experiment is required by these tests.
+--- /dev/null
++++ b/tests/test_api_origin.py
+@@ -0,0 +1,204 @@
++"""Offline source-origin contracts; fixture text is parsed, never imported."""
++from copy import deepcopy
++import hashlib
++from pathlib import Path
++import sys
++import tempfile
++from types import SimpleNamespace
++import unittest
++from unittest.mock import patch
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / "vendor/aideal_engine/src"))
++import aideal
++STAGED_PACKAGE = str(ROOT / "vendor/aideal_engine/src/aideal")
++if STAGED_PACKAGE not in aideal.__path__:
++    aideal.__path__.insert(0, STAGED_PACKAGE)
++from aideal.api_origin import audit_api_origins, filter_api_origins
++from aideal.api_discovery import api_origin_audit, public_api_details, public_api_surface, render_api_surface
++
++
++def sha(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++class OriginTests(unittest.TestCase):
++    def setUp(self):
++        temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
++        self.root = Path(temp.name)
++        self.source = self.root / "source"; self.source.mkdir()
++        self.file = self.source / "Tools.java"
++        self.file.write_text("package ownlib; class Tools { public int map(int x) { return spark.map(x); } }")
++        self.cfg = SimpleNamespace(root=self.root, language="Java", project_name="fixture",
++            surface_filter="all", exclude_names=[], visibility={}, source_globs=["source/*.java"],
++            test_globs=[], public_def_regex=r"\b(?:def|class)\s+(\w+)",
++            raw={"codebase": {"api_origin": {
++                "source_roots": ["source"], "library_namespaces": ["ownlib"],
++                "external_namespaces": ["java", "org.apache.spark", "math", "builtins", "foreign"]}}})
++
++    def row(self, **changes):
++        result={"name":"map", "qualified_name":"ownlib.Tools.map", "owner":"ownlib.Tools",
++                "module":"Java:class", "definition_kind":"compiler_declared_method",
++                "file":"source/Tools.java", "line":1, "file_sha256":sha(self.file),
++                "signature":"public int map(int x)", "params":[], "returns":"int",
++                "description":"", "visibility":"public", "site_id":"custom-map"}
++        return {**result, **changes}
++
++    def test_disabled_is_exact_backward_compatibility(self):
++        self.cfg.raw={"codebase":{}}
++        rows=[self.row(),self.row(qualified_name="java.lang.Object.toString")]
++        self.assertIs(rows,filter_api_origins(self.cfg,rows))
++        with patch("aideal.api_discovery.configured_api_details",return_value=rows):
++            self.assertIs(rows,public_api_details(self.cfg))
++            self.assertEqual({"map"},public_api_surface(self.cfg))
++        self.assertNotIn("api_origin",rows[0])
++
++    def test_source_caller_not_called_dependency_and_custom_override_kept(self):
++        rows=[self.row(name="mapPixels",qualified_name="ownlib.Tools.mapPixels"),
++              self.row(name="toString",qualified_name="ownlib.Tools.toString",is_override=True)]
++        result=audit_api_origins(self.cfg,rows)
++        self.assertEqual({"library_defined":2},result["counts"])
++        self.assertEqual({"mapPixels","toString"},{r["name"]for r in result["included"]})
++
++    def test_external_defining_owner_beats_local_exposure_and_same_bare_name(self):
++        rows=[self.row(),self.row(qualified_name="ownlib.Tools.map",inherited=True,
++                                defining_owner="org.apache.spark.rdd.RDD",site_id="spark-map"),
++              self.row(name="toString",qualified_name="ownlib.Tools.toString",
++                       defining_owner="java.lang.Object",inherited=True)]
++        result=audit_api_origins(self.cfg,rows)
++        self.assertEqual({"library_defined":1,"external_defined":2},result["counts"])
++        self.assertEqual(["custom-map"],[r["site_id"]for r in result["included"]])
++
++    def test_python_import_only_math_and_inherited_without_binding(self):
++        rows=[self.row(name="sqrt",qualified_name="ownlib.sqrt",defining_owner="math",import_only=True),
++              self.row(inherited=True),self.row(import_only=True)]
++        audit=audit_api_origins(self.cfg,rows)
++        self.assertEqual([],audit["included"])
++        self.assertEqual({"external_defined":1,"unresolved":2},audit["counts"])
++        self.assertEqual("exposure_without_defining_source",audit["decisions"][1]["reason"])
++
++    def test_owned_public_reexport_uses_actual_defining_file(self):
++        exposure=self.source/"__init__.py";exposure.write_text("from ownlib.tools import map\n")
++        row=self.row(file="source/__init__.py",file_sha256=sha(exposure),import_only=True,
++                     defining_file="source/Tools.java",defining_file_sha256=sha(self.file),
++                     defining_owner="ownlib.Tools")
++        result=audit_api_origins(self.cfg,[row])
++        self.assertEqual("library_defined",result["decisions"][0]["status"])
++        row["defining_file_sha256"]="0"*64
++        self.assertEqual("defining_file_hash_mismatch",audit_api_origins(self.cfg,[row])["decisions"][0]["reason"])
++
++    def test_unknown_namespace_and_namespace_prefix_collision_remain_visible(self):
++        rows=[self.row(qualified_name="unknown.Tools.map"),self.row(qualified_name="ownlibrary.Tools.map")]
++        audit=audit_api_origins(self.cfg,rows)
++        self.assertEqual({"unresolved":2},audit["counts"])
++        self.assertFalse(audit["included"])
++
++    def test_contradictory_defining_owners_are_unresolved(self):
++        row=self.row(defining_owner="ownlib.Tools",declaring_owner="java.lang.Object")
++        self.assertEqual("conflicting_defining_owner_evidence",audit_api_origins(self.cfg,[row])["decisions"][0]["reason"])
++
++    def test_relative_python_defining_owner_uses_matching_module_identity(self):
++        row=self.row(qualified_name="ownlib.tools.Tools.map",module="ownlib.tools",owner="Tools",defining_owner="Tools")
++        self.assertEqual("library_defined",audit_api_origins(self.cfg,[row])["decisions"][0]["status"])
++
++    def test_nested_relative_owner_and_constructor_identity_are_supported(self):
++        for qualified in ["ownlib.tools.Outer.Inner.map","ownlib.tools.Outer.Inner"]:
++            row=self.row(qualified_name=qualified,module="ownlib.tools",owner="Outer.Inner",defining_owner="Outer.Inner")
++            with self.subTest(qualified=qualified):
++                self.assertEqual("library_defined",audit_api_origins(self.cfg,[row])["decisions"][0]["status"])
++
++    def test_symlink_loop_during_owner_normalization_remains_unresolved(self):
++        loop=self.source/"loop.java";loop.symlink_to(loop.name)
++        row=self.row(defining_file="source/loop.java",defining_owner="ownlib.Tools",module="ownlib")
++        decision=audit_api_origins(self.cfg,[row])["decisions"][0]
++        self.assertEqual("unresolved",decision["status"])
++        self.assertEqual("unreadable_defining_source",decision["reason"])
++
++    def test_defining_file_does_not_bypass_same_file_hash_claims(self):
++        row=self.row(defining_file="source/Tools.java",file_sha256="0"*64)
++        self.assertEqual("defining_file_hash_mismatch",audit_api_origins(self.cfg,[row])["decisions"][0]["reason"])
++        row["defining_file_sha256"]=sha(self.file)
++        self.assertEqual("defining_file_hash_mismatch",audit_api_origins(self.cfg,[row])["decisions"][0]["reason"])
++
++    def test_file_symlink_escape_and_missing_file_rejected(self):
++        outside=self.root/"outside.java";outside.write_text("class Outside {}")
++        escape=self.source/"escape.java";escape.symlink_to(outside)
++        rows=[self.row(file="source/escape.java",file_sha256=sha(outside)),self.row(file="source/missing.java")]
++        result=audit_api_origins(self.cfg,rows)
++        self.assertFalse(result["included"])
++        self.assertTrue(result["decisions"][0]["symlink_escape"])
++        self.assertEqual("unreadable_defining_source",result["decisions"][1]["reason"])
++
++    def test_explicit_source_root_symlink_is_supported(self):
++        link=self.root/"declared-root";link.symlink_to(self.source,target_is_directory=True)
++        self.cfg.raw["codebase"]["api_origin"]["source_roots"]=["declared-root"]
++        self.assertEqual(1,len(filter_api_origins(self.cfg,[self.row(file="declared-root/Tools.java")])))
++
++    def test_hash_ownership_and_policy_changes_bind_decisions(self):
++        row=self.row();first=audit_api_origins(self.cfg,[row]);again=audit_api_origins(self.cfg,[row])
++        self.assertEqual(first,again)
++        changed=audit_api_origins(self.cfg,[{**row,"signature":"different overload"}])
++        self.assertNotEqual(first["decisions"][0]["ownership_sha256"],changed["decisions"][0]["ownership_sha256"])
++        self.file.write_text(self.file.read_text()+"\n// source changed")
++        changed=audit_api_origins(self.cfg,[row])
++        self.assertEqual("defining_file_hash_mismatch",changed["decisions"][0]["reason"])
++        self.cfg.raw["codebase"]["api_origin"]["external_namespaces"].append("another")
++        self.assertNotEqual(first["policy_sha256"],audit_api_origins(self.cfg,[row])["policy_sha256"])
++
++    def test_unpinned_source_hash_is_observed_not_claimed_prebound(self):
++        row=self.row();del row["file_sha256"]
++        decision=audit_api_origins(self.cfg,[row])["decisions"][0]
++        self.assertEqual(sha(self.file),decision["file_sha256"])
++        self.assertIsNone(decision["declared_file_sha256"])
++
++    def test_invalid_and_conflicting_policy_is_not_silently_disabled(self):
++        self.cfg.raw["codebase"]["api_origin"]=None
++        with self.assertRaises(ValueError):audit_api_origins(self.cfg,[self.row()])
++        self.cfg.raw["codebase"]["api_origin"]={"source_roots":["source"],"library_namespaces":["ownlib"],"external_namespaces":["ownlib"]}
++        self.assertEqual("conflicting_namespace_rules",audit_api_origins(self.cfg,[self.row()])["decisions"][0]["reason"])
++
++    def test_sql_docs_cannot_stand_in_for_registration_defining_source(self):
++        self.cfg.raw["codebase"]["api_origin"]["library_namespaces"]=["SQL"]
++        row=self.row(name="ST_Area",qualified_name="ST_Area",module="SQL",owner="",definition_kind="registered_sql")
++        decision=audit_api_origins(self.cfg,[row])["decisions"][0]
++        self.assertEqual("registered_sql_requires_defining_source_binding",decision["reason"])
++        self.cfg.raw={"codebase":{}}
++        self.assertEqual([row],filter_api_origins(self.cfg,[row]))
++
++    def test_registered_details_surface_and_dump_use_same_site_policy(self):
++        rows=[self.row(),self.row(qualified_name="java.util.Map.map",owner="java.util.Map"),
++              self.row(name="unknown",qualified_name="mystery.unknown")]
++        with patch("aideal.api_discovery.configured_api_details",return_value=rows):
++            self.assertEqual(["ownlib.Tools.map"],[r["qualified_name"]for r in public_api_details(self.cfg)])
++            self.assertEqual({"map"},public_api_surface(self.cfg))
++            audit=api_origin_audit(self.cfg)
++            dump=render_api_surface(self.cfg)
++        self.assertEqual({"library_defined":1,"external_defined":1,"unresolved":1},audit["counts"])
++        self.assertIn("external_defined: java.util.Map.map",dump)
++        self.assertIn("unresolved: mystery.unknown",dump)
++
++    def python_config(self):
++        own=self.source/"ownlib";own.mkdir();(own/"__init__.py").write_text("")
++        foreign=self.source/"foreign";foreign.mkdir();(foreign/"__init__.py").write_text("")
++        self.cfg.language="Python";self.cfg.source_globs=["source/**/*.py"]
++        self.cfg.public_def_regex=r"^\s*(?:def|class)\s+([A-Za-z_]\w*)"
++        return own,foreign
++
++    def test_real_python_discovery_does_not_import_dependencies_or_inherited_members(self):
++        own,_=self.python_config()
++        (own/"tools.py").write_text("from math import sqrt\nfrom pyspark import RDD\ndef mapPixels(x):\n    return sqrt(x)\nclass LocalRDD(RDD):\n    def map(self, f):\n        return super().map(f)\n")
++        names=public_api_surface(self.cfg)
++        self.assertEqual({"LocalRDD","map","mapPixels"},names)
++        self.assertNotIn("sqrt",names);self.assertNotIn("collect",names)
++        self.assertNotIn("pyspark",sys.modules)
++
++    def test_same_name_external_site_cannot_supply_documentation_to_custom_site(self):
++        own,foreign=self.python_config()
++        (own/"tools.py").write_text('def map(x):\n    return x\ndef selected(x):\n    """Owned documentation."""\n    return x\n')
++        (foreign/"tools.py").write_text('def map(x):\n    """External documentation must not select the custom map."""\n    return x\n')
++        self.cfg.surface_filter="documented"
++        self.assertEqual({"selected"},public_api_surface(self.cfg))
++        self.assertEqual({"map","selected"},public_api_surface(self.cfg,"all"))
++
++
++if __name__=="__main__":unittest.main()
+--- a/vendor/aideal_engine/src/aideal/api_discovery.py
++++ b/vendor/aideal_engine/src/aideal/api_discovery.py
+@@ -6,6 +6,7 @@
+ from pathlib import Path
+ from .config import AidealConfig
+ from .api_registry import configured_api_details
++from .api_origin import audit_api_origins, filter_api_origins, origin_enabled
+ from .api_signatures import (
+     _doc_at,
+     _java_param_record,
+@@ -35,15 +36,23 @@
+     Default `all` (back-compat)."""
+     registered = configured_api_details(cfg, override_filter)
+     if registered is not None:
+-        return {row["name"] for row in registered}
++        return {row["name"] for row in filter_api_origins(cfg, registered)}
++    owned_sites = None
++    owned_names = None
++    if origin_enabled(cfg):
++        owned = public_api_details(cfg)
++        owned_sites = {(row["file"], row["line"], row["name"]) for row in owned}
++        owned_names = {row["name"] for row in owned}
+     model = visibility_model(cfg)
+     flt = (override_filter or cfg.surface_filter or "all").lower()
+     if flt in ("intent_score", "intent"):
+         from .api_intent import intent_scores
+-        return {n for n, info in intent_scores(cfg).items() if info["selected"]}
++        names = {n for n, info in intent_scores(cfg).items() if info["selected"]}
++        return names if owned_names is None else names & owned_names
+     if flt in ("intended_llm", "intent_llm"):
+         from .api_intent import intended_api_llm
+-        return intended_api_llm(cfg)[0]
++        names = intended_api_llm(cfg)[0]
++        return names if owned_names is None else names & owned_names
+     file_cache: dict[str, list[str]] = {}
+     all_names: set[str] = set()
+     documented: set[str] = set()
+@@ -52,6 +61,10 @@
+     for name, prefix, path, i, _line in _iter_defs(cfg):
+         if name in cfg.exclude_names or not _is_public(name, prefix, model):
+             continue
++        if owned_sites is not None:
++            rel = str(Path(path).relative_to(cfg.root))
++            if (rel, i + 1, name) not in owned_sites:
++                continue
+         if py_identities is not None:
+             rel = str(Path(path).relative_to(cfg.root)).replace("\\", "/")
+             if (rel, i + 1, name) not in py_identities:
+@@ -94,7 +107,7 @@
+     return all_names
+ 
+ 
+-def public_api_details(cfg: AidealConfig) -> list[dict]:
++def _unfiltered_api_details(cfg: AidealConfig) -> list[dict]:
+     # Scan the configured source files and describe each matching definition.
+     # Return signatures, comments, visibility and exact source locations.
+     # Keep definition sites distinct; callers choose the intended public surface.
+@@ -150,6 +163,16 @@
+     return out
+ 
+ 
++def public_api_details(cfg: AidealConfig) -> list[dict]:
++    """Definition facts, with optional source-origin policy applied per site."""
++    return filter_api_origins(cfg, _unfiltered_api_details(cfg))
++
++
++def api_origin_audit(cfg: AidealConfig) -> dict:
++    """Ownership decisions, including excluded/unresolved sites, without calls."""
++    return audit_api_origins(cfg, _unfiltered_api_details(cfg))
++
++
+ def render_api_surface(cfg: AidealConfig, include_nonpublic: bool = False) -> str:
+     """Plain-text dump of the discovered API surface (Step 1 of the test plan)."""
+     details = public_api_details(cfg)
+@@ -182,6 +205,15 @@
+             lines.append(f"    returns: {d['returns'] or '(unspecified)'}")
+             if d["description"]:
+                 lines.append(f"    doc    : {d['description'][:200]}")
++    if origin_enabled(cfg):
++        audit = api_origin_audit(cfg)
++        lines.extend(["", "SOURCE ORIGIN — " + audit["policy"]["version"],
++                      "policy SHA256: " + audit["policy_sha256"],
++                      "origin counts: " + ", ".join(f"{key}={value}" for key, value in sorted(audit["counts"].items()))])
++        for decision in audit["decisions"]:
++            if decision["status"] != "library_defined":
++                lines.append(f"  {decision['status']}: {decision.get('qualified_name') or decision['name']} "
++                             f"@ {decision.get('file')}:{decision.get('line')} — {decision['reason']}")
+     return "\n".join(lines)
+ 
+ 
+--- /dev/null
++++ b/vendor/aideal_engine/src/aideal/api_origin.py
+@@ -0,0 +1,157 @@
++"""Opt-in definition ownership; never infer ownership from a called API name."""
++from __future__ import annotations
++
++from collections import Counter
++import hashlib
++import json
++from pathlib import Path
++
++POLICY_VERSION = "source_file_and_declaring_namespace_v1"
++
++
++def _hash(value):
++    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
++
++
++def origin_enabled(cfg):
++    return "api_origin" in (cfg.raw.get("codebase", {}) or {})
++
++
++def _namespace_match(value, prefix):
++    return value == prefix or value.startswith(prefix + ".") or value.startswith(prefix + "::")
++
++
++def _within(path, root):
++    return path == root or root in path.parents
++
++
++def _policy(cfg):
++    raw = (cfg.raw.get("codebase", {}) or {}).get("api_origin")
++    if not isinstance(raw, dict):
++        raise ValueError("codebase.api_origin must be an explicit ownership policy")
++    policy = {"version": POLICY_VERSION}
++    for key in ("source_roots", "library_namespaces", "external_namespaces"):
++        value = raw.get(key)
++        if (not isinstance(value, list) or any(not isinstance(x, str) or not x.strip() for x in value)
++                or (key != "external_namespaces" and not value)):
++            raise ValueError("api_origin requires string lists: " + key)
++        policy[key] = sorted(set(value))
++    roots = []
++    for value in policy["source_roots"]:
++        root = (Path(cfg.root) / value).resolve(strict=True)
++        if not root.is_dir():
++            raise ValueError("api_origin source root is not a directory: " + str(root))
++        roots.append(root)
++    policy["resolved_source_roots"] = sorted(map(str, roots))
++    return policy, roots
++
++
++def audit_api_origins(cfg, rows):
++    """Return included rows and an explicit audit of every supplied definition.
++
++    Existing readers supply verified declaration ``file``/``qualified_name``
++    facts. Exposure-oriented readers may instead supply ``defining_file`` and
++    ``defining_owner``/``declaring_owner``. Inherited/import-only exposures need
++    those explicit defining facts; an importing file is not a definition.
++    """
++    if not origin_enabled(cfg):
++        return {"enabled": False, "included": rows, "decisions": [], "counts": {}}
++    policy, roots = _policy(cfg)
++    policy_hash = _hash(policy)
++    files = {}
++    included, decisions = [], []
++    for row in rows:
++        owner_claims = {key: row[key] for key in ("defining_owner", "declaring_owner", "defining_module") if row.get(key)}
++        normalized_owners = []
++        for key in ("defining_owner", "declaring_owner"):
++            owner = owner_claims.get(key)
++            if not owner:
++                continue
++            module = owner_claims.get("defining_module")
++            same_file = False
++            try:
++                same_file = (not row.get("defining_file") or
++                             (Path(cfg.root) / row["defining_file"]).resolve() ==
++                             (Path(cfg.root) / row.get("file", "")).resolve())
++            except (OSError, RuntimeError, ValueError):
++                pass  # The defining-path check below records unresolved evidence.
++            if not module and same_file and row.get("module") and row.get("qualified_name"):
++                candidate = row["module"] + "." + owner
++                if _namespace_match(row["qualified_name"], candidate):
++                    module = row["module"]
++            if module:
++                candidate = module + "." + owner
++                if (("." not in owner and "::" not in owner) or
++                        (same_file and _namespace_match(row.get("qualified_name", ""), candidate))):
++                    owner = candidate
++            normalized_owners.append(owner)
++        explicit_owner = next(iter(normalized_owners), owner_claims.get("defining_module"))
++        namespace = explicit_owner or row.get("qualified_name") or row.get("module") or ""
++        if namespace == row.get("name"):
++            namespace = row.get("module") or row.get("owner") or ""
++        file_value = row.get("defining_file") or row.get("file")
++        decision = {"name": row.get("name"), "qualified_name": row.get("qualified_name"),
++                    "site_id": row.get("site_id"), "file": row.get("file"), "line": row.get("line"),
++                    "signature": row.get("signature"), "definition_kind": row.get("definition_kind"),
++                    "defining_owner_claims": owner_claims,
++                    "defining_namespace": namespace, "defining_file": file_value,
++                    "policy_sha256": policy_hash, "status": "unresolved", "reason": "missing_defining_evidence"}
++        own = [p for p in policy["library_namespaces"] if _namespace_match(namespace, p)]
++        external = [p for p in policy["external_namespaces"] if _namespace_match(namespace, p)]
++        decision.update(library_namespace_matches=own, external_namespace_matches=external)
++        exposure_only = bool(row.get("inherited") or row.get("import_only") or row.get("is_inherited"))
++        module_claim = owner_claims.get("defining_module")
++        owner_conflict = (len(set(normalized_owners)) > 1 or
++                          (module_claim and normalized_owners and
++                           not all(_namespace_match(value, module_claim) for value in normalized_owners)))
++        if owner_conflict:
++            decision["reason"] = "conflicting_defining_owner_evidence"
++        elif own and external:
++            decision["reason"] = "conflicting_namespace_rules"
++        elif external:
++            decision.update(status="external_defined", reason="external_declaring_namespace")
++        elif row.get("definition_kind") == "registered_sql" and not (explicit_owner and row.get("defining_file")):
++            decision["reason"] = "registered_sql_requires_defining_source_binding"
++        elif exposure_only and not (explicit_owner and row.get("defining_file")):
++            decision["reason"] = "exposure_without_defining_source"
++        elif not own:
++            decision["reason"] = "namespace_not_classified"
++        elif file_value:
++            lexical = Path(cfg.root) / file_value
++            try:
++                resolved = lexical.resolve(strict=True)
++                decision["resolved_defining_file"] = str(resolved)
++                if not any(_within(resolved, root) for root in roots):
++                    decision["reason"] = "defining_file_outside_source_roots"
++                    decision["symlink_escape"] = lexical.absolute() != resolved
++                elif not resolved.is_file():
++                    decision["reason"] = "defining_path_is_not_file"
++                else:
++                    if resolved not in files:
++                        files[resolved] = hashlib.sha256(resolved.read_bytes()).hexdigest()
++                    digest = files[resolved]
++                    claims = {}
++                    if row.get("defining_file_sha256"):
++                        claims["defining_file_sha256"] = row["defining_file_sha256"]
++                    if (not row.get("defining_file") or
++                            (Path(cfg.root) / row.get("file", "")).resolve() == resolved):
++                        claims.update({key: row[key] for key in ("file_sha256", "source_sha256") if row.get(key)})
++                    expected = next(iter(claims.values()), None)
++                    decision.update(file_sha256=digest, declared_file_sha256=expected, declared_hashes=claims)
++                    if any(digest != claim for claim in claims.values()):
++                        decision["reason"] = "defining_file_hash_mismatch"
++                    else:
++                        decision.update(status="library_defined", reason="owned_source_and_declaring_namespace")
++            except (OSError, RuntimeError, ValueError) as error:
++                decision.update(reason="unreadable_defining_source", error=str(error))
++        decision["ownership_sha256"] = _hash(decision)
++        decisions.append(decision)
++        if decision["status"] == "library_defined":
++            included.append({**row, "api_origin": decision})
++    return {"enabled": True, "policy": policy, "policy_sha256": policy_hash,
++            "included": included, "decisions": decisions,
++            "counts": dict(Counter(row["status"] for row in decisions))}
++
++
++def filter_api_origins(cfg, rows):
++    return audit_api_origins(cfg, rows)["included"]

@@ -1,0 +1,1158 @@
+7.9. H5MD trajectories — MDAnalysis.coordinates.H5MD
+
+The H5MD trajectory file format is based upon the general, high performance HDF5 file format. HDF5 files are self documenting and can be accessed with the h5py library. HDF5 can make use of parallel file system features through the MPI-IO interface of the HDF5 library to improve parallel reads and writes.
+
+The HDF5 library and h5py must be installed; otherwise, H5MD files cannot be read by MDAnalysis. If h5py is not installed, a RuntimeError is raised.
+
+7.9.1. Units
+
+H5MD files are very flexible and can store data in a wide range of physical units. The H5MDReader will attempt to match the units in order to convert all data to the standard MDAnalysis units (see MDAnalysis.units).
+
+Units are read from the attributes of the position, velocity, force, and time datasets provided by the H5MD file. The unit string is translated from H5MD notation to MDAnalysis notation. If MDAnalysis does not recognize the unit (likely because that unit string is not defined in MDAnalysis.units) provided, a RuntimeError is raised. If no units are provided, MDAnalysis stores a value of None for each unit. If the H5MD file does not contain units and convert_units=True, MDAnalysis will raise a ValueError. To load a universe from an H5MD file with no units defined, set convert_units=False.
+
+H5MDWriter detects the native units of the parent trajectory and writes the trajectory with those units, unless one of timeunit, lengthunit, velocityunit, forceunit arugments are supplied. In this case, the writer will write the corresponding dataset with the selected unit only if it is recognized by MDAnalysis units.
+
+7.9.2. Example: Loading an H5MD simulation
+
+To load an H5MD simulation from an H5MD trajectory data file (using the H5MDReader), pass the topology and trajectory files to Universe:
+
+import MDAnalysis as mda
+u = mda.Universe("topology.tpr", "trajectory.h5md")
+
+It is also possible to pass an open h5py.File file stream into the reader:
+
+import MDAnalysis as mda
+with h5py.File("trajectory.h5md", 'r') as f:
+     u = mda.Universe("topology.tpr", f)
+
+Note
+
+Directly using a h5py.File does not work yet. See issue #2884.
+
+7.9.3. Example: Writing an H5MD file
+
+To write to an H5MD file from a trajectory loaded with MDAnalysis, do:
+
+import MDAnalysis as mda
+u = mda.Universe("topology.tpr", "trajectory.h5md")
+with mda.Writer("output.h5md", n_atoms=u.trajectory.n_atoms) as W:
+    for ts in u.trajectory:
+        W.write(u)
+
+To write an H5MD file with contiguous datasets, you must specify the number of frames to be written and set chunks=False:
+
+with mda.Writer("output_contigous.h5md", n_atoms=u.trajectory.n_atoms,
+                n_frames=3, chunks=False) as W:
+    for ts in u.trajectory[:3]:
+        W.write(u)
+
+The writer also supports writing directly from an AtomGroup:
+
+ag = u.select_atoms("protein and name CA")
+ag.write("alpha_carbons.h5md", frames='all')
+
+7.9.4. Example: Opening an H5MD file in parallel
+
+The parallel features of HDF5 can be accessed through h5py (see parallel h5py docs for more detail) by using the mpi4py Python package with a Parallel build of HDF5. To load a an H5MD simulation with parallel HDF5, pass driver and comm arguments to Universe:
+
+import MDAnalysis as mda
+from mpi4py import MPI
+u = mda.Universe("topology.tpr", "trajectory.h5md",
+                 driver="mpio", comm=MPI.COMM_WORLD)
+
+Note
+
+h5py must be built with parallel features enabled on top of a parallel HDF5 build, and HDF5 and mpi4py must be built with a working MPI implementation. See instructions below.
+
+7.9.4.1. Building parallel h5py and HDF5 on Linux
+
+Building a working parallel HDF5/h5py/mpi4py environment can be challenging and is often specific to your local computing resources, e.g., the supercomputer that you’re running on typically already has its preferred MPI installation. As a starting point we provide instructions that worked in a specific, fairly generic environment.
+
+These instructions successfully built parallel HDF5/h5py with OpenMPI 4.0.4, HDF5 1.10.6, h5py 2.9.0, and mpi4py 3.0.3 on Ubuntu 16.0.6. You may have to play around with different combinations of versions of h5py/HDF5 to get a working parallel build.
+
+Build MPI from sources
+
+Build HDF5 from sources with parallel settings enabled:
+
+./configure --enable-parallel --enable-shared
+make
+make install
+
+Install mpi4py, making sure to point mpicc to where you’ve installed your MPI implemenation:
+
+env MPICC=/path/to/mpicc pip install mpi4py
+
+Build h5py from sources, making sure to enable mpi and to point to your parallel build of HDF5:
+
+export HDF5_PATH=path-to-parallel-hdf5
+python setup.py clean --all
+python setup.py configure -r --hdf5-version=X.Y.Z --mpi --hdf5=$HDF5_PATH
+export gcc=gcc
+CC=mpicc HDF5_DIR=$HDF5_PATH python setup.py build
+python setup.py install
+
+If you have questions or want to share how you managed to build parallel hdf5/h5py/mpi4py please let everyone know on the MDAnalysis forums.
+
+7.9.5. Classes
+
+ class MDAnalysis.coordinates.H5MD.H5MDReader(filename, convert_units=True, driver=None, comm=None, **kwargs)[source]
+
+Reader for the H5MD format.
+
+See h5md documentation for a detailed overview of the H5MD file format.
+
+The reader attempts to convert units in the trajectory file to the standard MDAnalysis units (MDAnalysis.units) if convert_units is set to True.
+
+Additional data in the observables group of the H5MD file are loaded into the Timestep.data dictionary.
+
+Only 3D-periodic boxes or no periodicity are supported; for no periodicity, Timestep.dimensions will return None.
+
+Although H5MD can store varying numbers of particles per time step as produced by, e.g., GCMC simulations, MDAnalysis can currently only process a fixed number of particles per step. If the number of particles changes a ValueError is raised.
+
+The H5MDReader reads .h5md files with the following HDF5 hierarchy:
+
+Notation:
+(name) is an HDF5 group that the reader recognizes
+{name} is an HDF5 group with arbitrary name
+[variable] is an HDF5 dataset
+<dtype> is dataset datatype
++-- is an attribute of a group or dataset
+
+H5MD root
+ \-- (h5md)
+    +-- version <int>
+    \-- author
+        +-- name <str>, author's name
+        +-- email <str>, optional email address
+    \-- creator
+        +-- name <str>, file that created .h5md file
+        +-- version
+ \-- (particles)
+    \-- {group1}
+        \-- (box)
+            +-- dimension : <int>, number of spatial dimensions
+            +-- boundary : <str>, boundary conditions of unit cell
+            \-- (edges)
+                \-- [step] <int>, gives frame
+                \-- [value] <float>, gives box dimensions
+                    +-- unit <str>
+        \-- (position)
+            \-- [step] <int>, gives frame
+            \-- [time] <float>, gives time
+                +-- unit <str>
+            \-- [value] <float>, gives numpy arrary of positions
+                                 with shape (n_atoms, 3)
+                +-- unit <str>
+        \-- (velocity)
+            \-- [step] <int>, gives frame
+            \-- [time] <float>, gives time
+                +-- unit <str>
+            \-- [value] <float>, gives numpy arrary of velocities
+                                 with shape (n_atoms, 3)
+                +-- unit <str>
+        \-- (force)
+            \-- [step] <int>, gives frame
+            \-- [time] <float>, gives time
+                +-- unit <str>
+            \-- [value] <float>, gives numpy arrary of forces
+                                 with shape (n_atoms, 3)
+                +-- unit <str>
+ \-- (observables)
+    \-- (lambda)
+        \-- [step] <int>, gives frame
+        \-- [time] <float>, gives time
+        \-- [value] <float>
+    \-- (step)
+        \-- [step] <int>, gives frame
+        \-- [time] <float>, gives time
+        \-- [value] <int>, gives integration step
+
+Note
+
+The reader does not currently read mass or charge data.
+
+Note
+
+If the driver and comm arguments were used to open the hdf5 file (specifically, driver="mpio") then the _reopen() method does not close and open the file like most readers because the information about the MPI communicator would be lost; instead it rewinds the trajectory back to the first timestep.
+
+Added in version 2.0.0.
+
+Changed in version 2.1.0: Adds parse_n_atoms() method to obtain the number of atoms directly from the trajectory by evaluating the shape of the position, velocity, or force groups.
+
+Changed in version 2.5.0: Add correct handling of simple cuboid boxes
+
+Parameters:
+
+filename (str or h5py.File) – trajectory filename or open h5py file
+
+convert_units (bool (optional)) – convert units to MDAnalysis units
+
+driver (str (optional)) – H5PY file driver used to open H5MD file
+
+comm (MPI.Comm (optional)) – MPI communicator used to open H5MD file Must be passed with ‘mpio’ file driver
+
+**kwargs (dict) – General reader arguments.
+
+Raises:
+
+RuntimeError – when H5PY is not installed
+
+RuntimeError – when a unit is not recognized by MDAnalysis
+
+ValueError – when n_atoms changes values between timesteps
+
+ValueError – when convert_units=True but the H5MD file contains no units
+
+ValueError – when dimension of unitcell is not 3
+
+ValueError – when an MPI communicator object is passed to the reader but driver != 'mpio'
+
+NoDataError – when the H5MD file has no ‘position’, ‘velocity’, or ‘force’ group
+
+ _reopen()[source]
+
+reopen trajectory
+
+Note
+
+If the driver and comm arguments were used to open the hdf5 file (specifically, driver="mpio") then this method does not close and open the file like most readers because the information about the MPI communicator would be lost; instead it rewinds the trajectory back to the first timstep.
+
+ OtherWriter(filename, **kwargs)
+
+Returns a writer appropriate for filename.
+
+Sets the default keywords start, step and dt (if available). n_atoms is always set from Reader.n_atoms.
+
+See also
+
+Reader.Writer()
+
+ Writer(filename, n_atoms=None, **kwargs)[source]
+
+Return writer for trajectory format
+
+Note
+
+The chunk shape of the input file will not be copied to the output file, as H5MDWriter uses a chunk shape of (1, n_atoms, 3) by default. To use a custom chunk shape, you must specify the chunks argument. If you would like to copy an existing chunk format from a dataset (positions, velocities, or forces), do the following:
+
+chunks = u.trajectory._particle_group['position/value'].chunks
+
+Note that the writer will set the same layout for all particle groups.
+
+See also
+
+H5MDWriter
+
+Added in version 2.0.0.
+
+ add_auxiliary(aux_spec: str | Dict[str, str] = None, auxdata: str | AuxReader = None, format: str = None, **kwargs) → None
+
+Add auxiliary data to be read alongside trajectory.
+
+Auxiliary data may be any data timeseries from the trajectory additional to that read in by the trajectory reader. auxdata can be an AuxReader instance, or the data itself as e.g. a filename; in the latter case an appropriate AuxReader is guessed from the data/file format. An appropriate format may also be directly provided as a key word argument.
+
+On adding, the AuxReader is initially matched to the current timestep of the trajectory, and will be updated when the trajectory timestep changes (through a call to next() or jumping timesteps with trajectory[i]).
+
+The representative value(s) of the auxiliary data for each timestep (as calculated by the AuxReader) are stored in the current timestep in the ts.aux namespace under aux_spec; e.g. to add additional pull force data stored in pull-force.xvg:
+
+u = MDAnalysis.Universe(PDB, XTC)
+u.trajectory.add_auxiliary('pull', 'pull-force.xvg')
+
+The representative value for the current timestep may then be accessed as u.trajectory.ts.aux.pull or u.trajectory.ts.aux['pull'].
+
+The following applies to energy readers like the EDRReader.
+
+All data that is present in the (energy) file can be added by omitting aux_spec like so:
+
+u.trajectory.add_auxiliary(auxdata="ener.edr")
+
+aux_spec is expected to be a dictionary that maps the desired attribute name in the ts.aux namespace to the precise data to be added as identified by a data_selector:
+
+term_dict = {"temp": "Temperature", "epot": "Potential"}
+u.trajectory.add_auxiliary(term_dict, "ener.edr")
+
+Adding this data can be useful, for example, to filter trajectory frames based on non-coordinate data like the potential energy of each time step. Trajectory slicing allows working on a subset of frames:
+
+selected_frames = np.array([ts.frame for ts in u.trajectory
+                            if ts.aux.epot < some_threshold])
+subset = u.trajectory[selected_frames]
+
+See also
+
+remove_auxiliary()
+
+Note
+
+Auxiliary data is assumed to be time-ordered, with no duplicates. See the Auxiliary API.
+
+ add_transformations(*transformations)
+
+Add all transformations to be applied to the trajectory.
+
+This function take as list of transformations as an argument. These transformations are functions that will be called by the Reader and given a Timestep object as argument, which will be transformed and returned to the Reader. The transformations can be part of the transformations module, or created by the user, and are stored as a list transformations. This list can only be modified once, and further calls of this function will raise an exception.
+
+u = MDAnalysis.Universe(topology, coordinates)
+workflow = [some_transform, another_transform, this_transform]
+u.trajectory.add_transformations(*workflow)
+
+The transformations are applied in the order given in the list transformations, i.e., the first transformation is the first or innermost one to be applied to the Timestep. The example above would be equivalent to
+
+for ts in u.trajectory:
+   ts = this_transform(another_transform(some_transform(ts)))
+
+Parameters:
+
+transform_list (list) – list of all the transformations that will be applied to the coordinates in the order given in the list
+
+See also
+
+MDAnalysis.transformations
+
+Raises:
+
+TypeError – If any transformation is not callable
+
+ property aux_list
+
+Lists the names of added auxiliary data.
+
+ check_slice_indices(start, stop, step)
+
+Check frame indices are valid and clip to fit trajectory.
+
+The usage follows standard Python conventions for range() but see the warning below.
+
+Parameters:
+
+start (int or None) – Starting frame index (inclusive). None corresponds to the default of 0, i.e., the initial frame.
+
+stop (int or None) – Last frame index (exclusive). None corresponds to the default of n_frames, i.e., it includes the last frame of the trajectory.
+
+step (int or None) – step size of the slice, None corresponds to the default of 1, i.e, include every frame in the range start, stop.
+
+Returns:
+
+start, stop, step – Integers representing the slice
+
+Return type:
+
+tuple (int, int, int)
+
+Warning
+
+The returned values start, stop and step give the expected result when passed in range() but gives unexpected behavior when passed in a slice when stop=None and step=-1
+
+This can be a problem for downstream processing of the output from this method. For example, slicing of trajectories is implemented by passing the values returned by check_slice_indices() to range()
+
+range(start, stop, step)
+
+and using them as the indices to randomly seek to. On the other hand, in MDAnalysis.analysis.base.AnalysisBase the values returned by check_slice_indices() are used to splice the trajectory by creating a slice instance
+
+slice(start, stop, step)
+
+This creates a discrepancy because these two lines are not equivalent:
+
+range(10, -1, -1)             # [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+range(10)[slice(10, -1, -1)]  # []
+
+ close()[source]
+
+close reader
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ copy()
+
+Return independent copy of this Reader.
+
+New Reader will have its own file handle and can seek/iterate independently of the original.
+
+Will also copy the current state of the Timestep held in the original Reader.
+
+Changed in version 2.2.0: Arguments used to construct the reader are correctly captured and passed to the creation of the new class. Previously the only n_atoms was passed to class copies, leading to a class created with default parameters which may differ from the original class.
+
+ property dt: float
+
+Time between two trajectory frames in picoseconds.
+
+ property frame: int
+
+Frame number of the current time step.
+
+This is a simple short cut to Timestep.frame.
+
+ get_aux_attribute(auxname, attrname)
+
+Get the value of attrname from the auxiliary auxname
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to get value for
+
+attrname (str) – Name of gettable attribute in the auxiliary reader
+
+See also
+
+set_aux_attribute()
+
+ get_aux_descriptions(auxnames=None)
+
+Get descriptions to allow reloading the specified auxiliaries.
+
+If no auxnames are provided, defaults to the full list of added auxiliaries.
+
+Passing the resultant description to add_auxiliary() will allow recreation of the auxiliary. e.g., to duplicate all auxiliaries into a second trajectory:
+
+descriptions = trajectory_1.get_aux_descriptions()
+for aux in descriptions:
+    trajectory_2.add_auxiliary(**aux)
+
+Returns:
+
+List of dictionaries of the args/kwargs describing each auxiliary.
+
+Return type:
+
+list
+
+See also
+
+MDAnalysis.auxiliary.base.AuxReader.get_description()
+
+ property has_forces
+
+True if ‘force’ group is in trajectory.
+
+ property has_positions
+
+True if ‘position’ group is in trajectory.
+
+ property has_velocities
+
+True if ‘velocity’ group is in trajectory.
+
+ iter_as_aux(auxname)
+
+Iterate through timesteps for which there is at least one assigned step from the auxiliary auxname within the cutoff specified in auxname.
+
+See also
+
+next_as_aux(), iter_auxiliary()
+
+ iter_auxiliary(auxname, start=None, stop=None, step=None, selected=None)
+
+Iterate through the auxiliary auxname independently of the trajectory.
+
+Will iterate over the specified steps of the auxiliary (defaults to all steps). Allows to access all values in an auxiliary, including those out of the time range of the trajectory, without having to also iterate through the trajectory.
+
+After interation, the auxiliary will be repositioned at the current step.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to iterate over.
+
+(start (optional) – Options for iterating over a slice of the auxiliary.
+
+stop (optional) – Options for iterating over a slice of the auxiliary.
+
+step) (optional) – Options for iterating over a slice of the auxiliary.
+
+selected (lst | ndarray, optional) – List of steps to iterate over.
+
+Yields:
+
+AuxStep object
+
+See also
+
+iter_as_aux()
+
+ property n_frames
+
+number of frames in trajectory
+
+ next() → Timestep
+
+Forward one step to next frame.
+
+ next_as_aux(auxname)
+
+Move to the next timestep for which there is at least one step from the auxiliary auxname within the cutoff specified in auxname.
+
+This allows progression through the trajectory without encountering NaN representative values (unless these are specifically part of the auxiliary data).
+
+If the auxiliary cutoff is not set, where auxiliary steps are less frequent (auxiliary.dt > trajectory.dt), this allows progression at the auxiliary pace (rounded to nearest timestep); while if the auxiliary steps are more frequent, this will work the same as calling next().
+
+See the Auxiliary API.
+
+See also
+
+iter_as_aux()
+
+ open_trajectory()[source]
+
+opens the trajectory file using h5py library
+
+ static parse_n_atoms(filename)[source]
+
+Read the coordinate file and deduce the number of atoms
+
+Returns:
+
+n_atoms – the number of atoms in the coordinate file
+
+Return type:
+
+int
+
+Raises:
+
+NotImplementedError – when the number of atoms can’t be deduced
+
+ remove_auxiliary(auxname)
+
+Clear data and close the AuxReader for the auxiliary auxname.
+
+See also
+
+add_auxiliary()
+
+ rename_aux(auxname, new)
+
+Change the name of the auxiliary auxname to new.
+
+Provided there is not already an auxiliary named new, the auxiliary name will be changed in ts.aux namespace, the trajectory’s list of added auxiliaries, and in the auxiliary reader itself.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to rename
+
+new (str) – New name to try set
+
+Raises:
+
+ValueError – If the name new is already in use by an existing auxiliary.
+
+ rewind() → Timestep
+
+Position at beginning of trajectory
+
+ set_aux_attribute(auxname, attrname, new)
+
+Set the value of attrname in the auxiliary auxname.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to alter
+
+attrname (str) – Name of settable attribute in the auxiliary reader
+
+new – New value to try set attrname to
+
+See also
+
+get_aux_attribute(), rename_aux()
+
+ property time
+
+Time of the current frame in MDAnalysis time units (typically ps).
+
+This is either read straight from the Timestep, or calculated as time = Timestep.frame * Timestep.dt
+
+ timeseries(asel: AtomGroup | None = None, atomgroup: Atomgroup | None = None, start: int | None = None, stop: int | None = None, step: int | None = None, order: str | None = 'fac') → ndarray
+
+Return a subset of coordinate data for an AtomGroup
+
+Parameters:
+
+asel (AtomGroup (optional)) –
+The AtomGroup to read the coordinates from. Defaults to None, in which case the full set of coordinate data is returned.
+
+Deprecated since version 2.7.0: asel argument will be renamed to atomgroup in 3.0.0
+
+atomgroup (AtomGroup (optional)) – Same as asel, will replace asel in 3.0.0
+
+start (int (optional)) – Begin reading the trajectory at frame index start (where 0 is the index of the first frame in the trajectory); the default None starts at the beginning.
+
+stop (int (optional)) – End reading the trajectory at frame index stop-1, i.e, stop is excluded. The trajectory is read to the end with the default None.
+
+step (int (optional)) – Step size for reading; the default None is equivalent to 1 and means to read every frame.
+
+order (str (optional)) – the order/shape of the return data array, corresponding to (a)tom, (f)rame, (c)oordinates all six combinations of ‘a’, ‘f’, ‘c’ are allowed ie “fac” - return array where the shape is (frame, number of atoms, coordinates)
+
+See also
+
+MDAnalysis.coordinates.memory
+
+Added in version 2.4.0.
+
+ property totaltime: float
+
+Total length of the trajectory
+
+The time is calculated as (n_frames - 1) * dt, i.e., we assume that the first frame no time as elapsed. Thus, a trajectory with two frames will be considered to have a length of a single time step dt and a “trajectory” with a single frame will be reported as length 0.
+
+ property transformations
+
+Returns the list of transformations
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.H5MD.H5MDWriter(filename, n_atoms, n_frames=None, driver=None, convert_units=True, chunks=None, compression=None, compression_opts=None, positions=True, velocities=True, forces=True, timeunit=None, lengthunit=None, velocityunit=None, forceunit=None, author='N/A', author_email=None, creator='MDAnalysis', creator_version='2.11.0', **kwargs)[source]
+
+Writer for H5MD format (version 1.1).
+
+H5MD trajectories are automatically recognised by the file extension “.h5md”.
+
+All data from the input Timestep is written by default. For detailed information on how H5MDWriter handles units, compression, and chunking, see the Notes section below.
+
+Note
+
+Parellel writing with the use of a MPI communicator and the 'mpio' HDF5 driver is currently not supported.
+
+Note
+
+NoDataError is raised if no positions, velocities, or forces are found in the input trajectory. While the H5MD standard allows for this case, H5MDReader cannot currently read files without at least one of these three groups.
+
+Note
+
+Writing H5MD files with fancy trajectory slicing where the Timestep does not increase monotonically such as u.trajectory[[2,1,0]] or u.trajectory[[0,1,2,0,1,2]] raises a ValueError as this violates the rules of the step dataset in the H5MD standard.
+
+Parameters:
+
+filename (str or h5py.File) – trajectory filename or open h5py file
+
+n_atoms (int) – number of atoms in trajectory
+
+n_frames (int (optional)) – number of frames to be written in trajectory
+
+driver (str (optional)) – H5PY file driver used to open H5MD file. See H5PY drivers for list of available drivers.
+
+convert_units (bool (optional)) – Convert units from MDAnalysis to desired units
+
+chunks (tuple (optional)) – Custom chunk layout to be applied to the position, velocity, and force datasets. By default, these datasets are chunked in (1, n_atoms, 3) blocks
+
+compression (str or int (optional)) – HDF5 dataset compression setting to be applied to position, velocity, and force datasets. Allowed settings are ‘gzip’, ‘szip’, ‘lzf’. If an integer in range(10), this indicates gzip compression level. Otherwise, an integer indicates the number of a dynamically loaded compression filter.
+
+compression_opts (int or tup (optional)) – Compression settings. This is an integer for gzip, 2-tuple for szip, etc. If specifying a dynamically loaded compression filter number, this must be a tuple of values. For gzip, 1 indicates the lowest level of compression and 9 indicates maximum compression.
+
+positions (bool (optional)) – Write positions into the trajectory [True]
+
+velocities (bool (optional)) – Write velocities into the trajectory [True]
+
+forces (bool (optional)) – Write forces into the trajectory [True]
+
+timeunit (str (optional)) – Option to convert values in the ‘time’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+lengthunit (str (optional)) – Option to convert values in the ‘position/value’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+velocityunit (str (optional)) – Option to convert values in the ‘velocity/value’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+forceunit (str (optional)) – Option to convert values in the ‘force/value’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+author (str (optional)) – Name of the author of the file
+
+author_email (str (optional)) – Email of the author of the file
+
+creator (str (optional)) – Software that wrote the file [MDAnalysis]
+
+creator_version (str (optional)) – Version of software that wrote the file [MDAnalysis.__version__]
+
+Raises:
+
+RuntimeError – when H5PY is not installed
+
+ValueError – when n_atoms is 0
+
+ValueError – when chunks=False but the user did not specify n_frames
+
+ValueError – when positions, velocities, and forces are all set to False
+
+TypeError – when the input object is not a Universe or AtomGroup
+
+IOError – when n_atoms of the Universe or AtomGroup being written does not match n_atoms passed as an argument to the writer
+
+ValueError – when any of the optional timeunit, lengthunit, velocityunit, or forceunit keyword arguments are not recognized by MDAnalysis
+
+Notes
+
+By default, the writer will write all available data (positions, velocities, and forces) if detected in the input Timestep. In addition, the settings for compression and compression_opts will be read from the first available group of positions, velocities, or forces and used as the default value. To write a file without any one of these datsets, set positions, velocities, or forces to False.
+
+Units
+
+The H5MD format is very flexible with regards to units, as there is no standard defined unit for the format. For this reason, H5MDWriter does not enforce any units. The units of the written trajectory can be set explicitly with the keyword arguments lengthunit, velocityunit, and forceunit. If units are not explicitly specified, they are set to the native units of the trajectory that is the source of the coordinates. For example, if one converts a DCD trajectory, then positions are written in ångstrom and time in AKMA units. A GROMACS XTC will be written in nm and ps. The units are stored in the metadata of the H5MD file so when MDAnalysis loads the H5MD trajectory, the units will be automatically set correctly.
+
+Compression
+
+HDF5 natively supports various compression modes. To write the trajectory with compressed datasets, set compression='gzip', compression='lzf' , etc. See H5PY compression options for all supported modes of compression. An additional argument, compression_opts, can be used to fine tune the level of compression. For example, for GZIP compression, compression_opts can be set to 1 for minimum compression and 9 for maximum compression.
+
+HDF5 Chunking
+
+HDF5 datasets can be chunked, meaning the dataset can be split into equal sized pieces and stored in different, noncontiguous places on disk. If HDF5 tries to read an element from a chunked dataset, the entire dataset must be read, therefore an ill-thought-out chunking scheme can drastically effect file I/O performance. In the case of all MDAnalysis writers, in general, the number of frames being written is not known apriori by the writer, therefore the HDF5 must be extendable. However, the allocation of diskspace is defined when the dataset is created, therefore extendable HDF5 datasets must be chunked so as to allow dynamic storage on disk of any incoming data to the writer. In such cases where chunking isn’t explicity defined by the user, H5PY automatically selects a chunk shape via an algorithm that attempts to make mostly square chunks between 1 KiB - 1 MiB, however this can lead to suboptimal I/O performance. H5MDWriter uses a default chunk shape of (1, n_atoms, 3) so as to mimic the typical access pattern of a trajectory by MDAnalysis. In our tests ([Jakupovic2021]), this chunk shape led to a speedup on the order of 10x versus H5PY’s auto-chunked shape. Users can set a custom chunk shape with the chunks argument. Additionaly, the datasets in a file can be written with a contiguous layout by setting chunks=False, however this must be accompanied by setting n_frames equal to the number of frames being written, as HDF5 must know how much space to allocate on disk when creating the dataset.
+
+Added in version 2.0.0.
+
+ H5MD_VERSION = (1, 1)
+
+currently written version of the file format
+
+ close()
+
+Close the trajectory file.
+
+ convert_dimensions_to_unitcell(ts, inplace=True)
+
+Read dimensions from timestep ts and return appropriate unitcell.
+
+The default is to return [A,B,C,alpha,beta,gamma]; if this is not appropriate then this method has to be overriden.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ data_blacklist = ['step', 'time', 'dt']
+
+These variables are not written from Timestep.data dictionary to the observables group in the H5MD file
+
+ property has_forces
+
+True if writer is writing forces from Timestep.
+
+ property has_positions
+
+True if writer is writing positions from Timestep.
+
+ has_valid_coordinates(criteria, x)
+
+Returns True if all values are within limit values of their formats.
+
+Due to rounding, the test is asymmetric (and min is supposed to be negative):
+
+min < x <= max
+
+Parameters:
+
+criteria (dict) – dictionary containing the max and min values in native units
+
+x (numpy.ndarray) – (x, y, z) coordinates of atoms selected to be written out
+
+Return type:
+
+bool
+
+ property has_velocities
+
+True if writer is writing velocities from Timestep.
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)
+
+Write current timestep, using the supplied obj.
+
+Parameters:
+
+obj (AtomGroup or Universe) – write coordinate information associate with obj
+
+Note
+
+The size of the obj must be the same as the number of atoms provided when setting up the trajectory.
+
+Changed in version 2.0.0: Deprecated support for Timestep argument to write has now been removed. Use AtomGroup or Universe as an input instead.
+
+ class MDAnalysis.coordinates.H5MD.H5PYPicklable(name, mode='r', driver=None, libver=None, userblock_size=None, swmr=False, rdcc_nslots=None, rdcc_nbytes=None, rdcc_w0=None, track_order=None, fs_strategy=None, fs_persist=False, fs_threshold=1, fs_page_size=None, page_buf_size=None, min_meta_keep=0, min_raw_keep=0, locking=None, alignment_threshold=1, alignment_interval=1, meta_block_size=None, *, track_times=False, **kwds)[source]
+
+H5PY file object (read-only) that can be pickled.
+
+This class provides a file-like object (as returned by h5py.File) that, unlike standard Python file objects, can be pickled. Only read mode is supported.
+
+When the file is pickled, filename, mode, driver, and comm of h5py.File in the file are saved. On unpickling, the file is opened by filename, mode, driver. This means that for a successful unpickle, the original file still has to be accessible with its filename.
+
+Parameters:
+
+filename (str or file-like) – a filename given a text or byte string.
+
+driver (str (optional)) – H5PY file driver used to open H5MD file
+
+Example
+
+f = H5PYPicklable('filename', 'r')
+print(f['particles/trajectory/position/value'][0])
+f.close()
+
+can also be used as context manager:
+
+with H5PYPicklable('filename', 'r'):
+    print(f['particles/trajectory/position/value'][0])
+
+Note
+
+Pickling of an h5py.File opened with driver=”mpio” and an MPI communicator is currently not supported
+
+See also
+
+MDAnalysis.lib.picklable_file_io.FileIOPicklable, MDAnalysis.lib.picklable_file_io.BufferIOPicklable, MDAnalysis.lib.picklable_file_io.TextIOPicklable, MDAnalysis.lib.picklable_file_io.GzipPicklable, MDAnalysis.lib.picklable_file_io.BZ2Picklable
+
+Added in version 2.0.0.
+
+Create a new file object.
+
+See the h5py user guide for a detailed explanation of the options.
+
+name
+
+Name of the file on disk, or file-like object. Note: for files created with the ‘core’ driver, HDF5 still requires this be non-empty.
+
+mode
+
+r Readonly, file must exist (default) r+ Read/write, file must exist w Create file, truncate if exists w- or x Create file, fail if exists a Read/write if exists, create otherwise
+
+driver
+
+Name of the driver to use. Legal values are None (default, recommended), ‘core’, ‘sec2’, ‘direct’, ‘stdio’, ‘mpio’, ‘ros3’.
+
+libver
+
+Library version bounds. Supported values: ‘earliest’, ‘v108’, ‘v110’, ‘v112’, ‘v114’, ‘v200’ and ‘latest’ depending on the version of libhdf5 h5py is built against.
+
+userblock_size
+
+Desired size of user block. Only allowed when creating a new file (mode w, w- or x).
+
+swmr
+
+Open the file in SWMR read mode. Only used when mode = ‘r’.
+
+rdcc_nslots
+
+The number of chunk slots in the raw data chunk cache for this file. Increasing this value reduces the number of cache collisions, but slightly increases the memory used. Due to the hashing strategy, this value should ideally be a prime number. As a rule of thumb, this value should be at least 10 times the number of chunks that can fit in rdcc_nbytes bytes. For maximum performance, this value should be set approximately 100 times that number of chunks. The default value is 521. Applies to all datasets unless individually changed.
+
+rdcc_nbytes
+
+Total size of the dataset chunk cache in bytes. The default size per dataset is 1024**2 (1 MiB) for HDF5 before 2.0 and 8 MiB for HDF5 2.0 and later. Applies to all datasets unless individually changed.
+
+rdcc_w0
+
+The chunk preemption policy for all datasets. This must be between 0 and 1 inclusive and indicates the weighting according to which chunks which have been fully read or written are penalized when determining which chunks to flush from cache. A value of 0 means fully read or written chunks are treated no differently than other chunks (the preemption is strictly LRU) while a value of 1 means fully read or written chunks are always preempted before other chunks. If your application only reads or writes data once, this can be safely set to 1. Otherwise, this should be set lower depending on how often you re-read or re-write the same data. The default value is 0.75. Applies to all datasets unless individually changed.
+
+track_order
+
+Track dataset/group/attribute creation order under root group if True. If None use global default h5.get_config().track_order.
+
+track_times: bool or None, default: False
+
+If True, store timestamps for this group in the file. If None, fall back to the default value.
+
+fs_strategy
+
+The file space handling strategy to be used. Only allowed when creating a new file (mode w, w- or x). Defined as: “fsm” FSM, Aggregators, VFD “page” Paged FSM, VFD “aggregate” Aggregators, VFD “none” VFD If None use HDF5 defaults.
+
+fs_page_size
+
+File space page size in bytes. Only used when fs_strategy=”page”. If None use the HDF5 default (4096 bytes).
+
+fs_persist
+
+A boolean value to indicate whether free space should be persistent or not. Only allowed when creating a new file. The default value is False.
+
+fs_threshold
+
+The smallest free-space section size that the free space manager will track. Only allowed when creating a new file. The default value is 1.
+
+page_buf_size
+
+Page buffer size in bytes. Only allowed for HDF5 files created with fs_strategy=”page”. Must be a power of two value and greater or equal than the file space page size when creating the file. It is not used by default.
+
+min_meta_keep
+
+Minimum percentage of metadata to keep in the page buffer before allowing pages containing metadata to be evicted. Applicable only if page_buf_size is set. Default value is zero.
+
+min_raw_keep
+
+Minimum percentage of raw data to keep in the page buffer before allowing pages containing raw data to be evicted. Applicable only if page_buf_size is set. Default value is zero.
+
+locking
+
+The file locking behavior. Defined as:
+
+False (or “false”) – Disable file locking
+
+True (or “true”) – Enable file locking
+
+“best-effort” – Enable file locking but ignore some errors
+
+None – Use HDF5 defaults
+
+Warning
+
+The HDF5_USE_FILE_LOCKING environment variable can override this parameter.
+
+alignment_threshold
+
+Together with alignment_interval, this property ensures that any file object greater than or equal in size to the alignment threshold (in bytes) will be aligned on an address which is a multiple of alignment interval.
+
+alignment_interval
+
+This property should be used in conjunction with alignment_threshold. See the description above. For more details, see https://support.hdfgroup.org/documentation/hdf5/latest/group___f_a_p_l.html#gab99d5af749aeb3896fd9e3ceb273677a
+
+meta_block_size
+
+Set the current minimum size, in bytes, of new metadata block allocations. See https://support.hdfgroup.org/documentation/hdf5/latest/group___f_a_p_l.html#ga8822e3dedc8e1414f20871a87d533cb1
+
+Additional keywords
+
+Passed on to the selected file driver.

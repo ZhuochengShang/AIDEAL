@@ -1,0 +1,27 @@
+mir_eval.multipitch.compute_num_true_positives(ref_freqs, est_freqs, window=0.5, chroma=False)
+
+Compute the number of true positives in an estimate given a reference. A frequency is correct if it is within a quartertone of the correct frequency.
+
+Parameters:
+
+ref_freqslist of np.ndarray
+
+reference frequencies (MIDI)
+
+est_freqslist of np.ndarray
+
+estimated frequencies (MIDI)
+
+windowfloat
+
+Window size, in semitones
+
+chromabool
+
+If True, computes distances modulo n. If True, ref_freqs and est_freqs should be wrapped modulo n.
+
+Returns:
+
+true_positivesnp.ndarray
+
+Array the same length as ref_freqs containing the number of true positives.

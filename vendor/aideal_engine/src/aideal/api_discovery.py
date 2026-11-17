@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 from .config import AidealConfig
 from .api_registry import configured_api_details
+from .api_origin import audit_api_origins, filter_api_origins, origin_enabled
 from .api_signatures import (
     _doc_at,
     _java_param_record,
@@ -35,15 +36,23 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
     Default `all` (back-compat)."""
     registered = configured_api_details(cfg, override_filter)
     if registered is not None:
-        return {row["name"] for row in registered}
+        return {row["name"] for row in filter_api_origins(cfg, registered)}
+    owned_sites = None
+    owned_names = None
+    if origin_enabled(cfg):
+        owned = public_api_details(cfg)
+        owned_sites = {(row["file"], row["line"], row["name"]) for row in owned}
+        owned_names = {row["name"] for row in owned}
     model = visibility_model(cfg)
     flt = (override_filter or cfg.surface_filter or "all").lower()
     if flt in ("intent_score", "intent"):
         from .api_intent import intent_scores
-        return {n for n, info in intent_scores(cfg).items() if info["selected"]}
+        names = {n for n, info in intent_scores(cfg).items() if info["selected"]}
+        return names if owned_names is None else names & owned_names
     if flt in ("intended_llm", "intent_llm"):
         from .api_intent import intended_api_llm
-        return intended_api_llm(cfg)[0]
+        names = intended_api_llm(cfg)[0]
+        return names if owned_names is None else names & owned_names
     file_cache: dict[str, list[str]] = {}
     all_names: set[str] = set()
     documented: set[str] = set()
@@ -52,6 +61,10 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
     for name, prefix, path, i, _line in _iter_defs(cfg):
         if name in cfg.exclude_names or not _is_public(name, prefix, model):
             continue
+        if owned_sites is not None:
+            rel = str(Path(path).relative_to(cfg.root))
+            if (rel, i + 1, name) not in owned_sites:
+                continue
         if py_identities is not None:
             rel = str(Path(path).relative_to(cfg.root)).replace("\\", "/")
             if (rel, i + 1, name) not in py_identities:
@@ -94,7 +107,7 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
     return all_names
 
 
-def public_api_details(cfg: AidealConfig) -> list[dict]:
+def _unfiltered_api_details(cfg: AidealConfig) -> list[dict]:
     # Scan the configured source files and describe each matching definition.
     # Return signatures, comments, visibility and exact source locations.
     # Keep definition sites distinct; callers choose the intended public surface.
@@ -150,6 +163,16 @@ def public_api_details(cfg: AidealConfig) -> list[dict]:
     return out
 
 
+def public_api_details(cfg: AidealConfig) -> list[dict]:
+    """Definition facts, with optional source-origin policy applied per site."""
+    return filter_api_origins(cfg, _unfiltered_api_details(cfg))
+
+
+def api_origin_audit(cfg: AidealConfig) -> dict:
+    """Ownership decisions, including excluded/unresolved sites, without calls."""
+    return audit_api_origins(cfg, _unfiltered_api_details(cfg))
+
+
 def render_api_surface(cfg: AidealConfig, include_nonpublic: bool = False) -> str:
     """Plain-text dump of the discovered API surface (Step 1 of the test plan)."""
     details = public_api_details(cfg)
@@ -182,6 +205,15 @@ def render_api_surface(cfg: AidealConfig, include_nonpublic: bool = False) -> st
             lines.append(f"    returns: {d['returns'] or '(unspecified)'}")
             if d["description"]:
                 lines.append(f"    doc    : {d['description'][:200]}")
+    if origin_enabled(cfg):
+        audit = api_origin_audit(cfg)
+        lines.extend(["", "SOURCE ORIGIN — " + audit["policy"]["version"],
+                      "policy SHA256: " + audit["policy_sha256"],
+                      "origin counts: " + ", ".join(f"{key}={value}" for key, value in sorted(audit["counts"].items()))])
+        for decision in audit["decisions"]:
+            if decision["status"] != "library_defined":
+                lines.append(f"  {decision['status']}: {decision.get('qualified_name') or decision['name']} "
+                             f"@ {decision.get('file')}:{decision.get('line')} — {decision['reason']}")
     return "\n".join(lines)
 
 

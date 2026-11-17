@@ -1,0 +1,33 @@
+rotateby(angle, axis, point=None)
+
+Apply a rotation to the selection’s coordinates.
+
+Parameters:
+
+angle (float) – Rotation angle in degrees.
+
+axis (array_like) – Rotation axis vector.
+
+point (array_like, optional) – Center of rotation. If None then the center of geometry of this group is used.
+
+Return type:
+
+self
+
+Notes
+
+The transformation from current coordinates \(\mathbf{x}\) to new coordinates \(\mathbf{x}'\) is
+
+ \[\mathbf{x}' = \mathsf{R}\,(\mathbf{x}-\mathbf{p}) + \mathbf{p}\]
+
+where \(\mathsf{R}\) is the rotation by angle around the axis going through point \(\mathbf{p}\).
+
+See also
+
+MDAnalysis.lib.transformations.rotation_matrix
+
+calculate
+
+math:mathsf{R}
+
+Changed in version 2.11.0: Also rotate velocities and forces if present in Timestep.

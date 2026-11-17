@@ -1,0 +1,29 @@
+MDAnalysis.lib.distances.apply_PBC(coords: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Moves coordinates into the primary unit cell.
+
+Parameters:
+
+coords (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (numpy.ndarray) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+backend ({'serial', 'OpenMP'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+newcoords – Array containing coordinates that all lie within the primary unit cell as defined by box.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float32, shape=coords.shape)
+
+Added in version 0.8.
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts (and, likewise, returns) single coordinates.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.11.0: Fixed wrapping in triclinic boxes where both the x component of the second box vector and the y component of the third are non-zero (Issue #4906).

@@ -1,0 +1,39 @@
+mir_eval.sonify.pitch_contour(times, frequencies, fs, amplitudes=None, function=<ufunc 'sin'>, length=None, kind='linear')
+
+Sonify a pitch contour.
+
+Parameters:
+
+timesnp.ndarray
+
+time indices for each frequency measurement, in seconds
+
+frequenciesnp.ndarray
+
+frequency measurements, in Hz. Non-positive measurements or NaNs will be interpreted as un-voiced samples.
+
+fsint
+
+desired sampling rate of the output signal
+
+amplitudesnp.ndarray
+
+amplitude measurements, nonnegative defaults to np.ones((length,))
+
+functionfunction
+
+function to use to synthesize notes, should be -periodic
+
+lengthint
+
+desired number of samples in the output signal, defaults to max(times)*fs
+
+kindstr
+
+Interpolation mode for the frequency and amplitude values. See: scipy.interpolate.interp1d for valid settings.
+
+Returns:
+
+outputnp.ndarray
+
+synthesized version of the pitch contour

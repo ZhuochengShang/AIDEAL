@@ -1,0 +1,439 @@
+4.6.1. Nucleic acid analysis — MDAnalysis.analysis.nuclinfo
+
+Author:
+
+Elizabeth Denning
+
+Year:
+
+2011
+
+Copyright:
+
+Lesser GNU Public License v2.1+
+
+The module provides functions to analyze nucleic acid structures, in particular
+
+backbone dihedrals,
+
+chi dihedrals,
+
+AS or CP phase angles,
+
+Watson-Crick N1-N3 distances, C2-O2 distances, N6-O4 distances, O6-N4 distances.
+
+For applications of this kind of analysis see [1][2].
+
+All functions take a Universe as an argument together with further parameters that specify the base or bases in question. Angles are in degrees. The functions use standard CHARMM names for nucleic acids and atom names.
+
+References
+
+4.6.1.1. Distances
+
+ MDAnalysis.analysis.nuclinfo.wc_pair(universe, i, bp, seg1='SYSTEM', seg2='SYSTEM')[source]
+
+Watson-Crick basepair distance for residue i with residue bp.
+
+The distance of the nitrogen atoms in a Watson-Crick hydrogen bond is computed.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+i (int) – resid of the first base
+
+bp (int) – resid of the second base
+
+seg1 (str (optional)) – segment id for first base [“SYSTEM”]
+
+seg2 (str (optional)) – segment id for second base [“SYSTEM”]
+
+Returns:
+
+Watson-Crick base pair distance
+
+Return type:
+
+float
+
+Notes
+
+If failure occurs be sure to check the segment identification.
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.minor_pair(universe, i, bp, seg1='SYSTEM', seg2='SYSTEM')[source]
+
+Minor-Groove basepair distance for residue i with residue bp.
+
+The distance of the nitrogen and oxygen atoms in a Minor-groove hydrogen bond is computed.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+i (int) – resid of the first base
+
+bp (int) – resid of the second base
+
+seg1 (str (optional)) – segment id for first base [“SYSTEM”]
+
+seg2 (str (optional)) – segment id for second base [“SYSTEM”]
+
+Returns:
+
+Minor groove base pair distance
+
+Return type:
+
+float
+
+Notes
+
+If failure occurs be sure to check the segment identification.
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.major_pair(universe, i, bp, seg1='SYSTEM', seg2='SYSTEM')[source]
+
+Major-Groove basepair distance for residue i with residue bp.
+
+The distance of the nitrogen and oxygen atoms in a Major-groove hydrogen bond is computed.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+i (int) – resid of the first base
+
+bp (int) – resid of the second base
+
+seg1 (str (optional)) – segment id for first base [“SYSTEM”]
+
+seg2 (str (optional)) – segment id for second base [“SYSTEM”]
+
+Returns:
+
+Major groove base pair distance
+
+Return type:
+
+float
+
+Notes
+
+If failure occurs be sure to check the segment identification.
+
+Added in version 0.7.6.
+
+4.6.1.2. Phases
+
+ MDAnalysis.analysis.nuclinfo.phase_cp(universe, seg, i)[source]
+
+Pseudo-angle describing the phase of the ribose pucker for residue i using the CP method.
+
+The angle is computed by the positions of atoms in the ribose ring.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+phase angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.phase_as(universe, seg, i)[source]
+
+Pseudo-angle describing the phase of the ribose pucker for residue i using the AS method
+
+The angle is computed by the position vector of atoms in the ribose ring.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+phase angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+4.6.1.3. Dihedral angles
+
+ MDAnalysis.analysis.nuclinfo.tors(universe, seg, i)[source]
+
+Calculation of nucleic backbone dihedral angles.
+
+The dihedral angles are alpha, beta, gamma, delta, epsilon, zeta, chi.
+
+The dihedral is computed based on position of atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+[alpha, beta, gamma, delta, epsilon, zeta, chi] – torsion angles in degrees
+
+Return type:
+
+list of floats
+
+Notes
+
+If failure occurs be sure to check the segment identification.
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.tors_alpha(universe, seg, i)[source]
+
+alpha backbone dihedral
+
+The dihedral is computed based on position atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+alpha – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.tors_beta(universe, seg, i)[source]
+
+beta backbone dihedral
+
+The dihedral is computed based on position atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+beta – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.tors_gamma(universe, seg, i)[source]
+
+Gamma backbone dihedral
+
+The dihedral is computed based on position atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+gamma – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.tors_delta(universe, seg, i)[source]
+
+delta backbone dihedral
+
+The dihedral is computed based on position atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+delta – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.tors_eps(universe, seg, i)[source]
+
+Epsilon backbone dihedral
+
+The dihedral is computed based on position atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+epsilon – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.tors_zeta(universe, seg, i)[source]
+
+Zeta backbone dihedral
+
+The dihedral is computed based on position atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+zeta – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.tors_chi(universe, seg, i)[source]
+
+chi nucleic acid dihedral
+
+The dihedral is computed based on position atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+chi – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.hydroxyl(universe, seg, i)[source]
+
+2-hydroxyl dihedral. Useful only for RNA calculations.
+
+Note
+
+This dihedral calculation will only work if using atom names as documented by charmm force field parameters, namely “C1’, C2’, O2’, H2’”.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+hydroxyl_angle – torsion angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.7.6.
+
+ MDAnalysis.analysis.nuclinfo.pseudo_dihe_baseflip(universe, bp1, bp2, i, seg1='SYSTEM', seg2='SYSTEM', seg3='SYSTEM')[source]
+
+pseudo dihedral for flipped bases. Useful only for nucleic acid base flipping
+
+The dihedral is computed based on position atoms for resid i
+
+Note
+
+This dihedral calculation will only work if using atom names as documented by charmm force field parameters.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+bp1 (int) – resid that base pairs with bp2
+
+bp2 (int) – resid below the base that flips
+
+i (int) – resid of the base that flips
+
+segid1 (str (optional)) – segid of resid base pairing with bp2
+
+segid2 (str (optional)) – segid, same as that of segid of flipping resid i
+
+segid3 (str (optional)) – segid of resid i that flips
+
+Returns:
+
+pseudo dihedral angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.8.0.

@@ -1,0 +1,62 @@
+7.2. CRD structure files in MDAnalysis — MDAnalysis.coordinates.CRD
+
+Read and write coordinates in CHARMM CARD coordinate format (suffix “crd”). The CHARMM “extended format” is handled automatically.
+
+ class MDAnalysis.coordinates.CRD.CRDReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+CRD reader that implements the standard and extended CRD coordinate formats
+
+Changed in version 0.11.0: Now returns a ValueError instead of FormatError. Frames now 0-based instead of 1-based.
+
+ Writer(filename, **kwargs)[source]
+
+Returns a CRDWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output CRD file
+
+Return type:
+
+CRDWriter
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.CRD.CRDWriter(filename, **kwargs)[source]
+
+CRD writer that implements the CHARMM CRD coordinate format.
+
+It automatically writes the CHARMM EXT extended format if there are more than 99,999 atoms.
+
+Requires the following attributes to be present: - resids - resnames - names - chainIDs - tempfactors
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 2.2.0: CRD extended format can now be explicitly requested with the extended keyword
+
+Changed in version 2.6.0: Files are now written in wt mode, and keep extensions, allowing for files to be written under compressed formats
+
+Parameters:
+
+filename (str or NamedStream) – name of the output file or a stream
+
+extended (bool (optional)) –
+By default, noextended CRD format is used [False]. However, extended CRD format can be forced by specifying extended =True. Note that the extended format is always used if the number of atoms exceeds 99,999, regardless of the setting of extended.
+
+Added in version 2.2.0.
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(selection, frame=None)[source]
+
+Write selection at current trajectory frame to file.
+
+Parameters:
+
+selection (AtomGroup) – group of atoms to be written
+
+frame (int (optional)) – Move the trajectory to frame frame; by default, write the current frame.

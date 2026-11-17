@@ -1,0 +1,19 @@
+get_data(data_selector: str | List[str] | None = None) → Dict[str, ndarray][source]
+
+Returns the auxiliary data contained in the EDRReader. Returns either all data or data specified as data_selector in form of a str or a list of any of EDRReader.terms. Time is always returned to allow easy plotting.
+
+Parameters:
+
+data_selector (str, List[str], None) – Keys to be extracted from the auxiliary reader’s data dictionary. If None, returns all data found in data_dict.
+
+Returns:
+
+data_dict – Dictionary mapping data_selector keys to NumPy arrays of the auxiliary data.
+
+Return type:
+
+dict
+
+Raises:
+
+KeyError – if an invalid data_selector key is passed.

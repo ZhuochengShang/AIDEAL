@@ -1,0 +1,31 @@
+class MDAnalysis.converters.RDKitInferring.TemplateInferrer(template: Mol, adjust_hydrogens: bool = True)[source]
+
+Infer bond orders and charges by matching the molecule with a template molecule containing bond orders and charges.
+
+ template
+
+Molecule containing the bond orders and charges.
+
+Type:
+
+rdkit.Chem.rdchem.Mol
+
+ adjust_hydrogens
+
+If True, temporarily removes hydrogens from the molecule to assign bond orders and charges from the template, then adds them back. Useful to avoid adding explicit hydrogens on the template which can prevent RDKit from finding a match between the template and the molecule. Setting this to False can be useful to speed things up for inorganic molecules that don’t have any hydrogens.
+
+Type:
+
+bool, default = True
+
+ .. versionadded:: 2.10.0
+
+ assign_from_template_with_adjusted_hydrogens(mol: Mol, index_field: str = '_MDAnalysis_index') → Mol[source]
+
+Temporarily removes hydrogens from the molecule before assigning bond orders and charges from the template, then adds them back.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.Mol) – Molecule to assign bond orders and charges to.
+
+index_field (str, default = "_MDAnalysis_index") – Atom property corresponding to a unique integer that can used to put back the hydrogen atoms that were removed before matching, and sort them back to the original order. Must be accessible through atom.GetIntProp.

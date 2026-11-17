@@ -1,0 +1,473 @@
+class MDAnalysis.coordinates.TPR.TPRReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Class supporting read in of positions and velocities from GROMACS TPR files.
+
+Added in version 2.10.0.
+
+Changed in version 2.11.0: Read unit cell dimensions from TPR file.
+
+ OtherWriter(filename, **kwargs)
+
+Returns a writer appropriate for filename.
+
+Sets the default keywords start, step and dt (if available). n_atoms is always set from Reader.n_atoms.
+
+See also
+
+Reader.Writer()
+
+ Writer(filename, **kwargs)
+
+A trajectory writer with the same properties as this trajectory.
+
+ add_auxiliary(aux_spec: str | Dict[str, str] = None, auxdata: str | AuxReader = None, format: str = None, **kwargs) → None
+
+Add auxiliary data to be read alongside trajectory.
+
+Auxiliary data may be any data timeseries from the trajectory additional to that read in by the trajectory reader. auxdata can be an AuxReader instance, or the data itself as e.g. a filename; in the latter case an appropriate AuxReader is guessed from the data/file format. An appropriate format may also be directly provided as a key word argument.
+
+On adding, the AuxReader is initially matched to the current timestep of the trajectory, and will be updated when the trajectory timestep changes (through a call to next() or jumping timesteps with trajectory[i]).
+
+The representative value(s) of the auxiliary data for each timestep (as calculated by the AuxReader) are stored in the current timestep in the ts.aux namespace under aux_spec; e.g. to add additional pull force data stored in pull-force.xvg:
+
+u = MDAnalysis.Universe(PDB, XTC)
+u.trajectory.add_auxiliary('pull', 'pull-force.xvg')
+
+The representative value for the current timestep may then be accessed as u.trajectory.ts.aux.pull or u.trajectory.ts.aux['pull'].
+
+The following applies to energy readers like the EDRReader.
+
+All data that is present in the (energy) file can be added by omitting aux_spec like so:
+
+u.trajectory.add_auxiliary(auxdata="ener.edr")
+
+aux_spec is expected to be a dictionary that maps the desired attribute name in the ts.aux namespace to the precise data to be added as identified by a data_selector:
+
+term_dict = {"temp": "Temperature", "epot": "Potential"}
+u.trajectory.add_auxiliary(term_dict, "ener.edr")
+
+Adding this data can be useful, for example, to filter trajectory frames based on non-coordinate data like the potential energy of each time step. Trajectory slicing allows working on a subset of frames:
+
+selected_frames = np.array([ts.frame for ts in u.trajectory
+                            if ts.aux.epot < some_threshold])
+subset = u.trajectory[selected_frames]
+
+See also
+
+remove_auxiliary()
+
+Note
+
+Auxiliary data is assumed to be time-ordered, with no duplicates. See the Auxiliary API.
+
+ add_transformations(*transformations)
+
+Add all transformations to be applied to the trajectory.
+
+This function take as list of transformations as an argument. These transformations are functions that will be called by the Reader and given a Timestep object as argument, which will be transformed and returned to the Reader. The transformations can be part of the transformations module, or created by the user, and are stored as a list transformations. This list can only be modified once, and further calls of this function will raise an exception.
+
+u = MDAnalysis.Universe(topology, coordinates)
+workflow = [some_transform, another_transform, this_transform]
+u.trajectory.add_transformations(*workflow)
+
+Parameters:
+
+transform_list (list) – list of all the transformations that will be applied to the coordinates
+
+See also
+
+MDAnalysis.transformations
+
+ property aux_list
+
+Lists the names of added auxiliary data.
+
+ check_slice_indices(start, stop, step)
+
+Check frame indices are valid and clip to fit trajectory.
+
+The usage follows standard Python conventions for range() but see the warning below.
+
+Parameters:
+
+start (int or None) – Starting frame index (inclusive). None corresponds to the default of 0, i.e., the initial frame.
+
+stop (int or None) – Last frame index (exclusive). None corresponds to the default of n_frames, i.e., it includes the last frame of the trajectory.
+
+step (int or None) – step size of the slice, None corresponds to the default of 1, i.e, include every frame in the range start, stop.
+
+Returns:
+
+start, stop, step – Integers representing the slice
+
+Return type:
+
+tuple (int, int, int)
+
+Warning
+
+The returned values start, stop and step give the expected result when passed in range() but gives unexpected behavior when passed in a slice when stop=None and step=-1
+
+This can be a problem for downstream processing of the output from this method. For example, slicing of trajectories is implemented by passing the values returned by check_slice_indices() to range()
+
+range(start, stop, step)
+
+and using them as the indices to randomly seek to. On the other hand, in MDAnalysis.analysis.base.AnalysisBase the values returned by check_slice_indices() are used to splice the trajectory by creating a slice instance
+
+slice(start, stop, step)
+
+This creates a discrepancy because these two lines are not equivalent:
+
+range(10, -1, -1)             # [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+range(10)[slice(10, -1, -1)]  # []
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ copy()
+
+Return independent copy of this Reader.
+
+New Reader will have its own file handle and can seek/iterate independently of the original.
+
+Will also copy the current state of the Timestep held in the original Reader.
+
+Changed in version 2.2.0: Arguments used to construct the reader are correctly captured and passed to the creation of the new class. Previously the only n_atoms was passed to class copies, leading to a class created with default parameters which may differ from the original class.
+
+ property dt: float
+
+Time between two trajectory frames in picoseconds.
+
+ property frame: int
+
+Frame number of the current time step.
+
+This is a simple short cut to Timestep.frame.
+
+ get_aux_attribute(auxname, attrname)
+
+Get the value of attrname from the auxiliary auxname
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to get value for
+
+attrname (str) – Name of gettable attribute in the auxiliary reader
+
+See also
+
+set_aux_attribute()
+
+ get_aux_descriptions(auxnames=None)
+
+Get descriptions to allow reloading the specified auxiliaries.
+
+If no auxnames are provided, defaults to the full list of added auxiliaries.
+
+Passing the resultant description to add_auxiliary() will allow recreation of the auxiliary. e.g., to duplicate all auxiliaries into a second trajectory:
+
+descriptions = trajectory_1.get_aux_descriptions()
+for aux in descriptions:
+    trajectory_2.add_auxiliary(**aux)
+
+Returns:
+
+List of dictionaries of the args/kwargs describing each auxiliary.
+
+Return type:
+
+list
+
+See also
+
+MDAnalysis.auxiliary.base.AuxReader.get_description()
+
+ iter_as_aux(auxname)
+
+Iterate through timesteps for which there is at least one assigned step from the auxiliary auxname within the cutoff specified in auxname.
+
+See also
+
+next_as_aux(), iter_auxiliary()
+
+ iter_auxiliary(auxname, start=None, stop=None, step=None, selected=None)
+
+Iterate through the auxiliary auxname independently of the trajectory.
+
+Will iterate over the specified steps of the auxiliary (defaults to all steps). Allows to access all values in an auxiliary, including those out of the time range of the trajectory, without having to also iterate through the trajectory.
+
+After interation, the auxiliary will be repositioned at the current step.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to iterate over.
+
+(start (optional) – Options for iterating over a slice of the auxiliary.
+
+stop (optional) – Options for iterating over a slice of the auxiliary.
+
+step) (optional) – Options for iterating over a slice of the auxiliary.
+
+selected (lst | ndarray, optional) – List of steps to iterate over.
+
+Yields:
+
+AuxStep object
+
+See also
+
+iter_as_aux()
+
+ next()
+
+Forward one step to next frame.
+
+ next_as_aux(auxname)
+
+Move to the next timestep for which there is at least one step from the auxiliary auxname within the cutoff specified in auxname.
+
+This allows progression through the trajectory without encountering NaN representative values (unless these are specifically part of the auxiliary data).
+
+If the auxiliary cutoff is not set, where auxiliary steps are less frequent (auxiliary.dt > trajectory.dt), this allows progression at the auxiliary pace (rounded to nearest timestep); while if the auxiliary steps are more frequent, this will work the same as calling next().
+
+See the Auxiliary API.
+
+See also
+
+iter_as_aux()
+
+ classmethod parse_n_atoms(filename, **kwargs)
+
+Read the coordinate file and deduce the number of atoms
+
+Returns:
+
+n_atoms – the number of atoms in the coordinate file
+
+Return type:
+
+int
+
+Raises:
+
+NotImplementedError – when the number of atoms can’t be deduced
+
+ remove_auxiliary(auxname)
+
+Clear data and close the AuxReader for the auxiliary auxname.
+
+See also
+
+add_auxiliary()
+
+ rename_aux(auxname, new)
+
+Change the name of the auxiliary auxname to new.
+
+Provided there is not already an auxiliary named new, the auxiliary name will be changed in ts.aux namespace, the trajectory’s list of added auxiliaries, and in the auxiliary reader itself.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to rename
+
+new (str) – New name to try set
+
+Raises:
+
+ValueError – If the name new is already in use by an existing auxiliary.
+
+ rewind()
+
+Position at beginning of trajectory
+
+ set_aux_attribute(auxname, attrname, new)
+
+Set the value of attrname in the auxiliary auxname.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to alter
+
+attrname (str) – Name of settable attribute in the auxiliary reader
+
+new – New value to try set attrname to
+
+See also
+
+get_aux_attribute(), rename_aux()
+
+ property time
+
+Time of the current frame in MDAnalysis time units (typically ps).
+
+This is either read straight from the Timestep, or calculated as time = Timestep.frame * Timestep.dt
+
+ timeseries(asel: AtomGroup | None = None, atomgroup: Atomgroup | None = None, start: int | None = None, stop: int | None = None, step: int | None = None, order: str | None = 'fac') → ndarray
+
+Return a subset of coordinate data for an AtomGroup
+
+Parameters:
+
+asel (AtomGroup (optional)) –
+The AtomGroup to read the coordinates from. Defaults to None, in which case the full set of coordinate data is returned.
+
+Deprecated since version 2.7.0: asel argument will be renamed to atomgroup in 3.0.0
+
+atomgroup (AtomGroup (optional)) – Same as asel, will replace asel in 3.0.0
+
+start (int (optional)) – Begin reading the trajectory at frame index start (where 0 is the index of the first frame in the trajectory); the default None starts at the beginning.
+
+stop (int (optional)) – End reading the trajectory at frame index stop-1, i.e, stop is excluded. The trajectory is read to the end with the default None.
+
+step (int (optional)) – Step size for reading; the default None is equivalent to 1 and means to read every frame.
+
+order (str (optional)) – the order/shape of the return data array, corresponding to (a)tom, (f)rame, (c)oordinates all six combinations of ‘a’, ‘f’, ‘c’ are allowed ie “fac” - return array where the shape is (frame, number of atoms, coordinates)
+
+See also
+
+MDAnalysis.coordinates.memory
+
+Added in version 2.4.0.
+
+ property totaltime: float
+
+Total length of the trajectory
+
+The time is calculated as (n_frames - 1) * dt, i.e., we assume that the first frame no time as elapsed. Thus, a trajectory with two frames will be considered to have a length of a single time step dt and a “trajectory” with a single frame will be reported as length 0.
+
+ property transformations
+
+Returns the list of transformations
+
+ units = {'length': 'nm', 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

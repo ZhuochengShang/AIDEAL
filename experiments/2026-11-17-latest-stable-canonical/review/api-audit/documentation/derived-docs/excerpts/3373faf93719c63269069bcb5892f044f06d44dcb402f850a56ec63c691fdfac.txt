@@ -1,0 +1,80 @@
+class MDAnalysis.coordinates.GRO.GROWriter(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+GRO Writer that conforms to the Trajectory API.
+
+Will attempt to write the following information from the topology:
+
+atom name (defaults to ‘X’)
+
+resnames (defaults to ‘UNK’)
+
+resids (defaults to ‘1’)
+
+Note
+
+The precision is hard coded to three decimal places.
+
+Note
+
+When dimensions are missing (i.e. set to None), a zero width unit cell box will be written (i.e. [0.0, 0.0, 0.0]).
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 0.13.0: Now strictly writes positions with 3dp precision. and velocities with 4dp. Removed the convert_dimensions_to_unitcell method, use Timestep.triclinic_dimensions instead. Now now writes velocities where possible.
+
+Changed in version 0.18.0: Added reindex keyword argument to allow original atom ids to be kept.
+
+Changed in version 2.0.0: Raises a warning when writing timestep with missing dimension information (i.e. set to None).
+
+Set up a GROWriter with a precision of 3 decimal places.
+
+Parameters:
+
+filename (str) – output filename
+
+n_atoms (int (optional)) – number of atoms
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+reindex (bool (optional)) – By default, all the atoms were reindexed to have a atom id starting from 1. [True] However, this behaviour can be turned off by specifying reindex =False.
+
+Note
+
+To use the reindex keyword, user can follow the two examples given below.:
+
+u = mda.Universe()
+
+Usage 1:
+
+u.atoms.write('out.gro', reindex=False)
+
+Usage 2:
+
+with mda.Writer('out.gro', reindex=False) as w:
+    w.write(u.atoms)
+
+ fmt = {'box_orthorhombic': '{box[0]:10.5f} {box[1]:9.5f} {box[2]:9.5f}\n', 'box_triclinic': '{box[0]:10.5f} {box[4]:9.5f} {box[8]:9.5f} {box[1]:9.5f} {box[2]:9.5f} {box[3]:9.5f} {box[5]:9.5f} {box[6]:9.5f} {box[7]:9.5f}\n', 'n_atoms': '{0:5d}\n', 'xyz': '{resid:>5d}{resname:<5.5s}{name:>5.5s}{index:>5d}{pos[0]:8.3f}{pos[1]:8.3f}{pos[2]:8.3f}\n', 'xyz_v': '{resid:>5d}{resname:<5.5s}{name:>5.5s}{index:>5d}{pos[0]:8.3f}{pos[1]:8.3f}{pos[2]:8.3f}{vel[0]:8.4f}{vel[1]:8.4f}{vel[2]:8.4f}\n'}
+
+format strings for the GRO file (all include newline); precision of 3 decimal places is hard-coded here.
+
+ units = {'length': 'nm', 'time': None, 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)[source]
+
+Write selection at current trajectory frame to file.
+
+Parameters:
+
+obj (AtomGroup or Universe)
+
+Note
+
+The GRO format only allows 5 digits for resid and atom number. If these numbers become larger than 99,999 then this routine will chop off the leading digits.
+
+Changed in version 0.7.6: resName and atomName are truncated to a maximum of 5 characters
+
+Changed in version 0.16.0: frame kwarg has been removed
+
+Changed in version 2.0.0: Deprecated support for calling with Timestep has nwo been removed. Use AtomGroup or Universe as an input instead.

@@ -1,0 +1,27 @@
+set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.

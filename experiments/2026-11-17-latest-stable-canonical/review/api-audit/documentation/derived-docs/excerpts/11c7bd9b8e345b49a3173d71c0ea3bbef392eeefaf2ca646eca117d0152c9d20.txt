@@ -1,0 +1,9 @@
+parse(**kwargs)[source]
+
+Parse Hoomd XML file
+
+Hoomd XML format does not contain a node for names. The parser will look for a name node anyway, and if it doesn’t find one, it will use the atom types as names. If the Hoomd XML file doesn’t contain a type node (it should), then all atom types will be ‘none’. Similar to the names, the parser will try to read atom type, mass, and charge from the XML file, but it will use placeholder values if they are not present.
+
+Because Hoomd uses unitless mass, charge, etc., if they are not present they will not be guessed - they will be set to zero.
+
+Added in version 0.11.0.

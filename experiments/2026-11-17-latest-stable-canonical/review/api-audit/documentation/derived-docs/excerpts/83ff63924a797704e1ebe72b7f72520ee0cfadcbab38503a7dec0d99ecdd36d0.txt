@@ -1,0 +1,207 @@
+class MDAnalysis.coordinates.chain.ChainReader(filenames, skip=1, dt=None, continuous=False, convert_units=True, **kwargs)[source]
+
+Reader that concatenates multiple trajectories on the fly.
+
+The ChainReader is used by MDAnalysis internally to represent multiple trajectories as one virtual trajectory. Users typically do not need to use the ChainReader explicitly.
+
+Chainreader can also handle a continuous trajectory split over several files. To use this pass the continuous == True keyword argument. Setting continuous=True will make the reader choose frames from the set of trajectories in such a way that the trajectory appears to be as continuous in time as possible, i.e. that time is strictly monotonically increasing. This means that there will be no duplicate time frames and no jumps backwards in time. However, there can be gaps in time (e.g., multiple time steps can appear to be missing). Ultimately, it is the user’s responsibility to ensure that the input trajectories can be virtually stitched together in a meaningful manner. As an example take the following trajectory that is split into three parts. The column represents the time and the trajectory segments overlap. With the continuous chainreader only the frames marked with a + will be read.
+
+part01:  ++++--
+part02:      ++++++-
+part03:            ++++++++
+
+Warning
+
+The order in which trajectories are given to the chainreader can change what frames are used with the continuous option.
+
+The default chainreader will read all frames. The continuous option is currently only supported for XTC, TRR, and LAMMPSDUMP files.
+
+Notes
+
+The trajectory API attributes exist but most of them only reflect the first trajectory in the list; ChainReader.n_frames, ChainReader.n_atoms, and ChainReader.fixed are properly set, though
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 0.13.0: time now reports the time summed over each trajectory’s frames and individual dt.
+
+Changed in version 0.19.0: added continuous trajectory option
+
+Changed in version 0.19.0: limit output of __repr__
+
+Changed in version 2.0.0: Now ChainReader can be (un)pickled. Upon unpickling, current timestep is retained.
+
+Set up the chain reader.
+
+Parameters:
+
+filenames (str or list or sequence) –
+file name or list of file names; the reader will open all file names and provide frames in the order of trajectories from the list. Each trajectory must contain the same number of atoms in the same order (i.e. they all must belong to the same topology). The trajectory format is deduced from the extension of each file name.
+
+Extension: filenames are either a single file name or list of file names in either plain file names format or (filename, format) tuple combination. This allows explicit setting of the format for each individual trajectory file.
+
+skip (int (optional)) – skip step (also passed on to the individual trajectory readers); must be same for all trajectories
+
+dt (float (optional)) – Passed to individual trajectory readers to enforce a common time difference between frames, in MDAnalysis time units. If not set, each reader’s dt will be used (either inferred from the trajectory files, or set to the reader’s default) when reporting frame times; note that this might lead an inconsistent time difference between frames.
+
+continuous (bool (optional)) – treat all trajectories as one single long trajectory. Adds several checks; all trajectories have the same dt, they contain at least 2 frames, and they are all of the same file-type. Not implemented for all trajectory formats! This can be used to analyze GROMACS simulations without concatenating them prior to analysis.
+
+**kwargs (dict (optional)) – all other keyword arguments are passed on to each trajectory reader unchanged
+
+ _get_local_frame(k) → Tuple[int, int][source]
+
+Find trajectory index and trajectory frame for chained frame k.
+
+Parameters:
+
+k (int) –
+Frame k in the chained trajectory can be found in the trajectory at index i and frame index f.
+
+Frames are internally treated as 0-based indices into the trajectory.
+
+Returns:
+
+i (int) – trajectory
+
+f (int) – frame in trajectory i
+
+Raises:
+
+IndexError for k<0 or i<0. –
+
+Note
+
+Does not check if k is larger than the maximum number of frames in the chained trajectory.
+
+ _apply(method, **kwargs)[source]
+
+Execute method with kwargs for all readers.
+
+ _get(attr)[source]
+
+Get value of attr for all readers.
+
+ _get_same(attr)[source]
+
+Verify that attr has the same value for all readers and return value.
+
+Parameters:
+
+attr (str) – attribute name
+
+Returns:
+
+value – common value of the attribute
+
+Return type:
+
+int or float or str or object
+
+Raises:
+
+ValueError if not all readers have the same value –
+
+ _read_frame(frame)[source]
+
+Position trajectory at frame index frame and return Timestep.
+
+The frame is translated to the corresponding reader and local frame index and the Timestep instance in ChainReader.ts is updated.
+
+Notes
+
+frame is 0-based, i.e. the first frame in the trajectory is accessed with frame = 0.
+
+See also
+
+_get_local_frame()
+
+ property active_reader
+
+Reader instance from which frames are currently being read.
+
+ close()[source]
+
+Close the trajectory file.
+
+ property compressed
+
+compressed attribute of the currently read trajectory
+
+ convert_pos_from_native(x)[source]
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x)[source]
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t)[source]
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t)[source]
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ property frame
+
+Cumulative frame number of the current time step.
+
+ property periodic
+
+periodic attribute of the currently read trajectory
+
+ property time
+
+Cumulative time of the current frame in MDAnalysis time units (typically ps).
+
+ property units
+
+units attribute of the currently read trajectory

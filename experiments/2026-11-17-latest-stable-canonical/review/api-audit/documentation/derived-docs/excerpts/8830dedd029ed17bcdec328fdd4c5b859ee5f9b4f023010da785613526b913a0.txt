@@ -1,0 +1,19 @@
+read_ts(ts)[source]
+
+Read auxiliary steps corresponding to the trajectory timestep ts.
+
+Read the auxiliary steps ‘assigned’ to ts (the steps that are within ts.dt/2 of of the trajectory timestep/frame - ie. closer to ts than either the preceding or following frame). Then calculate a ‘representative value’ for the timestep from the data in each of these auxiliary steps.
+
+To update ts with the representative value, use update_ts instead.
+
+Parameters:
+
+ts (Timestep object) – The trajectory timestep for which corresponding auxiliary data is to be read.
+
+See also
+
+update_ts()
+
+Note
+
+The auxiliary reader will end up positioned at the last step assigned to the trajectory frame or, if the frame includes no auxiliary steps, (as when auxiliary data are less frequent), the most recent auxiliary step before the frame.

@@ -1,0 +1,37 @@
+MDAnalysis.analysis.encore.similarity.dres_convergence(original_ensemble, window_size, select='name CA', dimensionality_reduction_method=None, nsamples=1000, ncores=1)[source]
+
+Use the DRES to evaluate the convergence of the ensemble/trajectory. DRES will be calculated between the whole trajectory contained in an ensemble and windows of such trajectory of increasing sizes, so that the similarity values should gradually drop to zero. The rate at which the value reach zero will be indicative of how much the trajectory keeps on resampling the same ares of the conformational space, and therefore of convergence.
+
+Parameters:
+
+original_ensemble (Universe object) – ensemble containing the trajectory whose convergence has to estimated
+
+window_size (int) – Size of window to be used, in number of frames
+
+select (str, optional) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+dimensionality_reduction_method – A single or a list of instances of the DimensionalityReductionMethod classes from the dimensionality_reduction module. Different parameters for the same method can be explored by adding different instances of the same dimensionality reduction class.
+
+nsamples (int, optional) – Number of samples to be drawn from the ensembles (default is 1000). This is akin to the nsamples parameter of dres().
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1).
+
+Returns:
+
+out – array of shape (number_of_frames / window_size, preference_values).
+
+Return type:
+
+np.array
+
+Example
+
+To calculate the convergence of a trajectory using the DRES method, a Universe object is created from a topology file and the trajectory. The topology- and trajectory files used are obtained from the MDAnalysis test suite for two different simulations of the protein AdK. Here the simplest case of evaluating the convergence is illustrated by splitting the trajectory into a window_size of 10 frames:
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> ens1 = Universe(PSF,DCD)
+>>> dres_conv = encore.dres_convergence(ens1, 10)
+
+Here, the rate at which the values reach zero will be indicative of how much the trajectory keeps on resampling the same ares of the conformational space, and therefore of convergence.

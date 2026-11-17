@@ -1,0 +1,85 @@
+class MDAnalysis.core.topology.Topology(n_atoms=1, n_res=1, n_seg=1, attrs=None, atom_resindex=None, residue_segindex=None)[source]
+
+In-memory, array-based topology database.
+
+The topology model of MDanalysis features atoms, which must each be a member of one residue. Each residue, in turn, must be a member of one segment. The details of maintaining this heirarchy, and mappings of atoms to residues, residues to segments, and vice-versa, are handled internally by this object.
+
+Parameters:
+
+n_atoms (int) – number of atoms in topology. Must be larger then 1 at each level
+
+n_residues (int) – number of residues in topology. Must be larger then 1 at each level
+
+n_segments (int) – number of segments in topology. Must be larger then 1 at each level
+
+attrs (TopologyAttr objects) – components of the topology to be included
+
+atom_resindex (array) – 1-D array giving the resindex of each atom in the system
+
+residue_segindex (array) – 1-D array giving the segindex of each residue in the system
+
+ add_Residue(segment, **new_attrs)[source]
+
+Return type:
+
+residx of the new Residue
+
+Raises:
+
+NoDataError – If not all data was provided. This error is raised before any changes
+
+Changed in version 2.1.0: Added use of _add_new to TopologyAttr resize
+
+ add_Segment(**new_attrs)[source]
+
+Adds a new Segment to the Topology
+
+Parameters:
+
+new_attrs (dict) – the new attributes for the new segment, eg {‘segid’: ‘B’}
+
+Raises:
+
+NoDataError – if an attribute wasn’t specified.
+
+Returns:
+
+ix – the idx of the new segment
+
+Return type:
+
+int
+
+Changed in version 2.1.0: Added use of _add_new to resize topology attrs
+
+ add_TopologyAttr(topologyattr)[source]
+
+Add a new TopologyAttr to the Topology.
+
+Parameters:
+
+topologyattr (TopologyAttr)
+
+ copy()[source]
+
+Return a deepcopy of this Topology
+
+ del_TopologyAttr(topologyattr)[source]
+
+Remove a TopologyAttr from the Topology.
+
+If it is not present, nothing happens.
+
+Parameters:
+
+topologyattr (TopologyAttr)
+
+Added in version 2.0.0.
+
+ property guessed_attributes
+
+A list of the guessed attributes in this topology
+
+ property read_attributes
+
+A list of the attributes read from the topology

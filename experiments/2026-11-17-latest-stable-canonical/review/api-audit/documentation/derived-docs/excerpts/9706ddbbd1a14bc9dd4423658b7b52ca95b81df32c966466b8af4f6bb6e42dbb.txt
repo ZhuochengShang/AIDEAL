@@ -1,0 +1,95 @@
+class MDAnalysis.auxiliary.EDR.EDRReader(filename: str, convert_units: bool = True, **kwargs)[source]
+
+Auxiliary reader to read data from an .edr file.
+
+EDR files are created by GROMACS during a simulation. They are binary files which contain time-series energy data and other data related to the simulation.
+
+Default reader for .edr files. All data from the file will be read and stored on initialisation.
+
+Parameters:
+
+filename (str) – Location of the file containing the auxiliary data.
+
+convert_units (bool, optional) – If True (default), units from the EDR file are automatically converted to MDAnalysis base units. If False, units are taken from the file as-is. Where no base unit is defined in MDAnalysis, no conversion takes place. Unit types in MDAnalysis.units.MDANALYSIS_BASE_UNITS will be converted automatically by default.
+
+**kwargs – Other AuxReader options.
+
+ _auxdata
+
+path at which the auxiliary data file is located
+
+Type:
+
+pathlib.PosixPath
+
+ data_dict
+
+dictionary that contains the auxiliary data, mapping the names GROMACS gave the entries in the EDR file to a NumPy array containing this data
+
+Type:
+
+dict
+
+ unit_dict
+
+dictionary that contains the units of the auxiliary data, mapping the data_selector of the Reader (i.e. the name of the dataset in the EDR file) to its unit.
+
+Type:
+
+dict
+
+ _n_steps
+
+Number of steps for which auxdata is available
+
+Type:
+
+int
+
+ terms
+
+Names of the auxiliary data entries available in data_dict. These are the names GROMACS set in the EDR file.
+
+Type:
+
+list
+
+See also
+
+MDAnalysis.auxiliary.base.AuxReader, MDAnalysis.coordinates.base.ReaderBase.add_auxiliary()
+
+Note
+
+The file is assumed to be of a size such that reading and storing the full contents is practical. A warning will be issued when memory usage exceeds 1 GB. This warning limit can be changed via the memory_limit kwarg.
+
+ get_data(data_selector: str | List[str] | None = None) → Dict[str, ndarray][source]
+
+Returns the auxiliary data contained in the EDRReader. Returns either all data or data specified as data_selector in form of a str or a list of any of EDRReader.terms. Time is always returned to allow easy plotting.
+
+Parameters:
+
+data_selector (str, List[str], None) – Keys to be extracted from the auxiliary reader’s data dictionary. If None, returns all data found in data_dict.
+
+Returns:
+
+data_dict – Dictionary mapping data_selector keys to NumPy arrays of the auxiliary data.
+
+Return type:
+
+dict
+
+Raises:
+
+KeyError – if an invalid data_selector key is passed.
+
+ read_all_times() → ndarray[source]
+
+Get list of time at each step.
+
+Returns:
+
+Time at each step.
+
+Return type:
+
+NumPy array of float

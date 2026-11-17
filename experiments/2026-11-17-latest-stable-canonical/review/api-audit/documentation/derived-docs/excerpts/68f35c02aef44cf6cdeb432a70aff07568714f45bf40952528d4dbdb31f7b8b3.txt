@@ -1,0 +1,15 @@
+mir_eval.util.intervals_to_durations(intervals)
+
+Convert an array of n intervals to their n durations.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+An array of time intervals, as returned by mir_eval.io.load_intervals(). The i th interval spans time intervals[i, 0] to intervals[i, 1].
+
+Returns:
+
+durationsnp.ndarray, shape=(n,)
+
+Array of the duration of each interval.

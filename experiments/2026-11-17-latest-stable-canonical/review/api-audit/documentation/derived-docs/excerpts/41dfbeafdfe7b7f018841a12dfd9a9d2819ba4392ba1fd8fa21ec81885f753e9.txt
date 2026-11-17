@@ -1,0 +1,211 @@
+class MDAnalysis.core.topology.TransTable(n_atoms, n_residues, n_segments, atom_resindex=None, residue_segindex=None)[source]
+
+Membership tables with methods to translate indices across levels.
+
+There are three levels; Atom, Residue and Segment. Each Atom must belong in a Residue, each Residue must belong to a Segment.
+
+When translating upwards, eg finding which Segment a Residue belongs in, a single numpy array is returned. When translating downwards, two options are available; a concatenated result (suffix _1) or a list for each parent object (suffix _2d).
+
+Parameters:
+
+n_atoms (int) – number of atoms in topology
+
+n_residues (int) – number of residues in topology
+
+n_segments (int) – number of segments in topology
+
+atom_resindex (1-D array) – resindex for each atom in the topology; the number of unique values in this array must be <= n_residues, and the array must be length n_atoms; giving None defaults to placing all atoms in residue 0
+
+residue_segindex (1-D array) – segindex for each residue in the topology; the number of unique values in this array must be <= n_segments, and the array must be length n_residues; giving None defaults to placing all residues in segment 0
+
+ n_atoms
+
+number of atoms in topology
+
+Type:
+
+int
+
+ n_residues
+
+number of residues in topology
+
+Type:
+
+int
+
+ n_segments
+
+number of segments in topology
+
+Type:
+
+int
+
+ size
+
+tuple (n_atoms, n_residues, n_segments) describing the shape of the TransTable
+
+Type:
+
+tuple
+
+ .. versionchanged:: 2.3.0
+
+Lazy building RA and SR.
+
+ atoms2residues(aix)[source]
+
+Get residue indices for each atom.
+
+Parameters:
+
+aix (array) – atom indices
+
+Returns:
+
+rix – residue index for each atom
+
+Return type:
+
+array
+
+ atoms2segments(aix)[source]
+
+Get segment indices for each atom.
+
+Parameters:
+
+aix (array) – atom indices
+
+Returns:
+
+rix – segment index for each atom
+
+Return type:
+
+array
+
+ copy()[source]
+
+Return a deepcopy of this Transtable
+
+ move_atom(aix, rix)[source]
+
+Move aix to be in rix
+
+ move_residue(rix, six)[source]
+
+Move rix to be in six
+
+ residues2atoms_1d(rix)[source]
+
+Get atom indices collectively represented by given residue indices.
+
+Parameters:
+
+rix (array) – residue indices
+
+Returns:
+
+aix – indices of atoms present in residues, collectively
+
+Return type:
+
+array
+
+ residues2atoms_2d(rix)[source]
+
+Get atom indices represented by each residue index.
+
+Parameters:
+
+rix (array) – residue indices
+
+Returns:
+
+raix – each element corresponds to a residue index, in order given in rix, with each element being an array of the atom indices present in that residue
+
+Return type:
+
+list
+
+ residues2segments(rix)[source]
+
+Get segment indices for each residue.
+
+Parameters:
+
+rix (array) – residue indices
+
+Returns:
+
+six – segment index for each residue
+
+Return type:
+
+array
+
+ segments2atoms_1d(six)[source]
+
+Get atom indices collectively represented by given segment indices.
+
+Parameters:
+
+six (array) – segment indices
+
+Returns:
+
+aix – sorted indices of atoms present in segments, collectively
+
+Return type:
+
+array
+
+ segments2atoms_2d(six)[source]
+
+Get atom indices represented by each segment index.
+
+Parameters:
+
+six (array) – residue indices
+
+Returns:
+
+saix – each element corresponds to a segment index, in order given in six, with each element being an array of the atom indices present in that segment
+
+Return type:
+
+list
+
+ segments2residues_1d(six)[source]
+
+Get residue indices collectively represented by given segment indices
+
+Parameters:
+
+six (array) – segment indices
+
+Returns:
+
+rix – sorted indices of residues present in segments, collectively
+
+Return type:
+
+array
+
+ segments2residues_2d(six)[source]
+
+Get residue indices represented by each segment index.
+
+Parameters:
+
+six (array) – residue indices
+
+Returns:
+
+srix – each element corresponds to a segment index, in order given in six, with each element being an array of the residue indices present in that segment
+
+Return type:
+
+list

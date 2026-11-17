@@ -1,0 +1,17 @@
+predict(X)[source]
+
+Predict class for a given set of time series.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+Returns:
+
+array of shape=(n_ts, ) or (n_ts, n_classes), depending on the shape
+
+of the label vector provided at training time.
+
+Index of the cluster each sample belongs to or class probability matrix, depending on what was provided at training time.

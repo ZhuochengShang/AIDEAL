@@ -1,0 +1,39 @@
+mir_eval.beat.goto(reference_beats, estimated_beats, goto_threshold=0.35, goto_mu=0.2, goto_sigma=0.2)
+
+Calculate Goto’s score, a binary 1 or 0 depending on some specific heuristic criteria
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+goto_thresholdfloat
+
+Threshold of beat error for a beat to be “correct” (Default value = 0.35)
+
+goto_mufloat
+
+The mean of the beat errors in the continuously correct track must be less than this (Default value = 0.2)
+
+goto_sigmafloat
+
+The std of the beat errors in the continuously correct track must be less than this (Default value = 0.2)
+
+Returns:
+
+goto_scorefloat
+
+Either 1.0 or 0.0 if some specific criteria are met
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> goto_score = mir_eval.beat.goto(reference_beats, estimated_beats)

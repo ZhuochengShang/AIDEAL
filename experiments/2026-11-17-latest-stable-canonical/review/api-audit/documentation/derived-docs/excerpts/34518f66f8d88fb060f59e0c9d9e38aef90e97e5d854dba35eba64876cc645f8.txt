@@ -1,0 +1,16 @@
+MDAnalysis.lib.transformations.rotation_from_matrix(matrix)[source]
+
+Return rotation angle and axis from rotation matrix.
+
+>>> from MDAnalysis.lib.transformations import (rotation_matrix,
+...     is_same_transform, rotation_from_matrix)
+>>> import random, math
+>>> import numpy as np
+>>> angle = (random.random() - 0.5) * (2*math.pi)
+>>> direc = np.random.random(3) - 0.5
+>>> point = np.random.random(3) - 0.5
+>>> R0 = rotation_matrix(angle, direc, point)
+>>> angle, direc, point = rotation_from_matrix(R0)
+>>> R1 = rotation_matrix(angle, direc, point)
+>>> is_same_transform(R0, R1)
+True

@@ -1,0 +1,48 @@
+MDAnalysis.analysis.align.iterative_average(mobile, reference=None, select='all', weights=None, niter=100, eps=1e-06, verbose=False, **kwargs)[source]
+
+Iteratively calculate an optimal reference that is also the average structure after an RMSD alignment.
+
+The optimal reference is defined as average structure of a trajectory, with the optimal reference used as input. This function computes the optimal reference by using a starting reference for the average structure, which is used as the reference to calculate the average structure again. This is repeated until the reference structure has converged. [1]
+
+Parameters:
+
+mobile (mda.Universe) – Universe containing trajectory to be fitted to reference.
+
+reference (mda.Universe (optional)) – Universe containing the initial reference structure.
+
+select (str or tuple or dict (optional)) – Atom selection for fitting a substructue. Default is set to all. Can be tuple or dict to define different selection strings for mobile and target.
+
+weights (str, array_like (optional)) – Weights that can be used. If None use equal weights, if ‘mass’ use masses of ref as weights or give an array of arbitrary weights.
+
+niter (int (optional)) – Maximum number of iterations.
+
+eps (float (optional)) – RMSD distance at which reference and average are assumed to be equal.
+
+verbose (bool (optional)) – Verbosity.
+
+**kwargs (dict (optional)) – AverageStructure kwargs.
+
+Returns:
+
+avg_struc – AverageStructure result from the last iteration.
+
+Return type:
+
+AverageStructure
+
+Example
+
+iterative_average can be used to obtain a MDAnalysis.Universe with the optimal reference structure.
+
+import MDAnalysis as mda
+from MDAnalysis.analysis import align
+from MDAnalysisTests.datafiles import PSF, DCD
+
+u = mda.Universe(PSF, DCD)
+av = align.iterative_average(u, u, verbose=True)
+
+averaged_universe = av.results.universe
+
+References
+
+Added in version 2.8.0.

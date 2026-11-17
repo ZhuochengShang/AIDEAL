@@ -1,0 +1,27 @@
+iter_auxiliary(auxname, start=None, stop=None, step=None, selected=None)[source]
+
+Iterate through the auxiliary auxname independently of the trajectory.
+
+Will iterate over the specified steps of the auxiliary (defaults to all steps). Allows to access all values in an auxiliary, including those out of the time range of the trajectory, without having to also iterate through the trajectory.
+
+After interation, the auxiliary will be repositioned at the current step.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to iterate over.
+
+(start (optional) – Options for iterating over a slice of the auxiliary.
+
+stop (optional) – Options for iterating over a slice of the auxiliary.
+
+step) (optional) – Options for iterating over a slice of the auxiliary.
+
+selected (lst | ndarray, optional) – List of steps to iterate over.
+
+Yields:
+
+AuxStep object
+
+See also
+
+iter_as_aux()

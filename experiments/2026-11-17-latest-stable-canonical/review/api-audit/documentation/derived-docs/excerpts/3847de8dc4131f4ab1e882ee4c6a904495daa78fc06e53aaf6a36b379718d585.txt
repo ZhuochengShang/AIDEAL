@@ -1,0 +1,30 @@
+mir_eval.alignment.evaluate(reference_timestamps, estimated_timestamps, **kwargs)
+
+Compute all metrics for the given reference and estimated annotations.
+
+Parameters:
+
+reference_timestampsnp.ndarray
+
+reference timestamp locations, in seconds
+
+estimated_timestampsnp.ndarray
+
+estimated timestamp locations, in seconds
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> reference_timestamps = mir_eval.io.load_events('reference.txt')
+>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')
+>>> duration = max(np.max(reference_timestamps), np.max(estimated_timestamps)) + 10
+>>> scores = mir_eval.align.evaluate(reference_onsets, estimated_timestamps, duration)

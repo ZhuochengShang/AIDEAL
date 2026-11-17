@@ -1,0 +1,21 @@
+mir_eval.chord.rotate_bitmaps_to_roots(bitmaps, roots)
+
+Circularly shift a relative bitmaps to absolute pitch classes.
+
+See rotate_bitmap_to_root() for more information.
+
+Parameters:
+
+bitmapsnp.ndarray, shape=(N, 12)
+
+Bitmap of active notes, relative to the given root.
+
+rootsnp.ndarray, shape=(N,)
+
+Absolute pitch class number.
+
+Returns:
+
+bitmapnp.ndarray, shape=(N, 12)
+
+Absolute bitmaps of active pitch classes.

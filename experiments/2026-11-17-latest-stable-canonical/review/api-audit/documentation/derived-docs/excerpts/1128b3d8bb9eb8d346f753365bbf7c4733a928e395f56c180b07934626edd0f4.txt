@@ -1,0 +1,13 @@
+parse_bonded(num_per_record, numlines)[source]
+
+Extracts bond information from PARM7 format files
+
+Parameters:
+
+num_per_record (int) – The number of entries for each record in section
+
+numlines (int) – The number of lines to be parsed for this section
+
+Note
+
+For the bond/angle sections of parm7 files, the atom numbers are set to coordinate array index values. As detailed in the specification, to recover the actual atom number, one should divide the values by 3 and add 1. Here, since we want to satisfy zero-indexing, we only divide by 3.

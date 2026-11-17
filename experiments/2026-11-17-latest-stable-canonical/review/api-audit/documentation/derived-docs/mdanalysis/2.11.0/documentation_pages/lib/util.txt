@@ -1,0 +1,1191 @@
+15.2.10. Helper functions — MDAnalysis.lib.util
+
+Small helper functions that don’t fit anywhere else.
+
+Changed in version 0.11.0: Moved mathematical functions into lib.mdamath
+
+15.2.10.1. Files and directories
+
+ MDAnalysis.lib.util.filename(name, ext=None, keep=False)[source]
+
+Return a new name that has suffix attached; replaces other extensions.
+
+Parameters:
+
+name (str or NamedStream) – filename; extension is replaced unless keep=True; name can also be a NamedStream (and its NamedStream.name will be changed accordingly)
+
+ext (None or str) – extension to use in the new filename
+
+keep (bool) –
+
+False: replace existing extension with ext;
+
+True: keep old extension if one existed
+
+Changed in version 0.9.0: Also permits NamedStream to pass through.
+
+ MDAnalysis.lib.util.openany(datasource, mode='rt', reset=True)[source]
+
+Context manager for anyopen().
+
+Open the datasource and close it when the context of the with statement exits.
+
+datasource can be a filename or a stream (see isstream()). A stream is reset to its start if possible (via seek() or reset()).
+
+The advantage of this function is that very different input sources (“streams”) can be used for a “file”, ranging from files on disk (including compressed files) to open file objects to sockets and strings—as long as they have a file-like interface.
+
+Parameters:
+
+datasource (a file or a stream)
+
+mode ({'r', 'w'} (optional)) – open in r(ead) or w(rite) mode
+
+reset (bool (optional)) – try to read (mode ‘r’) the stream from the start [True]
+
+Examples
+
+Open a gzipped file and process it line by line:
+
+with openany("input.pdb.gz") as pdb:
+    for line in pdb:
+        if line.startswith('ATOM'):
+            print(line)
+
+Open a URL and read it:
+
+import urllib2
+with openany(urllib2.urlopen("https://www.mdanalysis.org/")) as html:
+    print(html.read())
+
+See also
+
+anyopen()
+
+ MDAnalysis.lib.util.anyopen(datasource, mode='rt', reset=True)[source]
+
+Open datasource (gzipped, bzipped, uncompressed) and return a stream.
+
+datasource can be a filename or a stream (see isstream()). By default, a stream is reset to its start if possible (via seek() or reset()).
+
+If possible, the attribute stream.name is set to the filename or “<stream>” if no filename could be associated with the datasource.
+
+Parameters:
+
+datasource – a file (from file or open()) or a stream (e.g. from urllib2.urlopen() or io.StringIO)
+
+mode ({'r', 'w', 'a'} (optional)) – Open in r(ead), w(rite) or a(ppend) mode. This string is directly passed to the file opening handler (either Python’s openfe, bz2, or gzip). More complex modes are supported if the file opening handler supports it.
+
+reset (bool (optional)) – try to read (mode ‘r’) the stream from the start
+
+Return type:
+
+file-like object
+
+See also
+
+openany()
+
+to be used with the with statement.
+
+Changed in version 0.9.0: Only returns the stream and tries to set stream.name = filename instead of the previous behavior to return a tuple (stream, filename).
+
+Changed in version 2.0.0: New read handlers support pickle functionality if datasource is a filename. They return a custom picklable file stream in MDAnalysis.lib.picklable_file_io.
+
+ MDAnalysis.lib.util.greedy_splitext(p)[source]
+
+Split extension in path p at the left-most separator.
+
+Extensions are taken to be separated from the filename with the separator os.extsep (as used by os.path.splitext()).
+
+Parameters:
+
+p (str) – path
+
+Returns:
+
+(root, extension) – where root is the full path and filename with all extensions removed whereas extension is the string of all extensions.
+
+Return type:
+
+tuple
+
+Example
+
+>>> from MDAnalysis.lib.util import greedy_splitext
+>>> greedy_splitext("/home/joe/protein.pdb.bz2")
+('/home/joe/protein', '.pdb.bz2')
+
+ MDAnalysis.lib.util.which(program)[source]
+
+Determine full path of executable program on PATH.
+
+(Jay at http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python)
+
+Parameters:
+
+programe (str) – name of the executable
+
+Returns:
+
+path – absolute path to the executable if it can be found, else None
+
+Return type:
+
+str or None
+
+Deprecated since version 2.7.0: This method is deprecated and will be removed in version 3.0.0. Please use shutil.which instead.
+
+ MDAnalysis.lib.util.realpath(*args)[source]
+
+Join all args and return the real path, rooted at /.
+
+Expands ‘~’, ‘~user’, and environment variables such as $HOME.
+
+Returns None if any of the args is None.
+
+ MDAnalysis.lib.util.get_ext(filename)[source]
+
+Return the lower-cased extension of filename without a leading dot.
+
+Parameters:
+
+filename (str)
+
+Returns:
+
+root (str)
+
+ext (str)
+
+ MDAnalysis.lib.util.check_compressed_format(root, ext)[source]
+
+Check if this is a supported gzipped/bzip2ed file format and return UPPERCASE format.
+
+Parameters:
+
+root (str) – path of a file, without extension ext
+
+ext (str) – extension (currently only “bz2” and “gz” are recognized as compressed formats)
+
+Returns:
+
+format – upper case format extension if the compression can be handled by openany()
+
+Return type:
+
+str
+
+See also
+
+openany
+
+function that is used to open and decompress formats on the fly; only compression formats implemented in openany() are recognized
+
+ MDAnalysis.lib.util.format_from_filename_extension(filename)[source]
+
+Guess file format from the file extension.
+
+Parameters:
+
+filename (str)
+
+Returns:
+
+format
+
+Return type:
+
+str
+
+Raises:
+
+TypeError – if the file format cannot be determined
+
+ MDAnalysis.lib.util.guess_format(filename)[source]
+
+Return the format of filename
+
+The current heuristic simply looks at the filename extension and can work around compressed format extensions.
+
+Parameters:
+
+filename (str or stream) – path to the file or a stream, in which case filename.name is looked at for a hint to the format
+
+Returns:
+
+format – format specifier (upper case)
+
+Return type:
+
+str
+
+Raises:
+
+ValueError – if the heuristics are insufficient to guess a supported format
+
+Added in version 0.11.0: Moved into lib.util
+
+15.2.10.2. Modules and packages
+
+ MDAnalysis.lib.util.is_installed(modulename: str)[source]
+
+Checks if module is installed
+
+Parameters:
+
+modulename (str) – name of the module to be tested
+
+Added in version 2.8.0.
+
+15.2.10.3. Streams
+
+Many of the readers are not restricted to just reading files. They can also use gzip-compressed or bzip2-compressed files (through the internal use of openany()). It is also possible to provide more general streams as inputs, such as a io.StringIO instances (essentially, a memory buffer) by wrapping these instances into a NamedStream. This NamedStream can then be used in place of an ordinary file name (typically, with a class:~MDAnalysis.core.universe.Universe but it is also possible to write to such a stream using MDAnalysis.Writer()).
+
+In the following example, we use a PDB stored as a string pdb_s:
+
+import MDAnalysis
+from MDAnalysis.lib.util import NamedStream
+from io import StringIO
+
+pdb_s = "TITLE     Lonely Ion\\nATOM      1  NA  NA+     1      81.260  64.982  10.926  1.00  0.00\\n"
+u = MDAnalysis.Universe(NamedStream(StringIO(pdb_s), "ion.pdb"))
+print(u)
+#  <Universe with 1 atoms>
+print(u.atoms.positions)
+# [[ 81.26000214  64.98200226  10.92599964]]
+
+It is important to provide a proper pseudo file name with the correct extension (“.pdb”) to NamedStream because the file type recognition uses the extension of the file name to determine the file format or alternatively provide the format="pdb" keyword argument to the Universe.
+
+The use of streams becomes more interesting when MDAnalysis is used as glue between different analysis packages and when one can arrange things so that intermediate frames (typically in the PDB format) are not written to disk but remain in memory via e.g. io.StringIO buffers.
+
+Note
+
+A remote connection created by urllib2.urlopen() is not seekable and therefore will often not work as an input. But try it…
+
+ class MDAnalysis.lib.util.NamedStream(stream, filename, reset=True, close=False)[source]
+
+Stream that also provides a (fake) name.
+
+By wrapping a stream stream in this class, it can be passed to code that uses inspection of the filename to make decisions. For instance. os.path.split() will work correctly on a NamedStream.
+
+The class can be used as a context manager.
+
+NamedStream is derived from io.IOBase (to indicate that it is a stream). Many operations that normally expect a string will also work with a NamedStream; for instance, most of the functions in os.path will work with the exception of os.path.expandvars() and os.path.expanduser(), which will return the NamedStream itself instead of a string if no substitutions were made.
+
+Example
+
+Wrap a io.StringIO instance to write to:
+
+from io import StringIO
+import os.path
+stream = StringIO()
+f = NamedStream(stream, "output.pdb")
+print(os.path.splitext(f))
+
+Wrap a file instance to read from:
+
+stream = open("input.pdb")
+f = NamedStream(stream, stream.name)
+
+Use as a context manager (closes stream automatically when the with block is left):
+
+with NamedStream(open("input.pdb"), "input.pdb") as f:
+   # use f
+   print f.closed  # --> False
+   # ...
+print f.closed     # --> True
+
+Note
+
+This class uses its own __getitem__() method so if stream implements stream.__getitem__() then that will be masked and this class should not be used.
+
+Warning
+
+By default, NamedStream.close() will not close the stream but instead reset() it to the beginning. [1] Provide the force=True keyword to NamedStream.close() to always close the stream.
+
+Initialize the NamedStream from a stream and give it a name.
+
+The constructor attempts to rewind the stream to the beginning unless the keyword reset is set to False. If rewinding fails, a MDAnalysis.StreamWarning is issued.
+
+Parameters:
+
+stream (stream) – an open stream (e.g. file or io.StringIO)
+
+filename (str) – the filename that should be associated with the stream
+
+reset (bool (optional)) – start the stream from the beginning (either reset() or seek()) when the class instance is constructed
+
+close (bool (optional)) – close the stream when a with block exits or when close() is called; note that the default is not to close the stream
+
+Notes
+
+By default, this stream will not be closed by with and close() (see there) unless the close keyword is set to True.
+
+Added in version 0.9.0.
+
+ close(force=False)[source]
+
+Reset or close the stream.
+
+If NamedStream.close_stream is set to False (the default) then this method will not close the stream and only reset() it.
+
+If the force = True keyword is provided, the stream will be closed.
+
+Note
+
+This close() method is non-standard. del NamedStream always closes the underlying stream.
+
+ property closed
+
+True if stream is closed.
+
+ fileno()[source]
+
+Return the underlying file descriptor (an integer) of the stream if it exists.
+
+An IOError is raised if the IO object does not use a file descriptor.
+
+ flush()[source]
+
+Flush the write buffers of the stream if applicable.
+
+This does nothing for read-only and non-blocking streams. For file objects one also needs to call os.fsync() to write contents to disk.
+
+ readable()[source]
+
+Return True if the stream can be read from.
+
+If False, read() will raise IOError.
+
+ readline()[source]
+
+Read and return a line from the stream.
+
+If size is specified, at most size bytes will be read.
+
+The line terminator is always b’n’ for binary files; for text files, the newlines argument to open can be used to select the line terminator(s) recognized.
+
+ reset()[source]
+
+Move to the beginning of the stream
+
+ seek(offset, whence=0)[source]
+
+Change the stream position to the given byte offset .
+
+Parameters:
+
+offset (int) – offset is interpreted relative to the position indicated by whence.
+
+whence ({0, 1, 2} (optional)) –
+Values for whence are:
+
+io.SEEK_SET or 0 – start of the stream (the default); offset should be zero or positive
+
+io.SEEK_CUR or 1 – current stream position; offset may be negative
+
+io.SEEK_END or 2 – end of the stream; offset is usually negative
+
+Returns:
+
+the new absolute position in bytes.
+
+Return type:
+
+int
+
+ seekable()[source]
+
+Return True if the stream supports random access.
+
+If False, seek(), tell() and truncate() will raise IOError.
+
+ tell()[source]
+
+Return the current stream position.
+
+ truncate(*size)[source]
+
+Truncate the stream’s size to size.
+
+Parameters:
+
+size (int (optional)) – The size defaults to the current position (if no size argument is supplied). The current file position is not changed.
+
+ writable()[source]
+
+Return True if the stream can be written to.
+
+If False, write() will raise IOError.
+
+ MDAnalysis.lib.util.isstream(obj)[source]
+
+Detect if obj is a stream.
+
+We consider anything a stream that has the methods
+
+close()
+
+and either set of the following
+
+read(), readline(), readlines()
+
+write(), writeline(), writelines()
+
+Parameters:
+
+obj (stream or str)
+
+Returns:
+
+True if obj is a stream, False otherwise
+
+Return type:
+
+bool
+
+See also
+
+io
+
+Added in version 0.9.0.
+
+15.2.10.4. Containers and lists
+
+ MDAnalysis.lib.util.iterable(obj)[source]
+
+Returns True if obj can be iterated over and is not a string nor a NamedStream
+
+ MDAnalysis.lib.util.asiterable(obj)[source]
+
+Returns obj so that it can be iterated over.
+
+A string is not detected as and iterable and is wrapped into a list with a single element.
+
+See also
+
+iterable
+
+ MDAnalysis.lib.util.hasmethod(obj, m)[source]
+
+Return True if object obj contains the method m.
+
+ class MDAnalysis.lib.util.Namespace[source]
+
+Class to allow storing attributes in new namespace.
+
+15.2.10.5. Arrays
+
+ MDAnalysis.lib.util.unique_int_1d(values)
+
+Find the unique elements of a 1D array of integers.
+
+This function is optimal on sorted arrays.
+
+Parameters:
+
+values (numpy.ndarray) – 1D array of dtype numpy.int64 in which to find the unique values.
+
+Returns:
+
+A deduplicated copy of values.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 0.19.0.
+
+ MDAnalysis.lib.util.unique_rows(arr, return_index=False)[source]
+
+Return the unique rows of an array.
+
+Parameters:
+
+arr (numpy.ndarray) – Array of shape (n1, m).
+
+return_index (bool, optional) – If True, returns indices of array that formed answer (see numpy.unique())
+
+Returns:
+
+unique_rows (numpy.ndarray) – Array of shape (n2, m) containing only the unique rows of arr.
+
+r_idx (numpy.ndarray (optional)) – Array containing the corresponding row indices (if return_index is True).
+
+Examples
+
+Remove dupicate rows from an array:
+
+>>> import numpy as np
+>>> from MDAnalysis.lib.util import unique_rows
+>>> a = np.array([[0, 1], [1, 2], [1, 2], [0, 1], [2, 3]])
+>>> b = unique_rows(a)
+>>> b
+array([[0, 1],
+       [1, 2],
+       [2, 3]])
+
+See also
+
+numpy.unique
+
+ MDAnalysis.lib.util.blocks_of(a, n, m)[source]
+
+Extract a view of (n, m) blocks along the diagonal of the array a.
+
+Parameters:
+
+a (numpy.ndarray) – Input array, must be C contiguous and at least 2D.
+
+n (int) – Size of block in first dimension.
+
+m (int) – Size of block in second dimension.
+
+Returns:
+
+view – A view of the original array with shape (nblocks, n, m), where nblocks is the number of times the miniblocks of shape (n, m) fit in the original.
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If the supplied n and m don’t divide a into an integer number of blocks or if a is not C contiguous.
+
+Examples
+
+>>> import numpy as np
+>>> from MDAnalysis.lib.util import blocks_of
+>>> arr = np.arange(16).reshape(4, 4)
+>>> view = blocks_of(arr, 2, 2)
+>>> view[:] = 100
+>>> arr
+array([[100, 100,   2,   3],
+       [100, 100,   6,   7],
+       [  8,   9, 100, 100],
+       [ 12,  13, 100, 100]])
+
+Notes
+
+n, m must divide a into an identical integer number of blocks. Please note that if the block size is larger than the input array, this number will be zero, resulting in an empty view!
+
+Uses strides and therefore requires that the array is C contiguous.
+
+Returns a view, so editing this modifies the original array.
+
+Added in version 0.12.0.
+
+ MDAnalysis.lib.util.group_same_or_consecutive_integers(arr)[source]
+
+Split an array of integers into a list of same or consecutive sequences.
+
+Parameters:
+
+arr (numpy.ndarray)
+
+Returns:
+
+list of numpy.ndarray
+
+Examples
+
+>>> import numpy as np
+
+>>> arr = np.array([ 2, 3, 4, 7, 8, 9, 10, 11, 15, 16])
+
+>>> group_same_or_consecutive_integers(arr)
+
+[array([2, 3, 4]), array([ 7, 8, 9, 10, 11]), array([15, 16])]
+
+15.2.10.6. File parsing
+
+ class MDAnalysis.lib.util.FORTRANReader(fmt)[source]
+
+FORTRANReader provides a method to parse FORTRAN formatted lines in a file.
+
+The contents of lines in a file can be parsed according to FORTRAN format edit descriptors (see Fortran Formats for the syntax).
+
+Only simple one-character specifiers supported here: I F E A X (see FORTRAN_format_regex).
+
+Strings are stripped of leading and trailing white space.
+
+Set up the reader with the FORTRAN format string.
+
+The string fmt should look like ‘2I10,2X,A8,2X,A8,3F20.10,2X,A8,2X,A8,F20.10’.
+
+Parameters:
+
+fmt (str) – FORTRAN format edit descriptor for a line as described in Fortran Formats
+
+Example
+
+Parsing of a standard CRD file:
+
+atomformat = FORTRANReader('2I10,2X,A8,2X,A8,3F20.10,2X,A8,2X,A8,F20.10')
+for line in open('coordinates.crd'):
+    serial,TotRes,resName,name,x,y,z,chainID,resSeq,tempFactor = atomformat.read(line)
+
+ number_of_matches(line)[source]
+
+Return how many format entries could be populated with legal values.
+
+ parse_FORTRAN_format(edit_descriptor)[source]
+
+Parse the descriptor.
+
+Parameters:
+
+edit_descriptor (str) – FORTRAN format edit descriptor
+
+Returns:
+
+dict with totallength (in chars), repeat, length, format, decimals
+
+Return type:
+
+dict
+
+Raises:
+
+ValueError – The edit_descriptor is not recognized and cannot be parsed
+
+Note
+
+Specifiers: L ES EN T TL TR / r S SP SS BN BZ are not supported, and neither are the scientific notation Ew.dEe forms.
+
+ read(line)[source]
+
+Parse line according to the format string and return list of values.
+
+Values are converted to Python types according to the format specifier.
+
+Parameters:
+
+line (str)
+
+Returns:
+
+list of entries with appropriate types
+
+Return type:
+
+list
+
+Raises:
+
+ValueError – Any of the conversions cannot be made (e.g. space for an int)
+
+See also
+
+FORTRANReader.number_of_matches()
+
+ MDAnalysis.lib.util.FORTRAN_format_regex = '(?P<repeat>\\d+?)(?P<format>[IFEAX])(?P<numfmt>(?P<length>\\d+)(\\.(?P<decimals>\\d+))?)?'
+
+Regular expresssion (see re) to parse a simple FORTRAN edit descriptor. (?P<repeat>\d?)(?P<format>[IFELAX])(?P<numfmt>(?P<length>\d+)(\.(?P<decimals>\d+))?)?
+
+15.2.10.7. Data manipulation and handling
+
+ MDAnalysis.lib.util.fixedwidth_bins(delta, xmin, xmax)[source]
+
+Return bins of width delta that cover xmin, xmax (or a larger range).
+
+The bin parameters are computed such that the bin size delta is guaranteed. In order to achieve this, the range [xmin, xmax] can be increased.
+
+Bins can be calculated for 1D data (then all parameters are simple floats) or nD data (then parameters are supplied as arrays, with each entry correpsonding to one dimension).
+
+Parameters:
+
+delta (float or array_like) – desired spacing of the bins
+
+xmin (float or array_like) – lower bound (left boundary of first bin)
+
+xmax (float or array_like) – upper bound (right boundary of last bin)
+
+Returns:
+
+The dict contains ‘Nbins’, ‘delta’, ‘min’, and ‘max’; these are either floats or arrays, depending on the input.
+
+Return type:
+
+dict
+
+Example
+
+Use with numpy.histogram():
+
+B = fixedwidth_bins(delta, xmin, xmax)
+h, e = np.histogram(data, bins=B['Nbins'], range=(B['min'], B['max']))
+
+ MDAnalysis.lib.util.get_weights(atoms, weights)[source]
+
+Check that a weights argument is compatible with atoms.
+
+Parameters:
+
+atoms (AtomGroup or array_like) – The atoms that the weights should be applied to. Typically this is a AtomGroup but because only the length is compared, any sequence for which len(atoms) is defined is acceptable.
+
+weights ({"mass", None} or array_like) – All MDAnalysis functions or classes understand “mass” and will then use atoms.masses. None indicates equal weights for all atoms. Using an array_like assigns a custom weight to each element of atoms.
+
+Returns:
+
+weights – If “mass” was selected, atoms.masses is returned, otherwise the value of weights (which can be None).
+
+Return type:
+
+array_like or None
+
+Raises:
+
+TypeError – If weights is not one of the allowed values or if “mass” is selected but atoms.masses is not available.
+
+ValueError – If weights is not a 1D array with the same length as atoms, then the exception is raised. TypeError is also raised if atoms.masses is not defined.
+
+ MDAnalysis.lib.util.ltruncate_int(value, ndigits)[source]
+
+Truncate an integer, retaining least significant digits
+
+Parameters:
+
+value (int) – value to truncate
+
+ndigits (int) – number of digits to keep
+
+Returns:
+
+truncated – only the ndigits least significant digits from value
+
+Return type:
+
+int
+
+Examples
+
+>>> from MDAnalysis.lib.util import ltruncate_int
+>>> ltruncate_int(123, 2)
+23
+>>> ltruncate_int(1234, 5)
+1234
+
+ MDAnalysis.lib.util.flatten_dict(d, parent_key=())[source]
+
+Flatten a nested dict d into a shallow dict with tuples as keys.
+
+Parameters:
+
+d (dict)
+
+Return type:
+
+dict
+
+Note
+
+Based on https://stackoverflow.com/a/6027615/ by user https://stackoverflow.com/users/1897/imran
+
+Added in version 0.18.0.
+
+15.2.10.8. Strings
+
+ MDAnalysis.lib.util.convert_aa_code(x)[source]
+
+Converts between 3-letter and 1-letter amino acid codes.
+
+Parameters:
+
+x (str) – 1-letter or 3-letter amino acid code
+
+Returns:
+
+3-letter or 1-letter amino acid code
+
+Return type:
+
+str
+
+Raises:
+
+ValueError – No conversion can be made; the amino acid code is not defined.
+
+Note
+
+Data are defined in amino_acid_codes and inverse_aa_codes.
+
+ MDAnalysis.lib.util.parse_residue(residue)[source]
+
+Process residue string.
+
+Parameters:
+
+residue (str) – The residue must contain a 1-letter or 3-letter or 4-letter residue string, a number (the resid) and optionally an atom identifier, which must be separate from the residue with a colon (“:”). White space is allowed in between.
+
+Returns:
+
+(3-letter aa string, resid, atomname); known 1-letter aa codes are converted to 3-letter codes
+
+Return type:
+
+tuple
+
+Examples
+
+“LYS300:HZ1” –> (“LYS”, 300, “HZ1”)
+
+“K300:HZ1” –> (“LYS”, 300, “HZ1”)
+
+“K300” –> (“LYS”, 300, None)
+
+“4GB300:H6O” –> (“4GB”, 300, “H6O”)
+
+“4GB300” –> (“4GB”, 300, None)
+
+ MDAnalysis.lib.util.conv_float(s)[source]
+
+Convert an object s to float if possible.
+
+Function to be passed into map() or a list comprehension. If the argument can be interpreted as a float it is converted, otherwise the original object is passed back.
+
+ MDAnalysis.lib.util.atoi(s: str) → int[source]
+
+Convert the leading number part of a string to an integer.
+
+Parameters:
+
+s (str) – The string to convert to an integer.
+
+Returns:
+
+number – The first numeric part of the string converted to an integer. If the string does not start with a number, 0 is returned.
+
+Return type:
+
+int
+
+Examples
+
+>>> from MDAnalysis.lib.util import atoi
+>>> atoi('34f4')
+34
+>>> atoi('foo')
+0
+
+Added in version 2.8.0.
+
+15.2.10.9. Class decorators
+
+ MDAnalysis.lib.util.cached(key, universe_validation=False)[source]
+
+Cache a property within a class.
+
+Requires the Class to have a cache dict _cache and, with universe_validation, a universe with a cache dict _cache.
+
+Example
+
+How to add a cache for a variable to a class by using the @cached decorator:
+
+class A(object):
+    def__init__(self):
+        self._cache = dict()
+
+    @property
+    @cached('keyname')
+    def size(self):
+        # This code gets run only if the lookup of keyname fails
+        # After this code has been run once, the result is stored in
+        # _cache with the key: 'keyname'
+        return 10.0
+
+    @property
+    @cached('keyname', universe_validation=True)
+    def othersize(self):
+        # This code gets run only if the lookup
+        # id(self) is not in the validation set under
+        # self.universe._cache['_valid']['keyname']
+        # After this code has been run once, id(self) is added to that
+        # set. The validation set can be centrally invalidated at the
+        # universe level (say, if a topology change invalidates specific
+        # caches).
+        return 20.0
+
+Added in version 0.9.0.
+
+ MDAnalysis.lib.util.store_init_arguments(func)[source]
+
+Decorator to store arguments passed to the init method of a class.
+
+Arguments are stored as a dictionary in cls._kwargs.
+
+Notes
+
+Only does a shallow copy, if the arguments are changed by the class after passing through the decorator this will be reflected in the stored arguments.
+
+If not empty, args is not unpacked and stored as-is in the dictionary. If no args are passed, then no arg entry will be stored in the dictionary.
+
+Added in version 2.2.0.
+
+15.2.10.10. Function decorators
+
+ MDAnalysis.lib.util.static_variables(**kwargs)[source]
+
+Decorator equipping functions or methods with static variables.
+
+Static variables are declared and initialized by supplying keyword arguments and initial values to the decorator.
+
+Example
+
+>>> from MDAnalysis.lib.util import static_variables
+>>> @static_variables(msg='foo calls', calls=0)
+... def foo():
+...     foo.calls += 1
+...     print("{}: {}".format(foo.msg, foo.calls))
+...
+>>> foo()
+foo calls: 1
+>>> foo()
+foo calls: 2
+
+Note
+
+Based on https://stackoverflow.com/a/279586 by Claudiu
+
+Added in version 0.19.0.
+
+ MDAnalysis.lib.util.warn_if_not_unique(groupmethod)[source]
+
+Decorator triggering a DuplicateWarning if the underlying group is not unique.
+
+Assures that during execution of the decorated method only the first of potentially multiple warnings concerning the uniqueness of groups is shown.
+
+Raises:
+
+DuplicateWarning – If the AtomGroup, ResidueGroup, or SegmentGroup of which the decorated method is a member contains duplicates.
+
+Added in version 0.19.0.
+
+ MDAnalysis.lib.util.check_coords(*coord_names, **options)[source]
+
+Decorator for automated coordinate array checking.
+
+This decorator is intended for use especially in MDAnalysis.lib.distances. It takes an arbitrary number of positional arguments which must correspond to names of positional arguments of the decorated function. It then checks if the corresponding values are valid coordinate arrays or an AtomGroup. If the input is an array and all these arrays are single coordinates (i.e., their shape is (3,)), the decorated function can optionally return a single coordinate (or angle) instead of an array of coordinates (or angles). This can be used to enable computations of single observables using functions originally designed to accept only 2-d coordinate arrays.
+
+If the input is an AtomGroup it is converted into its corresponding position array via a call to AtomGroup.positions.
+
+The checks performed on each individual coordinate array are:
+
+Check that coordinate arrays are of type numpy.ndarray.
+
+Check that coordinate arrays have a shape of (n, 3) (or (3,) if single coordinates are allowed; see keyword argument allow_single).
+
+Automatic dtype conversion to numpy.float32.
+
+Optional replacement by a copy; see keyword argument enforce_copy .
+
+If coordinate arrays aren’t C-contiguous, they will be automatically replaced by a C-contiguous copy.
+
+Optional check for equal length of all coordinate arrays; see optional keyword argument check_lengths_match.
+
+Parameters:
+
+*coord_names (tuple) – Arbitrary number of strings corresponding to names of positional arguments of the decorated function.
+
+**options (dict, optional) –
+
+enforce_copy (bool, optional) – Enforce working on a copy of the coordinate arrays. This is useful to ensure that the input arrays are left unchanged. Default: True
+
+enforce_dtype (bool, optional) – Enforce a conversion to float32. Default: True
+
+allow_single (bool, optional) – Allow the input coordinate array to be a single coordinate with shape (3,).
+
+convert_single (bool, optional) – If True, single coordinate arrays will be converted to have a shape of (1, 3). Only has an effect if allow_single is True. Default: True
+
+reduce_result_if_single (bool, optional) – If True and all input coordinates are single, a decorated function func will return func()[0] instead of func(). Only has an effect if allow_single is True. Default: True
+
+check_lengths_match (bool, optional) – If True, a ValueError is raised if not all coordinate arrays contain the same number of coordinates. Default: True
+
+allow_atomgroup (bool, optional) – If False, a TypeError is raised if an AtomGroup is supplied Default: False
+
+Raises:
+
+ValueError – If the decorator is used without positional arguments (for development purposes only). If any of the positional arguments supplied to the decorator doesn’t correspond to a name of any of the decorated function’s positional arguments. If any of the coordinate arrays has a wrong shape.
+
+TypeError – If any of the coordinate arrays is not a numpy.ndarray or an AtomGroup. If the dtype of any of the coordinate arrays is not convertible to numpy.float32.
+
+Example
+
+>>> import numpy as np
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> from MDAnalysis.lib.util import check_coords
+>>> @check_coords('coords1', 'coords2', allow_atomgroup=True)
+... def coordsum(coords1, coords2):
+...     assert coords1.dtype == np.float32
+...     assert coords2.flags['C_CONTIGUOUS']
+...     return coords1 + coords2
+...
+>>> # automatic dtype conversion:
+>>> coordsum(np.zeros(3, dtype=np.int64), np.ones(3))
+array([1., 1., 1.], dtype=float32)
+>>>
+>>> # automatic handling of non-contiguous arrays:
+>>> coordsum(np.zeros(3), np.ones(6)[::2])
+array([1., 1., 1.], dtype=float32)
+>>>
+>>> # automatic handling of AtomGroups
+>>> u = mda.Universe(PSF, DCD)
+>>> try:
+...     coordsum(u.atoms, u.select_atoms("index 1 to 10"))
+... except ValueError as err:
+...     err
+ValueError('coordsum(): coords1, coords2 must contain the same number of coordinates, got [3341, 10].')
+>>>
+>>> # automatic shape checking:
+>>> try:
+...     coordsum(np.zeros(3), np.ones(6))
+... except ValueError as err:
+...     err
+ValueError('coordsum(): coords2.shape must be (3,) or (n, 3), got (6,)')
+
+Added in version 0.19.0.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as input, and added option allow_atomgroup with default False to retain old behaviour
+
+ MDAnalysis.lib.util.check_atomgroup_not_empty(groupmethod)[source]
+
+Decorator triggering a ValueError if the underlying group is empty.
+
+Avoids downstream errors in computing properties of empty atomgroups.
+
+Raises:
+
+ValueError – If the input AtomGroup, of a decorated method is empty.
+
+Added in version 2.4.0.
+
+15.2.10.11. Code management
+
+ MDAnalysis.lib.util.deprecate(*args, **kwargs)[source]
+
+Issues a DeprecationWarning, adds warning to old_name’s docstring, rebinds old_name.__name__ and returns the new function object.
+
+This function may also be used as a decorator.
+
+It adds a restructured text .. deprecated:: release block with the sphinx deprecated role to the end of the docs. The message is added under the deprecation block and contains the release in which the function was deprecated.
+
+Parameters:
+
+func (function) – The function to be deprecated.
+
+old_name (str, optional) – The name of the function to be deprecated. Default is None, in which case the name of func is used.
+
+new_name (str, optional) – The new name for the function. Default is None, in which case the deprecation message is that old_name is deprecated. If given, the deprecation message is that old_name is deprecated and new_name should be used instead.
+
+release (str) – Release in which the function was deprecated. This is given as a keyword argument for technical reasons but is required; a ValueError is raised if it is missing.
+
+remove (str, optional) – Release for which removal of the feature is planned.
+
+message (str, optional) – Additional explanation of the deprecation. Displayed in the docstring after the warning.
+
+Returns:
+
+old_func – The deprecated function.
+
+Return type:
+
+function
+
+Examples
+
+When deprecate() is used as a function as in the following example,
+
+oldfunc = deprecate(func, release="0.19.0", remove="1.0",
+                    message="Do it yourself instead.")
+
+then oldfunc will return a value after printing DeprecationWarning; func is still available as it was before.
+
+When used as a decorator, func will be changed and issue the warning and contain the deprecation note in the do string.
+
+@deprecate(release="0.19.0", remove="1.0",
+           message="Do it yourself instead.")
+def func():
+    \"\"\"Just pass\"\"\"
+    pass
+
+The resulting doc string (help(func)) will look like:
+
+`func` is deprecated!
+
+Just pass.
+
+.. deprecated:: 0.19.0
+   Do it yourself instead.
+   `func` will be removed in 1.0.
+
+(It is possible but confusing to change the name of func with the decorator so it is not recommended to use the new_func keyword argument with the decorator.)
+
+Added in version 0.19.0.
+
+ class MDAnalysis.lib.util._Deprecate(old_name=None, new_name=None, release=None, remove=None, message=None)[source]
+
+Decorator class to deprecate old functions.
+
+Refer to deprecate for details.
+
+See also
+
+deprecate
+
+Added in version 0.19.0.
+
+ MDAnalysis.lib.util.dedent_docstring(text)[source]
+
+Dedent typical python doc string.
+
+Parameters:
+
+text (str) – string, typically something like func.__doc__.
+
+Returns:
+
+string with the leading common whitespace removed from each line
+
+Return type:
+
+str
+
+See also
+
+textwrap.dedent
+
+Added in version 0.19.0.
+
+15.2.10.12. Data format checks
+
+ MDAnalysis.lib.util.check_box(box)[source]
+
+Take a box input and deduce what type of system it represents based on the shape of the array and whether all angles are 90 degrees.
+
+Parameters:
+
+box (array_like) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+Returns:
+
+boxtype ({'ortho', 'tri_vecs'}) – String indicating the box type (orthogonal or triclinic).
+
+checked_box (numpy.ndarray) –
+
+Array of dtype numpy.float32 containing box information:
+
+If boxtype is 'ortho', cecked_box will have the shape (3,) containing the x-, y-, and z-dimensions of the orthogonal box.
+
+If boxtype is 'tri_vecs', cecked_box will have the shape (3, 3) containing the triclinic box vectors in a lower triangular matrix as returned by triclinic_vectors().
+
+Raises:
+
+ValueError – If box is not of the form [lx, ly, lz, alpha, beta, gamma] or contains data that is not convertible to numpy.float32.
+
+See also
+
+MDAnalysis.lib.mdamath.triclinic_vectors
+
+Footnotes

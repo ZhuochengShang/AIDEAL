@@ -1,0 +1,21 @@
+class MDAnalysis.coordinates.PQR.PQRReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Read a PQR file into MDAnalysis.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+ Writer(filename, **kwargs)[source]
+
+Returns a PQRWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output PQR file
+
+Return type:
+
+PQRWriter
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

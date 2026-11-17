@@ -1,0 +1,25 @@
+class MDAnalysis.transformations.translate.translate(vector, max_threads=None, parallelizable=True)[source]
+
+Translates the coordinates of a given Timestep instance by a given vector.
+
+Example
+
+ts = MDAnalysis.transformations.translate([1,2,3])(ts)
+
+Parameters:
+
+vector (array-like) – coordinates of the vector to which the coordinates will be translated
+
+Return type:
+
+Timestep object
+
+Changed in version 2.0.0: The transformation was changed from a function/closure to a class with __call__.
+
+Changed in version 2.0.0: The transformation was changed to inherit from the base class for limiting threads and checking if it can be used in parallel analysis.
+
+Parameters:
+
+max_threads (int, optional) – The maximum thread number can be used. Default is None, which means the default or the external setting.
+
+parallelizable (bool, optional) – A check for if this can be used in split-apply-combine parallel analysis approach. Default is True.

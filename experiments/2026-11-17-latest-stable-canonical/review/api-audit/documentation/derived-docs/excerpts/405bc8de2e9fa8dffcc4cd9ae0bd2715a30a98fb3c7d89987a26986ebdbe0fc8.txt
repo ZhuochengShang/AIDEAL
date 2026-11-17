@@ -1,0 +1,9 @@
+assign_from_template_with_adjusted_hydrogens(mol: Mol, index_field: str = '_MDAnalysis_index') → Mol[source]
+
+Temporarily removes hydrogens from the molecule before assigning bond orders and charges from the template, then adds them back.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.Mol) – Molecule to assign bond orders and charges to.
+
+index_field (str, default = "_MDAnalysis_index") – Atom property corresponding to a unique integer that can used to put back the hydrogen atoms that were removed before matching, and sort them back to the original order. Must be accessible through atom.GetIntProp.

@@ -1,0 +1,35 @@
+MDAnalysis.analysis.align._fit_to(mobile_coordinates, ref_coordinates, mobile_atoms, mobile_com, ref_com, weights=None)[source]
+
+Perform an rmsd-fitting to determine rotation matrix and align atoms
+
+Parameters:
+
+mobile_coordinates (ndarray) – Coordinates of atoms to be aligned
+
+ref_coordinates (ndarray) – Coordinates of atoms to be fit against
+
+mobile_atoms (AtomGroup) – Atoms to be translated
+
+mobile_com (ndarray) – array of xyz coordinate of mobile center of mass
+
+ref_com (ndarray) – array of xyz coordinate of reference center of mass
+
+weights (array_like (optional)) – choose weights. With None weigh each atom equally. If a float array of the same length as mobile_coordinates is provided, use each element of the array_like as a weight for the corresponding atom in mobile_coordinates.
+
+Returns:
+
+mobile_atoms (AtomGroup) – AtomGroup of translated and rotated atoms
+
+min_rmsd (float) – Minimum rmsd of coordinates
+
+Notes
+
+This function assumes that mobile_coordinates and ref_coordinates have already been shifted so that their centers of geometry (or centers of mass, depending on weights) coincide at the origin. mobile_com and ref_com are the centers before this shift.
+
+The rotation matrix \(\mathsf{R}\) is determined with rotation_matrix() directly from mobile_coordinates and ref_coordinates.
+
+mobile_atoms \(X\) is rotated according to the rotation matrix and the centers according to
+
+ \[X' = \mathsf{R}(X - \bar{X}) + \bar{X}_{\text{ref}}\]
+
+where \(\bar{X}\) is the center.

@@ -1,0 +1,23 @@
+MDAnalysis.lib.util.get_weights(atoms, weights)[source]
+
+Check that a weights argument is compatible with atoms.
+
+Parameters:
+
+atoms (AtomGroup or array_like) – The atoms that the weights should be applied to. Typically this is a AtomGroup but because only the length is compared, any sequence for which len(atoms) is defined is acceptable.
+
+weights ({"mass", None} or array_like) – All MDAnalysis functions or classes understand “mass” and will then use atoms.masses. None indicates equal weights for all atoms. Using an array_like assigns a custom weight to each element of atoms.
+
+Returns:
+
+weights – If “mass” was selected, atoms.masses is returned, otherwise the value of weights (which can be None).
+
+Return type:
+
+array_like or None
+
+Raises:
+
+TypeError – If weights is not one of the allowed values or if “mass” is selected but atoms.masses is not available.
+
+ValueError – If weights is not a 1D array with the same length as atoms, then the exception is raised. TypeError is also raised if atoms.masses is not defined.

@@ -1,0 +1,31 @@
+mir_eval.melody.freq_to_voicing(frequencies, voicing=None)
+
+Convert from an array of frequency values to frequency array + voice/unvoiced array
+
+Parameters:
+
+frequenciesnp.ndarray
+
+Array of frequencies. A frequency <= 0 indicates “unvoiced”.
+
+voicingnp.ndarray
+
+Array of voicing values. (Default value = None) Default None, which means the voicing is inferred from frequencies:
+
+frames with frequency <= 0.0 are considered “unvoiced”
+
+frames with frequency > 0.0 are considered “voiced”
+
+If specified, voicing is used as the voicing array, but frequencies with value 0 are forced to have 0 voicing.
+
+Voicing inferred by negative frequency values is ignored.
+
+Returns:
+
+frequenciesnp.ndarray
+
+Array of frequencies, all >= 0.
+
+voicednp.ndarray
+
+Array of voicings between 0 and 1, same length as frequencies, which indicates voiced or unvoiced

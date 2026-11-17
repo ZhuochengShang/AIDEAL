@@ -1,0 +1,138 @@
+7.15. MOL2 file format — MDAnalysis.coordinates.MOL2
+
+Classes to work with Tripos molecule structure format (MOL2) coordinate and topology files. Used, for instance, by the DOCK docking code.
+
+7.15.1. Example for working with mol2 files
+
+To open a mol2, remove all hydrogens and save as a new file, use the following:
+
+u = Universe("Molecule.mol2")
+gr = u.select_atoms("not name H*")
+print(len(u.atoms), len(gr))
+gr.write("Molecule_noh.mol2")
+
+See also
+
+rdkit
+
+rdkit is an open source cheminformatics toolkit with more mol2 functionality
+
+7.15.2. Classes
+
+ class MDAnalysis.coordinates.MOL2.MOL2Reader(filename, **kwargs)[source]
+
+Reader for MOL2 structure format.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based. MOL2 now reuses the same Timestep object for every frame, previously created a new instance of Timestep each frame.
+
+Changed in version 0.20.0: Allows for comments at top of file. Ignores status bit strings
+
+Changed in version 2.0.0: Bonds attribute is not added if no bonds are present in MOL2 file
+
+Changed in version 2.2.0: Read MOL2 files with optional columns omitted.
+
+Read coordinates from filename.
+
+Parameters:
+
+filename (str or NamedStream) – name of the mol2 file or stream
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.MOL2.MOL2Writer(filename, n_atoms=None, convert_units=True)[source]
+
+mol2 format writer
+
+Write a file in the Tripos molecule structure format (MOL2).
+
+Note
+
+MOL2Writer can only be used to write out previously loaded MOL2 files. If you’re trying to convert, for example, a PDB file to MOL you should use other tools, like rdkit.
+
+Here is an example how to use rdkit to convert a PDB to MOL:
+
+from rdkit import Chem
+mol = Chem.MolFromPDBFile("molecule.pdb", removeHs=False)
+Chem.MolToMolFile(mol, "molecule.mol" )
+
+MOL2 writer is currently not available for rdkit master. It requires SYBYL atomtype generation. See page 7 for list of SYBYL atomtypes (http://tripos.com/tripos_resources/fileroot/pdfs/mol2_format2.pdf).
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Create a new MOL2Writer
+
+Parameters:
+
+filename (str) – name of output file
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+ close()[source]
+
+Close the trajectory file.
+
+ encode_block(obj)[source]
+
+Parameters:
+
+obj (AtomGroup or Universe)
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+Notes
+
+The MDAnalysis MOL2Reader and MOL2Writer only handle the MOLECULE, SUBSTRUCTURE, ATOM, and BOND record types. Other records are not currently read or preserved on writing.
+
+The MDAnalysis MOL2Reader reads unit cell dimensions from the @<TRIPOS>CRYSIN record. The space group and setting information (the 7th and 8th fields) are currently ignored. The unit cell is interpreted in the common crystallographic convention with box vector a parallel to the x-axis, b in the xy-plane, and c having a positive z-component.
+
+7.15.3. MOL2 format notes
+
+MOL2 Format Specification: (http://www.tripos.com/data/support/mol2.pdf)
+
+Example file (http://www.tripos.com/mol2/mol2_format3.html):
+
+ #    Name: benzene
+ #    Creating user name: tom
+ #    Creation time: Wed Dec 28 00:18:30 1988
+
+ #    Modifying user name: tom
+ #    Modification time: Wed Dec 28 00:18:30 1988
+
+ @<TRIPOS>MOLECULE
+ benzene
+ 12 12 1  0   0
+ SMALL
+ NO_CHARGES
+
+ @<TRIPOS>ATOM
+ 1   C1  1.207   2.091   0.000   C.ar    1   BENZENE 0.000
+ 2   C2  2.414   1.394   0.000   C.ar    1   BENZENE 0.000
+ 3   C3  2.414   0.000   0.000   C.ar    1   BENZENE 0.000
+ 4   C4  1.207   -0.697  0.000   C.ar    1   BENZENE 0.000
+ 5   C5  0.000   0.000   0.000   C.ar    1   BENZENE 0.000
+ 6   C6  0.000   1.394   0.000   C.ar    1   BENZENE 0.000
+ 7   H1  1.207   3.175   0.000   H   1   BENZENE 0.000
+ 8   H2  3.353   1.936   0.000   H   1   BENZENE 0.000
+ 9   H3  3.353   -0.542  0.000   H   1   BENZENE 0.000
+ 10  H4  1.207   -1.781  0.000   H   1   BENZENE 0.000
+ 11  H5  -0.939  -0.542  0.000   H   1   BENZENE 0.000
+ 12  H6  -0.939  1.936   0.000   H   1   BENZENE 0.000
+ @<TRIPOS>BOND
+ 1   1   2   ar
+ 2   1   6   ar
+ 3   2   3   ar
+ 4   3   4   ar
+ 5   4   5   ar
+ 6   5   6   ar
+ 7   1   7   1
+ 8   2   8   1
+ 9   3   9   1
+ 10  4   10  1
+ 11  5   11  1
+ 12  6   12  1
+@<TRIPOS>SUBSTRUCTURE
+ 1   BENZENE 1   PERM    0   ****    ****    0   ROOT

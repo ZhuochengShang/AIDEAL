@@ -1,0 +1,71 @@
+class MDAnalysis.analysis.gnm.closeContactGNMAnalysis(universe, select='protein', cutoff=4.5, ReportVector=None, weights='size')[source]
+
+GNMAnalysis only using close contacts.
+
+This is a version of the GNM where the Kirchoff matrix is constructed from the close contacts between individual atoms in different residues.
+
+Parameters:
+
+universe (Universe) – Analyze the full trajectory in the universe.
+
+select (str (optional)) – MDAnalysis selection string
+
+cutoff (float (optional)) – Consider selected atoms within the cutoff as neighbors for the Gaussian network model.
+
+ReportVector (str (optional)) – filename to write eigenvectors to, by default no output is written
+
+weights ({"size", None} (optional)) – If set to “size” (the default) then weight the contact by \(1/\sqrt{N_i N_j}\) where \(N_i\) and \(N_j\) are the number of atoms in the residues \(i\) and \(j\) that contain the atoms that form a contact.
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvalues
+
+calculated eigenvalues
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvectors
+
+calculated eigenvectors
+
+Type:
+
+numpy.ndarray
+
+Notes
+
+The MassWeight option has now been removed.
+
+See also
+
+GNMAnalysis
+
+Changed in version 0.16.0: Made generate_output() a private method _generate_output().
+
+Deprecated since version 0.16.0: Instead of MassWeight=True use weights="size".
+
+Changed in version 1.0.0: MassWeight option (see above deprecation entry). Changed selection keyword to select
+
+Changed in version 2.0.0: Use AnalysisBase as parent class and store results as attributes times, eigenvalues and eigenvectors of the results attribute.
+
+ generate_kirchoff()[source]
+
+Generate the Kirchhoff matrix of contacts.
+
+This generates the neighbour matrix by generating a grid of near-neighbours and then calculating which are are within the cutoff.
+
+Returns:
+
+the resulting Kirchhoff matrix
+
+Return type:
+
+array

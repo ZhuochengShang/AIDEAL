@@ -1,0 +1,82 @@
+softdtw_barycenter
+
+ tslearn.barycenters.softdtw_barycenter(X, gamma=1.0, weights=None, tol=0.001, max_iter=50, init=None, n_jobs=None, **metric_params)[source]
+
+Compute barycenter (time series averaging) under the soft-DTW geometry.
+
+Soft-DTW was originally presented in [1].
+
+Parameters:
+
+Xarray-like, shape=(n_ts, sz, d)
+
+Time series dataset.
+
+gamma: float
+
+Regularization parameter. Lower is less smoothed (closer to true DTW).
+
+weights: None or array
+
+Weights of each X[i]. Must be the same size as len(X). If None, uniform weights are used.
+
+method: string
+
+Optimization method, passed to scipy.optimize.minimize. Default: L-BFGS.
+
+tol: float
+
+Tolerance of the method used.
+
+max_iter: int
+
+Maximum number of iterations.
+
+init: array or None (default: None)
+
+Initial barycenter to start from for the optimization process. If None, euclidean barycenter is used as a starting point.
+
+n_jobsint or None, optional (default=None)
+
+The number of jobs to run in parallel. None means 1 unless in a joblib.parallel_backend context. -1 means using all processors. See scikit-learns’ Glossary for more details.
+
+metric_params: dict or None (default: None)
+
+Soft-DTW constraint parameters to be used. See tslearn.metrics.soft_dtw for a list of accepted parameters If None, no constraint is used for soft-DTW computations.
+
+Returns:
+
+numpy.array of shape (bsz, d) where bsz is the size of the init array if provided or sz otherwise
+
+Soft-DTW barycenter of the provided time series dataset.
+
+References
+
+ [1]
+M. Cuturi, M. Blondel “Soft-DTW: a Differentiable Loss Function for Time-Series,” ICML 2017.
+
+Examples
+
+>>> time_series = [[1, 2, 3, 4], [1, 2, 4, 5]]
+>>> softdtw_barycenter(time_series, max_iter=5)
+array([[1.25161574],
+       [2.03821705],
+       [3.5101956 ],
+       [4.36140605]])
+>>> time_series = [[1, 2, 3, 4], [1, 2, 3, 4, 5]]
+>>> softdtw_barycenter(time_series, max_iter=5)
+array([[1.21349933],
+       [1.8932251 ],
+       [2.67573269],
+       [3.51057026],
+       [4.33645802]])
+
+Examples using tslearn.barycenters.softdtw_barycenter
+
+Soft-DTW weighted barycenters
+
+Soft-DTW weighted barycenters
+
+Barycenters
+
+Barycenters

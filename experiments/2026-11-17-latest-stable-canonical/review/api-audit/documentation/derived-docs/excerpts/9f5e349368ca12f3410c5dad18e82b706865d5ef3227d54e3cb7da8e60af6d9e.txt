@@ -1,0 +1,39 @@
+quadrupole_moment(**kwargs)
+
+Quadrupole moment of the group according to [1].
+
+ \[Q = \sqrt{\frac{2}{3}{\hat{\mathsf{Q}}}:{\hat{\mathsf{Q}}}}\]
+
+where the quadrupole moment is calculated from the tensor double contraction of the traceless quadropole tensor \(\hat{\mathsf{Q}}\)
+
+Computes the quadrupole moment of Atoms in the group. Quadrupole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole moment is dependant on the center chosen and cannot be translated.
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center{‘mass’, ‘charge’}, optional
+
+Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+numpy.ndarray
+
+Quadrupole moment(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Added in version 2.4.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.

@@ -1,0 +1,64 @@
+mir_eval.separation.bss_eval_images_framewise(reference_sources, estimated_sources, window=1323000, hop=661500, compute_permutation=False)
+
+Framewise computation of bss_eval_images
+
+Please be aware that this function does not compute permutations (by default) on the possible relations between reference_sources and estimated_sources due to the dangers of a changing permutation. Therefore (by default), it assumes that reference_sources[i] corresponds to estimated_sources[i]. To enable computing permutations please set compute_permutation to be True and check that the returned perm is identical for all windows.
+
+NOTE: if reference_sources and estimated_sources would be evaluated using only a single window or are shorter than the window length, the result of bss_eval_images called on reference_sources and estimated_sources (with the compute_permutation parameter passed to bss_eval_images) is returned
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing true sources (must have the same shape as estimated_sources)
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing estimated sources (must have the same shape as reference_sources)
+
+windowint
+
+Window length for framewise evaluation
+
+hopint
+
+Hop size for framewise evaluation
+
+compute_permutationbool, optional
+
+compute permutation of estimate/source combinations for all windows (False by default)
+
+Returns:
+
+sdrnp.ndarray, shape=(nsrc, nframes)
+
+vector of Signal to Distortion Ratios (SDR)
+
+isrnp.ndarray, shape=(nsrc, nframes)
+
+vector of source Image to Spatial distortion Ratios (ISR)
+
+sirnp.ndarray, shape=(nsrc, nframes)
+
+vector of Source to Interference Ratios (SIR)
+
+sarnp.ndarray, shape=(nsrc, nframes)
+
+vector of Sources to Artifacts Ratios (SAR)
+
+permnp.ndarray, shape=(nsrc, nframes)
+
+vector containing the best ordering of estimated sources in the mean SIR sense (estimated source number perm[j] corresponds to true source number j) Note: perm will be range(nsrc) for all windows if compute_permutation is False
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated
+>>> # source
+>>> (sdr, isr, sir, sar,
+...  perm) = mir_eval.separation.bss_eval_images_framewise(
+         reference_sources,
+...      estimated_sources,
+         window,
+....     hop)

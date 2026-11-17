@@ -1,0 +1,21 @@
+early_predict(X)[source]
+
+Provides predicted classes as well as estimated delays before prediction timestamps for a dataset of incomplete time series.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+Xarray-like of shape (n_series, t, n_features)
+
+A dataset of incomplete time series observed up to time t
+
+Returns:
+
+array-like, shape (n_series,)
+
+Predicted classes.
+
+array-like, shape (n_series,)
+
+Estimated delays before prediction timestamps.

@@ -1,0 +1,41 @@
+MDAnalysis.lib.distances.calc_bonds(coords1: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords2: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculates the bond lengths between pairs of atom positions from the two coordinate arrays coords1 and coords2, which must contain the same number of coordinates. coords1[i] and coords2[i] represent the positions of atoms connected by the i-th bond. If single coordinates are supplied, a single distance will be returned.
+
+In comparison to distance_array() and self_distance_array(), which calculate distances between all possible combinations of coordinates, calc_bonds() only calculates distances between pairs of coordinates, similar to:
+
+numpy.linalg.norm(a - b) for a, b in zip(coords1, coords2)
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a numpy array of dtype numpy.float64 with shape (n,) (for n coordinate pairs) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+coords1 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) for one half of a single or n bonds, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords2 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) for the other half of a single or n bonds, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (numpy.ndarray, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array of dtype numpy.float64 and shape (n,) (for n coordinate pairs). Avoids recreating the array in repeated function calls.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration. Defaults to ‘serial’.
+
+Returns:
+
+bondlengths – numpy.float64 Array containing the bond lengths between each pair of coordinates. If two single coordinates were supplied, their distance is returned as a single number instead of an array.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n,)) or
+
+Added in version 0.8.
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.5.0: Can now optionally use the fast distance functions from distopia

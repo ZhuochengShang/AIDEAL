@@ -1,0 +1,228 @@
+5.16. PDB Topology Parser
+
+This topology parser uses a standard PDB file to build a minimum internal structure representation (list of atoms).
+
+The topology reader reads a PDB file line by line and ignores atom numbers but only reads residue numbers up to 9,999 correctly. If you have systems containing at least 10,000 residues then you need to use a different file format (e.g. the “extended” PDB, XPDB format, see ExtendedPDBParser) that can handle residue numbers up to 99,999.
+
+Note
+
+Atomtypes will be created from elements if they are present and valid. Otherwise, they will be guessed on Universe creation. By default, masses will also be guessed on Universe creation. This may change in release 3.0. See Guesser modules for more information.
+
+Note
+
+The parser processes atoms and their names. Partial charges are not set. Elements are parsed if they are valid. If partially missing or incorrect, empty records are assigned.
+
+Note
+
+You can also use MMCIFParser to parse PDB files that you’re having trouble parsing with the standard PDB parser. For example:
+
+import MDAnalysis as mda
+u = mda.Universe("problematic.pdb", topology_format="MMCIF")
+
+MMCIFParser uses the gemmi library, which is developed together with RCSB and may handle edge cases better.
+
+See also
+
+MDAnalysis.topology.ExtendedPDBParser
+
+MDAnalysis.topology.MMCIFParser
+
+MDAnalysis.coordinates.PDB.PDBReader
+
+MDAnalysis.core.universe.Universe
+
+5.16.1. Classes
+
+ class MDAnalysis.topology.PDBParser.PDBParser(filename)[source]
+
+Parser that obtains a list of atoms from a standard PDB file.
+
+Creates the following Attributes (if present):
+
+names
+
+chainids
+
+tempfactors
+
+occupancies
+
+record_types (ATOM/HETATM)
+
+resids
+
+resnames
+
+segids
+
+elements
+
+bonds
+
+formalcharges
+
+Note that PDBParser accepts an optional keyword argument force_chainids_to_segids. If set to True, the chain IDs (even if empty values are in the chain ID column in the file) will forcibly be used instead of the segment IDs for creating segments.
+
+See also
+
+MDAnalysis.coordinates.PDB.PDBReader
+
+Added in version 0.8.
+
+Changed in version 0.18.0: Added parsing of Record types
+
+Changed in version 1.0.0: Added parsing of valid Elements
+
+Changed in version 2.0.0: Bonds attribute is not added if no bonds are present in PDB file. If elements are invalid or partially missing, empty elements records are now assigned (Issue #2422). Aliased bfactors topologyattribute to tempfactors. bfactors is deprecated and will be removed in 3.0 (Issue #1901)
+
+Changed in version 2.3.0: Formal charges are now read from PDB files if present. No formalcharge attribute is created if no formal charges are present in the PDB file. Any formal charges not set are assumed to have a value of 0. Raise UserWarning instead RuntimeError when CONECT records are corrupt.
+
+Changed in version 2.5.0: Formal charges will not be populated if an unknown entry is encountered, instead a UserWarning is emitted.
+
+Changed in version 2.8.0: Removed type and mass guessing (attributes guessing takes place now through universe.guess_TopologyAttrs() API).
+
+Changed in version 2.10.0: segID is read from 73-76 instead of 67-76 and added the force_chainids_to_segids keyword argument. Some infos in logger will be generated if the segids is not present or if the chainids are not completely equal to segids.
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ parse(**kwargs)[source]
+
+Parse atom information from PDB file
+
+Return type:
+
+MDAnalysis Topology object
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
