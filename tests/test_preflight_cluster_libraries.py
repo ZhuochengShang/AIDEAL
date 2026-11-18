@@ -34,7 +34,7 @@ class NativePreflightTests(unittest.TestCase):
     def response(name, spec, case):
         code = 'assert f(1) == 1\nprint("__IDENTITY__ temporary synthetic source")\n'
         if case != 'witness_omitted':
-            code += 'print("__CHECK__ f(1)=1")\n'
+            code += 'print("__CHECK__ f value=1")\n'
         if case == 'assertion_failure':
             code += f'assert False, "{helper.SENTINEL}"\n'
         return code

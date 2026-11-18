@@ -63,7 +63,7 @@ class OriginalMicroTraceTests(unittest.TestCase):
                 self.assertIn('comprehension_write_exec.md', transcript)
                 if pause:
                     self.assertIn('[Pause]', transcript)
-                self.assertIn('__CHECK__ double(3)=6' if passed else 'AssertionError',
+                self.assertIn('__CHECK__ double value=6' if passed else 'AssertionError',
                               (attempts[-1] / ('stdout.txt' if passed else 'stderr.txt')).read_text())
                 original = (output / 'result.json').read_bytes()
                 repeated = subprocess.run(command, **options)
@@ -127,7 +127,7 @@ class OriginalMicroLiveTraceTests(unittest.TestCase):
         response = ('import os\n'
                     'assert os.getenv("GOOGLE_API_KEY") is None\n'
                     'assert os.getenv("GEMINI_API_KEY") is None\n'
-                    'assert f(3) == 3\nprint("__CHECK__ f(3)=3")')
+                    'assert f(3) == 3\nprint("__CHECK__ f value=3")')
         status, calls, transcript = self.run_live_trace(response)
         self.assertEqual(0, status)
         self.assertEqual(1, len(calls))
@@ -146,7 +146,7 @@ class OriginalMicroLiveTraceTests(unittest.TestCase):
         self.assertEqual(response, (attempts[0] / 'response.txt').read_text())
         self.assertTrue((attempts[0] / 'execution.json').is_file())
         self.assertTrue((attempts[0] / 'trace_provider.json').is_file())
-        self.assertIn('__CHECK__ f(3)=3', (attempts[0] / 'stdout.txt').read_text())
+        self.assertIn('__CHECK__ f value=3', (attempts[0] / 'stdout.txt').read_text())
         self.assertIn(request['user'], transcript)
         self.assertNotIn('test-google-placeholder', transcript)
         self.assertNotIn('test-gemini-placeholder', transcript)

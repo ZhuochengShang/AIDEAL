@@ -34,10 +34,11 @@ def exclusive_work_dir(function):
     return wrapped
 
 
-def run_command(command, *, cwd, env, timeout):
+def run_command(command, *, cwd, env, timeout, guard_dir=None):
     if os.name != 'posix':
         raise RuntimeError('Process-group execution requires POSIX; configure a supported runner')
-    blocked = Path(cwd) / '.aideal_unreconciled_process.json'
+    # A per-attempt cwd still shares the evaluation's process-cleanup guard.
+    blocked = Path(guard_dir or cwd) / '.aideal_unreconciled_process.json'
     if blocked.exists():
         raise CleanupError(f'Unreconciled process evidence at {blocked}; execution blocked')
     # The controller needs provider credentials; generated test programs do not.

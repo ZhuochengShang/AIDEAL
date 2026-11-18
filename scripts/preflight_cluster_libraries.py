@@ -79,9 +79,9 @@ def snippet(name, spec, case):
                 f'if (!origin.equals({json.dumps(jar)})) throw new AssertionError("wrong Thumbnailator JAR: " + origin);\n'
                 'System.out.println("__IDENTITY__ " + origin + " java=" + System.getProperty("java.version"));\n')
         witness = 'System.out.println("__CHECK__ size 16x12 PNG/JPEG fixtures");\n'
-        # Java's assert keyword is disabled by default; throw explicitly. The
-        # runtime condition also keeps the scaffold's trailing DONE reachable.
-        failure = f'if (sourceImage != null) throw new AssertionError("{SENTINEL}");\n'
+        # The corrected runner must enable Java assertions. This control fails
+        # if assertions work, and refuses readiness if they are silently disabled.
+        failure = f'assert sourceImage == null : "{SENTINEL}";\n'
     else:
         code = python_identity(name, source, spec)
         if name == 'mdanalysis':

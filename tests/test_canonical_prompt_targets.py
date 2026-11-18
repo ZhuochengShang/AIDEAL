@@ -56,7 +56,7 @@ class CanonicalPromptTargetTests(unittest.TestCase):
         (self.root / 'configs/aideal.yaml').write_text(yaml.safe_dump(config))
         self.cfg = load_config(self.root / 'configs/aideal.yaml')
 
-    def run_request(self, targets, doc_source='original', document='Treatment document'):
+    def run_request(self, targets, doc_source='original', document='Treatment document', api='f'):
         with ExitStack() as stack:
             stack.enter_context(redirect_stderr(io.StringIO()))
             provider = stack.enter_context(patch('aideal.llm.invoke_text', return_value='print("DONE")'))
@@ -68,8 +68,8 @@ class CanonicalPromptTargetTests(unittest.TestCase):
             stack.enter_context(patch.object(doc_check_execution, 'public_api_surface', return_value={'f'}))
             stack.enter_context(patch('aideal.readme_agent.public_api_details', return_value=[]))
             result = doc_check_execution._comprehension_execute(
-                self.cfg, [ApiEntry('f', 'Call f', '', document)], 0, 42, doc_source, max_fix_rounds=0)
-            request_path = Path(result['metrics']['f']['attempt_evidence'][0]) / 'request.json'
+                self.cfg, [ApiEntry(api, 'Call f', '', document)], 0, 42, doc_source, max_fix_rounds=0)
+            request_path = Path(result['metrics'][api]['attempt_evidence'][0]) / 'request.json'
             request = json.loads(request_path.read_text())
             self.assertEqual(provider.call_args.args[1:], (request['system'], request['user']))
         return result, request
@@ -91,6 +91,19 @@ class CanonicalPromptTargetTests(unittest.TestCase):
         components = result['run']['fingerprint_components']['canonical_requested_targets']
         self.assertEqual(digest_native({'f': selected}), components['targets_sha256'])
         self.assertNotIn('call_verified', request)
+
+    def test_adapter_work_directory_contains_exact_qualified_target(self):
+        api = 'scala:selected.Owner.f'
+        selected = target()
+        self.cfg.comprehension['execute']['command'] = 'synthetic --work {work} {test_file}'
+        result, request = self.run_request({api: selected}, api=api)
+        work = Path(result['metrics'][api]['attempt_evidence'][0])
+        self.assertEqual(selected, json.loads((work / 'requested_target.json').read_text()))
+        self.assertEqual((work.parent / 'requested_target.json').read_bytes(),
+                         (work / 'requested_target.json').read_bytes())
+        execution = json.loads((work / 'execution.json').read_text())
+        self.assertIn('--work ' + str(work) + ' ', execution['command'])
+        self.assertEqual(str(work), execution['cwd'])
 
     def test_same_target_context_is_used_for_every_document_treatment(self):
         selected = target()

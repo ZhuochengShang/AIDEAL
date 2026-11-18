@@ -69,7 +69,7 @@ def _comprehension_fingerprint_components(
     engine_paths = [engine_dir / name for name in (
         "config.py", "doc_checks.py", "llm.py", "prompts.py", "readme_agent.py",
         "checkpoint_compatibility.py", "provider_deadline.py", "experiment_identity.py",
-        "profile.py", "execution.py",
+        "profile.py", "execution.py", "native_execution_contract.py", "evaluation_scope.py",
         # The facade no longer contains these implementations. Keep all moved
         # code in the checkpoint identity; historical journals remain unchanged.
         "doc_check_provenance.py", "doc_check_sources.py", "doc_check_inputs.py",
@@ -82,10 +82,16 @@ def _comprehension_fingerprint_components(
         "readme_validation.py", "readme_replay.py", "original_documentation.py")]
     from .experiment_identity import extra_components
     from .original_documentation import original_document_paths
+    runtime_identity = {}
+    if ex.get("runtime_profile"):
+        from workflow.runtime_profile import load_runtime_profile, runtime_profile_receipts
+        profile = load_runtime_profile((cfg.root / ex["runtime_profile"]).resolve())
+        runtime_identity = {"runtime_profile": runtime_profile_receipts(profile)}
     audience = cfg.model_for_role("audience")
     fixer = cfg.model_for_role("fixer")
     return {
         "schema": 4,
+        **runtime_identity,
         **extra_components(cfg),
         "project": cfg.project_name,
         "language": cfg.language,

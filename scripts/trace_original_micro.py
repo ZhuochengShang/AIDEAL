@@ -217,7 +217,7 @@ def walkthrough(root: Path, args):
             else:
                 expected = [5, 7, 9 if args.fail else 6][number]
                 response = (f'value = double(3)\nassert value == {expected}, f"expected {expected}, got {{value}}"\n'
-                            'print(f"__CHECK__ double(3)={value}")')
+                            'print(f"__CHECK__ double value={value}")')
         except Exception as exc:
             show(f'R{number} provider error; no program will execute', f'{type(exc).__name__}: {exc}')
             raise  # The native engine saves this as an incomplete provider attempt.
@@ -238,7 +238,9 @@ def walkthrough(root: Path, args):
         """Observe the real compiler/process; keep full commands in saved evidence."""
         number = model_calls - 1
         evidence = work_api / f'attempt_{model_calls:04d}'
-        show(f'4. R{number} complete test before execution', program.read_text())
+        # The native runner now writes the program in its isolated attempt cwd.
+        actual_program = Path(kwargs['cwd']) / program.name
+        show(f'4. R{number} complete test before execution', actual_program.read_text())
         command_file = evidence / 'command.txt'
         command_file.write_text(command + '\n')
         # RDPro's resolved dependency classpath exceeds 100 KB. Preserve it in

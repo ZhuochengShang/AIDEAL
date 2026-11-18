@@ -18,30 +18,36 @@ types that are not listed here):
 Project context distilled from the original README (grounding — may say none exists):
 {original_readme_context}
 
-Real usage from the project's existing test suite (these compile and pass — base
-the Valid Call Patterns and realistic Common Failure Modes on them; may be empty):
+Retrieved snippets from the project's test files (source evidence, not execution
+validation; may be empty). Do not claim that these snippets passed unless the
+provided context includes execution evidence:
 ```{language}
 {test_examples}
 ```
 
-Verbatim code example(s) from the ORIGINAL project README that call `{api_name}`
-(the project's real, documented usage — may be empty):
-```{language}
+Retrieved original documentation for API identity `{api_name}`. This may include
+surrounding prose or state that no matching example exists; do not assume it
+contains a callable example merely because it was retrieved:
+```text
 {original_examples}
 ```
 
-GROUND THE CALL FORM by combining the sources above, in this priority order — and
-NEVER invent a call shape that appears in none of them:
-1. If a test-suite example is shown, its call form is authoritative (it compiles
-   and passes) — reproduce that exact receiver and argument order.
-2. Otherwise use the original-README example's call form.
-3. If BOTH are shown, reproduce a real form verbatim (either compiles); when they
-   differ, the instance/implicit form `value.{api_name}(...)` is the most portable.
-4. If NEITHER is shown, derive the call from the Signature/API facts and say in the
-   entry that the example is inferred from the signature (not verified).
-Preserve the receiver/qualifier EXACTLY as written — if it is
-`value.{api_name}(...)` or `Object.{api_name}(...)`, keep it; do NOT collapse it to
-a bare `{api_name}(...)`, which usually will not compile.
+The canonical API identity is a registry label, not executable syntax. Never
+copy its language prefix into a call. The API facts separately provide the
+actual display_name, qualified_name, public_access_paths or preferred_public_path
+when known. An access path alone does not establish whether a method is static,
+an instance member, a property, or an implicit extension.
+
+Ground the call form in the supplied evidence:
+1. Preserve the receiver, public access path and argument order of a relevant
+   source/test/documentation example that matches the selected declaration.
+2. Resolve conflicting examples against the selected declaration and owner.
+   Do not assume an instance form is more portable or convert it to a static call.
+3. If no matching call example exists, infer only what the API facts establish.
+   Explicitly label inferred examples as unverified and state unresolved receiver
+   or construction requirements instead of inventing them.
+4. Preserve parameterless/property access when shown. Do not add parentheses or
+   drop qualifiers merely to make the call look like a generic function.
 
 Fill in the template below. Replace every TODO. Keep the Signature block and the
 pre-filled Parameters types and Output type exactly as given; add the meaning of

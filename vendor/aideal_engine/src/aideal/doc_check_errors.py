@@ -9,17 +9,19 @@ _FRAME_RE = re.compile(r"\(([A-Za-z0-9_$]+\.(?:scala|java)):(\d+)\)"
 
 
 def _classify_error_py(merged: str, rc: int, error_marker: str) -> tuple[str, str, str]:
-    """Python flavor of _classify_error. compile = SyntaxError/IndentationError
-    (the file never ran); infra = missing third-party module (env problem, not a
-    doc problem — excluded from the doc-quality denominator like JVM
-    NoClassDefFoundError); runtime = everything raised while running."""
+    """Classify observed diagnostics without claiming an environmental cause.
+
+    An unavailable import may be a missing dependency, a nonexistent model-chosen
+    module, or a version error. Only a separate setup probe can distinguish them.
+    Keep these failures in the selected denominator pending that evidence.
+    """
     import re as _re
     invalid_symbol = _re.search(r"ImportError: cannot import name (.+)", merged)
     if invalid_symbol:
         return "api-import", invalid_symbol.group(0)[:300], ""
     m = _re.search(r"(?:ModuleNotFoundError|ImportError)[:\s]+(.+)", merged)
     if m:
-        return "infra", f"missing module/import: {m.group(1).strip()[:200]}", ""
+        return "dependency-unverified", f"missing module/import: {m.group(1).strip()[:200]}", ""
     m = _re.search(r"^(?:SyntaxError|IndentationError|TabError)[:\s]+(.+)$", merged, _re.M)
     if m:
         loc = _re.search(r'File "([^"]+)", line (\d+)', merged)
@@ -43,7 +45,7 @@ def _classify_error_java(merged: str, rc: int, error_marker: str) -> tuple[str, 
     im = _re.search(
         r"(?:NoClassDefFoundError|ClassNotFoundException)[:\s]+([\w/.$]+)", merged)
     if im:
-        return "infra", f"missing dependency on classpath: {im.group(1)}", ""
+        return "dependency-unverified", f"missing dependency on classpath: {im.group(1)}", ""
     cm = _re.search(r"^([^\n]+\.java):(\d+): error: (.+)$", merged, _re.M)
     if cm:
         return "compile", cm.group(0).strip()[:300], f"{cm.group(1)}:{cm.group(2)}"
@@ -63,7 +65,8 @@ def _classify_error_java(merged: str, rc: int, error_marker: str) -> tuple[str, 
 def _classify_error(merged: str, rc: int, error_marker: str,
                     language: str = "scala") -> tuple[str, str, str]:
     """Return (category, message, locus) from the run output.
-    category: compile | runtime | timeout | infra | unknown; locus = the failing call."""
+    Categories describe symptoms; dependency-unverified needs a setup probe.
+    No diagnostic substring alone proves a setup failure."""
     import re as _re
     if rc == 124:
         return "timeout", "execution timed out", ""
@@ -71,21 +74,17 @@ def _classify_error(merged: str, rc: int, error_marker: str,
         return _classify_error_py(merged, rc, error_marker)
     if language.lower() == "java":
         return _classify_error_java(merged, rc, error_marker)
-    # infra/environment: a dependency missing from the HARNESS classpath (the real
-    # test suite has it; spark-submit local[*] may not). NoClassDefFoundError /
-    # ClassNotFoundException are never a documentation problem — no doc fix resolves
-    # a missing jar — so they get their own category and are excluded from the
-    # doc-quality denominator. Matches ONLY the explicit JVM class-loading errors,
-    # NOT scalac "not found: type X" (which IS a real snippet/doc problem).
+    # A generated program may request a nonexistent class. Class-loading errors
+    # flag dependency review; they do not by themselves remove a trial from the
+    # denominator or prove that the configured classpath is incomplete.
     im = _re.search(r"(?:NoClassDefFoundError|ClassNotFoundException)[:\s]+([\w/.$]+)", merged)
     if im:
-        return "infra", f"missing dependency on classpath: {im.group(1)}", ""
+        return "dependency-unverified", f"missing dependency on classpath: {im.group(1)}", ""
     # compile-time classpath gap: scalac can't read a referenced class from the jars
-    # (inner-class / version mismatch, e.g. a protobuf ExtendableMessage). Also infra,
-    # not a doc problem — this is the `build` "Unable to locate class..." failure.
+    # (inner-class / version mismatch). Confirm with an independent setup probe.
     if _re.search(r"Unable to locate class corresponding to inner class|"
                   r"class file needed by .* is missing|missing or invalid dependency detected", merged):
-        return "infra", "compile-time classpath/version gap (missing or mismatched jar)", ""
+        return "dependency-unverified", "compile-time classpath/version gap (missing or mismatched jar)", ""
     # runtime: the scaffold prints __RUN_ERR__ <Class>: <msg>
     if error_marker and error_marker in merged:
         line = next((l for l in merged.splitlines() if error_marker in l), "").strip()

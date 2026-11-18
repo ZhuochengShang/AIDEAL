@@ -11,6 +11,10 @@ from .config import AidealConfig
 from .api_registry import target_key
 from .error_log import ErrorLog, new_run_id
 from .execution import exclusive_work_dir
+from .native_execution_contract import (
+    execution_contract, assertion_environment, isolate_output_bindings, rebind_output_text,
+    native_check_passed, native_witness_present,
+)
 from .readme_agent import public_api_details, public_api_surface
 from .doc_check_sources import _build_catalogue_context
 from .doc_check_inputs import (
@@ -156,6 +160,15 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     import time as _time
 
     ex = cfg.comprehension.get("execute", {}) if cfg.comprehension else {}
+    runtime_profile = None
+    if ex.get("runtime_profile"):
+        # Optional repository operator support; ordinary standalone engine use
+        # does not import workflow modules. Verify before spending model tokens.
+        from workflow.runtime_profile import (load_runtime_profile, verify_runtime_profile,
+                                              require_runtime_ready)
+        runtime_profile = load_runtime_profile((cfg.root / ex["runtime_profile"]).resolve())
+        verify_runtime_profile(runtime_profile, command=ex.get("command", ""))
+        require_runtime_ready(runtime_profile)
     manifest_inventory_n = len(inventory)
     cmd_template = ex.get("command", "")
     scaffold_path = ex.get("scaffold", "")
@@ -273,14 +286,11 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                 + ", ".join(sample_data) + ")")
     # legacy {{KEY}} placeholders still supported
     placeholders = {k: _resolve(v) for k, v in (ex.get("placeholders", {}) or {}).items()}
-    success_marker = ex.get("success_marker", "")
     error_marker = ex.get("error_marker", "")
-    # Phase-A correctness gate: when require_correctness is on, a run only PASSES if
-    # it emitted the structured witness (check_marker) — i.e. the snippet actually
-    # ran the require(...) correctness assertion and produced a non-degenerate
-    # result. Catches a wrong pixel TYPE that reads garbage without throwing, which
-    # a plain "it ran" (success_marker) check would let through. Default off.
-    check_marker = ex.get("check_marker", "__CHECK__")
+    # A native correctness witness must name this exact API on stdout.
+    # This gate checks emitted evidence; it does not independently establish
+    # that a model-written assertion is meaningful or its expectation is right.
+    check_marker = ex.get("check_marker") or "__CHECK__"
     require_correctness = bool(ex.get("require_correctness", False))
     timeout = int(timeout_s or ex.get("timeout_seconds", 600) or 600)
     strip_snippet_imports = bool(ex.get("strip_snippet_imports", False))
@@ -326,6 +336,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         missing = sorted({entry.name for entry in inventory} - set(canonical_targets))
         if missing:
             raise ValueError("Requested APIs lack a canonical target declaration: " + repr(missing))
+    native_contract = execution_contract(cfg.language)
+    fingerprint_components["native_execution_contract"] = native_contract
     experiment_fingerprint = digest_native(fingerprint_components)
 
     # Crash-proof progress: one JSONL row per finished API, flushed as it
@@ -483,15 +495,9 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         api_t0 = _time.time()
         api_u0 = usage_snapshot()
         work_api = work_dir / f"run_{api_storage_key(entry.name)}"
-        (work_api / "classes").mkdir(parents=True, exist_ok=True)
+        work_api.mkdir(parents=True, exist_ok=True)
+        # Initialize the evidence path even if the provider never returns code.
         scala_file = work_api / str(ex.get("test_filename", "ApiTest.scala"))
-        cmd = (cmd_template.replace("{scala_file}", str(scala_file))
-               .replace("{test_file}", str(scala_file))
-               .replace("{root}", str(cfg.root))
-               .replace("{uberjar}", uberjar).replace("{jars}", jars)
-               .replace("{classpath}", classpath).replace("{work}", str(work_api))
-               .replace("{packages}", packages_flag)
-               .replace("{repositories}", repositories_flag))
 
         ran = False
         last = {}
@@ -522,26 +528,57 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             evidence_number = max(previous_attempts, default=0) + 1
             evidence_dir = work_api / f"attempt_{evidence_number:04d}"
             evidence_dir.mkdir()
+            # Native adapters resolve the frozen target relative to {work}.
+            # Since {work} is now per attempt, keep the exact target beside the
+            # program as well as in the API-level provenance directory.
+            if requested_target is not None:
+                (evidence_dir / "requested_target.json").write_text(_json.dumps(
+                    requested_target, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+            (evidence_dir / "classes").mkdir()
+            # Every API and repair attempt owns a fresh directory. A snippet
+            # cannot turn another task's output filename into a directory.
+            attempt_data, attempt_placeholders, output_receipt = isolate_output_bindings(
+                sample_data, evidence_dir, placeholders, ex.get("output_bindings"))
+            attempt_bindings = rebind_output_text(bindings, output_receipt)
+            attempt_inputs = rebind_output_text(available_inputs, output_receipt)
+            attempt_inputs += "\nWritable output_dir is a directory unique to this attempt; keep generated files beneath it."
+            scala_file = evidence_dir / str(ex.get("test_filename", "ApiTest.scala"))
+            cmd = (cmd_template.replace("{scala_file}", str(scala_file))
+                   .replace("{test_file}", str(scala_file))
+                   .replace("{root}", str(cfg.root))
+                   .replace("{uberjar}", uberjar).replace("{jars}", jars)
+                   .replace("{classpath}", classpath).replace("{work}", str(evidence_dir))
+                   .replace("{packages}", packages_flag)
+                   .replace("{repositories}", repositories_flag))
+            child_env = assertion_environment(os.environ, cfg.language, cmd)
+            (evidence_dir / "execution_contract.json").write_text(_json.dumps({
+                **native_contract, **output_receipt, "sample_data": attempt_data,
+                "cwd": str(evidence_dir),
+            }, ensure_ascii=False, indent=2), encoding="utf-8")
             attempt_evidence.append(str(evidence_dir))
             selected_model = writer_spec if attempt == 0 else fixer_spec
+            if runtime_profile is not None:
+                verify_runtime_profile(runtime_profile, command=cmd)
+                require_runtime_ready(runtime_profile)
             provider_t0 = _time.time()
             provider_u0 = usage_snapshot()
             try:
                 delivered_prompt = load_prompt(cfg, "aideal/comprehension_write_exec",
                                  api_body=body_for(entry), api_name=entry.name,
-                                 available_inputs=available_inputs,
+                                 available_inputs=attempt_inputs,
                                  receiver=receiver or "(receiver type not resolved)",
                                  known_failures=known or "(none yet)",
                                  execution_context=_requested_target_context(
-                                     ex.get("execution_context", ""), requested_target),
+                                     rebind_output_text(ex.get("execution_context", ""), output_receipt), requested_target),
                                  exec_hints=ex.get("exec_hints", ""),
-                                 io_hints=io_hints_text)
+                                 io_hints=rebind_output_text(io_hints_text, output_receipt))
                 prompt_hashes.append(_hashlib.sha256(_json.dumps(delivered_prompt).encode()).hexdigest())
                 # Store only the selected model and rendered messages, never
                 # model configuration objects, credentials, or environment values.
                 (evidence_dir / "request.json").write_text(_json.dumps({
                     "api": entry.name, "round": attempt, "run_id": run_id,
                     "attempt_number": evidence_number,
+                    "execution_contract": native_contract,
                     "provider": selected_model.provider, "model": selected_model.model,
                     **({"max_output_tokens": selected_model.max_output_tokens}
                        if selected_model.max_output_tokens is not None else {}),
@@ -584,16 +621,20 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                            task=task, status="fail", function=entry.name,
                            error_category=cat, error=msg[:500], round=attempt)
                 break
-            scala = _fill_scaffold(scaffold.replace("// AIDEAL_DATA_BINDINGS", bindings)
-                                   .replace("# AIDEAL_DATA_BINDINGS", bindings),
-                                   snippet, region, placeholders)
+            attempt_scaffold = rebind_output_text(scaffold, output_receipt).replace(
+                "// AIDEAL_DATA_BINDINGS", attempt_bindings).replace("# AIDEAL_DATA_BINDINGS", attempt_bindings)
+            scala = _fill_scaffold(attempt_scaffold, snippet, region, attempt_placeholders)
+            if _is_py:
+                from .evaluation_scope import bind_python_scaffold_inputs
+                scala = bind_python_scaffold_inputs(scala, attempt_scaffold, region)
             scala_file.write_text(scala, encoding="utf-8")
-            (evidence_dir / scala_file.name).write_text(scala, encoding="utf-8")
+            if runtime_profile is not None:
+                verify_runtime_profile(runtime_profile, command=cmd)
             execution_t0 = _time.time()
             try:
                 # shell=True so the `scalac && jar && spark-submit` pipeline runs
                 from .execution import run_command
-                proc = run_command(cmd, cwd=work_dir, timeout=timeout, env=dict(os.environ))
+                proc = run_command(cmd, cwd=evidence_dir, timeout=timeout, env=child_env, guard_dir=work_dir)
                 out, err_out, rc = proc.stdout, proc.stderr, proc.returncode
             except subprocess.TimeoutExpired as e:
                 # TimeoutExpired carries the captured streams as BYTES even with
@@ -602,18 +643,20 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                 def _txt(b):
                     return b.decode("utf-8", "ignore") if isinstance(b, (bytes, bytearray)) else (b or "")
                 out, err_out, rc = _txt(e.stdout), _txt(e.stderr) + "\n[timeout]", 124
+            finally:
+                if runtime_profile is not None:
+                    verify_runtime_profile(runtime_profile, command=cmd)
             last_run = {"stdout": out or "", "stderr": err_out or "", "exit_code": rc}
             (evidence_dir / "stdout.txt").write_text(last_run["stdout"], encoding="utf-8")
             (evidence_dir / "stderr.txt").write_text(last_run["stderr"], encoding="utf-8")
             (evidence_dir / "execution.json").write_text(_json.dumps({
-                "command": cmd, "cwd": str(work_dir), "timeout_s": timeout,
+                "command": cmd, "cwd": str(evidence_dir), "timeout_s": timeout,
+                "execution_contract": native_contract, "output_root": output_receipt["output_root"],
                 "exit_code": rc, "wall_s": _time.time() - execution_t0,
                 "stdout_file": "stdout.txt", "stderr_file": "stderr.txt",
             }, ensure_ascii=False, indent=2), encoding="utf-8")
             merged = (out or "") + "\n" + (err_out or "")
-            ran = (rc == 0) and (success_marker in merged if success_marker else True) \
-                and not (error_marker and error_marker in merged) \
-                and (check_marker in merged if require_correctness else True)
+            ran = native_check_passed(out, err_out, rc, entry.name, ex)
             if ran:
                 rounds_trace.append({"round": attempt, "status": "pass"})
                 _sys.stderr.write(f"  [{entry.name}] round {attempt}: PASS\n"); _sys.stderr.flush()
@@ -640,12 +683,13 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             _, fix_hint = _classify_fix(merged)
             # ran clean but omitted the correctness witness -> tell the model exactly
             # what's missing instead of a vague "unknown" (Phase-A gate).
-            if (require_correctness and rc == 0 and check_marker not in merged
+            if (require_correctness and rc == 0
+                    and not native_witness_present(out, entry.name, check_marker)
                     and not (error_marker and error_marker in merged)):
                 cat = "no-correctness-check"
-                msg = (f"ran without a correctness check: no '{check_marker}' witness printed. "
-                       f"End the snippet with require(<result non-degenerate>, ...) then "
-                       f"println(\"{check_marker} {entry.name} \" + <witness>).")
+                msg = (f"ran without a target-specific correctness witness: no stdout line starts with "
+                       f"'{check_marker} {entry.name} ' followed by a value. "
+                       "Use an executable correctness assertion and print that exact prefix with its witness.")
                 fix_hint = msg
             frames = _codebase_frames(merged, file_index)
             last = {"cat": cat, "msg": msg, "locus": locus,
@@ -776,6 +820,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             "experiment_fingerprint": experiment_fingerprint,
             "fingerprint_components": fingerprint_components,
             "checkpoint_reuse": reuse,
+            "execution_contract": native_contract,
             "doc_scope": doc_scope,
         },
         # Retain the historical selected-API denominator. An interrupted score

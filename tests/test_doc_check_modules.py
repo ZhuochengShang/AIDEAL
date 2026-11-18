@@ -142,10 +142,10 @@ class DocCheckModuleTests(unittest.TestCase):
     def test_error_categories_and_source_frames_keep_exact_results(self):
         cases = [
             ('SyntaxError: invalid syntax', 1, 'python', 'compile'),
-            ('ModuleNotFoundError: missing', 1, 'python', 'infra'),
+            ('ModuleNotFoundError: missing', 1, 'python', 'dependency-unverified'),
             ('ImportError: cannot import name bad', 1, 'python', 'api-import'),
             ('Source.java:9: error: cannot find symbol', 1, 'java', 'compile'),
-            ('java.lang.NoClassDefFoundError: absent/Thing', 1, 'java', 'infra'),
+            ('java.lang.NoClassDefFoundError: absent/Thing', 1, 'java', 'dependency-unverified'),
             ('Source.scala:2: error: not found', 1, 'scala', 'compile'),
             ('__ERR__ wrong\n at app.call(Source.scala:7)', 1, 'scala', 'runtime'),
             ('partial', 124, 'python', 'timeout'),
