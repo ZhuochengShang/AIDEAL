@@ -33,7 +33,7 @@ def response(*, output=None, usage=True, status='completed', incomplete=None):
         'status': status, 'output': [message('def solve = 1')] if output is None else output,
         'parallel_tool_calls': False, 'tool_choice': 'none', 'tools': [],
         'incomplete_details': {'reason': incomplete} if incomplete else None,
-        'usage': {'input_tokens': 100, 'input_tokens_details': {'cached_tokens': 20},
+        'usage': {'input_tokens': 100, 'input_tokens_details': {'cached_tokens': 20, 'cache_write_tokens': 0},
                   'output_tokens': 30, 'output_tokens_details': {'reasoning_tokens': 23},
                   'total_tokens': 130} if usage else None})
 
