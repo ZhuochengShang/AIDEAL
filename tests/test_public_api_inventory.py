@@ -167,3 +167,92 @@ def test_reader_rejects_policy_drift(bound_reader):
     module,cfg,manifest,ledger,selection=bound_reader
     cfg.raw['codebase']['api_origin']['external_namespaces']=[]
     with pytest.raises(ValueError,match='namespace policy'):module.qualified_inventory_details(cfg,manifest)
+
+
+@pytest.mark.parametrize('missing', [True, False])
+def test_reader_normalizes_absent_or_null_source_comment_without_mutating_ledger(bound_reader,missing):
+    """Compiler-produced ledgers omit this optional field; consumers need a string."""
+    import copy
+    module,cfg,manifest,ledger,selection=bound_reader
+    record=ledger['records'][0]
+    if missing:record.pop('description',None)
+    else:record['description']=None
+    before=copy.deepcopy(ledger)
+    result=module.qualified_inventory_details(cfg,manifest)
+    assert result[0]['description']==''
+    assert ledger==before
+    assert [r['site_id'] for r in result]==selection['winner_site_ids']
+    assert result[0]['signature']==record['signature']
+    assert result[0]['source_sha256']==record['source_sha256']
+    assert result[0]['source_span_sha256']==record['source_span_sha256']
+
+
+def test_reader_preserves_existing_source_comment_verbatim(bound_reader):
+    module,cfg,manifest,ledger,selection=bound_reader
+    text='Exact source comment.\nDo not replace this with generated guidance.'
+    ledger['records'][0]['description']=text
+    result=module.qualified_inventory_details(cfg,manifest)
+    assert result[0]['description']==text
+
+
+@pytest.mark.parametrize('invalid', [42, False, {'unexpected':'object'}, ['unexpected']])
+def test_reader_rejects_nontext_source_comment(bound_reader,invalid):
+    module,cfg,manifest,ledger,selection=bound_reader
+    ledger['records'][0]['description']=invalid
+    with pytest.raises(ValueError,match='description must be text or absent'):
+        module.qualified_inventory_details(cfg,manifest)
+
+
+@pytest.mark.parametrize('language,extension,source_text,signature', [
+    ('Java', 'java', 'package pkg; public class C { public int run(int x) { return x + 1; } }', 'public int run(int x)'),
+    ('Scala', 'scala', 'package pkg\nclass C { def run(x: Int): Int = x + 1 }', 'def run(x: Int): Int'),
+])
+def test_compiler_record_without_comment_reaches_existing_overload_consumer(
+        bound_reader, monkeypatch, language, extension, source_text, signature):
+    """A JVM ledger must reach the shared R0/README overload consumer safely."""
+    import copy, types
+    module,cfg,manifest,ledger,selection=bound_reader
+    package=sys.modules[module.__package__]
+    path='pkg/C.'+extension
+    source_file=cfg.root/'source'/path
+    source_file.write_text(source_text)
+    sha=hashlib.sha256(source_text.encode()).hexdigest()
+    record=ledger['records'][0]
+    record.update(language=language,source_language=language,name='run',
+        owner='pkg.C',defining_owner='pkg.C',defining_owner_kind='class',
+        qualified_name='pkg.C.run',api_id=language.lower()+':pkg.C.run',
+        site_id=language.lower()+':fixture:C.run',kind='method',definition_kind='method',
+        path=path,file='source/'+path,defining_file='source/'+path,line=1,
+        start=0,end=len(source_text),source_sha256=sha,source_span_sha256=sha,
+        signature=signature,params=[{'name':'x','type':'int' if language=='Java' else 'Int'}],
+        parameter_count=1,parameter_count_status='compiler_declared',
+        offset_unit='UTF-16 code units in decoded UTF-8 source',
+        public_access_paths=['pkg.C.run'],preferred_public_path='pkg.C.run')
+    record.pop('description',None)
+    ledger.pop('package_roots',None)
+    ledger['source_files']=[{'path':path,'sha256':sha,'bytes':len(source_text.encode()),'encoding':'utf-8'}]
+    ledger['source_file_binding_sha256']=module.digest(ledger['source_files'])
+    cfg.language=language
+    record['api_origin']=package.api_origin.audit_api_origins(cfg,[record])['decisions'][0]
+    updated_selection=package.api_canonical_selection.select_canonical_implementations(
+        [record],policy_version=package.api_canonical_selection.QUALIFIED_POLICY_VERSION)
+    selection.clear();selection.update(updated_selection)
+    manifest.update(declaration_ids=[record['site_id']],canonical_declaration_ids=selection['winner_site_ids'])
+    before=copy.deepcopy(ledger)
+    normalized=module.qualified_inventory_details(cfg,manifest)
+    assert ledger==before
+    assert len(normalized)==1
+    assert normalized[0]['description']==''
+    assert normalized[0]['signature']==signature
+    assert normalized[0]['site_id']==record['site_id']
+    # Load the unchanged consumer with its unrelated imports stubbed; no LLM,
+    # subject import, compiler, or generated-program execution is involved.
+    for name,attribute in [('config','AidealConfig'),('api_discovery','public_api_details'),('api_intent','intent_scores')]:
+        stub=types.ModuleType(package.__name__+'.'+name)
+        setattr(stub,attribute,object)
+        monkeypatch.setitem(sys.modules,stub.__name__,stub)
+    spec=importlib.util.spec_from_file_location(package.__name__+'.api_overloads',MODULE.parent/'api_overloads.py')
+    consumer=importlib.util.module_from_spec(spec);spec.loader.exec_module(consumer)
+    maximals,subsumed=consumer._subsume_overloads(normalized)
+    assert maximals==normalized
+    assert subsumed==[]

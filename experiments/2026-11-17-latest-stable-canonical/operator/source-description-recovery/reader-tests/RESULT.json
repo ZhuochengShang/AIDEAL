@@ -1,0 +1,57 @@
+{
+  "created_utc": "2026-11-18T01:21:37.061973+00:00",
+  "status": "staged_and_tested",
+  "canonical_or_frozen_edits": false,
+  "model_calls": 0,
+  "credential_reads": 0,
+  "production_files_modified": 1,
+  "files": [
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "before_sha256": "2437440e79a40081d3a7792388c8f3ef8a582b16430f94cebce1c1ee3a3fb319",
+      "after_sha256": "c4f7626587923f61ea99c2ecb18f42486077da782e1b27ea9cfa4ceb816b652a",
+      "modified": true
+    },
+    {
+      "path": "tests/test_public_api_inventory.py",
+      "before_sha256": "9617f08c9fb55302b7a3bc7b7b3a652f4400591749f7b78b1697a0687a6cc87e",
+      "after_sha256": "d215d2393deeaedf69ae977293a528a48f65a4bc11415bcdcd8886cc78bd6d7c",
+      "modified": true
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_origin.py",
+      "before_sha256": "e3c6bccb236e40f8f6ca38767921966c4285986b126459feacc104897de6ad89",
+      "after_sha256": "e3c6bccb236e40f8f6ca38767921966c4285986b126459feacc104897de6ad89",
+      "modified": false
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_canonical_selection.py",
+      "before_sha256": "1e238331e2fda620535357cc5f62faed1f41f23d83d63ef8963636ee66f500f0",
+      "after_sha256": "1e238331e2fda620535357cc5f62faed1f41f23d83d63ef8963636ee66f500f0",
+      "modified": false
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_overloads.py",
+      "before_sha256": "a149c2b973d3ff45913034ac01fcd800733023c81832b2228792ab2fc7cb56c9",
+      "after_sha256": "a149c2b973d3ff45913034ac01fcd800733023c81832b2228792ab2fc7cb56c9",
+      "modified": false
+    }
+  ],
+  "tests": {
+    "pytest_exit_code": 0,
+    "passed": 36,
+    "baseline_tests": 27,
+    "new_cases": 9,
+    "log": "TESTS.log",
+    "negative_control": {
+      "code": "unchanged frozen reader",
+      "expected_exit_code": 1,
+      "failed": 2,
+      "deselected": 34,
+      "cause": "KeyError: 'description'",
+      "log": "NEGATIVE_CONTROL.log"
+    }
+  },
+  "effect": "Normalize absent/null optional source description to empty string only after frozen source identity and selected-site validation. Preserve existing text; reject nontext metadata. No ledger rewrite, no new source documentation, no change to selected API identities.",
+  "recovery": "Preserve running queue and immutable release. Hold only not-started JVM outputs in original namespace. Use new frozen evaluator and separately named recovery outputs for Thumbnailator, Beast Java, Beast Scala R0/README after original queue lock is released. Retain failed logs/distillation costs separately."
+}

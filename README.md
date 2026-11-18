@@ -1,8 +1,10 @@
 # AIDEAL — develop documentation and evaluate its effect
 
+Current launch: [completed results and the Java/Scala reader correction](experiments/2026-11-17-latest-stable-canonical/RUN_RECOVERY.md). Original R0 and README authoring are running on the cluster; each saved status includes its observation time.
+
 **Current all-library launch:** [inputs, folders, function calls, prompts, logs and results](experiments/2026-11-17-latest-stable-canonical/RUN_FLOW.md) · [running status and real traces](experiments/2026-11-17-latest-stable-canonical/operator/launch/live/README.md).
 
-**Current six-library preparation (November 17, 2026):** [experiment guide](experiments/2026-11-17-latest-stable-canonical/EXPERIMENT_GUIDE.md), [all qualified API/task inputs](experiments/2026-11-17-latest-stable-canonical/review/qualified-bank/INDEX.html), [readiness fixes](experiments/2026-11-17-latest-stable-canonical/READINESS_FIXES.md), and [review commands](experiments/2026-11-17-latest-stable-canonical/RUNBOOK.md). Live runs remain paused for input review; earlier results retain their own scope.
+**Current six-library preparation (November 17, 2026):** [experiment guide](experiments/2026-11-17-latest-stable-canonical/EXPERIMENT_GUIDE.md), [all qualified API/task inputs](experiments/2026-11-17-latest-stable-canonical/review/qualified-bank/INDEX.html), [readiness fixes](experiments/2026-11-17-latest-stable-canonical/READINESS_FIXES.md), and [review commands](experiments/2026-11-17-latest-stable-canonical/RUNBOOK.md). Original R0 and README authoring are authorized and running; the linked preparation files preserve the earlier review checkpoint.
 
 
 **Run readiness checked November 12, 2026:** [automation, study prerequisites and code-review route](docs/AUTOMATION_READINESS.md).

@@ -565,6 +565,15 @@ def qualified_inventory_details(cfg,data):
     expected_ids=[r['site_id'] for r in receipt['winners'] if r['language'].lower()==cfg.language.lower()]
     if set(selected['winner_site_ids'])!=set(expected_ids) or set(data.get('canonical_declaration_ids',[]))!=set(expected_ids):
         raise ValueError('Qualified selected definition identities changed')
+    # Compiler ledgers can omit source comments entirely. After verifying the
+    # frozen selection, expose the common consumer schema without rewriting its
+    # provenance or inventing documentation. Python/Cython comments stay exact.
+    for row in selected['winners']:
+        description = row.get('description')
+        if description is None:
+            row['description'] = ''
+        elif not isinstance(description, str):
+            raise ValueError('Qualified API source description must be text or absent')
     return selected['winners']
 
 
