@@ -1,0 +1,49 @@
+{
+  "name": "python:mir_eval.alignment.absolute_error",
+  "doc_source": "original",
+  "experiment_fingerprint": "a3c16e3a4c38c1ffbcebc379c6b532f608f2451cc24f276a8f6bebf1b62459e5",
+  "execution_evidence": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "mae, aae = mir_eval.alignment.absolute_error(ref_events, est_events)\nassert mae >= 0 and aae >= 0\nassert mae <= aae or aae <= mae\nprint(f\"__CHECK__ python:mir_eval.alignment.absolute_error {mae:.4f}, {aae:.4f}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.absolute_error--c795d832c4aa4b9f164313c159d83451af116cd75f2d5536bcc41ce8830b6a5d/api_test.py",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ python:mir_eval.alignment.absolute_error 0.0200, 0.0225\n__DONE__\n",
+    "stderr_tail": ""
+  },
+  "status": "pass",
+  "attempts": 1,
+  "rendered_prompt_sha256": [
+    "ff5519176c084f7127e0d1bb4c135e110a698510bc9b239a1cd75f839878f9e2"
+  ],
+  "attempt_evidence": [
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.absolute_error--c795d832c4aa4b9f164313c159d83451af116cd75f2d5536bcc41ce8830b6a5d/attempt_0001"
+  ],
+  "pass_round": 0,
+  "wall_s": 6.3,
+  "llm_calls": 1,
+  "input_tokens": 2133,
+  "output_tokens": 78,
+  "by_model": {
+    "google:gemini-3.1-flash-lite": {
+      "calls": 1,
+      "input_tokens": 2133,
+      "output_tokens": 78,
+      "missing_usage_calls": 0,
+      "usage_complete": true
+    }
+  },
+  "error_category": null,
+  "error": null,
+  "locus": null,
+  "doc_chars": 2310,
+  "document_sha256": "fd40dddba8b583b40fc1401d1dc0a2ed836f2fab79dbeacbb1c728ce34ac6396",
+  "source": "source/mir_eval/alignment.py:115",
+  "source_other_sites": 0,
+  "codebase_frames": null
+}

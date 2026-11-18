@@ -1,6 +1,6 @@
 # AIDEAL — develop documentation and evaluate its effect
 
-**Current all-library launch:** [inputs, folders, function calls, prompts, logs and results](experiments/2026-11-17-latest-stable-canonical/RUN_FLOW.md) · [timestamped launch status](experiments/2026-11-17-latest-stable-canonical/CURRENT_LAUNCH.json).
+**Current all-library launch:** [inputs, folders, function calls, prompts, logs and results](experiments/2026-11-17-latest-stable-canonical/RUN_FLOW.md) · [running status and real traces](experiments/2026-11-17-latest-stable-canonical/operator/launch/live/README.md).
 
 **Current six-library preparation (November 17, 2026):** [experiment guide](experiments/2026-11-17-latest-stable-canonical/EXPERIMENT_GUIDE.md), [all qualified API/task inputs](experiments/2026-11-17-latest-stable-canonical/review/qualified-bank/INDEX.html), [readiness fixes](experiments/2026-11-17-latest-stable-canonical/READINESS_FIXES.md), and [review commands](experiments/2026-11-17-latest-stable-canonical/RUNBOOK.md). Live runs remain paused for input review; earlier results retain their own scope.
 
