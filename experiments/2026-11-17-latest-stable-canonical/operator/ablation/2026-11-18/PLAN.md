@@ -1,6 +1,6 @@
 # Six-library ablation continuation
 
-Authorization: the developer requested “Generated-README evaluation and the remaining ablation conditions … plan it and run it” on November 18, 2026. This continuation preserves the completed Original R0 results and all authoring records.
+Authorization: the user requested “Generated-README evaluation and the remaining ablation conditions … plan it and run it” on November 18, 2026. This continuation preserves the completed Original R0 results and all authoring records.
 
 ## Immediate matched comparison
 
@@ -22,10 +22,10 @@ The completed runs measure native API microbenchmark execution under the existin
 
 | Condition | Documentation in initial request | Callable implementation | R0 | R1/R2 | Deep dive |
 | --- | --- | --- | --- | --- | --- |
-| Original | Pinned original documentation | Original | Complete | Planned as a separately frozen repair experiment | No |
-| README only | Completed generated README | Original | Running; first three libraries complete | Planned, up to two repairs | After R2, revise affected entries; fresh evaluation |
+| Original | Pinned original documentation | Original | Complete | Fresh matched mir_eval run completed | No |
+| README only | Completed generated README | Original | Running; six language banks complete | Fresh matched mir_eval run completed; up to two repairs | After R2, revise affected entries; fresh evaluation |
 | Alias only | Original + alias interface descriptions | Original + validated forwarding aliases | After alias validation | Up to two repairs | No |
-| Error Hints only | Original | Original + validated exception-message edits | After native-hint validation | Up to two repairs using emitted diagnostics | No |
+| Error Hints only | Original | Original + validated exception-message edits | mir_eval source installed and repair study queued | Up to two repairs using emitted diagnostics | No |
 | Combined | Generated README + alias descriptions | Same validated aliases and native hints | After both validations | Up to two repairs | After R2, revised README; fresh evaluation |
 
 R0 is the first generated program. R1 and R2 repair a failed program; successful tasks stop early. A provider retry is not a program repair. Deep dive changes the README and starts a fresh evaluation; it is not R3. Native hints enter the audience's context only when the library emits them in an execution diagnostic. Therefore a native-hints benefit is expected during repair, not in initial program generation. Changing an exception message can also affect programs that inspect exact messages and needs the paired controls below.
@@ -70,7 +70,7 @@ Shared evaluator, operator scripts and evidence: `ZhuochengShang/AIDEAL`, branch
 
 Each library repository uses `study/2026-11-17-latest-stable-canonical/{original,readme-only,alias-only,error-hints-only,combined}`. Branch names express intended conditions; receipts and commits establish what is actually installed. Never switch or patch the Original checkout to run another condition.
 
-A separately frozen repair protocol is being checked because the legacy native repair path truncates diagnostics and omits the previous program. The new protocol must expose the preceding program and bounded execution feedback, preserve emitted native hints, and apply the same repair policy to all five conditions. It must not silently reuse a zero-repair checkpoint with changed settings.
+The separately frozen repair protocol passed its software checks and real mechanism pilot. The full mir_eval Original, Generated README and Error Hints jobs now run with the preceding program and bounded execution feedback. The other two conditions remain gated on alias validation. All use fresh initial responses; no zero-repair checkpoint is silently reused with changed settings. The one-target real pilot showed no final-success benefit, despite verified native hint delivery.
 
 The continuation's operator records belong under `operator/ablation/2026-11-18/`. Runtime outputs use a new namespace and retain exact requests, returned program text, provider metadata, execution stdout/stderr, result JSON, reports and completion bindings. A live progress report must distinguish queued, running, completed, failed and awaiting validation.
 
@@ -100,3 +100,7 @@ Review in this order:
 ## Report quantities
 
 For each library and condition report completed/selected targets, R0 pass rate, cumulative pass rate after R1 and R2, newly repaired failures per round, unresolved failures by category, input/output tokens, model calls, provider retries, model time and build/run/check time. Preserve the full denominator and report provider failures separately. Never pool missing conditions as zero scores.
+
+## Current launch boundary
+
+Generated README R0 is active for the complete 2,850-target bank. A separately frozen mir_eval study runs Original, Generated README and native Error Hints across 178 targets each through R2. Alias-only and Combined evaluation have not started. The current alias queue preserves complete rejected proposals, excludes them from installation, and continues to the remaining APIs. It reuses previous responses and pauses only provider/incomplete output; accepted candidates still require runtime validation. The reviewed mir_eval bank has 67 schema-valid alias candidates, none installed yet. Source-adapter gaps and zero accepted native-hint coverage are explicit pending cells, not completed five-condition results.

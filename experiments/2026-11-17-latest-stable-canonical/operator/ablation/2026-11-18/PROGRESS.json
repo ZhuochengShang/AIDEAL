@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-11-18T17:50:51.157415+00:00",
+  "observed_at": "2026-11-18T20:01:37.550584+00:00",
   "condition": "generated_readme",
   "repair_rounds": 0,
   "model": "gemini-3.1-flash-lite",
@@ -62,55 +62,177 @@
     {
       "job": "tslearn-generated-r0",
       "library": "tslearn",
-      "status": "running",
+      "status": "complete",
       "selected": 362,
-      "completed": 88,
-      "passes": 63,
-      "failures": 25,
+      "completed": 362,
+      "passes": 231,
+      "failures": 131,
       "provider_blocked": 0,
       "partial_checkpoint_lines": 0,
       "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/tslearn",
-      "completion_receipt": false
+      "completion_receipt": true
     },
     {
       "job": "rdpro_java-generated-r0",
       "library": "rdpro_java",
-      "status": "running",
+      "status": "complete",
       "selected": 69,
-      "completed": 37,
-      "passes": 1,
-      "failures": 36,
+      "completed": 69,
+      "passes": 5,
+      "failures": 64,
       "provider_blocked": 0,
       "partial_checkpoint_lines": 0,
       "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java",
-      "completion_receipt": false
+      "completion_receipt": true
     },
     {
       "job": "rdpro_scala-generated-r0",
       "library": "rdpro_scala",
-      "status": "pending",
+      "status": "complete",
       "selected": 261,
-      "completed": 0,
-      "passes": 0,
-      "failures": 0,
+      "completed": 261,
+      "passes": 19,
+      "failures": 242,
       "provider_blocked": 0,
       "partial_checkpoint_lines": 0,
       "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala",
-      "completion_receipt": false
+      "completion_receipt": true
     },
     {
       "job": "mdanalysis-generated-r0",
       "library": "mdanalysis",
-      "status": "pending",
+      "status": "running",
       "selected": 1538,
-      "completed": 0,
-      "passes": 0,
-      "failures": 0,
+      "completed": 993,
+      "passes": 431,
+      "failures": 562,
       "provider_blocked": 0,
       "partial_checkpoint_lines": 0,
       "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis",
       "completion_receipt": false
     }
   ],
-  "note": "Running and prepared jobs are not completed results. Later treatment conditions require validation."
+  "note": "Running and prepared jobs are not completed results. Later treatment conditions require validation.",
+  "repair_study": [
+    {
+      "condition": "error_hints",
+      "selected": 178,
+      "recorded": 138,
+      "complete": false,
+      "cumulative_passes": [
+        99,
+        112,
+        117
+      ],
+      "outcomes": {
+        "pass": 117,
+        "fail": 86
+      },
+      "input_tokens": 549596,
+      "output_tokens": 48900,
+      "result_sha256": "30d533d261595bd080fc1b6a3ec708c3bd0d5f41367861dc6e9cb0ae471909c3"
+    },
+    {
+      "condition": "generated_readme",
+      "selected": 178,
+      "recorded": 178,
+      "complete": true,
+      "cumulative_passes": [
+        112,
+        148,
+        158
+      ],
+      "outcomes": {
+        "pass": 158,
+        "fail": 116
+      },
+      "input_tokens": 810380,
+      "output_tokens": 77199,
+      "result_sha256": "f066c0588290f2efb3fbba7fafe7563a50d7424703d866db2fc0e99f6325b82a"
+    },
+    {
+      "condition": "original",
+      "selected": 178,
+      "recorded": 178,
+      "complete": true,
+      "cumulative_passes": [
+        132,
+        151,
+        154
+      ],
+      "outcomes": {
+        "pass": 154,
+        "fail": 97
+      },
+      "input_tokens": 671398,
+      "output_tokens": 62529,
+      "result_sha256": "b782b61772ecb349d96bc4b8596b18608cdb329d1a4292b09c6583323eb76c78"
+    }
+  ],
+  "alias_review": {
+    "controller_alive": true,
+    "pid": 3002778,
+    "banks": [
+      {
+        "bank": "mir_eval",
+        "state": {
+          "job": "mir-eval-alias-review",
+          "library": "mir_eval",
+          "stage": "development",
+          "status": "complete",
+          "started_at": "2026-11-18T20:00:43.711640+00:00",
+          "attempt": "attempt_0001",
+          "command_sha256": "89db767d34bfee210f867469949cb163ab32136e72ca1b90562198296dc4e2cb",
+          "exit_code": 0,
+          "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-reviewed/mir_eval/collection/AUTHORING_COMPLETION.json",
+          "artifact_sha256": "37b61f19f5b29ceeea5f61c847a52e97a4f6bbfacf96010d2d5bf76aa4b7c83d",
+          "finished_at": "2026-11-18T20:01:29.679527+00:00"
+        },
+        "progress": {
+          "status": "reviewed_with_rejections",
+          "full_api_count": 178,
+          "reviewed_api_count": 178,
+          "accepted_batches": 23,
+          "rejected_batches": 1,
+          "alias_count": 67,
+          "full_api_exposure_complete": true
+        }
+      },
+      {
+        "bank": "rdpro_scala",
+        "state": {
+          "job": "rdpro-scala-alias-review",
+          "library": "rdpro_scala",
+          "stage": "development",
+          "status": "running",
+          "started_at": "2026-11-18T20:01:29.804538+00:00",
+          "attempt": "attempt_0001",
+          "command_sha256": "4a81d60db19af24ed2d7964e8e8ad436edf7ec915592ec29a6f58701d27e92c3"
+        },
+        "progress": {}
+      },
+      {
+        "bank": "thumbnailator",
+        "state": {
+          "status": "pending"
+        },
+        "progress": {}
+      },
+      {
+        "bank": "tslearn",
+        "state": {
+          "status": "pending"
+        },
+        "progress": {}
+      },
+      {
+        "bank": "mdanalysis",
+        "state": {
+          "status": "pending"
+        },
+        "progress": {}
+      }
+    ]
+  },
+  "snapshot_observed_at": "2026-11-18T20:01:37.561162+00:00"
 }

@@ -1,6 +1,6 @@
 # AIDEAL experiment guide
 
-Updated November 18, 2026. The current study contains **2,850 selected API targets across six libraries**. RDPro uses two language banks. Original R0 and README authoring are complete. Generated README R0 is running; the remaining treatments must pass source and runtime checks before evaluation.
+Updated November 18, 2026. The current study contains **2,850 selected API targets across six libraries**. RDPro uses two language banks. Original R0 and README authoring are complete. Generated README R0 is running. A fresh mir_eval study now evaluates Original, Generated README and Error Hints through R2 across all 178 targets; the first two conditions have completed. Alias review has resumed; Alias-only and Combined evaluation remain gated on accepted source treatments.
 
 [Current results and treatment gates](operator/ablation/2026-11-18/STATUS.md) · [Full ablation plan](operator/ablation/2026-11-18/PLAN.md) · [Live-progress snapshot](operator/ablation/2026-11-18/PROGRESS.json) · [Original completion proof](operator/resume/2026-11-18/COMPLETION.md)
 
@@ -26,10 +26,10 @@ The earlier RDPro count of 171 came from an older README-based inventory of bare
 
 | Condition | Documentation supplied | Library changes | Current execution gate |
 |---|---|---|---|
-| Original | Original documents | None | R0 complete; separate R0–R2 protocol being checked |
-| README only | Generated per-API entries | None | R0 running |
+| Original | Original documents | None | R0 complete; fresh mir_eval R0–R2 complete |
+| README only | Generated per-API entries | None | Six banks complete; MDAnalysis running |
 | Alias only | Original + accepted alias descriptions | Validated forwarding aliases | Model proposals running; build/behavior validation required |
-| Error Hints only | Original | Validated messages in existing exceptions | Native-source validation and installation underway |
+| Error Hints only | Original | Validated messages in existing exceptions | mir_eval and MDAnalysis source installed; mir_eval R0–R2 running |
 | Combined | Generated entries + same aliases | Same aliases + same native hints | Must contain both accepted source treatments before evaluation |
 
 ```mermaid
@@ -55,7 +55,11 @@ The immediate Generated README comparison uses one trial, zero repairs and `gemi
 
 SedonaDB's registered SQL bank currently lacks a compatible source-alias/native-hint adapter. RDPro, tslearn and Thumbnailator also have no accepted native hint under the current literal-message patcher. These treatment cells remain pending rather than silently becoming unchanged control branches.
 
-The separate repair protocol must include the preceding program and bounded public execution feedback, preserving emitted native hints. The old native repair path can truncate messages and omit the previous program, so its zero-repair checkpoint cannot simply be relabelled R2. All five conditions must use the same new repair policy.
+The tested repair protocol includes the preceding program and bounded public execution feedback, preserving emitted native hints. The old native repair path can truncate messages and omit the previous program, so its zero-repair checkpoint cannot simply be relabelled R2. The new mir_eval comparison uses fresh R0 responses in all three ready conditions. Do not pool these R0/R2 values with earlier R0-only runs. Alias-only and Combined will require the same repair policy when ready.
+
+The live one-target pilot completed six Gemini calls without provider, infrastructure or truncated-output errors. Both conditions failed through R2; the embedded hint reached R1 correctly but provided no observed final-success benefit in that trial. [Pilot outcomes and exact traces](operator/ablation/2026-11-18/repair-protocol/PILOT_RESULTS.md).
+
+Alias authoring now continues after a complete rejected response, while retaining the rejection and excluding its code. It reuses previously exposed batches, reviews the remaining APIs once, and pauses on provider/incomplete output. The accepted candidate index is only an input to separate runtime validation. [Review rules and counts](operator/ablation/2026-11-18/aliases/review-all-batches/README.md).
 
 ## 3. Inputs and fairness
 
@@ -109,8 +113,10 @@ study/
   qualified-readme-source-note/          completed MDAnalysis authoring recovery
   ablation-2026-11-18/
     generated-readme-r0/<bank>/           current matched README evaluation
+    matched-repairs/mir_eval/<condition>/ fresh 178-target R0/R1/R2 comparison
+    development/aliases-reviewed/          current alias review and accepted candidate index
     development/aliases/<bank>/          isolated source attachments
-    development/aliases-only-proposals/  current alias model requests and proposals
+    development/aliases-only-proposals/  preserved earlier proposals and rejection records
   native-hint-authoring-2026-11-18/       author requests, candidates and paired controls
   runtime-conditions/                    isolated installed source treatments
 ```
@@ -135,7 +141,27 @@ cd /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical
 /home/zshan011/apps/aideal/venv/bin/python operator/ablation/2026-11-18/progress.py
 ```
 
-The existing detached queue already runs. If it stops, first inspect its process/lock and failure reason. `start_generated.py` resumes the same frozen queue; do not start a duplicate while it is active. It uses the permitted credential-file path through the existing supervisor; do not copy the key into configuration or Git.
+To check the separate repair study from the same cluster folder:
+
+```bash
+python3 - <<'PY'
+import json
+from pathlib import Path
+base = Path("ablation-2026-11-18/matched-repairs/mir_eval")
+for condition in ("original", "generated_readme", "error_hints"):
+    path = base / condition / "result.json"
+    if not path.exists():
+        print(condition, "queued")
+        continue
+    result = json.loads(path.read_text())
+    print(condition, len(result["rows"]), "/", result["selected"],
+          result["cumulative_passes"], "complete:", result["complete"])
+PY
+```
+
+Within each repair output, `apis/<identity-hash>/round_00`, `round_01` and `round_02` contain `ROUND.json`, exact native attempt artifacts and stable-result receipts. `ROUND.json.logical_round` is authoritative: the reused native single-attempt executor labels its internal request round zero in every outer round. This mapping is recorded explicitly rather than overwriting native evidence.
+
+The existing detached queues already run. If it stops, first inspect its process/lock and failure reason. `start_generated.py` resumes the same frozen queue; do not start a duplicate while it is active. It uses the permitted credential-file path through the existing supervisor; do not copy the key into configuration or Git.
 
 Review locally in VS Code by opening `/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow`. [Code review route](CODE_REVIEW_ROUTE.md) and [treatment workflow](https://github.com/ZhuochengShang/AIDEAL/blob/8bddc9dbca22369283d5cb723f2c0c420e98bb27/docs/TREATMENT_WORKFLOW.md) explain entry points. A Mac execution requires separately prepared local paths and runtime bindings; it cannot resume a cluster checkpoint by copying files.
 
