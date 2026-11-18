@@ -1,0 +1,129 @@
+{
+  "observed_at": "2026-11-18T08:42:49.510037+00:00",
+  "original": {
+    "state": {
+      "status": "STOPPED_WITH_INCOMPLETE_JOBS",
+      "pid": 2637261,
+      "pid_exists": false
+    },
+    "launch/launch.lock": {
+      "held": false
+    },
+    "supervisor/queue.lock": {
+      "held": false
+    }
+  },
+  "raptor": {
+    "state": {
+      "status": "COMPLETE",
+      "pid": 2657039,
+      "pid_exists": false
+    },
+    "supervisor/queue.lock": {
+      "held": false
+    }
+  },
+  "root_supervisor_exists": false,
+  "tslearn-r0": {
+    "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn",
+    "output_lock_held": false,
+    "execution/run_identity.json": {
+      "sha256": "993014a276a11344d429c22ffcc712bdd182c6e23b51e3ceecb6287bde23ef44",
+      "keys": [
+        "schema",
+        "experiment_fingerprint",
+        "fingerprint_components"
+      ]
+    },
+    "transport": {
+      "temperature": 0,
+      "google_request_timeout_s": 300,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "launch.json": {
+      "sha256": "9a8aba98f063febfeedca3753b1b86a06b9cee7203594daccaf3b8ff00553ddf",
+      "keys": [
+        "model",
+        "sample",
+        "repairs",
+        "trials",
+        "documentation",
+        "doc_scope",
+        "base_config",
+        "source",
+        "input_files",
+        "engine",
+        "launcher_sha256"
+      ]
+    },
+    "model": "gemini-3.1-flash-lite",
+    "repairs": 0,
+    "provider_settings": null,
+    "packages": null
+  },
+  "mdanalysis-readme": {
+    "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mdanalysis/mdanalysis",
+    "output_lock_held": false,
+    "launch.json": {
+      "sha256": "a4db57a9ad50b8a50516fe149d4c825ea080538956d7073306d45405ffc269d1",
+      "keys": [
+        "schema",
+        "model",
+        "scope",
+        "sample",
+        "manifest_sha256",
+        "source",
+        "revision",
+        "effective_config_sha256",
+        "inputs",
+        "interpreter",
+        "provider_settings",
+        "packages",
+        "authoring",
+        "validation_policy",
+        "identity_sha256"
+      ]
+    },
+    "model": "google:gemini-3.1-flash-lite",
+    "repairs": null,
+    "provider_settings": {
+      "AIDEAL_GOOGLE_REQUEST_TIMEOUT_S": "300",
+      "AIDEAL_GOOGLE_MAX_RETRIES": "2",
+      "AIDEAL_GOOGLE_MIN_INTERVAL_S": "1.0"
+    },
+    "packages": {
+      "PyYAML": "6.0.2",
+      "langchain-core": "1.2.19",
+      "langchain-google-genai": "4.2.1",
+      "google-genai": "1.67.0"
+    }
+  },
+  "recovery": {
+    "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical",
+    "release": "/home/zshan011/apps/aideal/releases/2026-11-17-qualified-api-f3c6fd6fe802",
+    "jobs": [
+      "tslearn-r0",
+      "mdanalysis-readme"
+    ],
+    "controller": "scripts/run_cluster_experiment.py:supervise",
+    "workers": 2,
+    "key_file_handling": "Pass the authorized file path only to the existing supervisor; do not read or display credentials in the audit.",
+    "preserve_transport_contract": true,
+    "preserve_failed_attempt_evidence": true,
+    "r0_reused_outcomes": 223,
+    "readme_completed_entries": 1334,
+    "readme_resume": "run_readme_generation.py:209 find_or_create resume; successful calls reused by readme_recording.py",
+    "warning": "Do not restart whole original queue or change transport settings for this resume."
+  },
+  "safety": {
+    "model_calls": 0,
+    "credential_files_read": false,
+    "environment_files_read": false,
+    "process_changes": false,
+    "locks_checked_only": true
+  }
+}

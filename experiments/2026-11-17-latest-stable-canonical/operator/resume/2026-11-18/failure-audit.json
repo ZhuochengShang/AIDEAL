@@ -1,0 +1,1015 @@
+{
+  "checked_at_utc": "2026-11-18T08:46:16.229822+00:00",
+  "read_only": true,
+  "rdpro": {
+    "java": {
+      "result_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/result.json",
+      "run": {
+        "run_id": "20261118-043800Z",
+        "api_count": 69,
+        "selected_api_count": 69,
+        "attempted_api_count": 69,
+        "remaining_api_count": 0,
+        "complete": true,
+        "stopped_on_provider_error": false,
+        "manifest_api_count": 69,
+        "models": {
+          "audience": "google:gemini-3.1-flash-lite",
+          "fixer": "google:gemini-3.1-flash-lite"
+        },
+        "max_fix_rounds": 0,
+        "class_context": false,
+        "timeout_s": 600,
+        "wall_s": 1103.2,
+        "usage": {
+          "calls": 69,
+          "input_tokens": 134940,
+          "output_tokens": 11209,
+          "missing_usage_calls": 0,
+          "usage_complete": true,
+          "by_model": {
+            "google:gemini-3.1-flash-lite": {
+              "calls": 69,
+              "input_tokens": 134940,
+              "output_tokens": 11209,
+              "missing_usage_calls": 0,
+              "usage_complete": true
+            }
+          }
+        },
+        "checkpoint": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/comprehension_progress.jsonl",
+        "resumed_apis": 0,
+        "manifest_sha256": "f65e34ff07001a2289a0df3913cba7b677dbeba7ae3ce563d31e06546cf1a509",
+        "document_sha256": "7849e3a70a52c56a7060cbc93f6015d02344023f108ca071899a237a511b4cde",
+        "experiment_fingerprint": "ea13858bf47553d62e8ea833987af8046e9e6d95950d08eeaab5e4751b97c158",
+        "fingerprint_components": {
+          "schema": 4,
+          "prompt_contract": {
+            "templates": {
+              "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+            },
+            "profile_sha256": "6719a9126df03f6769b69cba793ae47135b0138d8bf45ada16463d33657ab40a"
+          },
+          "transport_contract": {
+            "temperature": 0.0,
+            "google_request_timeout_s": 300.0,
+            "google_sdk_attempts": 2,
+            "google_outer_deadline_s": 630.0,
+            "adapter_sha256": null,
+            "policy_sha256": null,
+            "setup_policy_sha256": null
+          },
+          "project": "RDPro Raptor raster scope \u2014 Beast 0.10.1",
+          "language": "Java",
+          "doc_source": "original",
+          "doc_scope": "relevant",
+          "max_fix_rounds": 0,
+          "manifest_sha256": "f65e34ff07001a2289a0df3913cba7b677dbeba7ae3ce563d31e06546cf1a509",
+          "document_sha256": "7849e3a70a52c56a7060cbc93f6015d02344023f108ca071899a237a511b4cde",
+          "original_document_files": {
+            "sha256": "1d914099e37c5f0f8a03d782b2cff0b12df677fef83cb987a6a02e7340a6a863",
+            "file_count": 37
+          },
+          "models": {
+            "audience": "google:gemini-3.1-flash-lite",
+            "fixer": "google:gemini-3.1-flash-lite",
+            "audience_max_output_tokens": 8192,
+            "fixer_max_output_tokens": 8192
+          },
+          "class_context": false,
+          "owner_overrides": {},
+          "timeout_s": 600,
+          "execute_config": {
+            "execution_context": "Java17 with Spark3.5.1. Write Java statements only. The scaffold provides JavaSparkContext sc, SparkSession spark, a tiny EnvelopeNDLite envelope, JTS point/geometryFactory, 4x4 RasterMetadata metadata, and JavaRDD<Integer> numbers. Local raster_tif, vector_shapefile, hdf_file paths are available. Assert a stable result before printing __CHECK__.",
+            "region": [
+              "// TODO API_TEST_START",
+              "// TODO API_TEST_END"
+            ],
+            "strip_snippet_imports": false,
+            "output_tail_chars": 2000,
+            "success_marker": "__DONE__",
+            "error_marker": "__RUN_ERR__",
+            "work_dir": "execution",
+            "timeout_seconds": 600,
+            "max_fix_rounds": 0,
+            "auto_report": false,
+            "scaffold": "inputs/api_test_scaffold.java",
+            "test_filename": "ApiTest.java",
+            "build": "",
+            "build_cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro",
+            "jars": "",
+            "uberjar": "",
+            "spark_jars": "",
+            "packages": [],
+            "repositories": [],
+            "command": "/home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_java.py --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/runtime/rdpro-classpath.json --work \"{work}\" --java-file \"{test_file}\"",
+            "local_uris": false,
+            "output_dir": "execution/output",
+            "require_correctness": true,
+            "check_marker": "__CHECK__",
+            "stop_on_provider_error": true,
+            "sample_data": {
+              "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+              "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+              "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf"
+            },
+            "fixtures_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures",
+            "preamble": "EnvelopeNDLite envelope = new EnvelopeNDLite(2, 0.0, 0.0, 2.0, 3.0);\nGeometryFactory geometryFactory = new GeometryFactory();\nPoint point = geometryFactory.createPoint(new Coordinate(1.0, 2.0));\nRasterMetadata metadata = new RasterMetadata(0, 0, 4, 4, 2, 2, 4326, new AffineTransform());\nJavaRDD<Integer> numbers = sc.parallelize(Arrays.asList(1, 2, 3), 1);\nFiles.createDirectories(Paths.get(output_dir));",
+            "io_hints": "",
+            "exec_hints": "Use Java syntax and public library APIs; fully qualify types missing from imports. Throw AssertionError on an unexpected result. Use only tiny local inputs and outputs under output_dir. No network or repository writes. Use the selected target owner and declaration provided in the request.",
+            "probe_on_missing": false
+          },
+          "scaffold": {
+            "sha256": "99a0554feb32bc07f46e662c75ac0759476256efa7c4bdc5f98c301c5ebf6373",
+            "file_count": 1
+          },
+          "source": {
+            "sha256": "4657e67aa553fcea419aeecf3d5f27feb14c4090bf9ce7d79d196cf5720c4f4e",
+            "file_count": 145
+          },
+          "api_inventory": {
+            "sha256": "16c82425b0605588eead2548f158ac8cc8a6ee838e04be44dc0de142569094f2",
+            "file_count": 1
+          },
+          "fixtures": {
+            "sha256": "7c866aa11c80b1107650c7677b8d475c36e1e996671ea5a20a0fe37423a1f614",
+            "file_count": 3
+          },
+          "engine": {
+            "sha256": "bdfaf62f5b1e6c9042afa8608ba485cafd4375711849ad0c62e2e3df2f1581ed",
+            "file_count": 38
+          },
+          "interpreter": {
+            "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+            "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+            "environment_sha256": ""
+          },
+          "canonical_requested_targets": {
+            "protocol_version": 1,
+            "targets_sha256": "5ffa2c766e0201f7537354cb12a34b7b4db837099d88c535ab60d71e723b9bf8",
+            "targets_count": 1384
+          }
+        },
+        "checkpoint_reuse": {},
+        "doc_scope": "relevant",
+        "full_doc": false,
+        "doc_chars": 155611,
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/inputs/api_manifest.json",
+          "apis": 69
+        }
+      },
+      "counts": {
+        "fail": 56,
+        "pass": 13
+      },
+      "failure_categories": {
+        "compile": 53,
+        "runtime": 3
+      },
+      "compile_groups": {
+        "invalid argument list": {
+          "count": 19,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getCount",
+              "diagnostic": "constructor GeoKeyEntry in class GeoKeyEntry cannot be applied to given types;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getCount--c89b2990d48bc48f721a59d419682b2a66dc9d3fae6168cbc8e0cc120bb9fcf7/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getValues",
+              "diagnostic": "constructor GeoKeyEntry in class GeoKeyEntry cannot be applied to given types;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getValues--d182f0b0a8fc5276805955a0d23c85e957e22d4f3f824d7d605fa3c37d679b69/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.setCount",
+              "diagnostic": "constructor GeoKeyEntry in class GeoKeyEntry cannot be applied to given types;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.setCount--26163e237e095a79119cdde523627d693aa68135658657d8a75a082ca82c50ef/attempt_0001"
+            }
+          ]
+        },
+        "unresolved name": {
+          "count": 8,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+              "diagnostic": "cannot find symbol",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata--e667b5296f2f4b1f06508a786a828258eb03b4431ec9749c5cab3c73fadd52a3/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata2CRSAdapter",
+              "diagnostic": "cannot find symbol",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata2CRSAdapter--2613245ef448568e5faf3e202c20ca7f752a5f7c27827512c520a4787d5524a2/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.PixelScale.getScaleX",
+              "diagnostic": "cannot find symbol",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.PixelScale.getScaleX--4b3e4514384b695d5314aab0aa14d4d8d85519d4dff0988f46c0403a91a5d3d9/attempt_0001"
+            }
+          ]
+        },
+        "illegal start of expression": {
+          "count": 5,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffException",
+              "diagnostic": "illegal start of expression",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffException--cf11bb23953b18005dc73cb5448a2e065be1a408ecd08aaccc8caa749423fbda/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata2CRSAdapter.createCoordinateSystem",
+              "diagnostic": "illegal start of expression",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata2CRSAdapter.createCoordinateSystem--60d5500521c16308356a9ea5b2e134cd40bc9c6c2145cbe6f00bdf99ca6c5e71/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata2CRSAdapter.getRasterToModel",
+              "diagnostic": "illegal start of expression",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata2CRSAdapter.getRasterToModel--30d37549066b5f6eccc45dfd0c62d9ab21ad443dda2731a1ec9d20d6b3550725/attempt_0001"
+            }
+          ]
+        },
+        "access restriction": {
+          "count": 2,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry",
+              "diagnostic": "keyID has private access in GeoKeyEntry",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry--aac5296ec97c210b8771c98923826a8a96dab26ec37df7158ef5c46c62634654/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.PixelScale",
+              "diagnostic": "scaleX has private access in PixelScale",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.PixelScale--e7a583cc6804a048c983118f71fbc2f5d7dc6970f883898ac2224582d11c534a/attempt_0001"
+            }
+          ]
+        },
+        "no suitable constructor found for PixelScale(double,double)": {
+          "count": 2,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.PixelScale.equals",
+              "diagnostic": "no suitable constructor found for PixelScale(double,double)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.PixelScale.equals--2b6647eed9094329da2396408c4da9224a148f8cd5bce66d30d18bc4e5a73b5a/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.PixelScale.hashCode",
+              "diagnostic": "no suitable constructor found for PixelScale(double,double)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.PixelScale.hashCode--e1d7b92d2d710bfbbd3ebe038f2534fcbdde2363714b5f38360a8d9199750f16/attempt_0001"
+            }
+          ]
+        },
+        "type mismatch": {
+          "count": 2,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.accumulate",
+              "diagnostic": "incompatible types: java.util.stream.Collector<Integer,CAP#1,Long> cannot be converted to edu.ucr.cs.bdlab.raptor.Collector",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.accumulate--8ba6437be1faceba3acbab17c549b0aec1f63fdac738bc5e063cdc3d40c99103/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.toString",
+              "diagnostic": "incompatible types: int cannot be converted to double[]",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.toString--274e32faacc32af13854fde99cb749e5219a72c755d2d284f79e7f30a6845a93/attempt_0001"
+            }
+          ]
+        },
+        "no suitable constructor found for TiePoint(double,double,double,double)": {
+          "count": 2,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.TiePoint.equals",
+              "diagnostic": "no suitable constructor found for TiePoint(double,double,double,double)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.TiePoint.equals--5e4bcf414fb4730e70c46443ef6758ef32d7ae7bd7289978f34df52f2d6f2f0f/attempt_0001"
+            },
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.TiePoint.toString",
+              "diagnostic": "no suitable constructor found for TiePoint(double,double,double,double)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.TiePoint.toString--7771083f4444f990fd51801c0c5434a3313845472a8bb5a994c92b45de63af1e/attempt_0001"
+            }
+          ]
+        },
+        "non-static method compute(Geometry[],long[],RasterMetadata) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.compute",
+              "diagnostic": "non-static method compute(Geometry[],long[],RasterMetadata) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.compute--526e59b103842622b49d793cdd9ea2d11f32054c19e5bacd4a7b96287efb08fc/attempt_0001"
+            }
+          ]
+        },
+        "non-static method getFeatureID(int) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.getFeatureID",
+              "diagnostic": "non-static method getFeatureID(int) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.getFeatureID--d18da18086bae07c54aa95ee07df00bc3c4c988664eb8d79fdfc7b104f5bcd78/attempt_0001"
+            }
+          ]
+        },
+        "non-static method getPolygonIndex(int) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.getPolygonIndex",
+              "diagnostic": "non-static method getPolygonIndex(int) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.getPolygonIndex--bb29e3329f3924f5f85aa3ab091d872e68d9f4caaac6bc7e41dba61d54c04824/attempt_0001"
+            }
+          ]
+        },
+        "non-static method getTileID(int) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.getTileID",
+              "diagnostic": "non-static method getTileID(int) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.getTileID--bbbd865d39bcfe6052d784c7fd5860a03bb0917b5ff98365e49a18cfb989e755/attempt_0001"
+            }
+          ]
+        },
+        "non-static method getX1(int) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.getX1",
+              "diagnostic": "non-static method getX1(int) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.getX1--80096c4d82ffb293ac2959a035be34c7dc0007f1af619202ebd6712f7d0d29df/attempt_0001"
+            }
+          ]
+        },
+        "non-static method getX2(int) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.getX2",
+              "diagnostic": "non-static method getX2(int) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.getX2--de68094cdaa48b75e33a45932c72a3759d226d3da91940e9c88cdc266ba56ba6/attempt_0001"
+            }
+          ]
+        },
+        "non-static method getY(int) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.getY",
+              "diagnostic": "non-static method getY(int) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.getY--d3ad61f2f161df2828785cdf2e9e3e02972d3d501f075f0f2a0ef1dcfefa66dc/attempt_0001"
+            }
+          ]
+        },
+        "no suitable constructor found for PixelScale(RasterMetadata)": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.PixelScale.getValues",
+              "diagnostic": "no suitable constructor found for PixelScale(RasterMetadata)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.PixelScale.getValues--9f8ecc1f0ab1bddd4afd6c86d251464d1efbbd5a83fd6db090dcfa7ff6d4f518/attempt_0001"
+            }
+          ]
+        },
+        "no suitable constructor found for RaptorSplit(String,int,int)": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.RaptorSplit.getLength",
+              "diagnostic": "no suitable constructor found for RaptorSplit(String,int,int)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.RaptorSplit.getLength--ec5b00dc3582049e0dd86b222f44f9062ecff98c65fc2224958a80ba59778a81/attempt_0001"
+            }
+          ]
+        },
+        "no suitable constructor found for RaptorSplit(String,EnvelopeNDLite)": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.RaptorSplit.getLocations",
+              "diagnostic": "no suitable constructor found for RaptorSplit(String,EnvelopeNDLite)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.RaptorSplit.getLocations--3e37fb379172bd125b57bf0fe2c1d131ce7a56e1587c5cbc53e97a48bc17247c/attempt_0001"
+            }
+          ]
+        },
+        "non-static method collect(int,int,int,int,int[]) cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.collect",
+              "diagnostic": "non-static method collect(int,int,int,int,int[]) cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.collect--e927c7314228913d76310a716b887fab7829a605ae231323145879806a3db034/attempt_0001"
+            }
+          ]
+        },
+        "non-static method invalidate() cannot be referenced from a static context": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.invalidate",
+              "diagnostic": "non-static method invalidate() cannot be referenced from a static context",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.invalidate--19cb7dda5f155b0e225d259a0536f4cd18640704110355f86779337f659162ce/attempt_0001"
+            }
+          ]
+        },
+        "no suitable constructor found for TiePoint(int,int,double)": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "java:edu.ucr.cs.bdlab.raptor.TiePoint.getValueAt",
+              "diagnostic": "no suitable constructor found for TiePoint(int,int,double)",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.TiePoint.getValueAt--5568353e9a9c80f4f46d119db0e2bc985d41dbb91da8dd818d6d6c7b1ef85a6d/attempt_0001"
+            }
+          ]
+        }
+      },
+      "runtime_failures": [
+        {
+          "api": "java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.compareTo",
+          "markers": [
+            "__RUN_ERR__ AssertionError: Expected negative result for entry1 < entry2, but got: 1"
+          ],
+          "stdout_last": "",
+          "stderr_last": "va:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.compareTo--8b2d00d8af904f0de70a98dbc886f1646ffd8266361b01c93b083d68ad26c5c7/attempt_0001"
+        },
+        {
+          "api": "java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getTiffTagLocation",
+          "markers": [
+            "__RUN_ERR__ AssertionError: Expected GeoKeyDirectoryTag (34735) for standard GeoKeyEntry, but got: 0"
+          ],
+          "stdout_last": "",
+          "stderr_last": "va:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getTiffTagLocation--71f305acdaf0af20684e1fbb59674ae5462195a22c0fef23b5c2a2d945f8cdb6/attempt_0001"
+        },
+        {
+          "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.setNumBands",
+          "markers": [
+            "__RUN_ERR__ NoSuchFieldException: numBands"
+          ],
+          "stdout_last": "",
+          "stderr_last": "va:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.setNumBands--b17ff9faf8d9eb3c13a47f2e5d4d4a128272ab73c60f886f04f3fed21f98a427/attempt_0001"
+        }
+      ],
+      "potential_environment_or_data_signals": [],
+      "spark_blockmanager_diagnostic_counts_by_outcome": {
+        "fail": 3,
+        "pass": 13
+      }
+    },
+    "scala": {
+      "result_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/result.json",
+      "run": {
+        "run_id": "20261118-044247Z",
+        "api_count": 261,
+        "selected_api_count": 261,
+        "attempted_api_count": 261,
+        "remaining_api_count": 0,
+        "complete": true,
+        "stopped_on_provider_error": false,
+        "manifest_api_count": 261,
+        "models": {
+          "audience": "google:gemini-3.1-flash-lite",
+          "fixer": "google:gemini-3.1-flash-lite"
+        },
+        "max_fix_rounds": 0,
+        "class_context": false,
+        "timeout_s": 600,
+        "wall_s": 3807.5,
+        "usage": {
+          "calls": 261,
+          "input_tokens": 599787,
+          "output_tokens": 44097,
+          "missing_usage_calls": 0,
+          "usage_complete": true,
+          "by_model": {
+            "google:gemini-3.1-flash-lite": {
+              "calls": 261,
+              "input_tokens": 599787,
+              "output_tokens": 44097,
+              "missing_usage_calls": 0,
+              "usage_complete": true
+            }
+          }
+        },
+        "checkpoint": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/comprehension_progress.jsonl",
+        "resumed_apis": 0,
+        "manifest_sha256": "147c09f5c2290fdd273aaad096176dcb02d36484401ddf64fef514e902e2f980",
+        "document_sha256": "c9b3b54dcb8061cf2641f5364e119bd4683a73c9cb620c2bdd6cc3f644724f17",
+        "experiment_fingerprint": "605f3c112638325f1803dc1d00c05080c7258fcc682577e049d31b49d21a4228",
+        "fingerprint_components": {
+          "schema": 4,
+          "prompt_contract": {
+            "templates": {
+              "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+            },
+            "profile_sha256": "27acd542cd0cf97659ba9ada7c89323d216dbf1c8521b6fe78c0fd039e643744"
+          },
+          "transport_contract": {
+            "temperature": 0.0,
+            "google_request_timeout_s": 300.0,
+            "google_sdk_attempts": 2,
+            "google_outer_deadline_s": 630.0,
+            "adapter_sha256": null,
+            "policy_sha256": null,
+            "setup_policy_sha256": null
+          },
+          "project": "RDPro Raptor raster scope \u2014 Beast 0.10.1",
+          "language": "Scala",
+          "doc_source": "original",
+          "doc_scope": "relevant",
+          "max_fix_rounds": 0,
+          "manifest_sha256": "147c09f5c2290fdd273aaad096176dcb02d36484401ddf64fef514e902e2f980",
+          "document_sha256": "c9b3b54dcb8061cf2641f5364e119bd4683a73c9cb620c2bdd6cc3f644724f17",
+          "original_document_files": {
+            "sha256": "1d914099e37c5f0f8a03d782b2cff0b12df677fef83cb987a6a02e7340a6a863",
+            "file_count": 37
+          },
+          "models": {
+            "audience": "google:gemini-3.1-flash-lite",
+            "fixer": "google:gemini-3.1-flash-lite",
+            "audience_max_output_tokens": 8192,
+            "fixer_max_output_tokens": 8192
+          },
+          "class_context": false,
+          "owner_overrides": {},
+          "timeout_s": 600,
+          "execute_config": {
+            "execution_context": "Scala2.12 with Spark3.5.1 and Java17. The full historical scaffold provides sc and sparkContext. The explicit preamble binds rasterRDD: RasterRDD[Array[Float]] (11Float32bands,737x628pixels) and featuresRDD: RDD[IFeature] (2polygonfeatures). Use the supplied local fixtures or tiny in-memory values. Assertions must precede the __CHECK__ witness. HDF4 fixture layer is LST_Day_1km. Temporary writes belong in output_dir.",
+            "region": [
+              "// TODO API_TEST_START",
+              "// TODO API_TEST_END"
+            ],
+            "strip_snippet_imports": false,
+            "output_tail_chars": 2000,
+            "success_marker": "__DONE__",
+            "error_marker": "__RUN_ERR__",
+            "work_dir": "execution",
+            "timeout_seconds": 600,
+            "max_fix_rounds": 0,
+            "auto_report": false,
+            "exec_hints": "Spark specifics: transformations are lazy, so if the result is an RDD / RasterRDD / DataFrame you MUST force it with an action \u2014 .count(), .first(), or .take(1) \u2014 and print that. For an in-memory Array/value, print its size. If the API is a writer, call .coalesce(1) before writing to output_dir to avoid the distributed-write merge error. I/O: read inputs with the high-level library readers on the pre-loaded typed vars (rasterRDD / featuresRDD, or sc.geoTiff / sc.shapefile) \u2014 do NOT open raw Hadoop FileSystem streams (FileSystem.get(conf) causes 'Wrong FS'; if unavoidable use path.getFileSystem(sc.hadoopConfiguration)), and never prepend an extra 'file://' to a path that already has a scheme.",
+            "fixtures_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures",
+            "output_dir": "execution/output",
+            "command": "/home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_scala.py --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/runtime/rdpro-classpath.json --work \"{work}\" --scala-file \"{scala_file}\"",
+            "scaffold": "inputs/api_test_scaffold.scala",
+            "preamble": "// Fixed input contract shared by all conditions: the supplied GeoTIFF has11Float32bands.\nval rasterRDD: RasterRDD[Array[Float]] = sc.geoTiff[Array[Float]](raster_tif)\nval featuresRDD: RDD[IFeature] = sc.shapefile(vector_shapefile)\n",
+            "sample_data": {
+              "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+              "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+              "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf"
+            },
+            "require_correctness": true,
+            "io_hints": "",
+            "jars": "",
+            "uberjar": "",
+            "build_cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro",
+            "repositories": [],
+            "packages": [],
+            "imports": "from-tests",
+            "extra_imports": [
+              "import edu.ucr.cs.bdlab.raptor._"
+            ],
+            "build": "",
+            "spark_jars": "",
+            "check_marker": "__CHECK__",
+            "stop_on_provider_error": true,
+            "probe_on_missing": false
+          },
+          "scaffold": {
+            "sha256": "8bd8ce751fa13cdab3051ffe1b6f1b3ffc5fe2a77e5d82a845a94e9fc4265c00",
+            "file_count": 1
+          },
+          "source": {
+            "sha256": "8eb6a3e3a95aec792e469a274b786a8c8a659ce9e8bead19cfed6630f738a2be",
+            "file_count": 241
+          },
+          "api_inventory": {
+            "sha256": "8965aa517479ac4a8cd245c173698154af3883c20ee314a19a7863d18cab659f",
+            "file_count": 1
+          },
+          "fixtures": {
+            "sha256": "7c866aa11c80b1107650c7677b8d475c36e1e996671ea5a20a0fe37423a1f614",
+            "file_count": 3
+          },
+          "engine": {
+            "sha256": "bdfaf62f5b1e6c9042afa8608ba485cafd4375711849ad0c62e2e3df2f1581ed",
+            "file_count": 38
+          },
+          "interpreter": {
+            "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+            "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+            "environment_sha256": ""
+          },
+          "canonical_requested_targets": {
+            "protocol_version": 1,
+            "targets_sha256": "60932655d6874a8ddc7e1638ce4cfcb5f4ba36be7bb23ba476908ddf16b4c7a9",
+            "targets_count": 1311
+          }
+        },
+        "checkpoint_reuse": {},
+        "doc_scope": "relevant",
+        "full_doc": false,
+        "doc_chars": 631240,
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/inputs/api_manifest.json",
+          "apis": 261
+        }
+      },
+      "counts": {
+        "fail": 237,
+        "pass": 24
+      },
+      "failure_categories": {
+        "compile": 223,
+        "runtime": 14
+      },
+      "compile_groups": {
+        "unknown member or wrong receiver": {
+          "count": 145,
+          "examples": [
+            {
+              "api": "scala:class:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.reproject",
+              "diagnostic": "value metadata is not a member of edu.ucr.cs.bdlab.beast.cg.SpatialDataTypes.RasterRDD[Array[Float]]",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_class_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.reproject--b6150a888d6fd8ad6f10d3d457c2967f41203cb536f02c1c19e9b2619ba59db7/attempt_0001"
+            },
+            {
+              "api": "scala:class:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.rescale",
+              "diagnostic": "value metadata is not a member of edu.ucr.cs.bdlab.beast.cg.SpatialDataTypes.RasterRDD[Array[Float]]",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_class_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.rescale--fc49d0681567ed33fd104369fffa734ea4abd9f95a0e7dba74eb11ce8d416a98/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+              "diagnostic": "object DataType is not a member of package edu.ucr.cs.bdlab.beast.geolite",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile--fd70061c2c866545a481d764514c240bfef1aab589acf91dda37cb4592e8d81e/attempt_0001"
+            }
+          ]
+        },
+        "invalid argument list": {
+          "count": 46,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterFeature.append",
+              "diagnostic": "not enough arguments for method create: (names: Array[String], values: Array[Any])edu.ucr.cs.bdlab.beast.geolite.RasterFeature.",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterFeature.append--51f83d08c185ec5e2da6583027a7adb6b5ecb613e93e875f120343cefc644a3c/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterFeature.setOrAppend",
+              "diagnostic": "not enough arguments for constructor RasterFeature: (values: Array[Any], schema: org.apache.spark.sql.types.StructType)edu.ucr.cs.bdlab.beast.geolite.RasterFeature.",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterFeature.setOrAppend--707efec350363ded1aee7c4c06d71a85ed6cdb27f7780b0895524887dae39765/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.CompactIntersectionsTileBreaker.moveToNextIntersections",
+              "diagnostic": "too many arguments (2) for constructor CompactIntersectionsTileBreaker: (intersections: Iterator[(Int, edu.ucr.cs.bdlab.raptor.Intersections)])edu.ucr.cs.bdlab.raptor.CompactIntersectionsTileBreaker",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.CompactIntersectionsTileBreaker.moveToNextIntersec--d59b21e9e4ad795afcaa63d21a5a392e610098009771daaf3effb5b397ca0d53/attempt_0001"
+            }
+          ]
+        },
+        "type mismatch": {
+          "count": 21,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write",
+              "diagnostic": "type mismatch;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write--3802e86d587cdd1097143e513939509d09cee61bf7b6837a3955969e0c01eeae/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.inferSchema",
+              "diagnostic": "type mismatch;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.inferSchema--c3ca82569c60bfe2535ef8e4e24313d64771234b9f92bc07bec3d22b6a0ab7be/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.readType",
+              "diagnostic": "type mismatch;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.readType--83d6b3e9a442df9b8960013820cde3dbc1aa28916ab3ca8b23b172c8df3dbfb4/attempt_0001"
+            }
+          ]
+        },
+        "constructor cannot be instantiated to expected type;": {
+          "count": 3,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.AbstractGeoTiffTile.isEmpty",
+              "diagnostic": "constructor cannot be instantiated to expected type;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.AbstractGeoTiffTile.isEmpty--77994aa3f3e842a884c3c95b28afd2df3b2dd825c9d2914468a0ba63924ab0b0/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.ExplodedTile.getPixelValue",
+              "diagnostic": "constructor cannot be instantiated to expected type;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.ExplodedTile.getPixelValue--c75be7c1aae9e3e6dda89d4b1e64d2530c9effcb7eeed96e2bac713e2379976f/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.StackedTile.isEmpty",
+              "diagnostic": "constructor cannot be instantiated to expected type;",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.StackedTile.isEmpty--d05a2f07abfb61572db99c863e8e3b5614f47d317d6f0011e68ed4b487ae9705/attempt_0001"
+            }
+          ]
+        },
+        "unresolved name": {
+          "count": 2,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.CompactIntersectionsTileBreaker",
+              "diagnostic": "not found: value CompactIntersectionsTileBreaker",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.CompactIntersectionsTileBreaker--0769cdf758fde5232b1487a0c90ca9bc4c6b0ccaa78e73d27d0f84ce729d1dd1/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.MemoryTileWindowSerializer.read",
+              "diagnostic": "not found: type MemoryTileWindow",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.MemoryTileWindowSerializer.read--a57616cd52d87736cb88d05df8b59cece3125380dbc5bc3673011c27f36c9af6/attempt_0001"
+            }
+          ]
+        },
+        "spark is already defined as value spark": {
+          "count": 2,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.HDFTile.getPixelValue",
+              "diagnostic": "spark is already defined as value spark",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.HDFTile.getPixelValue--e5bc394439a6444e1f84c0e0d6f8fd112697912aef586b7524f465e3439920fd/attempt_0001"
+            },
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.HDFTile.isEmpty",
+              "diagnostic": "spark is already defined as value spark",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.HDFTile.isEmpty--197d0c5bf38743b268e1d7409d1e238f2a579c148f36e270080d25cca4283710/attempt_0001"
+            }
+          ]
+        },
+        "identifier expected but '}' found.": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType",
+              "diagnostic": "identifier expected but '}' found.",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType--985d919a3054a105b107b67fc7e29d58f737f42ccc034c5c1e49921ddb2f805e/attempt_0001"
+            }
+          ]
+        },
+        "access restriction": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.CompactIntersectionsIterator",
+              "diagnostic": "constructor CompactIntersections in class CompactIntersections cannot be accessed in object GeoJob",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.CompactIntersectionsIterator--3dcd7e120ecb857beb5382034b4b38d7d434ecfaa34bc012fb406e397d4d6959/attempt_0001"
+            }
+          ]
+        },
+        "trait IRasterReader takes type parameters": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.IRasterReader.isValidTile",
+              "diagnostic": "trait IRasterReader takes type parameters",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.IRasterReader.isValidTile--a8887dab467810291d53ab73bc0ce393ed8c03fd17f14a2c2e565a4d7a6929ed/attempt_0001"
+            }
+          ]
+        },
+        "value empty of type Iterator[Nothing] does not take type parameters.": {
+          "count": 1,
+          "examples": [
+            {
+              "api": "scala:edu.ucr.cs.bdlab.raptor.PixelIterator3",
+              "diagnostic": "value empty of type Iterator[Nothing] does not take type parameters.",
+              "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.PixelIterator3--831d6985a92b33000363a2a0fa16cb06717b2a19430965e8998eb8abb9890c93/attempt_0001"
+            }
+          ]
+        }
+      },
+      "runtime_failures": [
+        {
+          "api": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.schema",
+          "markers": [
+            "__RUN_ERR__ java.lang.AssertionError: assertion failed: Schema must contain 'value' field, but found: tileID, mapLocator, imageValues, fileName",
+            "Exception in thread \"main\" java.lang.AssertionError: assertion failed: Schema must contain 'value' field, but found: tileID, mapLocator, imageValues, fileName"
+          ],
+          "stdout_last": "",
+          "stderr_last": "28)\n\tat org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:188)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)\n\tat scala.util.Try$.apply(Try.scala:213)\n\tat org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:188)\n\tat org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:178)\n\tat java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.ITile.schema--de233000f476f9b3d4fde3c3a7e3bfd2e3da1650388c2c207bf75f670139e209/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.create",
+          "markers": [
+            "__RUN_ERR__ java.lang.AssertionError: assertion failed: Expected x1 -120.0 but got 0",
+            "Exception in thread \"main\" java.lang.AssertionError: assertion failed: Expected x1 -120.0 but got 0"
+          ],
+          "stdout_last": "",
+          "stderr_last": "Submit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 20:51:58 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 20:51:58 INFO ShutdownHookManager: Deleting directory /tmp/spark-51229f3f-2bd9-4ed0-adfd-fc0c0d00da58\n26/11/17 20:51:58 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.create--175984351996f0b514b79730807da53dad21de87ce6ec007d10a3535cfddfeba/spark-tmp/spark-c8d9c4e8-8eb6-4200-a8bd-d4ed091ddb18\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.create--175984351996f0b514b79730807da53dad21de87ce6ec007d10a3535cfddfeba/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry",
+          "markers": [
+            "__RUN_ERR__ java.lang.IllegalArgumentException: requirement failed",
+            "Exception in thread \"main\" java.lang.IllegalArgumentException: requirement failed"
+          ],
+          "stdout_last": "",
+          "stderr_last": "doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:06:43 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:06:43 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry--1773a3207db16f26abaa847c14dac9a3b334066260acf94864200c4da4b8805b/spark-tmp/spark-a8baea57-83ed-40f7-9af2-3a60060f3a71\n26/11/17 21:06:43 INFO ShutdownHookManager: Deleting directory /tmp/spark-57f296a7-c6b3-40c0-bf4c-bf2dd2d45a89\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry--1773a3207db16f26abaa847c14dac9a3b334066260acf94864200c4da4b8805b/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.getValueOrOffsetBig",
+          "markers": [
+            "__RUN_ERR__ java.lang.IllegalArgumentException: requirement failed",
+            "Exception in thread \"main\" java.lang.IllegalArgumentException: requirement failed"
+          ],
+          "stdout_last": "",
+          "stderr_last": ".scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:07:41 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:07:41 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.getValueOrOffsetBig--33f51ec6eb00b692499afaab55d672924ad91cb29d764928a4f18c1b5e20ea00/spark-tmp/spark-d7b3facb-5b85-4c61-8b57-28b0472d0223\n26/11/17 21:07:41 INFO ShutdownHookManager: Deleting directory /tmp/spark-7fa17444-b944-4cf5-8e6a-9b976106e93a\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.getValueOrOffsetBig--33f51ec6eb00b692499afaab55d672924ad91cb29d764928a4f18c1b5e20ea00/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.getValueOrOffsetNormal",
+          "markers": [
+            "__RUN_ERR__ java.lang.IllegalArgumentException: requirement failed",
+            "Exception in thread \"main\" java.lang.IllegalArgumentException: requirement failed"
+          ],
+          "stdout_last": "",
+          "stderr_last": "ala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:08:33 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:08:33 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.getValueOrOffsetNormal--4e30b51946053f5923f40688fdf0db77c81f13440f50c74865e691fac878bd1d/spark-tmp/spark-0bff5142-f978-4ccd-b737-d9a9bece566f\n26/11/17 21:08:33 INFO ShutdownHookManager: Deleting directory /tmp/spark-230839f1-ed80-409d-96fb-a313904f50d4\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.getValueOrOffsetNormal--4e30b51946053f5923f40688fdf0db77c81f13440f50c74865e691fac878bd1d/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.valueLength",
+          "markers": [
+            "__RUN_ERR__ java.lang.IllegalArgumentException: requirement failed",
+            "Exception in thread \"main\" java.lang.IllegalArgumentException: requirement failed"
+          ],
+          "stdout_last": "",
+          "stderr_last": "rkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:09:29 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:09:29 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.valueLength--8d7022ee865ba3cb915034b564d593db0715e37b1ea280546eae54bee1487c2c/spark-tmp/spark-34000e50-890f-4ea7-ba0e-0f45046f61ef\n26/11/17 21:09:29 INFO ShutdownHookManager: Deleting directory /tmp/spark-deb2d76f-8bf5-41ad-baf6-2db41bd72694\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.valueLength--8d7022ee865ba3cb915034b564d593db0715e37b1ea280546eae54bee1487c2c/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.HDF4Reader.createDateFilter",
+          "markers": [
+            "__RUN_ERR__ java.text.ParseException: Unparseable date: \"2023-01-01\"",
+            "Exception in thread \"main\" java.text.ParseException: Unparseable date: \"2023-01-01\""
+          ],
+          "stdout_last": "",
+          "stderr_last": "oSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:11:57 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:11:57 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.HDF4Reader.createDateFilter--a613632e8a1f1400507db686e45a130ac3f9487c4aab69d2ebc5141c9c2f5777/spark-tmp/spark-51291aec-96b3-40ff-ad38-f2a4666866cb\n26/11/17 21:11:57 INFO ShutdownHookManager: Deleting directory /tmp/spark-1e73f946-491f-4a55-95e1-f87a2f5ce150\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.HDF4Reader.createDateFilter--a613632e8a1f1400507db686e45a130ac3f9487c4aab69d2ebc5141c9c2f5777/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.IntersectionsIterator",
+          "markers": [
+            "__RUN_ERR__ java.lang.AssertionError: assertion failed: All intersections cannot be empty",
+            "Exception in thread \"main\" java.lang.AssertionError: assertion failed: All intersections cannot be empty"
+          ],
+          "stdout_last": "",
+          "stderr_last": "bmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:15:17 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:15:17 INFO ShutdownHookManager: Deleting directory /tmp/spark-c9aa8f9b-4a0e-4107-a213-53237f273462\n26/11/17 21:15:17 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.IntersectionsIterator--eb8fd28dced973e24975b98bad964959523c465218dce83654998f299f4cfd0f/spark-tmp/spark-111971c2-7c6f-4678-bb38-2a609e3731ae\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.IntersectionsIterator--eb8fd28dced973e24975b98bad964959523c465218dce83654998f299f4cfd0f/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.RasterFilePartition.toString",
+          "markers": [
+            "__RUN_ERR__ java.lang.AssertionError: assertion failed: toString output should contain class name",
+            "Exception in thread \"main\" java.lang.AssertionError: assertion failed: toString output should contain class name"
+          ],
+          "stdout_last": "",
+          "stderr_last": "Submit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:31:19 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:31:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-dde138a4-7692-4cab-8167-914786204c5b\n26/11/17 21:31:19 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterFilePartition.toString--0cb3a5045d9cb4f77b9d28cd969d8dd54433080f434b9155261fcee326ffddf1/spark-tmp/spark-8089eb14-df18-418b-862b-350444e911a3\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterFilePartition.toString--0cb3a5045d9cb4f77b9d28cd969d8dd54433080f434b9155261fcee326ffddf1/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.RasterFileRDD",
+          "markers": [
+            "__RUN_ERR__ org.apache.spark.SparkException: Job aborted due to stage failure: Task 1 in stage 0.0 failed 1 times, most recent failure: Lost task 1.0 in stage 0.0 (TID 1) (localhost executor driver): java.lang.IllegalArgumentException: requirement failed: Could not find the layer 'null' in the HDF file",
+            "Exception in thread \"main\" org.apache.spark.SparkException: Job aborted due to stage failure: Task 1 in stage 0.0 failed 1 times, most recent failure: Lost task 1.0 in stage 0.0 (TID 1) (localhost executor driver): java.lang.IllegalArgumentException: requirement failed: Could not find the layer 'null' in the HDF file"
+          ],
+          "stdout_last": "",
+          "stderr_last": "28)\n\tat org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:188)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)\n\tat scala.util.Try$.apply(Try.scala:213)\n\tat org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:188)\n\tat org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:178)\n\tat java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterFileRDD--ac8c0b845b2d2f43426789356bc341e005d3e9bf230172ac9e21d77c9c3a0068/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.RasterFileRDD.buildIndex",
+          "markers": [
+            "__RUN_ERR__ java.lang.AssertionError: assertion failed: Index file should exist and have content, found: 0 bytes",
+            "Exception in thread \"main\" java.lang.AssertionError: assertion failed: Index file should exist and have content, found: 0 bytes"
+          ],
+          "stdout_last": "",
+          "stderr_last": "t.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/17 21:33:05 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 21:33:05 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterFileRDD.buildIndex--aaacf7c99c58461bf1218f2f8a79c6901d721befef82b0cc08d7e0011b8b6a85/spark-tmp/spark-362b74e9-c877-4aef-b585-bb638c44ed16\n26/11/17 21:33:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-e2f493e2-d60a-48fe-8652-8fd00ef51e22\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterFileRDD.buildIndex--aaacf7c99c58461bf1218f2f8a79c6901d721befef82b0cc08d7e0011b8b6a85/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.RasterFileRDD.selectFiles",
+          "markers": [
+            "__RUN_ERR__ java.io.FileNotFoundException: File file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/output does not exist",
+            "Exception in thread \"main\" java.io.FileNotFoundException: File file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/output does not exist"
+          ],
+          "stdout_last": "",
+          "stderr_last": "la.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)\n\tat scala.util.Try$.apply(Try.scala:213)\n\tat org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:188)\n\tat org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:178)\n\tat java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n26/11/17 21:34:06 INFO ShutdownHookManager: Deleting directory /tmp/spark-ff1d5283-a3e1-45b6-8c4f-5db66648b1d0\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterFileRDD.selectFiles--24a0b69a180ba4f5151b16304d4c55b6ff0f2b970ab7062f4e2c92de49ca9a1d/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.convolution",
+          "markers": [
+            "__RUN_ERR__ java.lang.IllegalArgumentException: requirement failed: Expected 49 weights but received 9",
+            "Exception in thread \"main\" java.lang.IllegalArgumentException: requirement failed: Expected 49 weights but received 9"
+          ],
+          "stdout_last": "",
+          "stderr_last": "28)\n\tat org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:188)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)\n\tat scala.util.Try$.apply(Try.scala:213)\n\tat org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:188)\n\tat org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:178)\n\tat java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.convolution--41d496c5581e761823cf347cf7a4f84ed39c28fa002872691852e7ceca2c3f81/attempt_0001"
+        },
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.slidingWindow",
+          "markers": [
+            "__RUN_ERR__ org.apache.spark.SparkException: Job aborted due to stage failure: task 0.0 in stage 2.0 (TID 500) had a not serializable result: edu.ucr.cs.bdlab.raptor.MemoryTileWindow",
+            "Exception in thread \"main\" org.apache.spark.SparkException: Job aborted due to stage failure: task 0.0 in stage 2.0 (TID 500) had a not serializable result: edu.ucr.cs.bdlab.raptor.MemoryTileWindow"
+          ],
+          "stdout_last": "",
+          "stderr_last": "28)\n\tat org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:188)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)\n\tat scala.util.Try$.apply(Try.scala:213)\n\tat org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:188)\n\tat org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:178)\n\tat java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n",
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.slidingWindow--ab4296bf6f2da17f381a0215d53cd194244c597c61a3348879d35adef7c95445/attempt_0001"
+        }
+      ],
+      "potential_environment_or_data_signals": [
+        {
+          "api": "scala:edu.ucr.cs.bdlab.raptor.RasterFileRDD.selectFiles",
+          "diagnostic": [
+            "__RUN_ERR__ java.io.FileNotFoundException: File file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/output does not exist",
+            "java.io.FileNotFoundException: File file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/output does not exist",
+            "Exception in thread \"main\" java.io.FileNotFoundException: File file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/output does not exist"
+          ],
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.raptor.RasterFileRDD.selectFiles--24a0b69a180ba4f5151b16304d4c55b6ff0f2b970ab7062f4e2c92de49ca9a1d/attempt_0001"
+        }
+      ],
+      "spark_blockmanager_diagnostic_counts_by_outcome": {
+        "pass": 24,
+        "fail": 14
+      }
+    }
+  },
+  "mdanalysis_author": {
+    "state": {
+      "generation_fingerprint": "6812c36b5c36d03911e2528534740bab677946ccb928e00a744d6426eec609c2",
+      "target_count": 1538,
+      "completed_count": 1334,
+      "complete": false,
+      "readme_sha256": null
+    },
+    "failed_attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mdanalysis/mdanalysis/author_calls/f462ecb3bc731084d282c0239e1ab9289ff5323c3f315d67958d06205d958cfe/attempt_0001",
+    "provider": {
+      "schema": 1,
+      "request_sha256": "f462ecb3bc731084d282c0239e1ab9289ff5323c3f315d67958d06205d958cfe",
+      "status": "failed_or_interrupted",
+      "started_at": "2026-11-18T03:51:57.114665+00:00",
+      "attempt_number": 1,
+      "usage": {
+        "calls": 1,
+        "input_tokens": 22753,
+        "output_tokens": 681,
+        "missing_usage_calls": 0,
+        "usage_complete": true,
+        "by_model": {
+          "google:gemini-3.1-flash-lite": {
+            "calls": 1,
+            "input_tokens": 22753,
+            "output_tokens": 681,
+            "missing_usage_calls": 0,
+            "usage_complete": true
+          }
+        }
+      },
+      "validation_policy": "source-note-todo-v2",
+      "response_sha256": "a677e7a53823aa319cfc7af4daee47fa8e3400f6352671f585037db28f64c0c7",
+      "error_type": "ValueError",
+      "finished_at": "2026-11-18T03:52:00.451403+00:00",
+      "seconds": 3.2404160629957914
+    },
+    "requested_api": "python:MDAnalysis.topology.CRDParser.CRDParser.parse",
+    "response_headings": [
+      "python:MDAnalysis.topology.CRDParser.CRDParser.parse"
+    ],
+    "todo_mentions": [
+      {
+        "line": 15,
+        "text": "Todo"
+      },
+      {
+        "line": 54,
+        "text": "- **Attribute Limitations:** As noted in the `Todo`, the parser may not fully utilize `resnum` or `tempfactor` fields; if your analysis depends on these specific attributes, verify they are correctly populated in the resulting `Topology` object."
+      }
+    ],
+    "finding": "Provider returned a complete text response; README validator rejects source TODO discussion outside Signature. This is a false-positive output-validation stop, not provider timeout or budget exhaustion.",
+    "source_note_in_signature": "Create the Topology object\n\nReturns\n-------\nMDAnalysis Topology object\n\nTodo\n----\nCould use the resnum and temp factor better",
+    "recommendation": "Correct the overbroad validation policy in an isolated version. Revalidate and replay preserved source-bound responses into a new derived output namespace; do not overwrite original receipts or blindly spend another model call."
+  },
+  "gate": {
+    "status": "COMPLETE",
+    "pid": 2657039,
+    "started_at": "2026-11-18T02:22:37.254609+00:00",
+    "plan_sha256": "6f52c105d82c97b952a82518c0248fda87c4e0bbd2dc1dc0248f24820757ab3f",
+    "queue_started_at": "2026-11-18T04:25:38.094759+00:00",
+    "workers": 2,
+    "finished_at": "2026-11-18T05:46:30.815921+00:00",
+    "jobs": {
+      "thumbnailator-r0": "complete",
+      "thumbnailator-readme": "complete",
+      "rdpro_java-r0": "complete",
+      "rdpro_java-readme": "complete",
+      "rdpro_scala-r0": "complete",
+      "rdpro_scala-readme": "complete"
+    }
+  },
+  "findings": [
+    "Raptor completed 330 Original R0 programs using google:gemini-3.1-flash-lite. No repair rounds or provider-blocked targets. Java 13/69, Scala 24/261. README authoring completed all 330 entries but is not itself an evaluation score.",
+    "276 compile failures are primarily generated program/API usage errors. Java commonly selects incorrect constructor/argument lists or treats instance methods as static. Scala has 145 first errors concerning missing members/wrong receivers, 46 invalid argument lists, and 21 type mismatches.",
+    "All 54 programs that reached execution (37 passes and 17 runtime failures) logged the same Spark BlockManager idWithoutTopologyInfo exception. This is repeated nonfatal background noise in these receipts, not a valid attribution for the 17 failures. Actual __RUN_ERR__ markers identify the failed program condition.",
+    "Runtime markers include self-authored assertion failures, argument requirements, date parsing, one reflective missing field, missing HDF layer configuration, a nonexistent generated output directory, and a nonserializable result. Inspect individual source contracts and oracles before treating failures as evidence of documentation quality.",
+    "For RasterFileRDD.selectFiles, generated code passed output_dir as the source directory without creating or populating it. For buildIndex it likewise indexed output_dir and asserted a nonempty index. For RasterFileRDD construction it provided empty BeastOptions with an HDF file; execution reported missing layer null. These are specific input/setup choices in the generated code, not evidence of a globally broken classpath.",
+    "The corrected Raptor gate reports COMPLETE. This audit did not modify or retry any job, prompt, code, result or source file."
+  ]
+}

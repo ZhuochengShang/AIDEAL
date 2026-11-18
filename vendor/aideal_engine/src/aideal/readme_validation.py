@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import re
 
-POLICY = 'source-note-todo-v2'
+POLICY = 'source-note-todo-v3'
 
 
 def validate_entry(text, api=None, source_docs=()):
@@ -24,6 +24,24 @@ def validate_entry(text, api=None, source_docs=()):
             body = re.sub(r'^_Source doc:_ ' + re.escape(doc) + r'[ \t]*$',
                           '_Source doc:_ [verbatim source note]', body, flags=re.M)
         checked = text[:signature.start(1)] + body + text[signature.end(1):]
+    # An authored sentence may refer to a real source TODO note by its label.
+    # Mask only that inline reference for this check; keep the returned text
+    # unchanged, and never exempt code, block quotes or ungrounded references.
+    if any(re.search(r'\bTODO\b', doc, re.I) for doc in source_docs if doc):
+        fence, lines = None, []
+        for line in checked.splitlines(keepends=True):
+            marker = re.match(r'^[ \t]*(`{3,}|~{3,})([^\n]*)', line)
+            if marker:
+                token, tail = marker.groups()
+                if fence is None:
+                    fence = token
+                elif token[0] == fence[0] and len(token) >= len(fence) and not tail.strip():
+                    fence = None
+            elif fence is None and not re.match(r'^(?: {4}|\t|[ \t]*>)', line):
+                line = re.sub(r'(\b(?:in|under|see|from)\s+(?:the\s+)?)`todo`(?=[\s,.;:]|$)',
+                              r'\1[source note]', line, flags=re.I)
+            lines.append(line)
+        checked = ''.join(lines)
     if re.search(r'\bTODO\b', checked, re.I):
         raise ValueError('Author returned an unfinished TODO placeholder')
 

@@ -1,5 +1,7 @@
 # AIDEAL experiment guide
 
+**Latest recovery, November 18:** [current progress and recovery guide](operator/resume/2026-11-18/README.md). RDPro R0 and README authoring are complete. tslearn R0 is resuming; a separate MDAnalysis README recovery corrects a source-note validation error. Dated queue snapshots below preserve the earlier launch record.
+
 Updated November 17, 2026. The current scope is **2,850 selected targets across six libraries and seven language banks**. RDPro now covers Raptor and its supporting raster types. Other libraries retain their inputs, releases and running/completed jobs.
 
 **Queue status observed at 2026-11-18T02:52:21.811279+00:00.** All six final cluster preparation checks passed with zero model calls. The strict 330-target bank uses evaluator `2026-11-17-strict-raptor-64fcd34eb17c`. The selection/reader checks passed 98 tests and 36 subtests, and the actual reader resolved all 330 targets. A separate constructor-correction release passed its 664-test suite. These are software checks, not new experiment results. The replacement was published before launch and is queued behind the current library jobs; no new Raptor model request has started at this checkpoint. The gate waits for the existing queue to release its process lock. README authoring and R0 are separate stages; an authored entry is not an evaluation pass.
