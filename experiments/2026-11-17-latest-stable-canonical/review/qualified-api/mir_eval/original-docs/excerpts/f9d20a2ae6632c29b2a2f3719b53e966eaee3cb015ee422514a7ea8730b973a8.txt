@@ -1,0 +1,27 @@
+mir_eval.alignment.karaoke_perceptual_metric(reference_timestamps, estimated_timestamps)
+
+Metric based on human synchronicity perception as measured in the paper “User-centered evaluation of lyrics to audio alignment” [#lizemasclef2021]
+
+The parameters of this function were tuned on data collected through a user Karaoke-like experiment It reflects human judgment of how “synchronous” lyrics and audio stimuli are perceived in that setup. Beware that this metric is non-symmetrical and by construction it is also not equal to 1 at 0.
+
+Parameters:
+
+reference_timestampsnp.ndarray
+
+reference timestamps, in seconds
+
+estimated_timestampsnp.ndarray
+
+estimated timestamps, in seconds
+
+Returns:
+
+perceptual_scorefloat
+
+Perceptual score, averaged over all timestamps
+
+Examples
+
+>>> reference_timestamps = mir_eval.io.load_events('reference.txt')
+>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')
+>>> score = mir_eval.align.karaoke_perceptual_metric(reference_onsets, estimated_timestamps)

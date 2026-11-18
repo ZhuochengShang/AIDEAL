@@ -1,0 +1,17 @@
+class MDAnalysis.auxiliary.XVG.XVGStep(time_selector=0, data_selector=None, **kwargs)[source]
+
+AuxStep class for .xvg file format.
+
+Extends the base AuxStep class to allow selection of time and data-of-interest fields (by column index) from the full set of data read each step.
+
+Parameters:
+
+time_selector (int | None, optional) – Index of column in .xvg file storing time, assumed to be in ps. Default value is 0 (i.e. first column).
+
+data_selector (list of int | None, optional) – List of indices of columns in .xvg file containing data of interest to be stored in data. Default value is None.
+
+**kwargs – Other AuxStep options.
+
+See also
+
+AuxStep

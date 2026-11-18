@@ -1,0 +1,27 @@
+mir_eval.sonify.chroma(chromagram, times, fs, **kwargs)
+
+Reverse synthesis of a chromagram (semitone matrix)
+
+Parameters:
+
+chromagramnp.ndarray, shape=(12, times.shape[0])
+
+Chromagram matrix, where each row represents a semitone [C->Bb] i.e., chromagram[3, j] is the magnitude of D# from times[j] to times[j + 1]
+
+timesnp.ndarray, shape=(len(chord_labels),) or (len(chord_labels), 2)
+
+Either the start time of each column in the chromagram, or the time interval corresponding to each column.
+
+fsint
+
+Sampling rate to synthesize audio data at
+
+**kwargs
+
+Additional keyword arguments to pass to mir_eval.sonify.time_frequency()
+
+Returns:
+
+outputnp.ndarray
+
+Synthesized chromagram

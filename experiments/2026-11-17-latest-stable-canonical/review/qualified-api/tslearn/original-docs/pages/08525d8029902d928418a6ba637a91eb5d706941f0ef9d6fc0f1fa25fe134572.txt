@@ -1,0 +1,50 @@
+gamma_soft_dtw
+
+ tslearn.metrics.gamma_soft_dtw(dataset, n_samples=100, random_state=None, be=None)[source]
+
+Compute gamma value to be used for GAK/Soft-DTW.
+
+This method was originally presented in [1].
+
+Parameters:
+
+datasetarray-like, shape=(n_ts, sz, d) or (n_ts, sz1) or (sz,)
+
+A dataset of time series. If shape is (n_ts, sz), the dataset is composed of univariate time series. If shape is (sz,), the dataset is composed of a unique univariate time series.
+
+n_samplesint (default: 100)
+
+Number of samples on which median distance should be estimated.
+
+random_stateinteger or numpy.RandomState or None (default: None)
+
+The generator used to draw the samples. If an integer is given, it fixes the seed. Defaults to the global numpy random number generator.
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+float
+
+Suggested \(\gamma\) parameter for the Soft-DTW.
+
+See also
+
+sigma_gak
+
+Compute sigma parameter for Global Alignment kernel
+
+References
+
+ [1]
+M. Cuturi, “Fast global alignment kernels,” ICML 2011.
+
+Examples
+
+>>> dataset = [[1, 2, 2, 3], [1., 2., 3., 4.]]
+>>> float(gamma_soft_dtw(dataset=dataset,
+...                      n_samples=200,
+...                      random_state=0))
+8.0...

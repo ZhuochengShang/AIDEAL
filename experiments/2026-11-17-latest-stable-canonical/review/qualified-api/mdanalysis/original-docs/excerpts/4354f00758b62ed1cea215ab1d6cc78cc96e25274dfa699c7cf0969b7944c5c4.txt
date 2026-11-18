@@ -1,0 +1,35 @@
+MDAnalysis.analysis.nuclinfo.pseudo_dihe_baseflip(universe, bp1, bp2, i, seg1='SYSTEM', seg2='SYSTEM', seg3='SYSTEM')[source]
+
+pseudo dihedral for flipped bases. Useful only for nucleic acid base flipping
+
+The dihedral is computed based on position atoms for resid i
+
+Note
+
+This dihedral calculation will only work if using atom names as documented by charmm force field parameters.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+bp1 (int) – resid that base pairs with bp2
+
+bp2 (int) – resid below the base that flips
+
+i (int) – resid of the base that flips
+
+segid1 (str (optional)) – segid of resid base pairing with bp2
+
+segid2 (str (optional)) – segid, same as that of segid of flipping resid i
+
+segid3 (str (optional)) – segid of resid i that flips
+
+Returns:
+
+pseudo dihedral angle in degrees
+
+Return type:
+
+float
+
+Added in version 0.8.0.

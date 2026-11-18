@@ -1,0 +1,25 @@
+score(X, y, sample_weight=None)
+
+Return the mean accuracy on the given test data and labels.
+
+In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
+
+Parameters:
+
+Xarray-like of shape (n_samples, n_features), or None
+
+Test samples. If None, predictions for all indexed points are used; in this case, points are not considered their own neighbors. This means that knn.fit(X, y).score(None, y) implicitly performs a leave-one-out cross-validation procedure and is equivalent to cross_val_score(knn, X, y, cv=LeaveOneOut()) but typically much faster.
+
+yarray-like of shape (n_samples,) or (n_samples, n_outputs)
+
+True labels for X.
+
+sample_weightarray-like of shape (n_samples,), default=None
+
+Sample weights.
+
+Returns:
+
+scorefloat
+
+Mean accuracy of self.predict(X) w.r.t. y.

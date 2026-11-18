@@ -1,0 +1,239 @@
+Pipeline (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Class Pipeline
+java.lang.Object
+net.coobird.thumbnailator.filters.Pipeline
+All Implemented Interfaces:
+ImageFilter
+public final class
+Pipeline
+extends
+Object
+implements
+ImageFilter
+An
+ImageFilter
+which will apply multiple
+ImageFilter
+s in a
+specific order.
+Author:
+coobird
+Constructor Summary
+Pipeline
+()
+Instantiates a new
+Pipeline
+with no image filters to apply.
+Pipeline
+(
+ImageFilter
+... filters)
+Instantiates a new
+Pipeline
+with an array of
+ImageFilter
+s
+to apply.
+Pipeline
+(
+List
+<
+ImageFilter
+> filters)
+Instantiates a new
+Pipeline
+with a list of
+ImageFilter
+s
+to apply.
+Method Summary
+void
+add
+(
+ImageFilter
+filter)
+Adds an
+ImageFilter
+to the pipeline.
+void
+addAll
+(
+List
+<
+ImageFilter
+> filters)
+Adds a
+List
+of
+ImageFilter
+s to the pipeline.
+void
+addFirst
+(
+ImageFilter
+filter)
+Adds an
+ImageFilter
+to the beginning of the pipeline.
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+List
+<
+ImageFilter
+>
+getFilters
+()
+Returns a list of
+ImageFilter
+s which will be applied by this
+Pipeline
+.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+Pipeline
+public
+Pipeline
+()
+Instantiates a new
+Pipeline
+with no image filters to apply.
+Pipeline
+public
+Pipeline
+(
+ImageFilter
+... filters)
+Instantiates a new
+Pipeline
+with an array of
+ImageFilter
+s
+to apply.
+Parameters:
+filters
+- An array of
+ImageFilter
+s to apply.
+Pipeline
+public
+Pipeline
+(
+List
+<
+ImageFilter
+> filters)
+Instantiates a new
+Pipeline
+with a list of
+ImageFilter
+s
+to apply.
+Parameters:
+filters
+- A list of
+ImageFilter
+s to apply.
+Method Detail
+add
+public void
+add
+(
+ImageFilter
+filter)
+Adds an
+ImageFilter
+to the pipeline.
+Parameters:
+filter
+- An
+ImageFilter
+.
+addFirst
+public void
+addFirst
+(
+ImageFilter
+filter)
+Adds an
+ImageFilter
+to the beginning of the pipeline.
+Parameters:
+filter
+- An
+ImageFilter
+.
+addAll
+public void
+addAll
+(
+List
+<
+ImageFilter
+> filters)
+Adds a
+List
+of
+ImageFilter
+s to the pipeline.
+Parameters:
+filters
+- A list of filters to add to the pipeline.
+getFilters
+public
+List
+<
+ImageFilter
+>
+getFilters
+()
+Returns a list of
+ImageFilter
+s which will be applied by this
+Pipeline
+.
+Returns:
+A list of filters which are applied by this
+pipeline.
+apply
+public
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Description copied from interface:
+ImageFilter
+Applies a image filtering operation on an image.
+Specified by:
+apply
+in interface
+ImageFilter
+Parameters:
+img
+- The image to apply the filtering on.
+Returns:
+The resulting image after applying this filter.
+Copyright © 2025. All rights reserved.

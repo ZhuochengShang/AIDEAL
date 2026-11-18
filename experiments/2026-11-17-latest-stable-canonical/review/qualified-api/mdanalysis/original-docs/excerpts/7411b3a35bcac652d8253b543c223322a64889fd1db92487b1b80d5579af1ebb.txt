@@ -1,0 +1,21 @@
+class MDAnalysis.coordinates.MOL2.MOL2Reader(filename, **kwargs)[source]
+
+Reader for MOL2 structure format.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based. MOL2 now reuses the same Timestep object for every frame, previously created a new instance of Timestep each frame.
+
+Changed in version 0.20.0: Allows for comments at top of file. Ignores status bit strings
+
+Changed in version 2.0.0: Bonds attribute is not added if no bonds are present in MOL2 file
+
+Changed in version 2.2.0: Read MOL2 files with optional columns omitted.
+
+Read coordinates from filename.
+
+Parameters:
+
+filename (str or NamedStream) – name of the mol2 file or stream
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

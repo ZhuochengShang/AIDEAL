@@ -1,0 +1,53 @@
+mir_eval.hierarchy.tmeasure(reference_intervals_hier, estimated_intervals_hier, transitive=False, window=15.0, frame_size=0.1, beta=1.0)
+
+Compute the tree measures for hierarchical segment annotations.
+
+Parameters:
+
+reference_intervals_hierlist of ndarray
+
+reference_intervals_hier[i] contains the segment intervals (in seconds) for the i th layer of the annotations. Layers are ordered from top to bottom, so that the last list of intervals should be the most specific.
+
+estimated_intervals_hierlist of ndarray
+
+Like reference_intervals_hier but for the estimated annotation
+
+transitivebool
+
+whether to compute the t-measures using transitivity or not.
+
+windowfloat > 0
+
+size of the window (in seconds). For each query frame q, result frames are only counted within q +- window.
+
+frame_sizefloat > 0
+
+length (in seconds) of frames. The frame size cannot be longer than the window.
+
+betafloat > 0
+
+beta parameter for the F-measure.
+
+Returns:
+
+t_precisionnumber [0, 1]
+
+T-measure Precision
+
+t_recallnumber [0, 1]
+
+T-measure Recall
+
+t_measurenumber [0, 1]
+
+F-beta measure for (t_precision, t_recall)
+
+Raises:
+
+ValueError
+
+If either of the input hierarchies are inconsistent
+
+If the input hierarchies have different time durations
+
+If frame_size > window or frame_size <= 0

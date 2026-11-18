@@ -1,0 +1,677 @@
+4.6.2. Updated nucleic acid analysis — MDAnalysis.analysis.nucleicacids
+
+Author:
+
+Alia Lescoulie
+
+Year:
+
+2022-2023
+
+copyright:
+
+LGPLv2.1
+
+The module provides classes for analyzing nucleic acids structures. This is an updated, higher performance version of previous nucleic acid tools. For applications see [1][2].
+
+References
+
+4.6.2.1. Distances
+
+ class MDAnalysis.analysis.nucleicacids.NucPairDist(selection1: List[AtomGroup], selection2: List[AtomGroup], **kwargs)[source]
+
+Atom pair distance calculation base class.
+
+Takes two lists of AtomGroup and computes the distances between them over a trajectory. Used as a superclass for the other nucleic acid distances classes. The distance will be measured between atoms sharing an index in the two lists of AtomGroup.
+
+Parameters:
+
+selection1 (List[AtomGroup]) – List of AtomGroup containing an atom of each nucleic acid being analyzed.
+
+selection2 (List[AtomGroup]) – List of AtomGroup containing an atom of each nucleic acid being analyzed.
+
+kwargs (dict) – Arguments for AnalysisBase
+
+ results.pair_distances
+
+2D array of pair distances. First dimension is simulation time, second dimension contains the pair distances for each each entry pair in selection1 and selection2.
+
+Added in version 2.4.0.
+
+Note
+
+results.pair_distances is slated for deprecation in version 3.0.0, use results.distances instead.
+
+Deprecated since version 2.7.0: results.pair_distances will be removed in version 3.0.0, use results.distances instead.
+
+Type:
+
+numpy.ndarray
+
+ results.distances
+
+stored in a 2d numpy array with first index selecting the Residue pair, and the second index selecting the frame number Distances are stored in a 2d numpy array with axis 0 (first index) indexing the trajectory frame and axis 1 (second index) selecting the Residue pair.
+
+Added in version 2.7.0.
+
+Type:
+
+numpy.ndarray
+
+ times
+
+Simulation times for analysis.
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If the selections given are not the same length
+
+ValueError – An AtomGroup in one of the strands not a valid nucleic acid
+
+ValueError – If a given residue pair from the provided strands returns an empty AtomGroup when selecting the atom pairs used in the distance calculations
+
+Version Info
+
+Changed in version 2.5.0: The ability to access by passing selection indices to results is now removed as of MDAnalysis version 2.5.0. Please use results.pair_distances instead. The results.times was deprecated and is now removed as of MDAnalysis 2.5.0. Please use the class attribute times instead.
+
+Changed in version 2.7.0: Added static method select_strand_atoms as a helper for selecting atom pairs for distance analysis.
+
+Changed in version 2.9.0: Enabled parallel execution with the multiprocessing and dask backends; use the new method get_supported_backends() to see all supported backends.
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.
+
+ static select_strand_atoms(strand1: ResidueGroup, strand2: ResidueGroup, a1_name: str, a2_name: str, g_name: str = 'G', a_name: str = 'A', u_name: str = 'U', t_name: str = 'T', c_name: str = 'C') → Tuple[List[AtomGroup], List[AtomGroup]][source]
+
+A helper method for nucleic acid pair distance analyses. Used for selecting specific atoms from two strands of nucleic acids.
+
+Parameters:
+
+strand1 (List[Residue]) – The first nucleic acid strand
+
+strand2 (List[Residue]) – The second nucleic acid strand
+
+a1_name (str) – The selection for the purine base of the strand pair
+
+a2_name (str) – the selection for the pyrimidine base of the strand pair
+
+g_name (str (optional)) – Name of Guanine in topology, by default assigned to G
+
+a_name (str (optional)) – Name of Adenine in topology, by default assigned to A
+
+u_name (str (optional)) – Name of Uracil in topology, by default assigned to U
+
+t_name (str (optional)) – Name of Thymine in topology, by default assigned to T
+
+c_name (str (optional)) – Name of Cytosine in topology, by default assigned to C
+
+Returns:
+
+returns a tuple containing two lists of AtomGroups corresponding to the provided selections from each strand.
+
+Return type:
+
+Tuple[List[AtomGroup], List[AtomGroup]]
+
+Raises:
+
+ValueError: – An AtomGroup in one of the strands not a valid nucleic acid
+
+ValueError: – An Residue returns an empty AtomGroup with the provided selection
+
+Added in version 2.7.0.
+
+Changed in version 2.11.0: Residue names are now matched exactly against the full resname rather than only its first character. Users with multi-character residue names (e.g. CHARMM "GUA", "DG") must pass the appropriate names via the keyword arguments.
+
+ class MDAnalysis.analysis.nucleicacids.WatsonCrickDist(strand1: List[Residue] | ResidueGroup, strand2: List[Residue] | ResidueGroup, n1_name: str = 'N1', n3_name: str = 'N3', g_name: str = 'G', a_name: str = 'A', u_name: str = 'U', t_name: str = 'T', c_name: str = 'C', **kwargs)[source]
+
+Watson-Crick base pair distance for selected residues over a trajectory.
+
+Takes two ResidueGroup objects or two lists of Residue and calculates the distance between the nitrogen atoms in the Watson-Crick hydrogen bond over the trajectory. Bases are matched either by their index in the two ResidueGroup provided as arguments, or based on the indices of the provided lists of Residue objects depending on which is provided.
+
+Note
+
+Support for Residue is slated for deprecation and will raise a warning when used. It still works but ResidueGroup is preferred.
+
+Parameters:
+
+strand1 (ResidueClass) –
+First list of bases
+
+Deprecated since version 2.7.0: Using a list of Residue will be removed in 3.0.0. Use a ResidueGroup.
+
+strand2 (ResidueClass) –
+Second list of bases
+
+Deprecated since version 2.7.0: Using a list of Residue will be removed in 3.0.0. Use a ResidueGroup.
+
+n1_name (str (optional)) – Name of Nitrogen 1 of nucleic acids, by default assigned to “N1”
+
+n3_name (str (optional)) – Name of Nitrogen 3 of nucleic acids, by default assigned to “N3”
+
+g_name (str (optional)) – Name of Guanine in topology, by default assigned to “G”
+
+a_name (str (optional)) – Name of Adenine in topology, by default assigned to “A”
+
+u_name (str (optional)) – Name of Uracil in topology, by default assigned to “U”
+
+t_name (str (optional)) – Name of Thymine in topology, by default assigned to “T”
+
+c_name (str (optional)) – Name of Cytosine in topology, by default assigned to C
+
+**kwargs (dict) – Key word arguments for AnalysisBase
+
+ results.distances
+
+Distances are stored in a 2d numpy array with axis 0 (first index) indexing the trajectory frame and axis 1 (second index) selecting the Residue pair.
+
+Added in version 2.7.0.
+
+Type:
+
+numpy.ndarray
+
+ results.pair_distances
+
+2D array of pair distances. First dimension is simulation time, second dimension contains the pair distances for each each entry pair in selection1 and selection2.
+
+Added in version 2.4.0.
+
+Deprecated since version 2.7.0: results.pair_distances will be removed in version 3.0.0, use results.distances instead.
+
+Type:
+
+numpy.ndarray
+
+ times
+
+Simulation times for analysis.
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+TypeError – If the provided list of Residue contains non-Residue elements .. deprecated:: 2.7.0 Starting with version 3.0.0, this exception will no longer be raised because only ResidueGroup will be allowed.
+
+ValueError – If strand1 and strand2 are not the same length
+
+ValueError: – An AtomGroup in one of the strands not a valid nucleic acid
+
+ValueError – If a given residue pair from the provided strands returns an empty AtomGroup when selecting the atom pairs used in the distance calculations
+
+Version Info
+
+Changed in version 2.5.0: Accessing results by passing strand indices to results was deprecated and is now removed as of MDAnalysis version 2.5.0. Please use results.pair_distances instead. The results.times was deprecated and is now removed as of MDAnalysis 2.5.0. Please use the class attribute times instead.
+
+Changed in version 2.7.0: strand1 and strand2 now also accept a ResidueGroup as input. The previous input type, List[Residue] is still supported, but it is deprecated and will be removed in release 3.0.0.
+
+Changed in version 2.11.0: Residue names are now matched exactly against the full resname rather than only its first character. Users with multi-character residue names (e.g. CHARMM "GUA", "DG") must pass the appropriate names via the keyword arguments.
+
+ classmethod get_supported_backends()
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.
+
+ class MDAnalysis.analysis.nucleicacids.MinorPairDist(strand1: ResidueGroup, strand2: ResidueGroup, o2_name: str = 'O2', c2_name: str = 'C2', g_name: str = 'G', a_name: str = 'A', u_name: str = 'U', t_name: str = 'T', c_name: str = 'C', **kwargs)[source]
+
+Minor-Pair basepair distance for selected residues over a trajectory.
+
+Takes two ResidueGroup objects and calculates the Minor-groove hydrogen bond length between the nitrogen and oxygen atoms over the trajectory. Bases are matched by their index in the two ResidueGroup provided as arguments.
+
+Parameters:
+
+strand1 (List[Residue]) – First list of bases
+
+strand2 (List[Residue]) – Second list of bases
+
+o2_name (str (optional)) – Name of Oxygen 2 of nucleic acids; by default assigned to “O2”;
+
+c2_name (str (optional)) – Name of Carbon 2 of nucleic acids; by default assigned to “C2”;
+
+g_name (str (optional)) – Name of Guanine in topology; by default assigned to “G”;
+
+a_name (str (optional)) – Name of Adenine in topology by default assigned to “A”;
+
+u_name (str (optional)) – Name of Uracil in topology; by default assigned to “U”;
+
+t_name (str (optional)) – Name of Thymine in topology; by default assigned to “T”;
+
+c_name (str (optional)) – Name of Cytosine in topology; by default assigned to “C”;
+
+**kwargs – keyword arguments for AnalysisBase
+
+ results.distances
+
+stored in a 2d numpy array with first index selecting the Residue pair, and the second index selecting the frame number
+
+Type:
+
+numpy.ndarray
+
+ times
+
+Simulation times for analysis.
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If the selections given are not the same length A Residue in one of the strands not a valid nucleic acid
+
+ValueError – If a given residue pair from the provided strands returns an empty AtomGroup when selecting the atom pairs used in the distance calculations
+
+Added in version 2.7.0.
+
+Changed in version 2.11.0: Residue names are now matched exactly against the full resname rather than only its first character. Users with multi-character residue names (e.g. CHARMM "GUA", "DG") must pass the appropriate names via the keyword arguments.
+
+ classmethod get_supported_backends()
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.
+
+ class MDAnalysis.analysis.nucleicacids.MajorPairDist(strand1: ResidueGroup, strand2: ResidueGroup, n4_name: str = 'N4', o6_name: str = 'O6', g_name: str = 'G', a_name: str = 'A', u_name: str = 'U', t_name: str = 'T', c_name: str = 'C', **kwargs)[source]
+
+Minor-Pair base pair distance for selected residues over a trajectory.
+
+Takes two ResidueGroup objects and calculates the Major-groove hydrogen bond length between the nitrogen and oxygen atoms over the trajectory. Bases are matched by their index in the two ResidueGroup provided as arguments.
+
+Parameters:
+
+strand1 (List[Residue]) – First list of bases
+
+strand2 (List[Residue]) – Second list of bases
+
+o6_name (str (optional)) – Name of Oxygen 6 of nucleic acids; by default assigned to “O6”
+
+n4_name (str (optional)) – Name of Nitrogen 4 of nucleic acids; by default assigned to “N4”
+
+g_name (str (optional)) – Name of Guanine in topology; by default assigned to “G”
+
+a_name (str (optional)) – Name of Adenine in topology; by default assigned to “A”
+
+u_name (str (optional)) – Name of Uracil in topology; by default assigned to “U”
+
+t_name (str (optional)) – Name of Thymine in topology; by default assigned to “T”
+
+c_name (str (optional)) – Name of Cytosine in topology; by default assigned to “C”
+
+**kwargs – arguments for AnalysisBase
+
+ results.distances
+
+Distances are stored in a 2d numpy array with axis 0 (first index) indexing the trajectory frame and axis 1 (second index) selecting the Residue pair.
+
+Type:
+
+numpy.ndarray
+
+ times
+
+Simulation times for analysis.
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – A Residue in one of the strands not a valid nucleic acid
+
+ValueError – If a given residue pair from the provided strands returns an empty AtomGroup when selecting the atom pairs used in the distance calculations
+
+ValueError – if the selections given are not the same length
+
+Added in version 2.7.0.
+
+Changed in version 2.11.0: Residue names are now matched exactly against the full resname rather than only its first character. Users with multi-character residue names (e.g. CHARMM "GUA", "DG") must pass the appropriate names via the keyword arguments.
+
+ classmethod get_supported_backends()
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.

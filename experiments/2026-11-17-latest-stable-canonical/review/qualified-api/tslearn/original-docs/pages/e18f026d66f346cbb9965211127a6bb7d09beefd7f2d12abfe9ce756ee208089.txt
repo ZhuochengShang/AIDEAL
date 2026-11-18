@@ -1,0 +1,32 @@
+from_seglearn_dataset
+
+ tslearn.utils.from_seglearn_dataset(X)[source]
+
+Transform a seglearn-compatible dataset into a tslearn dataset.
+
+Parameters:
+
+X: list of arrays, or array of arrays, shape = (n_ts, )
+
+seglearn-formatted dataset. i-th sub-array in the list has shape (sz_i, d)
+
+Returns:
+
+array, shape=(n_ts, sz, d), where sz is the maximum of all array lengths
+
+tslearn-formatted dataset
+
+Examples
+
+>>> seglearn_arr = [numpy.random.randn(10, 1), numpy.random.randn(10, 1)]
+>>> tslearn_arr = from_seglearn_dataset(seglearn_arr)
+>>> tslearn_arr.shape
+(2, 10, 1)
+>>> seglearn_arr = [numpy.random.randn(10, 1), numpy.random.randn(5, 1)]
+>>> tslearn_arr = from_seglearn_dataset(seglearn_arr)
+>>> tslearn_arr.shape
+(2, 10, 1)
+>>> seglearn_arr = numpy.random.randn(2, 10, 1)
+>>> tslearn_arr = from_seglearn_dataset(seglearn_arr)
+>>> tslearn_arr.shape
+(2, 10, 1)

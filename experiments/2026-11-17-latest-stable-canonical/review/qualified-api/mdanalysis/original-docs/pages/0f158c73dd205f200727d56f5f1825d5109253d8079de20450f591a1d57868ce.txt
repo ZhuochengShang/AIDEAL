@@ -1,0 +1,227 @@
+5.11. LAMMPSParser
+
+Parses data or dump files produced by LAMMPS.
+
+Note
+
+By default, masses will be guessed on Universe creation if they are not read from the input file. This may change in release 3.0. See Guesser modules for more information.
+
+Changed in version 1.0.0: Deprecated LAMMPSDataConverter has now been removed.
+
+5.11.1. Atom styles
+
+By default parsers and readers for Lammps data files expect either an atomic or full atom_style. This can be customised by passing the atom_style keyword argument. This should be a space separated string indicating the position of the id, type, resid, charge, x, y and z fields. The resid and charge fields are optional and any other specified field will be ignored.
+
+For example to read a file with the following format, where there is no resid:
+
+Atoms # atomic
+
+1 1 3.7151744275286681e+01 1.8684434743140471e+01 1.9285127961842125e+01 0 0 0
+
+The following code could be used:
+
+>>> import MDAnalysis as mda
+>>>
+>>> u = mda.Universe('myfile.data', atom_style='id type x y z')
+
+5.11.2. Classes
+
+ class MDAnalysis.topology.LAMMPSParser.DATAParser(filename)[source]
+
+Parse a LAMMPS DATA file for topology and coordinates.
+
+Note that LAMMPS DATA files can be used standalone.
+
+Both topology and coordinate parsing functionality is kept in this class as the topology and coordinate reader share many common functions
+
+By default the parser expects either atomic or full atom_style however this can be by passing an atom_style keyword argument, see Atom styles.
+
+Added in version 0.9.0.
+
+Changed in version 2.8.0: Removed mass guessing (attributes guessing takes place now through universe.guess_TopologyAttrs() API).
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ grab_datafile()[source]
+
+Split a data file into dict of header and sections
+
+Returns:
+
+header - dict of header section (value)
+
+sections - dict of section name (content)
+
+ parse(**kwargs)[source]
+
+Parses a LAMMPS DATA file.
+
+Return type:
+
+MDAnalysis Topology object.
+
+ read_DATA_timestep(n_atoms, TS_class, TS_kwargs, atom_style=None)[source]
+
+Read a DATA file and try and extract x, v, box.
+
+positions
+
+velocities (optional)
+
+box information
+
+Fills this into the Timestep object and returns it
+
+Added in version 0.9.0.
+
+Changed in version 0.18.0: Added atom_style kwarg
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.topology.LAMMPSParser.LammpsDumpParser(filename)[source]
+
+Parses Lammps ascii dump files.
+
+id, mol, type, mass, element and q columns are read and used to set the corresponding topology attributes.
+
+All other columns are ignored.
+
+If masses are not provided they will attempt to be guessed from element names. If no element names are provided then all masses will be set to 1.0.
+
+Added in version 0.19.0.
+
+Changed in version 2.0.0: Allow for a more flexible column layout
+
+Changed in version 2.10.0: Allow reading of mass, charge and element attributes

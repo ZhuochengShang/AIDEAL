@@ -1,0 +1,19 @@
+MDAnalysis.analysis.rdf.nested_array_sum(arrs: list[list[ndarray]]) → list[ndarray][source]
+
+Sum the count arrays of each pair of groups across workers
+
+Aggregator for InterRDF_s.results.count in parallel runs.
+
+Parameters:
+
+arrs (list of list of numpy.ndarray) – One list per worker, holding a count array for each pair of groups in ags
+
+Returns:
+
+For each pair of groups, the sum of its arrays over the workers
+
+Return type:
+
+list of numpy.ndarray
+
+Changed in version 2.11.0: Sums any number of pairs of groups (only two were summed correctly before).

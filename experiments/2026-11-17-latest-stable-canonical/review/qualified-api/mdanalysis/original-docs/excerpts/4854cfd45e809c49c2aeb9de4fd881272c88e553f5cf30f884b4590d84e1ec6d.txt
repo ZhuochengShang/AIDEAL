@@ -1,0 +1,43 @@
+class MDAnalysis.transformations.wrap.wrap(ag, compound='atoms', max_threads=None, parallelizable=True)[source]
+
+Shift the contents of a given AtomGroup back into the unit cell.
+
++-----------+          +-----------+
+|           |          |           |
+|         3 | 6        | 6       3 |
+|         ! | !        | !       ! |
+|       1-2-|-5-8  ->  |-5-8   1-2-|
+|         ! | !        | !       ! |
+|         4 | 7        | 7       4 |
+|           |          |           |
++-----------+          +-----------+
+
+Example
+
+ag = u.atoms
+transform = mda.transformations.wrap(ag)
+u.trajectory.add_transformations(transform)
+
+Parameters:
+
+ag (Atomgroup) – Atomgroup to be wrapped in the unit cell
+
+compound ({'atoms', 'group', 'residues', 'segments', 'fragments'}, optional) – The group which will be kept together through the shifting process.
+
+Notes
+
+When specifying a compound, the translation is calculated based on each compound. The same translation is applied to all atoms within this compound, meaning it will not be broken by the shift. This might however mean that not all atoms from the compound are inside the unit cell, but rather the center of the compound is.
+
+Return type:
+
+MDAnalysis.coordinates.timestep.Timestep
+
+Changed in version 2.0.0: The transformation was changed from a function/closure to a class with __call__.
+
+Changed in version 2.0.0: The transformation was changed to inherit from the base class for limiting threads and checking if it can be used in parallel analysis.
+
+Parameters:
+
+max_threads (int, optional) – The maximum thread number can be used. Default is None, which means the default or the external setting.
+
+parallelizable (bool, optional) – A check for if this can be used in split-apply-combine parallel analysis approach. Default is True.

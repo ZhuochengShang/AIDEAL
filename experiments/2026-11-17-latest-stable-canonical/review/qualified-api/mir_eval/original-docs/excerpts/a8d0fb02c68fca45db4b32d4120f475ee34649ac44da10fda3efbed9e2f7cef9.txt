@@ -1,0 +1,36 @@
+mir_eval.io.load_delimited(filename, converters, delimiter='\\s+', comment='#')
+
+Load data from an annotation file where columns are delimited. The number of columns is inferred from the length of the provided converters list.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+converterslist of functions
+
+Each entry in column n of the file will be cast by the function converters[n].
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+columnstuple of lists
+
+Each list in this tuple corresponds to values in one of the columns in the file.
+
+Examples
+
+>>> # Load in a one-column list of event times (floats)
+>>> load_delimited('events.txt', [float])
+>>> # Load in a list of labeled events, separated by commas
+>>> load_delimited('labeled_events.csv', [float, str], ',')

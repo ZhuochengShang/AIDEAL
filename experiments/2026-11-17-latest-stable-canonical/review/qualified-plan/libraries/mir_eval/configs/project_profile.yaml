@@ -1,0 +1,62 @@
+project_name: mir_eval
+role: An expert in reproducible music-information-retrieval evaluation and scientific
+  Python API usage.
+project:
+  name: mir_eval
+  language: Python
+  description: A scientific Python library of evaluation metrics, I/O helpers, displays,
+    and sonification utilities for music and audio information retrieval.
+  version: 0.8.2
+domain: 'Audio and music signal evaluation. This label is query provenance, not a
+  manual classification: the repository was returned by both the saved "audio processing"
+  and "signal processing" GitHub sweeps.'
+target_users:
+- music-information-retrieval researchers
+- audio and signal-processing engineers
+- coding agents implementing reproducible metric evaluations
+use_cases:
+- Score beats, onsets, melody, multipitch, chords, keys, and tempo.
+- Evaluate segment, hierarchy, transcription, alignment, and separation outputs.
+- Load repository-format annotations and produce deterministic summaries.
+constraints:
+- Use only checked-in test fixtures or deterministic in-memory arrays.
+- Keep display tests headless and prohibit network/audio-device access.
+- Use every name in the frozen 125-name canonical manifest without sampling; selection
+  is structural filtering and same-name maximum arity, not a proof of arbitrary semantic
+  equivalence.
+notes: Pinned official release 0.8.2 at commit 8db0b3812e2032544c1fc00d02d4256cab043f3d.
+knowledge:
+  repository:
+    upstream_url: https://github.com/mir-evaluation/mir_eval.git
+    pinned_commit: 8db0b3812e2032544c1fc00d02d4256cab043f3d
+    pinned_tree: 7f9f80392ab86bff2e0e688ed4890a523f07dc6e
+    package_version: 0.8.2
+    source_path: source
+  api_scope:
+    selected_api_names: 125
+    public_declaration_sites: 177
+    public_bare_names: 147
+    selection_policy: Frozen structural body audit; quarantine unknown/wrappers; globally
+      retain highest arity per bare name with deterministic ties.
+    semantic_equivalence_guarantee: false
+    sampling: none within the frozen selected set
+    manifest_path: inputs/api_manifest.json
+    canonical_selection_receipt: canonical-selection.json
+    manifest_file_sha256: 9a7829adffbe23f7a1963c9d1ff314451be01fd22750effcb86a3b6bd0b0d9c9
+    ordered_names_sha256: a2db02372c64f8aefefad1ab3c77029d1a24dc257162bae9463136e72aeab5ba
+  runtime:
+    python: /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+    python_version: 3.12.15
+    package_source: official release wheels; scientific PYTHONHOME/PYTHONPATH explicitly
+      unset
+    readiness: PENDING final runtime and selected-dependency control receipts
+  original_documentation:
+    source_roots:
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/README.rst
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs
+    document_count: 23
+    bundle_characters: 30789
+    bundle_sha256: cc3b7fa61dd461c70aa99d768881e093f4735913c1e12f02d743c59a6f4d74fb
+    scope_change_note: Preserved repository README+docs policy on exact stable source;
+      missing/added pages are recorded, and old generated or absent pages are not
+      imported.

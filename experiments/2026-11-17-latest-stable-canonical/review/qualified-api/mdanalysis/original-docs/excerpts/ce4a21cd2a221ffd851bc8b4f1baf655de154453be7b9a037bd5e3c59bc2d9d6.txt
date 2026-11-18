@@ -1,0 +1,27 @@
+MDAnalysis.analysis.encore.similarity.clustering_ensemble_similarity(cc, ens1, ens1_id, ens2, ens2_id, select='name CA')[source]
+
+Clustering ensemble similarity: calculate the probability densities from
+
+the clusters and calculate discrete Jensen-Shannon divergence.
+
+Parameters:
+
+cc (encore.clustering.ClustersCollection) – Collection from cluster calculated by a clustering algorithm (e.g. Affinity propagation)
+
+ens1 (Universe) – First ensemble to be used in comparison
+
+ens1_id (int) – First ensemble id as detailed in the ClustersCollection metadata
+
+ens2 (Universe) – Second ensemble to be used in comparison
+
+ens2_id (int) – Second ensemble id as detailed in the ClustersCollection metadata
+
+select (str) – Atom selection string in the MDAnalysis format. Default is “name CA”.
+
+Returns:
+
+djs – Jensen-Shannon divergence between the two ensembles, as calculated by the clustering ensemble similarity method
+
+Return type:
+
+float

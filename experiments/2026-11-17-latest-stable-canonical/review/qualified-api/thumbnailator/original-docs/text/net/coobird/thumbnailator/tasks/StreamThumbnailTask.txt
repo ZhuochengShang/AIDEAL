@@ -1,0 +1,256 @@
+StreamThumbnailTask (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks
+Class StreamThumbnailTask
+java.lang.Object
+net.coobird.thumbnailator.tasks.ThumbnailTask
+<
+InputStream
+,
+OutputStream
+>
+net.coobird.thumbnailator.tasks.StreamThumbnailTask
+public class
+StreamThumbnailTask
+extends
+ThumbnailTask
+<
+InputStream
+,
+OutputStream
+>
+A thumbnail generation task which streams data from an
+InputStream
+to an
+OutputStream
+.
+This class does not close the
+InputStream
+and
+OutputStream
+upon the completion of processing.
+Only the first image obtained from the data stream will be read. Subsequent
+images will be ignored.
+Author:
+coobird
+Constructor Summary
+StreamThumbnailTask
+(
+ThumbnailParameter
+param,
+InputStream
+is,
+OutputStream
+os)
+Creates a
+ThumbnailTask
+in which streamed image data from the
+specified
+InputStream
+is output to a specified
+OutputStream
+, using the parameters provided in the specified
+ThumbnailParameter
+.
+Method Summary
+OutputStream
+getDestination
+()
+Returns the destination to which the thumbnail is stored or written.
+ThumbnailParameter
+getParam
+()
+Returns the
+ThumbnailParameter
+for this
+ThumbnailTask
+,
+used when performing a thumbnail generation operation.
+InputStream
+getSource
+()
+Returns the source from which the source image is retrieved or read.
+BufferedImage
+read
+()
+Reads a source image.
+void
+write
+(
+BufferedImage
+img)
+Writes the thumbnail to the destination.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+StreamThumbnailTask
+public
+StreamThumbnailTask
+(
+ThumbnailParameter
+param,
+InputStream
+is,
+OutputStream
+os)
+Creates a
+ThumbnailTask
+in which streamed image data from the
+specified
+InputStream
+is output to a specified
+OutputStream
+, using the parameters provided in the specified
+ThumbnailParameter
+.
+Parameters:
+param
+- The parameters to use to create the thumbnail.
+is
+- The
+InputStream
+from which to obtain image data.
+os
+- The
+OutputStream
+to send thumbnail data to.
+Throws:
+NullPointerException
+- If the parameter is
+null
+.
+Method Detail
+read
+public
+BufferedImage
+read
+()
+throws
+IOException
+Description copied from class:
+ThumbnailTask
+Reads a source image.
+Specified by:
+read
+in class
+ThumbnailTask
+<
+InputStream
+,
+OutputStream
+>
+Returns:
+The image which was obtained from the source.
+Throws:
+IOException
+- Thrown when an I/O problem occurs when reading
+from the image source.
+write
+public void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Description copied from class:
+ThumbnailTask
+Writes the thumbnail to the destination.
+Specified by:
+write
+in class
+ThumbnailTask
+<
+InputStream
+,
+OutputStream
+>
+Parameters:
+img
+- The image to write.
+Throws:
+UnsupportedFormatException
+- When an image file which is to be
+read or written is unsupported.
+IOException
+- Thrown when an I/O problem occurs when writing the
+image.
+getParam
+public
+ThumbnailParameter
+getParam
+()
+Description copied from class:
+ThumbnailTask
+Returns the
+ThumbnailParameter
+for this
+ThumbnailTask
+,
+used when performing a thumbnail generation operation.
+Overrides:
+getParam
+in class
+ThumbnailTask
+<
+InputStream
+,
+OutputStream
+>
+Returns:
+The parameters to use when generating thumbnails.
+getSource
+public
+InputStream
+getSource
+()
+Description copied from class:
+ThumbnailTask
+Returns the source from which the source image is retrieved or read.
+Specified by:
+getSource
+in class
+ThumbnailTask
+<
+InputStream
+,
+OutputStream
+>
+Returns:
+The source.
+getDestination
+public
+OutputStream
+getDestination
+()
+Description copied from class:
+ThumbnailTask
+Returns the destination to which the thumbnail is stored or written.
+Specified by:
+getDestination
+in class
+ThumbnailTask
+<
+InputStream
+,
+OutputStream
+>
+Returns:
+The destination.
+Copyright © 2025. All rights reserved.

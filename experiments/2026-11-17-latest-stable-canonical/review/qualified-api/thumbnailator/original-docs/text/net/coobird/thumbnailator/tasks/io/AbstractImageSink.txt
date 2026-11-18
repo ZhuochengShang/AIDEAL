@@ -1,0 +1,169 @@
+AbstractImageSink (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class AbstractImageSink<T>
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.AbstractImageSink<T>
+All Implemented Interfaces:
+ImageSink
+<T>
+Direct Known Subclasses:
+BufferedImageSink
+,
+OutputStreamImageSink
+public abstract class
+AbstractImageSink<T>
+extends
+Object
+implements
+ImageSink
+<T>
+An abstract class for
+ImageSink
+s.
+Author:
+coobird
+Method Summary
+String
+preferredOutputFormatName
+()
+Returns the output format to use from information provided for the
+output image.
+void
+setOutputFormatName
+(
+String
+format)
+Sets the output format of the resulting image.
+void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when storing the image.
+void
+write
+(
+BufferedImage
+img)
+Writes the resulting image to a destination.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Methods inherited from interface net.coobird.thumbnailator.tasks.io.
+ImageSink
+getSink
+Method Detail
+setOutputFormatName
+public void
+setOutputFormatName
+(
+String
+format)
+Description copied from interface:
+ImageSink
+Sets the output format of the resulting image.
+For
+ImageSink
+s which stores raw images, the format name specified
+by this method may be ignored.
+Specified by:
+setOutputFormatName
+in interface
+ImageSink
+<
+T
+>
+Parameters:
+format
+- File format with which to store the image.
+setThumbnailParameter
+public void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Description copied from interface:
+ImageSink
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when storing the image.
+Specified by:
+setThumbnailParameter
+in interface
+ImageSink
+<
+T
+>
+Parameters:
+param
+- The
+ThumbnailParameter
+with image
+writing parameters.
+write
+public void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Description copied from interface:
+ImageSink
+Writes the resulting image to a destination.
+Specified by:
+write
+in interface
+ImageSink
+<
+T
+>
+Parameters:
+img
+- The image to write or store.
+Throws:
+IOException
+- When a problem occurs while writing or storing
+the image.
+preferredOutputFormatName
+public
+String
+preferredOutputFormatName
+()
+Description copied from interface:
+ImageSink
+Returns the output format to use from information provided for the
+output image.
+If the output format cannot be determined, then
+ThumbnailParameter.ORIGINAL_FORMAT
+should be returned.
+Specified by:
+preferredOutputFormatName
+in interface
+ImageSink
+<
+T
+>
+Returns:
+Name of the preferred output format.
+Copyright © 2025. All rights reserved.

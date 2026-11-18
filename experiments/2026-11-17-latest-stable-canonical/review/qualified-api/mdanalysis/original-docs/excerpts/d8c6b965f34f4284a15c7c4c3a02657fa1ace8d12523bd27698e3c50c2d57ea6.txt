@@ -1,0 +1,35 @@
+Writer(filename, **kwargs)[source]
+
+Returns a NCDFWriter for filename with the same parameters as this NCDF.
+
+All values can be changed through keyword arguments.
+
+Parameters:
+
+filename (str) – filename of the output NCDF trajectory
+
+n_atoms (int (optional)) – number of atoms
+
+remarks (str (optional)) – string that is stored in the title field
+
+convert_units (bool (optional)) – True: units are converted to the AMBER base format
+
+velocities (bool (optional)) – Write velocities into the trajectory
+
+forces (bool (optional)) – Write forces into the trajectory
+
+scale_time (float (optional)) – Scale factor for time units
+
+scale_cell_lengths (float (optional)) – Scale factor for cell lengths
+
+scale_cell_angles (float (optional)) – Scale factor for cell angles
+
+scale_coordinates (float (optional)) – Scale factor for coordinates
+
+scale_velocities (float (optional)) – Scale factor for velocities
+
+scale_forces (float (optional)) – Scale factor for forces
+
+Return type:
+
+NCDFWriter

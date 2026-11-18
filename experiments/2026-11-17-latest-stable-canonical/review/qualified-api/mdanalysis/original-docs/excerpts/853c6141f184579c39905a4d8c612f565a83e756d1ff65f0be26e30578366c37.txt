@@ -1,0 +1,33 @@
+union(other)
+
+Group of elements either in this Group or another
+
+On the contrary to concatenation, this method sort the elements and removes duplicate ones. It is synomymous to the | operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the combined elements of self and other, without duplicate elements
+
+Return type:
+
+Group
+
+Example
+
+In contrast to concatenate(), any duplicates are dropped and the result is sorted.
+
+>>> ag1 = u.select_atoms('name O')
+>>> ag2 = u.select_atoms('name N')
+>>> ag3 = ag1 | ag2  # or ag1.union(ag2)
+>>> ag3[:3].names
+array(['N', 'O', 'N'], dtype=object)
+
+See also
+
+concatenate, intersection
+
+Added in version 0.16.

@@ -1,0 +1,22 @@
+MDAnalysis.lib.mdamath.box_volume(dimensions: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Return the volume of the unitcell described by dimensions.
+
+The volume is computed as the product of the box matrix trace, with the matrix obtained from triclinic_vectors(). If the box is invalid, i.e., any box length is zero or negative, or any angle is outside the open interval (0, 180), the resulting volume will be zero.
+
+Parameters:
+
+dimensions (array_like) –
+Unitcell dimensions provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions:
+
+[lx, ly, lz, alpha, beta, gamma].
+
+Returns:
+
+volume – The volume of the unitcell. Will be zero for invalid boxes.
+
+Return type:
+
+float
+
+Changed in version 0.20.0: Calculations are performed in double precision and zero is returned for invalid dimensions.

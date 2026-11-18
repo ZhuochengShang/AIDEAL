@@ -1,0 +1,21 @@
+mir_eval.util.validate_frequencies(frequencies, max_freq, min_freq, allow_negatives=False)
+
+Check that a 1-d frequency ndarray is well-formed, and raises errors if not.
+
+Parameters:
+
+frequenciesnp.ndarray, shape=(n,)
+
+Array of frequency values
+
+max_freqfloat
+
+If a frequency is found above this pitch, a ValueError will be raised. (Default value = 5000.)
+
+min_freqfloat
+
+If a frequency is found below this pitch, a ValueError will be raised. (Default value = 20.)
+
+allow_negativesbool
+
+Whether or not to allow negative frequency values.

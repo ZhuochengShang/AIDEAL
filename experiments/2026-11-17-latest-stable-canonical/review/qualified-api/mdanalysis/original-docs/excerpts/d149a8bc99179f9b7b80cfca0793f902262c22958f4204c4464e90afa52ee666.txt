@@ -1,0 +1,25 @@
+transform(M)
+
+Apply homogenous transformation matrix M to the coordinates.
+
+Atom coordinates are rotated and translated in-place.
+
+Parameters:
+
+M (array_like) – 4x4 matrix with the rotation in R = M[:3, :3] and the translation in t = M[:3, 3].
+
+Return type:
+
+self
+
+See also
+
+MDAnalysis.lib.transformations
+
+module of all coordinate transforms
+
+Notes
+
+The rotation \(\mathsf{R}\) is about the origin and is applied before the translation \(\mathbf{t}\):
+
+ \[\mathbf{x}' = \mathsf{R}\mathbf{x} + \mathbf{t}\]

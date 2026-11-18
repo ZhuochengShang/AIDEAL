@@ -1,0 +1,215 @@
+Configurations (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.util
+Enum Configurations
+java.lang.Object
+java.lang.Enum
+<
+Configurations
+>
+net.coobird.thumbnailator.util.Configurations
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+Configurations
+>
+public enum
+Configurations
+extends
+Enum
+<
+Configurations
+>
+This enum lists properties that affect the behavior of Thumbnailator.
+Most are used for enabling or disabling workarounds.
+Implementation note
+The values for properties listed here will be read from the system
+properties via
+System.getProperty(String)
+, therefore, can be set
+via the
+-D
+options when invoking the JVM.
+Alternatively, they can be included in
+thumbnailator.properties
+on the classpath (of the current thread's class loader.)
+Disclaimer
+Properties listed here are not part of Thumbnailator's public API.
+Therefore, code invoking Thumbnailator should not depend on these
+workarounds always being present.
+Enum Constant Summary
+CONSERVE_MEMORY_WORKAROUND
+Enable a workaround to conserve memory when handling large image files.
+DEBUG_LOG
+Enable debug logging to standard error.
+DEBUG_LOG_EXIF_WORKAROUND
+Enable debug logging (to standard error) specifically for the
+Exif workaround
+.
+DISABLE_EXIF_WORKAROUND
+Disables the Exif workaround.
+Method Summary
+boolean
+getBoolean
+()
+Returns whether the specified configuration is enabled or not.
+static
+Configurations
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+Configurations
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+toString
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+DISABLE_EXIF_WORKAROUND
+public static final
+Configurations
+DISABLE_EXIF_WORKAROUND
+Disables the Exif workaround.
+(
+Issue #108
+)
+Property name:
+thumbnailator.disableExifWorkaround
+The default JPEG reader bundled with the JRE cannot handle JPEG images
+that doesn't have a JFIF APP0 marker segment as the first one.
+Some JPEG images have Exif (APP1) as the first one.
+A workaround was introduced to resolve issue #108 by capturing the
+Exif data from the bitstream rather than relying on the JPEG reader.
+Disabling this workaround will prevent Thumbnailator from properly
+identifying the image orientation of JPEG images which have Exif as
+the first marker.
+Therefore, unless the default behavior causes issues, disabling this
+workaround is not recommended.
+DEBUG_LOG
+public static final
+Configurations
+DEBUG_LOG
+Enable debug logging to standard error.
+This will enable debug logging throughout Thumbnailator.
+Property name:
+thumbnailator.debugLog
+DEBUG_LOG_EXIF_WORKAROUND
+public static final
+Configurations
+DEBUG_LOG_EXIF_WORKAROUND
+Enable debug logging (to standard error) specifically for the
+Exif workaround
+.
+Property name:
+thumbnailator.debugLog.exifWorkaround
+CONSERVE_MEMORY_WORKAROUND
+public static final
+Configurations
+CONSERVE_MEMORY_WORKAROUND
+Enable a workaround to conserve memory when handling large image files.
+(
+Issue #69
+)
+It is known that
+OutOfMemoryError
+s can occur when handling
+large images in Thumbnailator.
+To fundamentally address the issue requires some dramatic design changes
+to the core parts of Thumbnailator which would take some time and would
+affect many internal parts of the library.
+Such changes would take time before being implemented, a workaround has
+been implemented in Thumbnailator 0.4.8 to reduce the likeliness of
+OutOfMemoryError
+s.
+The workaround is not enabled by default, as it can negatively affect
+the quality of the final image. It has also not been extensively
+tested and will not necessarily prevent
+OutOfMemoryError
+s.
+When the workaround enabled, a smaller version of the source image will
+be used to reduce memory usage, under the following conditions:
+Both height and width have dimensions larger than 1800 pixels
+The expected memory size of the source image will take up more
+than 1/4 of the available JVM free memory
+Method Detail
+values
+public static final
+Configurations
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(Configurations c : Configurations.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+Configurations
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+getBoolean
+public boolean
+getBoolean
+()
+Returns whether the specified configuration is enabled or not.
+Returns:
+true
+if the configuration is enabled,
+false
+otherwise.
+Copyright © 2025. All rights reserved.

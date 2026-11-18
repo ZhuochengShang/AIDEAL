@@ -1,0 +1,221 @@
+URLImageSource (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class URLImageSource
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.AbstractImageSource
+<
+URL
+>
+net.coobird.thumbnailator.tasks.io.URLImageSource
+All Implemented Interfaces:
+ImageSource
+<
+URL
+>
+public class
+URLImageSource
+extends
+AbstractImageSource
+<
+URL
+>
+An
+ImageSource
+which retrieves a source image from a URL.
+Author:
+coobird
+Constructor Summary
+URLImageSource
+(
+String
+url)
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from.
+URLImageSource
+(
+String
+url,
+Proxy
+proxy)
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from, along with the proxy to use
+to connect to the aforementioned URL.
+URLImageSource
+(
+URL
+url)
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from.
+URLImageSource
+(
+URL
+url,
+Proxy
+proxy)
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from, along with the proxy to use
+to connect to the aforementioned URL.
+Method Summary
+Proxy
+getProxy
+()
+Returns the proxy to use when connecting to the URL to retrieve the
+source image.
+URL
+getSource
+()
+Returns the URL from which the source image is retrieved from.
+BufferedImage
+read
+()
+Retrieves the image from the source.
+Methods inherited from class net.coobird.thumbnailator.tasks.io.
+AbstractImageSource
+getInputFormatName
+,
+setThumbnailParameter
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+URLImageSource
+public
+URLImageSource
+(
+URL
+url)
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from.
+Parameters:
+url
+- URL to the source image.
+Throws:
+NullPointerException
+- If the URL is null
+URLImageSource
+public
+URLImageSource
+(
+String
+url)
+throws
+MalformedURLException
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from.
+Parameters:
+url
+- URL to the source image.
+Throws:
+NullPointerException
+- If the URL is null
+MalformedURLException
+- If the URL is not valid.
+URLImageSource
+public
+URLImageSource
+(
+URL
+url,
+Proxy
+proxy)
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from, along with the proxy to use
+to connect to the aforementioned URL.
+Parameters:
+url
+- URL to the source image.
+proxy
+- Proxy to use to connect to the URL.
+Throws:
+NullPointerException
+- If the URL and or the proxy is null
+URLImageSource
+public
+URLImageSource
+(
+String
+url,
+Proxy
+proxy)
+throws
+MalformedURLException
+Instantiates an
+URLImageSource
+with the URL from which the
+source image should be retrieved from, along with the proxy to use
+to connect to the aforementioned URL.
+Parameters:
+url
+- URL to the source image.
+proxy
+- Proxy to use to connect to the URL.
+Throws:
+NullPointerException
+- If the URL and or the proxy is null
+MalformedURLException
+- If the URL is not valid.
+Method Detail
+read
+public
+BufferedImage
+read
+()
+throws
+IOException
+Description copied from interface:
+ImageSource
+Retrieves the image from the source.
+Returns:
+The image.
+Throws:
+IOException
+- When a problem occurs while reading or obtaining
+the image.
+getSource
+public
+URL
+getSource
+()
+Returns the URL from which the source image is retrieved from.
+Returns:
+the url         The URL to the source image.s
+getProxy
+public
+Proxy
+getProxy
+()
+Returns the proxy to use when connecting to the URL to retrieve the
+source image.
+Returns:
+the proxy       The proxy used to connect to a URL.
+Copyright © 2025. All rights reserved.

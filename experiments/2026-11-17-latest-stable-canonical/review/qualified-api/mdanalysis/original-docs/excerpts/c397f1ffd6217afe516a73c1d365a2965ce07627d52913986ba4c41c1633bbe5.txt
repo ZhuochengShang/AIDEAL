@@ -1,0 +1,29 @@
+MDAnalysis.analysis.nuclinfo.tors(universe, seg, i)[source]
+
+Calculation of nucleic backbone dihedral angles.
+
+The dihedral angles are alpha, beta, gamma, delta, epsilon, zeta, chi.
+
+The dihedral is computed based on position of atoms for resid i.
+
+Parameters:
+
+universe (Universe) – Universe containing the trajectory
+
+seg (str) – segment id for base
+
+i (int) – resid of the first base
+
+Returns:
+
+[alpha, beta, gamma, delta, epsilon, zeta, chi] – torsion angles in degrees
+
+Return type:
+
+list of floats
+
+Notes
+
+If failure occurs be sure to check the segment identification.
+
+Added in version 0.7.6.

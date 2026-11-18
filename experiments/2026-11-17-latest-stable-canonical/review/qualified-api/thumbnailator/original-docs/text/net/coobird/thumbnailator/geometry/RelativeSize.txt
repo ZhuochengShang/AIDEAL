@@ -1,0 +1,110 @@
+RelativeSize (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.geometry
+Class RelativeSize
+java.lang.Object
+net.coobird.thumbnailator.geometry.RelativeSize
+All Implemented Interfaces:
+Size
+public class
+RelativeSize
+extends
+Object
+implements
+Size
+Calculates the size of an enclosed object relative to the enclosing object.
+Since:
+0.3.4
+Author:
+coobird
+Constructor Summary
+RelativeSize
+(double scalingFactor)
+Instantiates an object which calculates the size of an object, using
+the given scaling factor.
+Method Summary
+Dimension
+calculate
+(int width,
+int height)
+Calculates the size of the object.
+String
+toString
+()
+Returns a
+String
+representation of this object.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+RelativeSize
+public
+RelativeSize
+(double scalingFactor)
+Instantiates an object which calculates the size of an object, using
+the given scaling factor.
+Parameters:
+scalingFactor
+- The scaling factor to use to determine the
+size of the enclosing object.
+Throws:
+IllegalArgumentException
+- When the scaling factor is not within
+the range of
+0.0d
+and
+1.0d
+, inclusive.
+Method Detail
+calculate
+public
+Dimension
+calculate
+(int width,
+int height)
+Description copied from interface:
+Size
+Calculates the size of the object.
+Specified by:
+calculate
+in interface
+Size
+Parameters:
+width
+- Width of the object which encloses the object
+for which the size should be determined.
+height
+- Height of the object which encloses the object
+for which the size should be determined.
+Returns:
+Calculated size of the object.
+toString
+public
+String
+toString
+()
+Returns a
+String
+representation of this object.
+Overrides:
+toString
+in class
+Object
+Returns:
+String
+representation of this object.
+Copyright © 2025. All rights reserved.

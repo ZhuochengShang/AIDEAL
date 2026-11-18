@@ -1,0 +1,37 @@
+MDAnalysis.coordinates.core.get_reader_for(filename, format=None)[source]
+
+Return the appropriate trajectory reader class for filename.
+
+Parameters:
+
+filename – filename of the input trajectory or coordinate file. Also can handle a few special cases, see notes below.
+
+format (str or Reader (optional)) – Define the desired format. Can be a string to request a given Reader. If a class is passed, it will be assumed that this is a Reader and will be returned.
+
+Returns:
+
+A Reader object
+
+Return type:
+
+Reader
+
+Raises:
+
+ValueError – If no appropriate Reader is found
+
+Notes
+
+There are a number of special cases that can be handled:
+
+If filename is a numpy array, MemoryReader is returned.
+
+If filename is an MMTF object, MMTFReader is returned.
+
+If filename is a ParmEd Structure, ParmEdReader is returned.
+
+If filename is an iterable of filenames, ChainReader is returned.
+
+Automatic detection is disabled when an explicit format is provided, unless a list of filenames is given, in which case ChainReader is returned and format passed to the ChainReader.
+
+Changed in version 1.0.0: Added format_hint functionalityx

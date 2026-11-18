@@ -1,0 +1,19 @@
+mir_eval.chord.merge_chord_intervals(intervals, labels)
+
+Merge consecutive chord intervals if they represent the same chord.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2), dtype=float
+
+Chord intervals to be merged, in the format returned by mir_eval.io.load_labeled_intervals().
+
+labelslist, shape=(n,)
+
+Chord labels to be merged, in the format returned by mir_eval.io.load_labeled_intervals().
+
+Returns:
+
+merged_ivsnp.ndarray, shape=(k, 2), dtype=float
+
+Merged chord intervals, k <= n

@@ -1,0 +1,67 @@
+crop
+public
+Thumbnails.Builder
+<
+T
+>
+crop
+(
+Position
+position)
+Crops the thumbnail at the position specified by
+Position
+.
+This method must be used along with the
+size(int, int)
+method to specify the size of the thumbnail.
+This method will guarantee that the thumbnail will be exactly
+the dimensions specified in the
+size(int, int)
+method.
+Internally, the resizing is performed in two steps:
+First, the thumbnail will be sized so that one of the dimensions
+will be exactly the dimension specified in the
+size
+method.
+The other dimension may overhang the specified dimension.
+For example, if the
+.size(200, 200)
+is called and the
+source image is 400 x 600, the image will be resized to 200 x 300,
+internally.
+Next, the resized image will be cropped to the dimensions
+specified in the
+size
+method, positioned using
+the specified
+Position
+object.
+Continuing the example from the previous paragraph, the 200 x 300
+image will be cropped to 200 x 200 using the specified positioning.
+Once this method is called, calling the
+scale(double)
+or
+scale(double, double)
+method will throw an
+IllegalStateException
+.
+Calling this method multiple times will throw an
+IllegalStateException
+.
+Parameters:
+position
+- The position to which the thumbnail should be
+cropped to. For example, if
+Positions.CENTER
+is specified, the
+resulting thumbnail will be made by cropping to
+the center of the image.
+Returns:
+Reference to this object.
+Throws:
+NullPointerException
+- If the position is
+null
+.
+Since:
+0.4.0

@@ -1,0 +1,144 @@
+4.5.2. Leaflet identification — MDAnalysis.analysis.leaflet
+
+This module implements the LeafletFinder algorithm, described in [Michaud-Agrawal2011]. It can identify the lipids in a bilayer of arbitrary shape and topology, including planar and undulating bilayers under periodic boundary conditions or vesicles.
+
+One can use this information to identify
+
+the upper and lower leaflet of a planar membrane by comparing the the center_of_geometry() of the leaflet groups, or
+
+the outer and inner leaflet of a vesicle by comparing histograms of distances from the centre of geometry (or possibly simply the radius_of_gyration()).
+
+See example scripts in the MDAnalysisCookbook on how to use LeafletFinder. The function optimize_cutoff() implements a (slow) heuristic method to find the best cut off for the LeafletFinder algorithm.
+
+4.5.2.1. Algorithm
+
+build a graph of all phosphate distances < cutoff
+
+identify the largest connected subgraphs
+
+analyse first and second largest graph, which correspond to the leaflets
+
+For further details see [Michaud-Agrawal2011].
+
+4.5.2.2. Classes and Functions
+
+ class MDAnalysis.analysis.leaflet.LeafletFinder(universe, select, cutoff=15.0, pbc=False, sparse=None)[source]
+
+Identify atoms in the same leaflet of a lipid bilayer.
+
+This class implements the LeafletFinder algorithm [Michaud-Agrawal2011].
+
+Parameters:
+
+universe (Universe) – Universe object.
+
+select (AtomGroup or str) – A AtomGroup instance or a Universe.select_atoms() selection string for atoms that define the lipid head groups, e.g. universe.atoms.PO4 or “name PO4” or “name P*”
+
+cutoff (float (optional)) – head group-defining atoms within a distance of cutoff Angstroms are deemed to be in the same leaflet [15.0]
+
+pbc (bool (optional)) – take periodic boundary conditions into account [False]
+
+sparse (bool (optional)) – None: use fastest possible routine; True: use slow sparse matrix implementation (for large systems); False: use fast distance_array() implementation [None].
+
+Raises:
+
+ImportError – This class requires the optional package networkx. If not found an ImportError is raised.
+
+Example
+
+The components of the graph are stored in the list LeafletFinder.components; the atoms in each component are numbered consecutively, starting at 0. To obtain the atoms in the input structure use LeafletFinder.groups():
+
+u = mda.Universe(PDB)
+L = LeafletFinder(u, 'name P*')
+leaflet0 = L.groups(0)
+leaflet1 = L.groups(1)
+
+The residues can be accessed through the standard MDAnalysis mechanism:
+
+leaflet0.residues
+
+provides a ResidueGroup instance. Similarly, all atoms in the first leaflet are then
+
+leaflet0.residues.atoms
+
+Changed in version 1.0.0: Changed selection keyword to select
+
+Changed in version 2.0.0: The universe keyword no longer accepts non-Universe arguments. Please create a Universe first.
+
+ group(component_index)[source]
+
+Return a MDAnalysis.core.groups.AtomGroup for component_index.
+
+ groups(component_index=None)[source]
+
+Return a MDAnalysis.core.groups.AtomGroup for component_index.
+
+If no argument is supplied, then a list of all leaflet groups is returned.
+
+See also
+
+LeafletFinder.group(), LeafletFinder.groups_iter()
+
+ groups_iter()[source]
+
+Iterator over all leaflet groups()
+
+ sizes()[source]
+
+Dict of component index with size of component.
+
+ update(cutoff=None)[source]
+
+Update components, possibly with a different cutoff
+
+ write_selection(filename, **kwargs)[source]
+
+Write selections for the leaflets to filename.
+
+The format is typically determined by the extension of filename (e.g. “vmd”, “pml”, or “ndx” for VMD, PyMol, or Gromacs).
+
+See MDAnalysis.selections.base.SelectionWriter for all options.
+
+ MDAnalysis.analysis.leaflet.optimize_cutoff(universe, select, dmin=10.0, dmax=20.0, step=0.5, max_imbalance=0.2, **kwargs)[source]
+
+Find cutoff that minimizes number of disconnected groups.
+
+Applies heuristics to find best groups:
+
+at least two groups (assumes that there are at least 2 leaflets)
+
+reject any solutions for which:
+
+ \[\frac{|N_0 - N_1|}{|N_0 + N_1|} > \mathrm{max_imbalance}\]
+
+with \(N_i\) being the number of lipids in group \(i\). This heuristic picks groups with balanced numbers of lipids.
+
+Parameters:
+
+universe (Universe) – MDAnalysis.Universe instance
+
+select (AtomGroup or str) – AtomGroup or selection string as used for LeafletFinder
+
+dmin (float (optional))
+
+dmax (float (optional))
+
+step (float (optional)) – scan cutoffs from dmin to dmax at stepsize step (in Angstroms)
+
+max_imbalance (float (optional)) – tuning parameter for the balancing heuristic [0.2]
+
+kwargs (other keyword arguments) – other arguments for LeafletFinder
+
+Returns:
+
+optimum cutoff and number of groups found
+
+Return type:
+
+(cutoff, N)
+
+Note
+
+This function can die in various ways if really no appropriate number of groups can be found; it ought to be made more robust.
+
+Changed in version 1.0.0: Changed selection keyword to select

@@ -1,0 +1,38 @@
+allowOverwrite
+public
+Thumbnails.Builder
+<
+T
+>
+allowOverwrite
+(boolean allowOverwrite)
+Specifies whether or not to overwrite files which already exist if
+they have been specified as destination files.
+This method will change the output behavior of the following methods:
+toFile(File)
+toFile(String)
+toFiles(Iterable)
+toFiles(Rename)
+asFiles(Iterable)
+asFiles(Rename)
+The behavior of methods which are not listed above will not be
+affected by calling this method.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+allowOverwrite
+- If
+true
+then existing files will be
+overwritten if specified as a destination.
+If
+false
+, then the existing files
+will not be altered. For specific behavior,
+please refer to the specific output methods
+listed above.
+Returns:
+Reference to this object.
+Since:
+0.3.7

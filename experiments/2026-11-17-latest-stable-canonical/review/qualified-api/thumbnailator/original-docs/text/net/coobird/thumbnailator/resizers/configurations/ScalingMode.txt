@@ -1,0 +1,136 @@
+ScalingMode (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers.configurations
+Enum ScalingMode
+java.lang.Object
+java.lang.Enum
+<
+ScalingMode
+>
+net.coobird.thumbnailator.resizers.configurations.ScalingMode
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+ScalingMode
+>
+public enum
+ScalingMode
+extends
+Enum
+<
+ScalingMode
+>
+An enum which is used to specify how to scale images when creating
+thumbnails.
+Author:
+coobird
+Enum Constant Summary
+BICUBIC
+A hint to use bicubic interpolation when resizing images.
+BILINEAR
+A hint to use bilinear interpolation when resizing images.
+PROGRESSIVE_BILINEAR
+A hint to use progressing bilinear interpolation when resizing images.
+Method Summary
+static
+ScalingMode
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+ScalingMode
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+toString
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+BILINEAR
+public static final
+ScalingMode
+BILINEAR
+A hint to use bilinear interpolation when resizing images.
+BICUBIC
+public static final
+ScalingMode
+BICUBIC
+A hint to use bicubic interpolation when resizing images.
+PROGRESSIVE_BILINEAR
+public static final
+ScalingMode
+PROGRESSIVE_BILINEAR
+A hint to use progressing bilinear interpolation when resizing images.
+For details on this technique, refer to the documentation of the
+ProgressiveBilinearResizer
+class.
+Method Detail
+values
+public static final
+ScalingMode
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(ScalingMode c : ScalingMode.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+ScalingMode
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+Copyright © 2025. All rights reserved.

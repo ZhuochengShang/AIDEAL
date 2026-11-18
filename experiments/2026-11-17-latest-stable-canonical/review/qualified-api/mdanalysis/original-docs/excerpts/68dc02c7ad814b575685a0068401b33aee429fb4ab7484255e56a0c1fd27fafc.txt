@@ -1,0 +1,37 @@
+MDAnalysis.analysis.encore.confdistmatrix.get_distance_matrix(ensemble, select='name CA', load_matrix=None, save_matrix=None, superimpose=True, superimposition_subset='name CA', weights='mass', n_jobs=1, max_nbytes=None, verbose=False, *conf_dist_args, **conf_dist_kwargs)[source]
+
+Retrieves or calculates the conformational distance (RMSD) matrix. The distance matrix is calculated between all the frames of all the Universe objects given as input. The order of the matrix elements depends on the order of the coordinates of the ensembles and on the order of the input ensembles themselves, therefore the order of the input list is significant.
+
+The distance matrix can either be calculated from input ensembles or loaded from an input numpy binary file.
+
+Please notice that the .npz file does not contain a bi-dimensional array, but a flattened representation that is meant to represent the elements of an encore.utils.TriangularMatrix object.
+
+Parameters:
+
+ensemble (Universe)
+
+select (str) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+load_matrix (str, optional) – Load similarity/dissimilarity matrix from numpy binary file instead of calculating it (default is None). A filename is required.
+
+save_matrix (bool, optional) – Save calculated matrix as numpy binary file (default is None). A filename is required.
+
+superimpose (bool, optional) – Whether to superimpose structures before calculating distance (default is True).
+
+superimposition_subset (str, optional) – Group for superimposition using MDAnalysis selection syntax (default is CA atoms: “name CA”)
+
+weights (str/array_like, optional) – weights to be used for fit. Can be either ‘mass’ or an array_like
+
+n_jobs (int, optional) – Maximum number of cores to be used (default is 1). If -1 use all cores.
+
+max_nbytes (str, optional) – Threshold on the size of arrays passed to the workers that triggers automated memory mapping in temp_folder (default is None). See https://joblib.readthedocs.io/en/latest/generated/joblib.Parallel.html for detailed documentation.
+
+verbose (bool, optional) – print progress
+
+Returns:
+
+confdistmatrix – Conformational distance matrix. .
+
+Return type:
+
+encore.utils.TriangularMatrix

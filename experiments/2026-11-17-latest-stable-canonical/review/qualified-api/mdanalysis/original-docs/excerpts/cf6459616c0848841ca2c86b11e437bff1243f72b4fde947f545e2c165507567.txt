@@ -1,0 +1,23 @@
+class MDAnalysis.coordinates.INPCRD.INPReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Reader for Amber restart files.
+
+ static parse_n_atoms(filename, **kwargs)[source]
+
+Read the coordinate file and deduce the number of atoms
+
+Returns:
+
+n_atoms – the number of atoms in the coordinate file
+
+Return type:
+
+int
+
+Raises:
+
+NotImplementedError – when the number of atoms can’t be deduced
+
+ units = {'length': 'Angstrom'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

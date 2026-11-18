@@ -1,0 +1,27 @@
+FileImageSink
+public
+FileImageSink
+(
+File
+destinationFile)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+The output format to use will be determined from the file extension.
+If another format should be used, then the
+setOutputFormatName(String)
+should be called with the desired
+output format name.
+When the destination file exists, then this
+FileImageSink
+will
+overwrite the existing file.
+Parameters:
+destinationFile
+- The destination file.
+Throws:
+NullPointerException
+- If the specified file is
+null
+.

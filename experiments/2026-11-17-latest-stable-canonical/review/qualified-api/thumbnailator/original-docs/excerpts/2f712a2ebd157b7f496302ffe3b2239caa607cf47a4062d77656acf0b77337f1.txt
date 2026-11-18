@@ -1,0 +1,62 @@
+asBufferedImage
+public
+BufferedImage
+asBufferedImage
+()
+throws
+IOException
+Creates a thumbnail and returns it as a
+BufferedImage
+.
+To call this method, the thumbnail must have been created from a
+single source.
+If you intend to write the
+BufferedImage
+to a file,
+you're strongly encouraged to use one of the
+toFile(...)
+methods instead. See "Notes on image types" for details.
+Notes on image types
+The image type of the
+BufferedImage
+depends on the type
+of the input image. (Specifically, the type emitted by the
+ImageReader
+associated for the file type.)
+Thumbnailator will attempt to use the same image type as the
+input if it is not specified through
+imageType(int)
+.
+This has implications when writing
+BufferedImage
+to files
+using the default JPEG writer bundled with Java. There are issues
+with the JPEG writer
+outputting wrong colors
+or
+throwing exceptions
+when writing a image containing an alpha channel.
+If outputting to a file, consider using one of the
+toFile(File)
+or
+toFile(String)
+methods instead,
+as it contains workarounds to prevent issues mentioned in the
+previous paragraph.
+For more information on
+BufferedImage
+types, refer to
+BufferedImage.getType()
+.
+Returns:
+A thumbnail as a
+BufferedImage
+.
+Throws:
+IOException
+- If a problem occurred during
+the reading of the original
+image.
+IllegalArgumentException
+- If multiple original images are
+specified.

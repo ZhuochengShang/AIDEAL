@@ -1,0 +1,9 @@
+static _apply_reactions(reactions: List[ChemicalReaction], reactant: Mol) → None[source]
+
+Applies a series of unimolecular reactions to a molecule. The reactions must not add any atom to the product. The molecule is modified inplace.
+
+Parameters:
+
+reactions (List[rdkit.Chem.rdChemReactions.ChemicalReaction]) – Reactions from SMARTS. Each reaction is applied until no more transformations can be made.
+
+reactant (rdkit.Chem.rdchem.Mol) – The molecule to transform inplace

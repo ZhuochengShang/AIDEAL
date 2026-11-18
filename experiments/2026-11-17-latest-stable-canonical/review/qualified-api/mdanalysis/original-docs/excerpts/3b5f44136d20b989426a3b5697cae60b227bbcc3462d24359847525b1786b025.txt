@@ -1,0 +1,12 @@
+_read_offsets(store=False)[source]
+
+read frame offsets from trajectory
+
+Scan the trajectory for frames and build an index that relates frame number to the position in the file, thus enabling direct seeking to specific frames. The trajectory scan can take minutes for large trajectories.
+
+Parameters:
+
+store (bool) –
+Save the frame index (“offsets”) to a file with name generated from the trajectory name (filename) with function offsets_filename(). The offsets file also contains, ctime, file size, number of frames, and number of atoms of the trajectory. The file format is a compressed numpy array (numpy.savez()).
+
+If saving the file fails for any reasons, only a warning is issued.

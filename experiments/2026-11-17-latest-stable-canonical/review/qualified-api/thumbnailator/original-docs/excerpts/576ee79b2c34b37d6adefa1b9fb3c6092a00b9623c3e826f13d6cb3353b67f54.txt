@@ -1,0 +1,43 @@
+outputFormatType
+public
+Thumbnails.Builder
+<
+T
+>
+outputFormatType
+(
+String
+formatType)
+Sets the compression format type of the thumbnail to write.
+If the default type for the compression codec should be used, a
+value of
+ThumbnailParameter.DEFAULT_FORMAT_TYPE
+should be
+used.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Furthermore, if this method is called, then calling the
+outputFormat
+method is disabled, in order to prevent
+cases where the output format type does not exist in the format
+specified for the
+outputFormat
+method.
+Implementation note:
+Compression format type settings are ignored when the underlying
+image writer does not support compression. This behavior is subject
+to change in the future.
+Parameters:
+formatType
+- The compression format type
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If an unsupported format type is
+specified for the current output
+format type. Or, if the output
+format has not been specified before
+this method was called.

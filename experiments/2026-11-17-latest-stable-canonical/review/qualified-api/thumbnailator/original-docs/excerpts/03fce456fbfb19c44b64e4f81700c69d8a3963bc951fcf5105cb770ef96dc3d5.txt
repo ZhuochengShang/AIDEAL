@@ -1,0 +1,36 @@
+createThumbnail
+public static void
+createThumbnail
+(
+File
+inFile,
+File
+outFile,
+int width,
+int height)
+throws
+IOException
+Creates a thumbnail from an source image and writes the thumbnail to
+a destination file.
+The image format to use for the thumbnail will be determined from the
+file extension. However, if the image format cannot be determined, then,
+the same image format as the original image will be used when writing
+the thumbnail.
+Parameters:
+inFile
+- The
+File
+from which image data is read.
+outFile
+- The
+File
+to which thumbnail is written.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.

@@ -1,0 +1,15 @@
+Writer(filename, **kwargs)
+
+Writer creation is not supported for streaming trajectories.
+
+Writer creation requires trajectory metadata that streaming readers cannot provide due to their sequential processing nature.
+
+Parameters:
+
+filename (str) – Output filename (ignored, as method is not supported)
+
+**kwargs – Additional keyword arguments (ignored, as method is not supported)
+
+Raises:
+
+RuntimeError – Always raised, as writer creation is not supported for streaming trajectories

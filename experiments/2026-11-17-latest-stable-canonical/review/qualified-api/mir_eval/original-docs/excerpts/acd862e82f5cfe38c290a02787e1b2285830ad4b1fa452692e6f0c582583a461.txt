@@ -1,0 +1,41 @@
+mir_eval.display.pitch(times, frequencies, midi=False, unvoiced=False, ax=None, prop_cycle=None, **kwargs)
+
+Visualize pitch contours
+
+Parameters:
+
+timesnp.ndarray, shape=(n,)
+
+Sample times of frequencies
+
+frequenciesnp.ndarray, shape=(n,)
+
+frequencies (in Hz) of the pitch contours. Voicing is indicated by sign (positive for voiced, non-positive for non-voiced).
+
+midibool
+
+If True, plot on a MIDI-numbered vertical axis. Otherwise, plot on a linear frequency axis.
+
+unvoicedbool
+
+If True, unvoiced pitch contours are plotted and indicated by transparency.
+
+Otherwise, unvoiced pitch contours are omitted from the display.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the pitch contours. If none is provided, a new set of axes is created.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to matplotlib.pyplot.plot.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes

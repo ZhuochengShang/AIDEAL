@@ -1,0 +1,242 @@
+SourceSinkThumbnailTask (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks
+Class SourceSinkThumbnailTask<S,D>
+java.lang.Object
+net.coobird.thumbnailator.tasks.ThumbnailTask
+<S,D>
+net.coobird.thumbnailator.tasks.SourceSinkThumbnailTask<S,D>
+Type Parameters:
+S
+- The source class from which the source image is retrieved
+or read.
+D
+- The destination class to which the thumbnail is stored
+or written.
+public class
+SourceSinkThumbnailTask<S,D>
+extends
+ThumbnailTask
+<S,D>
+A
+ThumbnailTask
+which holds an
+ImageSource
+from which the
+image is read or retrieved, and an
+ImageSink
+to which the thumbnail
+is stored or written.
+This class will take care of handing off information from the
+ImageSource
+to the
+ImageSink
+. For example, the output format
+that should be used by the
+ImageSink
+will be handed off if the
+ThumbnailParameter.ORIGINAL_FORMAT
+parameter is set.
+Author:
+coobird
+Constructor Summary
+SourceSinkThumbnailTask
+(
+ThumbnailParameter
+param,
+ImageSource
+<
+S
+> source,
+ImageSink
+<
+D
+> destination)
+Creates a
+ThumbnailTask
+in which an image is retrived from the
+specified
+ImageSource
+and written to the specified
+ImageSink
+, using the parameters provided in the specified
+ThumbnailParameter
+.
+Method Summary
+D
+getDestination
+()
+Returns the destination to which the thumbnail is stored or written.
+S
+getSource
+()
+Returns the source from which the source image is retrieved or read.
+BufferedImage
+read
+()
+Reads a source image.
+void
+write
+(
+BufferedImage
+img)
+Writes the thumbnail to the destination.
+Methods inherited from class net.coobird.thumbnailator.tasks.
+ThumbnailTask
+getParam
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+SourceSinkThumbnailTask
+public
+SourceSinkThumbnailTask
+(
+ThumbnailParameter
+param,
+ImageSource
+<
+S
+> source,
+ImageSink
+<
+D
+> destination)
+Creates a
+ThumbnailTask
+in which an image is retrived from the
+specified
+ImageSource
+and written to the specified
+ImageSink
+, using the parameters provided in the specified
+ThumbnailParameter
+.
+Parameters:
+param
+- The parameters to use to create the thumbnail.
+source
+- The source from which the image is retrieved
+or read from.
+destination
+- The destination to which the thumbnail is
+stored or written to.
+Throws:
+NullPointerException
+- If either the parameter,
+ImageSource
+or
+ImageSink
+is
+null
+.
+Method Detail
+read
+public
+BufferedImage
+read
+()
+throws
+IOException
+Description copied from class:
+ThumbnailTask
+Reads a source image.
+Specified by:
+read
+in class
+ThumbnailTask
+<
+S
+,
+D
+>
+Returns:
+The image which was obtained from the source.
+Throws:
+IOException
+- Thrown when an I/O problem occurs when reading
+from the image source.
+write
+public void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Description copied from class:
+ThumbnailTask
+Writes the thumbnail to the destination.
+Specified by:
+write
+in class
+ThumbnailTask
+<
+S
+,
+D
+>
+Parameters:
+img
+- The image to write.
+Throws:
+UnsupportedFormatException
+- When an image file which is to be
+read or written is unsupported.
+IOException
+- Thrown when an I/O problem occurs when writing the
+image.
+getSource
+public
+S
+getSource
+()
+Description copied from class:
+ThumbnailTask
+Returns the source from which the source image is retrieved or read.
+Specified by:
+getSource
+in class
+ThumbnailTask
+<
+S
+,
+D
+>
+Returns:
+The source.
+getDestination
+public
+D
+getDestination
+()
+Description copied from class:
+ThumbnailTask
+Returns the destination to which the thumbnail is stored or written.
+Specified by:
+getDestination
+in class
+ThumbnailTask
+<
+S
+,
+D
+>
+Returns:
+The destination.
+Copyright © 2025. All rights reserved.

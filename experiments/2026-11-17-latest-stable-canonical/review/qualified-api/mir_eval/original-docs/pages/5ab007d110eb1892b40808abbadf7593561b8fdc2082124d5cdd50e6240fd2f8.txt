@@ -1,0 +1,317 @@
+mir_eval.beat
+
+The aim of a beat detection algorithm is to report the times at which a typical human listener might tap their foot to a piece of music. As a result, most metrics for evaluating the performance of beat tracking systems involve computing the error between the estimated beat times and some reference list of beat locations. Many metrics additionally compare the beat sequences at different metric levels in order to deal with the ambiguity of tempo.
+
+Based on the methods described in:
+
+Matthew E. P. Davies, Norberto Degara, and Mark D. Plumbley. “Evaluation Methods for Musical Audio Beat Tracking Algorithms”, Queen Mary University of London Technical Report C4DM-TR-09-06 London, United Kingdom, 8 October 2009.
+
+See also the Beat Evaluation Toolbox:
+
+https://code.soundsoftware.ac.uk/projects/beat-evaluation/
+
+Conventions
+
+Beat times should be provided in the form of a 1-dimensional array of beat times in seconds in increasing order. Typically, any beats which occur before 5s are ignored; this can be accomplished using mir_eval.beat.trim_beats().
+
+Metrics
+
+mir_eval.beat.f_measure(): The F-measure of the beat sequence, where an estimated beat is considered correct if it is sufficiently close to a reference beat
+
+mir_eval.beat.cemgil(): Cemgil’s score, which computes the sum of Gaussian errors for each beat
+
+mir_eval.beat.goto(): Goto’s score, a binary score which is 1 when at least 25% of the estimated beat sequence closely matches the reference beat sequence
+
+mir_eval.beat.p_score(): McKinney’s P-score, which computes the cross-correlation of the estimated and reference beat sequences represented as impulse trains
+
+mir_eval.beat.continuity(): Continuity-based scores which compute the proportion of the beat sequence which is continuously correct
+
+mir_eval.beat.information_gain(): The Information Gain of a normalized beat error histogram over a uniform distribution
+
+ mir_eval.beat.trim_beats(beats, min_beat_time=5.0)
+
+Remove beats before min_beat_time. A common preprocessing step.
+
+Parameters:
+
+beatsnp.ndarray
+
+Array of beat times in seconds.
+
+min_beat_timefloat
+
+Minimum beat time to allow (Default value = 5.)
+
+Returns:
+
+beats_trimmednp.ndarray
+
+Trimmed beat array.
+
+ mir_eval.beat.validate(reference_beats, estimated_beats)
+
+Check that the input annotations to a metric look like valid beat time arrays, and throws helpful errors if not.
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+estimated beat times, in seconds
+
+ mir_eval.beat.f_measure(reference_beats, estimated_beats, f_measure_threshold=0.07)
+
+Compute the F-measure of correct vs incorrectly predicted beats. “Correctness” is determined over a small window.
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+estimated beat times, in seconds
+
+f_measure_thresholdfloat
+
+Window size, in seconds (Default value = 0.07)
+
+Returns:
+
+f_scorefloat
+
+The computed F-measure score
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> f_measure = mir_eval.beat.f_measure(reference_beats,
+                                        estimated_beats)
+
+ mir_eval.beat.cemgil(reference_beats, estimated_beats, cemgil_sigma=0.04)
+
+Cemgil’s score, computes a gaussian error of each estimated beat. Compares against the original beat times and all metrical variations.
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+cemgil_sigmafloat
+
+Sigma parameter of gaussian error windows (Default value = 0.04)
+
+Returns:
+
+cemgil_scorefloat
+
+Cemgil’s score for the original reference beats
+
+cemgil_maxfloat
+
+The best Cemgil score for all metrical variations
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> cemgil_score, cemgil_max = mir_eval.beat.cemgil(reference_beats,
+                                                    estimated_beats)
+
+ mir_eval.beat.goto(reference_beats, estimated_beats, goto_threshold=0.35, goto_mu=0.2, goto_sigma=0.2)
+
+Calculate Goto’s score, a binary 1 or 0 depending on some specific heuristic criteria
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+goto_thresholdfloat
+
+Threshold of beat error for a beat to be “correct” (Default value = 0.35)
+
+goto_mufloat
+
+The mean of the beat errors in the continuously correct track must be less than this (Default value = 0.2)
+
+goto_sigmafloat
+
+The std of the beat errors in the continuously correct track must be less than this (Default value = 0.2)
+
+Returns:
+
+goto_scorefloat
+
+Either 1.0 or 0.0 if some specific criteria are met
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> goto_score = mir_eval.beat.goto(reference_beats, estimated_beats)
+
+ mir_eval.beat.p_score(reference_beats, estimated_beats, p_score_threshold=0.2)
+
+Get McKinney’s P-score. Based on the autocorrelation of the reference and estimated beats
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+p_score_thresholdfloat
+
+Window size will be p_score_threshold*np.median(inter_annotation_intervals), (Default value = 0.2)
+
+Returns:
+
+correlationfloat
+
+McKinney’s P-score
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> p_score = mir_eval.beat.p_score(reference_beats, estimated_beats)
+
+ mir_eval.beat.continuity(reference_beats, estimated_beats, continuity_phase_threshold=0.175, continuity_period_threshold=0.175)
+
+Get metrics based on how much of the estimated beat sequence is continually correct.
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+continuity_phase_thresholdfloat
+
+Allowable ratio of how far is the estimated beat can be from the reference beat (Default value = 0.175)
+
+continuity_period_thresholdfloat
+
+Allowable distance between the inter-beat-interval and the inter-annotation-interval (Default value = 0.175)
+
+Returns:
+
+CMLcfloat
+
+Correct metric level, continuous accuracy
+
+CMLtfloat
+
+Correct metric level, total accuracy (continuity not required)
+
+AMLcfloat
+
+Any metric level, continuous accuracy
+
+AMLtfloat
+
+Any metric level, total accuracy (continuity not required)
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> CMLc, CMLt, AMLc, AMLt = mir_eval.beat.continuity(reference_beats,
+                                                      estimated_beats)
+
+ mir_eval.beat.information_gain(reference_beats, estimated_beats, bins=41)
+
+Get the information gain - K-L divergence of the beat error histogram to a uniform histogram
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+binsint
+
+Number of bins in the beat error histogram (Default value = 41)
+
+Returns:
+
+information_gain_scorefloat
+
+Entropy of beat error histogram
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> information_gain = mir_eval.beat.information_gain(reference_beats,
+                                                      estimated_beats)
+
+ mir_eval.beat.evaluate(reference_beats, estimated_beats, **kwargs)
+
+Compute all metrics for the given reference and estimated annotations.
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+Reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+Query beat times, in seconds
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> scores = mir_eval.beat.evaluate(reference_beats, estimated_beats)

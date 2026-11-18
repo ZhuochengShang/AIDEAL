@@ -1,0 +1,261 @@
+BufferedImageBuilder (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.builders
+Class BufferedImageBuilder
+java.lang.Object
+net.coobird.thumbnailator.builders.BufferedImageBuilder
+public final class
+BufferedImageBuilder
+extends
+Object
+A builder for creating
+BufferedImage
+with specified parameters.
+Author:
+coobird
+Constructor Summary
+BufferedImageBuilder
+(
+Dimension
+size)
+Instantiates a
+BufferedImageBuilder
+with the specified size, and
+the default image type.
+BufferedImageBuilder
+(
+Dimension
+size,
+int imageType)
+Instantiates a
+BufferedImageBuilder
+with the specified size and
+image type.
+BufferedImageBuilder
+(int width,
+int height)
+Instantiates a
+BufferedImageBuilder
+with the specified size, and
+the default image type.
+BufferedImageBuilder
+(int width,
+int height,
+int imageType)
+Instantiates a
+BufferedImageBuilder
+with the specified size and
+image type.
+Method Summary
+BufferedImage
+build
+()
+Generates a new
+BufferedImage
+.
+BufferedImageBuilder
+height
+(int height)
+Sets the height for the
+BufferedImage
+.
+BufferedImageBuilder
+imageType
+(int imageType)
+Sets the type of the image of the
+BufferedImage
+.
+BufferedImageBuilder
+size
+(int width,
+int height)
+Sets the size for the
+BufferedImage
+.
+BufferedImageBuilder
+width
+(int width)
+Sets the width for the
+BufferedImage
+.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+BufferedImageBuilder
+public
+BufferedImageBuilder
+(
+Dimension
+size)
+Instantiates a
+BufferedImageBuilder
+with the specified size, and
+the default image type.
+Parameters:
+size
+- The size of the
+BufferedImage
+to build.
+BufferedImageBuilder
+public
+BufferedImageBuilder
+(
+Dimension
+size,
+int imageType)
+Instantiates a
+BufferedImageBuilder
+with the specified size and
+image type.
+Parameters:
+size
+- The size of the
+BufferedImage
+to build.
+imageType
+- The image type of the
+BufferedImage
+to build.
+BufferedImageBuilder
+public
+BufferedImageBuilder
+(int width,
+int height)
+Instantiates a
+BufferedImageBuilder
+with the specified size, and
+the default image type.
+Parameters:
+width
+- The width of the
+BufferedImage
+to build.
+height
+- The height of the
+BufferedImage
+to build.
+BufferedImageBuilder
+public
+BufferedImageBuilder
+(int width,
+int height,
+int imageType)
+Instantiates a
+BufferedImageBuilder
+with the specified size and
+image type.
+Parameters:
+width
+- The width of the
+BufferedImage
+to build.
+height
+- The height of the
+BufferedImage
+to build.
+imageType
+- The image type of the
+BufferedImage
+to build.
+Method Detail
+build
+public
+BufferedImage
+build
+()
+Generates a new
+BufferedImage
+.
+Returns:
+Returns a newly created
+BufferedImage
+from the
+parameters set in the
+BufferedImageBuilder
+.
+imageType
+public
+BufferedImageBuilder
+imageType
+(int imageType)
+Sets the type of the image of the
+BufferedImage
+.
+Parameters:
+imageType
+- The image type to use.
+If
+BufferedImage.TYPE_CUSTOM
+is used, it
+be substituted by
+BufferedImage.TYPE_INT_ARGB
+.
+Returns:
+This
+BufferedImageBuilder
+instance.
+size
+public
+BufferedImageBuilder
+size
+(int width,
+int height)
+Sets the size for the
+BufferedImage
+.
+Parameters:
+width
+- The width of the image to create.
+height
+- The height of the image to create.
+Returns:
+This
+BufferedImageBuilder
+instance.
+width
+public
+BufferedImageBuilder
+width
+(int width)
+Sets the width for the
+BufferedImage
+.
+Parameters:
+width
+- The width of the image to create.
+Returns:
+This
+BufferedImageBuilder
+instance.
+height
+public
+BufferedImageBuilder
+height
+(int height)
+Sets the height for the
+BufferedImage
+.
+Parameters:
+height
+- The height of the image to create.
+Returns:
+This
+BufferedImageBuilder
+instance.
+Copyright © 2025. All rights reserved.

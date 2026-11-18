@@ -1,0 +1,19 @@
+attach_auxiliary(coord_parent, aux_spec: str | Dict[str, str] | None = None, format: str | None = None, **kwargs) → None[source]
+
+Attaches the data specified in aux_spec to the coord_parent
+
+This method is called from within MDAnalysis.coordinates.base.ReaderBase.add_auxiliary(). add_auxiliary should be agnostic to the type of AuxReader, so the method call leads here instead. First, some checks are done on the arguments to make sure the input is treated properly. Then, the AuxReader(s) with appropriate data_selector are associated with the coord_parent from which add_auxiliary was called.
+
+Parameters:
+
+coord_parent (MDAnalysis.coordinates.base.ReaderBase) – Reader object to which to attach the auxiliary data.
+
+aux_spec (str, Dict[str, str], None) – Specifies which data to add to coord_parent. String types are for MDAnalysis.auxiliary.XVG.XVGReader only. Dictionaries are the standard way of providing aux_spec information (see also: MDAnalysis.auxiliary.EDR). Passing None causes all data to be added.
+
+Return type:
+
+None
+
+Raises:
+
+ValueError – If trying to add data under an aux_spec key that is already assigned.

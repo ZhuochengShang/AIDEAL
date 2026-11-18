@@ -1,0 +1,299 @@
+class MDAnalysis.coordinates.timestep.Timestep
+
+ __init__()
+
+Create a Timestep, representing a frame of a trajectory
+
+Parameters:
+
+n_atoms (uint64) – The total number of atoms this Timestep describes
+
+positions (bool, optional) – Whether this Timestep has position information [True]
+
+velocities (bool (optional)) – Whether this Timestep has velocity information [False]
+
+forces (bool (optional)) – Whether this Timestep has force information [False]
+
+reader (Reader (optional)) – A weak reference to the owning Reader. Used for when attributes require trajectory manipulation (e.g. dt)
+
+dt (float (optional)) – The time difference between frames (ps). If time is set, then dt will be ignored.
+
+time_offset (float (optional)) – The starting time from which to calculate time (in ps)
+
+Changed in version 0.11.0: Added keywords for positions, velocities and forces. Can add and remove position/velocity/force information by using the has_* attribute.
+
+Changed in version 2.3.0: Added the dtype attribute hardcoded to float32.
+
+ classmethod from_coordinates(cls, positions=None, velocities=None, forces=None, **kwargs)
+
+Create an instance of this Timestep, from coordinate data
+
+Can pass position, velocity and force data to form a Timestep.
+
+Added in version 0.11.0.
+
+ classmethod from_timestep(cls, Timestep other, **kwargs)
+
+Create a copy of another Timestep, in the format of this Timestep
+
+Added in version 0.11.0.
+
+ n_atoms
+
+A read only view of the number of atoms this Timestep has
+
+Changed in version 0.11.0: Changed to read only property
+
+ frame
+
+frame number (0-based)
+
+Changed in version 0.11.0: Frames now 0-based; was 1-based
+
+ time
+
+The time in ps of this timestep
+
+This is calculated as:
+
+time = ts.data['time_offset'] + ts.time
+
+Or, if the trajectory doesn’t provide time information:
+
+time = ts.data['time_offset'] + ts.frame * ts.dt
+
+Added in version 0.11.0.
+
+ dt
+
+The time difference in ps between timesteps
+
+Note
+
+This defaults to 1.0 ps in the absence of time data
+
+Added in version 0.11.0.
+
+ positions
+
+A record of the positions of all atoms in this Timestep Setting this attribute will add positions to the Timestep if they weren’t originally present.
+
+Returns:
+
+positions – position data of shape (n_atoms, 3) for all atoms
+
+Return type:
+
+numpy.ndarray with dtype numpy.float32
+
+Raises:
+
+MDAnalysis.exceptions.NoDataError – if the Timestep has no position data
+
+Changed in version 0.11.0: Now can raise NoDataError when no position data present
+
+ velocities
+
+A record of the velocities of all atoms in this Timestep Setting this attribute will add velocities to the Timestep if they weren’t originally present.
+
+Returns:
+
+velocities – velocity data of shape (n_atoms, 3) for all atoms
+
+Return type:
+
+numpy.ndarray with dtype numpy.float32
+
+Raises:
+
+MDAnalysis.exceptions.NoDataError – if the Timestep has no velocity data
+
+Added in version 0.11.0.
+
+ forces
+
+A record of the forces of all atoms in this Timestep Setting this attribute will add forces to the Timestep if they weren’t originally present.
+
+Returns:
+
+forces – force data of shape (n_atoms, 3) for all atoms
+
+Return type:
+
+numpy.ndarray with dtype numpy.float32
+
+Raises:
+
+MDAnalysis.exceptions.NoDataError – if the Timestep has no force data
+
+.. versionadded: – 0.11.0:
+
+ has_positions
+
+A boolean of whether this Timestep has position data This can be changed to True or False to allocate space for or remove the data.
+
+Added in version 0.11.0.
+
+ has_velocities
+
+A boolean of whether this Timestep has velocity data This can be changed to True or False to allocate space for or remove the data.
+
+Added in version 0.11.0.
+
+ has_forces
+
+A boolean of whether this Timestep has force data This can be changed to True or False to allocate space for or remove the data.
+
+Added in version 0.11.0.
+
+ _pos
+
+numpy.ndarray of dtype float32 of shape (n_atoms, 3) and internal C order, holding the raw cartesian coordinates (in MDAnalysis units, i.e. Å).
+
+Note
+
+Normally one does not directly access _pos but uses the positions attribute of a AtomGroup but sometimes it can be faster to directly use the raw coordinates. Any changes to this array are immediately reflected in the atom positions. If the frame is written to a new trajectory then the coordinates are changed. If a new trajectory frame is loaded, then all contents of _pos are overwritten.
+
+ _velocities
+
+numpy.ndarray of dtype float32. of shape (n_atoms, 3), holding the raw velocities (in MDAnalysis units, i.e., Å/ps).
+
+Note
+
+Normally velocities are accessed through the Timestep.velocities attribute or the velocities attribute of an AtomGroup
+
+_velocities only exists if the has_velocities flag is True.
+
+Added in version 0.7.5.
+
+ _forces
+
+numpy.ndarray of dtype float32. of shape (n_atoms, 3), holding the forces
+
+_forces only exists if has_forces is True.
+
+Added in version 0.11.0: Added as optional to Timestep
+
+ dtype
+
+The NumPy dtype of the timestep, all arrays in the timestep will
+
+have this dtype. Currently hardcoded to float32.
+
+Added in version 2.3.0: Added dtype
+
+ dimensions
+
+View of unitcell dimensions (A, B, C, alpha, beta, gamma)
+
+lengths a, b, c are in the MDAnalysis length unit (Å), and angles are in degrees.
+
+ triclinic_dimensions
+
+The unitcell dimensions represented as triclinic vectors
+
+Returns:
+
+A (3, 3) numpy.ndarray of unit cell vectors
+
+Return type:
+
+numpy.ndarray
+
+Examples
+
+The unitcell for a given system can be queried as either three vectors lengths followed by their respective angle, or as three triclinic vectors.
+
+>>> ts.dimensions
+array([ 13.,  14.,  15.,  90.,  90.,  90.], dtype=float32)
+>>> ts.triclinic_dimensions
+array([[ 13.,   0.,   0.],
+       [  0.,  14.,   0.],
+       [  0.,   0.,  15.]], dtype=float32)
+
+Setting the attribute also works:
+
+>>> ts.triclinic_dimensions = [[15, 0, 0], [5, 15, 0], [5, 5, 15]]
+>>> ts.dimensions
+array([ 15.        ,  15.81138802,  16.58312416,  67.58049774,
+        72.45159912,  71.56504822], dtype=float32)
+
+See also
+
+MDAnalysis.lib.mdamath.triclinic_vectors()
+
+Added in version 0.11.0.
+
+ volume
+
+volume of the unitcell
+
+ data
+
+dict that holds arbitrary per Timestep data
+
+Added in version 0.11.0.
+
+ __getitem__(self, atoms)
+
+Get a selection of coordinates
+
+ts[i]
+
+return coordinates for the i’th atom (0-based)
+
+ts[start:stop:skip]
+
+return an array of coordinates, where start, stop and skip correspond to atom indices, MDAnalysis.core.groups.Atom.index (0-based)
+
+ __eq__(self, other)
+
+Compare with another Timestep
+
+Added in version 0.11.0.
+
+ __iter__(self)
+
+Iterate over coordinates
+
+for x in ts
+
+iterate of the coordinates, atom by atom
+
+ copy(self)
+
+Make an independent (“deep”) copy of the whole Timestep.
+
+ copy_slice(self, sel)
+
+Make a new Timestep containing a subset of the original Timestep.
+
+Parameters:
+
+sel (array_like or slice) – The underlying position, velocity, and force arrays are sliced using a list, slice, or any array-like.
+
+Returns:
+
+A Timestep object of the same type containing all header information and all atom information relevant to the selection.
+
+Return type:
+
+Timestep
+
+Note
+
+The selection must be a 0 based slice or array of the atom indices in this Timestep
+
+Example
+
+Using a Python slice object:
+
+new_ts = ts.copy_slice(slice(start, stop, step))
+
+Using a list of indices:
+
+new_ts = ts.copy_slice([0, 2, 10, 20, 23])
+
+Added in version 0.8.
+
+Changed in version 0.11.0: Reworked to follow new Timestep API. Now will strictly only copy official attributes of the Timestep.

@@ -1,0 +1,25 @@
+MDAnalysis.lib.qcprot.FastCalcRMSDAndRotation(rot, A, E0, N)
+
+Calculate the RMSD, and/or the optimal rotation matrix.
+
+Parameters:
+
+rot (ndarray or None) – result rotation matrix, modified inplace
+
+A (ndarray) – the inner product of two structures
+
+E0 (floating) – 0.5 * (G1 + G2)
+
+N (int) – size of the system
+
+Returns:
+
+rmsd – RMSD value for two structures
+
+Return type:
+
+double
+
+Changed in version 0.16.0: Array sized changed from 3xN to Nx3.
+
+Changed in version 2.7.0: Changed arguments to floating type, can accept either float32 or float64 inputs. Internally still uses double precision for QCP algorithm

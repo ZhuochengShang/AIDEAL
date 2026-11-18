@@ -1,0 +1,27 @@
+readframes(start=None, stop=None, step=None, order='fac', indices=None)
+
+read multiple frames at once
+
+Parameters:
+
+start (int (optional)) – starting frame, default to 0
+
+stop (int (optional)) – stop frame, default to n_frames
+
+step (int (optional)) – step between frames read, defaults to 1
+
+order (str (optional)) – give order of returned array with f:frames, a:atoms, c:coordinates
+
+indices (array_like (optional)) – only read selected atoms. In None read all.
+
+Returns:
+
+DCDFrame – positions are in x and unitcell in unitcell attribute of DCDFrame. Here the attributes contain the positions for all frames in the given order
+
+Return type:
+
+namedtuple
+
+Notes
+
+unitcell is read as it from DCD. Post processing depending the program this DCD file was written with is necessary. Have a look at the MDAnalysis DCD reader for possible post processing into a common unitcell data structure.

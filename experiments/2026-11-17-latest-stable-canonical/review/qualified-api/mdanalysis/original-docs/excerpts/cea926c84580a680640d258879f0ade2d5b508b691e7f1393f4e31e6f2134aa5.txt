@@ -1,0 +1,15 @@
+generate_table(output_format=None)[source]
+
+Generate a normalised table of the results.
+
+Parameters:
+
+output_format ({'sele1_sele2', 'donor_acceptor'}) – The output format of the table can be changed a fashion similar to WaterBridgeAnalysis.results.timeseries by changing the labels of the columns of the participating atoms.
+
+Returns:
+
+table (numpy.rec.recarray) – A “tidy” table with one hydrogen bond per row, labeled according to output_format and containing information of atom_1, atom_2, distance, and angle.
+
+.. versionchanged:: 2.0.0 – Return the generated table (as well as storing it as table).
+
+.. deprecated:: 2.0.0 – In release 3.0.0, generate_table() will _only_ return the table and no longer store it in table.

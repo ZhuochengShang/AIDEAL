@@ -1,0 +1,27 @@
+psi_selections(c_name='C', n_name='N', ca_name='CA')
+
+Select list of AtomGroups corresponding to the psi protein
+
+backbone dihedral N-CA-C-N’.
+
+c_name: str (optional)
+
+name for the backbone C atom
+
+n_name: str (optional)
+
+name for the backbone N atom
+
+ca_name: str (optional)
+
+name for the alpha-carbon atom
+
+List of AtomGroups
+
+4-atom selections in the correct order. If no N’ found in the following residue (by resid) then the corresponding item in the list is None.
+
+Added in version 1.0.0.
+
+Note
+
+This requires the underlying topology to have names. Otherwise, a NoDataError is raised.

@@ -1,0 +1,1519 @@
+class MDAnalysis.core.groups.SegmentGroup(*args, **kwargs)[source]
+
+SegmentGroup base class.
+
+This class is used by a Universe for generating its Topology-specific SegmentGroup class. All the TopologyAttr components are obtained from GroupBase, so this class only includes ad-hoc methods specific to SegmentGroups.
+
+SegmentGroups can be compared and combined using group operators. See the list of these operators on GroupBase.
+
+Deprecated since version 0.16.2: Instant selectors of Segments will be removed in the 1.0 release.
+
+Changed in version 1.0.0: Removed instant selectors, use select_atoms instead
+
+Changed in version 2.1.0: Indexing an SegmentGroup with None raises a TypeError.
+
+ accumulate(attribute, function=<function sum>, compound='group')
+
+Accumulates the attribute associated with (compounds of) the group.
+
+Accumulates the attribute of Atoms in the group. The accumulation per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. By default, the method sums up all attributes per compound, but any function that takes an array and returns an acuumulation over a given axis can be used. For multi-dimensional input arrays, the accumulation is performed along the first axis.
+
+Parameters:
+
+attribute (str or array_like) – Attribute or array of values to accumulate. If a numpy.ndarray (or compatible) is provided, its first dimension must have the same length as the total number of atoms in the group.
+
+function (callable, optional) – The function performing the accumulation. It must take the array of attribute values to accumulate as its only positional argument and accept an (optional) keyword argument axis allowing to specify the axis along which the accumulation is performed.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'},) – optional If 'group', the accumulation of all attributes associated with atoms in the group will be returned as a single value. Otherwise, the accumulation of the attributes per Segment, Residue, molecule, or fragment will be returned as a 1d array. Note that, in any case, only the Atoms belonging to the group will be taken into account.
+
+Returns:
+
+Acuumulation of the attribute. If compound is set to 'group', the first dimension of the attribute array will be contracted to a single value. If compound is set to 'segments', 'residues', 'molecules', or 'fragments', the length of the first dimension will correspond to the number of compounds. In all cases, the other dimensions of the returned array will be of the original shape (without the first dimension).
+
+Return type:
+
+float or numpy.ndarray
+
+Raises:
+
+ValueError – If the length of a provided attribute array does not correspond to the number of atoms in the group.
+
+ValueError – If compound is not one of 'group', 'segments', 'residues', 'molecules', or 'fragments'.
+
+NoDataError – If compound is 'molecule' but the topology doesn’t contain molecule information (molnums), or if compound is 'fragments' but the topology doesn’t contain bonds.
+
+Examples
+
+To find the total charge of a given AtomGroup:
+
+>>> sel = u.select_atoms('prop mass > 4.0')
+>>> sel.accumulate('charges')
+-251.68500316143036
+
+To find the total mass per residue of all CA Atoms:
+
+ >>> sel = u.select_atoms('name CA')
+ >>> sel.accumulate('masses', compound='residues')
+ array([12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        ...
+
+To find the maximum atomic charge per fragment of a given AtomGroup:
+
+>>> import numpy as np
+>>> sel.accumulate('charges', compound="fragments", function=np.max)
+array([0.20999999])
+
+Added in version 0.20.0.
+
+ align_principal_axis(axis, vector)
+
+Align principal axis with index axis with vector.
+
+axis{0, 1, 2}
+
+Index of the principal axis (0, 1, or 2), as produced by principal_axes().
+
+vectorarray_like
+
+Vector to align principal axis with.
+
+To align the long axis of a channel (the first principal axis, i.e. axis = 0) with the z-axis:
+
+u.atoms.align_principal_axis(0, [0,0,1])
+u.atoms.write("aligned.pdb")
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ asphericity(wrap=False, unwrap=False, compound='group')
+
+Asphericity.
+
+See [Dima2004b] for background information.
+
+wrapbool, optional
+
+If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’}, optional
+
+Which type of component to keep together during unwrapping.
+
+Added in version 0.7.7.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 0.20.0: Added unwrap and compound parameter
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Changed in version 2.5.0: Added calculation for any compound type
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ asunique(sorted=False)[source]
+
+Return a SegmentGroup containing unique Segments only, with optional sorting.
+
+If the SegmentGroup is unique, this is the group itself.
+
+Parameters:
+
+sorted (bool (optional)) – Whether or not the returned SegmentGroup should be sorted by segindex.
+
+Returns:
+
+Unique SegmentGroup
+
+Return type:
+
+SegmentGroup
+
+Examples
+
+>>> sg = u.segments[[2, 1, 2, 2, 1, 0]]
+>>> sg
+<SegmentGroup with 6 segments>
+>>> sg.ix
+array([2, 1, 2, 2, 1, 0])
+>>> sg2 = sg.asunique(sorted=True)
+>>> sg2
+<SegmentGroup with 3 segments>
+>>> sg2.ix
+array([0, 1, 2])
+>>> sg2.asunique() is sg2
+True
+
+Added in version 2.0.0.
+
+ property atoms
+
+An AtomGroup of Atoms present in this SegmentGroup.
+
+The Atoms are ordered locally by Residue, which are further ordered by Segment in the SegmentGroup. Duplicates are not removed.
+
+ bbox(wrap=False)
+
+Return the bounding box of the selection.
+
+The lengths A,B,C of the orthorhombic enclosing box are
+
+L = AtomGroup.bbox()
+A,B,C = L[1] - L[0]
+
+Parameters:
+
+wrap (bool, optional) – If True, move all Atoms to the primary unit cell before calculation. [False]
+
+Returns:
+
+corners – 2x3 array giving corners of bounding box as [[xmin, ymin, zmin], [xmax, ymax, zmax]].
+
+Return type:
+
+numpy.ndarray
+
+Added in version 0.7.2.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 1.0.0: Removed flags affecting default behaviour
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ property bfactors
+
+Bfactor alias with warning
+
+Note
+
+This requires the underlying topology to have tempfactors. Otherwise, a NoDataError is raised.
+
+ bsphere(wrap=False)
+
+Return the bounding sphere of the selection.
+
+The sphere is calculated relative to the center of geometry.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms to the primary unit cell before calculation. [False]
+
+Returns:
+
+R (float) – Radius of the bounding sphere.
+
+center (numpy.ndarray) – Coordinates of the sphere center as [xcen, ycen, zcen].
+
+Added in version 0.7.3.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ center(weights, wrap=False, unwrap=False, compound='group')
+
+Weighted center of (compounds of) the group
+
+Computes the weighted center of Atoms in the group. Weighted centers per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the weights of a compound sum up to zero, the coordinates of that compound’s weighted center will be nan (not a number).
+
+Parameters:
+
+weights (array_like or None) – Weights to be used. Setting weights=None is equivalent to passing identical weights for all atoms of the group.
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not 'group' the center of each compound will be calculated without moving any Atoms to keep the compounds intact. Instead, the resulting position vectors will be moved to the primary unit cell after calculation. Default [False].
+
+unwrap (bool, optional) –
+
+If True, compounds will be unwrapped before computing their
+
+centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – If 'group', the weighted center of all atoms in the group will be returned as a single position vector. Else, the weighted centers of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+center – Position vector(s) of the weighted center(s) of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments', 'residues', 'molecules', or 'fragments', the output will be a 2d array of shape (n, 3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If compound is not one of 'group', 'segments', 'residues', 'molecules', or 'fragments'.
+
+ValueError – If both ‘wrap’ and ‘unwrap’ set to true.
+
+NoDataError – If compound is 'molecule' but the topology doesn’t contain molecule information (molnums) or if compound is 'fragments' but the topology doesn’t contain bonds.
+
+Examples
+
+To find the center of charge of a given AtomGroup:
+
+>>> sel = u.select_atoms('prop mass > 4.0')
+>>> sel.center(sel.charges)
+array([-0.22925091, -0.04771193, -0.16728489])
+
+To find the centers of mass per residue of all CA Atoms:
+
+ >>> sel = u.select_atoms('name CA')
+ >>> sel.center(sel.masses, compound='residues')
+ array([[ 11.66462231,   8.39347267,  -8.98323059],
+       [ 11.41483879,   5.43442154,  -6.51348448],
+       [  8.95975494,   5.61292315,  -3.61323047],
+       [  8.29006767,   3.07599092,  -0.79665166],
+       [  5.01112604,   3.76389837,   1.130355  ],
+       ...
+
+Changed in version 0.19.0: Added compound parameter
+
+Changed in version 0.20.0: Added 'molecules' and 'fragments' compounds
+
+Changed in version 0.20.0: Added unwrap parameter
+
+Changed in version 1.0.0: Removed flags affecting default behaviour
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ center_of_charge(wrap=False, unwrap=False, compound='group')
+
+Center of (absolute) charge of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i \vert q_i \vert \boldsymbol r_i} {\sum_i \vert q_i \vert}\]
+
+where \(q_i\) is the charge and \(\boldsymbol r_i\) the position of atom \(i\) in the given MDAnalysis.core.groups.AtomGroup. Centers of charge per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the charges of a compound sum up to zero, the center of mass coordinates of that compound will be nan (not a number).
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', the center of mass of all atoms in the group will be returned as a single position vector. Otherwise, the centers of mass of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+centernumpy.ndarray
+
+Position vector(s) of the center(s) of charge of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d coordinate array of shape (n, 3) where n is the number of compounds.
+
+This method can only be accessed if the underlying topology has information about atomic charges.
+
+Added in version 2.2.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.
+
+ center_of_geometry(wrap=False, unwrap=False, compound='group')
+
+Center of geometry of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i \boldsymbol r_i}{\sum_i 1}\]
+
+where \(\boldsymbol r_i\) of Atoms \(i\). Centers of geometry per Residue or per Segment can be obtained by setting the compound parameter accordingly.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is 'segments' or 'residues', the center of each compound will be calculated without moving any Atoms to keep the compounds intact. Instead, the resulting position vectors will be moved to the primary unit cell after calculation. Default False.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – If 'group', the center of geometry of all Atoms in the group will be returned as a single position vector. Else, the centers of geometry of each Segment or Residue will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+center – Position vector(s) of the geometric center(s) of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d array of shape (n, 3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 0.19.0: Added compound parameter
+
+Changed in version 0.20.0: Added 'molecules' and 'fragments' compounds
+
+Changed in version 0.20.0: Added unwrap parameter
+
+Changed in version 1.0.0: Removed flags affecting default behaviour
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ center_of_mass(wrap=False, unwrap=False, compound='group')
+
+Center of mass of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i m_i \boldsymbol r_i}{\sum m_i}\]
+
+where \(m_i\) is the mass and \(\boldsymbol r_i\) the position of atom \(i\) in the given MDAnalysis.core.groups.AtomGroup. Centers of mass per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the masses of a compound sum up to zero, the center of mass coordinates of that compound will be nan (not a number).
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’},
+
+optional
+
+If 'group', the center of mass of all atoms in the group will be returned as a single position vector. Otherwise, the centers of mass of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+centernumpy.ndarray
+
+Position vector(s) of the center(s) of mass of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d coordinate array of shape (n, 3) where n is the number of compounds.
+
+This method can only be accessed if the underlying topology has information about atomic masses.
+
+Changed in version 0.8: Added pbc parameter
+
+Changed in version 0.19.0: Added compound parameter
+
+Changed in version 0.20.0: Added 'molecules' and 'fragments' compounds; added unwrap parameter
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ centroid(wrap=False, unwrap=False, compound='group')
+
+Center of geometry of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i \boldsymbol r_i}{\sum_i 1}\]
+
+where \(\boldsymbol r_i\) of Atoms \(i\). Centers of geometry per Residue or per Segment can be obtained by setting the compound parameter accordingly.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is 'segments' or 'residues', the center of each compound will be calculated without moving any Atoms to keep the compounds intact. Instead, the resulting position vectors will be moved to the primary unit cell after calculation. Default False.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'}, optional) – If 'group', the center of geometry of all Atoms in the group will be returned as a single position vector. Else, the centers of geometry of each Segment or Residue will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+center – Position vector(s) of the geometric center(s) of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d array of shape (n, 3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 0.19.0: Added compound parameter
+
+Changed in version 0.20.0: Added 'molecules' and 'fragments' compounds
+
+Changed in version 0.20.0: Added unwrap parameter
+
+Changed in version 1.0.0: Removed flags affecting default behaviour
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+ concatenate(other)
+
+Concatenate with another Group or Component of the same level.
+
+Duplicate entries and original order is preserved. It is synomymous to the + operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with elements of self and other concatenated
+
+Return type:
+
+Group
+
+Example
+
+The order of the original contents (including duplicates) are preserved when performing a concatenation.
+
+>>> ag1 = u.select_atoms('name O')
+>>> ag2 = u.select_atoms('name N')
+>>> ag3 = ag1 + ag2  # or ag1.concatenate(ag2)
+>>> ag3[:3].names
+array(['O', 'O', 'O'], dtype=object)
+>>> ag3[-3:].names
+array(['N', 'N', 'N'], dtype=object)
+
+Added in version 0.16.0.
+
+ copy()
+
+Get another group identical to this one.
+
+Added in version 0.19.0.
+
+ difference(other)
+
+Elements from this Group that do not appear in another
+
+This method removes duplicate elements and sorts the result. As such, it is different from subtract(). difference() is synomymous to the - operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the elements of self that are not in other, without duplicate elements
+
+Return type:
+
+Group
+
+See also
+
+subtract, symmetric_difference
+
+Added in version 0.16.
+
+ property dimensions
+
+Obtain a copy of the dimensions of the currently loaded Timestep
+
+ dipole_moment(**kwargs)
+
+Dipole moment of the group or compounds in a group.
+
+ \[\mu = |\boldsymbol{\mu}| = \sqrt{ \sum_{i=1}^{D} \mu^2 }\]
+
+Where \(D\) is the number of dimensions, in this case 3.
+
+Computes the dipole moment of Atoms in the group. Dipole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is a net charge, the magnitude of the dipole moment is dependent on the center chosen. See dipole_vector().
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center{‘mass’, ‘charge’}, optional
+
+Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+numpy.ndarray
+
+Dipole moment(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Added in version 2.4.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.
+
+ dipole_vector(wrap=False, unwrap=False, compound='group', center='mass')
+
+Dipole vector of the group.
+
+ \[\boldsymbol{\mu} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+Computes the dipole vector of Atoms in the group. Dipole vector per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that the magnitude of the dipole moment is independent of the center chosen unless the species has a net charge. In the case of a charged group the dipole moment can be later adjusted with:
+
+ \[\boldsymbol{\mu}_{COC} = \boldsymbol{\mu}_{COM} + q_{ag}\mathbf{r}_{COM} - q_{ag}\boldsymbol{r}_{COC}\]
+
+Where \(\mathbf{r}_{COM}\) is the center of mass and \(\mathbf{r}_{COC}\) is the center of charge.
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center{‘mass’, ‘charge’}, optional
+
+Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+numpy.ndarray
+
+Dipole vector(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,3) where n is the number of compounds.
+
+Added in version 2.4.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.
+
+ get_connections(typename, outside=True)
+
+Get bonded connections between atoms as a TopologyGroup.
+
+Parameters:
+
+typename (str) – group name. One of {“bonds”, “angles”, “dihedrals”, “impropers”, “ureybradleys”, “cmaps”}
+
+outside (bool (optional)) – Whether to include connections involving atoms outside this group.
+
+Returns:
+
+TopologyGroup – containing the bonded group of choice, i.e. bonds, angles, dihedrals, impropers, ureybradleys or cmaps.
+
+.. versionadded:: 1.1.0
+
+ groupby(topattrs)
+
+Group together items in this group according to values of topattr
+
+Parameters:
+
+topattrs (str or list) – One or more topology attributes to group components by. Single arguments are passed as a string. Multiple arguments are passed as a list.
+
+Returns:
+
+Unique values of the multiple combinations of topology attributes as keys, Groups as values.
+
+Return type:
+
+dict
+
+Example
+
+To group atoms with the same mass together:
+
+ >>> ag.groupby('masses')
+ {32.06: <AtomGroup with 7 atoms>,
+  1.008: <AtomGroup with 1685 atoms>,
+  12.011: <AtomGroup with 1040 atoms>,
+  14.007: <AtomGroup with 289 atoms>,
+  15.999: <AtomGroup with 320 atoms>}
+
+To group atoms with the same residue name and mass together:
+
+ >>> group_dict = ag.groupby(['resnames', 'masses'])
+ >>> dict(sorted(group_dict.items()))
+ {('ALA', 1.008): <AtomGroup with 95 atoms>,
+  ('ALA', 12.011): <AtomGroup with 57 atoms>,
+  ('ALA', 14.007): <AtomGroup with 19 atoms>,
+  ('ALA', 15.999): <AtomGroup with 19 atoms>,
+  ('ARG', 1.008): <AtomGroup with 169 atoms>,
+  ...
+
+>>> ag.groupby(['resnames', 'masses'])['ALA', 15.999]
+<AtomGroup with 19 atoms>
+
+Added in version 0.16.0.
+
+Changed in version 0.18.0: The function accepts multiple attributes
+
+ gyration_moments(wrap=False, unwrap=False, compound='group')
+
+Moments of the gyration tensor.
+
+The moments are defined as the eigenvalues of the gyration tensor.
+
+ \[\mathsf{T} = \frac{1}{N} \sum_{i=1}^{N} (\mathbf{r}_\mathrm{i} - \mathbf{r}_\mathrm{COM})(\mathbf{r}_\mathrm{i} - \mathbf{r}_\mathrm{COM})\]
+
+Where \(\mathbf{r}_\mathrm{COM}\) is the center of mass.
+
+See [Dima2004a] for background information.
+
+wrapbool, optional
+
+If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’}, optional
+
+Which type of component to keep together during unwrapping.
+
+principle_moments_of_gyrationnumpy.ndarray
+
+Gyration vector(s) of (compounds of) the group in \(Å^2\). If compound was set to 'group', the output will be a single vector of length 3. Otherwise, the output will be a 2D array of shape (n,3) where n is the number of compounds.
+
+Added in version 2.5.0.
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ intersection(other)
+
+Group of elements which are in both this Group and another
+
+This method removes duplicate elements and sorts the result. It is synomymous to the & operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the common elements of self and other, without duplicate elements
+
+Return type:
+
+Group
+
+Example
+
+Intersections can be used when the select atoms string would become too complicated. For example to find the water atoms which are within 4.0A of two segments:
+
+>>> shell1 = u.select_atoms('resname SOL and around 4.0 segid 1')
+>>> shell2 = u.select_atoms('resname SOL and around 4.0 segid 2')
+>>> common = shell1 & shell2  # or shell1.intersection(shell2)
+
+See also
+
+union
+
+Added in version 0.16.
+
+ is_strict_subset(other)
+
+If this Group is a subset of another Group but not identical
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+True if this Group is a strict subset of the other one
+
+Return type:
+
+bool
+
+Added in version 0.16.
+
+ is_strict_superset(other)
+
+If this Group is a superset of another Group but not identical
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+True if this Group is a strict superset of the other one
+
+Return type:
+
+bool
+
+Added in version 0.16.
+
+ isdisjoint(other)
+
+If the Group has no elements in common with the other Group
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+True if the two Groups do not have common elements
+
+Return type:
+
+bool
+
+Added in version 0.16.
+
+ issubset(other)
+
+If all elements of this Group are part of another Group
+
+Note that an empty group is a subset of any group of the same level.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+True if this Group is a subset of the other one
+
+Return type:
+
+bool
+
+Added in version 0.16.
+
+ issuperset(other)
+
+If all elements of another Group are part of this Group
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+True if this Group is a subset of the other one
+
+Return type:
+
+bool
+
+Added in version 0.16.
+
+ property isunique
+
+Boolean indicating whether all components of the group are unique, i.e., the group contains no duplicates.
+
+Examples
+
+>>> ag = u.atoms[[2, 1, 2, 2, 1, 0]]
+>>> ag
+<AtomGroup with 6 atoms>
+>>> ag.isunique
+False
+>>> ag2 = ag.unique
+>>> ag2
+<AtomGroup with 3 atoms>
+>>> ag2.isunique
+True
+
+See also
+
+asunique
+
+Added in version 0.19.0.
+
+ property ix
+
+Unique indices of the components in the Group.
+
+If this Group is an AtomGroup, these are the indices of the Atom instances.
+
+If it is a ResidueGroup, these are the indices of the Residue instances.
+
+If it is a SegmentGroup, these are the indices of the Segment instances.
+
+ property ix_array
+
+Unique indices of the components in the Group.
+
+For a Group, ix_array is the same as ix. This method gives a consistent API between components and groups.
+
+See also
+
+ix
+
+ moment_of_inertia(wrap=False, unwrap=False, compound='group')
+
+Moment of inertia tensor relative to center of mass.
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers and tensor of inertia.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’},
+
+optional
+
+compound determines the behavior of wrap. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+moment_of_inertianumpy.ndarray
+
+Moment of inertia tensor as a 3 x 3 numpy array.
+
+The moment of inertia tensor \(\mathsf{I}\) is calculated for a group of \(N\) atoms with coordinates \(\mathbf{r}_i,\ 1 \le i \le N\) relative to its center of mass from the relative coordinates
+
+ \[\mathbf{r}'_i = \mathbf{r}_i - \frac{1}{\sum_{i=1}^{N} m_i} \sum_{i=1}^{N} m_i \mathbf{r}_i\]
+
+as
+
+ \[\mathsf{I} = \sum_{i=1}^{N} m_i \Big[(\mathbf{r}'_i\cdot\mathbf{r}'_i) \sum_{\alpha=1}^{3} \hat{\mathbf{e}}_\alpha \otimes \hat{\mathbf{e}}_\alpha - \mathbf{r}'_i \otimes \mathbf{r}'_i\Big]\]
+
+where \(\hat{\mathbf{e}}_\alpha\) are Cartesian unit vectors, or in Cartesian coordinates
+
+ \[I_{\alpha,\beta} = \sum_{k=1}^{N} m_k \Big(\big(\sum_{\gamma=1}^3 (x'^{(k)}_{\gamma})^2 \big)\delta_{\alpha,\beta} - x'^{(k)}_{\alpha} x'^{(k)}_{\beta} \Big).\]
+
+where \(x'^{(k)}_{\alpha}\) are the Cartesian coordinates of the relative coordinates \(\mathbf{r}'_k\).
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 0.20.0: Added unwrap parameter
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ property n_atoms
+
+Number of atoms present in the SegmentGroup, including duplicate segments (and thus, duplicate atoms).
+
+Equivalent to len(self.atoms).
+
+ property n_residues
+
+Number of residues present in this SegmentGroup, including duplicate segments (and thus, residues).
+
+Equivalent to len(self.residues).
+
+ property n_segments
+
+Number of segments in the SegmentGroup.
+
+Equivalent to len(self).
+
+ pack_into_box(box=None, inplace=True)
+
+Shift all Atoms in this group to the primary unit cell.
+
+Parameters:
+
+box (array_like) – Box dimensions, can be either orthogonal or triclinic information. Cell dimensions must be in an identical to format to those returned by MDAnalysis.coordinates.timestep.Timestep.dimensions, [lx, ly, lz, alpha, beta, gamma]. If None, uses these timestep dimensions.
+
+inplace (bool) – True to change coordinates in place.
+
+Returns:
+
+coords – Shifted atom coordinates.
+
+Return type:
+
+numpy.ndarray
+
+Notes
+
+All atoms will be moved so that they lie between 0 and boxlength \(L_i\) in all dimensions, i.e. the lower left corner of the simulation box is taken to be at (0,0,0):
+
+ \[x_i' = x_i - \left\lfloor\frac{x_i}{L_i}\right\rfloor\]
+
+The default is to take unit cell information from the underlying Timestep instance. The optional argument box can be used to provide alternative unit cell information (in the MDAnalysis standard format [Lx, Ly, Lz, alpha, beta, gamma]).
+
+Works with either orthogonal or triclinic box types.
+
+Note
+
+pack_into_box() is identical to wrap() with all default keywords.
+
+Note
+
+AtomGroup.pack_into_box() is currently faster than ResidueGroup.pack_into_box() or SegmentGroup.pack_into_box().
+
+Added in version 0.8.
+
+ principal_axes(wrap=False)
+
+Calculate the principal axes from the moment of inertia.
+
+e1,e2,e3 = AtomGroup.principal_axes()
+
+The eigenvectors are sorted by eigenvalue, i.e. the first one corresponds to the highest eigenvalue and is thus the first principal axes.
+
+The eigenvectors form a right-handed coordinate system.
+
+wrapbool, optional
+
+If True, move all atoms within the primary unit cell before calculation. [False]
+
+axis_vectorsarray
+
+3 x 3 array with v[0] as first, v[1] as second, and v[2] as third eigenvector.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 1.0.0: Always return principal axes in right-hand convention.
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ quadrupole_moment(**kwargs)
+
+Quadrupole moment of the group according to [1].
+
+ \[Q = \sqrt{\frac{2}{3}{\hat{\mathsf{Q}}}:{\hat{\mathsf{Q}}}}\]
+
+where the quadrupole moment is calculated from the tensor double contraction of the traceless quadropole tensor \(\hat{\mathsf{Q}}\)
+
+Computes the quadrupole moment of Atoms in the group. Quadrupole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole moment is dependant on the center chosen and cannot be translated.
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center{‘mass’, ‘charge’}, optional
+
+Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+numpy.ndarray
+
+Quadrupole moment(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Added in version 2.4.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.
+
+ quadrupole_tensor(wrap=False, unwrap=False, compound='group', center='mass')
+
+Traceless quadrupole tensor of the group or compounds.
+
+This tensor is first computed as the outer product of vectors from a reference point to some atom, and multiplied by the atomic charge. The tensor of each atom is then summed to produce the quadrupole tensor of the group:
+
+ \[\mathsf{Q} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} ) \otimes ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+The traceless quadrupole tensor, \(\hat{\mathsf{Q}}\), is then taken from:
+
+ \[\hat{\mathsf{Q}} = \frac{3}{2} \mathsf{Q} - \frac{1}{2} tr(\mathsf{Q})\]
+
+Computes the quadrupole tensor of Atoms in the group. Tensor per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole tensor is dependent on the center (e.g., \(\mathbf{r}_{COM}\)) chosen and cannot be translated.
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center{‘mass’, ‘charge’}, optional
+
+Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+numpy.ndarray
+
+Quadrupole tensor(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single tensor of shape (3,3). Otherwise, the output will be a 1d array of shape (n,3,3) where n is the number of compounds.
+
+Added in version 2.4.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.
+
+ radius_of_gyration(wrap=False, **kwargs)
+
+Radius of gyration.
+
+wrapbool, optional
+
+If True, move all atoms within the primary unit cell before calculation. [False]
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ property residues
+
+A ResidueGroup of Residues present in this SegmentGroup.
+
+The Residues are ordered locally by Segment in the SegmentGroup. Duplicates are not removed.
+
+ rotate(R, point=(0, 0, 0))
+
+Apply a rotation matrix R to the selection’s coordinates. \(\mathsf{R}\) is a 3x3 orthogonal matrix that transforms a vector \(\mathbf{x} \rightarrow \mathbf{x}'\):
+
+ \[\mathbf{x}' = \mathsf{R}\mathbf{x}\]
+
+Atom coordinates are rotated in-place.
+
+Parameters:
+
+R (array_like) – 3x3 rotation matrix
+
+point (array_like, optional) – Center of rotation
+
+Return type:
+
+self
+
+Notes
+
+By default, rotates about the origin point=(0, 0, 0). To rotate a group g around its center of geometry, use g.rotate(R, point=g.center_of_geometry()).
+
+See also
+
+rotateby
+
+rotate around given axis and angle
+
+MDAnalysis.lib.transformations
+
+module of all coordinate transforms
+
+Changed in version 2.11.0: Also rotate velocities and forces if present in Timestep.
+
+ rotateby(angle, axis, point=None)
+
+Apply a rotation to the selection’s coordinates.
+
+Parameters:
+
+angle (float) – Rotation angle in degrees.
+
+axis (array_like) – Rotation axis vector.
+
+point (array_like, optional) – Center of rotation. If None then the center of geometry of this group is used.
+
+Return type:
+
+self
+
+Notes
+
+The transformation from current coordinates \(\mathbf{x}\) to new coordinates \(\mathbf{x}'\) is
+
+ \[\mathbf{x}' = \mathsf{R}\,(\mathbf{x}-\mathbf{p}) + \mathbf{p}\]
+
+where \(\mathsf{R}\) is the rotation by angle around the axis going through point \(\mathbf{p}\).
+
+See also
+
+MDAnalysis.lib.transformations.rotation_matrix
+
+calculate
+
+math:mathsf{R}
+
+Changed in version 2.11.0: Also rotate velocities and forces if present in Timestep.
+
+ property segments
+
+The SegmentGroup itself.
+
+See also
+
+copy
+
+return a true copy of the SegmentGroup
+
+Changed in version 0.19.0: In previous versions, this returned a copy, but now the SegmentGroup itself is returned. This should not affect any code but only speed up calculations.
+
+ shape_parameter(wrap=False, unwrap=False, compound='group')
+
+Shape parameter.
+
+See [Dima2004a] for background information.
+
+wrapbool, optional
+
+If True, move all atoms within the primary unit cell before calculation. [False]
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’}, optional
+
+Which type of component to keep together during unwrapping.
+
+Added in version 0.7.7.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0. Superfluous kwargs were removed.
+
+Changed in version 2.5.0: Added calculation for any compound type
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ subtract(other)
+
+Group with elements from this Group that don’t appear in other
+
+The original order of this group is kept, as well as any duplicate elements. If an element of this Group is duplicated and appears in the other Group or Component, then all the occurences of that element are removed from the returned Group.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the elements of self that are not in other, conserves order and duplicates.
+
+Return type:
+
+Group
+
+Example
+
+Unlike difference() this method will not sort or remove duplicates.
+
+>>> ag1 = u.atoms[[3, 3, 2, 2, 1, 1]]
+>>> ag2 = u.atoms[2]
+>>> ag3 = ag1.subtract(ag2)
+>>> ag3.indices
+array([3, 3, 1, 1])
+
+See also
+
+concatenate, difference
+
+Added in version 0.16.
+
+ symmetric_difference(other)
+
+Group of elements which are only in one of this Group or another
+
+This method removes duplicate elements and the result is sorted. It is synomym to the ^ operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the elements that are in self or in other but not in both, without duplicate elements
+
+Return type:
+
+Group
+
+Example
+
+>>> ag1 = u.atoms[[0, 1, 5, 3, 3, 2]]
+>>> ag2 = u.atoms[[4, 4, 6, 2, 3, 5]]
+>>> ag3 = ag1 ^ ag2  # or ag1.symmetric_difference(ag2)
+>>> ag3.indices  # 0 and 1 are only in ag1, 4 and 6 are only in ag2
+array([0, 1, 4, 6])
+
+See also
+
+difference
+
+Added in version 0.16.
+
+ total_charge(compound='group')
+
+Total charge of (compounds of) the group.
+
+Computes the total charge of Atoms in the group. Total charges per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’},
+
+optional
+
+If ‘group’, the total charge of all atoms in the group will be returned as a single value. Otherwise, the total charges per Segment, Residue, molecule, or fragment will be returned as a 1d array. Note that, in any case, only the charges of Atoms belonging to the group will be taken into account.
+
+float or numpy.ndarray
+
+Total charge of (compounds of) the group. If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Changed in version 0.20.0: Added compound parameter
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.
+
+ total_mass(compound='group')
+
+Total mass of (compounds of) the group.
+
+Computes the total mass of Atoms in the group. Total masses per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’},
+
+optional
+
+If 'group', the total mass of all atoms in the group will be returned as a single value. Otherwise, the total masses per Segment, Residue, molecule, or fragment will be returned as a 1d array. Note that, in any case, only the masses of Atoms belonging to the group will be taken into account.
+
+float or numpy.ndarray
+
+Total mass of (compounds of) the group. If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Changed in version 0.20.0: Added compound parameter
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.
+
+ transform(M)
+
+Apply homogenous transformation matrix M to the coordinates.
+
+Atom coordinates are rotated and translated in-place.
+
+Parameters:
+
+M (array_like) – 4x4 matrix with the rotation in R = M[:3, :3] and the translation in t = M[:3, 3].
+
+Return type:
+
+self
+
+See also
+
+MDAnalysis.lib.transformations
+
+module of all coordinate transforms
+
+Notes
+
+The rotation \(\mathsf{R}\) is about the origin and is applied before the translation \(\mathbf{t}\):
+
+ \[\mathbf{x}' = \mathsf{R}\mathbf{x} + \mathbf{t}\]
+
+ translate(t)
+
+Apply translation vector t to the selection’s coordinates.
+
+Atom coordinates are translated in-place.
+
+Parameters:
+
+t (array_like) – vector to translate coordinates with
+
+Return type:
+
+self
+
+See also
+
+MDAnalysis.lib.transformations
+
+module of all coordinate transforms
+
+Notes
+
+The method applies a translation to the AtomGroup from current coordinates \(\mathbf{x}\) to new coordinates \(\mathbf{x}'\):
+
+ \[\mathbf{x}' = \mathbf{x} + \mathbf{t}\]
+
+ union(other)
+
+Group of elements either in this Group or another
+
+On the contrary to concatenation, this method sort the elements and removes duplicate ones. It is synomymous to the | operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the combined elements of self and other, without duplicate elements
+
+Return type:
+
+Group
+
+Example
+
+In contrast to concatenate(), any duplicates are dropped and the result is sorted.
+
+>>> ag1 = u.select_atoms('name O')
+>>> ag2 = u.select_atoms('name N')
+>>> ag3 = ag1 | ag2  # or ag1.union(ag2)
+>>> ag3[:3].names
+array(['N', 'O', 'N'], dtype=object)
+
+See also
+
+concatenate, intersection
+
+Added in version 0.16.
+
+ property unique
+
+Return a SegmentGroup containing sorted and unique Segments only.
+
+Examples
+
+>>> sg = u.segments[[2, 1, 2, 2, 1, 0]]
+>>> sg
+<SegmentGroup with 6 segments>
+>>> sg.ix
+array([2, 1, 2, 2, 1, 0])
+>>> sg2 = sg.unique
+>>> sg2
+<SegmentGroup with 3 segments>
+>>> sg2.ix
+array([0, 1, 2])
+>>> sg2.unique is sg2
+False
+
+Added in version 0.16.0.
+
+Changed in version 0.19.0: If the SegmentGroup is already unique, SegmentGroup.unique now returns the group itself instead of a copy.
+
+Changed in version 2.0.0: This function now always returns a copy.
+
+ property universe
+
+The underlying Universe the group belongs to.
+
+ unwrap(compound='fragments', reference='com', inplace=True)
+
+Move atoms of this group so that bonds within the group’s compounds aren’t split across periodic boundaries.
+
+This function is most useful when atoms have been packed into the primary unit cell, causing breaks mid-molecule, with the molecule then appearing on either side of the unit cell. This is problematic for operations such as calculating the center of mass of the molecule.
+
++-----------+       +-----------+
+|           |       |           |
+| 6       3 |       |         3 | 6
+| !       ! |       |         ! | !
+|-5-8   1-2-|  ==>  |       1-2-|-5-8
+| !       ! |       |         ! | !
+| 7       4 |       |         4 | 7
+|           |       |           |
++-----------+       +-----------+
+
+Parameters:
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional Which type of compound to unwrap. Note that, in any case, all atoms within each compound must be interconnected by bonds, i.e., compounds must correspond to (parts of) molecules.
+
+reference ({'com', 'cog', None}, optional) – If 'com' (center of mass) or 'cog' (center of geometry), the unwrapped compounds will be shifted so that their individual reference point lies within the primary unit cell. If None, no such shift is performed.
+
+inplace (bool, optional) – If True, coordinates are modified in place.
+
+Returns:
+
+coords – Unwrapped atom coordinate array of shape (n, 3).
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+NoDataError – If compound is 'molecules' but the underlying topology does not contain molecule information, or if reference is 'com' but the topology does not contain masses.
+
+ValueError – If reference is not one of 'com', 'cog', or None, or if reference is 'com' and the total mass of any compound is zero.
+
+Note
+
+Be aware of the fact that only atoms belonging to the group will be unwrapped! If you want entire molecules to be unwrapped, make sure that all atoms of these molecules are part of the group. An AtomGroup containing all atoms of all fragments in the group ag can be created with:
+
+all_frag_atoms = sum(ag.fragments)
+
+See also
+
+make_whole(), wrap(), pack_into_box(), apply_PBC()
+
+Added in version 0.20.0.
+
+ wrap(compound='atoms', center='com', box=None, inplace=True)
+
+Shift the contents of this group back into the primary unit cell according to periodic boundary conditions.
+
+Specifying a compound will keep the Atoms in each compound together during the process. If compound is different from 'atoms', each compound as a whole will be shifted so that its center lies within the primary unit cell.
+
+Parameters:
+
+compound ({'atoms', 'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional Which type of compound to keep together during wrapping. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'com', 'cog'}) – How to define the center of a given group of atoms. If compound is 'atoms', this parameter is meaningless and therefore ignored.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma]. If None, uses the dimensions of the current time step.
+
+inplace (bool, optional) – If True, coordinates will be changed in place.
+
+Returns:
+
+Array of wrapped atom coordinates of dtype np.float32 and shape (len(self.atoms.n_atoms), 3)
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If compound is not one of 'atoms', 'group', 'segments', 'residues', 'molecules', or 'fragments'.
+
+NoDataError – If compound is 'molecule' but the topology doesn’t contain molecule information (molnums) or if compound is 'fragments' but the topology doesn’t contain bonds or if center is 'com' but the topology doesn’t contain masses.
+
+Notes
+
+All atoms of the group will be moved so that the centers of its compounds lie within the primary periodic image. For orthorhombic unit cells, the primary periodic image is defined as the half-open interval \([0,L_i)\) between \(0\) and boxlength \(L_i\) in all dimensions \(i\in\{x,y,z\}\), i.e., the origin of the of the simulation box is taken to be at the origin \((0,0,0)\) of the euclidian coordinate system. A compound center residing at position \(x_i\) in dimension \(i\) will be shifted to \(x_i'\) according to
+
+ \[x_i' = x_i - \left\lfloor\frac{x_i}{L_i}\right\rfloor\,.\]
+
+When specifying a compound, the translation is calculated based on each compound. The same translation is applied to all atoms within this compound, meaning it will not be broken by the shift. This might however mean that not all atoms of a compound will be inside the unit cell after wrapping, but rather will be the center of the compound. Be aware of the fact that only atoms belonging to the group will be taken into account!
+
+center allows to define how the center of each group is computed. This can be either 'com' for center of mass, or 'cog' for center of geometry.
+
+box allows a unit cell to be given for the transformation. If not specified, the dimensions information from the current Timestep will be used.
+
+Note
+
+AtomGroup.wrap() is currently faster than ResidueGroup.wrap() or SegmentGroup.wrap().
+
+See also
+
+pack_into_box(), unwrap(), MDAnalysis.lib.distances.apply_PBC()
+
+Added in version 0.9.2.
+
+Changed in version 0.20.0: The method only acts on atoms belonging to the group and returns the wrapped positions as a numpy.ndarray. Added optional argument inplace.

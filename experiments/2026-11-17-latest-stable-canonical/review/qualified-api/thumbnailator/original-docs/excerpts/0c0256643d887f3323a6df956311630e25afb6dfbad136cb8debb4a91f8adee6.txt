@@ -1,0 +1,37 @@
+getExifOrientation
+public static
+Orientation
+getExifOrientation
+(
+ImageReader
+reader,
+int imageIndex)
+throws
+IOException
+Returns the orientation obtained from the Exif metadata.
+Parameters:
+reader
+- An
+ImageReader
+which is reading the
+target image.
+imageIndex
+- The index of the image from which the Exif
+metadata should be read from.
+Returns:
+The orientation information obtained from the
+Exif metadata, as a
+Orientation
+enum.
+Returns
+null
+if no orientation is found.
+Throws:
+IOException
+- When an error occurs during reading.
+IllegalArgumentException
+- If the
+ImageReader
+does not
+have the target image set, or if the
+reader does not have a JPEG open.

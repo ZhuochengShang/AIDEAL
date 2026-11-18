@@ -1,0 +1,29 @@
+mir_eval.io.load_valued_intervals(filename, delimiter='\\s+', comment='#')
+
+Import valued intervals from an annotation file. The file should consist of three columns: Two consisting of numeric values corresponding to start and end time of each interval and a third, also of numeric values, corresponding to the value of each interval. This is primarily useful for processing events which span a duration and have a numeric value, such as piano-roll notes which have an onset, offset, and a pitch value.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+intervalsnp.ndarray, shape=(n_events, 2)
+
+Array of event start and end times
+
+valuesnp.ndarray, shape=(n_events,)
+
+Array of values

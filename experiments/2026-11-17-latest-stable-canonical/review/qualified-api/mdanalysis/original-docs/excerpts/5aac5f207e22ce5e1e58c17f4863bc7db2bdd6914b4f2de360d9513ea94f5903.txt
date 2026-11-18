@@ -1,0 +1,31 @@
+concatenate(other)
+
+Concatenate with another Group or Component of the same level.
+
+Duplicate entries and original order is preserved. It is synomymous to the + operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with elements of self and other concatenated
+
+Return type:
+
+Group
+
+Example
+
+The order of the original contents (including duplicates) are preserved when performing a concatenation.
+
+>>> ag1 = u.select_atoms('name O')
+>>> ag2 = u.select_atoms('name N')
+>>> ag3 = ag1 + ag2  # or ag1.concatenate(ag2)
+>>> ag3[:3].names
+array(['O', 'O', 'O'], dtype=object)
+>>> ag3[-3:].names
+array(['N', 'N', 'N'], dtype=object)
+
+Added in version 0.16.0.

@@ -1,0 +1,602 @@
+15.2.1. Fast distance array computation — MDAnalysis.lib.distances
+
+Fast C-routines to calculate arrays of distances or angles from coordinate arrays. Distance functions can accept a NumPy np.ndarray or an AtomGroup. Many of the functions also exist in parallel versions, which typically provide higher performance than the serial code. The boolean attribute MDAnalysis.lib.distances.USED_OPENMP can be checked to see if OpenMP was used in the compilation of MDAnalysis.
+
+15.2.1.1. Selection of acceleration (“backend”)
+
+All functions take the optional keyword backend, which determines the type of acceleration. Currently, the following choices are implemented (backend is case-insensitive):
+
+ Available backends for accelerated distance functions.
+
+backend
+ |
+module
+ |
+description
+ |
+
+“serial”
+ |
+c_distances
+ |
+serial implementation in C/Cython
+ |
+
+“OpenMP”
+ |
+c_distances_openmp
+ |
+parallel implementation in C/Cython with OpenMP
+ |
+
+“distopia”
+ |
+_distopia
+ |
+SIMD-accelerated implementation with the distopia library
+ |
+
+15.2.1.2. Use of the distopia library
+
+MDAnalysis has developed a standalone library, distopia for accelerating the distance functions in this module using explicit SIMD vectorisation. This can provide many-fold speedups in calculating distances. Distopia is under active development and as such only a selection of functions in this module are covered. Consult the following table to see if the function you wish to use is covered by distopia. For more information see the distopia documentation.
+
+ Functions available using the distopia backend.
+
+Functions
+ |
+
+MDAnalysis.lib.distances.calc_bonds()
+ |
+
+MDAnalysis.lib.distances.calc_angles()
+ |
+
+MDAnalysis.lib.distances.calc_dihedrals()
+ |
+
+MDAnalysis.lib.distances.distance_array()
+ |
+
+MDAnalysis.lib.distances.self_distance_array()
+ |
+
+If distopia is installed, the functions in this table will accept the key ‘distopia’ for the backend keyword argument. The variable HAS_DISTOPIA is set to True if distopia is available.
+
+If the distopia backend is selected the distopia library will be used to calculate the distances. Note that for functions listed in this table distopia is not the default backend and must be explicitly selected.
+
+Note
+
+Due to the use of Instruction Set Architecture (ISA) specific SIMD intrinsics in distopia via HWY, the precision of your results may depend on the ISA available on your machine. However, in all tested cases distopia satisfied the accuracy thresholds used to the functions in this module. Please document any issues you encounter with distopia’s accuracy in the relevant distopia issue on the MDAnalysis GitHub repository.
+
+Added in version 0.13.0.
+
+Changed in version 2.3.0: Distance functions can now accept an AtomGroup or an np.ndarray
+
+Changed in version 2.5.0: Interface to the distopia package added.
+
+Changed in version 2.9.0: Distopia support greatly expanded (with distopia ≥ 0.4.0).
+
+15.2.1.3. Constants
+
+ MDAnalysis.lib.distances.HAS_DISTOPIA
+
+This variable is True if the distopia package has been installed and is available as a backend. Otherwise it is False.
+
+15.2.1.4. Functions
+
+ MDAnalysis.lib.distances.distance_array(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, configuration: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculate all possible distances between a reference set and another configuration.
+
+If there are n positions in reference and m positions in configuration, a distance array of shape (n, m) will be computed.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a 2D numpy array of dtype numpy.float64 with the shape (n, m) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array of shape (3,) or (n, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+configuration (numpy.ndarray or AtomGroup) – Configuration coordinate array of shape (3,) or (m, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array which must have the shape (n, m) and dtype numpy.float64. Avoids creating the array which saves time when the function is called repeatedly.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+d – Array containing the distances d[i,j] between reference coordinates i and configuration coordinates j.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n, m))
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.9.0: Added support for the distopia backend.
+
+ MDAnalysis.lib.distances.self_distance_array(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculate all possible distances within a configuration reference.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a 1D numpy array of dtype numpy.float64 with the shape (n*(n-1)/2,) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array of shape (3,) or (n, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array which must have the shape (n*(n-1)/2,) and dtype numpy.float64. Avoids creating the array which saves time when the function is called repeatedly.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+d (numpy.ndarray (dtype=numpy.float64, shape=(n*(n-1)/2,))) – Array containing the distances dist[i,j] between reference coordinates i and j at position d[k]. Loop through d:
+
+for i in range(n):
+    for j in range(i + 1, n):
+        dist[i, j] = dist[j, i] = d[k]
+        k += 1
+
+.. versionchanged:: 0.13.0 – Added backend keyword.
+
+.. versionchanged:: 0.19.0 – Internal dtype conversion of input coordinates to numpy.float32.
+
+.. versionchanged:: 2.3.0 – Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+.. versionchanged:: 2.9.0 – Added support for the distopia backend.
+
+ MDAnalysis.lib.distances.capped_distance(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, configuration: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, max_cutoff: float, min_cutoff: float | None = None, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, method: str | None = None, return_distances: bool | None = True, backend: str | None = 'serial')[source]
+
+Calculates pairs of indices corresponding to entries in the reference and configuration arrays which are separated by a distance lying within the specified cutoff(s). Optionally, these distances can be returned as well.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+An automatic guessing of the optimal method to calculate the distances is included in the function. An optional keyword for the method is also provided. Users can enforce a particular method with this functionality. Currently brute force, grid search, and periodic KDtree methods are implemented.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array with shape (3,) or (n, 3). Also accepts an AtomGroup.
+
+configuration (numpy.ndarray or AtomGroup) – Configuration coordinate array with shape (3,) or (m, 3). Also accepts an AtomGroup.
+
+max_cutoff (float) – Maximum cutoff distance between the reference and configuration.
+
+min_cutoff (float, optional) – Minimum cutoff distance between reference and configuration.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+method ({'bruteforce', 'nsgrid', 'pkdtree'}, optional) – Keyword to override the automatic guessing of the employed search method.
+
+return_distances (bool, optional) – If set to True, distances will also be returned.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+pairs (numpy.ndarray (dtype=numpy.int64, shape=(n_pairs, 2))) – Pairs of indices, corresponding to coordinates in the reference and configuration arrays such that the distance between them lies within the interval (min_cutoff, max_cutoff]. Each row in pairs is an index pair [i, j] corresponding to the i-th coordinate in reference and the j-th coordinate in configuration.
+
+distances (numpy.ndarray (dtype=numpy.float64, shape=(n_pairs,)), optional) – Distances corresponding to each pair of indices. Only returned if return_distances is True. distances[k] corresponds to the k-th pair returned in pairs and gives the distance between the coordinates reference[pairs[k, 0]] and configuration[pairs[k, 1]].
+
+pairs, distances = capped_distances(reference, configuration,
+                                    max_cutoff, return_distances=True)
+for k, [i, j] in enumerate(pairs):
+    coord1 = reference[i]
+    coord2 = configuration[j]
+    distance = distances[k]
+
+See also
+
+distance_array, MDAnalysis.lib.pkdtree.PeriodicKDTree.search, MDAnalysis.lib.nsgrid.FastNS.search
+
+Changed in version 1.0.1: nsgrid was temporarily removed and replaced with pkdtree due to issues relating to its reliability and accuracy (Issues #2919, #2229, #2345, #2670, #2930)
+
+Changed in version 1.0.2: nsgrid enabled again
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.10.0: Added the “backend” argument to select the type of acceleration of the distance calculations.
+
+ MDAnalysis.lib.distances.self_capped_distance(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, max_cutoff: float, min_cutoff: float | None = None, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, method: str | None = None, return_distances: bool | None = True, backend: str | None = 'serial')[source]
+
+Calculates pairs of indices corresponding to entries in the reference array which are separated by a distance lying within the specified cutoff(s). Optionally, these distances can be returned as well.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+An automatic guessing of the optimal method to calculate the distances is included in the function. An optional keyword for the method is also provided. Users can enforce a particular method with this functionality. Currently brute force, grid search, and periodic KDtree methods are implemented.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array with shape (3,) or (n, 3). Also accepts an AtomGroup.
+
+max_cutoff (float) – Maximum cutoff distance between reference coordinates.
+
+min_cutoff (float, optional) – Minimum cutoff distance between reference coordinates.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+method ({'bruteforce', 'nsgrid', 'pkdtree'}, optional) – Keyword to override the automatic guessing of the employed search method.
+
+return_distances (bool, optional) – If set to True, distances will also be returned.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+pairs (numpy.ndarray (dtype=numpy.int64, shape=(n_pairs, 2))) – Pairs of indices, corresponding to coordinates in the reference array such that the distance between them lies within the interval (min_cutoff, max_cutoff]. Each row in pairs is an index pair [i, j] corresponding to the i-th and the j-th coordinate in reference.
+
+distances (numpy.ndarray (dtype=numpy.float64, shape=(n_pairs,))) – Distances corresponding to each pair of indices. Only returned if return_distances is True. distances[k] corresponds to the k-th pair returned in pairs and gives the distance between the coordinates reference[pairs[k, 0]] and reference[pairs[k, 1]].
+
+pairs, distances = self_capped_distances(reference, max_cutoff,
+                                         return_distances=True)
+for k, [i, j] in enumerate(pairs):
+    coord1 = reference[i]
+    coord2 = reference[j]
+    distance = distances[k]
+
+Note
+
+Currently supports brute force, grid-based, and periodic KDtree search methods.
+
+See also
+
+self_distance_array, MDAnalysis.lib.pkdtree.PeriodicKDTree.search, MDAnalysis.lib.nsgrid.FastNS.self_search
+
+Changed in version 0.20.0: Added return_distances keyword.
+
+Changed in version 1.0.1: nsgrid was temporarily removed and replaced with pkdtree due to issues relating to its reliability and accuracy (Issues #2919, #2229, #2345, #2670, #2930)
+
+Changed in version 1.0.2: enabled nsgrid again
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.10.0: Added the “backend” argument to select the type of acceleration of the distance calculations.
+
+ MDAnalysis.lib.distances.calc_bonds(coords1: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords2: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculates the bond lengths between pairs of atom positions from the two coordinate arrays coords1 and coords2, which must contain the same number of coordinates. coords1[i] and coords2[i] represent the positions of atoms connected by the i-th bond. If single coordinates are supplied, a single distance will be returned.
+
+In comparison to distance_array() and self_distance_array(), which calculate distances between all possible combinations of coordinates, calc_bonds() only calculates distances between pairs of coordinates, similar to:
+
+numpy.linalg.norm(a - b) for a, b in zip(coords1, coords2)
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a numpy array of dtype numpy.float64 with shape (n,) (for n coordinate pairs) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+coords1 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) for one half of a single or n bonds, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords2 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) for the other half of a single or n bonds, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (numpy.ndarray, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array of dtype numpy.float64 and shape (n,) (for n coordinate pairs). Avoids recreating the array in repeated function calls.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration. Defaults to ‘serial’.
+
+Returns:
+
+bondlengths – numpy.float64 Array containing the bond lengths between each pair of coordinates. If two single coordinates were supplied, their distance is returned as a single number instead of an array.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n,)) or
+
+Added in version 0.8.
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.5.0: Can now optionally use the fast distance functions from distopia
+
+ MDAnalysis.lib.distances.calc_angles(coords1: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords2: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords3: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculates the angles formed between triplets of atom positions from the three coordinate arrays coords1, coords2, and coords3. All coordinate arrays must contain the same number of coordinates.
+
+The coordinates in coords2 represent the apices of the angles:
+
+  2---3
+ /
+1
+
+Configurations where the angle is undefined (e.g., when coordinates 1 or 3 of a triplet coincide with coordinate 2) result in a value of zero for that angle.
+
+If the optional argument box is supplied, periodic boundaries are taken into account when constructing the connecting vectors between coordinates, i.e., the minimum image convention is applied for the vectors forming the angles. Either orthogonal or triclinic boxes are supported.
+
+If a numpy array of dtype numpy.float64 with shape (n,) (for n coordinate triplets) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+coords1 (numpy.ndarray or AtomGroup) – Array of shape (3,) or (n, 3) containing the coordinates of one side of a single or n angles, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords2 (numpy.ndarray or AtomGroup) – Array of shape (3,) or (n, 3) containing the coordinates of the apices of a single or n angles, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords3 (numpy.ndarray or AtomGroup) – Array of shape (3,) or (n, 3) containing the coordinates of the other side of a single or n angles, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (numpy.ndarray, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array of dtype numpy.float64 and shape (n,) (for n coordinate triplets). Avoids recreating the array in repeated function calls.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+angles – Array containing the angles between each triplet of coordinates. Values are returned in radians (rad). If three single coordinates were supplied, the angle is returned as a single number instead of an array.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n,)) or numpy.float64
+
+Added in version 0.8.
+
+Changed in version 0.9.0: Added optional box argument to account for periodic boundaries in calculation
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+ MDAnalysis.lib.distances.calc_dihedrals(coords1: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords2: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords3: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords4: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculates the dihedral angles formed between quadruplets of positions from the four coordinate arrays coords1, coords2, coords3, and coords4, which must contain the same number of coordinates.
+
+The dihedral angle formed by a quadruplet of positions (1,2,3,4) is calculated around the axis connecting positions 2 and 3 (i.e., the angle between the planes spanned by positions (1,2,3) and (2,3,4)):
+
+        4
+        |
+  2-----3
+ /
+1
+
+If all coordinates lie in the same plane, the cis configuration corresponds to a dihedral angle of zero, and the trans configuration to \(\pi\) radians (180 degrees). Configurations where the dihedral angle is undefined (e.g., when all coordinates lie on the same straight line) result in a value of nan (not a number) for that dihedral.
+
+If the optional argument box is supplied, periodic boundaries are taken into account when constructing the connecting vectors between coordinates, i.e., the minimum image convention is applied for the vectors forming the dihedral angles. Either orthogonal or triclinic boxes are supported.
+
+If a numpy array of dtype numpy.float64 with shape (n,) (for n coordinate quadruplets) is provided in result then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+coords1 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) containing the 1st positions in dihedrals (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords2 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) containing the 2nd positions in dihedrals (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords3 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) containing the 3rd positions in dihedrals (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords4 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) containing the 4th positions in dihedrals (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (numpy.ndarray, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array of dtype numpy.float64 and shape (n,) (for n coordinate quadruplets). Avoids recreating the array in repeated function calls.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+dihedrals – Array containing the dihedral angles formed by each quadruplet of coordinates. Values are returned in radians (rad). If four single coordinates were supplied, the dihedral angle is returned as a single number instead of an array. The range of dihedral angle is \((-\pi, \pi)\).
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n,)) or numpy.float64
+
+Added in version 0.8.
+
+Changed in version 0.9.0: Added optional box argument to account for periodic boundaries in calculation
+
+Changed in version 0.11.0: Renamed from calc_torsions to calc_dihedrals
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+ MDAnalysis.lib.distances.apply_PBC(coords: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Moves coordinates into the primary unit cell.
+
+Parameters:
+
+coords (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (numpy.ndarray) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+backend ({'serial', 'OpenMP'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+newcoords – Array containing coordinates that all lie within the primary unit cell as defined by box.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float32, shape=coords.shape)
+
+Added in version 0.8.
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts (and, likewise, returns) single coordinates.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.11.0: Fixed wrapping in triclinic boxes where both the x component of the second box vector and the y component of the third are non-zero (Issue #4906).
+
+ MDAnalysis.lib.distances.transform_RtoS(coords, box, backend='serial')[source]
+
+Transform an array of coordinates from real space to S space (a.k.a. lambda space)
+
+S space represents fractional space within the unit cell for this system.
+
+Reciprocal operation to transform_StoR().
+
+Parameters:
+
+coords (numpy.ndarray) – A (3,) or (n, 3) array of coordinates (dtype is arbitrary, will be converted to numpy.float32 internally).
+
+box (numpy.ndarray) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+backend ({'serial', 'OpenMP'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+newcoords – An array containing fractional coordiantes.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float32, shape=coords.shape)
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts (and, likewise, returns) a single coordinate.
+
+ MDAnalysis.lib.distances.transform_StoR(coords, box, backend='serial')[source]
+
+Transform an array of coordinates from S space into real space.
+
+S space represents fractional space within the unit cell for this system.
+
+Reciprocal operation to transform_RtoS()
+
+Parameters:
+
+coords (numpy.ndarray) – A (3,) or (n, 3) array of coordinates (dtype is arbitrary, will be converted to numpy.float32 internally).
+
+box (numpy.ndarray) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+backend ({'serial', 'OpenMP'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+newcoords – An array containing real space coordiantes.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float32, shape=coords.shape)
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts (and, likewise, returns) a single coordinate.
+
+ MDAnalysis.lib.distances.augment_coordinates(coordinates, box, r)
+
+Calculates the periodic images of particles which are within a distance r from the box walls.
+
+The algorithm works by generating explicit periodic images of atoms residing close to any of the six box walls. The steps involved in generating images involves the evaluation of reciprocal box vectors followed by the calculation of distances of atoms from the walls by means of projection onto the reciprocal vectors. If the distance is less than a specified cutoff distance, relevant periodic images are generated using box translation vectors \(\vec{t}\) with
+
+ \[\vec{t}=l\cdot\vec{a}+m\cdot\vec{b}+n\cdot \vec{c}\,,\]
+
+where \(l,\,m,\,n \in \{-1,\,0,\,1\}\) are the neighboring cell indices in \(x\)-, \(y\)-, and \(z\)-direction relative to the central cell with box vectors \(\vec{a},\,\vec{b},\,\vec{c}\).
+
+For instance, an atom close to the \(xy\)-plane containing the origin will generate a periodic image outside the central cell and close to the opposite \(xy\)-plane of the box, i.e., shifted by \(\vec{t} = 0\cdot\vec{a}+0\cdot\vec{b}+1\cdot\vec{c}=\vec{c}\).
+
+Likewise, if the particle is close to more than one box walls, images along the diagonals are also generated:
+
+                            x            x
++------------+                +------------+
+|            |   augment      |            |
+|            |   ------->     |            |
+|          o |              x |          o |
++------------+                +------------+
+
+Parameters:
+
+coordinates (numpy.ndarray) – Input coordinate array of shape (n, 3) and dtype numpy.float32 used to generate duplicate images in the vicinity of the central cell. All coordinates must be within the primary unit cell.
+
+box (numpy.ndarray) – Box dimensions of shape (6,) and dtype numpy.float32. The dimensions must be provided in the same format as returned by MDAnalysis.coordinates.base.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma]
+
+r (float) – Thickness of cutoff region for duplicate image generation.
+
+Returns:
+
+output (numpy.ndarray) – Coordinates of duplicate (augmented) particles (dtype numpy.float32).
+
+indices (numpy.ndarray) – Original indices of the augmented coordinates (dtype numpy.int64). Maps the indices of augmented particles to their original particle index such that indices[augmented_index] = original_index.
+
+Note
+
+Output does not return coordinates from the initial array. To merge the particles with their respective images, the following operation is necessary when generating the images:
+
+images, mapping = augment_coordinates(coordinates, box, max_cutoff)
+all_coords = numpy.concatenate([coordinates, images])
+
+See also
+
+undo_augment()
+
+Added in version 0.19.0.
+
+ MDAnalysis.lib.distances.undo_augment(results, translation, nreal)
+
+Translate augmented indices back to original indices.
+
+Parameters:
+
+results (numpy.ndarray) – Array of dtype numpy.int64 containing coordinate indices, including “augmented” indices.
+
+translation (numpy.ndarray) – Index map of dtype numpy.int64 linking the augmented indices to the original particle indices such that translation[augmented_index] = original_index.
+
+nreal (int) – Number of real coordinates, i.e., indices in results equal or larger than this need to be mapped to their real counterpart.
+
+Returns:
+
+results – Modified input results with all the augmented indices translated to their corresponding initial original indices.
+
+Return type:
+
+numpy.ndarray
+
+Note
+
+Modifies the results array in place.
+
+See also
+
+augment_coordinates()
+
+Added in version 0.19.0.
+
+ MDAnalysis.lib.distances.minimize_vectors(vectors, box)[source]
+
+Apply minimum image convention to an array of vectors
+
+This function is required for calculating the correct vectors between two points. A naive approach of ag1.positions - ag2.positions will not provide the minimum vectors between particles, even if all particles are within the primary unit cell (box).
+
+Parameters:
+
+vectors (numpy.ndarray) – Vector array of shape (n, 3), either float32 or float64. These represent many vectors (such as between two particles).
+
+box (numpy.ndarray) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+Returns:
+
+minimized_vectors – Same shape and dtype as input. The vectors from the input, but minimized according to the size of the box.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.1.0.
+
+15.2.2. Low-level modules for MDAnalysis.lib.distances
+
+MDAnalysis.lib._distances contains low level access to the serial MDAnalysis Cython functions in distances. These have little to no error checking done on inputs so should be used with caution. Similarly, MDAnalysis.lib._distances_openmp contains the OpenMP-enable functions.
+
+15.2.2.1. Distance calculation library — MDAnalysis.lib.c_distances
+
+15.2.2.2. Parallel distance calculation library — MDAnalysis.lib.c_distances_openmp

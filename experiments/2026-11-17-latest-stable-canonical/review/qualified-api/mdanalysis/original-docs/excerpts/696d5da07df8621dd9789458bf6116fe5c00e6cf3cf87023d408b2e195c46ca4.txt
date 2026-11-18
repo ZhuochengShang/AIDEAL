@@ -1,0 +1,140 @@
+class MDAnalysis.lib.formats.libdcd.DCDFile(fname, mode='r')
+
+File like wrapper for DCD files
+
+This class can be similar to the normal file objects in python. The read() function will return a frame and all information in it instead of a single line. Additionally the context-manager protocol is supported as well.
+
+DCDFile can read typical DCD files created by e.g., CHARMM, NAMD, or LAMMPS. It reads raw data from the trajectory and hence interpretation of, for instance, different unitcell conventions or time and length units, has to be handled in higher level code. Reading and writing does not support fixed atoms or 4D coordinates.
+
+Parameters:
+
+fname (str) – The filename to open.
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+Examples
+
+>>> from MDAnalysis.lib.formats.libdcd import DCDFile
+>>> with DCDFile('foo.dcd') as f:
+>>>     for frame in f:
+>>>         print(frame.x)
+
+Notes
+
+DCD is not a well defined format. One consequence of this is that different programs like CHARMM and NAMD are using different convention to store the unitcell information. The DCDFile will read the unitcell information as is when available. Post processing depending on the program this DCD file was written with is necessary. Have a look at the MDAnalysis DCD reader for possible post processing into a common unitcell data structure. You can also find more information how different programs store unitcell information in DCD on the mdawiki . This class can be pickled. The pickle will store filename, mode, current frame
+
+ charmm_bitfield
+
+This DCDFile reader can process files written by different MD simulation programs. For files produced by CHARMM or other programs that follow the same convention we are reading a special CHARMM bitfield that stores different flags about additional information that is stored in the dcd. The bit flags are:
+
+DCD_IS_CHARMM       = 0x01
+DCD_HAS_4DIMS       = 0x02
+DCD_HAS_EXTRA_BLOCK = 0x04
+
+Here DCD_HAS_EXTRA_BLOCK means that unitcell information is stored.
+
+ close()
+
+Close the open DCD file
+
+ header
+
+returns: * dict of header values needed to write new dcd. * natoms (number of atoms) * istart (starting frame number) * nsavc (number of frames between saves) * delta (integrator time step.) * charm (bitfield integer if file contains special CHARMM information) * remarks (remark string, max 240 bytes.)
+
+ open(mode='r')
+
+Open a DCD file
+
+If another DCD file is currently opened it will be closed
+
+Parameters:
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+ read()
+
+Read next dcd frame
+
+Returns:
+
+DCDFrame – positions are in x and unitcell in unitcell attribute of DCDFrame
+
+Return type:
+
+namedtuple
+
+Notes
+
+unitcell is read as is from DCD. Post processing depending on the program this DCD file was written with is necessary. Have a look at the MDAnalysis DCD reader for possible post processing into a common unitcell data structure.
+
+ readframes(start=None, stop=None, step=None, order='fac', indices=None)
+
+read multiple frames at once
+
+Parameters:
+
+start (int (optional)) – starting frame, default to 0
+
+stop (int (optional)) – stop frame, default to n_frames
+
+step (int (optional)) – step between frames read, defaults to 1
+
+order (str (optional)) – give order of returned array with f:frames, a:atoms, c:coordinates
+
+indices (array_like (optional)) – only read selected atoms. In None read all.
+
+Returns:
+
+DCDFrame – positions are in x and unitcell in unitcell attribute of DCDFrame. Here the attributes contain the positions for all frames in the given order
+
+Return type:
+
+namedtuple
+
+Notes
+
+unitcell is read as it from DCD. Post processing depending the program this DCD file was written with is necessary. Have a look at the MDAnalysis DCD reader for possible post processing into a common unitcell data structure.
+
+ seek(frame)
+
+Seek to Frame.
+
+Parameters:
+
+frame (int) – seek the file to given frame (0-based)
+
+ tell()
+
+Return type:
+
+current frame (0-based)
+
+ write(xyz, box=None)
+
+write one frame into DCD file.
+
+Parameters:
+
+xyz (array_like, shape=(natoms, 3)) – cartesian coordinates
+
+box (array_like, shape=(6) (optional)) – Box vectors for this frame. Can be left to skip writing a unitcell
+
+ write_header(remarks, natoms, istart, nsavc, delta, is_periodic)
+
+Write DCD header
+
+This function needs to be called before the first frame can be written.
+
+Parameters:
+
+remarks (str) – remarks of DCD file. Writes up to 239 characters (ASCII). The character 240 will be the null terminator
+
+natoms (int) – number of atoms to write
+
+istart (int) – starting frame number
+
+nsavc (int) – number of frames between saves
+
+delta (float) – integrator time step. The time for 1 frame is nsavc * delta
+
+is_periodic (bool) – write unitcell information. Also pretends that file was written by CHARMM 24

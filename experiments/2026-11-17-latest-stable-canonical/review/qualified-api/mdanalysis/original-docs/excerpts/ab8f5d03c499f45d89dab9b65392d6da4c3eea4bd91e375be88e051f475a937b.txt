@@ -1,0 +1,33 @@
+class MDAnalysis.core.topologyobjects.UreyBradley(ix, universe, type=None, guessed=False, order=None)[source]
+
+A Urey-Bradley angle between two Atom instances. Two UreyBradley instances can be compared with the == and != operators. A UreyBradley angle is equal to another if the same atom numbers are involved.
+
+Added in version 1.0.0.
+
+Create a topology object
+
+Parameters:
+
+ix (numpy array) – indices of the Atoms
+
+universe (MDAnalysis.Universe)
+
+type (optional) – Type of the bond
+
+guessed (optional) – If the Bond is guessed
+
+ distance(pbc=True)[source]
+
+Distance between the atoms.
+
+ partner(Atom)[source]
+
+Returns:
+
+the other Atom in this
+
+interaction
+
+ value(pbc=True)
+
+Distance between the atoms.

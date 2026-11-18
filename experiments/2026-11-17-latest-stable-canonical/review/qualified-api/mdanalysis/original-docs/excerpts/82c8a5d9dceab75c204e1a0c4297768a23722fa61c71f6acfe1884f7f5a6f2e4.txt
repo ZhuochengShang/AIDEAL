@@ -1,0 +1,29 @@
+MDAnalysis.lib.correlations.correct_intermittency(list_of_sets, intermittency)[source]
+
+Preprocess data to allow intermittent behaviour prior to calling autocorrelation().
+
+Survival probabilty may be calculated either with a strict continuous requirement or a less strict intermittency. If calculating the survival probability water around a protein for example, in the former case the water must be within a cutoff distance of the protein at every frame from \(t_0\) to \(t_0 + \tau\) in order for it to be considered present at \(t_0 + \tau\). In the intermittent case, the water molecule is allowed to leave the region of interest for up to a specified consecutive number of frames whilst still being considered present at \(t_0 + \tau\).
+
+This function pre-processes data, such as the atom ids of water molecules within a cutoff distance of a protein at each frame, in order to allow for intermittent behaviour, with a single pass over the data.
+
+For example, if an atom is absent for a number of frames equal or smaller than the parameter intermittency, then this absence will be removed and thus the atom is considered to have not left. e.g 7,A,A,7 with intermittency=2 will be replaced by 7,7,7,7, where A=absence.
+
+The returned data can be used as input to the function autocorrelation() in order to calculate the survival probability with a given intermittency.
+
+See [2] for a description of intermittency in the calculation of hydrogen bond lifetimes.
+
+# TODO - is intermittency consitent with list of sets of sets? (hydrogen bonds)
+
+Parameters:
+
+list_of_sets (list) – In the simple case of e.g survival probability, a list of sets of atom ids present at each frame, where a single set contains atom ids at a given frame, e.g [{0, 1}, {0}, {0}, {0, 1}]
+
+intermittency (int) – The maximum gap allowed. The default intermittency=0 means that if the datapoint is missing at any frame, no changes are made to the data. With the value of intermittency=2, all datapoints missing for up to two consecutive frames will be instead be considered present.
+
+Returns:
+
+list_of_sets – returns a new list with the IDs with added IDs which disappeared for <= intermittency. e.g If [{0, 1}, {0}, {0}, {0, 1}] is a list of sets of atom ids present at each frame and intermittency=2, both atoms will be considered present throughout and thus the returned list of sets will be [{0, 1}, {0, 1}, {0, 1}, {0, 1}].
+
+Return type:
+
+list

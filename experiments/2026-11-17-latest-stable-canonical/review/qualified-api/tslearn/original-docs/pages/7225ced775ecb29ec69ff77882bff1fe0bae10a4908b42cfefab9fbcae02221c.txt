@@ -1,0 +1,45 @@
+to_sklearn_dataset
+
+ tslearn.utils.to_sklearn_dataset(dataset, dtype=<class 'float'>, return_dim=False)[source]
+
+Transforms a time series dataset so that it fits the format used in sklearn estimators.
+
+Parameters:
+
+datasetarray-like
+
+The dataset of time series to be transformed.
+
+dtypedata type (default: float64)
+
+Data type for the returned dataset.
+
+return_dimboolean (optional, default: False)
+
+Whether the dimensionality (third dimension should be returned together with the transformed dataset).
+
+Returns:
+
+numpy.ndarray of shape (n_ts, sz * d)
+
+The transformed dataset of time series.
+
+int (optional, if return_dim=True)
+
+The dimensionality of the original tslearn dataset (third dimension)
+
+See also
+
+to_time_series_dataset
+
+Transforms a time series dataset to tslearn
+
+format.
+
+Examples
+
+>>> to_sklearn_dataset([[1, 2]], return_dim=True)
+(array([[1., 2.]]), 1)
+>>> to_sklearn_dataset([[1, 2], [1, 4, 3]])
+array([[ 1.,  2., nan],
+       [ 1.,  4.,  3.]])

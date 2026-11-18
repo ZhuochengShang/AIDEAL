@@ -1,0 +1,514 @@
+ThumbnailParameterBuilder (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.builders
+Class ThumbnailParameterBuilder
+java.lang.Object
+net.coobird.thumbnailator.builders.ThumbnailParameterBuilder
+public final class
+ThumbnailParameterBuilder
+extends
+Object
+A builder for generating
+ThumbnailParameter
+.
+The default values assigned to the
+ThumbnailParameter
+created by
+the
+ThumbnailParameterBuilder
+are as follows:
+width
+Unassigned. Must be set by the
+size(int, int)
+method.
+height
+Unassigned. Must be set by the
+size(int, int)
+method.
+scaling factor
+Unassigned. Must be set by the
+scale(double)
+method or
+scale(double, double)
+method.
+source region
+Uses the entire source image.
+image type
+See
+ThumbnailParameter.DEFAULT_IMAGE_TYPE
+. Same as
+BufferedImage.TYPE_INT_ARGB
+.
+aspect ratio
+Maintain the aspect ratio of the original image.
+output quality
+See
+ThumbnailParameter.DEFAULT_QUALITY
+.
+output format
+See
+ThumbnailParameter.ORIGINAL_FORMAT
+. Maintains the same
+image format as the original image.
+output format type
+See
+ThumbnailParameter.DEFAULT_FORMAT_TYPE
+. Uses the default
+format type of the codec used to create the thumbnail image.
+image filters
+None.
+resizer factory
+DefaultResizerFactory
+is used.
+resizer
+The default
+Resizer
+returned by the
+ResizerFactory
+.
+use of Exif metadata for orientation
+Use the Exif metadata to determine the orientation of the thumbnail.
+Author:
+coobird
+Constructor Summary
+ThumbnailParameterBuilder
+()
+Creates an instance of a
+ThumbnailParameterBuilder
+.
+Method Summary
+ThumbnailParameter
+build
+()
+Returns a
+ThumbnailParameter
+from the parameters which are
+currently set.
+ThumbnailParameterBuilder
+filters
+(
+List
+<
+ImageFilter
+> filters)
+Sets the
+ImageFilter
+s to apply to the thumbnail.
+ThumbnailParameterBuilder
+fitWithinDimensions
+(boolean fit)
+Sets whether or not the thumbnail should fit within the specified
+dimensions.
+ThumbnailParameterBuilder
+format
+(
+String
+format)
+Sets the output format of the thumbnail.
+ThumbnailParameterBuilder
+formatType
+(
+String
+formatType)
+Sets the output format type of the thumbnail.
+ThumbnailParameterBuilder
+imageType
+(int type)
+Sets the image type fo the thumbnail.
+ThumbnailParameterBuilder
+keepAspectRatio
+(boolean keep)
+Sets whether or not the thumbnail is to maintain the aspect ratio of
+the original image.
+ThumbnailParameterBuilder
+quality
+(float quality)
+Sets the compression quality setting of the thumbnail.
+ThumbnailParameterBuilder
+region
+(
+Region
+sourceRegion)
+Sets the region of the source image to use when creating a thumbnail.
+ThumbnailParameterBuilder
+resizer
+(
+Resizer
+resizer)
+Sets the
+Resizer
+to use when performing the resizing operation
+to create the thumbnail.
+ThumbnailParameterBuilder
+resizerFactory
+(
+ResizerFactory
+resizerFactory)
+Sets the
+ResizerFactory
+to use to obtain a
+Resizer
+when
+performing the resizing operation to create the thumbnail.
+ThumbnailParameterBuilder
+scale
+(double scalingFactor)
+Sets the scaling factor of the thumbnail.
+ThumbnailParameterBuilder
+scale
+(double widthScalingFactor,
+double heightScalingFactor)
+Sets the scaling factor of the thumbnail.
+ThumbnailParameterBuilder
+size
+(
+Dimension
+size)
+Sets the size of the thumbnail.
+ThumbnailParameterBuilder
+size
+(int width,
+int height)
+Sets the size of the thumbnail.
+ThumbnailParameterBuilder
+useExifOrientation
+(boolean use)
+Sets whether or not the Exif metadata should be used to determine the
+orientation of the thumbnail.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+ThumbnailParameterBuilder
+public
+ThumbnailParameterBuilder
+()
+Creates an instance of a
+ThumbnailParameterBuilder
+.
+Method Detail
+imageType
+public
+ThumbnailParameterBuilder
+imageType
+(int type)
+Sets the image type fo the thumbnail.
+Parameters:
+type
+- The image type of the thumbnail.
+Returns:
+A reference to this object.
+size
+public
+ThumbnailParameterBuilder
+size
+(
+Dimension
+size)
+Sets the size of the thumbnail.
+Parameters:
+size
+- The dimensions of the thumbnail.
+Returns:
+A reference to this object.
+size
+public
+ThumbnailParameterBuilder
+size
+(int width,
+int height)
+Sets the size of the thumbnail.
+Parameters:
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+A reference to this object.
+Throws:
+IllegalArgumentException
+- If the widht or height is less than 0.
+scale
+public
+ThumbnailParameterBuilder
+scale
+(double scalingFactor)
+Sets the scaling factor of the thumbnail.
+Parameters:
+scalingFactor
+- The scaling factor of the thumbnail.
+Returns:
+A reference to this object.
+Throws:
+IllegalArgumentException
+- If the scaling factor is not a
+rational number, or if it is less
+than
+0.0
+.
+scale
+public
+ThumbnailParameterBuilder
+scale
+(double widthScalingFactor,
+double heightScalingFactor)
+Sets the scaling factor of the thumbnail.
+Parameters:
+widthScalingFactor
+- The scaling factor to use for the width
+when creating the thumbnail.
+heightScalingFactor
+- The scaling factor to use for the height
+when creating the thumbnail.
+Returns:
+A reference to this object.
+Throws:
+IllegalArgumentException
+- If the scaling factor is not a
+rational number, or if it is less
+than
+0.0
+.
+Since:
+0.3.10
+region
+public
+ThumbnailParameterBuilder
+region
+(
+Region
+sourceRegion)
+Sets the region of the source image to use when creating a thumbnail.
+Parameters:
+sourceRegion
+- The region of the source image to use when
+creating a thumbnail.
+Returns:
+A reference to this object.
+Since:
+0.3.4
+keepAspectRatio
+public
+ThumbnailParameterBuilder
+keepAspectRatio
+(boolean keep)
+Sets whether or not the thumbnail is to maintain the aspect ratio of
+the original image.
+Parameters:
+keep
+-
+true
+if the aspect ratio of the original image
+is to be maintained in the thumbnail,
+false
+otherwise.
+Returns:
+A reference to this object.
+quality
+public
+ThumbnailParameterBuilder
+quality
+(float quality)
+Sets the compression quality setting of the thumbnail.
+An acceptable value is in the range of
+0.0f
+to
+1.0f
+,
+where
+0.0f
+is for the lowest quality setting and
+1.0f
+for
+the highest quality setting.
+If the default compression quality is to be used, then the value
+ThumbnailParameter.DEFAULT_QUALITY
+should be used.
+Parameters:
+quality
+- The compression quality setting of the thumbnail.
+Returns:
+A reference to this object.
+format
+public
+ThumbnailParameterBuilder
+format
+(
+String
+format)
+Sets the output format of the thumbnail.
+Parameters:
+format
+- The output format of the thumbnail.
+Returns:
+A reference to this object.
+formatType
+public
+ThumbnailParameterBuilder
+formatType
+(
+String
+formatType)
+Sets the output format type of the thumbnail.
+Parameters:
+formatType
+- The output format type of the thumbnail.
+Returns:
+A reference to this object.
+filters
+public
+ThumbnailParameterBuilder
+filters
+(
+List
+<
+ImageFilter
+> filters)
+Sets the
+ImageFilter
+s to apply to the thumbnail.
+These filters will be applied after the original image is resized.
+Parameters:
+filters
+- The output format type of the thumbnail.
+Returns:
+A reference to this object.
+resizer
+public
+ThumbnailParameterBuilder
+resizer
+(
+Resizer
+resizer)
+Sets the
+Resizer
+to use when performing the resizing operation
+to create the thumbnail.
+Calling this method after
+resizerFactory(ResizerFactory)
+will
+cause the
+ResizerFactory
+used by the resulting
+ThumbnailParameter
+to only return the specified
+Resizer
+.
+Parameters:
+resizer
+- The
+Resizer
+to use when creating the
+thumbnail.
+Returns:
+A reference to this object.
+resizerFactory
+public
+ThumbnailParameterBuilder
+resizerFactory
+(
+ResizerFactory
+resizerFactory)
+Sets the
+ResizerFactory
+to use to obtain a
+Resizer
+when
+performing the resizing operation to create the thumbnail.
+Calling this method after
+resizer(Resizer)
+could result in
+Resizer
+s not specified in the
+resizer
+method to be used
+when creating thumbnails.
+Parameters:
+resizerFactory
+- The
+ResizerFactory
+to use when obtaining
+a
+Resizer
+to create the thumbnail.
+Returns:
+A reference to this object.
+Since:
+0.4.0
+fitWithinDimensions
+public
+ThumbnailParameterBuilder
+fitWithinDimensions
+(boolean fit)
+Sets whether or not the thumbnail should fit within the specified
+dimensions.
+Parameters:
+fit
+-
+true
+if the thumbnail should be sized to fit
+within the specified dimensions, if the thumbnail
+is going to exceed those dimensions.
+Returns:
+A reference to this object.
+Since:
+0.4.0
+useExifOrientation
+public
+ThumbnailParameterBuilder
+useExifOrientation
+(boolean use)
+Sets whether or not the Exif metadata should be used to determine the
+orientation of the thumbnail.
+Parameters:
+use
+-
+true
+if the Exif metadata should be used
+to determine the orientation of the thumbnail,
+false
+otherwise.
+Returns:
+A reference to this object.
+Since:
+0.4.3
+build
+public
+ThumbnailParameter
+build
+()
+Returns a
+ThumbnailParameter
+from the parameters which are
+currently set.
+This method will throw a
+IllegalArgumentException
+required
+parameters for the
+ThumbnailParameter
+have not been set.
+Returns:
+A
+ThumbnailParameter
+with parameters set through
+the use of this builder.
+Throws:
+IllegalStateException
+- If neither the size nor the scaling
+factor has been set.
+Copyright © 2025. All rights reserved.

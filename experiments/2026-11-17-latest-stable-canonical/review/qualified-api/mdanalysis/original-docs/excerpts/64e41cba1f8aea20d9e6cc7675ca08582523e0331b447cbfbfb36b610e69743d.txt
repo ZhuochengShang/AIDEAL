@@ -1,0 +1,31 @@
+symmetric_difference(other)
+
+Group of elements which are only in one of this Group or another
+
+This method removes duplicate elements and the result is sorted. It is synomym to the ^ operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the elements that are in self or in other but not in both, without duplicate elements
+
+Return type:
+
+Group
+
+Example
+
+>>> ag1 = u.atoms[[0, 1, 5, 3, 3, 2]]
+>>> ag2 = u.atoms[[4, 4, 6, 2, 3, 5]]
+>>> ag3 = ag1 ^ ag2  # or ag1.symmetric_difference(ag2)
+>>> ag3.indices  # 0 and 1 are only in ag1, 4 and 6 are only in ag2
+array([0, 1, 4, 6])
+
+See also
+
+difference
+
+Added in version 0.16.

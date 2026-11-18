@@ -1,0 +1,434 @@
+mir_eval.display
+
+Display functions
+
+ mir_eval.display.segments(intervals, labels, base=None, height=None, text=False, text_kw=None, ax=None, prop_cycle=None, **kwargs)
+
+Plot a segmentation as a set of disjoint rectangles.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+labelslist, shape=(n,)
+
+reference segment labels, in the format returned by mir_eval.io.load_labeled_intervals().
+
+basenumber
+
+The vertical position of the base of the rectangles. By default, this will be the bottom of the plot.
+
+heightnumber
+
+The height of the rectangles. By default, this will be the top of the plot (minus base). .. note:: If either base or height are provided, both must be provided.
+
+textbool
+
+If true, each segment’s label is displayed in its upper-left corner
+
+text_kwdict
+
+If text == True, the properties of the text object can be specified here. See matplotlib.pyplot.Text for valid parameters
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the segmentation. If none is provided, a new set of axes is created.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to pass to matplotlib.patches.Rectangle.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
+
+ mir_eval.display.labeled_intervals(intervals, labels, label_set=None, base=None, height=None, extend_labels=True, ax=None, tick=True, prop_cycle=None, **kwargs)
+
+Plot labeled intervals with each label on its own row.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+labelslist, shape=(n,)
+
+reference segment labels, in the format returned by mir_eval.io.load_labeled_intervals().
+
+label_setlist
+
+An (ordered) list of labels to determine the plotting order. If not provided, the labels will be inferred from ax.get_yticklabels(). If no yticklabels exist, then the sorted set of unique values in labels is taken as the label set.
+
+basenp.ndarray, shape=(n,), optional
+
+Vertical positions of each label. By default, labels are positioned at integers np.arange(len(labels)).
+
+heightscalar or np.ndarray, shape=(n,), optional
+
+Height for each label. If scalar, the same value is applied to all labels. By default, each label has height=1.
+
+extend_labelsbool
+
+If False, only values of labels that also exist in label_set will be shown.
+
+If True, all labels are shown, with those in labels but not in label_set appended to the top of the plot. A horizontal line is drawn to indicate the separation between values in or out of label_set.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the intervals. If none is provided, a new set of axes is created.
+
+tickbool
+
+If True, sets tick positions and labels on the y-axis.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to pass to matplotlib.collection.PolyCollection.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
+
+ class mir_eval.display.IntervalFormatter(base, ticks)
+
+Bases: Formatter
+
+Ticker formatter for labeled interval plots.
+
+Parameters:
+
+basearray-like of int
+
+The base positions of each label
+
+ticksarray-like of string
+
+The labels for the ticks
+
+Attributes:
+
+axis
+
+Methods
+
+__call__(x[, pos])
+ |
+Map the input position to its corresponding interval label
+ |
+
+fix_minus(s)
+ |
+Some classes may want to replace a hyphen for minus with the proper Unicode symbol (U+2212) for typographical correctness. This is a helper method to perform such a replacement when it is enabled via :rc:`axes.unicode_minus`.
+ |
+
+format_data(value)
+ |
+Return the full string representation of the value with the position unspecified.
+ |
+
+format_data_short(value)
+ |
+Return a short string version of the tick value.
+ |
+
+format_ticks(values)
+ |
+Return the tick labels for all the ticks at once.
+ |
+
+set_locs(locs)
+ |
+Set the locations of the ticks.
+ |
+
+create_dummy_axis
+ |   |
+
+get_offset
+ |   |
+
+set_axis
+ |   |
+
+ mir_eval.display.hierarchy(intervals_hier, labels_hier, levels=None, ax=None, **kwargs)
+
+Plot a hierarchical segmentation
+
+Parameters:
+
+intervals_hierlist of np.ndarray
+
+A list of segmentation intervals. Each element should be an n-by-2 array of segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals(). Segmentations should be ordered by increasing specificity.
+
+labels_hierlist of list-like
+
+A list of segmentation labels. Each element should be a list of labels for the corresponding element in intervals_hier.
+
+levelslist of string
+
+Each element levels[i] is a label for the `i th segmentation. This is used in the legend to denote the levels in a segment hierarchy.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the intervals. If none is provided, a new set of axes is created.
+
+**kwargs
+
+Additional keyword arguments to labeled_intervals.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
+
+ mir_eval.display.events(times, labels=None, base=None, height=None, ax=None, text_kw=None, prop_cycle=None, **kwargs)
+
+Plot event times as a set of vertical lines
+
+Parameters:
+
+timesnp.ndarray, shape=(n,)
+
+event times, in the format returned by mir_eval.io.load_events() or mir_eval.io.load_labeled_events().
+
+labelslist, shape=(n,), optional
+
+event labels, in the format returned by mir_eval.io.load_labeled_events().
+
+basenumber
+
+The vertical position of the base of the line. By default, this will be the bottom of the plot.
+
+heightnumber
+
+The height of the lines. By default, this will be the top of the plot (minus base). .. note:: If either base or height are provided, both must be provided.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the segmentation. If none is provided, a new set of axes is created.
+
+text_kwdict
+
+If labels is provided, the properties of the text objects can be specified here. See matplotlib.pyplot.Text for valid parameters
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to pass to matplotlib.pyplot.vlines.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
+
+ mir_eval.display.pitch(times, frequencies, midi=False, unvoiced=False, ax=None, prop_cycle=None, **kwargs)
+
+Visualize pitch contours
+
+Parameters:
+
+timesnp.ndarray, shape=(n,)
+
+Sample times of frequencies
+
+frequenciesnp.ndarray, shape=(n,)
+
+frequencies (in Hz) of the pitch contours. Voicing is indicated by sign (positive for voiced, non-positive for non-voiced).
+
+midibool
+
+If True, plot on a MIDI-numbered vertical axis. Otherwise, plot on a linear frequency axis.
+
+unvoicedbool
+
+If True, unvoiced pitch contours are plotted and indicated by transparency.
+
+Otherwise, unvoiced pitch contours are omitted from the display.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the pitch contours. If none is provided, a new set of axes is created.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to matplotlib.pyplot.plot.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
+
+ mir_eval.display.multipitch(times, frequencies, midi=False, unvoiced=False, ax=None, prop_cycle=None, **kwargs)
+
+Visualize multiple f0 measurements
+
+Parameters:
+
+timesnp.ndarray, shape=(n,)
+
+Sample times of frequencies
+
+frequencieslist of np.ndarray
+
+frequencies (in Hz) of the pitch measurements. Voicing is indicated by sign (positive for voiced, non-positive for non-voiced).
+
+times and frequencies should be in the format produced by mir_eval.io.load_ragged_time_series()
+
+midibool
+
+If True, plot on a MIDI-numbered vertical axis. Otherwise, plot on a linear frequency axis.
+
+unvoicedbool
+
+If True, unvoiced pitches are plotted and indicated by transparency.
+
+Otherwise, unvoiced pitches are omitted from the display.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the pitch contours. If none is provided, a new set of axes is created.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to plt.scatter.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
+
+ mir_eval.display.piano_roll(intervals, pitches=None, midi=None, ax=None, **kwargs)
+
+Plot a quantized piano roll as intervals
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+timing intervals for notes
+
+pitchesnp.ndarray, shape=(n,), optional
+
+pitches of notes (in Hz).
+
+midinp.ndarray, shape=(n,), optional
+
+pitches of notes (in MIDI numbers).
+
+At least one of pitches or midi must be provided.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the intervals. If none is provided, a new set of axes is created.
+
+**kwargs
+
+Additional keyword arguments to labeled_intervals().
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
+
+ mir_eval.display.separation(sources, fs=22050, labels=None, alpha=0.75, ax=None, rasterized=True, edgecolors='None', shading='gouraud', prop_cycle=None, **kwargs)
+
+Source-separation visualization
+
+Parameters:
+
+sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+A list of waveform buffers corresponding to each source
+
+fsnumber > 0
+
+The sampling rate
+
+labelslist of strings
+
+An optional list of descriptors corresponding to each source
+
+alphafloat in [0, 1]
+
+Maximum alpha (opacity) of spectrogram values.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the spectrograms. If none is provided, a new set of axes is created.
+
+rasterizedbool
+
+If True, the spectrogram is rasterized.
+
+edgecolorsstr or None
+
+The color of the edges of the spectrogram patches. Set to “None” (default) to disable edge coloring.
+
+shadingstr
+
+The shading method to use for the spectrogram. See matplotlib.pyplot.pcolormesh for valid options.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify colors for each signal. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to scipy.signal.spectrogram
+
+Returns:
+
+ax
+
+The axis handle for this plot
+
+ mir_eval.display.ticker_notes(ax=None)
+
+Set the y-axis of the given axes to MIDI notes
+
+Parameters:
+
+axmatplotlib.pyplot.axes
+
+The axes handle to apply the ticker. By default, uses the current axes handle.
+
+ mir_eval.display.ticker_pitch(ax=None)
+
+Set the y-axis of the given axes to MIDI frequencies
+
+Parameters:
+
+axmatplotlib.pyplot.axes
+
+The axes handle to apply the ticker. By default, uses the current axes handle.

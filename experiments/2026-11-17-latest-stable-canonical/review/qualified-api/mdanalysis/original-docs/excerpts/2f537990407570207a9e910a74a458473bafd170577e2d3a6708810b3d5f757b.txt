@@ -1,0 +1,27 @@
+MDAnalysis.lib.util.check_box(box)[source]
+
+Take a box input and deduce what type of system it represents based on the shape of the array and whether all angles are 90 degrees.
+
+Parameters:
+
+box (array_like) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+Returns:
+
+boxtype ({'ortho', 'tri_vecs'}) – String indicating the box type (orthogonal or triclinic).
+
+checked_box (numpy.ndarray) –
+
+Array of dtype numpy.float32 containing box information:
+
+If boxtype is 'ortho', cecked_box will have the shape (3,) containing the x-, y-, and z-dimensions of the orthogonal box.
+
+If boxtype is 'tri_vecs', cecked_box will have the shape (3, 3) containing the triclinic box vectors in a lower triangular matrix as returned by triclinic_vectors().
+
+Raises:
+
+ValueError – If box is not of the form [lx, ly, lz, alpha, beta, gamma] or contains data that is not convertible to numpy.float32.
+
+See also
+
+MDAnalysis.lib.mdamath.triclinic_vectors

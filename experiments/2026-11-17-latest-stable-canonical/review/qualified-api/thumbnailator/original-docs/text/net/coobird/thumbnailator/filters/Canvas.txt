@@ -1,0 +1,224 @@
+Canvas (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Class Canvas
+java.lang.Object
+net.coobird.thumbnailator.filters.Canvas
+All Implemented Interfaces:
+ImageFilter
+public class
+Canvas
+extends
+Object
+implements
+ImageFilter
+An
+ImageFilter
+which will enclose an image into a specified
+enclosing image.
+The intended use of this
+ImageFilter
+is to take an image and place
+it inside of a larger image, creating a border around the original image.
+This can be useful when the dimensions of a thumbnail must always be the
+same dimensions, and the original images are of differing dimensions.
+The fill color used for the enclosing image can be specified, along with
+whether or not to crop an image if it is larger than the enclosing image.
+Since:
+0.3.2
+Author:
+coobird
+Constructor Summary
+Canvas
+(int width,
+int height,
+Position
+position)
+Instantiates a
+Canvas
+filter.
+Canvas
+(int width,
+int height,
+Position
+position,
+boolean crop)
+Instantiates a
+Canvas
+filter.
+Canvas
+(int width,
+int height,
+Position
+position,
+boolean crop,
+Color
+fillColor)
+Instantiates a
+Canvas
+filter.
+Canvas
+(int width,
+int height,
+Position
+position,
+Color
+fillColor)
+Instantiates a
+Canvas
+filter.
+Method Summary
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+Canvas
+public
+Canvas
+(int width,
+int height,
+Position
+position)
+Instantiates a
+Canvas
+filter.
+No fill color will be applied to the filtered image. If the image to
+filter does not have a transparency channel, the image will be filled
+black.
+Crops the enclosed image if the enclosing image is smaller.
+Parameters:
+width
+- The width of the filtered image.
+height
+- The height of the filtered image.
+position
+- The position to place the enclosed image.
+Canvas
+public
+Canvas
+(int width,
+int height,
+Position
+position,
+boolean crop)
+Instantiates a
+Canvas
+filter.
+No fill color will be applied to the filtered image. If the image to
+filter does not have a transparency channel, the image will be filled
+black.
+Parameters:
+width
+- The width of the filtered image.
+height
+- The height of the filtered image.
+position
+- The position to place the enclosed image.
+crop
+- Whether or not to crop the enclosed image if the
+enclosed image has dimensions which are larger than
+the specified
+width
+and
+height
+.
+Canvas
+public
+Canvas
+(int width,
+int height,
+Position
+position,
+Color
+fillColor)
+Instantiates a
+Canvas
+filter.
+Crops the enclosed image if the enclosing image is smaller.
+Parameters:
+width
+- The width of the filtered image.
+height
+- The height of the filtered image.
+position
+- The position to place the enclosed image.
+fillColor
+- The color to fill portions of the image which is
+not covered by the enclosed image. Portions of the
+image which is transparent will be filled with
+the specified color as well.
+Canvas
+public
+Canvas
+(int width,
+int height,
+Position
+position,
+boolean crop,
+Color
+fillColor)
+Instantiates a
+Canvas
+filter.
+Parameters:
+width
+- The width of the filtered image.
+height
+- The height of the filtered image.
+position
+- The position to place the enclosed image.
+crop
+- Whether or not to crop the enclosed image if the
+enclosed image has dimensions which are larger than
+the specified
+width
+and
+height
+.
+fillColor
+- The color to fill portions of the image which is
+not covered by the enclosed image. Portions of the
+image which is transparent will be filled with
+the specified color as well.
+Method Detail
+apply
+public
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Description copied from interface:
+ImageFilter
+Applies a image filtering operation on an image.
+Specified by:
+apply
+in interface
+ImageFilter
+Parameters:
+img
+- The image to apply the filtering on.
+Returns:
+The resulting image after applying this filter.
+Copyright © 2025. All rights reserved.

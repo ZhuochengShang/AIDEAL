@@ -1,0 +1,17 @@
+positions
+
+A record of the positions of all atoms in this Timestep Setting this attribute will add positions to the Timestep if they weren’t originally present.
+
+Returns:
+
+positions – position data of shape (n_atoms, 3) for all atoms
+
+Return type:
+
+numpy.ndarray with dtype numpy.float32
+
+Raises:
+
+MDAnalysis.exceptions.NoDataError – if the Timestep has no position data
+
+Changed in version 0.11.0: Now can raise NoDataError when no position data present

@@ -1,0 +1,51 @@
+classmethod empty(n_atoms, n_residues=1, n_segments=1, n_frames=1, atom_resindex=None, residue_segindex=None, trajectory=False, velocities=False, forces=False)[source]
+
+Create a blank Universe
+
+Useful for building a Universe without requiring existing files, for example for system building.
+
+If trajectory is set to True, a MDAnalysis.coordinates.memory.MemoryReader will be attached to the Universe.
+
+Parameters:
+
+n_atoms (int) – number of Atoms in the Universe
+
+n_residues (int, default 1) – number of Residues in the Universe, defaults to 1
+
+n_segments (int, default 1) – number of Segments in the Universe, defaults to 1
+
+n_frames (int, default 1) – number of Frames in the Universe, defaults to 1
+
+atom_resindex (array like, optional) – mapping of atoms to residues, e.g. with 6 atoms, atom_resindex=[0, 0, 1, 1, 2, 2] would put 2 atoms into each of 3 residues.
+
+residue_segindex (array like, optional) – mapping of residues to segments
+
+trajectory (bool, optional) – if True, attaches a MDAnalysis.coordinates.memory.MemoryReader allowing coordinates to be set and written.
+
+velocities (bool, optional) – include velocities in the MDAnalysis.coordinates.memory.MemoryReader
+
+forces (bool, optional) – include forces in the MDAnalysis.coordinates.memory.MemoryReader
+
+Returns:
+
+Universe instance with dummy values for atoms and undefined coordinates/velocities/forces
+
+Return type:
+
+Universe
+
+Examples
+
+For example to create a new Universe with 6 atoms in 2 residues, with positions for the atoms and a mass attribute:
+
+u = mda.Universe.empty(6, 2,
+                       atom_resindex=np.array([0, 0, 0, 1, 1, 1]),
+                       trajectory=True,
+      )
+u.add_TopologyAttr('masses')
+
+Added in version 0.17.0.
+
+Changed in version 0.19.0: The attached Reader when trajectory=True is now a MemoryReader
+
+Changed in version 1.0.0: Universes can now be created with 0 atoms

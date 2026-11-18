@@ -1,0 +1,21 @@
+resample_factor(factor)
+
+Resample to a new regular grid.
+
+Parameters:
+
+factor (float) – The number of grid cells are scaled with factor in each dimension, i.e., factor * N_i cells along each dimension i. Must be positive, and cannot result in fewer than 2 cells along a dimension.
+
+Returns:
+
+interpolated grid – The resampled data are represented on a Grid with the new grid cell sizes.
+
+Return type:
+
+Grid
+
+See also
+
+resample
+
+Changed in version 0.6.0: Previous implementations would not alter the range of the grid edges being resampled on. As a result, values at the grid edges would creep steadily inward. The new implementation recalculates the extent of grid edges for every resampling.

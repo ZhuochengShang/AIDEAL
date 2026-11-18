@@ -1,0 +1,33 @@
+guess_hydrogens(select='all', max_mass=1.1, min_charge=0.3, min_mass=0.9)[source]
+
+Guesses which hydrogen atoms should be used in the analysis.
+
+Parameters:
+
+select (str (optional)) – Selection string for atom group from which hydrogens will be identified. (e.g., (resname X and name H1) or type 2)
+
+max_mass (float (optional)) – The mass of a hydrogen atom must be less than this value.
+
+min_mass (float (optional)) – The mass of a hydrogen atom must be greater than this value.
+
+min_charge (float (optional)) – The charge of a hydrogen atom must be greater than this value.
+
+Returns:
+
+potential_hydrogens – String containing the resname and name of all hydrogen atoms potentially capable of forming hydrogen bonds.
+
+Return type:
+
+str
+
+Notes
+
+Hydrogen selections may be achieved with either a resname, atom name combination, or when those are absent, atom types.
+
+This function makes use of atomic masses and atomic charges to identify which atoms are hydrogen atoms that are capable of participating in hydrogen bonding. If an atom has a mass less than max_mass and an atomic charge greater than min_charge then it is considered capable of participating in hydrogen bonds.
+
+If hydrogens_sel is None, this function is called to guess the selection.
+
+Alternatively, this function may be used to quickly generate a str of potential hydrogen atoms involved in hydrogen bonding. This str may then be modified before being used to set the attribute hydrogens_sel.
+
+Changed in version 2.4.0: Added ability to use atom types

@@ -1,0 +1,492 @@
+Thumbnailator (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator
+Class Thumbnailator
+java.lang.Object
+net.coobird.thumbnailator.Thumbnailator
+public final class
+Thumbnailator
+extends
+Object
+This class provides static utility methods which perform generation of
+thumbnails using Thumbnailator.
+When images are resized, the aspect ratio of the images are preserved.
+Author:
+coobird
+Method Summary
+static
+BufferedImage
+createThumbnail
+(
+BufferedImage
+img,
+int width,
+int height)
+Creates a thumbnail.
+static void
+createThumbnail
+(
+File
+inFile,
+File
+outFile,
+int width,
+int height)
+Creates a thumbnail from an source image and writes the thumbnail to
+a destination file.
+static
+BufferedImage
+createThumbnail
+(
+File
+f,
+int width,
+int height)
+Creates a thumbnail from an image file, and returns as a
+BufferedImage
+.
+static
+Image
+createThumbnail
+(
+Image
+img,
+int width,
+int height)
+Creates a thumbnail from an
+Image
+.
+static void
+createThumbnail
+(
+InputStream
+is,
+OutputStream
+os,
+int width,
+int height)
+Creates a thumbnail from image data streamed from an
+InputStream
+and streams the data out to an
+OutputStream
+.
+static void
+createThumbnail
+(
+InputStream
+is,
+OutputStream
+os,
+String
+format,
+int width,
+int height)
+Creates a thumbnail from image data streamed from an
+InputStream
+and streams the data out to an
+OutputStream
+, with the specified
+format for the output data.
+static void
+createThumbnail
+(
+ThumbnailTask
+<?,?> task)
+Creates a thumbnail from parameters specified in a
+ThumbnailTask
+.
+static void
+createThumbnails
+(
+Collection
+<? extends
+File
+> files,
+Rename
+rename,
+int width,
+int height)
+Deprecated.
+This method has been deprecated in favor of using the
+Thumbnails.fromFiles(Iterable)
+interface.
+This method will be removed in 0.5.0, and will not be
+further maintained.
+static
+Collection
+<
+File
+>
+createThumbnailsAsCollection
+(
+Collection
+<? extends
+File
+> files,
+Rename
+rename,
+int width,
+int height)
+Deprecated.
+This method has been deprecated in favor of using the
+Thumbnails.fromFiles(Iterable)
+interface.
+This method will be removed in 0.5.0, and will not be
+further maintained.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+createThumbnail
+public static void
+createThumbnail
+(
+ThumbnailTask
+<?,?> task)
+throws
+IOException
+Creates a thumbnail from parameters specified in a
+ThumbnailTask
+.
+Parameters:
+task
+- A
+ThumbnailTask
+to execute.
+Throws:
+IOException
+- Thrown when a problem occurs when creating a
+thumbnail.
+createThumbnail
+public static
+BufferedImage
+createThumbnail
+(
+BufferedImage
+img,
+int width,
+int height)
+Creates a thumbnail.
+The resulting thumbnail uses the default image type.
+When the image is resized, the aspect ratio will be preserved.
+When the specified dimensions does not have the same aspect ratio as the
+source image, the specified dimensions will be used as the absolute
+boundary of the thumbnail.
+For example, if the source image of 100 pixels by 100 pixels, and the
+desired thumbnail size is 50 pixels by 100 pixels, then the resulting
+thumbnail will be 50 pixels by 50 pixels, as the constraint will be
+50 pixels for the width, and therefore, by preserving the aspect ratio,
+the height will be required to be 50 pixels.
+Parameters:
+img
+- The source image.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+Resulting thumbnail.
+createThumbnail
+public static void
+createThumbnail
+(
+File
+inFile,
+File
+outFile,
+int width,
+int height)
+throws
+IOException
+Creates a thumbnail from an source image and writes the thumbnail to
+a destination file.
+The image format to use for the thumbnail will be determined from the
+file extension. However, if the image format cannot be determined, then,
+the same image format as the original image will be used when writing
+the thumbnail.
+Parameters:
+inFile
+- The
+File
+from which image data is read.
+outFile
+- The
+File
+to which thumbnail is written.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+createThumbnail
+public static
+BufferedImage
+createThumbnail
+(
+File
+f,
+int width,
+int height)
+throws
+IOException
+Creates a thumbnail from an image file, and returns as a
+BufferedImage
+.
+Parameters:
+f
+- The
+File
+from which image data is read.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+The thumbnail image as a
+BufferedImage
+.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+createThumbnail
+public static
+Image
+createThumbnail
+(
+Image
+img,
+int width,
+int height)
+Creates a thumbnail from an
+Image
+.
+The resulting
+BufferedImage
+uses the default image type.
+When the image is resized, the aspect ratio will be preserved.
+When the specified dimensions does not have the same aspect ratio as the
+source image, the specified dimensions will be used as the absolute
+boundary of the thumbnail.
+Parameters:
+img
+- The source image.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+The thumbnail image as an
+Image
+.
+createThumbnail
+public static void
+createThumbnail
+(
+InputStream
+is,
+OutputStream
+os,
+int width,
+int height)
+throws
+IOException
+Creates a thumbnail from image data streamed from an
+InputStream
+and streams the data out to an
+OutputStream
+.
+The thumbnail will be stored in the same format as the original image.
+Parameters:
+is
+- The
+InputStream
+from which to obtain
+image data.
+os
+- The
+OutputStream
+to send thumbnail data to.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+createThumbnail
+public static void
+createThumbnail
+(
+InputStream
+is,
+OutputStream
+os,
+String
+format,
+int width,
+int height)
+throws
+IOException
+Creates a thumbnail from image data streamed from an
+InputStream
+and streams the data out to an
+OutputStream
+, with the specified
+format for the output data.
+Parameters:
+is
+- The
+InputStream
+from which to obtain
+image data.
+os
+- The
+OutputStream
+to send thumbnail data to.
+format
+- The image format to use to store the thumbnail data.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+IllegalArgumentException
+- If the specified output format is
+not supported.
+createThumbnailsAsCollection
+public static
+Collection
+<
+File
+>
+createThumbnailsAsCollection
+(
+Collection
+<? extends
+File
+> files,
+Rename
+rename,
+int width,
+int height)
+throws
+IOException
+Deprecated.
+This method has been deprecated in favor of using the
+Thumbnails.fromFiles(Iterable)
+interface.
+This method will be removed in 0.5.0, and will not be
+further maintained.
+Creates thumbnails from a specified
+Collection
+of
+File
+s.
+The filenames of the resulting thumbnails are determined by applying
+the specified
+Rename
+.
+The order of the thumbnail
+File
+s in the returned
+Collection
+will be the same as the order as the source list.
+Parameters:
+files
+- A
+Collection
+containing
+File
+objects
+of image files.
+rename
+- The renaming function to use.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+A collection of
+File
+s to the thumbnails.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+createThumbnails
+public static void
+createThumbnails
+(
+Collection
+<? extends
+File
+> files,
+Rename
+rename,
+int width,
+int height)
+throws
+IOException
+Deprecated.
+This method has been deprecated in favor of using the
+Thumbnails.fromFiles(Iterable)
+interface.
+This method will be removed in 0.5.0, and will not be
+further maintained.
+Creates thumbnails from a specified
+Collection
+of
+File
+s.
+The filenames of the resulting thumbnails are determined by applying
+the specified
+Rename
+function.
+Parameters:
+files
+- A
+Collection
+containing
+File
+objects
+of image files.
+rename
+- The renaming function to use.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+Copyright © 2025. All rights reserved.

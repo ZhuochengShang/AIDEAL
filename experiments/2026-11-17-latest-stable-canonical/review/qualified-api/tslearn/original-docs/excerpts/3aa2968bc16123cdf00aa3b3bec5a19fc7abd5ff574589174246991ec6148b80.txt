@@ -1,0 +1,31 @@
+set_score_request(*, sample_weight: bool | None | str = '$UNCHANGED$') → LearningShapelets
+
+Configure whether metadata should be requested to be passed to the score method.
+
+Note that this method is only relevant when this estimator is used as a sub-estimator within a meta-estimator and metadata routing is enabled with enable_metadata_routing=True (see sklearn.set_config()). Please check the User Guide on how the routing mechanism works.
+
+The options for each parameter are:
+
+True: metadata is requested, and passed to score if provided. The request is ignored if metadata is not provided.
+
+False: metadata is not requested and the meta-estimator will not pass it to score.
+
+None: metadata is not requested, and the meta-estimator will raise an error if the user provides it.
+
+str: metadata should be passed to the meta-estimator with this given alias instead of the original name.
+
+The default (sklearn.utils.metadata_routing.UNCHANGED) retains the existing request. This allows you to change the request for some parameters and not others.
+
+Added in version 1.3.
+
+Parameters:
+
+sample_weightstr, True, False, or None, default=sklearn.utils.metadata_routing.UNCHANGED
+
+Metadata routing for sample_weight parameter in score.
+
+Returns:
+
+selfobject
+
+The updated object.

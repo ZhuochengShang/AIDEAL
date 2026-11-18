@@ -1,0 +1,78 @@
+MDAnalysis.analysis.encore.similarity.hes(ensembles, select='name CA', cov_estimator='shrinkage', weights='mass', align=False, estimate_error=False, bootstrapping_samples=100, calc_diagonal=False)[source]
+
+Calculates the Harmonic Ensemble Similarity (HES) between ensembles.
+
+The HES is calculated with the symmetrized version of Kullback-Leibler divergence as described in [2].
+
+Parameters:
+
+ensembles (list) – List of Universe objects for similarity measurements.
+
+select (str, optional) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+cov_estimator (str, optional) – Covariance matrix estimator method, either shrinkage, shrinkage, or Maximum Likelyhood, ml. Default is shrinkage.
+
+weights (str/array_like, optional) – specify optional weights. If mass then chose masses of ensemble atoms
+
+align (bool, optional) – Whether to align the ensembles before calculating their similarity. Note: this changes the ensembles in-place, and will thus leave your ensembles in an altered state. (default is False)
+
+estimate_error (bool, optional) – Whether to perform error estimation (default is False).
+
+bootstrapping_samples (int, optional) – Number of times the similarity matrix will be bootstrapped (default is 100), only if estimate_error is True.
+
+calc_diagonal (bool, optional) – Whether to calculate the diagonal of the similarity scores (i.e. the similarities of every ensemble against itself). If this is False (default), 0.0 will be used instead.
+
+Returns:
+
+hes, details – Harmonic similarity measurements between each pair of ensembles, and dict containing mean and covariance matrix for each ensemble
+
+Return type:
+
+numpy.array, dictionary
+
+Notes
+
+The method assumes that each ensemble is derived from a multivariate normal distribution. The mean and covariance matrix are, thus, estimatated from the distribution of each ensemble and used for comparision by the symmetrized version of Kullback-Leibler divergence defined as:
+
+ \[D_{KL}(P(x) || Q(x)) = \int_{-\infty}^{\infty}P(x_i) ln(P(x_i)/Q(x_i)) = \langle{}ln(P(x))\rangle{}_P - \langle{}ln(Q(x))\rangle{}_P\]
+
+where the \(\langle{}.\rangle{}_P\) denotes an expectation calculated under the distribution \(P\).
+
+For each ensemble, the mean conformation is estimated as the average over the ensemble, and the covariance matrix is calculated by default using a shrinkage estimation method (or by a maximum-likelihood method, optionally).
+
+Note that the symmetrized version of the Kullback-Leibler divergence has no upper bound (unlike the Jensen-Shannon divergence used by for instance CES and DRES).
+
+When using this similarity measure, consider whether you want to align the ensembles first (see example below).
+
+Example
+
+To calculate the Harmonic Ensemble similarity, two ensembles are created as Universe objects from a topology file and two trajectories. The topology- and trajectory files used are obtained from the MDAnalysis test suite for two different simulations of the protein AdK. You can use the align=True option to align the ensembles first. This will align everything to the current timestep in the first ensemble. Note that this changes the ens1 and ens2 objects:
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> ens1 = Universe(PSF, DCD)
+>>> ens2 = Universe(PSF, DCD2)
+>>> HES, details = encore.hes([ens1, ens2])
+>>> print(HES)
+[[       0.         38279540.04524205]
+ [38279540.04524205        0.        ]]
+>>> print(encore.hes([ens1, ens2], align=True)[0])
+[[   0.         6889.89729056]
+ [6889.89729056    0.        ]]
+
+Alternatively, for greater flexibility in how the alignment should be done you can call use an AlignTraj object manually:
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> from MDAnalysis.analysis import align
+>>> ens1 = Universe(PSF, DCD)
+>>> ens2 = Universe(PSF, DCD2)
+>>> _ = align.AlignTraj(ens1, ens1, select="name CA", in_memory=True).run()
+>>> _ = align.AlignTraj(ens2, ens1, select="name CA", in_memory=True).run()
+>>> print(encore.hes([ens1, ens2])[0])
+[[   0.         6889.89729056]
+ [6889.89729056    0.        ]]
+
+Changed in version 1.0.0: hes doesn’t accept the details argument anymore, it always returns the details of the calculation instead, in the form of a dictionary

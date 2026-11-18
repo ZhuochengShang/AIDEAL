@@ -1,0 +1,19 @@
+MDAnalysis.analysis.encore.similarity.prepare_ensembles_for_convergence_increasing_window(ensemble, window_size, select='name CA')[source]
+
+Generate ensembles to be fed to ces_convergence or dres_convergence from a single ensemble. Basically, the different slices the algorithm needs are generated here.
+
+Parameters:
+
+ensemble (Universe object) – Input ensemble
+
+window_size (int) – size of the window (in number of frames) to be used
+
+select (str) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+Returns:
+
+The original ensemble is divided into different ensembles, each being a window_size-long slice of the original ensemble. The last ensemble will be bigger if the length of the input ensemble is not exactly divisible by window_size.
+
+Return type:
+
+tmp_ensembles

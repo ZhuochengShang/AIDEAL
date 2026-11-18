@@ -1,0 +1,26 @@
+del_TopologyAttr(topologyattr)[source]
+
+Remove a topology attribute from the Universe
+
+Removing a TopologyAttribute from the Universe makes it unavailable to all AtomGroups etc throughout the Universe.
+
+Parameters:
+
+topologyattr (TopologyAttr or string) – Either a MDAnalysis TopologyAttr object or the name of a possible topology attribute.
+
+Example
+
+For example to remove bfactors to a Universe:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> u = mda.Universe(PSF, DCD)
+>>> u.add_TopologyAttr('tempfactors')
+>>> hasattr(u.atoms[:3], 'tempfactors')
+True
+>>>
+>>> u.del_TopologyAttr('tempfactors')
+>>> hasattr(u.atoms[:3], 'tempfactors')
+False
+
+Added in version 2.0.0.

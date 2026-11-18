@@ -1,16 +1,16 @@
 {
   "study_id": "2026-11-17-latest-stable-canonical",
-  "state": "REVISION_REQUIRED_NOT_RUN_READY",
+  "state": "INITIAL_INPUTS_VALIDATED_REVIEW_HOLD",
   "new_model_calls": 0,
   "live_pilot_approved": false,
   "full_run_approved": false,
   "evaluator": {
-    "release": "2026-11-17-canonical-api-a6e8bb84fe32",
-    "github_commit": "e9f02e397f96d78d825cf0705f65771232b27e69",
-    "content_sha256": "a6e8bb84fe32644837603ee4c73a1100f5f51519dfdecbdc36c4ffc992ba98c1",
-    "file_count": 225,
-    "local": "evaluator/",
-    "cluster": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32"
+    "release": "2026-11-17-qualified-api-f3c6fd6fe802",
+    "github_commit": "99207a6f3b8d9037604da289b8b9a7ad472f8c94",
+    "content_sha256": "f3c6fd6fe802716592df2d1342fc1b5bc9de5ca372aac880c196a240b2cb1838",
+    "file_count": 270,
+    "local": "evaluator-qualified/",
+    "cluster": "/home/zshan011/apps/aideal/releases/2026-11-17-qualified-api-f3c6fd6fe802"
   },
   "review_locations": {
     "local": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical",
@@ -42,9 +42,13 @@
       "cluster_source_head": "official_commit (detached)",
       "local_tracking_ref_prefix": "aideal-github/study/2026-11-17-latest-stable-canonical/",
       "prior_prepared_targets": 708,
-      "selected_targets": null,
+      "selected_targets": 2787,
       "prior_simple_name_context_mentions": 55,
-      "qualified_original_doc_coverage": null
+      "qualified_original_doc_coverage": {
+        "exact_excerpt_mapped": 3,
+        "no_exact_mapping": 2784,
+        "shared_readme_context_for_every_target": true
+      }
     },
     {
       "library": "mdanalysis",
@@ -70,9 +74,13 @@
       "cluster_source_head": "official_commit (detached)",
       "local_tracking_ref_prefix": "aideal-github/study/2026-11-17-latest-stable-canonical/",
       "prior_prepared_targets": 435,
-      "selected_targets": null,
+      "selected_targets": 1538,
       "prior_simple_name_context_mentions": 38,
-      "qualified_original_doc_coverage": null
+      "qualified_original_doc_coverage": {
+        "exact_excerpt_mapped": 1064,
+        "no_exact_mapping": 474,
+        "shared_readme_context_for_every_target": true
+      }
     },
     {
       "library": "tslearn",
@@ -98,9 +106,13 @@
       "cluster_source_head": "official_commit (detached)",
       "local_tracking_ref_prefix": "aideal-github/study/2026-11-17-latest-stable-canonical/",
       "prior_prepared_targets": 116,
-      "selected_targets": null,
+      "selected_targets": 362,
       "prior_simple_name_context_mentions": 56,
-      "qualified_original_doc_coverage": null
+      "qualified_original_doc_coverage": {
+        "exact_excerpt_mapped": 223,
+        "no_exact_mapping": 139,
+        "shared_readme_context_for_every_target": true
+      }
     },
     {
       "library": "mir_eval",
@@ -126,9 +138,13 @@
       "cluster_source_head": "official_commit (detached)",
       "local_tracking_ref_prefix": "aideal-github/study/2026-11-17-latest-stable-canonical/",
       "prior_prepared_targets": 125,
-      "selected_targets": null,
+      "selected_targets": 178,
       "prior_simple_name_context_mentions": 22,
-      "qualified_original_doc_coverage": null
+      "qualified_original_doc_coverage": {
+        "exact_excerpt_mapped": 177,
+        "no_exact_mapping": 1,
+        "shared_readme_context_for_every_target": true
+      }
     },
     {
       "library": "thumbnailator",
@@ -154,9 +170,13 @@
       "cluster_source_head": "official_commit (detached)",
       "local_tracking_ref_prefix": "aideal-github/study/2026-11-17-latest-stable-canonical/",
       "prior_prepared_targets": 94,
-      "selected_targets": null,
+      "selected_targets": 225,
       "prior_simple_name_context_mentions": 94,
-      "qualified_original_doc_coverage": null
+      "qualified_original_doc_coverage": {
+        "exact_excerpt_mapped": 225,
+        "no_exact_mapping": 0,
+        "shared_readme_context_for_every_target": true
+      }
     },
     {
       "library": "sedonadb",
@@ -182,26 +202,39 @@
       "cluster_source_head": "official_commit (detached)",
       "local_tracking_ref_prefix": "aideal-github/study/2026-11-17-latest-stable-canonical/",
       "prior_prepared_targets": 217,
-      "selected_targets": null,
+      "selected_targets": 217,
       "prior_simple_name_context_mentions": 212,
-      "qualified_original_doc_coverage": null
+      "qualified_original_doc_coverage": {
+        "exact_excerpt_mapped": 211,
+        "no_exact_mapping": 6,
+        "shared_readme_context_for_every_target": true
+      }
     }
   ],
-  "scope": "Entire Beast by module; library-owned APIs; distinct owners retained; within-owner overload reduction. Corrected inventory and original-document coverage remain under review.",
+  "scope": "Entire Beast by module; exact defining owners retained, overloads reduced within one API. Original-document mappings and unresolved boundaries recorded separately.",
   "local_execution_status": "Code and review assets match the pinned cluster evaluator. Linux runtimes are validated; a fresh native Mac runtime has not been configured or executed. Remote SSH from VS Code runs the validated cluster environment.",
   "synchronization": "SYNC_MANIFEST.json covers exact portable review and evaluator bytes. Git branches and HTML do not update themselves; synchronize a new snapshot after later approved runs. Earlier measured cohorts remain separate.",
   "approved_target_count": null,
   "prior_run_plan_sha256": "7aef275e71077749dd53c83eb701496e4f8a43fa8b54e2bf4a79c9b9227e0255",
-  "current_run_plan_sha256": null,
-  "inventory_correction": "review/api-audit/AUDIT_STATUS.json",
+  "current_run_plan_sha256": "5ae99b7a0e8bbe58f3c96cbba3fd42baa1408ca14a78a2baeec0ce51a470582a",
+  "inventory_correction": "review/qualified-api/",
   "health_review": {
-    "status": "software_checks_pass_experiment_revision_required",
-    "report": "HEALTH_CHECK.md",
+    "status": "offline_checks_and_seven_bank_preparation_verified",
+    "report": "READINESS_FIXES.md",
     "new_model_calls": 0,
-    "subject_executions": 0,
-    "latest_stable_versions_checked": 6,
-    "resume_fingerprint_fix": "api_origin.py included for direct README resumes",
-    "development_code_updates": "review/api-audit/code_updates/",
-    "frozen_evaluator_unchanged": true
-  }
+    "new_subject_executions": 0,
+    "prior_evaluators_preserved": true,
+    "final_validation": "review/qualified-checks/FINAL_VALIDATION.json",
+    "tests_per_environment": 684,
+    "subtests_per_environment": 365
+  },
+  "previous_evaluator": {
+    "release": "2026-11-17-canonical-api-a6e8bb84fe32",
+    "github_commit": "e9f02e397f96d78d825cf0705f65771232b27e69",
+    "content_sha256": "a6e8bb84fe32644837603ee4c73a1100f5f51519dfdecbdc36c4ffc992ba98c1",
+    "file_count": 225,
+    "local": "evaluator/",
+    "cluster": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32"
+  },
+  "selected_target_count": 5307
 }

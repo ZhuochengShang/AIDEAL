@@ -1,0 +1,29 @@
+mir_eval.pattern.evaluate(ref_patterns, est_patterns, **kwargs)
+
+Load data and perform the evaluation.
+
+Parameters:
+
+ref_patternslist
+
+The reference patterns in the format returned by mir_eval.io.load_patterns()
+
+est_patternslist
+
+The estimated patterns in the same format
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> ref_patterns = mir_eval.io.load_patterns("ref_pattern.txt")
+>>> est_patterns = mir_eval.io.load_patterns("est_pattern.txt")
+>>> scores = mir_eval.pattern.evaluate(ref_patterns, est_patterns)

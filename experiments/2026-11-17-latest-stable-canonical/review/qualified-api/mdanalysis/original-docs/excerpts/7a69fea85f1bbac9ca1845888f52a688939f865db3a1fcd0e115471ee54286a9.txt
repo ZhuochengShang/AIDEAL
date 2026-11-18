@@ -1,0 +1,15 @@
+run(force=False)[source]
+
+Run all the required passes
+
+Intermediate results are stored in the attribute solution (a dict). In order to perform the exponential fits, run the solve() method.
+
+Parameters:
+
+force (bool, optional) – If previous results exist and force=True, then the analysis will run and will overwrite previous results; in the same situation with force=Fales, this method will return immediately without making any changes to solution.
+
+Raises:
+
+ValueError – If all runs start without hydrogen bonds (no hydrogen bonds at the first frame of any run), so that the autocorrelation is undefined.
+
+Changed in version 2.11.0: Runs without hydrogen bonds at their first frame are skipped with a warning instead of giving NaN. A ValueError is raised if all runs are skipped.

@@ -1,0 +1,89 @@
+class MDAnalysis.core.topologyattrs.Resnames(vals, guessed=False)[source]
+
+ dtype
+
+alias of object
+
+ sequence(**kwargs)[source]
+
+Returns the amino acid sequence.
+
+The format of the sequence is selected with the keyword format:
+
+format
+ |
+description
+ |
+
+‘SeqRecord’
+ |
+Bio.SeqRecord.SeqRecord (default)
+ |
+
+‘Seq’
+ |
+Bio.Seq.Seq
+ |
+
+‘string’
+ |
+string
+ |
+
+The sequence is returned by default (keyword format = 'SeqRecord') as a Bio.SeqRecord.SeqRecord instance, which can then be further processed. In this case, all keyword arguments (such as the id string or the name or the description) are directly passed to Bio.SeqRecord.SeqRecord.
+
+If the keyword format is set to 'Seq', all kwargs are ignored and a Bio.Seq.Seq instance is returned. The difference to the record is that the record also contains metadata and can be directly used as an input for other functions in Bio.
+
+If the keyword format is set to 'string', all kwargs are ignored and a Python string is returned.
+
+Example: Write FASTA file
+
+Use Bio.SeqIO.write(), which takes sequence records:
+
+import Bio.SeqIO
+
+# get the sequence record of a protein component of a Universe
+protein = u.select_atoms("protein")
+record = protein.sequence(id="myseq1", name="myprotein")
+
+Bio.SeqIO.write(record, "single.fasta", "fasta")
+
+A FASTA file with multiple entries can be written with
+
+Bio.SeqIO.write([record1, record2, ...], "multi.fasta", "fasta")
+
+Parameters:
+
+format (string, optional) –
+
+"string": return sequence as a string of 1-letter codes
+
+"Seq": return a Bio.Seq.Seq instance
+
+"SeqRecord": return a Bio.SeqRecord.SeqRecord instance
+
+Default is "SeqRecord"
+
+id (optional) – Sequence ID for SeqRecord (should be different for different sequences)
+
+name (optional) – Name of the protein.
+
+description (optional) – Short description of the sequence.
+
+kwargs (optional) – Any other keyword arguments that are understood by class:Bio.SeqRecord.SeqRecord.
+
+Raises:
+
+ValueError –
+
+1-letter IUPAC protein amino acid code; make sure to only –
+
+select protein residues. –
+
+TypeError –
+
+ImportError –
+
+Added in version 0.9.0.
+
+Changed in version 2.7.0: Biopython is now an optional dependency

@@ -1,0 +1,37 @@
+class MDAnalysis.lib.nsgrid.NSResults
+
+Class to store the results
+
+All outputs from FastNS are stored in an instance of this class. All methods of FastNS return an instance of this class, which can be used to generate the desired results on demand.
+
+ get_pair_distances(self)
+
+Returns all the distances corresponding to each pair of neighbors
+
+Returns an array of shape N where N is the number of pairs among the query atoms and initial atoms within a specified distance. Every element [i] corresponds to the distance between pairs[i, 0] and pairs[i, 1], where pairs is the array obtained from get_pairs()
+
+Returns:
+
+distances – distances between pairs of query and initial atom coordinates of shape N
+
+Return type:
+
+numpy.ndarray
+
+See also
+
+get_pairs()
+
+ get_pairs(self)
+
+Returns all the pairs within the desired cutoff distance
+
+Returns an array of shape (N, 2), where N is the number of pairs between reference and configuration within the specified distance. For every pair (i, j), reference[i] and configuration[j] are atom positions such that reference is the position of query atoms while configuration coontains the position of group of atoms used to search against the query atoms.
+
+Returns:
+
+pairs – pairs of atom indices of neighbors from query and initial atom coordinates of shape (N, 2)
+
+Return type:
+
+numpy.ndarray

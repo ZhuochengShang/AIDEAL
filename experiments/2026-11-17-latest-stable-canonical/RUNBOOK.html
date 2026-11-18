@@ -1,0 +1,137 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>RUNBOOK</title><style>body{max-width:1280px;margin:30px auto;padding:0 25px;font:16px/1.6 system-ui;color:#18344b}a{color:#1765a6}table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow:auto}td,th{border:1px solid #ccd7e2;padding:10px;text-align:left}th{background:#eef4f9}pre{background:#eff3f7;padding:16px;overflow:auto}code{overflow-wrap:anywhere}img{max-width:100%}h2{margin-top:36px;border-top:1px solid #d8e3eb;padding-top:20px}</style><h1>Review-only runbook</h1>
+<p><strong>Current state: ready for input review is not a completed scientific study.</strong> The live review hold remains active. The commands below inspect or prepare inputs; they contain no live-run option and do not authorize model calls.</p>
+<p><a href="EXPERIMENT_GUIDE.html">Experiment guide</a> · <a href="review/qualified-bank/INDEX.html">All selected API/task inputs</a> · <a href="READINESS_FIXES.html">Readiness fixes</a> · <a href="HISTORY.md">History</a></p>
+<h2>Current package and scope</h2>
+<table>
+<thead>
+<tr>
+  <th>Item</th>
+  <th>Current path / state</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Qualified evaluator snapshot</td>
+  <td><code>evaluator-qualified/</code></td>
+</tr>
+<tr>
+  <td>Final evaluator release</td>
+  <td><code>2026-11-17-qualified-api-f3c6fd6fe802</code></td>
+</tr>
+<tr>
+  <td>Final evaluator content SHA256</td>
+  <td><code>f3c6fd6fe802716592df2d1342fc1b5bc9de5ca372aac880c196a240b2cb1838</code></td>
+</tr>
+<tr>
+  <td>Integrated test receipt</td>
+  <td><a href="review/qualified-checks/FINAL_VALIDATION.json">Final checks</a> — 684 tests and 365 subtests passed on both Mac and lab cluster</td>
+</tr>
+<tr>
+  <td>Cluster preflight receipt</td>
+  <td><code>review/qualified-checks/preflight/PREFLIGHT.json</code></td>
+</tr>
+<tr>
+  <td>Seven-bank catalog</td>
+  <td><a href="review/qualified-plan/RUN_CATALOG.cluster.yaml">RUN_CATALOG.cluster.yaml</a></td>
+</tr>
+<tr>
+  <td>Selected targets</td>
+  <td>5,307 total; <a href="review/figures/qualified_count_data.json">source/doc count evidence</a></td>
+</tr>
+<tr>
+  <td>New output namespace</td>
+  <td>Cluster study <code>qualified/</code>; prior measured output trees remain unchanged</td>
+</tr>
+<tr>
+  <td>Initial full queue</td>
+  <td>14 proposed jobs: seven Original R0 banks + seven README-authoring banks; held</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th style="text-align:right">Selected APIs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>rdpro_scala</code></td>
+  <td style="text-align:right">1,394</td>
+</tr>
+<tr>
+  <td><code>rdpro_java</code></td>
+  <td style="text-align:right">1,393</td>
+</tr>
+<tr>
+  <td><code>mdanalysis</code></td>
+  <td style="text-align:right">1,538</td>
+</tr>
+<tr>
+  <td><code>tslearn</code></td>
+  <td style="text-align:right">362</td>
+</tr>
+<tr>
+  <td><code>mir_eval</code></td>
+  <td style="text-align:right">178</td>
+</tr>
+<tr>
+  <td><code>thumbnailator</code></td>
+  <td style="text-align:right">225</td>
+</tr>
+<tr>
+  <td><code>sedonadb</code></td>
+  <td style="text-align:right">217</td>
+</tr>
+</tbody>
+</table>
+<p>Source ledgers, manifests, exact target excerpts and pinned shared READMEs live under <code>review/qualified-api/&lt;library&gt;/</code>. Each bank's proposed scaffold, profile and configuration live under <code>review/qualified-plan/libraries/&lt;bank&gt;/</code>. A CSV plus row-level links are available in the <a href="review/qualified-bank/INDEX.html">bank browser</a>.</p>
+<h2>Local review</h2>
+<p>Use the Mac or VS Code for reviewing the portable artifacts. A native Mac scientific execution environment is not certified. These commands verify local bytes and open the current input browser:</p>
+<pre><code class="language-bash">cd &quot;/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical&quot;
+python3 verify_snapshot.py
+open EXPERIMENT_GUIDE.html
+open review/qualified-bank/INDEX.html
+open review/qualified-pilots/INDEX.html
+</code></pre>
+<p>The standalone HTML loads local static scripts. It does not call a model, fetch remote data in the background or launch an experiment. If browser file policies block it, the CSV and Markdown are the direct review alternatives; no browser workaround is required.</p>
+<h2>Cluster inspection and preparation</h2>
+<p>Use VS Code <strong>Remote SSH</strong> for the validated cluster environment. First connect and identify the reviewed snapshot:</p>
+<pre><code class="language-bash">ssh -o ClearAllForwardings=yes lab
+STUDY=/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical
+REVIEW=&quot;$STUDY/review_snapshot&quot;
+TOOLKIT=&quot;$REVIEW/evaluator-qualified&quot;
+CONTROL_PY=/home/zshan011/apps/aideal/venv/bin/python
+CATALOG=&quot;$REVIEW/review/qualified-plan/RUN_CATALOG.cluster.yaml&quot;
+cd &quot;$REVIEW&quot;
+python3 verify_snapshot.py
+test -f &quot;$TOOLKIT/scripts/run_original_micro.py&quot;
+test -f &quot;$TOOLKIT/scripts/run_readme_generation.py&quot;
+test -f &quot;$CATALOG&quot;
+</code></pre>
+<p>Run preparation only after the final snapshot verification and preflight receipt identify the qualified evaluator. Preparation writes isolated input configurations, manifests and fingerprint receipts. It makes no model calls and runs no subject programs.</p>
+<p>Prepare the complete Original R0 inputs into a review-specific output directory:</p>
+<pre><code class="language-bash">&quot;$CONTROL_PY&quot; &quot;$TOOLKIT/scripts/run_original_micro.py&quot; \
+  --prepare \
+  --catalog &quot;$CATALOG&quot; \
+  --output &quot;$STUDY/qualified/review_prepare/original_r0&quot; \
+  --model gemini-3.1-flash-lite \
+  --libraries rdpro_scala rdpro_java mdanalysis tslearn mir_eval thumbnailator sedonadb
+</code></pre>
+<p>Prepare complete README-authoring inputs, using the exact selected manifest:</p>
+<pre><code class="language-bash">&quot;$CONTROL_PY&quot; &quot;$TOOLKIT/scripts/run_readme_generation.py&quot; \
+  --prepare \
+  --scope manifest \
+  --catalog &quot;$CATALOG&quot; \
+  --output &quot;$STUDY/qualified/review_prepare/readme_authoring&quot; \
+  --model gemini-3.1-flash-lite \
+  --libraries rdpro_scala rdpro_java mdanalysis tslearn mir_eval thumbnailator sedonadb
+</code></pre>
+<p>Keep the two output directories separate. A changed source, document, configuration, model or evaluator invalidates reuse; retain the old receipts and choose a newly identified output namespace. Do not reuse the superseded 1,695-target plan.</p>
+<h2>What must be reviewed before live work</h2>
+<p>Review the selected IDs and unresolved boundaries, all six pilot target choices, actual prompt/data exposure, shared README plus exact excerpts, fixture/scaffold behavior, assertion/witness contract, independent-oracle limits, repair policy, request budget and output namespace. The first full queue proposes at least 10,614 per-API calls plus whole-corpus distillation chunks and any authorized provider retries; fourteen jobs does not mean fourteen model calls. The new <a href="review/qualified-plan/COST_SCOPE.md">cost scenarios</a> cover 10,639 minimum requests, including 25 distillation chunks. They replace the reduced-bank forecast and remain estimates.</p>
+<p>No runnable live command is supplied here. After approval, the operator should bind the approved plan hash and exact scope before launching. Six new end-to-end pilots, complete authoring/R0, later R1/R2, aliases/hints/Combined installation, and matched puzzle evaluation remain separate stages. A passing preflight or a prepared catalog does not count as their completion.</p>
+<h2>Branches and immutable history</h2>
+<p>Five library branches remain under <code>study/2026-11-17-latest-stable-canonical/{original,readme-only,alias-only,error-hints-only,combined}</code>. Treatment installation is pending; the branch names do not establish that any treatment was applied. The original source commit and public snapshot commit can differ while sharing an identical tree.</p>
+<p>The prior <code>evaluator/</code> and historical guide/results remain preserved. New operational code belongs to <code>evaluator-qualified/</code>; current native source/doc inputs belong to the qualified catalog. <a href="HISTORY.md">HISTORY.md</a> is the place for previous measured cohorts and superseded commands.</p>

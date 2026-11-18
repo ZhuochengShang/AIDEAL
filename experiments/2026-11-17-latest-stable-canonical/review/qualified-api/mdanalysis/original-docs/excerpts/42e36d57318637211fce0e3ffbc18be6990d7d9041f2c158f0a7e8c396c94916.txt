@@ -1,0 +1,31 @@
+class MDAnalysis.analysis.diffusionmap.DiffusionMap(u, epsilon=1, **kwargs)[source]
+
+Non-linear dimension reduction method
+
+Dimension reduction with diffusion mapping of selected structures in a trajectory.
+
+ eigenvalues
+
+Eigenvalues of the diffusion map
+
+Type:
+
+array (n_frames,)
+
+ run()[source]
+
+Constructs an anisotropic diffusion kernel and performs eigenvalue decomposition on it.
+
+ transform(n_eigenvectors, time)[source]
+
+Perform an embedding of a frame into the eigenvectors representing the collective coordinates.
+
+Changed in version 2.2.0: DiffusionMap now also accepts AtomGroup.
+
+Parameters:
+
+u (MDAnalysis Universe or AtomGroup or DistanceMatrix object.) – Can be a Universe or AtomGroup, in which case one must supply kwargs for the initialization of a DistanceMatrix. Otherwise, this can be a DistanceMatrix already initialized. Either way, this will be made into a diffusion kernel.
+
+epsilon (Float) – Specifies the method used for the choice of scale parameter in the diffusion map. More information in [2][3][4], Default: 1.
+
+**kwargs – Parameters to be passed for the initialization of a DistanceMatrix.

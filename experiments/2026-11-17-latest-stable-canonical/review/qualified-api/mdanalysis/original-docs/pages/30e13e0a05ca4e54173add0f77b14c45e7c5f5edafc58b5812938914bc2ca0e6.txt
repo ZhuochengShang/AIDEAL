@@ -1,0 +1,773 @@
+8.3. RDKit topology parser — MDAnalysis.converters.RDKitParser
+
+Converts an RDKit rdkit.Chem.rdchem.Mol into a MDAnalysis.core.Topology.
+
+See also
+
+MDAnalysis.converters.RDKit
+
+8.3.1. Classes
+
+ class MDAnalysis.converters.RDKitParser.RDKitParser(filename)[source]
+
+For RDKit structures
+
+Creates the following Attributes:
+
+Atomids
+
+Atomnames
+
+Aromaticities
+
+Elements
+
+Types
+
+Masses
+
+Bonds
+
+Resids
+
+Resnums
+
+RSChirality
+
+Segids
+
+Depending on RDKit’s input, the following Attributes might be present:
+
+Charges
+
+Resnames
+
+AltLocs
+
+ChainIDs
+
+ICodes
+
+Occupancies
+
+Tempfactors
+
+Attributes table:
+
+RDKit attribute
+ |
+MDAnalysis equivalent
+ |
+
+atom.GetMonomerInfo().GetAltLoc()
+ |
+altLocs
+ |
+
+atom.GetIsAromatic()
+ |
+aromaticities
+ |
+
+atom.GetMonomerInfo().GetChainId()
+ |
+chainIDs
+ |
+
+atom.GetDoubleProp(‘_GasteigerCharge’) atom.GetDoubleProp(‘_TriposPartialCharge’)
+ |
+charges
+ |
+
+atom.GetSymbol()
+ |
+elements
+ |
+
+atom.GetMonomerInfo().GetInsertionCode()
+ |
+icodes
+ |
+
+atom.GetIdx()
+ |
+indices
+ |
+
+atom.GetMass()
+ |
+masses
+ |
+
+atom.GetMonomerInfo().GetName() atom.GetProp(‘_TriposAtomName’)
+ |
+names
+ |
+
+atom.GetProp(‘_CIPCode’)
+ |
+chiralities
+ |
+
+atom.GetMonomerInfo().GetOccupancy()
+ |
+occupancies
+ |
+
+atom.GetMonomerInfo().GetResidueName()
+ |
+resnames
+ |
+
+atom.GetMonomerInfo().GetResidueNumber()
+ |
+resnums
+ |
+
+atom.GetMonomerInfo().GetTempFactor()
+ |
+tempfactors
+ |
+
+atom.GetProp(‘_TriposAtomType’)
+ |
+types
+ |
+
+Raises:
+
+ValueError – If only part of the atoms have MonomerInfo available
+
+Added in version 2.0.0.
+
+Changed in version 2.1.0: Added R/S chirality support
+
+Changed in version 2.8.0: Removed type guessing (attributes guessing takes place now through universe.guess_TopologyAttrs() API). If atoms types is not present in the input rdkit molecule as a _TriposAtomType property, the type attribute get the same values as the element attribute.
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ parse(**kwargs)[source]
+
+Parse RDKit into Topology
+
+Return type:
+
+MDAnalysis Topology object
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+8.4. RDKit molecule I/O — MDAnalysis.converters.RDKit
+
+Read coordinates data from an RDKit rdkit.Chem.rdchem.Mol with RDKitReader into an MDAnalysis Universe. Convert it back to a rdkit.Chem.rdchem.Mol with RDKitConverter.
+
+Example
+
+To read an RDKit molecule and then convert the AtomGroup back to an RDKit molecule:
+
+>>> from rdkit import Chem
+>>> import MDAnalysis as mda
+>>> mol = Chem.MolFromMol2File("docking_poses.mol2", removeHs=False)
+>>> u = mda.Universe(mol)
+>>> u
+<Universe with 42 atoms>
+>>> u.trajectory
+<RDKitReader with 10 frames of 42 atoms>
+>>> u.atoms.convert_to("RDKIT")
+<rdkit.Chem.rdchem.Mol object at 0x7fcebb958148>
+
+Warning
+
+The RDKit converter is currently experimental and may not work as expected for all molecules. Currently the converter accurately infers the structures of approximately 99% of the ChEMBL27 dataset. Work is currently ongoing on further improving this and updates to the converter are expected in future releases of MDAnalysis. Please see Issue #3339 and the RDKitConverter benchmark for more details.
+
+Instead of using the default bond-order and charge inferring algorithm that relies on the topology alone and the presence of explicit hydrogen atoms, you can also use alternative builtin algorithms (see the RDKitInferring module) or even your own function to modify the RDKit molecule:
+
+>>> template = Chem.MolFromSmiles("CC(=O)Oc1ccccc1C(=O)O")
+>>> inferrer = mda.converters.RDKitInferring.TemplateInferrer(
+...     template=template
+... )
+>>> u.atoms.convert_to.rdkit(inferrer=inferrer)
+<rdkit.Chem.rdchem.Mol at 0x7f70ee6f3ca0>
+>>> def dummy_inferrer(mol):
+...     # assign bond orders and do any other modification here
+...     return mol
+>>> u.atoms.convert_to.rdkit(inferrer=dummy_inferrer)
+<rdkit.Chem.rdchem.Mol at 0x7f70ee6f2b90>
+
+8.4.1. Classes
+
+ class MDAnalysis.converters.RDKit.RDKitReader(filename, **kwargs)[source]
+
+Coordinate reader for RDKit.
+
+Added in version 2.0.0.
+
+Read coordinates from an RDKit molecule. Each conformer in the original RDKit molecule will be read as a frame in the resulting universe.
+
+Parameters:
+
+filename (rdkit.Chem.rdchem.Mol) – RDKit molecule
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.converters.RDKit.RDKitConverter[source]
+
+Convert MDAnalysis AtomGroup or Universe to RDKit Mol
+
+MDanalysis attributes are stored in each RDKit Atom of the resulting molecule in two different ways:
+
+in an AtomPDBResidueInfo object available through the GetMonomerInfo() method if it’s an attribute that is typically found in a PDB file,
+
+directly as an atom property available through the GetProp() methods for the others.
+
+Supported attributes:
+
+MDAnalysis attribute
+ |
+RDKit
+ |
+
+altLocs
+ |
+atom.GetMonomerInfo().GetAltLoc()
+ |
+
+chainIDs
+ |
+atom.GetMonomerInfo().GetChainId()
+ |
+
+icodes
+ |
+atom.GetMonomerInfo().GetInsertionCode()
+ |
+
+names
+ |
+atom.GetMonomerInfo().GetName() atom.GetProp(“_MDAnalysis_name”)
+ |
+
+occupancies
+ |
+atom.GetMonomerInfo().GetOccupancy()
+ |
+
+resnames
+ |
+atom.GetMonomerInfo().GetResidueName()
+ |
+
+resids
+ |
+atom.GetMonomerInfo().GetResidueNumber()
+ |
+
+segindices
+ |
+atom.GetMonomerInfo().GetSegmentNumber()
+ |
+
+tempfactors
+ |
+atom.GetMonomerInfo().GetTempFactor()
+ |
+
+charges
+ |
+atom.GetDoubleProp(“_MDAnalysis_charge”)
+ |
+
+indices
+ |
+atom.GetIntProp(“_MDAnalysis_index”)
+ |
+
+segids
+ |
+atom.GetProp(“_MDAnalysis_segid”)
+ |
+
+types
+ |
+atom.GetProp(“_MDAnalysis_type”)
+ |
+
+Example
+
+To access MDAnalysis properties:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PDB_full
+>>> u = mda.Universe(PDB_full)
+>>> mol = u.select_atoms('resname DMS').convert_to('RDKIT')
+>>> mol.GetAtomWithIdx(0).GetMonomerInfo().GetResidueName()
+'DMS'
+
+To create a molecule for each frame of a trajectory:
+
+from MDAnalysisTests.datafiles import PSF, DCD
+from rdkit.Chem.Descriptors3D import Asphericity
+
+u = mda.Universe(PSF, DCD, to_guess=['elements'])
+ag = u.select_atoms("resid 1-10")
+
+for ts in u.trajectory:
+    mol = ag.convert_to("RDKIT")
+    x = Asphericity(mol)
+
+Notes
+
+The converter requires the Elements attribute to be present in the topology, else it will fail.
+
+It also requires the bonds attribute, although they will be automatically guessed if not present.
+
+Hydrogens should be explicit in the topology file. If this is not the case, use the parameter implicit_hydrogens=True when using the converter to allow implicit hydrogens, and inferrer=None to disable inferring bond orders and charges. You can also pass your own callable function to inferrer to assign bond orders and charges as you see fit:
+
+>>> from rdkit import Chem
+>>> from rdkit.Chem.AllChem import AssignBondOrdersFromTemplate
+>>> template = Chem.MolFromSmiles("NC(Cc1ccccc1)C(=O)O")
+>>> def infer_from_template(mol: Chem.Mol) -> Chem.Mol:
+...     return AssignBondOrdersFromTemplate(template, mol)
+>>> mol = u.atoms.convert_to.rdkit(inferrer=infer_from_template)
+
+Note that all builtin inferrer functions can be found in the RDKitInferring module.
+
+Since one of the main use case of the converter is converting trajectories and not just a topology, creating a new molecule from scratch for every frame would be too slow so the converter uses a caching system. The cache only stores the 2 most recent AtomGroups that were converted, and is sensitive to the arguments that were passed to the converter. The number of objects cached can be changed with the function set_converter_cache_size(). However, ag.convert_to("RDKIT") followed by ag.convert_to("RDKIT", implicit_hydrogens=False) will not use the cache since the arguments given are different. You can pass a cache=False argument to the converter to bypass the caching system.
+
+The _MDAnalysis_index property of the resulting molecule corresponds to the index of the specific AtomGroup that was converted, which may not always match the index property.
+
+To get a better understanding of how the converter works under the hood, please refer to the following RDKit UGM presentation:
+
+Video (4:55 to 8:05)
+
+Slides
+
+There are some molecules containing specific patterns that the default inferrer cannot currently tackle correctly. See Issue #3339 for more info.
+
+Added in version 2.0.0.
+
+Changed in version 2.2.0: Improved the accuracy of the converter. Atoms in the resulting molecule now follow the same order as in the AtomGroup. The output of atom.GetMonomerInfo().GetName() now follows the guidelines for PDB files while the original name is still available through atom.GetProp("_MDAnalysis_name")
+
+Changed in version 2.10.0: Added inferrer to specify a callable that can transform the molecule (this operation is cached).
+
+Deprecated since version 2.10.0: Deprecated max_iter (moved to the inferrer class MDAnalysisInferrer) and deprecated NoImplicit in favor of implicit_hydrogens.
+
+ convert(obj, cache=True, implicit_hydrogens=False, force=False, inferrer=MDAnalysisInferrer(max_iter=200, sanitize=True), **kwargs)[source]
+
+Write selection at current trajectory frame to Mol.
+
+Parameters:
+
+obj (AtomGroup or) – Universe
+
+cache (bool) – Use a cached copy of the molecule’s topology when available. To be used, the cached molecule and the new one have to be made from the same AtomGroup selection and with the same arguments passed to the converter
+
+inferrer (Optional[Callable[[Chem.Mol], Chem.Mol]]) – A callable to infer bond orders and charges for the RDKit molecule created by the converter. If None, inferring is skipped.
+
+implicit_hydrogens (bool) – Whether to allow implicit hydrogens on the molecule or not.
+
+force (bool) – Force the conversion when no hydrogens were detected but inferrer is not None. Useful for inorganic molecules mostly.
+
+NoImplicit (bool) –
+Opposite of implicit_hydrogens.
+
+Deprecated since version 2.10.0: Use implicit_hydrogens instead (with an opposite value).
+
+max_iter (int) –
+Maximum number of iterations to standardize conjugated systems. See _rebuild_conjugated_bonds().
+
+Deprecated since version 2.10.0: Use inferrer=MDAnalysisInferrer(max_iter=...) instead.
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+8.5. RDKit bond order inferring — MDAnalysis.converters.RDKitInferring
+
+Bond order and formal charge inferring for RDKit molecules. Because most MD file formats don’t preserve bond order information directly (or formal charges to some extent), the classes provided here give users different options to either provide or infer this information to the RDKit molecule constructed from the topology. Having bond orders and formal charges properly defined is a requirement for almost all cheminformatics-related task, hence the different approaches proposed here to cover most use cases. You can also defined your own function if need be, see the RDKit module for an example.
+
+These classes are meant to be passed directly to the RDKit converter:
+
+>>> import MDAnalysis as mda
+>>> from rdkit import Chem
+>>> u = mda.Universe("aspirin.pdb")
+>>> template = Chem.MolFromSmiles("CC(=O)Oc1ccccc1C(=O)O")
+>>> inferrer = mda.converters.RDKitInferring.TemplateInferrer(template)
+>>> rdkit_mol = u.atoms.convert_to.rdkit(inferrer=inferrer)
+
+8.5.1. Classes
+
+ class MDAnalysis.converters.RDKitInferring.MDAnalysisInferrer(max_iter: int = 200, sanitize: bool = True)[source]
+
+Bond order and formal charge inferring as originally implemented for the RDKit converter. This algorithm only relies on the topology with explicit hydrogens to assign bond orders and formal charges.
+
+ max_iter
+
+Maximum number of iterations to standardize conjugated systems. See _rebuild_conjugated_bonds()
+
+Type:
+
+int
+
+ sanitize
+
+Whether to sanitize the molecule or not.
+
+Type:
+
+bool
+
+ MONATOMIC_CATION_CHARGES
+
+Charges that should be assigned to monatomic cations. Maps atomic number to their formal charge. Anion charges are directly handled by the code using the typical valence of the atom.
+
+Type:
+
+ClassVar[Dict[int, int]]
+
+ STANDARDIZATION_REACTIONS
+
+Reactions uses by _standardize_patterns() to fix challenging cases must have single reactant and product, and cannot add any atom.
+
+Type:
+
+ClassVar[List[str]]
+
+Notes
+
+There are some molecules containing specific substructures that this inferrer cannot currently tackle correctly. See Issue #3339 for more info.
+
+Added in version 2.10.0.
+
+ static _apply_reactions(reactions: List[ChemicalReaction], reactant: Mol) → None[source]
+
+Applies a series of unimolecular reactions to a molecule. The reactions must not add any atom to the product. The molecule is modified inplace.
+
+Parameters:
+
+reactions (List[rdkit.Chem.rdChemReactions.ChemicalReaction]) – Reactions from SMARTS. Each reaction is applied until no more transformations can be made.
+
+reactant (rdkit.Chem.rdchem.Mol) – The molecule to transform inplace
+
+ classmethod _atom_sorter(atom: Atom) → Tuple[int, int][source]
+
+Sorts atoms in the molecule in a way that makes it easy for the bond order and charge infering code to get the correct state on the first try. Currently sorts by number of unpaired electrons, then by number of heavy atom neighbors (i.e. atoms at the edge first).
+
+ static _get_nb_unpaired_electrons(atom: Atom) → List[int][source]
+
+Calculate the number of unpaired electrons (NUE) of an atom
+
+Parameters:
+
+atom (rdkit.Chem.rdchem.Atom) – The atom for which the NUE will be computed
+
+Returns:
+
+nue – The NUE for each possible valence of the atom
+
+Return type:
+
+List[int]
+
+ classmethod _infer_bo_and_charges(mol: Mol) → None[source]
+
+Infer bond orders and formal charges from a molecule.
+
+Since most MD topology files don’t explicitly retain information on bond orders or charges, it has to be guessed from the topology. This is done by looping over each atom and comparing its expected valence to the current valence to get the Number of Unpaired Electrons (NUE). If an atom has a negative NUE, it needs a positive formal charge (-NUE). If two neighbouring atoms have UEs, the bond between them most likely has to be increased by the value of the smallest NUE. If after this process, an atom still has UEs, it needs a negative formal charge of -NUE.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule is modified inplace and must have all hydrogens added
+
+Notes
+
+This algorithm is order dependant. For example, for a carboxylate group R-C(-O)-O the first oxygen read will receive a double bond and the other one will be charged. It will also affect more complex conjugated systems.
+
+ _rebuild_conjugated_bonds(mol: Mol, max_iter: int | None = None) → None[source]
+
+Rebuild conjugated bonds without negatively charged atoms at the beginning and end of the conjugated system
+
+Depending on the order in which atoms are read during the conversion, the _infer_bo_and_charges() function might write conjugated systems with a double bond less and both edges of the system as anions instead of the usual alternating single and double bonds. This function corrects this behaviour by using an iterative procedure. The problematic molecules always follow the same pattern: anion[-*=*]n-anion instead of *=[*-*=]n*, where n is the number of successive single and double bonds. The goal of the iterative procedure is to make n as small as possible by consecutively transforming anion-*=* into *=*-anion until it reaches the smallest pattern with n=1. This last pattern is then transformed anion-*=*-anion to *=*-*=*. Since anion-*=* is the same as *=*-anion in terms of SMARTS, we can control that we don’t transform the same triplet of atoms back and forth by adding their indices to a list. This function also handles conjugated systems with triple bonds. The molecule needs to be kekulized first to also cover systems with aromatic rings.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule to transform, modified inplace
+
+max_iter (Optional[int]) –
+Maximum number of iterations to standardize conjugated systems.
+
+Deprecated since version 2.10.0: Will be removed in 3.0, use inferrer=MDAnalysisInferrer(max_iter=...) instead.
+
+Notes
+
+The molecule is modified inplace
+
+ _standardize_patterns(mol: Mol, max_iter: int | None = None) → Mol[source]
+
+Standardizes functional groups
+
+Uses _rebuild_conjugated_bonds() to standardize conjugated systems, and SMARTS reactions for other functional groups. Due to the way reactions work, we first have to split the molecule by fragments. Then, for each fragment, we apply the standardization reactions. Finally, the fragments are recombined.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule to standardize
+
+max_iter (Optional[int]) –
+Maximum number of iterations to standardize conjugated systems.
+
+Deprecated since version 2.10.0: Will be removed in 3.0, use inferrer=MDAnalysisInferrer(max_iter=...) instead.
+
+Returns:
+
+mol – The standardized molecule
+
+Return type:
+
+rdkit.Chem.rdchem.Mol
+
+Notes
+
+The following functional groups are transformed in this order:
+
+Name
+ |
+Reaction
+ |
+
+conjugated
+ |
+[*-:1]-[*:2]=[*:3]-[*-:4]>>[*+0:1]=[*:2]-[*:3]=[*+0:4]
+ |
+
+conjugated N+
+ |
+[N;X3;v3:1]-[*:2]=[*:3]-[*-:4]>>[N+:1]=[*:2]-[*:3]=[*+0:4]
+ |
+
+conjugated O-
+ |
+[O:1]=[#6+0,#7+:2]-[*:3]=[*:4]-[*-:5]>>[O-:1]-[*:2]=[*:3]-[*:4]=[*+0:5]
+ |
+
+conjug. S=O
+ |
+[O-:1]-[S;D4;v4:2]-[*:3]=[*:4]-[*-:5]>>[O+0:1]=[*:2]=[*:3]-[*:4]=[*+0:5]
+ |
+
+Cterm
+ |
+[C-;X2;H0:1]=[O:2]>>[C+0:1]=[O:2]
+ |
+
+Nterm
+ |
+[N-;X2;H1;$(N-[*^3]):1]>>[N+0:1]
+ |
+
+keto-enolate
+ |
+[#6-:1]-[#6:2]=[O:3]>>[#6+0:1]=[#6:2]-[O-:3]
+ |
+
+arginine
+ |
+[C-;v3:1]-[#7+0;v3;H2:2]>>[#6+0:1]=[#7+:2]
+ |
+
+histidine
+ |
+[#6+0;H0:1]=[#6+0:2]-[#7;X3:3]-[#6-;X3:4]>>[#6:1]=[#6:2]-[#7+:3]=[#6+0:4]
+ |
+
+sulfone
+ |
+[S;D4;!v6:1]-[*-:2]>>[S;v6:1]=[*+0:2]
+ |
+
+charged N
+ |
+[#7+0;X3:1]-[*-:2]>>[#7+:1]=[*+0:2]
+ |
+
+ class MDAnalysis.converters.RDKitInferring.TemplateInferrer(template: Mol, adjust_hydrogens: bool = True)[source]
+
+Infer bond orders and charges by matching the molecule with a template molecule containing bond orders and charges.
+
+ template
+
+Molecule containing the bond orders and charges.
+
+Type:
+
+rdkit.Chem.rdchem.Mol
+
+ adjust_hydrogens
+
+If True, temporarily removes hydrogens from the molecule to assign bond orders and charges from the template, then adds them back. Useful to avoid adding explicit hydrogens on the template which can prevent RDKit from finding a match between the template and the molecule. Setting this to False can be useful to speed things up for inorganic molecules that don’t have any hydrogens.
+
+Type:
+
+bool, default = True
+
+ .. versionadded:: 2.10.0
+
+ assign_from_template_with_adjusted_hydrogens(mol: Mol, index_field: str = '_MDAnalysis_index') → Mol[source]
+
+Temporarily removes hydrogens from the molecule before assigning bond orders and charges from the template, then adds them back.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.Mol) – Molecule to assign bond orders and charges to.
+
+index_field (str, default = "_MDAnalysis_index") – Atom property corresponding to a unique integer that can used to put back the hydrogen atoms that were removed before matching, and sort them back to the original order. Must be accessible through atom.GetIntProp.
+
+ class MDAnalysis.converters.RDKitInferring.RDKitInferrer(charge: int = 0)[source]
+
+Uses RDKit’s DetermineBondOrders() to infer bond orders and formal charges. This is the same algorithm used by the xyz2mol package.
+
+Added in version 2.10.0.
+
+ MDAnalysis.converters.RDKitInferring.sanitize_mol(mol: Mol) → None[source]
+
+Sanitizes the molecule.
+
+ MDAnalysis.converters.RDKitInferring.reorder_atoms(mol: Mol, field: str = '_MDAnalysis_index') → Mol[source]
+
+Reorder atoms based on the given field. Defaults to sorting in the same order as the input AtomGroup.
+
+Notes
+
+If the field is not found on the molecule, skips reordering.

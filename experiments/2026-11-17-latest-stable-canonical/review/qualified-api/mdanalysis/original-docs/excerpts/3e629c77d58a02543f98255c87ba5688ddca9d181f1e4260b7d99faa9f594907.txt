@@ -1,0 +1,46 @@
+sort(key='ix', keyfunc=None)[source]
+
+Returns a sorted AtomGroup using a specified attribute as the key.
+
+Parameters:
+
+key (str, optional) – The name of the AtomGroup attribute to sort by (e.g. ids, ix. default= ix ).
+
+keyfunc (callable, optional) – A function to convert multidimensional arrays to a single dimension. This 1D array will be used as the sort key and is required when sorting with an AtomGroup attribute key which has multiple dimensions. Note: this argument is ignored when the attribute is one dimensional.
+
+Returns:
+
+Sorted AtomGroup.
+
+Return type:
+
+AtomGroup
+
+Example
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysisTests.datafiles import PDB_small
+>>> u = mda.Universe(PDB_small)
+>>> ag = u.atoms[[3, 2, 1, 0]]
+>>> ag.ix
+array([3, 2, 1, 0])
+>>> ag = ag.sort()
+>>> ag.ix
+array([0, 1, 2, 3])
+>>> ag.positions
+array([[-11.921,  26.307,  10.41 ],
+       [-11.447,  26.741,   9.595],
+       [-12.44 ,  27.042,  10.926],
+       [-12.632,  25.619,  10.046]], dtype=float32)
+>>> ag = ag.sort("positions", lambda x: x[:, 1])
+>>> ag.positions
+array([[-12.632,  25.619,  10.046],
+       [-11.921,  26.307,  10.41 ],
+       [-11.447,  26.741,   9.595],
+       [-12.44 ,  27.042,  10.926]], dtype=float32)
+
+Note
+
+This uses a stable sort as implemented by numpy.argsort(kind=’stable’).
+
+Added in version 2.0.0.

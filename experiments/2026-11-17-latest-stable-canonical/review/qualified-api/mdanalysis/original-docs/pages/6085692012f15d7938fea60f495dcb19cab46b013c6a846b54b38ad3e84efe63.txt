@@ -1,0 +1,316 @@
+15.2.7. Mathematical helper functions — MDAnalysis.lib.mdamath
+
+Helper functions for common mathematical operations. Some of these functions are written in C/cython for higher performance.
+
+15.2.7.1. Linear algebra
+
+ MDAnalysis.lib.mdamath.normal(vec1: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], vec2: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Returns the unit vector normal to two vectors.
+
+ \[\hat{\mathbf{n}} = \frac{\mathbf{v}_1 \times \mathbf{v}_2}{|\mathbf{v}_1 \times \mathbf{v}_2|}\]
+
+If the two vectors are collinear, the vector \(\mathbf{0}\) is returned.
+
+Changed in version 0.11.0: Moved into lib.mdamath
+
+ MDAnalysis.lib.mdamath.norm(v: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Calculate the norm of a vector v.
+
+ \[v = \sqrt{\mathbf{v}\cdot\mathbf{v}}\]
+
+This version is faster then numpy.linalg.norm because it only works for a single vector and therefore can skip a lot of the additional fuss linalg.norm does.
+
+Parameters:
+
+v (array_like) – 1D array of shape (N) for a vector of length N
+
+Returns:
+
+norm of the vector
+
+Return type:
+
+float
+
+ MDAnalysis.lib.mdamath.pdot(a: ndarray[tuple[Any, ...], dtype[_ScalarT]], b: ndarray[tuple[Any, ...], dtype[_ScalarT]]) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Pairwise dot product.
+
+a must be the same shape as b.
+
+Parameters:
+
+a (numpy.ndarray of shape (N, M))
+
+b (numpy.ndarray of shape (N, M))
+
+Return type:
+
+numpy.ndarray of shape (N,)
+
+ MDAnalysis.lib.mdamath.pnorm(a: ndarray[tuple[Any, ...], dtype[_ScalarT]]) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Euclidean norm of each vector in a matrix
+
+Parameters:
+
+a (numpy.ndarray of shape (N, M))
+
+Return type:
+
+numpy.ndarray of shape (N,)
+
+ MDAnalysis.lib.mdamath.angle(a: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], b: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Returns the angle between two vectors in radians
+
+Changed in version 0.11.0: Moved into lib.mdamath
+
+Changed in version 1.0.0: Changed rounding-off code to use np.clip(). Values lower than -1.0 now return np.pi instead of -np.pi
+
+ MDAnalysis.lib.mdamath.dihedral(ab: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], bc: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], cd: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Returns the dihedral angle in radians between vectors connecting A,B,C,D.
+
+The dihedral measures the rotation around bc:
+
+  ab
+A---->B
+       \ bc
+       _\'
+         C---->D
+           cd
+
+The dihedral angle is restricted to the range -π <= x <= π.
+
+Added in version 0.8.
+
+Changed in version 0.11.0: Moved into lib.mdamath
+
+ MDAnalysis.lib.mdamath.stp(vec1: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], vec2: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], vec3: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Takes the scalar triple product of three vectors.
+
+Returns the volume V of the parallel epiped spanned by the three vectors
+
+ \[V = \mathbf{v}_3 \cdot (\mathbf{v}_1 \times \mathbf{v}_2)\]
+
+Changed in version 0.11.0: Moved into lib.mdamath
+
+ MDAnalysis.lib.mdamath.sarrus_det(matrix: ndarray[tuple[Any, ...], dtype[_ScalarT]]) → float | ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Computes the determinant of a 3x3 matrix according to the rule of Sarrus.
+
+If an array of 3x3 matrices is supplied, determinants are computed per matrix and returned as an appropriately shaped numpy array.
+
+Parameters:
+
+matrix (numpy.ndarray) – An array of shape (..., 3, 3) with the 3x3 matrices residing in the last two dimensions.
+
+Returns:
+
+det – The determinant(s) of matrix. If matrix.shape == (3, 3), the determinant will be returned as a scalar. If matrix.shape == (..., 3, 3), the determinants will be returned as a numpy.ndarray of shape (...,) and dtype numpy.float64.
+
+Return type:
+
+float or numpy.ndarray
+
+Raises:
+
+ValueError: – If matrix has less than two dimensions or its last two dimensions are not of shape (3, 3).
+
+Added in version 0.20.0.
+
+ MDAnalysis.lib.mdamath.triclinic_box(x: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], y: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], z: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Convert the three triclinic box vectors to [lx, ly, lz, alpha, beta, gamma].
+
+If the resulting box is invalid, i.e., any box length is zero or negative, or any angle is outside the open interval (0, 180), a zero vector will be returned.
+
+All angles are in degrees and defined as follows:
+
+alpha = angle(y,z)
+
+beta = angle(x,z)
+
+gamma = angle(x,y)
+
+Parameters:
+
+x (array_like) – Array of shape (3,) representing the first box vector
+
+y (array_like) – Array of shape (3,) representing the second box vector
+
+z (array_like) – Array of shape (3,) representing the third box vector
+
+Returns:
+
+A numpy array of shape (6,) and dtype np.float32 providing the unitcell dimensions in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions:
+
+[lx, ly, lz, alpha, beta, gamma].
+
+Invalid boxes are returned as a zero vector.
+
+Return type:
+
+numpy.ndarray
+
+Note
+
+Definition of angles: http://en.wikipedia.org/wiki/Lattice_constant
+
+See also
+
+triclinic_vectors()
+
+Changed in version 0.20.0: Calculations are performed in double precision and invalid box vectors result in an all-zero box.
+
+ MDAnalysis.lib.mdamath.triclinic_vectors(dimensions: ~numpy._typing._array_like._Buffer | ~numpy._typing._array_like._SupportsArray[~numpy.dtype[~typing.Any]] | ~numpy._typing._nested_sequence._NestedSequence[~numpy._typing._array_like._SupportsArray[~numpy.dtype[~typing.Any]]] | complex | bytes | str | ~numpy._typing._nested_sequence._NestedSequence[complex | bytes | str], dtype: type[~typing.Any] | ~numpy.dtype[~typing.Any] | ~numpy._typing._dtype_like._HasDType[~numpy.dtype[~typing.Any]] | ~numpy._typing._dtype_like._HasNumPyDType[~numpy.dtype[~typing.Any]] | tuple[~typing.Any, ~typing.Any] | list[~typing.Any] | ~numpy._typing._dtype_like._DTypeDict | str = <class 'numpy.float32'>) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Convert [lx, ly, lz, alpha, beta, gamma] to a triclinic matrix representation.
+
+Original code by Tsjerk Wassenaar posted on the Gromacs mailinglist.
+
+If dimensions indicates a non-periodic system (i.e., all lengths are zero), zero vectors are returned. The same applies for invalid dimensions, i.e., any box length is zero or negative, or any angle is outside the open interval (0, 180).
+
+Parameters:
+
+dimensions (array_like) –
+Unitcell dimensions provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions:
+
+[lx, ly, lz, alpha, beta, gamma].
+
+dtype (numpy.dtype) – The data type of the returned box matrix.
+
+Returns:
+
+box_matrix – A numpy array of shape (3, 3) and dtype dtype, with box_matrix[0] containing the first, box_matrix[1] the second, and box_matrix[2] the third box vector.
+
+Return type:
+
+numpy.ndarray
+
+Notes
+
+The first vector is guaranteed to point along the x-axis, i.e., it has the form (lx, 0, 0).
+
+The second vector is guaranteed to lie in the x/y-plane, i.e., its z-component is guaranteed to be zero.
+
+If any box length is negative or zero, or if any box angle is zero, the box is treated as invalid and an all-zero-matrix is returned.
+
+Changed in version 0.7.6: Null-vectors are returned for non-periodic (or missing) unit cell.
+
+Changed in version 0.20.0: * Calculations are performed in double precision and zero vectors are also returned for invalid boxes. * Added optional output dtype parameter.
+
+ MDAnalysis.lib.mdamath.box_volume(dimensions: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Return the volume of the unitcell described by dimensions.
+
+The volume is computed as the product of the box matrix trace, with the matrix obtained from triclinic_vectors(). If the box is invalid, i.e., any box length is zero or negative, or any angle is outside the open interval (0, 180), the resulting volume will be zero.
+
+Parameters:
+
+dimensions (array_like) –
+Unitcell dimensions provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions:
+
+[lx, ly, lz, alpha, beta, gamma].
+
+Returns:
+
+volume – The volume of the unitcell. Will be zero for invalid boxes.
+
+Return type:
+
+float
+
+Changed in version 0.20.0: Calculations are performed in double precision and zero is returned for invalid dimensions.
+
+15.2.7.2. Connectivity
+
+ MDAnalysis.lib.mdamath.make_whole(atomgroup, reference_atom=None, inplace=True)
+
+Move all atoms in a single molecule so that bonds don’t split over images.
+
+This function is most useful when atoms have been packed into the primary unit cell, causing breaks mid molecule, with the molecule then appearing on either side of the unit cell. This is problematic for operations such as calculating the center of mass of the molecule.
+
++-----------+     +-----------+
+|           |     |           |
+| 6       3 |     |         3 | 6
+| !       ! |     |         ! | !
+|-5-8   1-2-| ->  |       1-2-|-5-8
+| !       ! |     |         ! | !
+| 7       4 |     |         4 | 7
+|           |     |           |
++-----------+     +-----------+
+
+Parameters:
+
+atomgroup (AtomGroup) – The MDAnalysis.core.groups.AtomGroup to work with. The positions of this are modified in place. All these atoms must belong to the same molecule or fragment.
+
+reference_atom (Atom) – The atom around which all other atoms will be moved. Defaults to atom 0 in the atomgroup.
+
+inplace (bool, optional) – If True, coordinates are modified in place.
+
+Returns:
+
+coords – The unwrapped atom coordinates.
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+NoDataError – There are no bonds present. (See guess_bonds())
+
+ValueError – The algorithm fails to work. This is usually caused by the atomgroup not being a single fragment. (ie the molecule can’t be traversed by following bonds)
+
+Example
+
+Make fragments whole:
+
+from MDAnalysis.lib.mdamath import make_whole
+
+# This algorithm requires bonds, these can be guessed!
+u = mda.Universe(......, guess_bonds=True)
+
+# MDAnalysis can split AtomGroups into their fragments
+# based on bonding information.
+# Note that this function will only handle a single fragment
+# at a time, necessitating a loop.
+for frag in u.atoms.fragments:
+    make_whole(frag)
+
+Alternatively, to keep a single atom in place as the anchor:
+
+# This will mean that atomgroup[10] will NOT get moved,
+# and all other atoms will move (if necessary).
+make_whole(atomgroup, reference_atom=atomgroup[10])
+
+See also
+
+MDAnalysis.core.groups.AtomGroup.unwrap()
+
+Added in version 0.11.0.
+
+Changed in version 0.20.0: Inplace-modification of atom positions is now optional, and positions are returned as a numpy array.
+
+ MDAnalysis.lib.mdamath.find_fragments(atoms, bondlist)
+
+Calculate distinct fragments from nodes (atom indices) and edges (pairs of atom indices).
+
+Parameters:
+
+atoms (array_like) – 1-D Array of atom indices (dtype will be converted to numpy.int64 internally)
+
+bonds (array_like) – 2-D array of bonds (dtype will be converted to numpy.int32 internally), where bonds[i, 0] and bonds[i, 1] are the indices of atoms connected by the i-th bond. Any bonds referring to atom indices not in atoms will be ignored.
+
+Returns:
+
+fragments (list) – List of arrays, each containing the atom indices of a fragment.
+
+.. versionaddded:: 0.19.0
+
+Added in version 0.11.0.

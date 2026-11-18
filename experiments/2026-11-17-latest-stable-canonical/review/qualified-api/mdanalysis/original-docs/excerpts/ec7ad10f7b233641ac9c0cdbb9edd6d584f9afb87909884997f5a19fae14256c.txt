@@ -1,0 +1,31 @@
+guess_bonds(atoms=None, coords=None)[source]
+
+Guess if bonds exist between two atoms based on their distance.
+
+Bond between two atoms is created, if the two atoms are within
+
+ \[d < f \cdot (R_1 + R_2)\]
+
+of each other, where \(R_1\) and \(R_2\) are the VdW radii of the atoms and \(f\) is an ad-hoc fudge_factor. This is the same algorithm that VMD uses.
+
+Parameters:
+
+atoms (AtomGroup) – atoms for which bonds should be guessed
+
+coords (np.ndarray, optional) – coordinates of the atoms. If not provided, the coordinates of the atoms in the universe are used.
+
+Returns:
+
+List of tuples suitable for use in Universe topology building.
+
+Return type:
+
+list
+
+Warning
+
+No check is done after the bonds are guessed to see if Lewis structure is correct. This is wrong and will burn somebody.
+
+Raises:
+
+ValueError – If inputs are malformed or vdwradii data is missing.

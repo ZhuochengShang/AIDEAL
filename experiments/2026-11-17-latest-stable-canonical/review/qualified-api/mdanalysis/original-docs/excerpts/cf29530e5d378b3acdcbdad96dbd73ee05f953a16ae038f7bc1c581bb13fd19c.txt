@@ -1,0 +1,29 @@
+resample(edges)
+
+Resample data to a new grid with edges edges.
+
+This method creates a new grid with the data from the current grid resampled to a regular grid specified by edges. The order of the interpolation is set by Grid.interpolation_spline_order: change the value before calling resample().
+
+Parameters:
+
+edges (tuple of arrays or Grid) – edges of the new grid or a Grid instance that provides Grid.edges
+
+Returns:
+
+a new Grid with the data interpolated over the new grid cells
+
+Return type:
+
+Grid
+
+Examples
+
+Providing edges (a tuple of three arrays, indicating the boundaries of each grid cell):
+
+g = grid.resample(edges)
+
+As a convenience, one can also supply another Grid as the argument for this method
+
+g = grid.resample(othergrid)
+
+and the edges are taken from Grid.edges.

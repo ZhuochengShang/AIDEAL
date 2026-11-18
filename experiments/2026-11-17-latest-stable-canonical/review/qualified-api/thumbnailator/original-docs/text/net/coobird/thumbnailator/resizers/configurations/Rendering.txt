@@ -1,0 +1,172 @@
+Rendering (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers.configurations
+Enum Rendering
+java.lang.Object
+java.lang.Enum
+<
+Rendering
+>
+net.coobird.thumbnailator.resizers.configurations.Rendering
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+Rendering
+>,
+ResizerConfiguration
+public enum
+Rendering
+extends
+Enum
+<
+Rendering
+>
+implements
+ResizerConfiguration
+An enum which is used to specify the dithering settings of the
+resizing operations.
+Author:
+coobird
+Enum Constant Summary
+DEFAULT
+A hint to use the default rendering settings.
+QUALITY
+A hint used to emphasize quality when rendering.
+SPEED
+A hint used to emphasize speed when rendering.
+Method Summary
+RenderingHints.Key
+getKey
+()
+Returns a rendering hint key.
+Object
+getValue
+()
+Returns a rendering hint value.
+static
+Rendering
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+Rendering
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+toString
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+SPEED
+public static final
+Rendering
+SPEED
+A hint used to emphasize speed when rendering.
+QUALITY
+public static final
+Rendering
+QUALITY
+A hint used to emphasize quality when rendering.
+DEFAULT
+public static final
+Rendering
+DEFAULT
+A hint to use the default rendering settings.
+Method Detail
+values
+public static final
+Rendering
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(Rendering c : Rendering.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+Rendering
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+getKey
+public
+RenderingHints.Key
+getKey
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint key.
+Specified by:
+getKey
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint key.
+getValue
+public
+Object
+getValue
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint value.
+Specified by:
+getValue
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint value.
+Copyright © 2025. All rights reserved.

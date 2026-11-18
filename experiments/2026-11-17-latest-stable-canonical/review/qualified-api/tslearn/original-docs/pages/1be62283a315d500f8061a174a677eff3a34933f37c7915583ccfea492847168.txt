@@ -1,0 +1,42 @@
+to_cesium_dataset
+
+ tslearn.utils.to_cesium_dataset(X)[source]
+
+Transform a tslearn-compatible dataset into a cesium dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz, d), where n_ts=1
+
+tslearn-formatted dataset to be cast to cesium format
+
+Returns:
+
+list of cesium TimeSeries
+
+cesium-formatted dataset (cf. link)
+
+Notes
+
+Conversion from/to cesium format requires cesium to be installed.
+
+Examples
+
+>>> tslearn_arr = numpy.random.randn(3, 16, 1)
+>>> cesium_ds = to_cesium_dataset(tslearn_arr)
+>>> len(cesium_ds)
+3
+>>> cesium_ds[0].measurement.shape
+(16,)
+>>> tslearn_arr = numpy.random.randn(3, 16, 2)
+>>> cesium_ds = to_cesium_dataset(tslearn_arr)
+>>> len(cesium_ds)
+3
+>>> cesium_ds[0].measurement.shape
+(2, 16)
+>>> tslearn_arr = [[1, 2, 3], [1, 2, 3, 4]]
+>>> cesium_ds = to_cesium_dataset(tslearn_arr)
+>>> len(cesium_ds)
+2
+>>> cesium_ds[0].measurement.shape
+(3,)

@@ -1,0 +1,59 @@
+18. Custom exceptions and warnings — MDAnalysis.exceptions
+
+ exception MDAnalysis.exceptions.ApplicationError[source]
+
+Raised when an external application failed.
+
+The error code is specific for the application.
+
+Added in version 0.7.7.
+
+ exception MDAnalysis.exceptions.ConversionWarning[source]
+
+Warning indicating a problem with converting between units.
+
+ exception MDAnalysis.exceptions.DuplicateWarning[source]
+
+Warning indicating possible problems arising from an AtomGroup / ResidueGroup / SegmentGroup containing duplicate Atoms / Residues / Segments.
+
+Added in version 0.19.0.
+
+ exception MDAnalysis.exceptions.FileFormatWarning[source]
+
+Warning indicating possible problems with a file format.
+
+ exception MDAnalysis.exceptions.MissingDataWarning[source]
+
+Warning indicating is that required data are missing.
+
+ exception MDAnalysis.exceptions.NoDataError[source]
+
+Raised when empty input is not allowed or required data are missing.
+
+This exception is raised in the following scenarios:
+
+Raised when a TopologyAttr (e.g., bonds, charges) is not present in the data.
+
+Raised when data is missing in an analysis class because the run() method has not been called, e.g. PersistenceLength.
+
+Raised when timestep data is missing, such as positions, velocities, or forces.
+
+Raised in the nojump transformation if there is no box information in the universe.
+
+This exception should not be raised in cases where arrays have zero width, or AtomGroups are empty.
+
+Changed in version 1.0.0: Now a subclass of AttributeError as well as ValueError
+
+ exception MDAnalysis.exceptions.SelectionError[source]
+
+Raised when a atom selection failed.
+
+ exception MDAnalysis.exceptions.SelectionWarning[source]
+
+Warning indicating a possible problem with a selection.
+
+ exception MDAnalysis.exceptions.StreamWarning[source]
+
+Warning indicating a possible problem with a stream.
+
+StreamWarning is used when streams are substituted for simple access by filename (see in particular NamedStream). This does not work everywhere in MDAnalysis (yet).

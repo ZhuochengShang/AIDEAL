@@ -1,0 +1,1070 @@
+7.17. PDB structure files in MDAnalysis — MDAnalysis.coordinates.PDB
+
+MDAnalysis reads coordinates from PDB files and additional optional data such as B-factors. It is also possible to substitute a PDB file instead of PSF file in order to define the list of atoms (but no connectivity information will be available in this case).
+
+PDB files contain both coordinate and atom information. It is also possible to write trajectories as multi-frame (or multi-model) PDB files. This is not very space efficient but is sometimes the lowest common denominator for exchanging trajectories. Single frame and multi-frame PDB files are automatically recognized; the only difference is thath the single-frame PDB is represented as a trajectory with only one frame.
+
+In order to write a selection to a PDB file one typically uses the MDAnalysis.core.groups.AtomGroup.write() method of the selection:
+
+calphas = universe.select_atoms("name CA")
+calphas.write("calpha_only.pdb")
+
+This uses the coordinates from the current timestep of the trajectory.
+
+In order to write a PDB trajectory one needs to first obtain a multi-frame writer (keyword multiframe = True) and then iterate through the trajectory, while writing each frame:
+
+calphas = universe.select_atoms("name CA")
+with MDAnalysis.Writer("calpha_traj.pdb", multiframe=True) as W:
+    for ts in u.trajectory:
+        W.write(calphas)
+
+It is important to always close the trajectory when done because only at this step is the final END record written, which is required by the PDB 3.3 standard. Using the writer as a context manager ensures that this always happens.
+
+7.17.1. Capabilities
+
+A pure-Python implementation for PDB files commonly encountered in MD simulations comes under the names PDBReader and PDBWriter. It only implements a subset of the PDB 3.3 standard and also allows some typical enhancements such as 4-letter resids (introduced by CHARMM/NAMD).
+
+The PDBReader can read multi-frame PDB files and represents them as a trajectory. The PDBWriter can write single and multi-frame PDB files as specified by the multiframe keyword. By default, it writes single frames. On the other hand, the MultiPDBWriter is set up to write a PDB trajectory by default (equivalent to using multiframe = True).
+
+7.17.2. Examples for working with PDB files
+
+A single frame PDB can be written with the write() method of any AtomGroup:
+
+protein = u.select_atoms("protein")
+protein.write("protein.pdb")
+
+Alternatively, get the single frame writer and supply the AtomGroup:
+
+protein = u.select_atoms("protein")
+with MDAnalysis.Writer("protein.pdb") as pdb:
+    pdb.write(protein)
+
+In order to write a multi-frame PDB trajectory from a universe u one can do the following:
+
+with MDAnalysis.Writer("all.pdb", multiframe=True) as pdb:
+    for ts in u.trajectory:
+        pdb.write(u)
+
+Similarly, writing only a protein:
+
+protein = u.select_atoms("protein")
+with MDAnalysis.Writer("protein.pdb", multiframe=True) as pdb:
+    for ts in u.trajectory:
+        pdb.write(protein)
+
+7.17.3. Classes
+
+Changed in version 0.16.0: PDB readers and writers based on Bio.PDB.PDBParser were retired and removed.
+
+ class MDAnalysis.coordinates.PDB.PDBReader(filename, **kwargs)[source]
+
+PDBReader that reads a PDB-formatted file, no frills.
+
+The following PDB records are parsed (see PDB coordinate section for details):
+
+CRYST1 for unitcell A,B,C, alpha,beta,gamma
+
+ATOM or HETATM for serial,name,resName,chainID,resSeq,x,y,z,occupancy,tempFactor
+
+HEADER (header), TITLE (title), COMPND
+
+(compound), REMARK (remarks)
+
+all other lines are ignored
+
+Reads multi-MODEL PDB files as trajectories. The Timestep.data dictionary holds the occupancy and tempfactor (bfactor) values for each atom for a given frame. These attributes are commonly appropriated to store other time varying properties and so they are exposed here. Note this does not update the AtomGroup attributes, as the topology does not change with trajectory iteration.
+
+COLUMNS
+ |
+DATA TYPE
+ |
+FIELD
+ |
+DEFINITION
+ |
+
+1 - 6
+ |
+Record name
+ |
+“CRYST1”
+ |   |
+
+7 - 15
+ |
+Real(9.3)
+ |
+a
+ |
+a (Angstroms).
+ |
+
+16 - 24
+ |
+Real(9.3)
+ |
+b
+ |
+b (Angstroms).
+ |
+
+25 - 33
+ |
+Real(9.3)
+ |
+c
+ |
+c (Angstroms).
+ |
+
+34 - 40
+ |
+Real(7.2)
+ |
+alpha
+ |
+alpha (degrees).
+ |
+
+41 - 47
+ |
+Real(7.2)
+ |
+beta
+ |
+beta (degrees).
+ |
+
+48 - 54
+ |
+Real(7.2)
+ |
+gamma
+ |
+gamma (degrees).
+ |
+
+1 - 6
+ |
+Record name
+ |
+“ATOM “
+ |   |
+
+7 - 11
+ |
+Integer
+ |
+serial
+ |
+Atom serial number.
+ |
+
+13 - 16
+ |
+Atom
+ |
+name
+ |
+Atom name.
+ |
+
+17
+ |
+Character
+ |
+altLoc
+ |
+Alternate location indicator.
+ |
+
+18 - 21
+ |
+Residue name
+ |
+resName
+ |
+Residue name.
+ |
+
+22
+ |
+Character
+ |
+chainID
+ |
+Chain identifier.
+ |
+
+23 - 26
+ |
+Integer
+ |
+resSeq
+ |
+Residue sequence number.
+ |
+
+27
+ |
+AChar
+ |
+iCode
+ |
+Code for insertion of residues.
+ |
+
+31 - 38
+ |
+Real(8.3)
+ |
+x
+ |
+Orthogonal coordinates for X in Angstroms.
+ |
+
+39 - 46
+ |
+Real(8.3)
+ |
+y
+ |
+Orthogonal coordinates for Y in Angstroms.
+ |
+
+47 - 54
+ |
+Real(8.3)
+ |
+z
+ |
+Orthogonal coordinates for Z in Angstroms.
+ |
+
+55 - 60
+ |
+Real(6.2)
+ |
+occupancy
+ |
+Occupancy.
+ |
+
+61 - 66
+ |
+Real(6.2)
+ |
+tempFactor
+ |
+Temperature factor.
+ |
+
+67 - 72
+ |   |   |
+(not used in the official PDB format)
+ |
+
+73 - 76
+ |
+String
+ |
+segID
+ |
+(unofficial PDB format*)
+ |
+
+77 - 78
+ |
+LString(2)
+ |
+element
+ |
+Element symbol, right-justified.
+ |
+
+79 - 80
+ |
+LString(2)
+ |
+charge
+ |
+Charge on the atom.
+ |
+
+Notes
+
+If a system does not have unit cell parameters (such as in electron microscopy structures), the PDB file format requires the CRYST1 field to be provided with unitary values (cubic box with sides of 1 Å) and an appropriate REMARK. If unitary values are found within the CRYST1 field, PDBReader will not set unit cell dimensions (which will take the default value np.zeros(6), see Issue #2698) and it will warn the user.
+
+*The columns 73-76 are not part of the official PDB format but are used by some programs to store/operate the segment ID. For instance, Chimera assigns it as the attribute pdbSegment to allow command-line specification.
+
+See also
+
+PDBWriter PDBReader
+
+If you would like to force the use of chainID as the segID when parsing PDB, please use the keyword argument force_chainids_to_segids=True (MDAnalysis.topology.PDBParser.PDBParser). This will prioritize the chain ID to the segment ID.
+
+Changed in version 0.11.0: * Frames now 0-based instead of 1-based * New title (list with all TITLE lines).
+
+Changed in version 0.19.1: Can now read PDB files with DOS line endings
+
+Changed in version 0.20.0: Strip trajectory header of trailing spaces and newlines
+
+Changed in version 1.0.0: Raise user warning for CRYST1 record with unitary values (cubic box with sides of 1 Å) and do not set cell dimensions.
+
+Changed in version 2.5.0: Tempfactors (aka bfactors) are now read into the ts.data dictionary each frame. Occupancies are also read into this dictionary.
+
+Read coordinates from filename.
+
+filename can be a gzipped or bzip2ed compressed PDB file.
+
+If the pdb file contains multiple MODEL records then it is read as a trajectory where the MODEL numbers correspond to frame numbers.
+
+ Writer(filename, **kwargs)[source]
+
+Returns a PDBWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output PDB file
+
+Return type:
+
+PDBWriter
+
+ close()[source]
+
+Close the trajectory file.
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.PDB.PDBWriter(filename, bonds='conect', n_atoms=None, start=0, step=1, remarks='Created by PDBWriter', convert_units=True, multiframe=None, reindex=True)[source]
+
+PDB writer that implements a subset of the PDB 3.3 standard .
+
+PDB format as used by NAMD/CHARMM: 4-letter resnames and segID are allowed, altLoc is written.
+
+The PDBWriter can be used to either dump a coordinate set to a PDB file (operating as a “single frame writer”, selected with the constructor keyword multiframe = False, the default) or by writing a PDB “movie” (multi frame mode, multiframe = True), consisting of multiple models (using the MODEL and ENDMDL records).
+
+Note
+
+Writing bonds currently only works when writing a whole Universe and if bond information is available in the topology. (For selections smaller than the whole Universe, the atom numbering in the CONECT records would not match the numbering of the atoms in the new PDB file and therefore a NotImplementedError is raised.)
+
+The maximum frame number that can be stored in a PDB file is 9999 and it will wrap around (see MODEL() for further details).
+
+The CRYST1 record specifies the unit cell. This record is set to unitary values (cubic box with sides of 1 Å) if unit cell dimensions are not set (None or np.zeros(6), see Issue #2698).
+
+When the record_types attribute is present (e.g. Universe object was created by loading a PDB file), ATOM and HETATM record type keywords are written out accordingly. Otherwise, the ATOM record type is the default output.
+
+The CONECT record is written out, if required, when the output stream is closed.
+
+See also
+
+This, exception, None
+
+Changed in version 0.7.5: Initial support for multi-frame PDB files.
+
+Changed in version 0.7.6: The multiframe keyword was added to select the writing mode. The writing of bond information (CONECT records) is now disabled by default but can be enabled with the bonds keyword.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 0.14.0: PDB doesn’t save charge information
+
+Changed in version 0.20.0: Strip trajectory header of trailing spaces and newlines
+
+Changed in version 1.0.0: ChainID now comes from the last character of segid, as stated in the documentation. An indexing issue meant it previously used the first charater (Issue #2224)
+
+Changed in version 2.0.0: Add the redindex argument. Setting this keyword to True (the default) preserves the behavior in earlier versions of MDAnalysis. The PDB writer checks for a valid chainID entry instead of using the last character of segid. Should a chainID not be present, or not conform to the PDB standard, the default value of ‘X’ is used.
+
+Changed in version 2.3.0: Do not write unusable conect records when ag index is larger than 100000.
+
+Create a new PDBWriter
+
+Parameters:
+
+filename (str) – name of output file
+
+start (int (optional)) – starting timestep (the first frame will have MODEL number start + 1 because the PDB standard prescribes MODEL numbers starting at 1)
+
+step (int (optional)) – skip between subsequent timesteps
+
+remarks (str (optional)) – comments to annotate pdb file (added to the TITLE record); note that any remarks from the trajectory that serves as input are written to REMARK records with lines longer than remark_max_length (66 characters) being wrapped.
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+bonds ({"conect", "all", None} (optional)) – If set to “conect”, then only write those bonds that were already defined in an input PDB file as PDB CONECT record. If set to “all”, write all bonds (including guessed ones) to the file. None does not write any bonds. The default is “conect”.
+
+multiframe (bool (optional)) – False: write a single frame to the file; True: create a multi frame PDB file in which frames are written as MODEL … ENDMDL records. If None, then the class default is chosen. [None]
+
+reindex (bool (optional)) – If True (default), the atom serial is set to be consecutive numbers starting at 1. Else, use the atom id.
+
+ _check_pdb_coordinates()[source]
+
+Check if the coordinate values fall within the range allowed for PDB files.
+
+Deletes the output file if this is the first frame or if frames have already been written (in multi-frame mode) adds a REMARK instead of the coordinates and closes the file.
+
+Raises:
+
+ValueError – if the coordinates fail the check.
+
+.. versionchanged – 1.0.0: Check if filename is StringIO when attempting to remove a PDB file with invalid coordinates (Issue #2512)
+
+ _write_pdb_bonds()[source]
+
+Writes out all the bond records
+
+ _update_frame(obj)[source]
+
+Method to initialize important attributes in writer from a AtomGroup or Universe obj.
+
+Attributes initialized/updated:
+
+PDBWriter.obj (the entity that provides topology information and coordinates, either a AtomGroup or a whole Universe)
+
+PDBWriter.trajectory (the underlying trajectory Reader)
+
+PDBWriter.timestep (the underlying trajectory Timestep)
+
+Before calling _write_next_frame() this method must be called at least once to enable extracting topology information from the current frame.
+
+ _write_timestep(ts, multiframe=False)[source]
+
+Write a new timestep ts to file
+
+Does unit conversion if necessary.
+
+By setting multiframe = True, MODEL … ENDMDL records are written to represent trajectory frames in a multi-model PDB file. (At the moment we do not write the NUMMDL record.)
+
+The multiframe = False keyword signals that the PDBWriter is in single frame mode and no MODEL records are written.
+
+Changed in version 0.7.6: The multiframe keyword was added, which completely determines if MODEL records are written. (Previously, this was decided based on the underlying trajectory and only if len(traj) > 1 would MODEL records have been written.)
+
+Changed in version 1.0.0: ChainID now comes from the last character of segid, as stated in the documentation. An indexing issue meant it previously used the first charater (Issue #2224)
+
+Changed in version 2.0.0: When only record_types attribute is present, instead of using ATOM for both ATOM and HETATM, HETATM record types are properly written out (Issue #1753). Writing now only uses the contents of the elements attribute instead of guessing by default. If the elements are missing, empty records are written out (Issue #2423). Atoms are now checked for a valid chainID instead of being overwritten by the last letter of the segid (Issue #3144).
+
+ CONECT(conect)[source]
+
+Write CONECT record.
+
+ CRYST1(dimensions, spacegroup='P 1', zvalue=1)[source]
+
+Write CRYST1 record.
+
+ END()[source]
+
+Write END record.
+
+Only a single END record is written. Calling END multiple times has no effect. Because close() also calls this method right before closing the file it is recommended to not call END() explicitly.
+
+ ENDMDL()[source]
+
+Write the ENDMDL record.
+
+ HEADER(trajectory)[source]
+
+Write HEADER record.
+
+Changed in version 0.20.0: Strip trajectory.header since it can be modified by the user and should be sanitized (Issue #2324)
+
+ MODEL(modelnumber)[source]
+
+Write the MODEL record.
+
+Note
+
+The maximum MODEL number is limited to 9999 in the PDB standard (i.e., 4 digits). If frame numbers are larger than 9999, they will wrap around, i.e., 9998, 9999, 0, 1, 2, …
+
+Changed in version 0.19.0: Maximum model number is enforced.
+
+ REMARK(*remarks)[source]
+
+Write generic REMARKS record (without number).
+
+Each string provided in remarks is written as a separate REMARKS record.
+
+ TITLE(*title)[source]
+
+Write TITLE record.
+
+ close()[source]
+
+Close PDB file and write CONECT and END record
+
+Changed in version 2.0.0: CONECT record written just before END record
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)[source]
+
+Write object obj at current trajectory frame to file.
+
+obj can be a selection (i.e. a AtomGroup) or a whole Universe.
+
+The last letter of the segid is used as the PDB chainID (but see ATOM() for details).
+
+Parameters:
+
+obj – The AtomGroup or Universe to write.
+
+ write_all_timesteps(obj)[source]
+
+Write all timesteps associated with obj to the PDB file.
+
+obj can be a AtomGroup or a Universe.
+
+The method writes the frames from the one specified as start until the end, using a step of step (start and step are set in the constructor). Thus, if u is a Universe then
+
+u.trajectory[-2]
+pdb = PDBWriter("out.pdb", u.atoms.n_atoms)
+pdb.write_all_timesteps(u)
+
+will write a PDB trajectory containing the last 2 frames and
+
+pdb = PDBWriter("out.pdb", u.atoms.n_atoms, start=12, step=2)
+pdb.write_all_timesteps(u)
+
+will be writing frames 12, 14, 16, …
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 2.0.0: CONECT record moved to close()
+
+ class MDAnalysis.coordinates.PDB.MultiPDBWriter(filename, bonds='conect', n_atoms=None, start=0, step=1, remarks='Created by PDBWriter', convert_units=True, multiframe=None, reindex=True)[source]
+
+PDB writer that implements a subset of the PDB 3.3 standard .
+
+PDB format as used by NAMD/CHARMM: 4-letter resnames and segID, altLoc is written.
+
+By default, MultiPDBWriter writes a PDB “movie” (multi frame mode, multiframe = True), consisting of multiple models (using the MODEL and ENDMDL records).
+
+See also
+
+This, exception, single
+
+Added in version 0.7.6.
+
+Create a new PDBWriter
+
+Parameters:
+
+filename (str) – name of output file
+
+start (int (optional)) – starting timestep (the first frame will have MODEL number start + 1 because the PDB standard prescribes MODEL numbers starting at 1)
+
+step (int (optional)) – skip between subsequent timesteps
+
+remarks (str (optional)) – comments to annotate pdb file (added to the TITLE record); note that any remarks from the trajectory that serves as input are written to REMARK records with lines longer than remark_max_length (66 characters) being wrapped.
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+bonds ({"conect", "all", None} (optional)) – If set to “conect”, then only write those bonds that were already defined in an input PDB file as PDB CONECT record. If set to “all”, write all bonds (including guessed ones) to the file. None does not write any bonds. The default is “conect”.
+
+multiframe (bool (optional)) – False: write a single frame to the file; True: create a multi frame PDB file in which frames are written as MODEL … ENDMDL records. If None, then the class default is chosen. [None]
+
+reindex (bool (optional)) – If True (default), the atom serial is set to be consecutive numbers starting at 1. Else, use the atom id.
+
+ class MDAnalysis.coordinates.PDB.ExtendedPDBReader(filename, **kwargs)[source]
+
+PDBReader that reads a PDB-formatted file with five-digit residue numbers.
+
+This reader does not conform to the PDB 3.3 standard because it allows five-digit residue numbers that may take up columns 23 to 27 (inclusive) instead of being confined to 23-26 (with column 27 being reserved for the insertion code in the PDB standard). PDB files in this format are written by popular programs such as VMD.
+
+See also
+
+PDBReader
+
+Added in version 0.8.
+
+Read coordinates from filename.
+
+filename can be a gzipped or bzip2ed compressed PDB file.
+
+If the pdb file contains multiple MODEL records then it is read as a trajectory where the MODEL numbers correspond to frame numbers.
+
+ OtherWriter(filename, **kwargs)
+
+Returns a writer appropriate for filename.
+
+Sets the default keywords start, step and dt (if available). n_atoms is always set from Reader.n_atoms.
+
+See also
+
+Reader.Writer()
+
+ Writer(filename, **kwargs)
+
+Returns a PDBWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output PDB file
+
+Return type:
+
+PDBWriter
+
+ add_auxiliary(aux_spec: str | Dict[str, str] = None, auxdata: str | AuxReader = None, format: str = None, **kwargs) → None
+
+Add auxiliary data to be read alongside trajectory.
+
+Auxiliary data may be any data timeseries from the trajectory additional to that read in by the trajectory reader. auxdata can be an AuxReader instance, or the data itself as e.g. a filename; in the latter case an appropriate AuxReader is guessed from the data/file format. An appropriate format may also be directly provided as a key word argument.
+
+On adding, the AuxReader is initially matched to the current timestep of the trajectory, and will be updated when the trajectory timestep changes (through a call to next() or jumping timesteps with trajectory[i]).
+
+The representative value(s) of the auxiliary data for each timestep (as calculated by the AuxReader) are stored in the current timestep in the ts.aux namespace under aux_spec; e.g. to add additional pull force data stored in pull-force.xvg:
+
+u = MDAnalysis.Universe(PDB, XTC)
+u.trajectory.add_auxiliary('pull', 'pull-force.xvg')
+
+The representative value for the current timestep may then be accessed as u.trajectory.ts.aux.pull or u.trajectory.ts.aux['pull'].
+
+The following applies to energy readers like the EDRReader.
+
+All data that is present in the (energy) file can be added by omitting aux_spec like so:
+
+u.trajectory.add_auxiliary(auxdata="ener.edr")
+
+aux_spec is expected to be a dictionary that maps the desired attribute name in the ts.aux namespace to the precise data to be added as identified by a data_selector:
+
+term_dict = {"temp": "Temperature", "epot": "Potential"}
+u.trajectory.add_auxiliary(term_dict, "ener.edr")
+
+Adding this data can be useful, for example, to filter trajectory frames based on non-coordinate data like the potential energy of each time step. Trajectory slicing allows working on a subset of frames:
+
+selected_frames = np.array([ts.frame for ts in u.trajectory
+                            if ts.aux.epot < some_threshold])
+subset = u.trajectory[selected_frames]
+
+See also
+
+remove_auxiliary()
+
+Note
+
+Auxiliary data is assumed to be time-ordered, with no duplicates. See the Auxiliary API.
+
+ add_transformations(*transformations)
+
+Add all transformations to be applied to the trajectory.
+
+This function take as list of transformations as an argument. These transformations are functions that will be called by the Reader and given a Timestep object as argument, which will be transformed and returned to the Reader. The transformations can be part of the transformations module, or created by the user, and are stored as a list transformations. This list can only be modified once, and further calls of this function will raise an exception.
+
+u = MDAnalysis.Universe(topology, coordinates)
+workflow = [some_transform, another_transform, this_transform]
+u.trajectory.add_transformations(*workflow)
+
+The transformations are applied in the order given in the list transformations, i.e., the first transformation is the first or innermost one to be applied to the Timestep. The example above would be equivalent to
+
+for ts in u.trajectory:
+   ts = this_transform(another_transform(some_transform(ts)))
+
+Parameters:
+
+transform_list (list) – list of all the transformations that will be applied to the coordinates in the order given in the list
+
+See also
+
+MDAnalysis.transformations
+
+Raises:
+
+TypeError – If any transformation is not callable
+
+ property aux_list
+
+Lists the names of added auxiliary data.
+
+ check_slice_indices(start, stop, step)
+
+Check frame indices are valid and clip to fit trajectory.
+
+The usage follows standard Python conventions for range() but see the warning below.
+
+Parameters:
+
+start (int or None) – Starting frame index (inclusive). None corresponds to the default of 0, i.e., the initial frame.
+
+stop (int or None) – Last frame index (exclusive). None corresponds to the default of n_frames, i.e., it includes the last frame of the trajectory.
+
+step (int or None) – step size of the slice, None corresponds to the default of 1, i.e, include every frame in the range start, stop.
+
+Returns:
+
+start, stop, step – Integers representing the slice
+
+Return type:
+
+tuple (int, int, int)
+
+Warning
+
+The returned values start, stop and step give the expected result when passed in range() but gives unexpected behavior when passed in a slice when stop=None and step=-1
+
+This can be a problem for downstream processing of the output from this method. For example, slicing of trajectories is implemented by passing the values returned by check_slice_indices() to range()
+
+range(start, stop, step)
+
+and using them as the indices to randomly seek to. On the other hand, in MDAnalysis.analysis.base.AnalysisBase the values returned by check_slice_indices() are used to splice the trajectory by creating a slice instance
+
+slice(start, stop, step)
+
+This creates a discrepancy because these two lines are not equivalent:
+
+range(10, -1, -1)             # [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+range(10)[slice(10, -1, -1)]  # []
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ copy()
+
+Return independent copy of this Reader.
+
+New Reader will have its own file handle and can seek/iterate independently of the original.
+
+Will also copy the current state of the Timestep held in the original Reader.
+
+Changed in version 2.2.0: Arguments used to construct the reader are correctly captured and passed to the creation of the new class. Previously the only n_atoms was passed to class copies, leading to a class created with default parameters which may differ from the original class.
+
+ property dt: float
+
+Time between two trajectory frames in picoseconds.
+
+ property frame: int
+
+Frame number of the current time step.
+
+This is a simple short cut to Timestep.frame.
+
+ get_aux_attribute(auxname, attrname)
+
+Get the value of attrname from the auxiliary auxname
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to get value for
+
+attrname (str) – Name of gettable attribute in the auxiliary reader
+
+See also
+
+set_aux_attribute()
+
+ get_aux_descriptions(auxnames=None)
+
+Get descriptions to allow reloading the specified auxiliaries.
+
+If no auxnames are provided, defaults to the full list of added auxiliaries.
+
+Passing the resultant description to add_auxiliary() will allow recreation of the auxiliary. e.g., to duplicate all auxiliaries into a second trajectory:
+
+descriptions = trajectory_1.get_aux_descriptions()
+for aux in descriptions:
+    trajectory_2.add_auxiliary(**aux)
+
+Returns:
+
+List of dictionaries of the args/kwargs describing each auxiliary.
+
+Return type:
+
+list
+
+See also
+
+MDAnalysis.auxiliary.base.AuxReader.get_description()
+
+ iter_as_aux(auxname)
+
+Iterate through timesteps for which there is at least one assigned step from the auxiliary auxname within the cutoff specified in auxname.
+
+See also
+
+next_as_aux(), iter_auxiliary()
+
+ iter_auxiliary(auxname, start=None, stop=None, step=None, selected=None)
+
+Iterate through the auxiliary auxname independently of the trajectory.
+
+Will iterate over the specified steps of the auxiliary (defaults to all steps). Allows to access all values in an auxiliary, including those out of the time range of the trajectory, without having to also iterate through the trajectory.
+
+After interation, the auxiliary will be repositioned at the current step.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to iterate over.
+
+(start (optional) – Options for iterating over a slice of the auxiliary.
+
+stop (optional) – Options for iterating over a slice of the auxiliary.
+
+step) (optional) – Options for iterating over a slice of the auxiliary.
+
+selected (lst | ndarray, optional) – List of steps to iterate over.
+
+Yields:
+
+AuxStep object
+
+See also
+
+iter_as_aux()
+
+ next() → Timestep
+
+Forward one step to next frame.
+
+ next_as_aux(auxname)
+
+Move to the next timestep for which there is at least one step from the auxiliary auxname within the cutoff specified in auxname.
+
+This allows progression through the trajectory without encountering NaN representative values (unless these are specifically part of the auxiliary data).
+
+If the auxiliary cutoff is not set, where auxiliary steps are less frequent (auxiliary.dt > trajectory.dt), this allows progression at the auxiliary pace (rounded to nearest timestep); while if the auxiliary steps are more frequent, this will work the same as calling next().
+
+See the Auxiliary API.
+
+See also
+
+iter_as_aux()
+
+ classmethod parse_n_atoms(filename, **kwargs)
+
+Read the coordinate file and deduce the number of atoms
+
+Returns:
+
+n_atoms – the number of atoms in the coordinate file
+
+Return type:
+
+int
+
+Raises:
+
+NotImplementedError – when the number of atoms can’t be deduced
+
+ remove_auxiliary(auxname)
+
+Clear data and close the AuxReader for the auxiliary auxname.
+
+See also
+
+add_auxiliary()
+
+ rename_aux(auxname, new)
+
+Change the name of the auxiliary auxname to new.
+
+Provided there is not already an auxiliary named new, the auxiliary name will be changed in ts.aux namespace, the trajectory’s list of added auxiliaries, and in the auxiliary reader itself.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to rename
+
+new (str) – New name to try set
+
+Raises:
+
+ValueError – If the name new is already in use by an existing auxiliary.
+
+ rewind() → Timestep
+
+Position at beginning of trajectory
+
+ set_aux_attribute(auxname, attrname, new)
+
+Set the value of attrname in the auxiliary auxname.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to alter
+
+attrname (str) – Name of settable attribute in the auxiliary reader
+
+new – New value to try set attrname to
+
+See also
+
+get_aux_attribute(), rename_aux()
+
+ property time
+
+Time of the current frame in MDAnalysis time units (typically ps).
+
+This is either read straight from the Timestep, or calculated as time = Timestep.frame * Timestep.dt
+
+ timeseries(asel: AtomGroup | None = None, atomgroup: Atomgroup | None = None, start: int | None = None, stop: int | None = None, step: int | None = None, order: str | None = 'fac') → ndarray
+
+Return a subset of coordinate data for an AtomGroup
+
+Parameters:
+
+asel (AtomGroup (optional)) –
+The AtomGroup to read the coordinates from. Defaults to None, in which case the full set of coordinate data is returned.
+
+Deprecated since version 2.7.0: asel argument will be renamed to atomgroup in 3.0.0
+
+atomgroup (AtomGroup (optional)) – Same as asel, will replace asel in 3.0.0
+
+start (int (optional)) – Begin reading the trajectory at frame index start (where 0 is the index of the first frame in the trajectory); the default None starts at the beginning.
+
+stop (int (optional)) – End reading the trajectory at frame index stop-1, i.e, stop is excluded. The trajectory is read to the end with the default None.
+
+step (int (optional)) – Step size for reading; the default None is equivalent to 1 and means to read every frame.
+
+order (str (optional)) – the order/shape of the return data array, corresponding to (a)tom, (f)rame, (c)oordinates all six combinations of ‘a’, ‘f’, ‘c’ are allowed ie “fac” - return array where the shape is (frame, number of atoms, coordinates)
+
+See also
+
+MDAnalysis.coordinates.memory
+
+Added in version 2.4.0.
+
+ property totaltime: float
+
+Total length of the trajectory
+
+The time is calculated as (n_frames - 1) * dt, i.e., we assume that the first frame no time as elapsed. Thus, a trajectory with two frames will be considered to have a length of a single time step dt and a “trajectory” with a single frame will be reported as length 0.
+
+ property transformations
+
+Returns the list of transformations
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

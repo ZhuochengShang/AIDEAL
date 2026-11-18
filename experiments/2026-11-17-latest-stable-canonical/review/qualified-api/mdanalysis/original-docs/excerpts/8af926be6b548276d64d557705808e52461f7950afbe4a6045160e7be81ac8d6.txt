@@ -1,0 +1,47 @@
+classmethod from_smiles(smiles, sanitize=True, addHs=True, generate_coordinates=True, numConfs=1, rdkit_kwargs=None, **kwargs)[source]
+
+Create a Universe from a SMILES string with rdkit
+
+Parameters:
+
+smiles (str) – SMILES string
+
+sanitize (bool (optional, default True)) – Toggle the sanitization of the molecule
+
+addHs (bool (optional, default True)) – Add all necessary hydrogens to the molecule
+
+generate_coordinates (bool (optional, default True)) – Generate 3D coordinates using RDKit’s AllChem.EmbedMultipleConfs() function. Requires adding hydrogens with the addHs parameter
+
+numConfs (int (optional, default 1)) – Number of frames to generate coordinates for. Ignored if generate_coordinates=False
+
+rdkit_kwargs (dict (optional)) – Other arguments passed to the RDKit EmbedMultipleConfs() function
+
+kwargs (dict) – Parameters passed on Universe creation
+
+Returns:
+
+universe – contains atom names and topology information (bonds) derived from the input SMILES string; coordinates are included if generate_coordinates was set to True
+
+Return type:
+
+Universe
+
+Examples
+
+To create a Universe with 10 conformers of ethanol:
+
+>>> from rdkit.Chem import AllChem
+>>> u = mda.Universe.from_smiles('CCO', numConfs=10)
+>>> u
+<Universe with 9 atoms>
+>>> u.trajectory
+<RDKitReader with 10 frames of 9 atoms>
+
+To use a different conformer generation algorithm, like ETKDGv3:
+
+>>> u = mda.Universe.from_smiles('CCO', rdkit_kwargs=dict(
+...      params=AllChem.ETKDGv3()))
+>>> u.trajectory
+<RDKitReader with 1 frames of 9 atoms>
+
+Added in version 2.0.0.

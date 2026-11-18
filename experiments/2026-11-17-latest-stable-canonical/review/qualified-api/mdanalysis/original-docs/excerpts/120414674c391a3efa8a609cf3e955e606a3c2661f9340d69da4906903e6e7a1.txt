@@ -1,0 +1,13 @@
+_compute(indexed_frames: ndarray, verbose: bool = None, *, progressbar_kwargs=None) → AnalysisBase[source]
+
+Perform the calculation on a balanced slice of frames that have been setup prior to that using _setup_computation_groups()
+
+Parameters:
+
+indexed_frames (np.ndarray) – np.ndarray of (n, 2) shape, where first column is frame iteration indices and second is frame numbers
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list.
+
+Added in version 2.8.0.

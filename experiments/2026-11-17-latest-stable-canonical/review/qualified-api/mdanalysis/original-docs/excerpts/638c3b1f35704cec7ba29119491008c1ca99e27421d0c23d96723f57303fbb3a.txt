@@ -1,0 +1,15 @@
+property positions
+
+Coordinates of the Atoms in the AtomGroup.
+
+A numpy.ndarray with shape=(n_atoms, 3) and dtype=numpy.float32.
+
+The positions can be changed by assigning an array of the appropriate shape, i.e., either (n_atoms, 3) to assign individual coordinates, or (3,) to assign the same coordinate to all Atoms (e.g., ag.positions = array([0,0,0]) will move all Atoms to the origin).
+
+Note
+
+Changing positions is not reflected in any files; reading any frame from the trajectory will replace the change with that from the file except if the trajectory is held in memory, e.g., when the transfer_to_memory() method was used.
+
+Raises:
+
+NoDataError – If the underlying Timestep does not contain positions.

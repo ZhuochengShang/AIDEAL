@@ -1,0 +1,217 @@
+ScaledThumbnailMaker (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.makers
+Class ScaledThumbnailMaker
+java.lang.Object
+net.coobird.thumbnailator.makers.ThumbnailMaker
+net.coobird.thumbnailator.makers.ScaledThumbnailMaker
+public final class
+ScaledThumbnailMaker
+extends
+ThumbnailMaker
+A
+ThumbnailMaker
+which scales an image by a specified scaling factor
+when producing a thumbnail.
+Upon calculating the size of the thumbnail, if any of the dimensions are
+0
+, then that dimension will be promoted to
+1
+. This will
+cause some resizing operations to not preserve the aspect ratio of the
+original image.
+Usage:
+The following example demonstrates how to create a thumbnail which is 25%
+the size of the source image:
+BufferedImage img = ImageIO.read(new File("sourceImage.jpg"));
+BufferedImage thumbnail = new ScaledThumbnailMaker()
+.scale(0.25)
+.make(img);
+It is also possible to independently specify the scaling factor for the
+width and height. (If the two scaling factors are not equal then the aspect
+ratio of the original image will not be preserved.)
+Usage:
+The following example demonstrates how to create a thumbnail which is scaled
+50% in the width and 75% in the height:
+BufferedImage img = ImageIO.read(new File("sourceImage.jpg"));
+BufferedImage thumbnail = new ScaledThumbnailMaker()
+.scale(0.50, 0.75)
+.make(img);
+Author:
+coobird
+Constructor Summary
+ScaledThumbnailMaker
+()
+Creates an instance of
+ScaledThumbnailMaker
+without the
+scaling factor specified.
+ScaledThumbnailMaker
+(double factor)
+Creates an instance of
+ScaledThumbnailMaker
+with the specified
+scaling factor.
+ScaledThumbnailMaker
+(double widthFactor,
+double heightFactor)
+Creates an instance of
+ScaledThumbnailMaker
+with the specified
+scaling factors for the width and height.
+Method Summary
+BufferedImage
+make
+(
+BufferedImage
+img)
+Makes a thumbnail.
+ScaledThumbnailMaker
+scale
+(double factor)
+Sets the scaling factor for the thumbnail.
+ScaledThumbnailMaker
+scale
+(double widthFactor,
+double heightFactor)
+Sets the scaling factors for the thumbnail.
+Methods inherited from class net.coobird.thumbnailator.makers.
+ThumbnailMaker
+defaultImageType
+,
+defaultResizer
+,
+defaultResizerFactory
+,
+imageType
+,
+resizer
+,
+resizerFactory
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+ScaledThumbnailMaker
+public
+ScaledThumbnailMaker
+()
+Creates an instance of
+ScaledThumbnailMaker
+without the
+scaling factor specified.
+To use this
+ScaledThumbnailMaker
+, one must specify the
+scaling factor to use by calling the
+scale(double)
+method
+before generating a thumbnail.
+ScaledThumbnailMaker
+public
+ScaledThumbnailMaker
+(double factor)
+Creates an instance of
+ScaledThumbnailMaker
+with the specified
+scaling factor.
+Parameters:
+factor
+- The scaling factor to apply when resizing an
+image to create a thumbnail.
+ScaledThumbnailMaker
+public
+ScaledThumbnailMaker
+(double widthFactor,
+double heightFactor)
+Creates an instance of
+ScaledThumbnailMaker
+with the specified
+scaling factors for the width and height.
+Parameters:
+widthFactor
+- The scaling factor to apply to the width when
+resizing an image to create a thumbnail.
+heightFactor
+- The scaling factor to apply to the height when
+resizing an image to create a thumbnail.
+Since:
+0.3.10
+Method Detail
+scale
+public
+ScaledThumbnailMaker
+scale
+(double factor)
+Sets the scaling factor for the thumbnail.
+The aspect ratio of the resulting image is unaltered from the original.
+Parameters:
+factor
+- The scaling factor to apply when resizing an
+image to create a thumbnail.
+Returns:
+A reference to this object.
+Throws:
+IllegalStateException
+- If the scaling factor has already
+been previously set.
+scale
+public
+ScaledThumbnailMaker
+scale
+(double widthFactor,
+double heightFactor)
+Sets the scaling factors for the thumbnail.
+Parameters:
+widthFactor
+- The scaling factor to apply to the width when
+resizing an image to create a thumbnail.
+heightFactor
+- The scaling factor to apply to the height when
+resizing an image to create a thumbnail.
+Returns:
+A reference to this object.
+Throws:
+IllegalStateException
+- If the scaling factor has already
+been previously set.
+Since:
+0.3.10
+make
+public
+BufferedImage
+make
+(
+BufferedImage
+img)
+Description copied from class:
+ThumbnailMaker
+Makes a thumbnail.
+Specified by:
+make
+in class
+ThumbnailMaker
+Parameters:
+img
+- The source image.
+Returns:
+The thumbnail created from the source image, using the
+parameters set by the
+ThumbnailMaker
+.
+Copyright © 2025. All rights reserved.

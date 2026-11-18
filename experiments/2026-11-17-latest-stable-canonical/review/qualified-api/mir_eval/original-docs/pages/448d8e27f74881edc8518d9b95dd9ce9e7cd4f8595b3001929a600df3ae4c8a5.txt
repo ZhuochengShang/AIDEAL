@@ -1,0 +1,99 @@
+mir_eval.onset
+
+The goal of an onset detection algorithm is to automatically determine when notes are played in a piece of music. The primary method used to evaluate onset detectors is to first determine which estimated onsets are “correct”, where correctness is defined as being within a small window of a reference onset.
+
+Based in part on this script:
+
+https://github.com/CPJKU/onset_detection/blob/master/onset_evaluation.py
+
+Conventions
+
+Onsets should be provided in the form of a 1-dimensional array of onset times in seconds in increasing order.
+
+Metrics
+
+mir_eval.onset.f_measure(): Precision, Recall, and F-measure scores based on the number of estimated onsets which are sufficiently close to reference onsets.
+
+ mir_eval.onset.validate(reference_onsets, estimated_onsets)
+
+Check that the input annotations to a metric look like valid onset time arrays, and throws helpful errors if not.
+
+Parameters:
+
+reference_onsetsnp.ndarray
+
+reference onset locations, in seconds
+
+estimated_onsetsnp.ndarray
+
+estimated onset locations, in seconds
+
+ mir_eval.onset.f_measure(reference_onsets, estimated_onsets, window=0.05)
+
+Compute the F-measure of correct vs incorrectly predicted onsets. “Correctness” is determined over a small window.
+
+Parameters:
+
+reference_onsetsnp.ndarray
+
+reference onset locations, in seconds
+
+estimated_onsetsnp.ndarray
+
+estimated onset locations, in seconds
+
+windowfloat
+
+Window size, in seconds (Default value = .05)
+
+Returns:
+
+f_measurefloat
+
+2*precision*recall/(precision + recall)
+
+precisionfloat
+
+(# true positives)/(# true positives + # false positives)
+
+recallfloat
+
+(# true positives)/(# true positives + # false negatives)
+
+Examples
+
+>>> reference_onsets = mir_eval.io.load_events('reference.txt')
+>>> estimated_onsets = mir_eval.io.load_events('estimated.txt')
+>>> F, P, R = mir_eval.onset.f_measure(reference_onsets,
+...                                    estimated_onsets)
+
+ mir_eval.onset.evaluate(reference_onsets, estimated_onsets, **kwargs)
+
+Compute all metrics for the given reference and estimated annotations.
+
+Parameters:
+
+reference_onsetsnp.ndarray
+
+reference onset locations, in seconds
+
+estimated_onsetsnp.ndarray
+
+estimated onset locations, in seconds
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> reference_onsets = mir_eval.io.load_events('reference.txt')
+>>> estimated_onsets = mir_eval.io.load_events('estimated.txt')
+>>> scores = mir_eval.onset.evaluate(reference_onsets,
+...                                  estimated_onsets)

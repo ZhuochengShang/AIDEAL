@@ -1,0 +1,41 @@
+watermark
+public
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+BufferedImage
+image,
+float opacity)
+Sets the image and opacity of the watermark to apply on
+the thumbnail.
+This method is a convenience method for the
+watermark(Position, BufferedImage, float)
+method, where
+the opacity is 50%:
+watermark(Positions.CENTER, image, opacity);
+This method can be called multiple times to apply multiple
+watermarks.
+If multiple watermarks are to be applied, the watermarks will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+image
+- The image of the watermark.
+opacity
+- The opacity of the watermark.
+The value should be between
+0.0f
+and
+1.0f
+, where
+0.0f
+is completely
+transparent, and
+1.0f
+is completely
+opaque.
+Returns:
+Reference to this object.

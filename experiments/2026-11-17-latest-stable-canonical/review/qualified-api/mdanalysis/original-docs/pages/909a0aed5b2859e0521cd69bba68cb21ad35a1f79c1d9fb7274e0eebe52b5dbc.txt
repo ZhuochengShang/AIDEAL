@@ -1,0 +1,139 @@
+15.2.4. Neighbor search library — MDAnalysis.lib.nsgrid
+
+15.2.4.1. About the code
+
+This Neighbor search library is a serialized Cython version greatly inspired by the NS grid search implemented in GROMACS .
+
+GROMACS 4.x code (more precisely nsgrid.c and ns.c ) was used as reference to write this file.
+
+GROMACS 4.x code is released under the GNU Public Licence v2.
+
+15.2.4.2. About the algorithm
+
+The neighbor search implemented here is based on cell lists which allow computation of pairs [1] with a cost of \(O(N)\), instead of \(O(N^2)\). The basic algorithm is described in Appendix F, Page 552 of Understanding Molecular Dynamics: From Algorithm to Applications by Frenkel and Smit.
+
+In brief, the algorithm divides the domain into smaller subdomains called cells and distributes every particle to these cells based on their positions. Subsequently, any distance based query first identifies the corresponding cell position in the domain followed by distance evaluations within the identified cell and neighboring cells only. Care must be taken to ensure that cellsize is greater than the desired search distance, otherwise all of the neighbours might not reflect in the results.
+
+Added in version 0.19.0.
+
+Changed in version 1.0.2: Rewrote module
+
+Changed in version 2.1.0: Capped max grid dimension to 1290, which when cubed is the max value of a 32 bit signed integer.
+
+15.2.4.3. Classes
+
+ class MDAnalysis.lib.nsgrid.FastNS(cutoff, coords, box, pbc=True)
+
+Grid based search between positions
+
+Minimum image convention is used for distance evaluations if pbc is set to True.
+
+Changed in version 1.0.2: Rewrote to fix bugs with triclinic boxes
+
+Changed in version 2.11.0: Fixed missed neighbours in triclinic boxes where both the x component of the second box vector and the y component of the third are non-zero or more than one angle is non-90º (Issue #4906).
+
+If box is not supplied, the range of coordinates i.e. [xmax, ymax, zmax] - [xmin, ymin, zmin] should be used to construct a pseudo box. Subsequently, the origin should also be shifted to [xmin, ymin, zmin]. These arguments must be provided to the function.
+
+Parameters:
+
+cutoff (float) – Desired cutoff distance
+
+coords (numpy.ndarray) – atom coordinates of shape (N, 3) for N atoms. dtype=numpy.float32. For Non-PBC calculations, all the coords must be within the bounding box specified by box
+
+box (numpy.ndarray) – Box dimension of shape (6, ). The dimensions must be provided in the same format as returned by MDAnalysis.coordinates.base.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma]. For non-PBC evaluations, provide an orthogonal bounding box (dtype = numpy.float32)
+
+pbc (boolean) – Handle to switch periodic boundary conditions on/off [True]
+
+Note
+
+pbc=False Only works for orthogonal boxes.
+
+Care must be taken such that all particles are inside the bounding box as defined by the box argument for non-PBC calculations.
+
+In case of Non-PBC calculations, a bounding box must be provided to encompass all the coordinates as well as the search coordinates. The dimension should be similar to box argument but for an orthogonal box. For instance, one valid set of argument for box for the case of no PBC could be [10, 10, 10, 90, 90, 90]
+
+Following operations are advisable for non-PBC calculations
+
+lmax = all_coords.max(axis=0)
+lmin = all_coords.min(axis=0)
+pseudobox[:3] = 1.1*(lmax - lmin)
+pseudobox[3:] = 90.
+shift = all_coords.copy()
+shift -= lmin
+gridsearch = FastNS(max_cutoff, shift, box=pseudobox, pbc=False)
+
+ search(self, float[, : ] search_coords)
+
+Search a group of atoms against initialized coordinates
+
+Creates a new grid with the query atoms and searches against the initialized coordinates. The search is exclusive i.e. only the pairs (i, j) such that atom[i] from query atoms and atom[j] from the initialized set of coordinates is stored as neighbors.
+
+PBC-aware/non PBC-aware calculations are automatically enabled during the instantiation of :class:FastNS.
+
+Parameters:
+
+search_coords (numpy.ndarray) – Query coordinates of shape (N, 3) where N is the number of queries
+
+Returns:
+
+results – An NSResults object holding neighbor search results, which can be accessed by its methods get_pairs() and get_pair_distances().
+
+Return type:
+
+NSResults
+
+Note
+
+For non-PBC aware calculations, the current implementation doesn’t work if any of the query coordinates lies outside the box supplied to FastNS.
+
+ self_search(self)
+
+Searches all the pairs within the initialized coordinates
+
+All the pairs among the initialized coordinates are registered in hald the time. Although the algorithm is still the same, but the distance checks can be reduced to half in this particular case as every pair need not be evaluated twice.
+
+Returns:
+
+results – An NSResults object holding neighbor search results, which can be accessed by its methods get_pairs() and get_pair_distances().
+
+Return type:
+
+NSResults
+
+ class MDAnalysis.lib.nsgrid.NSResults
+
+Class to store the results
+
+All outputs from FastNS are stored in an instance of this class. All methods of FastNS return an instance of this class, which can be used to generate the desired results on demand.
+
+ get_pair_distances(self)
+
+Returns all the distances corresponding to each pair of neighbors
+
+Returns an array of shape N where N is the number of pairs among the query atoms and initial atoms within a specified distance. Every element [i] corresponds to the distance between pairs[i, 0] and pairs[i, 1], where pairs is the array obtained from get_pairs()
+
+Returns:
+
+distances – distances between pairs of query and initial atom coordinates of shape N
+
+Return type:
+
+numpy.ndarray
+
+See also
+
+get_pairs()
+
+ get_pairs(self)
+
+Returns all the pairs within the desired cutoff distance
+
+Returns an array of shape (N, 2), where N is the number of pairs between reference and configuration within the specified distance. For every pair (i, j), reference[i] and configuration[j] are atom positions such that reference is the position of query atoms while configuration coontains the position of group of atoms used to search against the query atoms.
+
+Returns:
+
+pairs – pairs of atom indices of neighbors from query and initial atom coordinates of shape (N, 2)
+
+Return type:
+
+numpy.ndarray

@@ -1,0 +1,32 @@
+mir_eval.pattern.first_n_target_proportion_R(reference_patterns, estimated_patterns, n=5)
+
+First n target proportion establishment recall metric.
+
+This metric is similar is similar to the establishment FPR score, but it only takes into account the first n estimated patterns and it only outputs the Recall value of it.
+
+Parameters:
+
+reference_patternslist
+
+The reference patterns in the format returned by mir_eval.io.load_patterns()
+
+estimated_patternslist
+
+The estimated patterns in the same format
+
+nint
+
+Number of patterns to consider from the estimated results, in the order they appear in the matrix. (Default value = 5)
+
+Returns:
+
+recallfloat
+
+The first n target proportion Recall.
+
+Examples
+
+>>> ref_patterns = mir_eval.io.load_patterns("ref_pattern.txt")
+>>> est_patterns = mir_eval.io.load_patterns("est_pattern.txt")
+>>> R = mir_eval.pattern.first_n_target_proportion_R(
+...                                 ref_patterns, est_patterns, n=5)

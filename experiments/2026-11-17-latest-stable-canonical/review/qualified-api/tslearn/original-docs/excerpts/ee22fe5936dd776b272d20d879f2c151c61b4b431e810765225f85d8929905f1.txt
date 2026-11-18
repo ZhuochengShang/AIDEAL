@@ -1,0 +1,39 @@
+tslearn.utils.to_pyflux_dataset(X)[source]
+
+Transform a tslearn-compatible dataset into a pyflux dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz, d), where n_ts=1
+
+tslearn-formatted dataset to be cast to pyflux format
+
+Returns:
+
+Pandas data-frame
+
+pyflux-formatted dataset (cf. link)
+
+Notes
+
+Conversion from/to pyflux format requires pandas to be installed.
+
+Examples
+
+>>> tslearn_arr = numpy.random.randn(1, 16, 1)
+>>> pyflux_df = to_pyflux_dataset(tslearn_arr)
+>>> pyflux_df.shape
+(16, 1)
+>>> pyflux_df.columns[0]
+'dim_0'
+>>> tslearn_arr = numpy.random.randn(1, 16, 2)
+>>> pyflux_df = to_pyflux_dataset(tslearn_arr)
+>>> pyflux_df.shape
+(16, 2)
+>>> pyflux_df.columns[1]
+'dim_1'
+>>> tslearn_arr = numpy.random.randn(10, 16, 1)
+>>> to_pyflux_dataset(tslearn_arr)
+Traceback (most recent call last):
+...
+ValueError: Array should be made of a single time series (10 here)

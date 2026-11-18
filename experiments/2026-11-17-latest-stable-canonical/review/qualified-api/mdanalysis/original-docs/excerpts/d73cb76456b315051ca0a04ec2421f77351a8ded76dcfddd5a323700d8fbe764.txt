@@ -1,0 +1,15 @@
+rename_aux(auxname, new)[source]
+
+Change the name of the auxiliary auxname to new.
+
+Provided there is not already an auxiliary named new, the auxiliary name will be changed in ts.aux namespace, the trajectory’s list of added auxiliaries, and in the auxiliary reader itself.
+
+Parameters:
+
+auxname (str) – Name of the auxiliary to rename
+
+new (str) – New name to try set
+
+Raises:
+
+ValueError – If the name new is already in use by an existing auxiliary.

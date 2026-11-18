@@ -1,0 +1,13 @@
+parse(include_dir='/usr/local/gromacs/share/gromacs/top/', infer_system=True, **kwargs)[source]
+
+Parse ITP file into Topology
+
+Parameters:
+
+include_dir (str, optional) – A directory in which to look for other files included from the original file, if the files are not first found in the current directory. Default: “/usr/local/gromacs/share/gromacs/top/”
+
+infer_system (bool, optional (default True)) – If a [ molecules ] directive is not found within the the topology file, create a Topology with one of every [ moleculetype ] defined. If a [ molecules ] directive is found, this keyword is ignored.
+
+Return type:
+
+MDAnalysis Topology object

@@ -1,0 +1,1040 @@
+ThumbnailParameter (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator
+Class ThumbnailParameter
+java.lang.Object
+net.coobird.thumbnailator.ThumbnailParameter
+public class
+ThumbnailParameter
+extends
+Object
+This class is used to specify the parameters to use when creating a thumbnail.
+An instance of
+ThumbnailParameter
+is mutable -- it should not be
+reused for multiple resizes, as the parameters can change behind the scenes
+as the resizing process progresses.
+Author:
+coobird
+Field Summary
+static
+String
+DEFAULT_FORMAT_TYPE
+A constant used to denote that the output format type of the thumbnail
+should be the default type of the codec being used.
+static int
+DEFAULT_IMAGE_TYPE
+A constant used to denote that the default image type should be used
+when creating the thumbnail.
+static float
+DEFAULT_QUALITY
+A constant used to denote that the default compression quality settings
+should be used when creating the thumbnail.
+static
+String
+DETERMINE_FORMAT
+A constant used to denote that the output format of the thumbnail should
+be the determined from available information such as the file name of
+the thumbnail.
+static
+String
+ORIGINAL_FORMAT
+A constant used to denote that the output format of the thumbnail should
+be the same as the format of the original image.
+static int
+ORIGINAL_IMAGE_TYPE
+A constant used to denote that the image type of the original image
+should be used when creating the thumbnail.
+Constructor Summary
+ThumbnailParameter
+(
+Dimension
+thumbnailSize,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+Resizer
+resizer,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+ThumbnailParameter
+(
+Dimension
+thumbnailSize,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+ResizerFactory
+resizerFactory,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+ThumbnailParameter
+(double widthScalingFactor,
+double heightScalingFactor,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+Resizer
+resizer,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+ThumbnailParameter
+(double widthScalingFactor,
+double heightScalingFactor,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+ResizerFactory
+resizerFactory,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+Method Summary
+boolean
+fitWithinDimenions
+()
+Returns whether or not to fit the thumbnail within the specified
+dimensions.
+double
+getHeightScalingFactor
+()
+Returns the scaling factor to apply to the height when creating the
+thumbnail.
+List
+<
+ImageFilter
+>
+getImageFilters
+()
+Returns the list of
+ImageFilter
+s which are applied to the
+thumbnail.
+String
+getOutputFormat
+()
+Returns the output format for the thumbnail.
+String
+getOutputFormatType
+()
+Returns the output format type for the thumbnail.
+float
+getOutputQuality
+()
+Returns the compression quality settings for the thumbnail.
+Resizer
+getResizer
+()
+Returns the default
+Resizer
+that will be used when performing the
+resizing operation to create a thumbnail.
+ResizerFactory
+getResizerFactory
+()
+Returns the
+ResizerFactory
+for obtaining a
+Resizer
+which
+is to be used when performing the resizing operation to create a
+thumbnail.
+Dimension
+getSize
+()
+Returns the size of the thumbnail.
+Region
+getSourceRegion
+()
+Returns the region of the source image to use when creating a thumbnail,
+represented by a
+Region
+object.
+int
+getType
+()
+Returns the type of image.
+double
+getWidthScalingFactor
+()
+Returns the scaling factor to apply to the width when creating the
+thumbnail.
+boolean
+isKeepAspectRatio
+()
+Returns whether or not the thumbnail is to maintain the aspect ratio of
+the source image when creating the thumbnail.
+boolean
+useExifOrientation
+()
+Returns whether or not the Exif metadata should be used to determine
+the orientation of the thumbnail.
+boolean
+useOriginalImageType
+()
+Returns whether or not the original image type should be used for the
+thumbnail.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Field Detail
+ORIGINAL_FORMAT
+public static final
+String
+ORIGINAL_FORMAT
+A constant used to denote that the output format of the thumbnail should
+be the same as the format of the original image.
+DETERMINE_FORMAT
+public static final
+String
+DETERMINE_FORMAT
+A constant used to denote that the output format of the thumbnail should
+be the determined from available information such as the file name of
+the thumbnail.
+If a suitable output format cannot be determined, then the implementation
+should behave as if
+ORIGINAL_FORMAT
+was specified.
+See Also:
+Constant Field Values
+DEFAULT_FORMAT_TYPE
+public static final
+String
+DEFAULT_FORMAT_TYPE
+A constant used to denote that the output format type of the thumbnail
+should be the default type of the codec being used.
+DEFAULT_QUALITY
+public static final float
+DEFAULT_QUALITY
+A constant used to denote that the default compression quality settings
+should be used when creating the thumbnail.
+See Also:
+Constant Field Values
+ORIGINAL_IMAGE_TYPE
+public static final int
+ORIGINAL_IMAGE_TYPE
+A constant used to denote that the image type of the original image
+should be used when creating the thumbnail.
+See Also:
+Constant Field Values
+DEFAULT_IMAGE_TYPE
+public static final int
+DEFAULT_IMAGE_TYPE
+A constant used to denote that the default image type should be used
+when creating the thumbnail.
+See Also:
+Constant Field Values
+Constructor Detail
+ThumbnailParameter
+public
+ThumbnailParameter
+(
+Dimension
+thumbnailSize,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+Resizer
+resizer,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+Parameters:
+thumbnailSize
+- The size of the thumbnail to generate.
+sourceRegion
+- The region of the source image to use when
+creating a thumbnail.
+A value of
+null
+indicates that the
+entire source image should be used to create
+the thumbnail.
+keepAspectRatio
+- Indicates whether or not the thumbnail should
+maintain the aspect ratio of the original image.
+outputFormat
+- A string indicating the compression format
+that should be applied on the thumbnail.
+A value of
+ORIGINAL_FORMAT
+should be provided if the same image format as
+the original should     be used for the thumbnail.
+A value of
+DETERMINE_FORMAT
+should be provided if the output format of the
+thumbnail should be the determined from the
+information available, such as the output file
+name of the thumbnail.
+outputFormatType
+- A string indicating the compression type that
+should be used when writing the thumbnail.
+A value of
+DEFAULT_FORMAT_TYPE
+should be provided if the thumbnail should be
+written using the default compression type of
+the codec specified in
+outputFormat
+.
+outputQuality
+- A value from
+0.0f
+to
+1.0f
+which
+indicates the quality setting to use for the
+compression of the thumbnail.
+0.0f
+indicates the lowest quality,
+1.0f
+indicates the highest quality setting for the
+compression.
+DEFAULT_QUALITY
+should be specified when the codec's default
+compression quality settings should be used.
+imageType
+- The
+BufferedImage
+image type of the
+thumbnail.
+A value of
+DEFAULT_IMAGE_TYPE
+should be specified when the default image
+type should be used when creating the thumbnail.
+filters
+- The
+ImageFilter
+s to apply to the
+thumbnail.
+A value of
+null
+will be recognized as
+no filters are to be applied.
+The filters are applied after the original
+image has been resized.
+resizer
+- The
+Resizer
+to use when performing the
+resizing operation to create a thumbnail.
+fitWithinDimensions
+- Whether or not to fit the thumbnail within
+the specified dimensions.
+If
+true
+is specified, then the
+thumbnail will be sized to fit within the
+specified dimensions, if the thumbnail is
+going to exceed those dimensions.
+useExifOrientation
+- Whether or not to use the Exif metadata to
+determine the orientation of the thumbnail.
+If
+true
+is specified, then the
+Exif metadata will be used to determine
+the orientation of the thumbnail.
+Throws:
+IllegalArgumentException
+- If size is
+null
+or if the
+dimensions are negative, or if the
+Resizer
+is null.
+Since:
+0.4.3
+ThumbnailParameter
+public
+ThumbnailParameter
+(double widthScalingFactor,
+double heightScalingFactor,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+Resizer
+resizer,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+Parameters:
+widthScalingFactor
+- The scaling factor to apply to the width
+when creating a thumbnail from the original
+image.
+heightScalingFactor
+- The scaling factor to apply to the height
+when creating a thumbnail from the original
+image.
+sourceRegion
+- The region of the source image to use when
+creating a thumbnail.
+A value of
+null
+indicates that the
+entire source image should be used to create
+the thumbnail.
+keepAspectRatio
+- Indicates whether or not the thumbnail should
+maintain the aspect ratio of the original image.
+outputFormat
+- A string indicating the compression format
+that should be applied on the thumbnail.
+A value of
+ORIGINAL_FORMAT
+should be provided if the same image format as
+the original should     be used for the thumbnail.
+A value of
+DETERMINE_FORMAT
+should be provided if the output format of the
+thumbnail should be the determined from the
+information available, such as the output file
+name of the thumbnail.
+outputFormatType
+- A string indicating the compression type that
+should be used when writing the thumbnail.
+A value of
+DEFAULT_FORMAT_TYPE
+should be provided if the thumbnail should be
+written using the default compression type of
+the codec specified in
+outputFormat
+.
+outputQuality
+- A value from
+0.0f
+to
+1.0f
+which
+indicates the quality setting to use for the
+compression of the thumbnail.
+0.0f
+indicates the lowest quality,
+1.0f
+indicates the highest quality setting for the
+compression.
+DEFAULT_QUALITY
+should be specified when the codec's default
+compression quality settings should be used.
+imageType
+- The
+BufferedImage
+image type of the
+thumbnail.
+A value of
+DEFAULT_IMAGE_TYPE
+should be specified when the default image
+type should be used when creating the thumbnail.
+filters
+- The
+ImageFilter
+s to apply to the
+thumbnail.
+A value of
+null
+will be recognized as
+no filters are to be applied.
+The filters are applied after the original
+image has been resized.
+resizer
+- The
+Resizer
+to use when performing the
+resizing operation to create a thumbnail.
+fitWithinDimensions
+- Whether or not to fit the thumbnail within
+the specified dimensions.
+If
+true
+is specified, then the
+thumbnail will be sized to fit within the
+specified dimensions, if the thumbnail is
+going to exceed those dimensions.
+useExifOrientation
+- Whether or not to use the Exif metadata to
+determine the orientation of the thumbnail.
+If
+true
+is specified, then the
+Exif metadata will be used to determine
+the orientation of the thumbnail.
+Throws:
+IllegalArgumentException
+- If the scaling factor is not a
+rational number or is less than or
+equal to 0, or if the
+Resizer
+is null.
+Since:
+0.4.3
+ThumbnailParameter
+public
+ThumbnailParameter
+(
+Dimension
+thumbnailSize,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+ResizerFactory
+resizerFactory,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+Parameters:
+thumbnailSize
+- The size of the thumbnail to generate.
+sourceRegion
+- The region of the source image to use when
+creating a thumbnail.
+A value of
+null
+indicates that the
+entire source image should be used to create
+the thumbnail.
+keepAspectRatio
+- Indicates whether or not the thumbnail should
+maintain the aspect ratio of the original image.
+outputFormat
+- A string indicating the compression format
+that should be applied on the thumbnail.
+A value of
+ORIGINAL_FORMAT
+should be provided if the same image format as
+the original should     be used for the thumbnail.
+A value of
+DETERMINE_FORMAT
+should be provided if the output format of the
+thumbnail should be the determined from the
+information available, such as the output file
+name of the thumbnail.
+outputFormatType
+- A string indicating the compression type that
+should be used when writing the thumbnail.
+A value of
+DEFAULT_FORMAT_TYPE
+should be provided if the thumbnail should be
+written using the default compression type of
+the codec specified in
+outputFormat
+.
+outputQuality
+- A value from
+0.0f
+to
+1.0f
+which
+indicates the quality setting to use for the
+compression of the thumbnail.
+0.0f
+indicates the lowest quality,
+1.0f
+indicates the highest quality setting for the
+compression.
+DEFAULT_QUALITY
+should be specified when the codec's default
+compression quality settings should be used.
+imageType
+- The
+BufferedImage
+image type of the
+thumbnail.
+A value of
+DEFAULT_IMAGE_TYPE
+should be specified when the default image
+type should be used when creating the thumbnail.
+filters
+- The
+ImageFilter
+s to apply to the
+thumbnail.
+A value of
+null
+will be recognized as
+no filters are to be applied.
+The filters are applied after the original
+image has been resized.
+resizerFactory
+- The
+ResizerFactory
+for obtaining a
+Resizer
+that is to be used when
+performing an image resizing operation.
+fitWithinDimensions
+- Whether or not to fit the thumbnail within
+the specified dimensions.
+If
+true
+is specified, then the
+thumbnail will be sized to fit within the
+specified dimensions, if the thumbnail is
+going to exceed those dimensions.
+useExifOrientation
+- Whether or not to use the Exif metadata to
+determine the orientation of the thumbnail.
+If
+true
+is specified, then the
+Exif metadata will be used to determine
+the orientation of the thumbnail.
+Throws:
+IllegalArgumentException
+- If size is
+null
+or if the
+dimensions are negative, or if the
+ResizerFactory
+is null.
+Since:
+0.4.3
+ThumbnailParameter
+public
+ThumbnailParameter
+(double widthScalingFactor,
+double heightScalingFactor,
+Region
+sourceRegion,
+boolean keepAspectRatio,
+String
+outputFormat,
+String
+outputFormatType,
+float outputQuality,
+int imageType,
+List
+<
+ImageFilter
+> filters,
+ResizerFactory
+resizerFactory,
+boolean fitWithinDimensions,
+boolean useExifOrientation)
+Creates an object holding the parameters needed in order to make a
+thumbnail.
+Parameters:
+widthScalingFactor
+- The scaling factor to apply to the width
+when creating a thumbnail from the original
+image.
+heightScalingFactor
+- The scaling factor to apply to the height
+when creating a thumbnail from the original
+image.
+sourceRegion
+- The region of the source image to use when
+creating a thumbnail.
+A value of
+null
+indicates that the
+entire source image should be used to create
+the thumbnail.
+keepAspectRatio
+- Indicates whether or not the thumbnail should
+maintain the aspect ratio of the original image.
+outputFormat
+- A string indicating the compression format
+that should be applied on the thumbnail.
+A value of
+ORIGINAL_FORMAT
+should be provided if the same image format as
+the original should     be used for the thumbnail.
+A value of
+DETERMINE_FORMAT
+should be provided if the output format of the
+thumbnail should be the determined from the
+information available, such as the output file
+name of the thumbnail.
+outputFormatType
+- A string indicating the compression type that
+should be used when writing the thumbnail.
+A value of
+DEFAULT_FORMAT_TYPE
+should be provided if the thumbnail should be
+written using the default compression type of
+the codec specified in
+outputFormat
+.
+outputQuality
+- A value from
+0.0f
+to
+1.0f
+which
+indicates the quality setting to use for the
+compression of the thumbnail.
+0.0f
+indicates the lowest quality,
+1.0f
+indicates the highest quality setting for the
+compression.
+DEFAULT_QUALITY
+should be specified when the codec's default
+compression quality settings should be used.
+imageType
+- The
+BufferedImage
+image type of the
+thumbnail.
+A value of
+DEFAULT_IMAGE_TYPE
+should be specified when the default image
+type should be used when creating the thumbnail.
+filters
+- The
+ImageFilter
+s to apply to the
+thumbnail.
+A value of
+null
+will be recognized as
+no filters are to be applied.
+The filters are applied after the original
+image has been resized.
+resizerFactory
+- The
+ResizerFactory
+for obtaining a
+Resizer
+that is to be used when
+performing an image resizing operation.
+fitWithinDimensions
+- Whether or not to fit the thumbnail within
+the specified dimensions.
+If
+true
+is specified, then the
+thumbnail will be sized to fit within the
+specified dimensions, if the thumbnail is
+going to exceed those dimensions.
+useExifOrientation
+- Whether or not to use the Exif metadata to
+determine the orientation of the thumbnail.
+If
+true
+is specified, then the
+Exif metadata will be used to determine
+the orientation of the thumbnail.
+Throws:
+IllegalArgumentException
+- If the scaling factor is not a
+rational number or is less than or
+equal to 0, or if the
+ResizerFactory
+is null.
+Since:
+0.4.3
+Method Detail
+getSize
+public
+Dimension
+getSize
+()
+Returns the size of the thumbnail.
+Returns
+null
+if the scaling factor is set rather than the
+explicit thumbnail size.
+Returns:
+The size of the thumbnail.
+getWidthScalingFactor
+public double
+getWidthScalingFactor
+()
+Returns the scaling factor to apply to the width when creating the
+thumbnail.
+Returns
+Double.NaN
+if the thumbnail size is set rather than the
+scaling factor.
+Returns:
+The width scaling factor for the thumbnail.
+Since:
+0.3.10
+getHeightScalingFactor
+public double
+getHeightScalingFactor
+()
+Returns the scaling factor to apply to the height when creating the
+thumbnail.
+Returns
+Double.NaN
+if the thumbnail size is set rather than the
+scaling factor.
+Returns:
+The height scaling factor for the thumbnail.
+Since:
+0.3.10
+getType
+public int
+getType
+()
+Returns the type of image. The value returned is the constant used for
+image types of
+BufferedImage
+.
+Returns:
+The type of the image.
+isKeepAspectRatio
+public boolean
+isKeepAspectRatio
+()
+Returns whether or not the thumbnail is to maintain the aspect ratio of
+the source image when creating the thumbnail.
+Returns:
+true
+if the thumbnail is to maintain the aspect
+ratio of the original image,
+false
+otherwise.
+getOutputFormat
+public
+String
+getOutputFormat
+()
+Returns the output format for the thumbnail.
+If the output format is to use the same compression format as the
+original image, this method will return
+ORIGINAL_FORMAT
+.
+If the output format should be determined from the information available
+such as the file name of the thumbnail, then this method will return
+DETERMINE_FORMAT
+.
+Returns:
+The output format for the thumbnail.
+getOutputFormatType
+public
+String
+getOutputFormatType
+()
+Returns the output format type for the thumbnail.
+If the default compression type of the compression format is to be used,
+then this method will return
+DEFAULT_FORMAT_TYPE
+.
+Returns:
+The output format type for the thumbnail.
+getOutputQuality
+public float
+getOutputQuality
+()
+Returns the compression quality settings for the thumbnail.
+The value is in the range of
+0.0f
+to
+1.0f
+,
+where
+0.0f
+is for the lowest quality setting and
+1.0f
+for
+the highest quality setting.
+If the default compression quality is to be used, then this method will
+return
+DEFAULT_QUALITY
+.
+Returns:
+The compression quality settings for the thumbnail.
+getImageFilters
+public
+List
+<
+ImageFilter
+>
+getImageFilters
+()
+Returns the list of
+ImageFilter
+s which are applied to the
+thumbnail.
+These filters are applied after the original image has been resized.
+Returns:
+The
+ImageFilter
+s which are applied to the thumbnail.
+getResizer
+public
+Resizer
+getResizer
+()
+Returns the default
+Resizer
+that will be used when performing the
+resizing operation to create a thumbnail.
+Returns:
+The default
+Resizer
+to use when performing a resize
+operation.
+getResizerFactory
+public
+ResizerFactory
+getResizerFactory
+()
+Returns the
+ResizerFactory
+for obtaining a
+Resizer
+which
+is to be used when performing the resizing operation to create a
+thumbnail.
+Returns:
+The
+ResizerFactory
+to use to obtain the
+Resizer
+.
+useOriginalImageType
+public boolean
+useOriginalImageType
+()
+Returns whether or not the original image type should be used for the
+thumbnail.
+Returns:
+true
+if the original image type should be used,
+false
+otherwise.
+getSourceRegion
+public
+Region
+getSourceRegion
+()
+Returns the region of the source image to use when creating a thumbnail,
+represented by a
+Region
+object.
+Returns:
+The
+Region
+object representing the source region
+to use when creating a thumbnail.
+A value of
+null
+indicates that the entire source
+image should be used to create the thumbnail.
+fitWithinDimenions
+public boolean
+fitWithinDimenions
+()
+Returns whether or not to fit the thumbnail within the specified
+dimensions.
+Returns:
+true
+is returned when the thumbnail should be sized
+to fit within the specified dimensions, if the thumbnail
+is going to exceed those dimensions.
+Since:
+0.4.0
+useExifOrientation
+public boolean
+useExifOrientation
+()
+Returns whether or not the Exif metadata should be used to determine
+the orientation of the thumbnail.
+Returns:
+true
+is returned when the Exif metadata should be
+used to decide the orientation of the thumbnail,
+false
+otherwise.
+Since:
+0.4.3
+Copyright © 2025. All rights reserved.

@@ -1,0 +1,169 @@
+class MDAnalysis.core.topologyattrs.Atomnames(vals, guessed=False)[source]
+
+Name for each atom.
+
+ chi1_selection(n_name='N', ca_name='CA', cb_name='CB', cg_name='CG CG1 OG OG1 SG')[source]
+
+Select AtomGroup corresponding to the chi1 sidechain dihedral N-CA-CB-*G. The gamma atom is taken to be the heavy atom in the gamma position. If more than one heavy atom is present (e.g. CG1 and CG2), the one with the lower number is used (CG1).
+
+Warning
+
+This numbering of chi1 atoms here in following with the IUPAC 1970 rules. However, it should be noted that analyses which use dihedral angles may have different definitions. For example, the MDAnalysis.analysis.dihedrals.Janin class does not incorporate amino acids where the gamma atom is not carbon, into its chi1 selections.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+cb_name (str (optional)) – name for the beta-carbon atom
+
+cg_name (str (optional)) – name for the gamma-carbon atom
+
+Returns:
+
+4-atom selection in the correct order. If no CB and/or CG is found then this method returns None.
+
+Return type:
+
+AtomGroup
+
+Added in version 0.7.5.
+
+Changed in version 1.0.0: Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ chi1_selections(n_name='N', ca_name='CA', cb_name='CB', cg_name='CG CG1 OG OG1 SG')[source]
+
+Select list of AtomGroups corresponding to the chi1 sidechain dihedral N-CA-CB-CG.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+cb_name (str (optional)) – name for the beta-carbon atom
+
+cg_name (str (optional)) – name for the gamma-carbon atom
+
+Returns:
+
+List of AtomGroups – 4-atom selections in the correct order. If no CB and/or CG is found then the corresponding item in the list is None.
+
+.. versionadded:: 1.0.0
+
+ dtype
+
+alias of object
+
+ omega_selection(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select AtomGroup corresponding to the omega protein backbone dihedral CA-C-N’-CA’.
+
+omega describes the -C-N- peptide bond. Typically, it is trans (180 degrees) although cis-bonds (0 degrees) are also occasionally observed (especially near Proline).
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+AtomGroup – 4-atom selection in the correct order. If no C’ found in the previous residue (by resid) then this method returns None.
+
+.. versionchanged:: 1.0.0 – Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ omega_selections(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select list of AtomGroups corresponding to the omega protein backbone dihedral CA-C-N’-CA’.
+
+omega describes the -C-N- peptide bond. Typically, it is trans (180 degrees) although cis-bonds (0 degrees) are also occasionally observed (especially near Proline).
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+List of AtomGroups – 4-atom selections in the correct order. If no C’ found in the previous residue (by resid) then the corresponding item in the list is None.
+
+.. versionadded:: 1.0.0
+
+ phi_selection(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select AtomGroup corresponding to the phi protein backbone dihedral C’-N-CA-C.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+AtomGroup – 4-atom selection in the correct order. If no C’ found in the previous residue (by resid) then this method returns None.
+
+.. versionchanged:: 1.0.0 – Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ phi_selections(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select list of AtomGroups corresponding to the phi protein backbone dihedral C’-N-CA-C.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+list of AtomGroups – 4-atom selections in the correct order. If no C’ found in the previous residue (by resid) then corresponding item in the list is None.
+
+.. versionadded:: 1.0.0
+
+ psi_selection(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select AtomGroup corresponding to the psi protein backbone dihedral N-CA-C-N’.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+AtomGroup – 4-atom selection in the correct order. If no N’ found in the following residue (by resid) then this method returns None.
+
+.. versionchanged:: 1.0.0 – Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+ psi_selections(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select list of AtomGroups corresponding to the psi protein backbone dihedral N-CA-C-N’.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+List of AtomGroups – 4-atom selections in the correct order. If no N’ found in the following residue (by resid) then the corresponding item in the list is None.
+
+.. versionadded:: 1.0.0

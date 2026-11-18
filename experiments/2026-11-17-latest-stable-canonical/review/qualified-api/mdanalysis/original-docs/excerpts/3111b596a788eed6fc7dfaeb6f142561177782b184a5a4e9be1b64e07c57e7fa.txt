@@ -1,0 +1,17 @@
+class MDAnalysis.auxiliary.EDR.EDRStep(time_selector: str = 'Time', data_selector: str | None = None, **kwargs)[source]
+
+AuxStep class for the .edr file format.
+
+Extends the base AuxStep class to allow selection of time and data-of-interest fields (by dictionary key) from the full set of data read each step.
+
+Parameters:
+
+time_selector (str, optional) – Name of the dictionary key that links to the time values (assumed to be in ps). Default value is “Time”
+
+data_selector (str | list of str | None, optional) – List of dictionary keys linking to data of interest in the EDR file to be stored in data. Default value is None.
+
+**kwargs – Other AuxStep options.
+
+See also
+
+MDAnalysis.auxiliary.base.AuxStep

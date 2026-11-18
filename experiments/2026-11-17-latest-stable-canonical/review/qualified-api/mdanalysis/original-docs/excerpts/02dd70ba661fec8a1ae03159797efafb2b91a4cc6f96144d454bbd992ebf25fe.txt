@@ -1,0 +1,155 @@
+class MDAnalysis.lib.util.NamedStream(stream, filename, reset=True, close=False)[source]
+
+Stream that also provides a (fake) name.
+
+By wrapping a stream stream in this class, it can be passed to code that uses inspection of the filename to make decisions. For instance. os.path.split() will work correctly on a NamedStream.
+
+The class can be used as a context manager.
+
+NamedStream is derived from io.IOBase (to indicate that it is a stream). Many operations that normally expect a string will also work with a NamedStream; for instance, most of the functions in os.path will work with the exception of os.path.expandvars() and os.path.expanduser(), which will return the NamedStream itself instead of a string if no substitutions were made.
+
+Example
+
+Wrap a io.StringIO instance to write to:
+
+from io import StringIO
+import os.path
+stream = StringIO()
+f = NamedStream(stream, "output.pdb")
+print(os.path.splitext(f))
+
+Wrap a file instance to read from:
+
+stream = open("input.pdb")
+f = NamedStream(stream, stream.name)
+
+Use as a context manager (closes stream automatically when the with block is left):
+
+with NamedStream(open("input.pdb"), "input.pdb") as f:
+   # use f
+   print f.closed  # --> False
+   # ...
+print f.closed     # --> True
+
+Note
+
+This class uses its own __getitem__() method so if stream implements stream.__getitem__() then that will be masked and this class should not be used.
+
+Warning
+
+By default, NamedStream.close() will not close the stream but instead reset() it to the beginning. [1] Provide the force=True keyword to NamedStream.close() to always close the stream.
+
+Initialize the NamedStream from a stream and give it a name.
+
+The constructor attempts to rewind the stream to the beginning unless the keyword reset is set to False. If rewinding fails, a MDAnalysis.StreamWarning is issued.
+
+Parameters:
+
+stream (stream) – an open stream (e.g. file or io.StringIO)
+
+filename (str) – the filename that should be associated with the stream
+
+reset (bool (optional)) – start the stream from the beginning (either reset() or seek()) when the class instance is constructed
+
+close (bool (optional)) – close the stream when a with block exits or when close() is called; note that the default is not to close the stream
+
+Notes
+
+By default, this stream will not be closed by with and close() (see there) unless the close keyword is set to True.
+
+Added in version 0.9.0.
+
+ close(force=False)[source]
+
+Reset or close the stream.
+
+If NamedStream.close_stream is set to False (the default) then this method will not close the stream and only reset() it.
+
+If the force = True keyword is provided, the stream will be closed.
+
+Note
+
+This close() method is non-standard. del NamedStream always closes the underlying stream.
+
+ property closed
+
+True if stream is closed.
+
+ fileno()[source]
+
+Return the underlying file descriptor (an integer) of the stream if it exists.
+
+An IOError is raised if the IO object does not use a file descriptor.
+
+ flush()[source]
+
+Flush the write buffers of the stream if applicable.
+
+This does nothing for read-only and non-blocking streams. For file objects one also needs to call os.fsync() to write contents to disk.
+
+ readable()[source]
+
+Return True if the stream can be read from.
+
+If False, read() will raise IOError.
+
+ readline()[source]
+
+Read and return a line from the stream.
+
+If size is specified, at most size bytes will be read.
+
+The line terminator is always b’n’ for binary files; for text files, the newlines argument to open can be used to select the line terminator(s) recognized.
+
+ reset()[source]
+
+Move to the beginning of the stream
+
+ seek(offset, whence=0)[source]
+
+Change the stream position to the given byte offset .
+
+Parameters:
+
+offset (int) – offset is interpreted relative to the position indicated by whence.
+
+whence ({0, 1, 2} (optional)) –
+Values for whence are:
+
+io.SEEK_SET or 0 – start of the stream (the default); offset should be zero or positive
+
+io.SEEK_CUR or 1 – current stream position; offset may be negative
+
+io.SEEK_END or 2 – end of the stream; offset is usually negative
+
+Returns:
+
+the new absolute position in bytes.
+
+Return type:
+
+int
+
+ seekable()[source]
+
+Return True if the stream supports random access.
+
+If False, seek(), tell() and truncate() will raise IOError.
+
+ tell()[source]
+
+Return the current stream position.
+
+ truncate(*size)[source]
+
+Truncate the stream’s size to size.
+
+Parameters:
+
+size (int (optional)) – The size defaults to the current position (if no size argument is supplied). The current file position is not changed.
+
+ writable()[source]
+
+Return True if the stream can be written to.
+
+If False, write() will raise IOError.

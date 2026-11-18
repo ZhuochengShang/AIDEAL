@@ -1,0 +1,73 @@
+ResizerFactory (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers
+Interface ResizerFactory
+All Known Implementing Classes:
+DefaultResizerFactory
+,
+FixedResizerFactory
+public interface
+ResizerFactory
+This interface is implemented by all classes which will return a
+Resizer
+that should be used when creating a thumbnail.
+Since:
+0.4.0
+Author:
+coobird
+Method Summary
+Resizer
+getResizer
+()
+Returns the default
+Resizer
+.
+Resizer
+getResizer
+(
+Dimension
+originalSize,
+Dimension
+thumbnailSize)
+Returns a suitable
+Resizer
+, given the
+Dimension
+s of the
+original image and the thumbnail image.
+Method Detail
+getResizer
+Resizer
+getResizer
+()
+Returns the default
+Resizer
+.
+Returns:
+The default
+Resizer
+.
+getResizer
+Resizer
+getResizer
+(
+Dimension
+originalSize,
+Dimension
+thumbnailSize)
+Returns a suitable
+Resizer
+, given the
+Dimension
+s of the
+original image and the thumbnail image.
+Parameters:
+originalSize
+- The size of the original image.
+thumbnailSize
+- The size of the thumbnail.
+Returns:
+The suitable
+Resizer
+to perform the
+resizing operation for the given condition.
+Copyright © 2025. All rights reserved.

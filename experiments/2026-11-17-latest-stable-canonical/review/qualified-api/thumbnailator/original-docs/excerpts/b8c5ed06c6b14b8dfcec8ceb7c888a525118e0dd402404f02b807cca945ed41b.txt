@@ -1,0 +1,49 @@
+createThumbnails
+public static void
+createThumbnails
+(
+Collection
+<? extends
+File
+> files,
+Rename
+rename,
+int width,
+int height)
+throws
+IOException
+Deprecated.
+This method has been deprecated in favor of using the
+Thumbnails.fromFiles(Iterable)
+interface.
+This method will be removed in 0.5.0, and will not be
+further maintained.
+Creates thumbnails from a specified
+Collection
+of
+File
+s.
+The filenames of the resulting thumbnails are determined by applying
+the specified
+Rename
+function.
+Parameters:
+files
+- A
+Collection
+containing
+File
+objects
+of image files.
+rename
+- The renaming function to use.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+Copyright © 2025. All rights reserved.

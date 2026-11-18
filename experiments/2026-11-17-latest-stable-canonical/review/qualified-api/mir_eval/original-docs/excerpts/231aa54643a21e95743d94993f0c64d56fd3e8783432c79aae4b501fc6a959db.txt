@@ -1,0 +1,31 @@
+mir_eval.beat.p_score(reference_beats, estimated_beats, p_score_threshold=0.2)
+
+Get McKinney’s P-score. Based on the autocorrelation of the reference and estimated beats
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+p_score_thresholdfloat
+
+Window size will be p_score_threshold*np.median(inter_annotation_intervals), (Default value = 0.2)
+
+Returns:
+
+correlationfloat
+
+McKinney’s P-score
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> p_score = mir_eval.beat.p_score(reference_beats, estimated_beats)

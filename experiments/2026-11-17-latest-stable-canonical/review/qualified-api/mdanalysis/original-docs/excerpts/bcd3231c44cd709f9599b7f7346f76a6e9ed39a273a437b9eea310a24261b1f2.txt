@@ -1,0 +1,17 @@
+MDAnalysis.analysis.encore.bootstrap.bootstrapped_matrix(matrix, ensemble_assignment)[source]
+
+Bootstrap an input square matrix. The resulting matrix will have the same shape as the original one, but the order of its elements will be drawn (with repetition). Separately bootstraps each ensemble.
+
+Parameters:
+
+matrix (encore.utils.TriangularMatrix) – similarity/dissimilarity matrix
+
+ensemble_assignment (numpy.array) – array of ensemble assignments. This array must be matrix.size long.
+
+Returns:
+
+this_m – bootstrapped similarity/dissimilarity matrix
+
+Return type:
+
+encore.utils.TriangularMatrix

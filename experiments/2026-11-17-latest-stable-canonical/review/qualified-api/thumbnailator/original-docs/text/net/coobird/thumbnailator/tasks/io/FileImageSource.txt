@@ -1,0 +1,202 @@
+FileImageSource (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class FileImageSource
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.FileImageSource
+All Implemented Interfaces:
+ImageSource
+<
+File
+>
+public class
+FileImageSource
+extends
+Object
+implements
+ImageSource
+<
+File
+>
+An
+ImageSource
+which reads the source image from a file.
+Author:
+coobird
+Constructor Summary
+FileImageSource
+(
+File
+sourceFile)
+Instantiates a
+FileImageSource
+with the specified file as
+the source image.
+FileImageSource
+(
+String
+sourceFilePath)
+Instantiates a
+FileImageSource
+with the specified file as
+the source image.
+Method Summary
+String
+getInputFormatName
+()
+Returns the name of the image format.
+File
+getSource
+()
+Returns the source file from which an image is read.
+BufferedImage
+read
+()
+Retrieves the image from the source.
+void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when retrieving the image.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+FileImageSource
+public
+FileImageSource
+(
+File
+sourceFile)
+Instantiates a
+FileImageSource
+with the specified file as
+the source image.
+Parameters:
+sourceFile
+- The source image file.
+Throws:
+NullPointerException
+- If the image is null.
+FileImageSource
+public
+FileImageSource
+(
+String
+sourceFilePath)
+Instantiates a
+FileImageSource
+with the specified file as
+the source image.
+Parameters:
+sourceFilePath
+- The filepath of the source image file.
+Throws:
+NullPointerException
+- If the image is null.
+Method Detail
+read
+public
+BufferedImage
+read
+()
+throws
+IOException
+Description copied from interface:
+ImageSource
+Retrieves the image from the source.
+Specified by:
+read
+in interface
+ImageSource
+<
+File
+>
+Returns:
+The image.
+Throws:
+IOException
+- When a problem occurs while reading or obtaining
+the image.
+getSource
+public
+File
+getSource
+()
+Returns the source file from which an image is read.
+Specified by:
+getSource
+in interface
+ImageSource
+<
+File
+>
+Returns:
+The
+File
+representation of the source file.
+getInputFormatName
+public
+String
+getInputFormatName
+()
+Description copied from interface:
+ImageSource
+Returns the name of the image format.
+Specified by:
+getInputFormatName
+in interface
+ImageSource
+<
+File
+>
+Returns:
+The image format name. If there is no
+image format information, then
+null
+will be returned.
+setThumbnailParameter
+public void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Description copied from interface:
+ImageSource
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when retrieving the image.
+Specified by:
+setThumbnailParameter
+in interface
+ImageSource
+<
+File
+>
+Parameters:
+param
+- The
+ThumbnailParameter
+with image
+reading parameters.
+Copyright © 2025. All rights reserved.

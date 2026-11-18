@@ -1,0 +1,173 @@
+Colorize (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Class Colorize
+java.lang.Object
+net.coobird.thumbnailator.filters.Colorize
+All Implemented Interfaces:
+ImageFilter
+public final class
+Colorize
+extends
+Object
+implements
+ImageFilter
+An image filter which will add a color tint to an image.
+Author:
+coobird
+Constructor Summary
+Colorize
+(
+Color
+c)
+Instantiates this filter with the color to use to tint the target image
+with.
+Colorize
+(
+Color
+c,
+float alpha)
+Instantiates this filter with the color to use to tint the target image
+with and the transparency level provided as a
+float
+ranging from
+0.0f
+to
+1.0f
+, where
+0.0f
+indicates completely
+transparent, and
+1.0f
+indicates completely opaque.
+Colorize
+(
+Color
+c,
+int alpha)
+Instantiates this filter with the color to use to tint the target image
+with and the transparency level provided as a
+int
+ranging from
+0
+to
+255
+, where
+0
+indicates completely
+transparent, and
+255
+indicates completely opaque.
+Method Summary
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+Colorize
+public
+Colorize
+(
+Color
+c)
+Instantiates this filter with the color to use to tint the target image
+with.
+Note: If the provided
+Color
+does not have an alpha channel
+(transparency channel), then the target image will be painted with an
+opaque color, resulting in an image with only the specified color.
+Parameters:
+c
+- Color to tint with.
+Colorize
+public
+Colorize
+(
+Color
+c,
+float alpha)
+Instantiates this filter with the color to use to tint the target image
+with and the transparency level provided as a
+float
+ranging from
+0.0f
+to
+1.0f
+, where
+0.0f
+indicates completely
+transparent, and
+1.0f
+indicates completely opaque.
+Parameters:
+c
+- Color to tint with.
+alpha
+- The opacity of the tint.
+Colorize
+public
+Colorize
+(
+Color
+c,
+int alpha)
+Instantiates this filter with the color to use to tint the target image
+with and the transparency level provided as a
+int
+ranging from
+0
+to
+255
+, where
+0
+indicates completely
+transparent, and
+255
+indicates completely opaque.
+Parameters:
+c
+- Color to tint with.
+alpha
+- The opacity of the tint.
+Method Detail
+apply
+public
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Description copied from interface:
+ImageFilter
+Applies a image filtering operation on an image.
+Specified by:
+apply
+in interface
+ImageFilter
+Parameters:
+img
+- The image to apply the filtering on.
+Returns:
+The resulting image after applying this filter.
+Copyright © 2025. All rights reserved.

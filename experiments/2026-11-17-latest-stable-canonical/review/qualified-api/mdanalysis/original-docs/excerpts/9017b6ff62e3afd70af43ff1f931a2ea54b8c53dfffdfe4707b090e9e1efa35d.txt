@@ -1,0 +1,25 @@
+write(xyz, velocity, forces, box, step, time, _lambda, natoms)
+
+write one frame into TRR file.
+
+Parameters:
+
+xyz (array_like, shape=(n_atoms, 3), optional) – cartesion coordinates. Only written if not None.
+
+velocity (array_like, shape=(n_atoms, 3), optional) – cartesion velocities. Only written if not None.
+
+forces (array_like, shape=(n_atoms, 3), optional) – cartesion forces. Only written if not None.
+
+box (array_like, shape=(3, 3)) – Box vectors for this frame
+
+step (int) – current step number, 1 indexed
+
+time (float) – current time
+
+_lambda (float) – current lambda value
+
+natoms (int) – number of atoms in frame
+
+Raises:
+
+IOError –

@@ -1,0 +1,13 @@
+_single_frame()[source]
+
+Calculate data from a single frame of trajectory
+
+Don’t worry about normalising, just deal with a single frame. Attributes accessible during your calculations:
+
+self._frame_index: index of the frame in results array
+
+self._ts – Timestep instance
+
+self._sliced_trajectory – trajectory that you’re iterating over
+
+self.results – MDAnalysis.analysis.results.Results instance holding run results initialized in _prepare().

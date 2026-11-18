@@ -1,0 +1,34 @@
+MDAnalysis.analysis.dssp.dssp.translate(onehot: ndarray) → ndarray[source]
+
+Translate a one-hot encoding summary into char-based secondary structure assignment.
+
+One-hot encoding corresponds to C3 notation: ‘-’, ‘H’, ‘E’ are loop, helix and sheet, respectively. Input array must have its last axis of shape 3: (n_residues, 3) or (n_frames, n_residues, 3)
+
+Examples
+
+from MDAnalysis.analysis.dssp import translate
+import numpy as np
+# encoding 'HE-'
+onehot = np.array([[False, True, False],  # 'H'
+                   [False, False, True],  # 'E'
+                   [True, False, False]]) # '-'
+''.join(translate(onehot))
+print(''.join(translate(onehot)))
+
+Running this code produces
+
+HE-
+
+Parameters:
+
+onehot (np.ndarray) – input array of one-hot encoding in (‘-’, ‘H’, ‘E’) order
+
+Returns:
+
+array of ‘-’, ‘H’ and ‘E’ symbols with secondary structure
+
+Return type:
+
+np.ndarray
+
+Added in version 2.8.0.

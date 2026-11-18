@@ -1,0 +1,155 @@
+BufferedImageSink (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class BufferedImageSink
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.AbstractImageSink
+<
+BufferedImage
+>
+net.coobird.thumbnailator.tasks.io.BufferedImageSink
+All Implemented Interfaces:
+ImageSink
+<
+BufferedImage
+>
+public class
+BufferedImageSink
+extends
+AbstractImageSink
+<
+BufferedImage
+>
+An
+ImageSink
+which stores the resulting thumbnail to a
+BufferedImage
+.
+Author:
+coobird
+Constructor Summary
+BufferedImageSink
+()
+Method Summary
+BufferedImage
+getSink
+()
+Returns the thumbnail.
+void
+setOutputFormatName
+(
+String
+format)
+Sets the output format of the resulting image.
+void
+write
+(
+BufferedImage
+img)
+Writes the resulting image to a destination.
+Methods inherited from class net.coobird.thumbnailator.tasks.io.
+AbstractImageSink
+preferredOutputFormatName
+,
+setThumbnailParameter
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+BufferedImageSink
+public
+BufferedImageSink
+()
+Method Detail
+write
+public void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Description copied from interface:
+ImageSink
+Writes the resulting image to a destination.
+Specified by:
+write
+in interface
+ImageSink
+<
+BufferedImage
+>
+Overrides:
+write
+in class
+AbstractImageSink
+<
+BufferedImage
+>
+Parameters:
+img
+- The image to write or store.
+Throws:
+IOException
+- When a problem occurs while writing or storing
+the image.
+getSink
+public
+BufferedImage
+getSink
+()
+Returns the thumbnail.
+Returns:
+The thumbnail.
+Throws:
+IllegalStateException
+- If a thumbnail has not been stored to
+this
+BufferedImageSink
+yet.
+setOutputFormatName
+public void
+setOutputFormatName
+(
+String
+format)
+Description copied from interface:
+ImageSink
+Sets the output format of the resulting image.
+For
+ImageSink
+s which stores raw images, the format name specified
+by this method may be ignored.
+Specified by:
+setOutputFormatName
+in interface
+ImageSink
+<
+BufferedImage
+>
+Overrides:
+setOutputFormatName
+in class
+AbstractImageSink
+<
+BufferedImage
+>
+Parameters:
+format
+- File format with which to store the image.
+Copyright © 2025. All rights reserved.

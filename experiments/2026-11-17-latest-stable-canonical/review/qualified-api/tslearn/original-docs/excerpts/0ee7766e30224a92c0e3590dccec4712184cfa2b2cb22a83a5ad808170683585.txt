@@ -1,0 +1,15 @@
+transform(X, y=None, **kwargs)[source]
+
+Normalizes (mean-std) the dataset. If per_timeseries is True, this transformation is completely stateless, and is applied to each of the timeseries individually. Otherwise, normalization is performed based on the fitted data.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be rescaled.
+
+Returns:
+
+numpy.ndarray
+
+Rescaled time series dataset.

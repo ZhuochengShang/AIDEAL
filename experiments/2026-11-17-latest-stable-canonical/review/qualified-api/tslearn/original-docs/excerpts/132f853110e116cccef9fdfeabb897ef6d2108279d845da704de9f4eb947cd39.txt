@@ -1,0 +1,175 @@
+class tslearn.preprocessing.TimeSeriesResampler(sz: int = -1)[source]
+
+Resampler for time series. Resample time series so that they reach the target size.
+
+Parameters:
+
+szint (default: -1)
+
+Size of the output time series. If not strictly positive, the size of the longuest timeseries in the dataset is used.
+
+Examples
+
+>>> TimeSeriesResampler(sz=5).fit_transform([[0, 3, 6]])
+array([[[0. ],
+        [1.5],
+        [3. ],
+        [4.5],
+        [6. ]]])
+
+Methods
+
+fit(X[, y])
+ |
+A dummy method such that it complies to the sklearn requirements.
+ |
+
+fit_transform(X[, y])
+ |
+Fit to data, then transform it.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+set_output(*[, transform])
+ |
+Set output container.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+transform(X[, y])
+ |
+Fit to data, then transform it.
+ |
+
+ fit(X, y=None, **kwargs)[source]
+
+A dummy method such that it complies to the sklearn requirements. Since this method is completely stateless, it just returns itself.
+
+Parameters:
+
+X
+
+Ignored
+
+Returns:
+
+self
+
+ fit_transform(X, y=None, **kwargs)[source]
+
+Fit to data, then transform it.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be resampled.
+
+Returns:
+
+numpy.ndarray
+
+Resampled time series dataset.
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ transform(X, y=None, **kwargs)[source]
+
+Fit to data, then transform it.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be resampled.
+
+Returns:
+
+numpy.ndarray
+
+Resampled time series dataset.

@@ -1,0 +1,17 @@
+dihedrals(result=None, pbc=False)[source]
+
+Calculate the dihedral angle in radians for this topology group.
+
+Defined as the angle between a plane formed by atoms 1, 2 and 3 and a plane formed by atoms 2, 3 and 4.
+
+Parameters:
+
+result (array_like) – allows a predefined results array to be used, note that this will be overwritten
+
+pbc (bool) – apply periodic boundary conditions when calculating angles [False] this is important when connecting vectors between atoms might require minimum image convention
+
+Returns:
+
+angles (ndarray)
+
+.. versionchanged:: 0.9.0 – Added pbc option (default False)

@@ -1,0 +1,25 @@
+mir_eval.io.load_key(filename, delimiter='\\s+', comment='#')
+
+Load key labels from an annotation file. The file should consist of two string columns: One denoting the key scale degree (semitone), and the other denoting the mode (major or minor). The file should contain only one row.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+keystr
+
+Key label, in the form '(key) (mode)'

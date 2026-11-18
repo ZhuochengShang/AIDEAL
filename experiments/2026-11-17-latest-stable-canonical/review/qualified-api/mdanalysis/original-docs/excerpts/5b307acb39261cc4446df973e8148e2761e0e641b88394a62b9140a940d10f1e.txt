@@ -1,0 +1,43 @@
+MDAnalysis.lib.mdamath.triclinic_box(x: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], y: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], z: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Convert the three triclinic box vectors to [lx, ly, lz, alpha, beta, gamma].
+
+If the resulting box is invalid, i.e., any box length is zero or negative, or any angle is outside the open interval (0, 180), a zero vector will be returned.
+
+All angles are in degrees and defined as follows:
+
+alpha = angle(y,z)
+
+beta = angle(x,z)
+
+gamma = angle(x,y)
+
+Parameters:
+
+x (array_like) – Array of shape (3,) representing the first box vector
+
+y (array_like) – Array of shape (3,) representing the second box vector
+
+z (array_like) – Array of shape (3,) representing the third box vector
+
+Returns:
+
+A numpy array of shape (6,) and dtype np.float32 providing the unitcell dimensions in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions:
+
+[lx, ly, lz, alpha, beta, gamma].
+
+Invalid boxes are returned as a zero vector.
+
+Return type:
+
+numpy.ndarray
+
+Note
+
+Definition of angles: http://en.wikipedia.org/wiki/Lattice_constant
+
+See also
+
+triclinic_vectors()
+
+Changed in version 0.20.0: Calculations are performed in double precision and invalid box vectors result in an all-zero box.

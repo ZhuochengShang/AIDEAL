@@ -1,0 +1,461 @@
+ConsecutivelyNumberedFilenames (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.name
+Class ConsecutivelyNumberedFilenames
+java.lang.Object
+net.coobird.thumbnailator.name.ConsecutivelyNumberedFilenames
+All Implemented Interfaces:
+Iterable
+<
+File
+>
+public class
+ConsecutivelyNumberedFilenames
+extends
+Object
+implements
+Iterable
+<
+File
+>
+This class is used to produce file names based on a given format string
+and an internal counter which increments every time a new file name
+is produced.
+Author:
+coobird
+Constructor Summary
+ConsecutivelyNumberedFilenames
+()
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from
+0
+.
+ConsecutivelyNumberedFilenames
+(
+File
+dir)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from
+0
+, with the directory specified.
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+int start)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from from the given value, with the directory specified.
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+String
+format)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string,
+located in the directory specified.
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+String
+format,
+int start)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string,
+located in the directory specified.
+ConsecutivelyNumberedFilenames
+(int start)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from the given value.
+ConsecutivelyNumberedFilenames
+(
+String
+format)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string.
+ConsecutivelyNumberedFilenames
+(
+String
+format,
+int start)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string.
+Method Summary
+Iterator
+<
+File
+>
+iterator
+()
+Returns an iterator which generates file names according to the rules
+specified by this object.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+()
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from
+0
+.
+File name sequence
+0
+1
+2
+3
+and so on.
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(int start)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from the given value.
+File name sequence
+For a case where the given value is
+5
+:
+5
+6
+7
+8
+and so on.
+Parameters:
+start
+- The value from which to start counting.
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+File
+dir)
+throws
+IOException
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from
+0
+, with the directory specified.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+:
+/foo/bar/0
+/foo/bar/1
+/foo/bar/2
+/foo/bar/3
+and so on.
+Parameters:
+dir
+- The directory in which the files are to be located.
+Throws:
+IOException
+- If the specified directory path is not a directory,
+or if does not exist.
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+String
+format)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string.
+The numbering will be consecutive from
+0
+.
+The format string should contain the string
+%d
+which will be
+replaced with a consecutively counted number. Additional formatting
+can be applied. For more details, please refer to the section on
+Numeric
+formatting in the Java API specification for the
+Formatter
+class.
+File name sequence
+For a case where the format string is
+image-%d
+:
+image-0
+image-1
+image-2
+image-3
+and so on.
+Parameters:
+format
+- The format string to use.
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+int start)
+throws
+IOException
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from from the given value, with the directory specified.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+, and the
+specified value is
+5
+:
+/foo/bar/5
+/foo/bar/6
+/foo/bar/7
+/foo/bar/8
+and so on.
+Parameters:
+dir
+- The directory in which the files are to be located.
+start
+- The value from which to start counting.
+Throws:
+IOException
+- If the specified directory path is not a directory,
+or if does not exist.
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+String
+format)
+throws
+IOException
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string,
+located in the directory specified. The numbering will be consecutively
+counted from
+0
+.
+The format string should contain the string
+%d
+which will be
+replaced with a consecutively counted number. Additional formatting
+can be applied. For more details, please refer to the section on
+Numeric
+formatting in the Java API specification for the
+Formatter
+class.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+,
+with the format string
+image-%d
+:
+/foo/bar/image-0
+/foo/bar/image-1
+/foo/bar/image-2
+/foo/bar/image-3
+and so on.
+Parameters:
+dir
+- The directory in which the files are to be located.
+format
+- The format string to use.
+Throws:
+IOException
+- If the specified directory path is not a directory,
+or if does not exist.
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+String
+format,
+int start)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string.
+The numbering will be consecutive from the specified value.
+The format string should contain the string
+%d
+which will be
+replaced with a consecutively counted number. Additional formatting
+can be applied. For more details, please refer to the section on
+Numeric
+formatting in the Java API specification for the
+Formatter
+class.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+, and the
+specified value is
+5
+, with the format string
+image-%d
+:
+image-5
+image-6
+image-7
+image-8
+and so on.
+Parameters:
+format
+- The format string to use.
+start
+- The value from which to start counting.
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+String
+format,
+int start)
+throws
+IOException
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string,
+located in the directory specified. The numbering will be consecutive
+from the specified value.
+The format string should contain the string
+%d
+which will be
+replaced with a consecutively counted number. Additional formatting
+can be applied. For more details, please refer to the section on
+Numeric
+formatting in the Java API specification for the
+Formatter
+class.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+, and the
+specified value is
+5
+, with format string
+image-%d
+:
+/foo/bar/image-5
+/foo/bar/image-6
+/foo/bar/image-7
+/foo/bar/image-8
+and so on.
+Parameters:
+dir
+- The directory in which the files are to be located.
+format
+- The format string to use.
+start
+- The value from which to start counting.
+Throws:
+IOException
+- If the specified directory path is not a directory,
+or if does not exist.
+Method Detail
+iterator
+public
+Iterator
+<
+File
+>
+iterator
+()
+Returns an iterator which generates file names according to the rules
+specified by this object.
+Specified by:
+iterator
+in interface
+Iterable
+<
+File
+>
+Returns:
+An iterator which generates file names.
+Copyright © 2025. All rights reserved.

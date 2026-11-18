@@ -1,0 +1,36 @@
+MDAnalysis.lib.mdamath.triclinic_vectors(dimensions: ~numpy._typing._array_like._Buffer | ~numpy._typing._array_like._SupportsArray[~numpy.dtype[~typing.Any]] | ~numpy._typing._nested_sequence._NestedSequence[~numpy._typing._array_like._SupportsArray[~numpy.dtype[~typing.Any]]] | complex | bytes | str | ~numpy._typing._nested_sequence._NestedSequence[complex | bytes | str], dtype: type[~typing.Any] | ~numpy.dtype[~typing.Any] | ~numpy._typing._dtype_like._HasDType[~numpy.dtype[~typing.Any]] | ~numpy._typing._dtype_like._HasNumPyDType[~numpy.dtype[~typing.Any]] | tuple[~typing.Any, ~typing.Any] | list[~typing.Any] | ~numpy._typing._dtype_like._DTypeDict | str = <class 'numpy.float32'>) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Convert [lx, ly, lz, alpha, beta, gamma] to a triclinic matrix representation.
+
+Original code by Tsjerk Wassenaar posted on the Gromacs mailinglist.
+
+If dimensions indicates a non-periodic system (i.e., all lengths are zero), zero vectors are returned. The same applies for invalid dimensions, i.e., any box length is zero or negative, or any angle is outside the open interval (0, 180).
+
+Parameters:
+
+dimensions (array_like) –
+Unitcell dimensions provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions:
+
+[lx, ly, lz, alpha, beta, gamma].
+
+dtype (numpy.dtype) – The data type of the returned box matrix.
+
+Returns:
+
+box_matrix – A numpy array of shape (3, 3) and dtype dtype, with box_matrix[0] containing the first, box_matrix[1] the second, and box_matrix[2] the third box vector.
+
+Return type:
+
+numpy.ndarray
+
+Notes
+
+The first vector is guaranteed to point along the x-axis, i.e., it has the form (lx, 0, 0).
+
+The second vector is guaranteed to lie in the x/y-plane, i.e., its z-component is guaranteed to be zero.
+
+If any box length is negative or zero, or if any box angle is zero, the box is treated as invalid and an all-zero-matrix is returned.
+
+Changed in version 0.7.6: Null-vectors are returned for non-periodic (or missing) unit cell.
+
+Changed in version 0.20.0: * Calculations are performed in double precision and zero vectors are also returned for invalid boxes. * Added optional output dtype parameter.

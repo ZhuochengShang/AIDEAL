@@ -1,0 +1,172 @@
+Antialiasing (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers.configurations
+Enum Antialiasing
+java.lang.Object
+java.lang.Enum
+<
+Antialiasing
+>
+net.coobird.thumbnailator.resizers.configurations.Antialiasing
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+Antialiasing
+>,
+ResizerConfiguration
+public enum
+Antialiasing
+extends
+Enum
+<
+Antialiasing
+>
+implements
+ResizerConfiguration
+An enum which is used to specify the antialiasing settings of the
+resizing operations.
+Author:
+coobird
+Enum Constant Summary
+DEFAULT
+A hint to use the default antialiasing settings.
+OFF
+A hint to disable antialiasing.
+ON
+A hint to enable antialiasing.
+Method Summary
+RenderingHints.Key
+getKey
+()
+Returns a rendering hint key.
+Object
+getValue
+()
+Returns a rendering hint value.
+static
+Antialiasing
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+Antialiasing
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+toString
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+ON
+public static final
+Antialiasing
+ON
+A hint to enable antialiasing.
+OFF
+public static final
+Antialiasing
+OFF
+A hint to disable antialiasing.
+DEFAULT
+public static final
+Antialiasing
+DEFAULT
+A hint to use the default antialiasing settings.
+Method Detail
+values
+public static final
+Antialiasing
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(Antialiasing c : Antialiasing.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+Antialiasing
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+getKey
+public
+RenderingHints.Key
+getKey
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint key.
+Specified by:
+getKey
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint key.
+getValue
+public
+Object
+getValue
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint value.
+Specified by:
+getValue
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint value.
+Copyright © 2025. All rights reserved.

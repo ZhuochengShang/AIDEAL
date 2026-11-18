@@ -1,0 +1,9 @@
+move_to_ts(ts)[source]
+
+Position auxiliary reader just before trajectory timestep ts.
+
+Calling next() should read the first auxiliary step ‘assigned’ to the trajectory timestep ts or, if no auxiliary steps are assigned to that timestep (as in the case of less frequent auxiliary data), the first auxiliary step after ts.
+
+Parameters:
+
+ts (Timestep object) – The trajectory timestep before which the auxiliary reader is to be positioned.

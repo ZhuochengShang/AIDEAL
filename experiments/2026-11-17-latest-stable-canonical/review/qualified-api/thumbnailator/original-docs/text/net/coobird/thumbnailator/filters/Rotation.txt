@@ -1,0 +1,124 @@
+Rotation (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Class Rotation
+java.lang.Object
+net.coobird.thumbnailator.filters.Rotation
+public class
+Rotation
+extends
+Object
+A class containing rotation filters.
+Aside from the three
+Rotation.Rotator
+s provided as class constants, a
+Rotation.Rotator
+which performs a rotation by an arbituary angle can be
+obtained through the
+newRotator(double)
+method.
+Author:
+coobird
+Nested Class Summary
+static class
+Rotation.Rotator
+An
+ImageFilter
+which applies a rotation to an image.
+Field Summary
+static
+Rotation.Rotator
+LEFT_90_DEGREES
+A
+Rotator
+which will rotate a specified image to the left 90
+degrees.
+static
+Rotation.Rotator
+RIGHT_90_DEGREES
+A
+Rotator
+which will rotate a specified image to the right 90
+degrees.
+static
+Rotation.Rotator
+ROTATE_180_DEGREES
+A
+Rotator
+which will rotate a specified image to the 180 degrees.
+Method Summary
+static
+Rotation.Rotator
+newRotator
+(double angle)
+Creates a new instance of
+Rotator
+which rotates an image at
+the specified angle.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Field Detail
+LEFT_90_DEGREES
+public static final
+Rotation.Rotator
+LEFT_90_DEGREES
+A
+Rotator
+which will rotate a specified image to the left 90
+degrees.
+RIGHT_90_DEGREES
+public static final
+Rotation.Rotator
+RIGHT_90_DEGREES
+A
+Rotator
+which will rotate a specified image to the right 90
+degrees.
+ROTATE_180_DEGREES
+public static final
+Rotation.Rotator
+ROTATE_180_DEGREES
+A
+Rotator
+which will rotate a specified image to the 180 degrees.
+Method Detail
+newRotator
+public static
+Rotation.Rotator
+newRotator
+(double angle)
+Creates a new instance of
+Rotator
+which rotates an image at
+the specified angle.
+When the
+Rotation.Rotator
+returned by this method is applied, the image
+will be rotated clockwise by the specified angle.
+Parameters:
+angle
+- The angle at which the instance of
+Rotator
+is to rotate a image it acts upon.
+Returns:
+An instance of
+Rotator
+which will rotate
+a given image.
+Copyright © 2025. All rights reserved.

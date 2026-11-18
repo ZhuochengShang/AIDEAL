@@ -1,0 +1,29 @@
+mir_eval.io.load_time_series(filename, delimiter='\\s+', comment='#')
+
+Import a time series from an annotation file. The file should consist of two columns of numeric values corresponding to the time and value of each sample of the time series.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+timesnp.ndarray
+
+array of timestamps (float)
+
+valuesnp.ndarray
+
+array of corresponding numeric values (float)

@@ -1,0 +1,21 @@
+MDAnalysis.lib.distances.minimize_vectors(vectors, box)[source]
+
+Apply minimum image convention to an array of vectors
+
+This function is required for calculating the correct vectors between two points. A naive approach of ag1.positions - ag2.positions will not provide the minimum vectors between particles, even if all particles are within the primary unit cell (box).
+
+Parameters:
+
+vectors (numpy.ndarray) – Vector array of shape (n, 3), either float32 or float64. These represent many vectors (such as between two particles).
+
+box (numpy.ndarray) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+Returns:
+
+minimized_vectors – Same shape and dtype as input. The vectors from the input, but minimized according to the size of the box.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.1.0.

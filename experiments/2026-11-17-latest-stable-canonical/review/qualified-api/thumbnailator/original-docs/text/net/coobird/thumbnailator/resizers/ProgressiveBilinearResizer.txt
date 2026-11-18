@@ -1,0 +1,141 @@
+ProgressiveBilinearResizer (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers
+Class ProgressiveBilinearResizer
+java.lang.Object
+net.coobird.thumbnailator.resizers.AbstractResizer
+net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer
+All Implemented Interfaces:
+Resizer
+public class
+ProgressiveBilinearResizer
+extends
+AbstractResizer
+A
+Resizer
+which performs resizing operations by using
+progressive bilinear scaling.
+The resizing technique used in this class is based on the technique
+discussed in
+Chapter 4: Images
+of
+Filthy Rich Clients
+by Chet Haase and Romain Guy.
+The actual implementation of the technique is independent of the code which
+is provided in the book.
+Author:
+coobird
+Constructor Summary
+ProgressiveBilinearResizer
+()
+Instantiates a
+ProgressiveBilinearResizer
+with default
+rendering hints.
+ProgressiveBilinearResizer
+(
+Map
+<
+RenderingHints.Key
+,
+Object
+> hints)
+Instantiates a
+ProgressiveBilinearResizer
+with the specified
+rendering hints.
+Method Summary
+void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+Resizes an image using the progressive bilinear scaling technique.
+Methods inherited from class net.coobird.thumbnailator.resizers.
+AbstractResizer
+getRenderingHints
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+ProgressiveBilinearResizer
+public
+ProgressiveBilinearResizer
+()
+Instantiates a
+ProgressiveBilinearResizer
+with default
+rendering hints.
+ProgressiveBilinearResizer
+public
+ProgressiveBilinearResizer
+(
+Map
+<
+RenderingHints.Key
+,
+Object
+> hints)
+Instantiates a
+ProgressiveBilinearResizer
+with the specified
+rendering hints.
+Parameters:
+hints
+- Additional rendering hints to apply.
+Method Detail
+resize
+public void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+throws
+NullPointerException
+Resizes an image using the progressive bilinear scaling technique.
+When the source image isn't at least twice as large as the destination
+image for both dimensions, a regular one-step scaling is performed.
+If the source and/or destination image is
+null
+, then a
+NullPointerException
+will be thrown.
+Specified by:
+resize
+in interface
+Resizer
+Overrides:
+resize
+in class
+AbstractResizer
+Parameters:
+srcImage
+- The source image.
+destImage
+- The destination image.
+Throws:
+NullPointerException
+- When the source and/or the destination
+image is
+null
+.
+Copyright © 2025. All rights reserved.

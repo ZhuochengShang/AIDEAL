@@ -1,9 +1,12 @@
-# Current study review
+# Current six-library review
 
-[Latest health check, fixes and cleanup](HEALTH_CHECK.md).
+Original R0 and README inputs are validated; live runs remain on hold.
 
-**Correction required; no new model runs.**
+- [Full experiment guide](EXPERIMENT_GUIDE.md)
+- [All selected API/task inputs](review/qualified-bank/INDEX.html)
+- [Six complete prompt previews](review/qualified-pilots/INDEX.html)
+- [Readiness fixes and checks](READINESS_FIXES.md)
+- [Commands](RUNBOOK.md)
+- [Historical results](HISTORY.md)
 
-Start with [EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) or its [HTML view](EXPERIMENT_GUIDE.html). Inspect the [source, documentation and reduction audit](review/api-audit/API_AUDIT.html), then the [progress tracker](review/EXPERIMENT_TRACKER.html). The earlier 1,695-target plan remains blocked.
-
-[Exact version lock](STUDY_LOCK.json) · [Verify the package](verify_snapshot.py) · [Historical results](HISTORY.md).
+Verify the exact frozen package with `python3 verify_snapshot.py`.

@@ -1,0 +1,51 @@
+mir_eval.display.separation(sources, fs=22050, labels=None, alpha=0.75, ax=None, rasterized=True, edgecolors='None', shading='gouraud', prop_cycle=None, **kwargs)
+
+Source-separation visualization
+
+Parameters:
+
+sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+A list of waveform buffers corresponding to each source
+
+fsnumber > 0
+
+The sampling rate
+
+labelslist of strings
+
+An optional list of descriptors corresponding to each source
+
+alphafloat in [0, 1]
+
+Maximum alpha (opacity) of spectrogram values.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the spectrograms. If none is provided, a new set of axes is created.
+
+rasterizedbool
+
+If True, the spectrogram is rasterized.
+
+edgecolorsstr or None
+
+The color of the edges of the spectrogram patches. Set to “None” (default) to disable edge coloring.
+
+shadingstr
+
+The shading method to use for the spectrogram. See matplotlib.pyplot.pcolormesh for valid options.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify colors for each signal. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to scipy.signal.spectrogram
+
+Returns:
+
+ax
+
+The axis handle for this plot

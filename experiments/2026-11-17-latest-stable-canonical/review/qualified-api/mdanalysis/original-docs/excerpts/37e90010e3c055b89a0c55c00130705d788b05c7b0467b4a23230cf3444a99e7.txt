@@ -1,0 +1,9 @@
+MDAnalysis.lib.mdamath.normal(vec1: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], vec2: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Returns the unit vector normal to two vectors.
+
+ \[\hat{\mathbf{n}} = \frac{\mathbf{v}_1 \times \mathbf{v}_2}{|\mathbf{v}_1 \times \mathbf{v}_2|}\]
+
+If the two vectors are collinear, the vector \(\mathbf{0}\) is returned.
+
+Changed in version 0.11.0: Moved into lib.mdamath

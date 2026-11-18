@@ -1,0 +1,57 @@
+class MDAnalysis.core.groups.Segment(*args, **kwargs)[source]
+
+Segment base class.
+
+This class is used by a Universe for generating its Topology-specific Segment class. All the TopologyAttr components are obtained from ComponentBase, so this class only includes ad-hoc methods specific to Segments.
+
+Deprecated since version 0.16.2: Instant selectors of Segments will be removed in the 1.0 release.
+
+Changed in version 1.0.0: Removed instant selectors, use either segment.residues[…] to select residue by number, or segment.residues[segment.residue.resnames = …] to select by resname.
+
+ property atoms
+
+An AtomGroup of Atoms present in this Segment.
+
+ property bfactors
+
+Bfactor alias with warning
+
+Note
+
+This requires the underlying topology to have tempfactors. Otherwise, a NoDataError is raised.
+
+ get_connections(typename, outside=True)
+
+Get bonded connections between atoms as a TopologyGroup.
+
+Parameters:
+
+typename (str) – group name. One of {“bonds”, “angles”, “dihedrals”, “impropers”, “ureybradleys”, “cmaps”}
+
+outside (bool (optional)) – Whether to include connections involving atoms outside this group.
+
+Returns:
+
+TopologyGroup – containing the bonded group of choice, i.e. bonds, angles, dihedrals, impropers, ureybradleys or cmaps.
+
+.. versionadded:: 1.1.0
+
+ property ix
+
+Unique index of this component.
+
+If this component is an Atom, this is the index of the Atom. If it is a Residue, this is the index of the Residue. If it is a Segment, this is the index of the Segment.
+
+ property ix_array
+
+Unique index of this component as an array.
+
+This method gives a consistent API between components and groups.
+
+See also
+
+ix
+
+ property residues
+
+A ResidueGroup of Residues present in this Segment.

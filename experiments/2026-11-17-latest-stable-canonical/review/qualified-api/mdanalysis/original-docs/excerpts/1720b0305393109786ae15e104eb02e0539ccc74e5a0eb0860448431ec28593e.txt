@@ -1,0 +1,31 @@
+MDAnalysis.lib.qcprot.InnerProduct(A, coords1, coords2, N, weight)
+
+Calculate the inner product of two structures.
+
+Parameters:
+
+A (ndarray) – result inner product array, modified in place
+
+coords1 (ndarray) – reference structure
+
+coords2 (ndarray) – candidate structure
+
+N (int) – size of system
+
+weight (ndarray or None) – used to calculate weighted inner product
+
+Returns:
+
+E0 (float)
+
+0.5 * (G1 + G2), can be used as input for FastCalcRMSDAndRotation()
+
+Notes
+
+You MUST center the structures, coords1 and coords2, before calling this function.
+
+Coordinates are stored as Nx3 arrays (as everywhere else in MDAnalysis).
+
+Changed in version 0.16.0: Array size changed from 3xN to Nx3.
+
+Changed in version 2.7.0: Updating to allow either float32 or float64 inputs

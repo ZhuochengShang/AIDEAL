@@ -1,0 +1,164 @@
+InputStreamImageSource (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class InputStreamImageSource
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.AbstractImageSource
+<
+InputStream
+>
+net.coobird.thumbnailator.tasks.io.InputStreamImageSource
+All Implemented Interfaces:
+ImageSource
+<
+InputStream
+>
+public class
+InputStreamImageSource
+extends
+AbstractImageSource
+<
+InputStream
+>
+An
+ImageSource
+which uses an
+InputStream
+to read the
+source image.
+Author:
+coobird
+Constructor Summary
+InputStreamImageSource
+(
+InputStream
+is)
+Instantiates an
+InputStreamImageSource
+with the
+InputStream
+which will be used to read the source image.
+Method Summary
+InputStream
+getSource
+()
+Returns the source from which the image is read or retrieved.
+BufferedImage
+read
+()
+Retrieves the image from the source.
+void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when retrieving the image.
+Methods inherited from class net.coobird.thumbnailator.tasks.io.
+AbstractImageSource
+getInputFormatName
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+InputStreamImageSource
+public
+InputStreamImageSource
+(
+InputStream
+is)
+Instantiates an
+InputStreamImageSource
+with the
+InputStream
+which will be used to read the source image.
+Parameters:
+is
+- The
+InputStream
+which is to be used to obtain
+the source image.
+Throws:
+NullPointerException
+- If the
+InputStream
+is
+null
+.
+Method Detail
+setThumbnailParameter
+public void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Description copied from interface:
+ImageSource
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when retrieving the image.
+Specified by:
+setThumbnailParameter
+in interface
+ImageSource
+<
+InputStream
+>
+Overrides:
+setThumbnailParameter
+in class
+AbstractImageSource
+<
+InputStream
+>
+Parameters:
+param
+- The
+ThumbnailParameter
+with image
+reading parameters.
+read
+public
+BufferedImage
+read
+()
+throws
+IOException
+Description copied from interface:
+ImageSource
+Retrieves the image from the source.
+Returns:
+The image.
+Throws:
+IOException
+- When a problem occurs while reading or obtaining
+the image.
+getSource
+public
+InputStream
+getSource
+()
+Description copied from interface:
+ImageSource
+Returns the source from which the image is read or retrieved.
+Returns:
+The source of the image.
+Copyright © 2025. All rights reserved.

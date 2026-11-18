@@ -1,0 +1,133 @@
+15.2.9. Fast QCP RMSD structure alignment — MDAnalysis.lib.qcprot
+
+Author:
+
+Joshua L. Adelman, University of Pittsburgh
+
+Author:
+
+Robert R. Delgado, Cornell University and Arizona State University
+
+Contact:
+
+jla65@pitt.edu
+
+Year:
+
+2011, 2016
+
+Licence:
+
+BSD
+
+PyQCPROT is a python/cython implementation of Douglas Theobald’s QCP method for calculating the minimum RMSD between two structures [Theobald2005] and determining the optimal least-squares rotation matrix [Liu2010].
+
+A full description of the method, along with the original C implementation can be found at http://theobald.brandeis.edu/qcp/
+
+See also
+
+MDAnalysis.analysis.align
+
+Align structures using CalcRMSDRotationalMatrix()
+
+MDAnalysis.analysis.rms.rmsd
+
+Calculate the RMSD between two structures using CalcRMSDRotationalMatrix()
+
+Changed in version 0.16.0: Call signatures were changed to directly interface with MDAnalysis coordinate arrays: shape (N, 3)
+
+References
+
+If you use this QCP rotation calculation method in a publication, please reference:
+
+ [Theobald2005]
+Douglas L. Theobald (2005) “Rapid calculation of RMSD using a quaternion-based characteristic polynomial.” Acta Crystallographica A 61(4):478-480.
+
+ [Liu2010]
+Pu Liu, Dmitris K. Agrafiotis, and Douglas L. Theobald (2010) “Fast determination of the optimal rotational matrix for macromolecular superpositions.” J. Comput. Chem. 31, 1561-1563.
+
+15.2.9.1. Functions
+
+Users will typically use the CalcRMSDRotationalMatrix() function.
+
+ MDAnalysis.lib.qcprot.CalcRMSDRotationalMatrix(ref, conf, N, rot, weights)
+
+Calculate the RMSD & rotational matrix.
+
+Parameters:
+
+ref (ndarray) – reference structure coordinates, shape (N, 3)
+
+conf (ndarray) – condidate structure coordinates, shape (N, 3)
+
+N (int) – size of the system
+
+rot (ndarray or None) – array to store rotation matrix. If given must be flat and shape (9,)
+
+weights (ndarray or None) – weights for each component
+
+Returns:
+
+rmsd (float) – RMSD value
+
+.. versionchanged:: 0.16.0 – Array size changed from 3xN to Nx3.
+
+.. versionchanged:: 2.7.0 – Changed arguments to floating type, can accept either float32 or float64 inputs
+
+ MDAnalysis.lib.qcprot.InnerProduct(A, coords1, coords2, N, weight)
+
+Calculate the inner product of two structures.
+
+Parameters:
+
+A (ndarray) – result inner product array, modified in place
+
+coords1 (ndarray) – reference structure
+
+coords2 (ndarray) – candidate structure
+
+N (int) – size of system
+
+weight (ndarray or None) – used to calculate weighted inner product
+
+Returns:
+
+E0 (float)
+
+0.5 * (G1 + G2), can be used as input for FastCalcRMSDAndRotation()
+
+Notes
+
+You MUST center the structures, coords1 and coords2, before calling this function.
+
+Coordinates are stored as Nx3 arrays (as everywhere else in MDAnalysis).
+
+Changed in version 0.16.0: Array size changed from 3xN to Nx3.
+
+Changed in version 2.7.0: Updating to allow either float32 or float64 inputs
+
+ MDAnalysis.lib.qcprot.FastCalcRMSDAndRotation(rot, A, E0, N)
+
+Calculate the RMSD, and/or the optimal rotation matrix.
+
+Parameters:
+
+rot (ndarray or None) – result rotation matrix, modified inplace
+
+A (ndarray) – the inner product of two structures
+
+E0 (floating) – 0.5 * (G1 + G2)
+
+N (int) – size of the system
+
+Returns:
+
+rmsd – RMSD value for two structures
+
+Return type:
+
+double
+
+Changed in version 0.16.0: Array sized changed from 3xN to Nx3.
+
+Changed in version 2.7.0: Changed arguments to floating type, can accept either float32 or float64 inputs. Internally still uses double precision for QCP algorithm

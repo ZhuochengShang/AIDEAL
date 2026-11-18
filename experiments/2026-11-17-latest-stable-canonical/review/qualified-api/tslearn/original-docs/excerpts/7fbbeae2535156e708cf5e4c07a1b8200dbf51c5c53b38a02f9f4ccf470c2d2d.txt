@@ -1,0 +1,21 @@
+predict_proba_and_earliness(X)[source]
+
+Provide probability estimates as well as prediction timestamps.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting. The returned estimates for all classes are ordered by the label of classes.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Vector to be scored, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+Returns:
+
+array-like of shape (n_series, n_classes)
+
+Probability of the sample for each class in the model, where classes are ordered as they are in self.classes_.
+
+array-like of shape (n_series, )
+
+Prediction timestamps.

@@ -1,0 +1,43 @@
+mir_eval.melody.overall_accuracy(ref_voicing, ref_cent, est_voicing, est_cent, cent_tolerance=50)
+
+Compute the overall accuracy given two pitch (frequency) sequences in cents and matching voicing indicator sequences. The first pitch and voicing arrays are treated as the reference (truth), and the second two as the estimate (prediction). All 4 sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference voicing array. When this array is non-binary, it is treated as a ‘reference reward’, as in (Bittner & Bosch, 2019)
+
+ref_centnp.ndarray
+
+Reference pitch sequence in cents
+
+est_voicingnp.ndarray
+
+Estimated voicing array
+
+est_centnp.ndarray
+
+Estimate pitch sequence in cents
+
+cent_tolerancefloat
+
+Maximum absolute deviation in cents for a frequency value to be considered correct (Default value = 50)
+
+Returns:
+
+overall_accuracyfloat
+
+Overall accuracy, the total fraction of correctly estimates frames, where provides a correct frequency values (within cent_tolerance).
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> overall_accuracy = mir_eval.melody.overall_accuracy(ref_v, ref_c,
+...                                                     est_v, est_c)

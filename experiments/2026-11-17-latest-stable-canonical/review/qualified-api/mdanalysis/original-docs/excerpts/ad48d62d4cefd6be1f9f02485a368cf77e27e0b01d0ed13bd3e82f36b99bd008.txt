@@ -1,0 +1,13 @@
+property velocity
+
+Velocity of the atom.
+
+The velocity can be changed by assigning an array of shape (3,).
+
+Note
+
+changing the velocity is not reflected in any files; reading any frame from the trajectory will replace the change with that from the file
+
+Raises:
+
+NoDataError – If the underlying Timestep does not contain velocities.

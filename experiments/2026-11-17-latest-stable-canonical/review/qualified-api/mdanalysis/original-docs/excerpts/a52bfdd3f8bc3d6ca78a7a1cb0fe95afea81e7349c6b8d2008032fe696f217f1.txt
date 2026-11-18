@@ -1,0 +1,23 @@
+lifetime(tau_max=20, window_step=1, intermittency=0)[source]
+
+Computes and returns the time-autocorrelation (HydrogenBondLifetimes) of hydrogen bonds.
+
+Before calling this method, the hydrogen bonds must first be computed with the run() function. The same start, stop and step parameters used in finding hydrogen bonds will be used here for calculating hydrogen bond lifetimes. That is, the same frames will be used in the analysis.
+
+Unique hydrogen bonds are identified using hydrogen-acceptor pairs. This means an acceptor switching to a different hydrogen atom - with the same donor - from one frame to the next is considered a different hydrogen bond.
+
+Please see MDAnalysis.lib.correlations.autocorrelation() and MDAnalysis.lib.correlations.intermittency() functions for more details.
+
+Parameters:
+
+window_step (int, optional) – The number of frames between each t(0).
+
+tau_max (int, optional) – Hydrogen bond lifetime is calculated for frames in the range 1 <= tau <= tau_max
+
+intermittency (int, optional) – The maximum number of consecutive frames for which a bond can disappear but be counted as present if it returns at the next frame. An intermittency of 0 is equivalent to a continuous autocorrelation, which does not allow for hydrogen bond disappearance. For example, for intermittency=2, any given hydrogen bond may disappear for up to two consecutive frames yet be treated as being present at all frames. The default is continuous (intermittency=0).
+
+Returns:
+
+tau_timeseries (np.array) – tau from 1 to tau_max
+
+timeseries (np.array) – autcorrelation value for each value of tau

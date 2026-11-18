@@ -1,0 +1,37 @@
+MDAnalysis.analysis.encore.similarity.dimred_ensemble_similarity(kde1, resamples1, kde2, resamples2, ln_P1_exp_P1=None, ln_P2_exp_P2=None, ln_P1P2_exp_P1=None, ln_P1P2_exp_P2=None)[source]
+
+Calculate the Jensen-Shannon divergence according the Dimensionality reduction method.
+
+In this case, we have continuous probability densities, this we need to integrate over the measurable space. The aim is to first calculate the Kullback-Liebler divergence, which is defined as:
+
+ \[D_{KL}(P(x) || Q(x)) = \int_{-\infty}^{\infty}P(x_i) ln(P(x_i)/Q(x_i)) = \langle{}ln(P(x))\rangle{}_P - \langle{}ln(Q(x))\rangle{}_P\]
+
+where the \(\langle{}.\rangle{}_P\) denotes an expectation calculated under the distribution P. We can, thus, just estimate the expectation values of the components to get an estimate of dKL. Since the Jensen-Shannon distance is actually more complex, we need to estimate four expectation values:
+
+ \[ \begin{align}\begin{aligned}\langle{}log(P(x))\rangle{}_P\\\langle{}log(Q(x))\rangle{}_Q\\\langle{}log(0.5*(P(x)+Q(x)))\rangle{}_P\\\langle{}log(0.5*(P(x)+Q(x)))\rangle{}_Q\end{aligned}\end{align} \]
+
+Parameters:
+
+kde1 (scipy.stats.gaussian_kde) – Kernel density estimation for ensemble 1
+
+resamples1 (numpy.array) – Samples drawn according do kde1. Will be used as samples to calculate the expected values according to ‘P’ as detailed before.
+
+kde2 (scipy.stats.gaussian_kde) – Kernel density estimation for ensemble 2
+
+resamples2 (numpy.array) – Samples drawn according do kde2. Will be used as sample to calculate the expected values according to ‘Q’ as detailed before.
+
+ln_P1_exp_P1 (float or None) – Use this value for \(\langle{}log(P(x))\rangle{}_P\); if None, calculate it instead
+
+ln_P2_exp_P2 (float or None) – Use this value for \(\langle{}log(Q(x))\rangle{}_Q\); if None, calculate it instead
+
+ln_P1P2_exp_P1 (float or None) – Use this value for \(\langle{}log(0.5*(P(x)+Q(x)))\rangle{}_P\); if None, calculate it instead
+
+ln_P1P2_exp_P2 (float or None) – Use this value for \(\langle{}log(0.5*(P(x)+Q(x)))\rangle{}_Q\); if None, calculate it instead
+
+Returns:
+
+djs – Jensen-Shannon divergence calculated according to the dimensionality reduction method
+
+Return type:
+
+float

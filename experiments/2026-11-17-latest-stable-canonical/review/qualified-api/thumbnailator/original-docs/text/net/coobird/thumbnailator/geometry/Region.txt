@@ -1,0 +1,161 @@
+Region (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.geometry
+Class Region
+java.lang.Object
+net.coobird.thumbnailator.geometry.Region
+public final class
+Region
+extends
+Object
+A representation of a region, using a
+Position
+object and a
+Dimension
+object.
+Since:
+0.3.4
+Author:
+coobird
+Constructor Summary
+Region
+(
+Position
+position,
+Size
+size)
+Instantiates a representation of a region from a
+Position
+and
+Size
+.
+Method Summary
+Rectangle
+calculate
+(int outerWidth,
+int outerHeight,
+boolean flipHorizontal,
+boolean flipVertical,
+boolean swapDimensions)
+Calculates the position and size of the enclosed region, relative to the
+enclosing region.
+Position
+getPosition
+()
+Returns the position of the region.
+Size
+getSize
+()
+Returns the size of the region.
+String
+toString
+()
+Returns a
+String
+representation of this region.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+Region
+public
+Region
+(
+Position
+position,
+Size
+size)
+Instantiates a representation of a region from a
+Position
+and
+Size
+.
+Parameters:
+position
+- Position of the region.
+size
+- Size of the region.
+Throws:
+NullPointerException
+- When the position and/or the size is
+null
+.
+Method Detail
+getPosition
+public
+Position
+getPosition
+()
+Returns the position of the region.
+Returns:
+Position of the region.
+getSize
+public
+Size
+getSize
+()
+Returns the size of the region.
+Returns:
+Size of the region.
+calculate
+public
+Rectangle
+calculate
+(int outerWidth,
+int outerHeight,
+boolean flipHorizontal,
+boolean flipVertical,
+boolean swapDimensions)
+Calculates the position and size of the enclosed region, relative to the
+enclosing region.
+The portions of the enclosed region which lies outside the enclosing
+region are ignored. Effectively, the
+Rectangle
+returned by this
+method is an intersection of the enclosing and enclose regions.
+Parameters:
+outerWidth
+- Width of the enclosing region.
+outerHeight
+- Height of the enclosing region.
+flipHorizontal
+- Whether enclosed region should flip
+horizontally within the enclosing region.
+flipVertical
+- Whether enclosed region should flip
+vertically within the enclosing region.
+swapDimensions
+- Whether the components of the point and
+dimension of the enclosed region should be
+swapped.
+Returns:
+Position and size of the enclosed region.
+toString
+public
+String
+toString
+()
+Returns a
+String
+representation of this region.
+Overrides:
+toString
+in class
+Object
+Returns:
+String
+representation of this region.
+Copyright © 2025. All rights reserved.

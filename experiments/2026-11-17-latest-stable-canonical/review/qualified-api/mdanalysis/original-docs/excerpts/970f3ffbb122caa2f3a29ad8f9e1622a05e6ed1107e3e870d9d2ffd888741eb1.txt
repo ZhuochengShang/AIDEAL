@@ -1,0 +1,19 @@
+write_header(remarks, natoms, istart, nsavc, delta, is_periodic)
+
+Write DCD header
+
+This function needs to be called before the first frame can be written.
+
+Parameters:
+
+remarks (str) – remarks of DCD file. Writes up to 239 characters (ASCII). The character 240 will be the null terminator
+
+natoms (int) – number of atoms to write
+
+istart (int) – starting frame number
+
+nsavc (int) – number of frames between saves
+
+delta (float) – integrator time step. The time for 1 frame is nsavc * delta
+
+is_periodic (bool) – write unitcell information. Also pretends that file was written by CHARMM 24

@@ -1,0 +1,111 @@
+AbstractImageSource (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class AbstractImageSource<T>
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.AbstractImageSource<T>
+All Implemented Interfaces:
+ImageSource
+<T>
+Direct Known Subclasses:
+BufferedImageSource
+,
+InputStreamImageSource
+,
+URLImageSource
+public abstract class
+AbstractImageSource<T>
+extends
+Object
+implements
+ImageSource
+<T>
+An abstract class for
+ImageSource
+s.
+Author:
+coobird
+Method Summary
+String
+getInputFormatName
+()
+Returns the name of the image format.
+void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when retrieving the image.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Methods inherited from interface net.coobird.thumbnailator.tasks.io.
+ImageSource
+getSource
+,
+read
+Method Detail
+setThumbnailParameter
+public void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Description copied from interface:
+ImageSource
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when retrieving the image.
+Specified by:
+setThumbnailParameter
+in interface
+ImageSource
+<
+T
+>
+Parameters:
+param
+- The
+ThumbnailParameter
+with image
+reading parameters.
+getInputFormatName
+public
+String
+getInputFormatName
+()
+Description copied from interface:
+ImageSource
+Returns the name of the image format.
+Specified by:
+getInputFormatName
+in interface
+ImageSource
+<
+T
+>
+Returns:
+The image format name. If there is no
+image format information, then
+null
+will be returned.
+Copyright © 2025. All rights reserved.

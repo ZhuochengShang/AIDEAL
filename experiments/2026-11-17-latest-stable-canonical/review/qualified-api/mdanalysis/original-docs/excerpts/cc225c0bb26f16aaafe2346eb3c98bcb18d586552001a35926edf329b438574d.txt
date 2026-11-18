@@ -1,0 +1,13 @@
+time
+
+The time in ps of this timestep
+
+This is calculated as:
+
+time = ts.data['time_offset'] + ts.time
+
+Or, if the trajectory doesn’t provide time information:
+
+time = ts.data['time_offset'] + ts.frame * ts.dt
+
+Added in version 0.11.0.

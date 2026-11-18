@@ -1,0 +1,63 @@
+7.16. NAMDBIN files format — MDAnalysis.coordinates.NAMDBIN
+
+Read/Write coordinates in NAMD double-precision binary format (suffix “coor” or “namdbin”).
+
+7.16.1. Classes
+
+ class MDAnalysis.coordinates.NAMDBIN.NAMDBINReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Reader for NAMD binary coordinate files.
+
+Added in version 1.0.0.
+
+ Writer(filename, **kwargs)[source]
+
+Returns a NAMDBINWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output NAMDBIN file
+
+Return type:
+
+NAMDBINWriter
+
+ static parse_n_atoms(filename, **kwargs)[source]
+
+Read the coordinate file and deduce the number of atoms
+
+Returns:
+
+n_atoms – the number of atoms in the coordinate file
+
+Return type:
+
+int
+
+Raises:
+
+NotImplementedError – when the number of atoms can’t be deduced
+
+ units = {'length': 'Angstrom'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.coordinates.NAMDBIN.NAMDBINWriter(filename, n_atoms=None, **kwargs)[source]
+
+Writer for NAMD binary coordinate files.
+
+Note
+
+Does not handle writing to bz2 or gz compressed file types.
+
+Added in version 1.0.0.
+
+Parameters:
+
+filename (str or NamedStream) – name of the output file or a stream
+
+n_atoms (int) – number of atoms for the output coordinate
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

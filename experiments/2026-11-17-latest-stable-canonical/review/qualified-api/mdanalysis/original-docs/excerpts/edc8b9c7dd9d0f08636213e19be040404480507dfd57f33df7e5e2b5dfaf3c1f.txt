@@ -1,0 +1,50 @@
+MDAnalysis.coordinates.GSD.gsd_pickle_open(name: str, mode: str = 'r')[source]
+
+Open hoomd schema GSD file with pickle function implemented.
+
+This function returns a GSDPicklable object. It can be used as a context manager, and replace the built-in gsd.hoomd.open() function in read mode that only returns an unpicklable file object.
+
+Schema version will depend on the version of gsd module.
+
+Note
+
+Can be only used with read mode.
+
+Parameters:
+
+name (str) – a filename given a text or byte string.
+
+mode (str, optional) – ‘r’: open for reading.
+
+Returns:
+
+stream-like object
+
+Return type:
+
+GSDPicklable
+
+Raises:
+
+ValueError – if mode is not one of the allowed read modes
+
+Examples
+
+open as context manager:
+
+with gsd_pickle_open('filename') as f:
+    line = f.readline()
+
+open as function:
+
+f = gsd_pickle_open('filename')
+line = f.readline()
+f.close()
+
+See also
+
+MDAnalysis.lib.util.anyopen(), MDAnalysis.lib.picklable_file_io.pickle_open(), MDAnalysis.lib.picklable_file_io.bz2_pickle_open(), MDAnalysis.lib.picklable_file_io.gzip_pickle_open(), gsd.hoomd.open()
+
+Added in version 2.0.0.
+
+Changed in version 2.6.0: Only GSD versions 3.0.1+ are supported. ‘rb’ mode support has been replaced with ‘r’ mode.

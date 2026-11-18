@@ -1,0 +1,17 @@
+MDAnalysis.lib.transformations.shear_from_matrix(matrix)[source]
+
+Return shear angle, direction and plane from shear matrix.
+
+>>> from MDAnalysis.lib.transformations import (shear_matrix,
+...     shear_from_matrix, is_same_transform)
+>>> import random, math
+>>> import numpy as np
+>>> angle = (random.random() - 0.5) * 4*math.pi
+>>> direct = np.random.random(3) - 0.5
+>>> point = np.random.random(3) - 0.5
+>>> normal = np.cross(direct, np.random.random(3))
+>>> S0 = shear_matrix(angle, direct, point, normal)
+>>> angle, direct, point, normal = shear_from_matrix(S0)
+>>> S1 = shear_matrix(angle, direct, point, normal)
+>>> is_same_transform(S0, S1)
+True

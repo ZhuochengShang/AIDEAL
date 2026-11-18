@@ -1,0 +1,23 @@
+MDAnalysis.lib.util.greedy_splitext(p)[source]
+
+Split extension in path p at the left-most separator.
+
+Extensions are taken to be separated from the filename with the separator os.extsep (as used by os.path.splitext()).
+
+Parameters:
+
+p (str) – path
+
+Returns:
+
+(root, extension) – where root is the full path and filename with all extensions removed whereas extension is the string of all extensions.
+
+Return type:
+
+tuple
+
+Example
+
+>>> from MDAnalysis.lib.util import greedy_splitext
+>>> greedy_splitext("/home/joe/protein.pdb.bz2")
+('/home/joe/protein', '.pdb.bz2')

@@ -1,0 +1,13 @@
+get_pairs(self)
+
+Returns all the pairs within the desired cutoff distance
+
+Returns an array of shape (N, 2), where N is the number of pairs between reference and configuration within the specified distance. For every pair (i, j), reference[i] and configuration[j] are atom positions such that reference is the position of query atoms while configuration coontains the position of group of atoms used to search against the query atoms.
+
+Returns:
+
+pairs – pairs of atom indices of neighbors from query and initial atom coordinates of shape (N, 2)
+
+Return type:
+
+numpy.ndarray

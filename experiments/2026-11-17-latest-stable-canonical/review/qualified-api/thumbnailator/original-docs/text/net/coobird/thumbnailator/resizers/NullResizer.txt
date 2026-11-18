@@ -1,0 +1,100 @@
+NullResizer (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers
+Class NullResizer
+java.lang.Object
+net.coobird.thumbnailator.resizers.AbstractResizer
+net.coobird.thumbnailator.resizers.NullResizer
+All Implemented Interfaces:
+Resizer
+public class
+NullResizer
+extends
+AbstractResizer
+A
+Resizer
+which does not actually resize the image.
+The source image will be drawn at the origin of the destination image.
+Since:
+0.4.0
+Author:
+coobird
+Constructor Summary
+NullResizer
+()
+Instantiates the
+NullResizer
+which draws the source image at
+the origin of the destination image.
+Method Summary
+void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+Performs a resize operation from a source image and outputs to a
+destination image.
+Methods inherited from class net.coobird.thumbnailator.resizers.
+AbstractResizer
+getRenderingHints
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+NullResizer
+public
+NullResizer
+()
+Instantiates the
+NullResizer
+which draws the source image at
+the origin of the destination image.
+Method Detail
+resize
+public void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+Description copied from class:
+AbstractResizer
+Performs a resize operation from a source image and outputs to a
+destination image.
+If the source or destination image is
+null
+, then a
+NullPointerException
+will be thrown.
+Specified by:
+resize
+in interface
+Resizer
+Overrides:
+resize
+in class
+AbstractResizer
+Parameters:
+srcImage
+- The source image.
+destImage
+- The destination image.
+Copyright © 2025. All rights reserved.

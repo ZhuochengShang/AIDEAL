@@ -1,0 +1,85 @@
+extends: []
+project:
+  name: SedonaDB 0.5.0 canonical SQL Original R0
+  language: Python
+codebase:
+  source_globs:
+  - source/rust/*/src/**/*.rs
+  - source/c/*/src/**/*.rs
+  - source/docs/reference/sql/*.qmd
+  test_globs: []
+  surface_filter: all
+  intent:
+    use_llm: false
+  api_inventory: inputs/api_inventory.json
+  api_inventory_sha256: 64d18ef9a1a1089de9919840a52bac1d7f52b072e5bbf60342bb56ba8f088fb3
+  path: source
+  identity_mode: qualified
+  exclude_names: []
+files:
+  project_profile: configs/project_profile.yaml
+  original_readme: []
+  llm_readme: docs/LLM_readme.md
+  notes_to_self: docs/notes_to_self.md
+  error_log: logs/error_log.jsonl
+  original_doc_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/sedonadb/original-docs/manifest.json
+  original_doc_manifest_sha256: cd27c949a595a3e41b986c33116a81299de31fb7aa41501cabeb6c9022867fbb
+  prompts_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/prompts
+models:
+  registry:
+    selected:
+      provider: google
+      model: gemini-3.1-flash-lite
+      max_output_tokens: 8192
+  roles:
+    author: selected
+    audience: selected
+    fixer: selected
+coverage:
+  documentation_call_patterns:
+  - \b{name}\s*\(
+  - (?m)^title:\s*{name}\s*$
+comprehension:
+  class_context: false
+  relevant_doc_chars: 18700
+  execute:
+    scaffold: inputs/api_test_scaffold.py
+    test_filename: ApiTest.py
+    region:
+    - '# TODO API_TEST_START'
+    - '# TODO API_TEST_END'
+    build: ''
+    command: '"/home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/bin/python" "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/sedonadb/runtime/run_snippet.py"
+      "{test_file}"'
+    work_dir: execution
+    output_dir: execution/output
+    local_uris: false
+    sample_data:
+      raster_cea_tif: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/fixtures/cea.tif
+      raster_test4_tif: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/fixtures/test4.tiff
+    preamble: ''
+    io_hints: ''
+    max_fix_rounds: 0
+    require_correctness: true
+    timeout_seconds: 60
+    success_marker: __DONE__
+    error_marker: __RUN_ERR__
+    check_marker: __CHECK__
+    execution_context: 'Write Python statements only. A SedonaDB connection named
+      sd is already provided. The target is a SQL function, not a Python method: call
+      it inside sd.sql("SELECT ..."). Materialize with .to_arrow_table(), which returns
+      a real pyarrow.Table. Read a scalar with table.column("name")[0].as_py() or
+      rows with table.to_pylist(). Setup SQL may use sd.sql(...).execute(). The adapter
+      requires the target SQL function to be called and materialized. Do not import
+      another database or replace sd. Use Python assert with a falsifiable documented
+      expectation and then print the exact target __CHECK__ witness.'
+    exec_hints: Use individual SQL statements. Paths raster_cea_tif and raster_test4_tif
+      are available local fixture files; output_dir is available for tiny outputs.
+      Use only these paths when a documented operation needs a file. Tiny SQL VALUES
+      and documented constructors are available for in-memory inputs. Do not use remote
+      URLs. No repairs are permitted in this R0 run.
+    probe_on_missing: false
+    auto_report: false
+    stop_on_provider_error: true
+readme_generation:
+  distill_chunk_chars: 150000

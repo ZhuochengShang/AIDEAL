@@ -1,0 +1,36 @@
+load_new(filename, format=None, in_memory=False, in_memory_step=1, **kwargs)[source]
+
+Load coordinates from filename.
+
+The file format of filename is autodetected from the file name suffix or can be explicitly set with the format keyword. A sequence of files can be read as a single virtual trajectory by providing a list of filenames.
+
+Parameters:
+
+filename (str or list) – the coordinate file (single frame or trajectory) or a list of filenames, which are read one after another.
+
+format (str or list or object (optional)) – provide the file format of the coordinate or trajectory file; None guesses it from the file extension. Note that this keyword has no effect if a list of file names is supplied because the “chained” reader has to guess the file format for each individual list member [None]. Can also pass a subclass of MDAnalysis.coordinates.base.ProtoReader to define a custom reader to be used on the trajectory file.
+
+in_memory (bool (optional)) –
+Directly load trajectory into memory with the MemoryReader
+
+Added in version 0.16.0.
+
+**kwargs (dict) – Other kwargs are passed to the trajectory reader (only for advanced use)
+
+Returns:
+
+universe
+
+Return type:
+
+Universe
+
+Raises:
+
+TypeError – if trajectory format can not be determined or no appropriate trajectory reader found
+
+Changed in version 0.8: If a list or sequence that is provided for filename only contains a single entry then it is treated as single coordinate file. This has the consequence that it is not read by the ChainReader but directly by its specialized file format reader, which typically has more features than the ChainReader.
+
+Changed in version 0.17.0: Now returns a Universe instead of the tuple of file/array and detected file type.
+
+Changed in version 2.4.0: Passes through kwargs if in_memory=True.

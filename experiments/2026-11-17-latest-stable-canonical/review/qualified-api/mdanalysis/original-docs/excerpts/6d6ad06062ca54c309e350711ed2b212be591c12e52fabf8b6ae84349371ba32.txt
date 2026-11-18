@@ -1,0 +1,31 @@
+dipole_moment(**kwargs)[source]
+
+Dipole moment of the group or compounds in a group.
+
+ \[\mu = |\boldsymbol{\mu}| = \sqrt{ \sum_{i=1}^{D} \mu^2 }\]
+
+Where \(D\) is the number of dimensions, in this case 3.
+
+Computes the dipole moment of Atoms in the group. Dipole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is a net charge, the magnitude of the dipole moment is dependent on the center chosen. See dipole_vector().
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Dipole moment(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.

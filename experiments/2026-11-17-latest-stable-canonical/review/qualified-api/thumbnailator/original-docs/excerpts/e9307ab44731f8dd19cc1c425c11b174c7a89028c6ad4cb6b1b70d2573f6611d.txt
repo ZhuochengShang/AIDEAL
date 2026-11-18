@@ -1,0 +1,38 @@
+sourceRegion
+public
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Position
+position,
+int width,
+int height)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+position
+- Position of the source region.
+width
+- Width of the source region.
+height
+- Height of the source region.
+Returns:
+Reference to this object.
+Throws:
+NullPointerException
+- If the position and/or size is
+null
+.
+IllegalArgumentException
+- If the width and/or height is
+less than or equal to
+0
+.
+Since:
+0.3.4

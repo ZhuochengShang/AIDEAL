@@ -1,0 +1,19 @@
+parse_dihedrals(diha, dihh)[source]
+
+Combines hydrogen and non-hydrogen containing AMBER dihedral lists and extracts sublists for conventional dihedrals and improper angles
+
+Parameters:
+
+diha (list of tuples) – The atom ids of dihedrals not involving hydrogens
+
+dihh (list of tuples) – The atom ids of dihedrals involving hydrogens
+
+Returns:
+
+dihedrals (Dihedrals) – A Dihedrals instance containing a list of all unique dihedrals as defined by the parm7 file
+
+impropers (Impropers) – A Impropers instance containing a list of all unique improper dihedrals as defined by the parm7 file
+
+Note
+
+As detailed in the specification, the dihedral sections of parm7 files contain information about both conventional dihedrals and impropers. The following must be accounted for: 1) If the fourth atom in a dihedral entry is given a negative value, this indicates that it is an improper. 2) If the third atom in a dihedral entry is given a negative value, this indicates that it 1-4 NB interactions are ignored for this dihedrals. This could be due to the dihedral within a ring, or if it is part of a multi-term dihedral definition or if it is an improper.

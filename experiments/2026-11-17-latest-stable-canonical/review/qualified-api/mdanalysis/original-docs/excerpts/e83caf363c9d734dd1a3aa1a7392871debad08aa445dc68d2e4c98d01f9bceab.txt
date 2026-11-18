@@ -1,0 +1,33 @@
+MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix(ensemble, conf_dist_function, select='', superimposition_select='', n_jobs=1, pairwise_align=True, weights='mass', metadata=True, verbose=False, max_nbytes=None)[source]
+
+Run the conformational distance matrix calculation. args and kwargs are passed to conf_dist_function.
+
+Parameters:
+
+ensemble (Universe object) – Universe object for which the conformational distance matrix will be computed.
+
+conf_dist_function (function object) – Function that fills the matrix with conformational distance values. See set_rmsd_matrix_elements for an example.
+
+select (str, optional) – use this selection for the calculation of conformational distance
+
+superimposition_select (str, optional) – use atoms from this selection for fitting instead of those of select
+
+pairwise_align (bool, optional) – Whether to perform pairwise alignment between conformations. Default is True (do the superimposition)
+
+weights (str/array_like, optional) – weights to be used for fit. Can be either ‘mass’ or an array_like
+
+metadata (bool, optional) – Whether to build a metadata dataset for the calculated matrix. Default is True.
+
+n_jobs (int, optional) – Number of cores to be used for parallel calculation Default is 1. -1 uses all available cores
+
+max_nbytes (str, optional) – Threshold on the size of arrays passed to the workers that triggers automated memory mapping in temp_folder (default is None). See https://joblib.readthedocs.io/en/latest/generated/joblib.Parallel.html for detailed documentation.
+
+verbose (bool, optional) – enable verbose output
+
+Returns:
+
+conf_dist_matrix – Conformational distance matrix in triangular representation.
+
+Return type:
+
+encore.utils.TriangularMatrix object

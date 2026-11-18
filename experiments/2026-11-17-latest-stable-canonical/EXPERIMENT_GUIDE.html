@@ -1,352 +1,513 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIDEAL experiment guide</title><style>body{max-width:1150px;margin:36px auto;padding:0 24px;font:16px/1.6 system-ui;color:#203549}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:9px;border:1px solid #cad7e2;text-align:left}th{background:#edf3f9}pre{background:#edf3f9;padding:18px;overflow:auto}img{max-width:100%}a{color:#1264a3}</style><main><p><a href="HEALTH_CHECK.html">Latest health check, fixes and cleanup</a></p><h1>AIDEAL experiment guide</h1>
-<p>Updated November 17, 2026. <strong>API and documentation correction in progress. The previous launch plan is blocked. No new model calls or subject-program executions occurred during this audit.</strong></p>
-<h2>1. Start here</h2>
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>EXPERIMENT GUIDE</title><style>body{max-width:1280px;margin:30px auto;padding:0 25px;font:16px/1.6 system-ui;color:#18344b}a{color:#1765a6}table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow:auto}td,th{border:1px solid #ccd7e2;padding:10px;text-align:left}th{background:#eef4f9}pre{background:#eff3f7;padding:16px;overflow:auto}code{overflow-wrap:anywhere}img{max-width:100%}h2{margin-top:36px;border-top:1px solid #d8e3eb;padding-top:20px}</style><h1>AIDEAL experiment guide</h1>
+<p>Updated November 17, 2026. <strong>Review hold: no live authoring or evaluation is authorized by this package.</strong> The owner-qualified replacement passed offline regression and seven-bank preparation checks. Earlier measured results and frozen releases remain unchanged.</p>
+<p><a href="review/qualified-bank/INDEX.html">All 5,307 API/task inputs</a> · <a href="READINESS_FIXES.html">Readiness fixes</a> · <a href="review/EXPERIMENT_TRACKER.html">Current tracker</a> · <a href="RUNBOOK.md">Runbook</a> · <a href="HISTORY.md">Historical cohorts</a></p>
+<h2>1. What is current</h2>
+<p><strong>Why this is not a completed study:</strong> the corrected source/doc bank and code can be reviewed, but the new live six pilots, complete README authoring, Original R0 and later repair/condition studies have not run. Treatment installation and the full matched puzzle/oracle protocol remain pending. The final receipts record 684 tests and 365 subtests passed on both Mac and lab cluster; all seven Original and README preparations passed. Passing those checks does not remove the user's review hold.</p>
+<p>The current scope is six pinned libraries, with <strong>the entire Beast repository</strong> included by module. Different defining classes and modules keep separate API identities. Overload selection happens within one defining API; a common short name does not merge unrelated operations.</p>
+<p>The previous <strong>1,695-target bank, 477 name-mention count and old launch plan are superseded preparation evidence</strong>. They are not the approved denominator or coverage rate for this replacement. <a href="review/CURRENT_BANK.html">Earlier task previews</a> and <a href="review/PILOT_REVIEW.html">earlier six-pilot previews</a> remain historical preparation references. Use the qualified bank and six full prompt previews for the current inputs.</p>
 <table>
 <thead>
 <tr>
-<th>Review question</th>
-<th>Open</th>
+  <th>Review item</th>
+  <th>Current evidence</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Which APIs were found, removed or left unresolved?</td>
-<td><a href="review/api-audit/API_AUDIT.html">New source and documentation audit</a>, <a href="review/api-audit/ALL_SOURCE_CANDIDATES.csv">all 5,478 candidate records</a></td>
+  <td>What was found and selected?</td>
+  <td><a href="review/qualified-bank/INDEX.html">Search all 5,307 selected targets and native micro inputs</a>; source/doc/selection receipts per row</td>
 </tr>
 <tr>
-<td>Why did the counts change?</td>
-<td><a href="review/api-audit/API_AUDIT.md">Exact reduction tables and module breakdown</a></td>
+  <td>Why did the earlier counts fall?</td>
+  <td><a href="review/api-audit/API_AUDIT.html">Historical reduction audit</a>, <a href="review/api-audit/ALL_SOURCE_CANDIDATES.csv">all earlier candidate rows</a></td>
 </tr>
 <tr>
-<td>Which source version and documentation were used?</td>
-<td><a href="review/api-audit/SOURCE_LOCATIONS.csv">Source locations</a>, <a href="review/api-audit/documentation/CONFIGURED_DOCUMENT_ORIGINS.csv">document paths, URLs and hashes</a></td>
+  <td>Which concrete bugs were fixed?</td>
+  <td><a href="READINESS_FIXES.html">Readiness fixes and remaining checks</a></td>
 </tr>
 <tr>
-<td>What can I inspect before any run?</td>
-<td><a href="review/CURRENT_BANK.html">Prior task previews</a>, <a href="review/PILOT_REVIEW.html">six prior pilot previews</a></td>
+  <td>What actually ran?</td>
+  <td><a href="review/READINESS.html">Existing native setup evidence</a>, <a href="HISTORY.md">historical cohorts</a></td>
 </tr>
 <tr>
-<td>What has actually run?</td>
-<td><a href="review/READINESS.html">Existing setup controls</a>, <a href="review/EXPERIMENT_TRACKER.html">experiment tracker</a>, <a href="HISTORY.md">historical cohorts</a></td>
-</tr>
-<tr>
-<td>What changed in the code?</td>
-<td><a href="review/api-audit/code_updates/docs/API_ORIGIN.md">API origin filter</a></td>
+  <td>Is the code and review package identical everywhere?</td>
+  <td><a href="STUDY_LOCK.json">Study lock</a>, <a href="SYNC_MANIFEST.json">snapshot manifest</a>, <a href="verify_snapshot.py">verification script</a></td>
 </tr>
 </tbody>
 </table>
-<p>The old 1,695 task previews remain available as <strong>superseded preparation evidence</strong>. They are not the approved bank for the replacement experiment. Source implementation bodies in the audit belong to the reviewer, not automatically to the audience prompt.</p>
-<h2>2. Source versions and API counts</h2>
-<p>All six cluster source HEADs and trees matched the pinned versions on this audit. Full identities and local Git-store paths are in <a href="STUDY_LOCK.json">STUDY_LOCK.json</a>. A local working checkout need not be at the pinned commit; inspect the recorded commit explicitly.</p>
+<p>New model calls and measured results for the owner-qualified replacement remain <strong>zero</strong>. Prepared prompts, mocked tests and earlier native controls are different kinds of evidence; none substitutes for six new live end-to-end pilots.</p>
+<h2>2. Pinned libraries and current API identities</h2>
 <table>
 <thead>
 <tr>
-<th>Library</th>
-<th>Version</th>
-<th>Official commit</th>
-<th>GitHub</th>
+  <th>Library</th>
+  <th>Stable version</th>
+  <th>Official commit prefix</th>
+  <th>Source scope</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>rdpro</td>
-<td>0.10.1</td>
-<td><code>547f7f912131</code></td>
-<td><a href="https://github.com/ZhuochengShang/AIDEAL-RDPro/branches">Public branches</a></td>
+  <td>Beast / RDPro</td>
+  <td>0.10.1</td>
+  <td><code>547f7f912131</code></td>
+  <td>Whole repository; Scala and Java modules reported separately</td>
 </tr>
 <tr>
-<td>mdanalysis</td>
-<td>2.11.0</td>
-<td><code>ace84dde1363</code></td>
-<td><a href="https://github.com/ZhuochengShang/AIDEAL-MDAnalysis/branches">Public branches</a></td>
+  <td>MDAnalysis</td>
+  <td>2.11.0</td>
+  <td><code>ace84dde1363</code></td>
+  <td>Python/Cython definitions and resolved public exposures</td>
 </tr>
 <tr>
-<td>tslearn</td>
-<td>0.10.0</td>
-<td><code>f6072f237313</code></td>
-<td><a href="https://github.com/ZhuochengShang/AIDEAL-tslearn/branches">Public branches</a></td>
+  <td>tslearn</td>
+  <td>0.10.0</td>
+  <td><code>f6072f237313</code></td>
+  <td>Library-defined Python APIs and resolved public exposures</td>
 </tr>
 <tr>
-<td>mir_eval</td>
-<td>0.8.2</td>
-<td><code>8db0b3812e20</code></td>
-<td><a href="https://github.com/ZhuochengShang/AIDEAL-mir_eval/branches">Public branches</a></td>
+  <td>mir_eval</td>
+  <td>0.8.2</td>
+  <td><code>8db0b3812e20</code></td>
+  <td>Library-defined Python APIs and resolved public exposures</td>
 </tr>
 <tr>
-<td>thumbnailator</td>
-<td>0.4.21</td>
-<td><code>c9d99613878b</code></td>
-<td><a href="https://github.com/ZhuochengShang/AIDEAL-Thumbnailator/branches">Public branches</a></td>
+  <td>Thumbnailator</td>
+  <td>0.4.21</td>
+  <td><code>c9d99613878b</code></td>
+  <td>Java methods and public constructors</td>
 </tr>
 <tr>
-<td>sedonadb</td>
-<td>0.5.0</td>
-<td><code>751453f04cd6</code></td>
-<td><a href="https://github.com/ZhuochengShang/AIDEAL-SedonaDB/branches">Public branches</a></td>
+  <td>SedonaDB</td>
+  <td>0.5.0</td>
+  <td><code>751453f04cd6</code></td>
+  <td>Registered SQL operations and explicit alias relationships</td>
 </tr>
 </tbody>
 </table>
+<p>The source commit is the official upstream identity. A public publication snapshot can have a different commit ID while retaining the exact same tree. <a href="STUDY_LOCK.json">STUDY_LOCK.json</a> records that distinction. A local working checkout need not be at the pinned commit; inspect the recorded commit explicitly.</p>
+<p>&lt;!-- QUALIFIED_COUNTS_START --&gt;</p>
+<p>The final staged inventory records <strong>5,307 selected identities</strong>. These counts describe the recorded selection snapshot; the review hold and remaining limitations below still apply. <a href="review/figures/qualified_count_data.json">Count data and hashes</a> bind the chart to the exact ledgers, selection receipts and documentation mappings.</p>
 <table>
 <thead>
 <tr>
-<th>Library</th>
-<th>Version</th>
-<th style="text-align:right">Scanned sites / SQL names</th>
-<th style="text-align:right">Distinct simple names</th>
-<th style="text-align:right">Previous filtered count</th>
-<th>Corrected approved count</th>
+  <th>Library</th>
+  <th style="text-align:right">Scanned sites / SQL names</th>
+  <th style="text-align:right">Eligible callable sites</th>
+  <th style="text-align:right">Selected APIs</th>
+  <th style="text-align:right">Exact excerpt mapped</th>
+  <th style="text-align:right">No exact excerpt</th>
+  <th>Selected manifests</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>rdpro</td>
-<td>0.10.1</td>
-<td style="text-align:right">2973</td>
-<td style="text-align:right">1268</td>
-<td style="text-align:right">708</td>
-<td>Pending</td>
+  <td><a href="review/qualified-api/rdpro/canonical-selection.json">Beast / RDPro</a></td>
+  <td style="text-align:right">7,711</td>
+  <td style="text-align:right">3,321</td>
+  <td style="text-align:right">2,787</td>
+  <td style="text-align:right">3</td>
+  <td style="text-align:right">2,784</td>
+  <td><a href="review/qualified-api/rdpro/api_manifest.java.json">Java</a> / <a href="review/qualified-api/rdpro/api_manifest.scala.json">Scala</a></td>
 </tr>
 <tr>
-<td>mdanalysis</td>
-<td>2.11.0</td>
-<td style="text-align:right">1435</td>
-<td style="text-align:right">1053</td>
-<td style="text-align:right">435</td>
-<td>Pending</td>
+  <td><a href="review/qualified-api/mdanalysis/canonical-selection.json">MDAnalysis</a></td>
+  <td style="text-align:right">2,631</td>
+  <td style="text-align:right">1,543</td>
+  <td style="text-align:right">1,538</td>
+  <td style="text-align:right">1,064</td>
+  <td style="text-align:right">474</td>
+  <td><a href="review/qualified-api/mdanalysis/api_manifest.python.json">Python</a></td>
 </tr>
 <tr>
-<td>tslearn</td>
-<td>0.10.0</td>
-<td style="text-align:right">348</td>
-<td style="text-align:right">237</td>
-<td style="text-align:right">116</td>
-<td>Pending</td>
+  <td><a href="review/qualified-api/tslearn/canonical-selection.json">tslearn</a></td>
+  <td style="text-align:right">686</td>
+  <td style="text-align:right">362</td>
+  <td style="text-align:right">362</td>
+  <td style="text-align:right">223</td>
+  <td style="text-align:right">139</td>
+  <td><a href="review/qualified-api/tslearn/api_manifest.python.json">Python</a></td>
 </tr>
 <tr>
-<td>mir_eval</td>
-<td>0.8.2</td>
-<td style="text-align:right">177</td>
-<td style="text-align:right">147</td>
-<td style="text-align:right">125</td>
-<td>Pending</td>
+  <td><a href="review/qualified-api/mir_eval/canonical-selection.json">mir_eval</a></td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">178</td>
+  <td style="text-align:right">178</td>
+  <td style="text-align:right">177</td>
+  <td style="text-align:right">1</td>
+  <td><a href="review/qualified-api/mir_eval/api_manifest.python.json">Python</a></td>
 </tr>
 <tr>
-<td>thumbnailator</td>
-<td>0.4.21</td>
-<td style="text-align:right">319</td>
-<td style="text-align:right">145</td>
-<td style="text-align:right">94</td>
-<td>Pending</td>
+  <td><a href="review/qualified-api/thumbnailator/canonical-selection.json">Thumbnailator</a></td>
+  <td style="text-align:right">319</td>
+  <td style="text-align:right">319</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">0</td>
+  <td><a href="review/qualified-api/thumbnailator/api_manifest.java.json">Java</a></td>
 </tr>
 <tr>
-<td>sedonadb</td>
-<td>0.5.0</td>
-<td style="text-align:right">226</td>
-<td style="text-align:right">226</td>
-<td style="text-align:right">217</td>
-<td>Pending</td>
+  <td><a href="review/qualified-api/sedonadb/canonical-selection.json">SedonaDB SQL</a></td>
+  <td style="text-align:right">226</td>
+  <td style="text-align:right">SQL policy</td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">211</td>
+  <td style="text-align:right">6</td>
+  <td><a href="review/qualified-api/sedonadb/api_manifest.sql.json">Sql</a></td>
+</tr>
+<tr>
+  <td><strong>Total selected</strong></td>
+  <td style="text-align:right">—</td>
+  <td style="text-align:right">—</td>
+  <td style="text-align:right"><strong>5,307</strong></td>
+  <td style="text-align:right"><strong>1,903</strong></td>
+  <td style="text-align:right"><strong>3,404</strong></td>
+  <td>—</td>
 </tr>
 </tbody>
 </table>
-<p><img alt="Old API reduction by library" src="review/api-audit/API_REDUCTION.svg"></p><p>These columns count different things. A definition site is a declaration in a file. A simple name ignores its owner. An API identity includes its module or class. MDAnalysis's previous 1,032 simple names became 1,053 in the new source scan; 435 was a heavily filtered subset. The old selector excluded 752 unresolved sites and merged names across unrelated owners. It also omitted Cython source definitions. Those omissions do not establish redundancy.</p>
-<p>RDPro now means <strong>the entire Beast repository</strong>, including raster, vector and utility modules, as requested. The audit reports each module separately. A whole-repository count may exceed 700; the new count will follow evidence rather than a target number.</p>
-<h3>Correct reduction order</h3>
-<pre><code class="language-text">Pinned library source + matching original documentation
-  -&gt; enumerate definitions and documented public access paths
-  -&gt; resolve the actual defining owner and source file
-  -&gt; exclude dependency-only imports and inherited external methods
-  -&gt; map proven forwarding wrappers to retained library operations
-  -&gt; group overloads within the same module/class API
-  -&gt; retain the version with most explicit parameters
-  -&gt; review unresolved records and documentation mappings
-  -&gt; freeze approved IDs, documents, task bank and configuration
-  -&gt; generate README entries and run the matched evaluation
-</code></pre>
-<p>Keep a library-defined operation that calls Spark, Java utilities or NumPy. Keep a library override with its own implementation. Exclude a Spark/Java/Python dependency definition merely exposed through the library. Do not remove functions solely because they are named <code>map</code>, <code>run</code>, <code>fit</code>, <code>read</code> or <code>toString</code>. Cross-owner operations remain distinct. A wrapper removal needs a retained target mapping; an unresolved origin stays visible for review.</p>
-<p>The new origin filter is implemented as an explicit discovery option. It does not repair the old global bare-name selector, add Cython discovery or migrate README identities by itself. These remaining changes block a final count and a replacement launch.</p>
-<h2>3. Original documentation and fairness</h2>
-<p>The previous 477/1,695 coverage number counted short names in selected code-context text. It was <strong>not</strong> the number of documented APIs. The new audit preserves exact document URLs, page hashes and API anchors.</p>
+<p><img src="review/figures/qualified_scanned_selected.svg" alt="Recorded declarations and selected defining API targets" /></p>
+<p>Beast splits into 1,394 Scala and 1,393 Java targets. Its 7,711 scanned records include fields and other noncallable/private declarations; 3,321 enter callable selection. Public exposure aliases are not extra targets. Sedona counts registered SQL names under a separate explicit-alias policy.</p>
+<p>The strict documentation mapping gives Beast 3 exact excerpts among 2,787 selected identities. That means 2,784 targets have <strong>no verified exact mapping under this detector</strong>, not that useful original documentation is absent. All still receive the pinned README as shared Original context. Shared text does not inflate the 1,903 exact-mapped target count.</p>
+<p>&lt;!-- QUALIFIED_COUNTS_END --&gt;</p>
+<p><img src="review/figures/qualified_selection_flow.svg" alt="Selection and identity boundaries" /></p>
+<p>The selection contract is:</p>
+<ol>
+<li>Enumerate source declarations, constructors and public access paths, including Cython where applicable. Preserve exclusions and unresolved cases in the ledger.</li>
+<li>Resolve the defining owner and origin. Exclude dependency-only definitions exposed through the library; retain the library's own implementation even when it calls Spark, Java or NumPy.</li>
+<li>Map public aliases and inherited exposure paths to the same defining API. A private defining module can remain a valid target when its public exposure is established.</li>
+<li>Remove a forwarding wrapper only with recorded evidence and a retained target mapping. Unknown body classification alone does not prove a wrapper or justify discarding an otherwise established callable.</li>
+<li>Group overloads within the same defining module/class API and select the largest explicit parameter count. An unresolved competing overload blocks that election. A singleton with unknown constructor arity remains visibly unknown, not a verified zero-argument callable.</li>
+<li>Freeze the selected identities, source sites, documentation dispositions and hashes after review. SQL registration aliases follow their own explicit policy; no finite maximum SQL arity is invented.</li>
+</ol>
+<p>The usual identifier is <code>language:fully.qualified.symbol</code>. Proven Scala companion class/object collisions additionally carry the owner kind, for example <code>scala:class:qualified.symbol</code> versus <code>scala:object:qualified.symbol</code>. The defining qualified name and public access paths remain separate fields.</p>
+<p>Beast's custom <code>org.apache.spark.beast</code> definitions are library-owned despite their namespace prefix. Ordinary Spark dependency definitions are not added to the bank merely because a Beast API exposes them.</p>
+<p>These are auditable structural rules. They do not prove that every remaining pair of APIs is semantically different or that every possible wrapper has been recognized.</p>
+<p>The final ledger makes the remaining boundaries explicit:</p>
+<ul>
+<li>Beast retains 581 sites with earlier forwarder/wrapper/facade labels and 951 unresolved-body labels as review notes. Thumbnailator retains 26 earlier forwarder/wrapper labels and 69 unresolved-body labels. A label alone lacks the target-equivalence proof required for removal; wrapper elimination is therefore <strong>not certified complete</strong>.</li>
+<li>MDAnalysis retains 29 and tslearn 7 selected singleton APIs with unknown arity. They are not represented as verified zero-parameter calls.</li>
+<li>Public exposure resolution records 41 unresolved MDAnalysis paths and one unresolved tslearn path; dynamic/generated symbols and external-base enumeration boundaries remain visible in the ledgers.</li>
+<li>Sedona binds 225 of 226 registration names directly to source evidence and retains the dynamic <code>S2_CellIdFromPoint</code> boundary explicitly.</li>
+</ul>
+<p>Zero unresolved identity/arity election sites does not mean complete dynamic exposure resolution, complete wrapper removal or a fully specified scientific evaluation. Review these limits before accepting the replacement scope.</p>
+<h2>3. Original documentation and exposure fairness</h2>
+<p>The earlier 477/1,695 figure counted short-name mentions in code-context text. It was <strong>not a qualified API documentation count</strong>. New documentation uses exact defining identities or resolved public exposure paths, with the original URL, source version, raw bytes, normalized text and anchor hashes retained.</p>
 <table>
 <thead>
 <tr>
-<th>Library</th>
-<th>Verified original-document evidence</th>
-<th>Remaining interpretation</th>
+  <th>Library</th>
+  <th>Reviewed original corpus being bound</th>
+  <th>Coverage interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Beast</td>
-<td>21 tracked documentation files, including four previously omitted module READMEs</td>
-<td>119 source-name mentions do not prove qualified API coverage</td>
+  <td>Beast</td>
+  <td>21 tracked documentation files, including four previously omitted module READMEs</td>
+  <td>A name mention alone does not establish a particular owner's documented contract</td>
 </tr>
 <tr>
-<td>MDAnalysis</td>
-<td>Version 2.11.0 rendered API pages; 2,108 callable-like documented entries</td>
-<td>Reconcile re-exports, inheritance, private objects and Cython definitions</td>
+  <td>MDAnalysis</td>
+  <td>148 version-checked rendered API pages + pinned README</td>
+  <td>Defining APIs and public aliases require exact reconciliation; this is not the entire user guide</td>
 </tr>
 <tr>
-<td>tslearn</td>
-<td>Stable pages identify 0.10.0; 468 callable-like documented entries</td>
-<td>Resolve source-to-public aliases and inherited methods</td>
+  <td>tslearn</td>
+  <td>99 version-checked rendered API pages + pinned README</td>
+  <td>Dataset payloads and unresolved documentation stubs are excluded from the reviewed text corpus</td>
 </tr>
 <tr>
-<td>mir_eval</td>
-<td>Stable pages identify 0.8.2; 177 callable-like entries</td>
-<td>All 177 recorded source sites match documented qualified targets</td>
+  <td>mir_eval</td>
+  <td>18 version-checked rendered API pages + pinned README</td>
+  <td>Exact documented identities are mapped to the selected source targets</td>
 </tr>
 <tr>
-<td>Thumbnailator</td>
-<td>Official 0.4.21 Maven Javadoc; 349 public member signatures</td>
-<td>Includes constructors; not the benchmark target count</td>
+  <td>Thumbnailator</td>
+  <td>83 content documents: 81 API/package pages, overview and source README; 349 declared member anchors</td>
+  <td>Member anchors include overloads and constructors, so 349 is not the selected target count</td>
 </tr>
 <tr>
-<td>SedonaDB</td>
-<td>212 pinned SQL function pages matching 212 of 226 registry names</td>
-<td>Map registered aliases separately</td>
+  <td>SedonaDB</td>
+  <td>214 pinned documents: 212 SQL function pages, SQL index and README</td>
+  <td>Registered aliases are mapped explicitly; missing targets remain visible</td>
 </tr>
 </tbody>
 </table>
-<p>The replacement bundle has 265 version-checked official pages and 2,867 extracted API anchors. The old tslearn bundle was approximately 96% dataset text and its distillation limit cut off inside a dataset. The replacement text excludes that payload. These documents are <strong>staged for review</strong>, not substituted into historical runs.</p>
-<p>Freeze one canonical target bank for all five conditions. Tag each target as documented, undocumented or unresolved using qualified documentation evidence. Report success for each stratum and the shared total. An undocumented API remains eligible if its public library identity is established. All conditions receive the same target signature and runtime instructions; implementation bodies and reference answers are not ordinary audience inputs.</p>
-<h2>4. Experiment plan and stages</h2>
+<p>The three Python corpora include 265 version-checked API pages plus their three pinned repository READMEs. Their extracted anchors are documentation records, not automatically eligible benchmark targets. The new manifest marks each selected target <strong>documented</strong>, <strong>undocumented</strong> or <strong>unresolved</strong>. The bound target mappings establish the 1,903 exact-mapped and 3,404 no-exact-mapping dispositions above.</p>
 <table>
 <thead>
 <tr>
-<th>Condition</th>
-<th>Audience documentation</th>
-<th>Alias code</th>
-<th>Embedded fix hints</th>
+  <th>Consumer</th>
+  <th>Actual documentation input</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Original</td>
-<td>Original bundle</td>
-<td>No</td>
-<td>No</td>
+  <td>Original audience, default relevant/entry mode</td>
+  <td>The pinned top-level README verbatim, followed by exact reviewed excerpts for the requested API; an explicit no-excerpt note for an undocumented target</td>
 </tr>
 <tr>
-<td>README only</td>
-<td>Generated README</td>
-<td>No</td>
-<td>No</td>
+  <td>README author</td>
+  <td>Entire reviewed corpus through recorded distillation chunks, plus complete exact target excerpts and permitted source facts</td>
 </tr>
 <tr>
-<td>Alias only</td>
-<td>Original + alias interface description</td>
-<td>Validated</td>
-<td>No</td>
+  <td>README-only audience</td>
+  <td>The generated entry for the exact requested API identity</td>
 </tr>
 <tr>
-<td>Error hints only</td>
-<td>Original bundle</td>
-<td>No</td>
-<td>Validated exception guidance</td>
-</tr>
-<tr>
-<td>Combined</td>
-<td>Generated + alias interface description</td>
-<td>Validated</td>
-<td>Validated exception guidance</td>
+  <td>Explicit full-document audience mode</td>
+  <td>The entire selected document bundle; a separate exposure setting that must be frozen in the protocol</td>
 </tr>
 </tbody>
 </table>
-<p><img src="review/figures/04_branch_separation.svg" alt="Branches and isolated outputs" /></p>
-<pre><code class="language-text">Development evidence -&gt; generate/check README, aliases and native hints
-                      -&gt; freeze five library versions
-Each version + same task -&gt; R0 program -&gt; build/run/check
-                                      -&gt; if failed: R1 repair -&gt; check
-                                                        -&gt; if failed: R2 repair -&gt; check
-README only / Combined -&gt; review R2 failures -&gt; deep-dive README revision
-                       -&gt; freeze revised README -&gt; fresh audience evaluation
-</code></pre>
-<p>R0 is the first program, R1 the first program repair, and R2 the second repair. Provider retries are not repair rounds. README deep dive changes the documentation and therefore starts a separate fresh evaluation. Learned development memory must not leak prior evaluation answers between trials. Hint development uses separate development failures and freezes the source changes before the controlled comparison.</p>
-<p>The first requested live stage remains Original microbenchmarks at R0 and complete configured README authoring. The six small pilots and later R1/R2, puzzles and five-condition comparisons require their reviewed task/oracle/exposure settings. No dependent prompts or outputs should be invented before their preceding results exist.</p>
-<h2>5. Progress and evidence</h2>
+<p>Every library uses the same reviewed shared-context rule: its pinned top-level README is declared through <code>shared_document_ids</code> and supplied verbatim before target excerpts. A repeated whole-document excerpt is omitted only when its content is exactly identical to the shared document. Shared README text does <strong>not</strong> earn exact API-documentation coverage credit. Other introduction/setup pages are not automatically appended. Common scaffold, fixture, runtime and requested-target instructions are supplied separately and held equal across conditions. An unresolved or missing mapping blocks the relevant request. A documented excerpt that exceeds the configured budget raises an error rather than being silently cut.</p>
+<p>Author distillation now covers every character of the configured reviewed corpus in deterministic chunks. Its receipts record chunk ranges, input/output hashes and exact requests. A summary can compress information; the claim is that no input tail is silently omitted. The number of distillation calls depends on corpus size and the reviewed chunk setting.</p>
+<p>Do not import implementation bodies, private expected answers or evaluation failures into ordinary audience documentation. Keep documented and undocumented target strata in the results. If a study intentionally changes exposure scope, record it as a separate protocol rather than mixing the results.</p>
+<h2>4. Conditions, rounds and later studies</h2>
 <table>
 <thead>
 <tr>
-<th>Work</th>
-<th>Current state</th>
+  <th>Condition</th>
+  <th>Audience documentation</th>
+  <th>Source treatment</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Six pinned source identities</td>
-<td>Verified</td>
+  <td>Original</td>
+  <td>Pinned top-level README + reviewed original API excerpts</td>
+  <td>Pinned original source</td>
 </tr>
 <tr>
-<td>Dependency-origin discovery filter</td>
-<td>Implemented and tested; optional configuration documented</td>
+  <td>README only</td>
+  <td>Exact generated API entry</td>
+  <td>Original source; generated document installed after validation</td>
 </tr>
 <tr>
-<td>Original-document acquisition</td>
-<td>265 pages fetched and version checked</td>
+  <td>Alias only</td>
+  <td>Shared README + original excerpts + alias interface description</td>
+  <td>Reviewed aliases mapped to the same defining targets</td>
 </tr>
 <tr>
-<td>Owner-qualified reduction, wrappers and full public exposures</td>
-<td>Correction/review still required</td>
+  <td>Error hints only</td>
+  <td>Shared README + original excerpts</td>
+  <td>Reviewed embedded exception guidance</td>
 </tr>
 <tr>
-<td>New approved denominator and task manifest</td>
-<td>Not frozen</td>
-</tr>
-<tr>
-<td>Existing runtime controls</td>
-<td>25 expected outcomes retained; setup evidence, not audience scores</td>
-</tr>
-<tr>
-<td>Five branch names for each library</td>
-<td>Published; all new refs still point to untreated baselines</td>
-</tr>
-<tr>
-<td>New R0 programs and generated README entries</td>
-<td>Not run</td>
-</tr>
-<tr>
-<td>New aliases, embedded hints and Combined installation</td>
-<td>Pending development and validation</td>
-</tr>
-<tr>
-<td>Launch status</td>
-<td>Blocked for inventory/documentation correction and user review</td>
+  <td>Combined</td>
+  <td>Generated entry plus alias interface description</td>
+  <td>Reviewed aliases and embedded hints</td>
 </tr>
 </tbody>
 </table>
-<p>The previous evaluator release and measured cohorts stay unchanged. <a href="review/api-audit/PRIOR_EXPERIMENT_GUIDE.md">The old guide</a> preserves the preparation record. Its 1,695-target and cost figures are superseded assumptions. Recalculate tokens and cost after approving the corrected bank and documentation.</p>
-<h2>6. Folder structure and output records</h2>
+<p>The five branch names exist for every library, but <strong>the treatment branches are still untreated placeholders</strong>. Branch existence does not prove that a generated README, alias implementation or hint treatment has been installed or tested.</p>
+<p><img src="review/figures/qualified_study_stages.svg" alt="Current and planned experiment stages" /></p>
+<table>
+<thead>
+<tr>
+  <th>Stage</th>
+  <th>Meaning</th>
+  <th>Current state</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Inventory and documentation freeze</td>
+  <td>Approve target identities, dispositions, document scope, fixtures and hashes</td>
+  <td>Inputs verified; user review pending</td>
+</tr>
+<tr>
+  <td>One API per library</td>
+  <td>Six end-to-end pilots with actual delivered prompts and complete outputs</td>
+  <td>Six complete prompt previews saved; no live pilot sent</td>
+</tr>
+<tr>
+  <td>Complete README authoring</td>
+  <td>Author every approved selected API; validate exact completion and install reviewed documents</td>
+  <td>Frozen inputs verified; user review pending</td>
+</tr>
+<tr>
+  <td>Original micro R0</td>
+  <td>First audience-written program for each approved target</td>
+  <td>Pending approval</td>
+</tr>
+<tr>
+  <td>R1</td>
+  <td>First bounded repair after an actual R0 failure</td>
+  <td>Pending preceding evidence and reviewed repair policy</td>
+</tr>
+<tr>
+  <td>R2</td>
+  <td>Second bounded repair after an actual R1 failure</td>
+  <td>Pending preceding evidence and reviewed repair policy</td>
+</tr>
+<tr>
+  <td>Five-condition micro comparison</td>
+  <td>Same bank, fixtures, scoring and exposure rules for all conditions</td>
+  <td>Treatment development/installation and matched protocol pending</td>
+</tr>
+<tr>
+  <td>Puzzles</td>
+  <td>Complete approved public inputs, hidden expectations, scoring and outputs</td>
+  <td>Full matched bank/protocol not yet certified complete</td>
+</tr>
+<tr>
+  <td>README-only / Combined deep dive</td>
+  <td>Inspect R2 failures, revise docs, freeze a revision and evaluate with a fresh audience</td>
+  <td>Separate later evaluation, not a continuation counted as R0</td>
+</tr>
+</tbody>
+</table>
+<p>Provider retries are not R1/R2. A later README revision starts a new evaluation identity. A model-authored assertion is not an independent oracle. Record which tests are independent, which are execution witnesses and which assertions were written by the audience.</p>
+<p>Secondary user questions remain explicitly <strong>unscheduled studies</strong>, not extra current paid jobs:</p>
+<table>
+<thead>
+<tr>
+  <th>Question</th>
+  <th>Required comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Sequential all-entry README versus selected-API regeneration/order</td>
+  <td>Equal author budget and an explicit generation order</td>
+</tr>
+<tr>
+  <td>Attached-library refactoring/reorganization</td>
+  <td>A separate source treatment, distinct from deduplicating the evaluation bank</td>
+</tr>
+<tr>
+  <td>Memory on versus off</td>
+  <td>Frozen development-only memory with evaluation leakage controls</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Fixes, validation and remaining work</h2>
+<p>The implemented replacements address distinct-owner merging, unstable identity use across README stages, missing source/public exposure records, broad documentation ingestion, silent corpus truncation, and adapters guessing an API from an output-folder name. <a href="READINESS_FIXES.html">READINESS_FIXES.html</a> links each fix to its evidence and recorded checks and remaining study stages.</p>
+<table>
+<thead>
+<tr>
+  <th>Evidence</th>
+  <th>What it establishes</th>
+  <th>What it does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Offline regression tests</td>
+  <td>Deterministic contracts with mocked provider/process boundaries</td>
+  <td>Real model behavior or complete scientific correctness</td>
+</tr>
+<tr>
+  <td>Existing 25 native setup outcomes</td>
+  <td>Earlier positive and deliberately negative controls behaved as expected</td>
+  <td>25 successful benchmarks, or six new live end-to-end pilots</td>
+</tr>
+<tr>
+  <td>Source/document checksums</td>
+  <td>Which exact bytes and versions are bound</td>
+  <td>Semantic equivalence of APIs or documentation sufficiency</td>
+</tr>
+<tr>
+  <td>New reviewed previews</td>
+  <td>The proposed prompt/data exposure before a call</td>
+  <td>A delivered request, measured pass or provider token receipt</td>
+</tr>
+<tr>
+  <td>Current source selection</td>
+  <td>A reproducible structural policy and visible dispositions</td>
+  <td>A proof that all wrappers or all bugs have been eliminated</td>
+</tr>
+</tbody>
+</table>
+<p>The current catalog is <a href="review/qualified-plan/RUN_CATALOG.cluster.yaml">RUN_CATALOG.cluster.yaml</a>. It contains seven banks: Beast Scala 1,394, Beast Java 1,393, MDAnalysis 1,538, tslearn 362, mir_eval 178, Thumbnailator 225 and SedonaDB 217. The initial plan is 14 held jobs: seven Original R0 banks and seven complete README-authoring banks. New outputs belong under the cluster study's <code>qualified/</code> namespace.</p>
+<table>
+<thead>
+<tr>
+  <th>Final integration binding</th>
+  <th>Receipt-backed value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Current evaluator snapshot</td>
+  <td><code>evaluator-qualified/</code>; previous <code>evaluator/</code> preserved</td>
+</tr>
+<tr>
+  <td>Release ID</td>
+  <td><code>2026-11-17-qualified-api-f3c6fd6fe802</code></td>
+</tr>
+<tr>
+  <td>Evaluator content SHA256</td>
+  <td><code>f3c6fd6fe802716592df2d1342fc1b5bc9de5ca372aac880c196a240b2cb1838</code></td>
+</tr>
+<tr>
+  <td>Integrated test receipt</td>
+  <td><a href="review/qualified-checks/FINAL_VALIDATION.json">Final checks</a> — 684 tests and 365 subtests passed on both Mac and lab cluster</td>
+</tr>
+<tr>
+  <td>Cluster preflight receipt</td>
+  <td><code>review/qualified-checks/preflight/PREFLIGHT.json</code></td>
+</tr>
+</tbody>
+</table>
+<p><a href="RUNBOOK.md">RUNBOOK.md</a> provides concrete verification and <code>--prepare</code> commands against that catalog. It deliberately contains no runnable live command. The replacement is an input-review package, not completed model experimentation.</p>
+<p>No code change grants permission to run. The review hold persists until the user approves the concrete replacement bank and plan. Prior launch commands remain superseded.</p>
+<h2>6. Folder structure and manifests</h2>
 <pre><code class="language-text">2026-11-17-latest-stable-canonical/
-  EXPERIMENT_GUIDE.md / .html     current guide
-  STUDY_LOCK.json                versions, scope and hold state
-  SYNC_MANIFEST.json             exact portable-file hashes
-  evaluator/                    unchanged frozen prior evaluator
-  operator/cluster/             prior launch plan and current hold receipts
+  EXPERIMENT_GUIDE.md / .html      current guide
+  READINESS_FIXES.md / .html       fixes, evidence and remaining checks
+  STUDY_LOCK.json                  official source vs publication identities
+  SYNC_MANIFEST.json               portable-file checksums
+  RUNBOOK.md                      reviewed local/cluster commands
+  evaluator/                      prior frozen evaluator, preserved
+  evaluator-qualified/            new qualified evaluator, release-bound
+  operator/cluster/               plan, approval/hold and launch receipts
   review/
-    api-audit/                  correction tables, source rows and module counts
-      documentation/            raw official pages, normalized text and provenance
-      code_updates/             new origin-filter code, tests and documentation
-    CURRENT_BANK.html           prior exact Original request previews
-    PILOT_REVIEW.html           prior one-API-per-library walkthroughs
-    EXPERIMENT_TRACKER.*        current progress and separate historical cohorts
-    runtime_evidence/           existing setup programs, stdout/stderr and checks
+    qualified-api/
+      rdpro/                      Scala/Java ledgers and selected API manifests
+      mdanalysis/                 Python/Cython definitions and exposure mappings
+      tslearn/                    Python definitions and exposure mappings
+      mir_eval/                   Python definitions and exposure mappings
+      thumbnailator/              Java methods/constructors and Javadoc mappings
+      sedonadb/                   SQL registrations, aliases and document mappings
+      &lt;library&gt;/original-docs/    source-bound corpus and target excerpts
+    qualified-plan/libraries/    new bank configs, profiles and scaffolds
+    qualified-bank/INDEX.html    searchable all-API/task input browser + CSV
+    qualified-pilots/INDEX.html  six complete unsent R0 requests and scaffolds
+    qualified-checks/           local/cluster tests and preparation/build receipts
+    figures/                     count data, comparison chart and stage diagrams
+    CURRENT_BANK.html             task prompts/inputs, labeled by preparation cohort
+    PILOT_REVIEW.html             six pilot walkthroughs, labeled by cohort
+    EXPERIMENT_TRACKER.*          current progress plus separate historical cohorts
+    runtime_evidence/            setup programs, stdout/stderr and check receipts
+    api-audit/                   earlier correction evidence; retained as history
 </code></pre>
-<p>Cluster sources live at <code>/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/&lt;library&gt;</code>. The portable review lives in <code>review_snapshot/</code> under that study. New measured outputs must use a newly fingerprinted plan/output namespace. Record each delivered prompt, response, program, execution command, stdout/stderr, verdict, error category, repair round, timestamps and provider token receipt. Unknown usage remains unknown; it is not zero. Current previews are not delivered model requests.</p>
-<h2>7. Local, cluster and GitHub navigation</h2>
-<p>Use the Mac or VS Code for review. Use VS Code Remote SSH for future long runs in the validated cluster environment. A fresh native Mac scientific runtime has not been verified. Open the guide locally and verify the portable package:</p>
+<p>For source-audited libraries, each <code>review/qualified-api/&lt;library&gt;/</code> directory contains <code>ledger.json</code>, <code>canonical-selection.json</code>, <code>api_inventory.&lt;language&gt;.json</code> and <code>api_manifest.&lt;language&gt;.json</code>. The inventory binds all candidate sites and the selected receipt separately. An API manifest lists selected exact identities. Beast has distinct Scala and Java manifest files; they share the repository provenance. Sedona's final registration binding is listed with its own policy.</p>
+<p>Each <code>original-docs/manifest.json</code> records the shared README IDs, complete reviewed corpus and exact target mappings. Its payload paths resolve relative to its own directory. An output config may relocate while retaining an absolute manifest locator and its checksum. The manifest, complete corpus and all target excerpts are included in input fingerprints.</p>
+<p>Every measured output must retain the exact requested API identity, public access path, delivered prompts, response, generated program, command, stdout/stderr, verdict, error category, repair round, timestamp and provider usage receipt. A filesystem-safe hashed name is only a storage key; it must never become the requested API. Missing provider usage is unknown, not zero.</p>
+<h2>7. Local, cluster and GitHub</h2>
+<p>Use the Mac or VS Code for review. Long runs belong in the validated cluster environment through VS Code Remote SSH. A fresh native Mac scientific runtime is not currently certified. Review-only local checks are:</p>
 <pre><code class="language-bash">cd &quot;/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical&quot;
 python3 verify_snapshot.py
-open review/api-audit/API_AUDIT.html
+open EXPERIMENT_GUIDE.html
 </code></pre>
-<p>Inspect the cluster without launching anything:</p>
+<p>Cluster source and review locations are separate:</p>
+<pre><code class="language-text">/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/&lt;library&gt;
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/
+</code></pre>
+<p>Read-only source inspection:</p>
 <pre><code class="language-bash">ssh -o ClearAllForwardings=yes lab
 STUDY=/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical
-cat &quot;$STUDY/PRELAUNCH_CHECKS.json&quot;
 git -C &quot;$STUDY/sources/rdpro&quot; rev-parse HEAD 'HEAD^{tree}'
 cd &quot;$STUDY/review_snapshot&quot;
 python3 verify_snapshot.py
 </code></pre>
-<p>Each library has five refs under <code>study/2026-11-17-latest-stable-canonical/</code>: <code>original</code>, <code>readme-only</code>, <code>alias-only</code>, <code>error-hints-only</code>, <code>combined</code>. Inspect with <code>git show &lt;ref&gt;:&lt;path&gt;</code> without switching a running checkout. Changing a branch name does not update frozen inputs or prior outputs. Branch existence does not mean a treatment was installed.</p>
-<p>The <a href="https://github.com/ZhuochengShang/AIDEAL/tree/study%2F2026-11-17-latest-stable-canonical">AIDEAL study branch</a> carries the correction and review package. Main, measured history and the old evaluator release remain unchanged. Local/cluster/GitHub copies are compared by the sync manifest, not just filenames.</p>
-<p><strong>Do not run the prior launch commands.</strong> First finish and review the corrected inventory/documents, migrate qualified IDs, regenerate the plan and obtain the requested pre-run review. <a href="RUNBOOK.md">RUNBOOK.md</a> provides current read-only checks and links to the earlier commands as history.</p>
-<section><h2>Verified custom Spark namespace</h2><p>Beast defines four production files under org.apache.spark.beast, including its custom SQL data types. The most specific configured namespace rule preserves these custom definitions while excluding ordinary Spark APIs. The origin filter retained all 31 recorded declarations from those four files in a read-only source check; this is not a final benchmark count.</p></section></main></html>
+<p>Every library has refs under <code>study/2026-11-17-latest-stable-canonical/</code>: <code>original</code>, <code>readme-only</code>, <code>alias-only</code>, <code>error-hints-only</code>, <code>combined</code>. Inspect a ref with <code>git show</code> without changing a checkout. Treat those refs as baseline placeholders until installation receipts identify the actual treatment commits.</p>
+<p>The <a href="https://github.com/ZhuochengShang/AIDEAL/tree/study%2F2026-11-17-latest-stable-canonical">AIDEAL study branch</a> hosts the portable review. The frozen review package is synchronized by its file checksums across local storage, the cluster and this study branch. Verify it with <code>python3 verify_snapshot.py</code>; later edits require a new freeze and sync. Main, previous branches and measured history remain preserved.</p>
+<p>Use the concrete review-only preparation commands in <a href="RUNBOOK.md">RUNBOOK.md</a> after checking the final qualified release/preflight binding. Live commands remain withheld until approval; do not reuse the superseded plan or infer permission from a passing test suite.</p>
+<h2>Current review links</h2>
+<p>Start with <a href="review/qualified-pilots/INDEX.html">six complete Original R0 previews</a>, then <a href="review/qualified-bank/INDEX.html">the full 5,307-target browser</a>. Inspect the <a href="review/qualified-plan/QUEUE.cluster.json">paused 14-job queue</a>, <a href="review/qualified-plan/COST_SCOPE.md">cost scenarios</a>, <a href="review/qualified-checks/preflight/PREFLIGHT.json">seven-bank preparation receipt</a>, and <a href="review/qualified-checks/NATIVE_HINT_INTAKE.md">native failure-to-hint connection</a>. R0/README preparation is verified; treatments, live pilots, five-condition results and the matched puzzle protocol remain separate pending stages.</p>
+<h2>8. Read the code in execution order</h2>
+<p><a href="CODE_REVIEW_ROUTE.md">Code review route with exact functions, line numbers and prompts</a>. The native all-API R0/README launchers and the matched five-condition runner are separate entry points. Their evidence is connected through the verified native R0 intake; do not assume that a legacy condition run is the new full-bank run.</p>

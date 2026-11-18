@@ -1,0 +1,9 @@
+worker(q, results)[source]
+
+Generic worker. Will run function with the prescribed args and kwargs.
+
+Parameters:
+
+q (multiprocessing.Manager.Queue object) – work queue, from which the worker fetches arguments and messages
+
+results (multiprocessing.Manager.Queue object) – results queue, where results are put after each calculation is finished

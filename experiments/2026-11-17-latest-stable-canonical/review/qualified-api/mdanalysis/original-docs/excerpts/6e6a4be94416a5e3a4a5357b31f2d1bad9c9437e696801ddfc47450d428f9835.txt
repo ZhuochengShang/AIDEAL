@@ -1,0 +1,54 @@
+class MDAnalysis.coordinates.XYZ.XYZWriter(filename, n_atoms=None, convert_units=True, remark=None, precision=5, **kwargs)[source]
+
+Writes an XYZ file
+
+The XYZ file format is not formally defined. This writer follows the VMD implementation for the molfile xyzplugin.
+
+Notes
+
+By default, the XYZ writer will attempt to use the input AtomGroup or Universe elements record to assign atom names in the XYZ file. If the elements record is missing, then the name record will be used. In the event that neither of these are available, the atoms will all be named X. Please see, the User Guide for more information on how to add topology attributes if you wish to add your own elements / atom names to a Universe.
+
+Changed in version 1.0.0: Use elements attribute instead of names attribute, if present.
+
+Changed in version 2.0.0: Support for passing timestep to the writer was deprecated in 1.0 and has now been removed. As a consequence, custom names can no longer be passed to the writer, these should be added to the Universe, or AtomGroup before invoking the writer.
+
+Initialize the XYZ trajectory writer
+
+Parameters:
+
+filename (str) – filename of trajectory file. If it ends with “gz” then the file will be gzip-compressed; if it ends with “bz2” it will be bzip2 compressed.
+
+n_atoms (int (optional)) – Number of atoms in trajectory. By default assume that this is None and that this file is used to store several different models instead of a single trajectory. If a number is provided each written TimeStep has to contain the same number of atoms.
+
+convert_units (bool (optional)) – convert quantities to default MDAnalysis units of Angstrom upon writing [True]
+
+remark (str (optional)) – single line of text (“molecule name”). By default writes MDAnalysis version and frame
+
+precision (int (optional)) –
+set precision of saved trjactory to this number of decimal places.
+
+Added in version 2.9.0.
+
+Changed in version 1.0.0: Removed default_remark variable (Issue #2692).
+
+Changed in version 2.0.0: Due to the removal of timestep as an input for writing, the atoms parameter is no longer relevant and has been removed. If passing an empty universe, please use add_TopologyAttr to add in the required elements or names.
+
+ close()[source]
+
+Close the trajectory file and finalize the writing
+
+ units = {'length': 'Angstrom', 'time': 'ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)[source]
+
+Write object obj at current trajectory frame to file.
+
+Atom elements (or names) in the output are taken from the obj or default to the value of the atoms keyword supplied to the XYZWriter constructor.
+
+Parameters:
+
+obj (Universe or AtomGroup) – The AtomGroup or Universe to write.
+
+Changed in version 2.0.0: Deprecated support for Timestep argument has now been removed. Use AtomGroup or Universe as an input instead.

@@ -1,0 +1,33 @@
+copy_slice(self, sel)
+
+Make a new Timestep containing a subset of the original Timestep.
+
+Parameters:
+
+sel (array_like or slice) – The underlying position, velocity, and force arrays are sliced using a list, slice, or any array-like.
+
+Returns:
+
+A Timestep object of the same type containing all header information and all atom information relevant to the selection.
+
+Return type:
+
+Timestep
+
+Note
+
+The selection must be a 0 based slice or array of the atom indices in this Timestep
+
+Example
+
+Using a Python slice object:
+
+new_ts = ts.copy_slice(slice(start, stop, step))
+
+Using a list of indices:
+
+new_ts = ts.copy_slice([0, 2, 10, 20, 23])
+
+Added in version 0.8.
+
+Changed in version 0.11.0: Reworked to follow new Timestep API. Now will strictly only copy official attributes of the Timestep.

@@ -1,0 +1,142 @@
+FixedResizerFactory (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers
+Class FixedResizerFactory
+java.lang.Object
+net.coobird.thumbnailator.resizers.FixedResizerFactory
+All Implemented Interfaces:
+ResizerFactory
+public class
+FixedResizerFactory
+extends
+Object
+implements
+ResizerFactory
+A
+ResizerFactory
+that returns a specific
+Resizer
+unconditionally.
+Since:
+0.4.0
+Author:
+coobird
+Constructor Summary
+FixedResizerFactory
+(
+Resizer
+resizer)
+Creates an instance of the
+FixedResizerFactory
+which returns
+the speicifed
+Resizer
+under all circumstances.
+Method Summary
+Resizer
+getResizer
+()
+Returns the default
+Resizer
+.
+Resizer
+getResizer
+(
+Dimension
+originalSize,
+Dimension
+thumbnailSize)
+Returns a suitable
+Resizer
+, given the
+Dimension
+s of the
+original image and the thumbnail image.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+FixedResizerFactory
+public
+FixedResizerFactory
+(
+Resizer
+resizer)
+Creates an instance of the
+FixedResizerFactory
+which returns
+the speicifed
+Resizer
+under all circumstances.
+Parameters:
+resizer
+- The
+Resizer
+instance that is to be returned
+under all circumstances.
+Method Detail
+getResizer
+public
+Resizer
+getResizer
+()
+Description copied from interface:
+ResizerFactory
+Returns the default
+Resizer
+.
+Specified by:
+getResizer
+in interface
+ResizerFactory
+Returns:
+The default
+Resizer
+.
+getResizer
+public
+Resizer
+getResizer
+(
+Dimension
+originalSize,
+Dimension
+thumbnailSize)
+Description copied from interface:
+ResizerFactory
+Returns a suitable
+Resizer
+, given the
+Dimension
+s of the
+original image and the thumbnail image.
+Specified by:
+getResizer
+in interface
+ResizerFactory
+Parameters:
+originalSize
+- The size of the original image.
+thumbnailSize
+- The size of the thumbnail.
+Returns:
+The suitable
+Resizer
+to perform the
+resizing operation for the given condition.
+Copyright © 2025. All rights reserved.

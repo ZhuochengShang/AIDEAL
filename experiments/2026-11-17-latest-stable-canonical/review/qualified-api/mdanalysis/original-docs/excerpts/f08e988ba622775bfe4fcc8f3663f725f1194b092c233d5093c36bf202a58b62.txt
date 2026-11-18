@@ -1,0 +1,171 @@
+class MDAnalysis.converters.RDKit.RDKitConverter[source]
+
+Convert MDAnalysis AtomGroup or Universe to RDKit Mol
+
+MDanalysis attributes are stored in each RDKit Atom of the resulting molecule in two different ways:
+
+in an AtomPDBResidueInfo object available through the GetMonomerInfo() method if it’s an attribute that is typically found in a PDB file,
+
+directly as an atom property available through the GetProp() methods for the others.
+
+Supported attributes:
+
+MDAnalysis attribute
+ |
+RDKit
+ |
+
+altLocs
+ |
+atom.GetMonomerInfo().GetAltLoc()
+ |
+
+chainIDs
+ |
+atom.GetMonomerInfo().GetChainId()
+ |
+
+icodes
+ |
+atom.GetMonomerInfo().GetInsertionCode()
+ |
+
+names
+ |
+atom.GetMonomerInfo().GetName() atom.GetProp(“_MDAnalysis_name”)
+ |
+
+occupancies
+ |
+atom.GetMonomerInfo().GetOccupancy()
+ |
+
+resnames
+ |
+atom.GetMonomerInfo().GetResidueName()
+ |
+
+resids
+ |
+atom.GetMonomerInfo().GetResidueNumber()
+ |
+
+segindices
+ |
+atom.GetMonomerInfo().GetSegmentNumber()
+ |
+
+tempfactors
+ |
+atom.GetMonomerInfo().GetTempFactor()
+ |
+
+charges
+ |
+atom.GetDoubleProp(“_MDAnalysis_charge”)
+ |
+
+indices
+ |
+atom.GetIntProp(“_MDAnalysis_index”)
+ |
+
+segids
+ |
+atom.GetProp(“_MDAnalysis_segid”)
+ |
+
+types
+ |
+atom.GetProp(“_MDAnalysis_type”)
+ |
+
+Example
+
+To access MDAnalysis properties:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PDB_full
+>>> u = mda.Universe(PDB_full)
+>>> mol = u.select_atoms('resname DMS').convert_to('RDKIT')
+>>> mol.GetAtomWithIdx(0).GetMonomerInfo().GetResidueName()
+'DMS'
+
+To create a molecule for each frame of a trajectory:
+
+from MDAnalysisTests.datafiles import PSF, DCD
+from rdkit.Chem.Descriptors3D import Asphericity
+
+u = mda.Universe(PSF, DCD, to_guess=['elements'])
+ag = u.select_atoms("resid 1-10")
+
+for ts in u.trajectory:
+    mol = ag.convert_to("RDKIT")
+    x = Asphericity(mol)
+
+Notes
+
+The converter requires the Elements attribute to be present in the topology, else it will fail.
+
+It also requires the bonds attribute, although they will be automatically guessed if not present.
+
+Hydrogens should be explicit in the topology file. If this is not the case, use the parameter implicit_hydrogens=True when using the converter to allow implicit hydrogens, and inferrer=None to disable inferring bond orders and charges. You can also pass your own callable function to inferrer to assign bond orders and charges as you see fit:
+
+>>> from rdkit import Chem
+>>> from rdkit.Chem.AllChem import AssignBondOrdersFromTemplate
+>>> template = Chem.MolFromSmiles("NC(Cc1ccccc1)C(=O)O")
+>>> def infer_from_template(mol: Chem.Mol) -> Chem.Mol:
+...     return AssignBondOrdersFromTemplate(template, mol)
+>>> mol = u.atoms.convert_to.rdkit(inferrer=infer_from_template)
+
+Note that all builtin inferrer functions can be found in the RDKitInferring module.
+
+Since one of the main use case of the converter is converting trajectories and not just a topology, creating a new molecule from scratch for every frame would be too slow so the converter uses a caching system. The cache only stores the 2 most recent AtomGroups that were converted, and is sensitive to the arguments that were passed to the converter. The number of objects cached can be changed with the function set_converter_cache_size(). However, ag.convert_to("RDKIT") followed by ag.convert_to("RDKIT", implicit_hydrogens=False) will not use the cache since the arguments given are different. You can pass a cache=False argument to the converter to bypass the caching system.
+
+The _MDAnalysis_index property of the resulting molecule corresponds to the index of the specific AtomGroup that was converted, which may not always match the index property.
+
+To get a better understanding of how the converter works under the hood, please refer to the following RDKit UGM presentation:
+
+Video (4:55 to 8:05)
+
+Slides
+
+There are some molecules containing specific patterns that the default inferrer cannot currently tackle correctly. See Issue #3339 for more info.
+
+Added in version 2.0.0.
+
+Changed in version 2.2.0: Improved the accuracy of the converter. Atoms in the resulting molecule now follow the same order as in the AtomGroup. The output of atom.GetMonomerInfo().GetName() now follows the guidelines for PDB files while the original name is still available through atom.GetProp("_MDAnalysis_name")
+
+Changed in version 2.10.0: Added inferrer to specify a callable that can transform the molecule (this operation is cached).
+
+Deprecated since version 2.10.0: Deprecated max_iter (moved to the inferrer class MDAnalysisInferrer) and deprecated NoImplicit in favor of implicit_hydrogens.
+
+ convert(obj, cache=True, implicit_hydrogens=False, force=False, inferrer=MDAnalysisInferrer(max_iter=200, sanitize=True), **kwargs)[source]
+
+Write selection at current trajectory frame to Mol.
+
+Parameters:
+
+obj (AtomGroup or) – Universe
+
+cache (bool) – Use a cached copy of the molecule’s topology when available. To be used, the cached molecule and the new one have to be made from the same AtomGroup selection and with the same arguments passed to the converter
+
+inferrer (Optional[Callable[[Chem.Mol], Chem.Mol]]) – A callable to infer bond orders and charges for the RDKit molecule created by the converter. If None, inferring is skipped.
+
+implicit_hydrogens (bool) – Whether to allow implicit hydrogens on the molecule or not.
+
+force (bool) – Force the conversion when no hydrogens were detected but inferrer is not None. Useful for inorganic molecules mostly.
+
+NoImplicit (bool) –
+Opposite of implicit_hydrogens.
+
+Deprecated since version 2.10.0: Use implicit_hydrogens instead (with an opposite value).
+
+max_iter (int) –
+Maximum number of iterations to standardize conjugated systems. See _rebuild_conjugated_bonds().
+
+Deprecated since version 2.10.0: Use inferrer=MDAnalysisInferrer(max_iter=...) instead.
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

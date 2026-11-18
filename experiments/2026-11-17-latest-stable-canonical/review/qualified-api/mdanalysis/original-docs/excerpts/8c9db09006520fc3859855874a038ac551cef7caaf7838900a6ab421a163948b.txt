@@ -1,0 +1,11 @@
+property coord
+
+Reference to current timestep and coordinates of universe.
+
+The raw trajectory coordinates are Universe.coord.positions, represented as a numpy.float32 array.
+
+Because coord is a reference to a Timestep, it changes its contents while one is stepping through the trajectory.
+
+Note
+
+In order to access the coordinates it is better to use the AtomGroup.positions() method; for instance, all coordinates of the Universe as a numpy array: Universe.atoms.positions().

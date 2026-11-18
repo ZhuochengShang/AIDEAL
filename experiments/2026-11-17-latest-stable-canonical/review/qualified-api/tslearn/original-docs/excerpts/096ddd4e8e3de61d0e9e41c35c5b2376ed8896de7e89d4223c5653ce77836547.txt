@@ -1,0 +1,35 @@
+tslearn.barycenters.euclidean_barycenter(X, weights=None)[source]
+
+Standard Euclidean barycenter computed from a set of time series.
+
+Parameters:
+
+Xarray-like, shape=(n_ts, sz, d)
+
+Time series dataset.
+
+weights: None or array
+
+Weights of each X[i]. Must be the same size as len(X). If None, uniform weights are used.
+
+Returns:
+
+numpy.array of shape (sz, d)
+
+Barycenter of the provided time series dataset.
+
+Notes
+
+This method requires a dataset of equal-sized time series
+
+Examples
+
+>>> time_series = [[1, 2, 3, 4], [1, 2, 4, 5]]
+>>> bar = euclidean_barycenter(time_series)
+>>> bar.shape
+(4, 1)
+>>> bar
+array([[1. ],
+       [2. ],
+       [3.5],
+       [4.5]])

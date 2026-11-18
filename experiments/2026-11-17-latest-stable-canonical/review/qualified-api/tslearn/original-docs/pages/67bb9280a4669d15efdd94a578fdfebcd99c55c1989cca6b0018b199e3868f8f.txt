@@ -1,0 +1,231 @@
+ScaledForecastingPipeline
+
+ class tslearn.forecasting.ScaledForecastingPipeline(forecaster, scaler=None)[source]
+
+Scale a series, forecast, and un-scale the forecast.
+
+A pattern often seen in forecasting is to scale each series before handing it over to a model, and to un-scale the model’s predictions using the statistics computed by the scaler, so that the forecaster itself only ever sees normalized data. This estimator acts as a pipeline and fills that gap for tslearn.forecasting forecasters.
+
+Parameters:
+
+forecasterestimator
+
+A tslearn forecaster, exposing fit(X, y=None) and predict(X=None, n=1), that will be trained on the scaled data.
+
+scalertransformer or None (default: None)
+
+A scaler exposing fit, transform and inverse_transform, such as the ones in tslearn.preprocessing. When None, a TimeSeriesScalerMeanVariance is used, scaling each series independently (its default, per_timeseries=True).
+
+Attributes:
+
+per_timeseries_bool
+
+Whether scaling is performed independently per series (mirrors scaler.per_timeseries, defaulting to False when the scaler does not have such a parameter).
+
+scalers_list of transformers
+
+The fitted scaler(s): a single one when per_timeseries_ is False, one per training series otherwise.
+
+forecaster_estimator
+
+The forecaster, fitted on scaled data.
+
+See also
+
+VARIMA, AutoVARIMA
+
+Forecasters that can be wrapped as-is.
+
+Examples
+
+>>> from tslearn.forecasting import VARIMA
+>>> from tslearn.generators import random_walks
+>>> X = random_walks(n_ts=2, sz=20, d=1, random_state=0)
+>>> model = ScaledForecastingPipeline(VARIMA(1, 0, 0)).fit(X)
+>>> model.predict(n=3).shape
+(2, 3, 1)
+
+Methods
+
+fit(X[, y])
+ |
+Fit the scaler(s), then the forecaster on the scaled data.
+ |
+
+fit_predict(X[, y, n])
+ |
+Fit the estimator and forecast n timestamps for the given data.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+predict([X, n])
+ |
+Forecast n timestamps ahead, on the original data scale.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+set_predict_request(*[, n])
+ |
+Configure whether metadata should be requested to be passed to the predict method.
+ |
+
+ fit(X, y=None)[source]
+
+Fit the scaler(s), then the forecaster on the scaled data.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+yIgnored
+
+Returns:
+
+self
+
+The fitted estimator
+
+ fit_predict(X, y=None, n=None)[source]
+
+Fit the estimator and forecast n timestamps for the given data.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+yIgnored
+
+nint or None (default: None)
+
+The number of timestamps to forecast, a.k.a. the horizon. See predict().
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps, on the original data scale.
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ predict(X=None, n=None)[source]
+
+Forecast n timestamps ahead, on the original data scale.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d) or None (default: None)
+
+Time series dataset to forecast. If None, the data passed at fit time is forecasted instead.
+
+nint or None (default: None)
+
+The number of timestamps to forecast, a.k.a. the horizon. When None, forecaster’s own default kicks in instead – 1 for most forecasters, but the whole fitted horizon for LinearProbeForecaster, which computes it in a single shot regardless of n.
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps, on the original data scale.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_predict_request(*, n: bool | None | str = '$UNCHANGED$') → ScaledForecastingPipeline
+
+Configure whether metadata should be requested to be passed to the predict method.
+
+Note that this method is only relevant when this estimator is used as a sub-estimator within a meta-estimator and metadata routing is enabled with enable_metadata_routing=True (see sklearn.set_config()). Please check the User Guide on how the routing mechanism works.
+
+The options for each parameter are:
+
+True: metadata is requested, and passed to predict if provided. The request is ignored if metadata is not provided.
+
+False: metadata is not requested and the meta-estimator will not pass it to predict.
+
+None: metadata is not requested, and the meta-estimator will raise an error if the user provides it.
+
+str: metadata should be passed to the meta-estimator with this given alias instead of the original name.
+
+The default (sklearn.utils.metadata_routing.UNCHANGED) retains the existing request. This allows you to change the request for some parameters and not others.
+
+Added in version 1.3.
+
+Parameters:
+
+nstr, True, False, or None, default=sklearn.utils.metadata_routing.UNCHANGED
+
+Metadata routing for n parameter in predict.
+
+Returns:
+
+selfobject
+
+The updated object.
+
+Examples using tslearn.forecasting.ScaledForecastingPipeline
+
+Forecasting with a pre-trained model
+
+Forecasting with a pre-trained model
+
+A tour of the pre-trained forecasting model zoo
+
+A tour of the pre-trained forecasting model zoo

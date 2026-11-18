@@ -1,0 +1,17 @@
+MDAnalysis.lib.util.filename(name, ext=None, keep=False)[source]
+
+Return a new name that has suffix attached; replaces other extensions.
+
+Parameters:
+
+name (str or NamedStream) – filename; extension is replaced unless keep=True; name can also be a NamedStream (and its NamedStream.name will be changed accordingly)
+
+ext (None or str) – extension to use in the new filename
+
+keep (bool) –
+
+False: replace existing extension with ext;
+
+True: keep old extension if one existed
+
+Changed in version 0.9.0: Also permits NamedStream to pass through.

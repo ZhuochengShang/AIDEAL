@@ -1,0 +1,172 @@
+AlphaInterpolation (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers.configurations
+Enum AlphaInterpolation
+java.lang.Object
+java.lang.Enum
+<
+AlphaInterpolation
+>
+net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+AlphaInterpolation
+>,
+ResizerConfiguration
+public enum
+AlphaInterpolation
+extends
+Enum
+<
+AlphaInterpolation
+>
+implements
+ResizerConfiguration
+An enum which is used to specify the alpha interpolation settings of the
+resizing operations.
+Author:
+coobird
+Enum Constant Summary
+DEFAULT
+A hint which indicates to use the default alpha interpolation settings.
+QUALITY
+A hint used to emphasize quality when performing alpha interpolation.
+SPEED
+A hint used to emphasize speed when performing alpha interpolation.
+Method Summary
+RenderingHints.Key
+getKey
+()
+Returns a rendering hint key.
+Object
+getValue
+()
+Returns a rendering hint value.
+static
+AlphaInterpolation
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+AlphaInterpolation
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+toString
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+SPEED
+public static final
+AlphaInterpolation
+SPEED
+A hint used to emphasize speed when performing alpha interpolation.
+QUALITY
+public static final
+AlphaInterpolation
+QUALITY
+A hint used to emphasize quality when performing alpha interpolation.
+DEFAULT
+public static final
+AlphaInterpolation
+DEFAULT
+A hint which indicates to use the default alpha interpolation settings.
+Method Detail
+values
+public static final
+AlphaInterpolation
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(AlphaInterpolation c : AlphaInterpolation.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+AlphaInterpolation
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+getKey
+public
+RenderingHints.Key
+getKey
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint key.
+Specified by:
+getKey
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint key.
+getValue
+public
+Object
+getValue
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint value.
+Specified by:
+getValue
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint value.
+Copyright © 2025. All rights reserved.

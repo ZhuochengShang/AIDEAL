@@ -1,0 +1,38 @@
+forceSize
+public
+Thumbnails.Builder
+<
+T
+>
+forceSize
+(int width,
+int height)
+Sets the size of the thumbnail.
+The thumbnails will be forced to the specified size, therefore,
+the aspect ratio of the original image will not be preserved in
+the thumbnails. Calling this method will be equivalent to calling
+the
+size(int, int)
+method in conjunction with the
+keepAspectRatio(boolean)
+method with the value
+false
+.
+Once this method is called, calling the
+scale(double)
+method
+will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+Reference to this object.
+Since:
+0.3.2

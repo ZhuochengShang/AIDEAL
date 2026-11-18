@@ -1,0 +1,45 @@
+mir_eval.util.adjust_intervals(intervals, labels=None, t_min=0.0, t_max=None, start_label='__T_MIN', end_label='__T_MAX')
+
+Adjust a list of time intervals to span the range [t_min, t_max].
+
+Any intervals lying completely outside the specified range will be removed.
+
+Any intervals lying partially outside the specified range will be cropped.
+
+If the specified range exceeds the span of the provided data in either direction, additional intervals will be appended. If an interval is appended at the beginning, it will be given the label start_label; if an interval is appended at the end, it will be given the label end_label.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n_events, 2)
+
+Array of interval start and end-times
+
+labelslist, len=n_events or None
+
+List of labels (Default value = None)
+
+t_minfloat or None
+
+Minimum interval start time. (Default value = 0.0)
+
+t_maxfloat or None
+
+Maximum interval end time. (Default value = None)
+
+start_labelstr or float or int
+
+Label to give any intervals appended at the beginning (Default value = ‘__T_MIN’)
+
+end_labelstr or float or int
+
+Label to give any intervals appended at the end (Default value = ‘__T_MAX’)
+
+Returns:
+
+new_intervalsnp.ndarray
+
+Intervals spanning [t_min, t_max]
+
+new_labelslist
+
+List of labels for new_labels

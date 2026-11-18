@@ -1,0 +1,23 @@
+parse_FORTRAN_format(edit_descriptor)[source]
+
+Parse the descriptor.
+
+Parameters:
+
+edit_descriptor (str) – FORTRAN format edit descriptor
+
+Returns:
+
+dict with totallength (in chars), repeat, length, format, decimals
+
+Return type:
+
+dict
+
+Raises:
+
+ValueError – The edit_descriptor is not recognized and cannot be parsed
+
+Note
+
+Specifiers: L ES EN T TL TR / r S SP SS BN BZ are not supported, and neither are the scientific notation Ew.dEe forms.

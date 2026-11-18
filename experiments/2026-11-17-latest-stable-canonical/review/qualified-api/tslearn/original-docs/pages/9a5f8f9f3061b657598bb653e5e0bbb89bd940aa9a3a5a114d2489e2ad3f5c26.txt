@@ -1,0 +1,82 @@
+silhouette_samples
+
+ tslearn.clustering.silhouette_samples(X, labels, metric=None, metric_params=None, n_jobs=None, verbose=0, **kwds)[source]
+
+Compute the Silhouette Coefficient for each sample (cf. [1] and [2]).
+
+Read more in the scikit-learn documentation.
+
+Parameters:
+
+Xarray [n_ts, n_ts] if metric == “precomputed”, or, [n_ts, sz, d] otherwise
+
+Array of pairwise distances between time series, or a time series dataset.
+
+labelsarray, shape = [n_ts]
+
+Predicted labels for each time series.
+
+metricstring, callable or None (default: None)
+
+The metric to use when calculating distance between time series. Should be one of {‘dtw’, ‘softdtw’, ‘euclidean’} or a callable distance function or None. If ‘softdtw’ is passed, a normalized version of Soft-DTW is used that is defined as sdtw_(x,y) := sdtw(x,y) - 1/2(sdtw(x,x)+sdtw(y,y)). If X is the distance array itself, use metric="precomputed". If None, dtw is used.
+
+metric_paramsdict or None (default: None)
+
+Parameter values for the chosen metric. For metrics that accept parallelization of the cross-distance matrix computations, n_jobs and verbose keys passed in metric_params are overridden by the corresponding function arguments. The be key is ignored because the backend is inferred from X.
+
+n_jobsint or None, optional (default=None)
+
+The number of jobs to run in parallel for cross-distance matrix computations. Ignored if the cross-distance matrix cannot be computed using parallelization. None means 1 unless in a joblib.parallel_backend context. -1 means using all processors. See scikit-learns’ Glossary for more details.
+
+verboseint (default: 0)
+
+If nonzero, joblib progress messages are printed during the cross-distance matrix computation (only used by the dtw and softdtw branches).
+
+**kwdsoptional keyword parameters
+
+Any further parameters are passed directly to the distance function, just as for the metric_params parameter. The be keyword is ignored because the backend is inferred from X. Note that, unlike tslearn.clustering.silhouette_score(), sample_size and random_state have no effect here: sklearn’s per-sample silhouette_samples has no subsampling, so these are simply forwarded to the distance function like any other keyword, mirroring sklearn’s own silhouette_score/silhouette_samples pair.
+
+Returns:
+
+silhouettearray, shape = [n_ts]
+
+Silhouette Coefficient for each sample.
+
+References
+
+ [1]
+Peter J. Rousseeuw (1987). “Silhouettes: a Graphical Aid to the Interpretation and Validation of Cluster Analysis”. Computational and Applied Mathematics 20: 53-65.
+
+ [2]
+Wikipedia entry on the Silhouette Coefficient
+
+Examples
+
+>>> from tslearn.generators import random_walks
+>>> from tslearn.metrics import cdist_dtw
+>>> from tslearn.metrics import dtw
+>>> numpy.random.seed(0)
+>>> X = random_walks(n_ts=20, sz=16, d=1)
+>>> labels = numpy.random.randint(2, size=20)
+>>> float(numpy.mean(silhouette_samples(X, labels, metric="dtw")))
+0.13383800...
+>>> float(numpy.mean(silhouette_samples(X, labels,
+...                                     metric="euclidean")))
+0.09126917...
+>>> float(numpy.mean(silhouette_samples(X, labels,
+...                                     metric="softdtw")))
+0.17953934...
+>>> float(numpy.mean(silhouette_samples(X, labels, metric="softdtw",
+...                                     metric_params={"gamma": 2.})))
+0.17591060...
+>>> float(numpy.mean(silhouette_samples(cdist_dtw(X), labels,
+...                                     metric="precomputed")))
+0.13383800...
+>>> float(numpy.mean(silhouette_samples(X, labels, metric=dtw)))
+0.13383800...
+
+Examples using tslearn.clustering.silhouette_samples
+
+Silhouette analysis
+
+Silhouette analysis

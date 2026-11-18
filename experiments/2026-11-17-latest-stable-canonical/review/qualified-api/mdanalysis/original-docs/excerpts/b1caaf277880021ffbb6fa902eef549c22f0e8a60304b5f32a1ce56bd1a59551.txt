@@ -1,0 +1,31 @@
+class MDAnalysis.auxiliary.XVG.XVGReader(filename, **kwargs)[source]
+
+Auxiliary reader to read data from an .xvg file.
+
+Default reader for .xvg files. All data from the file will be read and stored on initialisation.
+
+Parameters:
+
+filename (str) – Location of the file containing the auxiliary data.
+
+**kwargs – Other AuxReader options.
+
+See also
+
+AuxReader
+
+Note
+
+The file is assumed to be of a size such that reading and storing the full contents is practical.
+
+ read_all_times()[source]
+
+Get NumPy array of time at each step.
+
+Returns:
+
+Time at each step.
+
+Return type:
+
+NumPy array of float

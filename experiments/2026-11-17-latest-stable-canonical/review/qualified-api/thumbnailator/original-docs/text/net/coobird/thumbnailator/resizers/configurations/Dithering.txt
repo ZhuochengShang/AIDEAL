@@ -1,0 +1,172 @@
+Dithering (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers.configurations
+Enum Dithering
+java.lang.Object
+java.lang.Enum
+<
+Dithering
+>
+net.coobird.thumbnailator.resizers.configurations.Dithering
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+Dithering
+>,
+ResizerConfiguration
+public enum
+Dithering
+extends
+Enum
+<
+Dithering
+>
+implements
+ResizerConfiguration
+An enum which is used to specify the dithering settings of the
+resizing operations.
+Author:
+coobird
+Enum Constant Summary
+DEFAULT
+A hint to use the default dithering settings.
+DISABLE
+A hint used to disable dithering.
+ENABLE
+A hint used to enable dithering.
+Method Summary
+RenderingHints.Key
+getKey
+()
+Returns a rendering hint key.
+Object
+getValue
+()
+Returns a rendering hint value.
+static
+Dithering
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+Dithering
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+toString
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+ENABLE
+public static final
+Dithering
+ENABLE
+A hint used to enable dithering.
+DISABLE
+public static final
+Dithering
+DISABLE
+A hint used to disable dithering.
+DEFAULT
+public static final
+Dithering
+DEFAULT
+A hint to use the default dithering settings.
+Method Detail
+values
+public static final
+Dithering
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(Dithering c : Dithering.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+Dithering
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+getKey
+public
+RenderingHints.Key
+getKey
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint key.
+Specified by:
+getKey
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint key.
+getValue
+public
+Object
+getValue
+()
+Description copied from interface:
+ResizerConfiguration
+Returns a rendering hint value.
+Specified by:
+getValue
+in interface
+ResizerConfiguration
+Returns:
+Rendering hint value.
+Copyright © 2025. All rights reserved.

@@ -1,0 +1,53 @@
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+String
+format,
+int start)
+throws
+IOException
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string,
+located in the directory specified. The numbering will be consecutive
+from the specified value.
+The format string should contain the string
+%d
+which will be
+replaced with a consecutively counted number. Additional formatting
+can be applied. For more details, please refer to the section on
+Numeric
+formatting in the Java API specification for the
+Formatter
+class.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+, and the
+specified value is
+5
+, with format string
+image-%d
+:
+/foo/bar/image-5
+/foo/bar/image-6
+/foo/bar/image-7
+/foo/bar/image-8
+and so on.
+Parameters:
+dir
+- The directory in which the files are to be located.
+format
+- The format string to use.
+start
+- The value from which to start counting.
+Throws:
+IOException
+- If the specified directory path is not a directory,
+or if does not exist.

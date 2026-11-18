@@ -1,0 +1,37 @@
+chi1_selection(n_name='N', ca_name='CA', cb_name='CB', cg_name='CG CG1 OG OG1 SG')
+
+Select AtomGroup corresponding to the chi1 sidechain dihedral N-CA-CB-*G.
+
+The gamma atom is taken to be the heavy atom in the gamma position. If more than one heavy atom is present (e.g. CG1 and CG2), the one with the lower number is used (CG1).
+
+Warning
+
+This numbering of chi1 atoms here in following with the IUPAC 1970 rules. However, it should be noted that analyses which use dihedral angles may have different definitions. For example, the MDAnalysis.analysis.dihedrals.Janin class does not incorporate amino acids where the gamma atom is not carbon, into its chi1 selections.
+
+c_name: str (optional)
+
+name for the backbone C atom
+
+ca_name: str (optional)
+
+name for the alpha-carbon atom
+
+cb_name: str (optional)
+
+name for the beta-carbon atom
+
+cg_name: str (optional)
+
+name for the gamma-carbon atom
+
+AtomGroup
+
+4-atom selection in the correct order. If no CB and/or CG is found then this method returns None.
+
+Added in version 0.7.5.
+
+Changed in version 1.0.0: Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.
+
+Note
+
+This requires the underlying topology to have names. Otherwise, a NoDataError is raised.

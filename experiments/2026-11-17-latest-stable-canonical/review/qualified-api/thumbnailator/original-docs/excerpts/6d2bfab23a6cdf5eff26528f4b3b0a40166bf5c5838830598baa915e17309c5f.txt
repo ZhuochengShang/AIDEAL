@@ -1,0 +1,30 @@
+height
+public
+Thumbnails.Builder
+<
+T
+>
+height
+(int height)
+Sets the height of the thumbnail.
+The thumbnail will have the dimensions constrained by the specified
+height, and the aspect ratio of the original image will be preserved
+by the thumbnail.
+Once this method is called, calling the
+size(int, int)
+or
+the
+scale(double)
+method will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+height
+- The height of the thumbnail.
+Returns:
+Reference to this object.
+Since:
+0.3.5

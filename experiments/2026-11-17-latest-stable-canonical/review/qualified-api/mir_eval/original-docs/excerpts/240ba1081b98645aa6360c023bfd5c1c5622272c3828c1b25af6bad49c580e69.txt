@@ -1,0 +1,37 @@
+mir_eval.alignment.percentage_correct_segments(reference_timestamps, estimated_timestamps, duration: float | None = None)
+
+Calculate the percentage of correct segments (PCS) metric.
+
+It constructs segments out of predicted and estimated timestamps separately out of each given timestamp vector and calculates the percentage of overlap between correct segments compared to the total duration.
+
+WARNING: This metrics behaves differently depending on whether “duration” is given!
+
+If duration is not given (default case), the computation follows the MIREX lyrics alignment challenge 2020. For a timestamp vector with entries (t1,t2, … tN), segments with the following (start, end) boundaries are created: (t1, t2), … (tN-1, tN). After the segments are created, the overlap between the reference and estimated segments is determined and divided by the total duration, which is the distance between the first and last timestamp in the reference.
+
+If duration is given, the segment boundaries are instead (0, t1), (t1, t2), … (tN, duration). The overlap is computed in the same way, but then divided by the duration parameter given to this function. This method follows the original paper [#fujihara2011] more closely, where the metric was proposed. As a result, this variant of the metrics punishes cases where the first estimated timestamp is too early or the last estimated timestamp is too late, whereas the MIREX variant does not. On the other hand, the MIREX metric is invariant to how long the eventless beginning and end parts of the audio are, which might be a desirable property.
+
+Parameters:
+
+reference_timestampsnp.ndarray
+
+reference timestamps, in seconds
+
+estimated_timestampsnp.ndarray
+
+estimated timestamps, in seconds
+
+durationfloat
+
+Optional. Total duration of audio (seconds). WARNING: Metric is computed differently depending on whether this is provided or not - see documentation above!
+
+Returns:
+
+pcsfloat
+
+Percentage of time where ground truth and predicted segments overlap
+
+Examples
+
+>>> reference_timestamps = mir_eval.io.load_events('reference.txt')
+>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')
+>>> pcs = mir_eval.align.percentage_correct_segments(reference_timestamps, estimated_timestamps)

@@ -1,0 +1,37 @@
+toFiles
+public void
+toFiles
+(
+Iterable
+<
+File
+> iterable)
+throws
+IOException
+Creates the thumbnails and stores them to the files.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written.
+The file names for the thumbnails are obtained from the given
+Iterable
+.
+Parameters:
+iterable
+- An
+Iterable
+which returns an
+Iterator
+which returns file names
+which should be assigned to each thumbnail.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+Since:
+0.3.7

@@ -1,0 +1,154 @@
+class MDAnalysis.lib.formats.libmdaxdr.TRRFile
+
+File-like wrapper for gromacs TRR files.
+
+This class can be similar to the normal file objects in python. The read() function will return a frame and all information in it instead of a single line. Additionally the context-manager protocoll is supported as well.
+
+Parameters:
+
+fname (str) – The filename to open.
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+Examples
+
+>>> from MDAnalysis.lib.formats.libmdaxdr import TRRFile
+>>> with TRRFile('foo.trr') as f:
+>>>     for frame in f:
+>>>         print(frame.x)
+
+Notes
+
+This class can be pickled. The pickle will store filename, mode, current frame and offsets
+
+Changed in version 2.4.0: Added read_direct_xvf method to read into an existing positions array
+
+ calc_offsets()
+
+read byte offsets from TRR file directly
+
+ close()
+
+Close the open XDR file
+
+Raises:
+
+IOError –
+
+ offsets
+
+get byte offsets from current xdr file
+
+See also
+
+set_offsets
+
+ open(fname, mode)
+
+Open a XDR file
+
+If another XDR file is currently opened it will be closed
+
+Parameters:
+
+fname (str) – The filename to open.
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+Raises:
+
+IOError –
+
+ read()
+
+Read next frame in the TRR file
+
+Returns:
+
+frame – namedtuple with frame information
+
+Return type:
+
+libmdaxdr.TRRFrame
+
+See also
+
+TRRFrame, XTCFile
+
+Raises:
+
+IOError –
+
+ read_direct_xvf(positions, velocities, forces)
+
+Read next frame in the TRR file with positions read directly into a pre-existing array.
+
+Parameters:
+
+positions (np.ndarray) – positions array to read positions into
+
+Returns:
+
+frame – namedtuple with frame information
+
+Return type:
+
+libmdaxdr.TRRFrame
+
+See also
+
+TRRFrame, XTCFile
+
+Raises:
+
+IOError –
+
+Added in version 2.4.0.
+
+ seek(frame)
+
+Seek to Frame.
+
+Please note that this function will generate internal file offsets if they haven’t been set before. For large file this means the first seek can be very slow. Later seeks will be very fast.
+
+Parameters:
+
+frame (int) – seek the file to given frame
+
+Raises:
+
+IOError –
+
+ set_offsets(offsets)
+
+set frame offsets
+
+ tell()
+
+Get current frame
+
+ write(xyz, velocity, forces, box, step, time, _lambda, natoms)
+
+write one frame into TRR file.
+
+Parameters:
+
+xyz (array_like, shape=(n_atoms, 3), optional) – cartesion coordinates. Only written if not None.
+
+velocity (array_like, shape=(n_atoms, 3), optional) – cartesion velocities. Only written if not None.
+
+forces (array_like, shape=(n_atoms, 3), optional) – cartesion forces. Only written if not None.
+
+box (array_like, shape=(3, 3)) – Box vectors for this frame
+
+step (int) – current step number, 1 indexed
+
+time (float) – current time
+
+_lambda (float) – current lambda value
+
+natoms (int) – number of atoms in frame
+
+Raises:
+
+IOError –

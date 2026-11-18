@@ -1,0 +1,7 @@
+class MDAnalysis.core.selection.BackboneSelection(parser, tokens)[source]
+
+A BackboneSelection contains all atoms with name ‘N’, ‘CA’, ‘C’, ‘O’.
+
+This excludes OT* on C-termini (which are included by, eg VMD’s backbone selection).
+
+Changed in version 1.0.1: bb_atoms changed to set (from numpy array) performance improved by ~100x on larger systems

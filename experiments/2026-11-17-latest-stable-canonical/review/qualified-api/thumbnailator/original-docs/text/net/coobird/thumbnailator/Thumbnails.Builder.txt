@@ -1,0 +1,2518 @@
+Thumbnails.Builder (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator
+Class Thumbnails.Builder<T>
+java.lang.Object
+net.coobird.thumbnailator.Thumbnails.Builder<T>
+Enclosing class:
+Thumbnails
+public static class
+Thumbnails.Builder<T>
+extends
+Object
+The builder interface for Thumbnailator to set up the thumbnail
+generation task.
+Thumbnailator is intended to be used by calling one of the
+Thumbnails.of(...)
+methods, then chaining methods such as
+size(int, int)
+and
+outputQuality(double)
+to set up
+the thumbnail generation parameters. (See "Intended Use" below.)
+The end result should be code that resembles English.
+In most cases, holding an instance of this class in a local variable,
+such as seen in the "Unintended Use" example below, is more verbose
+and less future-proof, as changes to this class (which is just an
+inner class of the
+Thumbnails
+class) can lead to broken code
+when attempting to use future releases of Thumbnailator.
+Intended Use:
+// Intended use - recommended!
+Thumbnails.of("path/to/image")
+.size(200, 200)
+.asFile("path/to/thumbnail");
+// English: "Make a thumbnail of 'path/to/image' with a size of 200x200,
+and save it as a file to 'path/to/thumbnail'."
+Unintended Use:
+// Unintended use - not recommended!
+Builder<File> instance = Thumbnails.of("path/to/image");
+instance.size(200, 200);
+instance.asFiles("path/to/thumbnail");
+An instance of this class provides the fluent interface in the form of
+method chaining. Through the fluent interface, the parameters used for
+the thumbnail creation, such as
+size(int, int)
+and
+outputQuality(double)
+can be set up. Finally, to execute the
+thumbnail creation, one of the output methods whose names start with
+to
+(e.g.
+toFiles(Rename)
+) or
+as
+(e.g.
+asBufferedImages()
+) is called.
+An instance of this class is obtained by calling one of:
+Thumbnails.of(BufferedImage...)
+Thumbnails.of(File...)
+Thumbnails.of(String...)
+Thumbnails.of(InputStream...)
+Thumbnails.of(URL...)
+Thumbnails.fromImages(Iterable)
+Thumbnails.fromFiles(Iterable)
+Thumbnails.fromFilenames(Iterable)
+Thumbnails.fromInputStreams(Iterable)
+Thumbnails.fromURLs(Iterable)
+Author:
+coobird
+Method Summary
+Thumbnails.Builder
+<
+T
+>
+addFilter
+(
+ImageFilter
+filter)
+Adds a
+ImageFilter
+to apply to the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+addFilters
+(
+List
+<
+ImageFilter
+> filters)
+Adds multiple
+ImageFilter
+s to apply to the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+allowOverwrite
+(boolean allowOverwrite)
+Specifies whether or not to overwrite files which already exist if
+they have been specified as destination files.
+Thumbnails.Builder
+<
+T
+>
+alphaInterpolation
+(
+AlphaInterpolation
+config)
+Sets the alpha interpolation mode when performing the resizing
+operation to generate the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+antialiasing
+(
+Antialiasing
+config)
+Sets the antialiasing mode when performing the resizing
+operation to generate the thumbnail.
+BufferedImage
+asBufferedImage
+()
+Creates a thumbnail and returns it as a
+BufferedImage
+.
+List
+<
+BufferedImage
+>
+asBufferedImages
+()
+Create the thumbnails and return as a
+List
+of
+BufferedImage
+s.
+List
+<
+File
+>
+asFiles
+(
+File
+destinationDir,
+Rename
+rename)
+Creates thumbnails and stores them to files in the directory
+specified by the given
+File
+object, and using the
+Rename
+function to determine the filenames.
+List
+<
+File
+>
+asFiles
+(
+Iterable
+<
+File
+> iterable)
+Creates the thumbnails and stores them to the files, and returns
+a
+List
+of
+File
+s to the thumbnails.
+List
+<
+File
+>
+asFiles
+(
+Rename
+rename)
+Creates thumbnails and stores them to files using the
+Rename
+function to determine the filenames.
+Thumbnails.Builder
+<
+T
+>
+crop
+(
+Position
+position)
+Crops the thumbnail at the position specified by
+Position
+.
+Thumbnails.Builder
+<
+T
+>
+determineOutputFormat
+()
+Indicates that the output format should be determined from the
+available information when writing the thumbnail image.
+Thumbnails.Builder
+<
+T
+>
+dithering
+(
+Dithering
+config)
+Sets the dithering mode when performing the resizing
+operation to generate the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+forceSize
+(int width,
+int height)
+Sets the size of the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+height
+(int height)
+Sets the height of the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+imageType
+(int type)
+Sets the image type of the thumbnail.
+Iterable
+<
+BufferedImage
+>
+iterableBufferedImages
+()
+Create the thumbnails and return as a
+Iterable
+of
+BufferedImage
+s.
+Thumbnails.Builder
+<
+T
+>
+keepAspectRatio
+(boolean keep)
+Sets whether or not to keep the aspect ratio of the original image
+for the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+outputFormat
+(
+String
+format)
+Sets the compression format to use when writing the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+outputFormatType
+(
+String
+formatType)
+Sets the compression format type of the thumbnail to write.
+Thumbnails.Builder
+<
+T
+>
+outputQuality
+(double quality)
+Sets the output quality of the compression algorithm used to
+compress the thumbnail when it is written to an external destination
+such as a file or output stream.
+Thumbnails.Builder
+<
+T
+>
+outputQuality
+(float quality)
+Sets the output quality of the compression algorithm used to
+compress the thumbnail when it is written to an external destination
+such as a file or output stream.
+Thumbnails.Builder
+<
+T
+>
+rendering
+(
+Rendering
+config)
+Sets the rendering mode when performing the resizing
+operation to generate the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+resizer
+(
+Resizer
+resizer)
+Sets the resizing operation to use when creating the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+resizerFactory
+(
+ResizerFactory
+resizerFactory)
+Sets the
+ResizerFactory
+object to use to decide what kind of
+resizing operation is to be used when creating the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+rotate
+(double angle)
+Sets the amount of rotation to apply to the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+scale
+(double scale)
+Sets the scaling factor of the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+scale
+(double scaleWidth,
+double scaleHeight)
+Sets the scaling factor for the width and height of the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+scalingMode
+(
+ScalingMode
+config)
+Sets the resizing scaling mode to use when creating the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+size
+(int width,
+int height)
+Sets the size of the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(int x,
+int y,
+int width,
+int height)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Position
+position,
+int width,
+int height)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Position
+position,
+Size
+size)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Rectangle
+region)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Region
+sourceRegion)
+Specifies the region of the source image where the thumbnail
+will be created from.
+void
+toFile
+(
+File
+outFile)
+Create a thumbnail and writes it to a
+File
+.
+void
+toFile
+(
+String
+outFilepath)
+Create a thumbnail and writes it to a
+File
+.
+void
+toFiles
+(
+File
+destinationDir,
+Rename
+rename)
+Creates thumbnails and stores them to files in the directory
+specified by the given
+File
+object, and using the
+Rename
+function to determine the filenames.
+void
+toFiles
+(
+Iterable
+<
+File
+> iterable)
+Creates the thumbnails and stores them to the files.
+void
+toFiles
+(
+Rename
+rename)
+Creates thumbnails and stores them to files using the
+Rename
+function to determine the filenames.
+void
+toOutputStream
+(
+OutputStream
+os)
+Create a thumbnail and writes it to a
+OutputStream
+.
+void
+toOutputStreams
+(
+Iterable
+<? extends
+OutputStream
+> iterable)
+Creates the thumbnails and writes them to
+OutputStream
+s
+provided by the
+Iterable
+.
+Thumbnails.Builder
+<
+T
+>
+useExifOrientation
+(boolean useExifOrientation)
+Sets whether or not to use the Exif metadata when orienting the
+thumbnail.
+Thumbnails.Builder
+<
+T
+>
+useOriginalFormat
+()
+Sets the compression format to use the same format as the original
+image.
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+BufferedImage
+image)
+Sets the image of the watermark to apply on the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+BufferedImage
+image,
+float opacity)
+Sets the image and opacity of the watermark to apply on
+the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+Position
+position,
+BufferedImage
+image,
+float opacity)
+Sets the image and opacity and position of the watermark to apply on
+the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+Position
+position,
+BufferedImage
+image,
+float opacity,
+int insets)
+Sets the image, opacity, position and insets for the watermark to
+apply on to the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+Watermark
+w)
+Sets the watermark to apply on the thumbnail.
+Thumbnails.Builder
+<
+T
+>
+width
+(int width)
+Sets the width of the thumbnail.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+size
+public
+Thumbnails.Builder
+<
+T
+>
+size
+(int width,
+int height)
+Sets the size of the thumbnail.
+For example, to create thumbnails which should fit within a
+bounding rectangle of 640 x 480, the following code can be used:
+Thumbnails.of(image)
+.size(640, 480)
+.toFile(thumbnail);
+In the above code, the thumbnail will preserve the aspect ratio
+of the original image. If the thumbnail should be forced to the
+specified size, the
+forceSize(int, int)
+method can
+be used instead of this method.
+Once this method is called, calling the
+scale(double)
+method
+will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+Reference to this object.
+width
+public
+Thumbnails.Builder
+<
+T
+>
+width
+(int width)
+Sets the width of the thumbnail.
+The thumbnail will have the dimensions constrained by the specified
+width, and the aspect ratio of the original image will be preserved
+by the thumbnail.
+Once this method is called, calling the
+size(int, int)
+or
+the
+scale(double)
+method will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+width
+- The width of the thumbnail.
+Returns:
+Reference to this object.
+Since:
+0.3.5
+height
+public
+Thumbnails.Builder
+<
+T
+>
+height
+(int height)
+Sets the height of the thumbnail.
+The thumbnail will have the dimensions constrained by the specified
+height, and the aspect ratio of the original image will be preserved
+by the thumbnail.
+Once this method is called, calling the
+size(int, int)
+or
+the
+scale(double)
+method will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+height
+- The height of the thumbnail.
+Returns:
+Reference to this object.
+Since:
+0.3.5
+forceSize
+public
+Thumbnails.Builder
+<
+T
+>
+forceSize
+(int width,
+int height)
+Sets the size of the thumbnail.
+The thumbnails will be forced to the specified size, therefore,
+the aspect ratio of the original image will not be preserved in
+the thumbnails. Calling this method will be equivalent to calling
+the
+size(int, int)
+method in conjunction with the
+keepAspectRatio(boolean)
+method with the value
+false
+.
+Once this method is called, calling the
+scale(double)
+method
+will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+Reference to this object.
+Since:
+0.3.2
+scale
+public
+Thumbnails.Builder
+<
+T
+>
+scale
+(double scale)
+Sets the scaling factor of the thumbnail.
+For example, to create thumbnails which are 50% the size of the
+original, the following code can be used:
+Thumbnails.of(image)
+.scale(0.5)
+.toFile(thumbnail);
+Once this method is called, calling the
+size(int, int)
+method, or the
+scale(double, double)
+method, or the
+keepAspectRatio(boolean)
+method will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+scale
+- The scaling factor to use when creating a
+thumbnail.
+The value must be a
+double
+which is
+greater than
+0.0
+, and not
+Double.POSITIVE_INFINITY
+.
+Returns:
+Reference to this object.
+scale
+public
+Thumbnails.Builder
+<
+T
+>
+scale
+(double scaleWidth,
+double scaleHeight)
+Sets the scaling factor for the width and height of the thumbnail.
+If the scaling factor for the width and height are not equal, then
+the thumbnail will not preserve the aspect ratio of the original
+image.
+For example, to create thumbnails which are 50% the width of the
+original, while 75% the height of the original, the following code
+can be used:
+Thumbnails.of(image)
+.scale(0.5, 0.75)
+.toFile(thumbnail);
+Once this method is called, calling the
+size(int, int)
+method, or the
+scale(double)
+method, or the
+keepAspectRatio(boolean)
+method will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+scaleWidth
+- The scaling factor to use for the width when
+creating a thumbnail.
+The value must be a
+double
+which is
+greater than
+0.0
+, and not
+Double.POSITIVE_INFINITY
+.
+scaleHeight
+- The scaling factor to use for the height when
+creating a thumbnail.
+The value must be a
+double
+which is
+greater than
+0.0
+, and not
+Double.POSITIVE_INFINITY
+.
+Returns:
+Reference to this object.
+Since:
+0.3.10
+sourceRegion
+public
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Region
+sourceRegion)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+sourceRegion
+- Source region to use when creating a thumbnail.
+Returns:
+Reference to this object.
+Throws:
+NullPointerException
+- If the source region object is
+null
+.
+Since:
+0.3.4
+sourceRegion
+public
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Position
+position,
+Size
+size)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+position
+- Position of the source region.
+size
+- Size of the source region.
+Returns:
+Reference to this object.
+Throws:
+NullPointerException
+- If the position and/or size is
+null
+.
+Since:
+0.3.4
+sourceRegion
+public
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(int x,
+int y,
+int width,
+int height)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+x
+- The horizontal-component of the top left-hand
+corner of the source region.
+y
+- The vertical-component of the top left-hand
+corner of the source region.
+width
+- Width of the source region.
+height
+- Height of the source region.
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If the width and/or height is
+less than or equal to
+0
+.
+Since:
+0.3.4
+sourceRegion
+public
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Position
+position,
+int width,
+int height)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+position
+- Position of the source region.
+width
+- Width of the source region.
+height
+- Height of the source region.
+Returns:
+Reference to this object.
+Throws:
+NullPointerException
+- If the position and/or size is
+null
+.
+IllegalArgumentException
+- If the width and/or height is
+less than or equal to
+0
+.
+Since:
+0.3.4
+sourceRegion
+public
+Thumbnails.Builder
+<
+T
+>
+sourceRegion
+(
+Rectangle
+region)
+Specifies the region of the source image where the thumbnail
+will be created from.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+region
+- A rectangular region which specifies the source
+region to use when creating the thumbnail.
+Returns:
+Reference to this object.
+Throws:
+NullPointerException
+- If the region is
+null
+.
+Since:
+0.3.4
+crop
+public
+Thumbnails.Builder
+<
+T
+>
+crop
+(
+Position
+position)
+Crops the thumbnail at the position specified by
+Position
+.
+This method must be used along with the
+size(int, int)
+method to specify the size of the thumbnail.
+This method will guarantee that the thumbnail will be exactly
+the dimensions specified in the
+size(int, int)
+method.
+Internally, the resizing is performed in two steps:
+First, the thumbnail will be sized so that one of the dimensions
+will be exactly the dimension specified in the
+size
+method.
+The other dimension may overhang the specified dimension.
+For example, if the
+.size(200, 200)
+is called and the
+source image is 400 x 600, the image will be resized to 200 x 300,
+internally.
+Next, the resized image will be cropped to the dimensions
+specified in the
+size
+method, positioned using
+the specified
+Position
+object.
+Continuing the example from the previous paragraph, the 200 x 300
+image will be cropped to 200 x 200 using the specified positioning.
+Once this method is called, calling the
+scale(double)
+or
+scale(double, double)
+method will throw an
+IllegalStateException
+.
+Calling this method multiple times will throw an
+IllegalStateException
+.
+Parameters:
+position
+- The position to which the thumbnail should be
+cropped to. For example, if
+Positions.CENTER
+is specified, the
+resulting thumbnail will be made by cropping to
+the center of the image.
+Returns:
+Reference to this object.
+Throws:
+NullPointerException
+- If the position is
+null
+.
+Since:
+0.4.0
+allowOverwrite
+public
+Thumbnails.Builder
+<
+T
+>
+allowOverwrite
+(boolean allowOverwrite)
+Specifies whether or not to overwrite files which already exist if
+they have been specified as destination files.
+This method will change the output behavior of the following methods:
+toFile(File)
+toFile(String)
+toFiles(Iterable)
+toFiles(Rename)
+asFiles(Iterable)
+asFiles(Rename)
+The behavior of methods which are not listed above will not be
+affected by calling this method.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+allowOverwrite
+- If
+true
+then existing files will be
+overwritten if specified as a destination.
+If
+false
+, then the existing files
+will not be altered. For specific behavior,
+please refer to the specific output methods
+listed above.
+Returns:
+Reference to this object.
+Since:
+0.3.7
+imageType
+public
+Thumbnails.Builder
+<
+T
+>
+imageType
+(int type)
+Sets the image type of the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+type
+- The image type of the thumbnail.
+Returns:
+Reference to this object.
+scalingMode
+public
+Thumbnails.Builder
+<
+T
+>
+scalingMode
+(
+ScalingMode
+config)
+Sets the resizing scaling mode to use when creating the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+config
+- The scaling mode to use.
+Returns:
+Reference to this object.
+resizer
+public
+Thumbnails.Builder
+<
+T
+>
+resizer
+(
+Resizer
+resizer)
+Sets the resizing operation to use when creating the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+This method cannot be called in conjunction with the
+resizerFactory(ResizerFactory)
+method.
+Parameters:
+resizer
+- The scaling operation to use.
+Returns:
+Reference to this object.
+resizerFactory
+public
+Thumbnails.Builder
+<
+T
+>
+resizerFactory
+(
+ResizerFactory
+resizerFactory)
+Sets the
+ResizerFactory
+object to use to decide what kind of
+resizing operation is to be used when creating the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+This method cannot be called in conjunction with the
+resizer(Resizer)
+method.
+Parameters:
+resizerFactory
+- The scaling operation to use.
+Returns:
+Reference to this object.
+Since:
+0.4.0
+alphaInterpolation
+public
+Thumbnails.Builder
+<
+T
+>
+alphaInterpolation
+(
+AlphaInterpolation
+config)
+Sets the alpha interpolation mode when performing the resizing
+operation to generate the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+This method cannot be called in conjunction with the
+resizerFactory(ResizerFactory)
+method.
+Parameters:
+config
+- The alpha interpolation mode.
+Returns:
+Reference to this object.
+dithering
+public
+Thumbnails.Builder
+<
+T
+>
+dithering
+(
+Dithering
+config)
+Sets the dithering mode when performing the resizing
+operation to generate the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+This method cannot be called in conjunction with the
+resizerFactory(ResizerFactory)
+method.
+Parameters:
+config
+- The dithering mode.
+Returns:
+Reference to this object.
+antialiasing
+public
+Thumbnails.Builder
+<
+T
+>
+antialiasing
+(
+Antialiasing
+config)
+Sets the antialiasing mode when performing the resizing
+operation to generate the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+.
+This method cannot be called in conjunction with the
+resizerFactory(ResizerFactory)
+method.
+Parameters:
+config
+- The antialiasing mode.
+Returns:
+Reference to this object.
+rendering
+public
+Thumbnails.Builder
+<
+T
+>
+rendering
+(
+Rendering
+config)
+Sets the rendering mode when performing the resizing
+operation to generate the thumbnail.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+This method cannot be called in conjunction with the
+resizerFactory(ResizerFactory)
+method.
+Parameters:
+config
+- The rendering mode.
+Returns:
+Reference to this object.
+keepAspectRatio
+public
+Thumbnails.Builder
+<
+T
+>
+keepAspectRatio
+(boolean keep)
+Sets whether or not to keep the aspect ratio of the original image
+for the thumbnail.
+Calling this method without first calling the
+size(int, int)
+method will result in an
+IllegalStateException
+to be thrown.
+If this method is not called when, by default the aspect ratio of
+the original image is preserved for the thumbnail.
+Calling this method after calling the
+scale(double)
+method
+or the
+scale(double, double)
+method will result in a
+IllegalStateException
+.
+Parameters:
+keep
+-
+true
+if the thumbnail is to maintain
+the aspect ratio of the original image,
+false
+otherwise.
+Returns:
+Reference to this object.
+Throws:
+IllegalStateException
+- If
+the
+size(int, int)
+has
+not yet been called to specify the
+size of the thumbnail, or
+the
+scale(double)
+method has been called, or
+the
+scale(double, double)
+method has been called, or
+the
+width(int)
+and/or
+height(int)
+has been called
+and not preserving the aspect ratio
+is desired.
+outputQuality
+public
+Thumbnails.Builder
+<
+T
+>
+outputQuality
+(float quality)
+Sets the output quality of the compression algorithm used to
+compress the thumbnail when it is written to an external destination
+such as a file or output stream.
+The value is a
+float
+between
+0.0f
+and
+1.0f
+where
+0.0f
+indicates the minimum quality and
+1.0f
+indicates the maximum quality settings should be used for by the
+compression codec.
+Calling this method to set this parameter is optional.
+Calling this method in conjunction with
+asBufferedImage()
+or
+asBufferedImages()
+will not result in any changes to the
+final result.
+Calling this method multiple times, or the
+outputQuality(double)
+in conjunction with this method will
+result in an
+IllegalStateException
+to be thrown.
+Implementation note:
+Compression quality settings are ignored when the underlying
+image writer does not support compression. This behavior is subject
+to change in the future.
+Parameters:
+quality
+- The compression quality to use when writing
+the thumbnail.
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If the argument is less than
+0.0f
+or is greater than
+1.0f
+.
+outputQuality
+public
+Thumbnails.Builder
+<
+T
+>
+outputQuality
+(double quality)
+Sets the output quality of the compression algorithm used to
+compress the thumbnail when it is written to an external destination
+such as a file or output stream.
+The value is a
+double
+between
+0.0d
+and
+1.0d
+where
+0.0d
+indicates the minimum quality and
+1.0d
+indicates the maximum quality settings should be used for by the
+compression codec.
+This method is a convenience method for
+outputQuality(float)
+where the
+double
+argument type is accepted instead of a
+float
+.
+Calling this method to set this parameter is optional.
+Calling this method in conjunction with
+asBufferedImage()
+or
+asBufferedImages()
+will not result in any changes to the
+final result.
+Calling this method multiple times, or the
+outputQuality(float)
+in conjunction with this method will
+result in an
+IllegalStateException
+to be thrown.
+Implementation note:
+Compression quality settings are ignored when the underlying
+image writer does not support compression. This behavior is subject
+to change in the future.
+Parameters:
+quality
+- The compression quality to use when writing
+the thumbnail.
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If the argument is less than
+0.0d
+or is greater than
+1.0d
+.
+outputFormat
+public
+Thumbnails.Builder
+<
+T
+>
+outputFormat
+(
+String
+format)
+Sets the compression format to use when writing the thumbnail.
+For example, to set the output format to JPEG, the following code
+can be used:
+Thumbnails.of(image)
+.size(640, 480)
+.outputFormat("JPEG")
+.toFile(thumbnail);
+or, alternatively:
+Thumbnails.of(image)
+.size(640, 480)
+.outputFormat("jpg")
+.toFile(thumbnail);
+Currently, whether or not the compression format string is valid
+dependents on whether the Java Image I/O API recognizes the string
+as a format that it supports for output. (Valid format names can
+be obtained by calling the
+ImageIO.getWriterFormatNames()
+method.)
+Calling this method to set this parameter is optional.
+Calling this method in conjunction with
+asBufferedImage()
+or
+asBufferedImages()
+will not result in any changes to the
+final result.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+format
+- The compression format to use when writing
+the thumbnail.
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If an unsupported format is
+specified.
+useOriginalFormat
+public
+Thumbnails.Builder
+<
+T
+>
+useOriginalFormat
+()
+Sets the compression format to use the same format as the original
+image.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Returns:
+Reference to this object.
+Since:
+0.4.0
+useExifOrientation
+public
+Thumbnails.Builder
+<
+T
+>
+useExifOrientation
+(boolean useExifOrientation)
+Sets whether or not to use the Exif metadata when orienting the
+thumbnail.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+useExifOrientation
+-
+true
+if the Exif metadata
+should be used to determine the
+orientation of the thumbnail,
+false
+otherwise.
+Returns:
+Reference to this object.
+Since:
+0.4.3
+determineOutputFormat
+public
+Thumbnails.Builder
+<
+T
+>
+determineOutputFormat
+()
+Indicates that the output format should be determined from the
+available information when writing the thumbnail image.
+For example, calling this method will cause the output format to be
+determined from the file extension if thumbnails are written to
+files.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Returns:
+Reference to this object.
+Since:
+0.4.0
+outputFormatType
+public
+Thumbnails.Builder
+<
+T
+>
+outputFormatType
+(
+String
+formatType)
+Sets the compression format type of the thumbnail to write.
+If the default type for the compression codec should be used, a
+value of
+ThumbnailParameter.DEFAULT_FORMAT_TYPE
+should be
+used.
+Calling this method to set this parameter is optional.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Furthermore, if this method is called, then calling the
+outputFormat
+method is disabled, in order to prevent
+cases where the output format type does not exist in the format
+specified for the
+outputFormat
+method.
+Implementation note:
+Compression format type settings are ignored when the underlying
+image writer does not support compression. This behavior is subject
+to change in the future.
+Parameters:
+formatType
+- The compression format type
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If an unsupported format type is
+specified for the current output
+format type. Or, if the output
+format has not been specified before
+this method was called.
+watermark
+public
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+Watermark
+w)
+Sets the watermark to apply on the thumbnail.
+This method can be called multiple times to apply multiple
+watermarks.
+If multiple watermarks are to be applied, the watermarks will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+w
+- The watermark to apply to the thumbnail.
+Returns:
+Reference to this object.
+watermark
+public
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+BufferedImage
+image)
+Sets the image of the watermark to apply on the thumbnail.
+This method is a convenience method for the
+watermark(Position, BufferedImage, float)
+method, where
+the opacity is 50%, and the position is set to center of the
+thumbnail:
+watermark(Positions.CENTER, image, 0.5f);
+This method can be called multiple times to apply multiple
+watermarks.
+If multiple watermarks are to be applied, the watermarks will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+image
+- The image of the watermark.
+Returns:
+Reference to this object.
+watermark
+public
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+BufferedImage
+image,
+float opacity)
+Sets the image and opacity of the watermark to apply on
+the thumbnail.
+This method is a convenience method for the
+watermark(Position, BufferedImage, float)
+method, where
+the opacity is 50%:
+watermark(Positions.CENTER, image, opacity);
+This method can be called multiple times to apply multiple
+watermarks.
+If multiple watermarks are to be applied, the watermarks will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+image
+- The image of the watermark.
+opacity
+- The opacity of the watermark.
+The value should be between
+0.0f
+and
+1.0f
+, where
+0.0f
+is completely
+transparent, and
+1.0f
+is completely
+opaque.
+Returns:
+Reference to this object.
+watermark
+public
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+Position
+position,
+BufferedImage
+image,
+float opacity)
+Sets the image and opacity and position of the watermark to apply on
+the thumbnail.
+This method can be called multiple times to apply multiple
+watermarks.
+If multiple watermarks are to be applied, the watermarks will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+position
+- The position of the watermark.
+image
+- The image of the watermark.
+opacity
+- The opacity of the watermark.
+The value should be between
+0.0f
+and
+1.0f
+, where
+0.0f
+is completely
+transparent, and
+1.0f
+is completely
+opaque.
+Returns:
+Reference to this object.
+watermark
+public
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+Position
+position,
+BufferedImage
+image,
+float opacity,
+int insets)
+Sets the image, opacity, position and insets for the watermark to
+apply on to the thumbnail.
+This method can be called multiple times to apply multiple
+watermarks.
+If multiple watermarks are to be applied, the watermarks will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+position
+- The position of the watermark.
+image
+- The image of the watermark.
+opacity
+- The opacity of the watermark.
+The value should be between
+0.0f
+and
+1.0f
+, where
+0.0f
+is completely
+transparent, and
+1.0f
+is completely
+opaque.
+insets
+- Inset size around the watermark.
+Cannot be negative.
+Returns:
+Reference to this object.
+rotate
+public
+Thumbnails.Builder
+<
+T
+>
+rotate
+(double angle)
+Sets the amount of rotation to apply to the thumbnail.
+The thumbnail will be rotated clockwise by the angle specified.
+This method can be called multiple times to apply multiple
+rotations.
+If multiple rotations are to be applied, the rotations will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+angle
+- Angle in degrees.
+Returns:
+Reference to this object.
+addFilter
+public
+Thumbnails.Builder
+<
+T
+>
+addFilter
+(
+ImageFilter
+filter)
+Adds a
+ImageFilter
+to apply to the thumbnail.
+This method can be called multiple times to apply multiple
+filters.
+If multiple filters are to be applied, the filters will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+filter
+- An image filter to apply to the thumbnail.
+Returns:
+Reference to this object.
+addFilters
+public
+Thumbnails.Builder
+<
+T
+>
+addFilters
+(
+List
+<
+ImageFilter
+> filters)
+Adds multiple
+ImageFilter
+s to apply to the thumbnail.
+This method can be called multiple times to apply multiple
+filters.
+If multiple filters are to be applied, the filters will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+filters
+- A list of filters to apply to the thumbnail.
+Returns:
+Reference to this object.
+iterableBufferedImages
+public
+Iterable
+<
+BufferedImage
+>
+iterableBufferedImages
+()
+Create the thumbnails and return as a
+Iterable
+of
+BufferedImage
+s.
+Thumbnail for a given input is lazily evaluated as the
+Iterator.next()
+method is called on the iterator.
+For situations where multiple thumbnails are being generated, this
+method is preferred over the
+asBufferedImages()
+method,
+as (1) the processing does not have to complete before the method
+returns and (2) the thumbnails can be retrieved one at a time,
+potentially reducing the number of thumbnails which need to be
+retained in the heap memory, potentially reducing the chance of
+OutOfMemoryError
+s from occurring.
+If an
+IOException
+occurs during the processing of the
+thumbnail, the
+Iterable
+will return a
+null
+for that
+element.
+Notes on image types
+The image type of the
+BufferedImage
+depends on the type
+of the input image. (Specifically, the type emitted by the
+ImageReader
+associated for the file type.)
+Thumbnailator will attempt to use the same image type as the
+input if it is not specified through
+imageType(int)
+.
+This has implications when writing
+BufferedImage
+to files
+using the default JPEG writer bundled with Java. There are issues
+with the JPEG writer
+outputting wrong colors
+or
+throwing exceptions
+when writing a image containing an alpha channel.
+If outputting to a file, consider using one of the
+toFiles(Iterable)
+,
+toFiles(Rename)
+,
+toFiles(File, Rename)
+asFiles(Iterable)
+,
+asFiles(Rename)
+or
+asFiles(File, Rename)
+methods instead, as it contains workarounds to prevent issues
+mentioned in the previous paragraph.
+For more information on
+BufferedImage
+types, refer to
+BufferedImage.getType()
+.
+Returns:
+An
+Iterable
+which will provide an
+Iterator
+which returns thumbnails as
+BufferedImage
+s.
+asBufferedImages
+public
+List
+<
+BufferedImage
+>
+asBufferedImages
+()
+throws
+IOException
+Create the thumbnails and return as a
+List
+of
+BufferedImage
+s.
+If you intend to write these
+BufferedImage
+s to files,
+you're strongly encouraged to use one of the
+toFiles(...)
+or
+asFiles(...)
+methods instead. See "Notes on image types"
+for details.
+Notes on image types
+The image type of the
+BufferedImage
+depends on the type
+of the input image. (Specifically, the type emitted by the
+ImageReader
+associated for the file type.)
+Thumbnailator will attempt to use the same image type as the
+input if it is not specified through
+imageType(int)
+.
+This has implications when writing
+BufferedImage
+to files
+using the default JPEG writer bundled with Java. There are issues
+with the JPEG writer
+outputting wrong colors
+or
+throwing exceptions
+when writing a image containing an alpha channel.
+If outputting to a file, consider using one of the
+toFiles(Iterable)
+,
+toFiles(Rename)
+,
+toFiles(File, Rename)
+asFiles(Iterable)
+,
+asFiles(Rename)
+or
+asFiles(File, Rename)
+methods instead, as it contains workarounds to prevent issues
+mentioned in the previous paragraph.
+For more information on
+BufferedImage
+types, refer to
+BufferedImage.getType()
+.
+Note about performance
+This method will process all inputs and create the corresponding
+thumbnails at once before returning them as in a list.
+Therefore, if many thumbnails are generated at once, it is possible
+that the Java virtual machine's heap space will run out and an
+OutOfMemoryError
+could be thrown.
+If many thumbnails are being processed at once, then using the
+iterableBufferedImages()
+method would be preferable.
+Returns:
+A list of thumbnails.
+Throws:
+IOException
+- If a problem occurred during
+the reading of the original
+images.
+asBufferedImage
+public
+BufferedImage
+asBufferedImage
+()
+throws
+IOException
+Creates a thumbnail and returns it as a
+BufferedImage
+.
+To call this method, the thumbnail must have been created from a
+single source.
+If you intend to write the
+BufferedImage
+to a file,
+you're strongly encouraged to use one of the
+toFile(...)
+methods instead. See "Notes on image types" for details.
+Notes on image types
+The image type of the
+BufferedImage
+depends on the type
+of the input image. (Specifically, the type emitted by the
+ImageReader
+associated for the file type.)
+Thumbnailator will attempt to use the same image type as the
+input if it is not specified through
+imageType(int)
+.
+This has implications when writing
+BufferedImage
+to files
+using the default JPEG writer bundled with Java. There are issues
+with the JPEG writer
+outputting wrong colors
+or
+throwing exceptions
+when writing a image containing an alpha channel.
+If outputting to a file, consider using one of the
+toFile(File)
+or
+toFile(String)
+methods instead,
+as it contains workarounds to prevent issues mentioned in the
+previous paragraph.
+For more information on
+BufferedImage
+types, refer to
+BufferedImage.getType()
+.
+Returns:
+A thumbnail as a
+BufferedImage
+.
+Throws:
+IOException
+- If a problem occurred during
+the reading of the original
+image.
+IllegalArgumentException
+- If multiple original images are
+specified.
+asFiles
+public
+List
+<
+File
+>
+asFiles
+(
+Iterable
+<
+File
+> iterable)
+throws
+IOException
+Creates the thumbnails and stores them to the files, and returns
+a
+List
+of
+File
+s to the thumbnails.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written and the corresponding
+File
+object will not be included in the
+List
+returned
+by this method.
+The file names for the thumbnails are obtained from the given
+Iterable
+.
+Parameters:
+iterable
+- An
+Iterable
+which returns an
+Iterator
+which returns file names
+which should be assigned to each thumbnail.
+Returns:
+A list of
+File
+s of the thumbnails
+which were created.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+Since:
+0.3.7
+toFiles
+public void
+toFiles
+(
+Iterable
+<
+File
+> iterable)
+throws
+IOException
+Creates the thumbnails and stores them to the files.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written.
+The file names for the thumbnails are obtained from the given
+Iterable
+.
+Parameters:
+iterable
+- An
+Iterable
+which returns an
+Iterator
+which returns file names
+which should be assigned to each thumbnail.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+Since:
+0.3.7
+asFiles
+public
+List
+<
+File
+>
+asFiles
+(
+Rename
+rename)
+throws
+IOException
+Creates thumbnails and stores them to files using the
+Rename
+function to determine the filenames. The thubnail
+files are returned as a
+List
+.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written and the corresponding
+File
+object will not be included in the
+List
+returned
+by this method.
+To call this method, the thumbnails must have been creates from
+files by calling the
+Thumbnails.of(File...)
+method.
+Parameters:
+rename
+- The rename function which is used to
+determine the filenames of the thumbnail
+files to write.
+Returns:
+A list of
+File
+s of the thumbnails
+which were created.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+IllegalStateException
+- If the original images are not
+from files.
+Since:
+0.3.7
+asFiles
+public
+List
+<
+File
+>
+asFiles
+(
+File
+destinationDir,
+Rename
+rename)
+throws
+IOException
+Creates thumbnails and stores them to files in the directory
+specified by the given
+File
+object, and using the
+Rename
+function to determine the filenames. The thubnail
+files are returned as a
+List
+.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written and the corresponding
+File
+object will not be included in the
+List
+returned
+by this method.
+Extra caution should be taken when using this method, as there are
+no protections in place to prevent file name collisions resulting
+from creating thumbnails from files in separate directories but
+having the same name. In such a case, the behavior will be depend
+on the behavior of the
+allowOverwrite(boolean)
+as
+described in the previous paragraph.
+To call this method, the thumbnails must have been creates from
+files by calling the
+Thumbnails.of(File...)
+method.
+Parameters:
+destinationDir
+- The destination directory to which the
+thumbnails should be written to.
+rename
+- The rename function which is used to
+determine the filenames of the thumbnail
+files to write.
+Returns:
+A list of
+File
+s of the thumbnails
+which were created.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+IllegalStateException
+- If the original images are not
+from files.
+IllegalArgumentException
+- If the destination directory
+is not a directory.
+Since:
+0.4.7
+toFiles
+public void
+toFiles
+(
+Rename
+rename)
+throws
+IOException
+Creates thumbnails and stores them to files using the
+Rename
+function to determine the filenames.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written.
+To call this method, the thumbnails must have been creates from
+files by calling the
+Thumbnails.of(File...)
+method.
+Parameters:
+rename
+- The rename function which is used to
+determine the filenames of the thumbnail
+files to write.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+thumbnails to files.
+IllegalStateException
+- If the original images are not
+from files.
+Since:
+0.3.7
+toFiles
+public void
+toFiles
+(
+File
+destinationDir,
+Rename
+rename)
+throws
+IOException
+Creates thumbnails and stores them to files in the directory
+specified by the given
+File
+object, and using the
+Rename
+function to determine the filenames.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written.
+Extra caution should be taken when using this method, as there are
+no protections in place to prevent file name collisions resulting
+from creating thumbnails from files in separate directories but
+having the same name. In such a case, the behavior will be depend
+on the behavior of the
+allowOverwrite(boolean)
+as
+described in the previous paragraph.
+To call this method, the thumbnails must have been creates from
+files by calling the
+Thumbnails.of(File...)
+method.
+Parameters:
+destinationDir
+- The destination directory to which the
+thumbnails should be written to.
+rename
+- The rename function which is used to
+determine the filenames of the thumbnail
+files to write.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+thumbnails to files.
+IllegalStateException
+- If the original images are not
+from files.
+IllegalArgumentException
+- If the destination directory
+is not a directory.
+Since:
+0.4.7
+toFile
+public void
+toFile
+(
+File
+outFile)
+throws
+IOException
+Create a thumbnail and writes it to a
+File
+.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then an
+IllegalArgumentException
+will
+be thrown.
+To call this method, the thumbnail must have been created from a
+single source.
+Parameters:
+outFile
+- The file to which the thumbnail is to be
+written to.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+IllegalArgumentException
+- If multiple original image files
+are     specified, or if the
+destination file exists, and
+overwriting files is disabled.
+toFile
+public void
+toFile
+(
+String
+outFilepath)
+throws
+IOException
+Create a thumbnail and writes it to a
+File
+.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then an
+IllegalArgumentException
+will
+be thrown.
+To call this method, the thumbnail must have been created from a
+single source.
+Parameters:
+outFilepath
+- The file to which the thumbnail is to be
+written to.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+IllegalArgumentException
+- If multiple original image files
+are     specified, or if the
+destination file exists, and
+overwriting files is disabled.
+toOutputStream
+public void
+toOutputStream
+(
+OutputStream
+os)
+throws
+IOException
+Create a thumbnail and writes it to a
+OutputStream
+.
+To call this method, the thumbnail must have been created from a
+single source.
+Note that the
+OutputStream.close()
+method will not be
+called upon the completion of the thumbnail being written to the
+OutputStream
+.
+Parameters:
+os
+- The output stream to which the thumbnail
+is to be written to.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails.
+IllegalArgumentException
+- If multiple original image files
+are     specified.
+IllegalStateException
+- If the output format has not
+been specified through the
+outputFormat(String)
+method.
+toOutputStreams
+public void
+toOutputStreams
+(
+Iterable
+<? extends
+OutputStream
+> iterable)
+throws
+IOException
+Creates the thumbnails and writes them to
+OutputStream
+s
+provided by the
+Iterable
+.
+Note that the
+OutputStream.close()
+method will not be
+called upon the completion of the thumbnail being written to the
+OutputStream
+.
+Parameters:
+iterable
+- An
+Iterable
+which returns an
+Iterator
+which returns the
+output stream which should be assigned to
+each thumbnail.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails.
+IllegalStateException
+- If the output format has not
+been specified through the
+outputFormat(String)
+method.
+Copyright © 2025. All rights reserved.

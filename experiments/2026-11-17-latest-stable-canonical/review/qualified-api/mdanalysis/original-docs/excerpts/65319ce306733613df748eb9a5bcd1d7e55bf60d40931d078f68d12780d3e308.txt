@@ -1,0 +1,62 @@
+convert_density(unit='Angstrom^{-3}')[source]
+
+Convert the density to the physical units given by unit.
+
+Parameters:
+
+unit (str (optional)) –
+The target unit that the density should be converted to.
+
+unit can be one of the following:
+
+name
+ |
+description of the unit
+ |
+
+Angstrom^{-3}
+ |
+particles/A**3
+ |
+
+nm^{-3}
+ |
+particles/nm**3
+ |
+
+SPC
+ |
+density of SPC water at standard conditions
+ |
+
+TIP3P
+ |
+… see MDAnalysis.units.water
+ |
+
+TIP4P
+ |
+… see MDAnalysis.units.water
+ |
+
+water
+ |
+density of real water at standard conditions (0.997 g/cm**3)
+ |
+
+Molar
+ |
+mol/l
+ |
+
+Raises:
+
+RuntimeError – If the density does not have a unit associated with it to begin with (i.e., is not a density) then no conversion can take place.
+
+ValueError – for unknown unit.
+
+Notes
+
+This method only works if there is already a length unit associated with the density; otherwise raises RuntimeError
+
+Conversions always go back to unity so there can be rounding and floating point artifacts for multiple conversions.

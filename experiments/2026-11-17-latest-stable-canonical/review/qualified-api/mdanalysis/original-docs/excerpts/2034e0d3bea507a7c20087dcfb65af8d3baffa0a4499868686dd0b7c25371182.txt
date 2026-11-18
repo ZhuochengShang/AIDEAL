@@ -1,0 +1,33 @@
+rotate(R, point=(0, 0, 0))
+
+Apply a rotation matrix R to the selection’s coordinates. \(\mathsf{R}\) is a 3x3 orthogonal matrix that transforms a vector \(\mathbf{x} \rightarrow \mathbf{x}'\):
+
+ \[\mathbf{x}' = \mathsf{R}\mathbf{x}\]
+
+Atom coordinates are rotated in-place.
+
+Parameters:
+
+R (array_like) – 3x3 rotation matrix
+
+point (array_like, optional) – Center of rotation
+
+Return type:
+
+self
+
+Notes
+
+By default, rotates about the origin point=(0, 0, 0). To rotate a group g around its center of geometry, use g.rotate(R, point=g.center_of_geometry()).
+
+See also
+
+rotateby
+
+rotate around given axis and angle
+
+MDAnalysis.lib.transformations
+
+module of all coordinate transforms
+
+Changed in version 2.11.0: Also rotate velocities and forces if present in Timestep.

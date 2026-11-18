@@ -1,0 +1,47 @@
+MDAnalysis.lib.distances.augment_coordinates(coordinates, box, r)
+
+Calculates the periodic images of particles which are within a distance r from the box walls.
+
+The algorithm works by generating explicit periodic images of atoms residing close to any of the six box walls. The steps involved in generating images involves the evaluation of reciprocal box vectors followed by the calculation of distances of atoms from the walls by means of projection onto the reciprocal vectors. If the distance is less than a specified cutoff distance, relevant periodic images are generated using box translation vectors \(\vec{t}\) with
+
+ \[\vec{t}=l\cdot\vec{a}+m\cdot\vec{b}+n\cdot \vec{c}\,,\]
+
+where \(l,\,m,\,n \in \{-1,\,0,\,1\}\) are the neighboring cell indices in \(x\)-, \(y\)-, and \(z\)-direction relative to the central cell with box vectors \(\vec{a},\,\vec{b},\,\vec{c}\).
+
+For instance, an atom close to the \(xy\)-plane containing the origin will generate a periodic image outside the central cell and close to the opposite \(xy\)-plane of the box, i.e., shifted by \(\vec{t} = 0\cdot\vec{a}+0\cdot\vec{b}+1\cdot\vec{c}=\vec{c}\).
+
+Likewise, if the particle is close to more than one box walls, images along the diagonals are also generated:
+
+                            x            x
++------------+                +------------+
+|            |   augment      |            |
+|            |   ------->     |            |
+|          o |              x |          o |
++------------+                +------------+
+
+Parameters:
+
+coordinates (numpy.ndarray) – Input coordinate array of shape (n, 3) and dtype numpy.float32 used to generate duplicate images in the vicinity of the central cell. All coordinates must be within the primary unit cell.
+
+box (numpy.ndarray) – Box dimensions of shape (6,) and dtype numpy.float32. The dimensions must be provided in the same format as returned by MDAnalysis.coordinates.base.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma]
+
+r (float) – Thickness of cutoff region for duplicate image generation.
+
+Returns:
+
+output (numpy.ndarray) – Coordinates of duplicate (augmented) particles (dtype numpy.float32).
+
+indices (numpy.ndarray) – Original indices of the augmented coordinates (dtype numpy.int64). Maps the indices of augmented particles to their original particle index such that indices[augmented_index] = original_index.
+
+Note
+
+Output does not return coordinates from the initial array. To merge the particles with their respective images, the following operation is necessary when generating the images:
+
+images, mapping = augment_coordinates(coordinates, box, max_cutoff)
+all_coords = numpy.concatenate([coordinates, images])
+
+See also
+
+undo_augment()
+
+Added in version 0.19.0.

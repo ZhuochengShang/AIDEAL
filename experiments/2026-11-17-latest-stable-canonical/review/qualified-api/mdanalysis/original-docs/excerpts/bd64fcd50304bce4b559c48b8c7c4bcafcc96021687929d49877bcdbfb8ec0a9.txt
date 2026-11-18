@@ -1,0 +1,101 @@
+class MDAnalysis.analysis.align.AlignTraj(mobile, reference, select='all', filename=None, prefix='rmsfit_', weights=None, tol_mass=0.1, match_atoms=True, strict=False, force=True, in_memory=False, writer_kwargs=None, **kwargs)[source]
+
+RMS-align trajectory to a reference structure using a selection.
+
+Both the reference reference and the trajectory mobile must be MDAnalysis.Universe instances. If they contain a trajectory then it is used. The output file format is determined by the file extension of filename. One can also use the same universe if one wants to fit to the current frame.
+
+Changed in version 1.0.0: save() has now been removed, as an alternative use np.savetxt() on results.rmsd.
+
+Parameters:
+
+mobile (Universe) – Universe containing trajectory to be fitted to reference
+
+reference (Universe) – Universe containing trajectory frame to be used as reference
+
+select (str (optional)) – Set as default to all, is used for Universe.select_atoms to choose subdomain to be fitted against
+
+filename (str (optional)) – Provide a filename for results to be written to
+
+prefix (str (optional)) – Provide a string to prepend to filename for results to be written to
+
+weights ({“mass”, None} or array_like (optional)) – choose weights. With "mass" uses masses of reference as weights; with None weigh each atom equally. If a float array of the same length as the selection is provided, use each element of the array_like as a weight for the corresponding atom in the selection.
+
+tol_mass (float (optional)) – Tolerance given to get_matching_atoms to find appropriate atoms
+
+match_atoms (bool (optional)) – Whether to match the mobile and reference atom-by-atom. Default True.
+
+strict (bool (optional)) – Force get_matching_atoms to fail if atoms can’t be found using exact methods
+
+force (bool (optional)) – Force overwrite of filename for rmsd-fitting
+
+in_memory (bool (optional)) – Permanently switch mobile to an in-memory trajectory so that alignment can be done in-place, which can improve performance substantially in some cases. In this case, no file is written out (filename and prefix are ignored) and only the coordinates of mobile are changed in memory.
+
+verbose (bool (optional)) – Set logger to show more information and show detailed progress of the calculation if set to True; the default is False.
+
+writer_kwargs (dict (optional)) – kwarg dict to be passed to the constructed writer
+
+ reference_atoms
+
+Atoms of the reference structure to be aligned against
+
+Type:
+
+AtomGroup
+
+ mobile_atoms
+
+Atoms inside each trajectory frame to be rmsd_aligned
+
+Type:
+
+AtomGroup
+
+ results.rmsd
+
+Array of the rmsd values of the least rmsd between the mobile_atoms and reference_atoms after superposition and minimimization of rmsd
+
+Added in version 2.0.0.
+
+Type:
+
+numpy.ndarray
+
+ rmsd
+
+Alias to the results.rmsd attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.rmsd instead.
+
+Type:
+
+numpy.ndarray
+
+ filename
+
+String reflecting the filename of the file where the aligned positions will be written to upon running RMSD alignment
+
+Type:
+
+str
+
+Notes
+
+If set to verbose=False, it is recommended to wrap the statement in a try ... finally to guarantee restoring of the log level in the case of an exception.
+
+The in_memory option changes the mobile universe to an in-memory representation (see MDAnalysis.coordinates.memory) for the remainder of the Python session. If mobile.trajectory is already a MemoryReader then it is always treated as if in_memory had been set to True.
+
+Changed in version 1.0.0: Default filename has now been changed to the current directory.
+
+Deprecated since version 0.19.1: Default filename directory will change in 1.0 to the current directory.
+
+Changed in version 0.16.0: new general weights kwarg replace mass_weights
+
+Deprecated since version 0.16.0: Instead of mass_weighted=True use new weights='mass'
+
+Changed in version 0.17.0: removed deprecated mass_weighted keyword
+
+Changed in version 1.0.0: Support for the start, stop, and step keywords has been removed. These should instead be passed to AlignTraj.run().
+
+Changed in version 2.0.0: rmsd results are now stored in a MDAnalysis.analysis.base.Results instance.
+
+Changed in version 2.8.0: Added writer_kwargs kwarg dict to pass to the writer
