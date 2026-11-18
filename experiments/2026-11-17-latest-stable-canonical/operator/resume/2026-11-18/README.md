@@ -1,5 +1,7 @@
 # November 18 recovery
 
+**Complete:** all current Original R0 and README-authoring jobs finished. [Verified results and completion checks](COMPLETION.md). The recovery procedure and earlier snapshot below are retained as history.
+
 RDPro finished all 330 Original R0 targets (37 passed) and authored all 330 README entries. Compiler/runtime failures are recorded outcomes, not unfinished provider requests.
 
 | Interrupted job | Recovery | Preserved evidence |

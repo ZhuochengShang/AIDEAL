@@ -1,0 +1,44 @@
+{
+  "versions": {
+    "MDAnalysis": "2.11.0",
+    "tslearn": "0.10.0",
+    "biopython": "1.88",
+    "openmm": null,
+    "ParmEd": null,
+    "imdclient": null,
+    "gemmi": null,
+    "pytng": null,
+    "tensorflow": null,
+    "keras": "3.15.1",
+    "torch": "2.15.0+cpu",
+    "scikit-learn": "1.7.2",
+    "h5py": "3.16.0",
+    "gsd": "5.0.1"
+  },
+  "source_excerpts": {
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/coordinates/GSD.py": {
+      "start_line": 55,
+      "end_line": 69,
+      "text": "try:\n    import gsd\n    import gsd.fl\nexcept ImportError:\n    HAS_GSD = False\n    import types\n\n    class MockHOOMDTrajectory:\n        pass\n\n    gsd = types.ModuleType(\"gsd\")\n    gsd.hoomd = types.ModuleType(\"hoomd\")\n    gsd.hoomd.HOOMDTrajectory = MockHOOMDTrajectory\nelse:\n    HAS_GSD = True"
+    },
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/coordinates/H5MD.py": {
+      "start_line": 219,
+      "end_line": 234,
+      "text": "try:\n    import h5py\nexcept ImportError:\n    HAS_H5PY = False\n\n    # Allow building documentation even if h5py is not installed\n    import types\n\n    class MockH5pyFile:\n        pass\n\n    h5py = types.ModuleType(\"h5py\")\n    h5py.File = MockH5pyFile\n\nelse:\n    HAS_H5PY = True"
+    },
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/analysis/align.py": {
+      "start_line": 200,
+      "end_line": 207,
+      "text": "try:\n    import Bio.AlignIO\n    import Bio.Align\n    import Bio.Align.Applications\nexcept ImportError:\n    HAS_BIOPYTHON = False\nelse:\n    HAS_BIOPYTHON = True"
+    },
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/lib/c_distances.pyx": {
+      "start_line": 164,
+      "text": "def calc_angle_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                         numpy.ndarray coords3, numpy.ndarray box,\n                         numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_angle_triclinic(<coordinate*> coords1.data,\n                          <coordinate*> coords2.data,\n                          <coordinate*> coords3.data, numcoords,\n                          <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral(numpy.ndarray coords1, numpy.ndarray coords2,\n                  numpy.ndarray coords3, numpy.ndarray coords4,\n                  numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                   <coordinate*> coords3.data, <coordinate*> coords4.data,\n                   numcoords, <double*> results.data)\n\n\ndef calc_dihedral_ortho(numpy.ndarray coords1, numpy.ndarray coords2,\n                        numpy.ndarray coords3, numpy.ndarray coords4,\n                        numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral_ortho(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                         <coordinate*> coords3.data, <coordinate*> coords4.data,\n                         numcoords, <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                            numpy.ndarray coords3, numpy.ndarray coords4,\n                            numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral_triclinic(<coordinate*> coords1.data,\n                             <coordinate*> coords2.data,\n                             <coordinate*> coords3.data,\n                             <coordinate*> coords4.data, numcoords,\n                             <float*> box.data, <double*> results.data)\n\n\ndef ortho_pbc(numpy.ndarray coords, numpy.ndarray box):\n    cdef uint64_t numcoords\n    numcoords = coords.shape[0]"
+    },
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/lib/c_distances_openmp.pyx": {
+      "start_line": 174,
+      "text": "def calc_angle_ortho(numpy.ndarray coords1, numpy.ndarray coords2,\n                     numpy.ndarray coords3, numpy.ndarray box,\n                     numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_angle_ortho(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                      <coordinate*> coords3.data, numcoords, <float*> box.data,\n                      <double*> results.data)\n\n\ndef calc_angle_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                         numpy.ndarray coords3, numpy.ndarray box,\n                         numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_angle_triclinic(<coordinate*> coords1.data,\n                          <coordinate*> coords2.data,\n                          <coordinate*> coords3.data, numcoords,\n                          <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral(numpy.ndarray coords1, numpy.ndarray coords2,\n                  numpy.ndarray coords3, numpy.ndarray coords4,\n                  numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                   <coordinate*> coords3.data, <coordinate*> coords4.data,\n                   numcoords, <double*> results.data)\n\n\ndef calc_dihedral_ortho(numpy.ndarray coords1, numpy.ndarray coords2,\n                        numpy.ndarray coords3, numpy.ndarray coords4,\n                        numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral_ortho(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                         <coordinate*> coords3.data, <coordinate*> coords4.data,\n                         numcoords, <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                            numpy.ndarray coords3, numpy.ndarray coords4,\n                            numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]"
+    }
+  },
+  "biopython_applications_spec_present": false
+}

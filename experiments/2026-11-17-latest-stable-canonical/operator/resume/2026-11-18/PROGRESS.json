@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-11-18T08:56:36.479728+00:00",
+  "observed_at": "2026-11-18T16:55:35.689323+00:00",
   "launch": {
     "status": "STOPPED_WITH_INCOMPLETE_JOBS",
     "pid": 2637261,
@@ -102,12 +102,12 @@
     },
     {
       "job": "tslearn-r0",
-      "status": "running",
+      "status": "complete",
       "selected": 362,
       "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn",
-      "completed": 267,
-      "passes": 162,
-      "failures": 105,
+      "completed": 362,
+      "passes": 219,
+      "failures": 143,
       "provider_blocked_targets": 0,
       "unfinished_checkpoint_lines": 0,
       "previous_controller_status": "failed"
@@ -136,17 +136,17 @@
     },
     {
       "job": "mdanalysis-readme",
-      "status": "running",
+      "status": "complete",
       "selected": 1538,
       "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-readme-source-note/authoring/mdanalysis/mdanalysis",
-      "completed": 753,
+      "completed": 1538,
       "passes": null,
       "failures": null,
-      "generation_complete": false,
-      "completion_receipt_exists": false,
+      "generation_complete": true,
+      "completion_receipt_exists": true,
       "previous_output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mdanalysis/mdanalysis",
       "previous_completed": 1334,
-      "replayed_responses": 766,
+      "replayed_responses": 1348,
       "validation_policy": "source-note-todo-v3"
     },
     {
@@ -225,7 +225,7 @@
     }
   },
   "provider_resume": {
-    "status": "RUNNING",
+    "status": "COMPLETE",
     "pid": 2797968,
     "started_at": "2026-11-18T08:47:00.745398+00:00",
     "jobs": [
@@ -233,13 +233,21 @@
     ],
     "workers": 1,
     "queue_started_at": "2026-11-18T08:47:11.281480+00:00",
-    "release": "/home/zshan011/apps/aideal/releases/2026-11-17-qualified-api-f3c6fd6fe802"
+    "release": "/home/zshan011/apps/aideal/releases/2026-11-17-qualified-api-f3c6fd6fe802",
+    "finished_at": "2026-11-18T09:15:24.330078+00:00",
+    "outcomes": {
+      "tslearn-r0": "complete"
+    }
   },
   "author_recovery": {
-    "status": "RUNNING",
+    "status": "COMPLETE",
     "pid": 2799288,
     "started_at": "2026-11-18T08:53:43.013362+00:00",
     "workers": 1,
-    "release": "/home/zshan011/apps/aideal/releases/2026-11-18-readme-source-note-af14d93d2dcc"
+    "release": "/home/zshan011/apps/aideal/releases/2026-11-18-readme-source-note-af14d93d2dcc",
+    "finished_at": "2026-11-18T09:09:57.471666+00:00",
+    "outcomes": {
+      "mdanalysis-readme": "complete"
+    }
   }
 }

@@ -1,0 +1,868 @@
+{
+  "checked_at_utc": "2026-11-18T16:59:59.081738+00:00",
+  "read_only": true,
+  "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/result.json",
+  "totals": {
+    "targets": 217,
+    "pass": 78,
+    "recorded_runtime": 74,
+    "recorded_unknown": 65
+  },
+  "group_counts": {
+    "invalid_function:rs_fromgeotiff": 56,
+    "invalid_function:st_fromgeoraster": 1,
+    "wrong_raster_argument_type": 1,
+    "invalid_function:read_binary": 1,
+    "no_matching_kernel": 5,
+    "unsupported_dot_access": 1
+  },
+  "groups": {
+    "invalid_function:rs_fromgeotiff": [
+      "sql:RS_AsGeoTiff",
+      "sql:RS_BandNoDataValue",
+      "sql:RS_BandPixelType",
+      "sql:RS_BandToDim",
+      "sql:RS_Clip",
+      "sql:RS_Contains",
+      "sql:RS_ConvexHull",
+      "sql:RS_CRS",
+      "sql:RS_DimNames",
+      "sql:RS_DimSize",
+      "sql:RS_DimToBand",
+      "sql:RS_Envelope",
+      "sql:RS_GeoReference",
+      "sql:RS_GeoTransform",
+      "sql:RS_Height",
+      "sql:RS_Intersects",
+      "sql:RS_IsEmpty",
+      "sql:RS_MinConvexHull",
+      "sql:RS_NumBands",
+      "sql:RS_PixelAsCentroid",
+      "sql:RS_PixelAsPoint",
+      "sql:RS_PixelAsPolygon",
+      "sql:RS_Polygonize",
+      "sql:RS_RasterToWorldCoord",
+      "sql:RS_RasterToWorldCoordX",
+      "sql:RS_RasterToWorldCoordY",
+      "sql:RS_ReplaceBandNoDataValue",
+      "sql:RS_ReprojectMatch",
+      "sql:RS_Resample",
+      "sql:RS_Rotation",
+      "sql:RS_ScaleX",
+      "sql:RS_ScaleY",
+      "sql:RS_SetBandNoDataValue",
+      "sql:RS_SetCRS",
+      "sql:RS_SetGeoReference",
+      "sql:RS_SetSRID",
+      "sql:RS_Shape",
+      "sql:RS_SkewX",
+      "sql:RS_SkewY",
+      "sql:RS_Slice",
+      "sql:RS_SRID",
+      "sql:RS_Stack",
+      "sql:RS_SummaryStats",
+      "sql:RS_SummaryStatsAll",
+      "sql:RS_Tile",
+      "sql:RS_UpperLeftX",
+      "sql:RS_UpperLeftY",
+      "sql:RS_Value",
+      "sql:RS_Values",
+      "sql:RS_Width",
+      "sql:RS_Within",
+      "sql:RS_WorldToRasterCoord",
+      "sql:RS_WorldToRasterCoordX",
+      "sql:RS_WorldToRasterCoordY",
+      "sql:RS_ZonalStats",
+      "sql:RS_ZonalStatsAll"
+    ],
+    "invalid_function:st_fromgeoraster": [
+      "sql:RS_BandPath"
+    ],
+    "wrong_raster_argument_type": [
+      "sql:rs_ensureloaded"
+    ],
+    "invalid_function:read_binary": [
+      "sql:RS_NumDimensions"
+    ],
+    "no_matching_kernel": [
+      "sql:RS_SetValue",
+      "sql:ST_ClosestPoint",
+      "sql:st_longestline",
+      "sql:ST_MakeValid",
+      "sql:st_shortestline"
+    ],
+    "unsupported_dot_access": [
+      "sql:ST_Dump"
+    ]
+  },
+  "classifier": {
+    "frozen_file": "/home/zshan011/apps/aideal/releases/2026-11-17-qualified-api-f3c6fd6fe802/vendor/aideal_engine/src/aideal/doc_check_errors.py",
+    "line": 33,
+    "pattern": "^(\\w*(?:Error|Exception)\\b.*)$",
+    "problem": "Cannot match qualified Python exception name sedonadb._lib.SedonaError; native traceback lacks configured __RUN_ERR__ marker. Unknown here does not mean execution did not run.",
+    "safe_fix": "Accept module-qualified exception classes and test this form. Reclassify immutable saved diagnostics in a derived report without any model/execution rerun."
+  },
+  "capability_findings": [
+    {
+      "apis": [
+        "sql:ST_ClosestPoint",
+        "sql:st_longestline",
+        "sql:st_shortestline"
+      ],
+      "finding": "Generated geometry arguments do not match the pinned S2 geography-only kernels. No GEOS implementations for these names occur in its register.rs. At least ST_ClosestPoint original reference metadata nevertheless advertises a geometry overload, so documentation/capability mismatch contributes; do not call this missing dependency from this evidence.",
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/c/sedona-s2geography/src/kernels.rs:110",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/c/sedona-geos/src/register.rs",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_closestpoint.qmd:21"
+      ]
+    },
+    {
+      "apis": [
+        "sql:ST_MakeValid"
+      ],
+      "finding": "Generated program first calls the supported one-argument function, then fails when testing (geometry, boolean). Original reference explicitly advertises keepCollapsed:boolean but pinned GEOS implementation matches one geometry argument only. This is a documented-overload/runtime capability mismatch.",
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_makevalid.qmd:24",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/c/sedona-geos/src/st_makevalid.rs:46"
+      ]
+    },
+    {
+      "apis": [
+        "sql:RS_SetValue"
+      ],
+      "finding": "Failure occurs in helper RS_MakeEmptyRaster with nine integer arguments before the target operation. This is a helper-call kernel/argument mismatch; no missing-module diagnostic is present.",
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetValue--5d11149e40451679cf5ab0c381ebc45436ea56653be1106a11cfcb010649b591/attempt_0001"
+      ]
+    }
+  ],
+  "findings": [
+    "All65 unknown rows terminated with exit1 and explicit SedonaError diagnostics. No missing dependency or provider failure is confirmed among these65.",
+    "56 generated programs call unregistered RS_FromGeoTiff; one calls ST_FromGeoRaster, one read_binary. These calls occur in saved generated code. The inspected RS_AsGeoTiff request contains neither RS_FromGeoTiff nor RS_FromGDALRaster, so no evidence that the invalid name was supplied by the scaffold or that prompt.",
+    "One record passes Utf8 where Raster is required; one uses unsupported dot access. Five fail SQL kernel dispatch as detailed above.",
+    "Classify captured errors more precisely without overwriting historical results. If changing supplied docs, runtime kernels, fixtures or environment, use a new versioned evaluation namespace and do not mix new outcomes into the frozen R0 run.",
+    "No experiments, files on cluster, dependencies or model calls were changed by this audit."
+  ],
+  "records": [
+    {
+      "api": "sql:RS_AsGeoTiff",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_AsGeoTiff--ef4c8603bac37a37f00dd09b9798b2952260278e4db13828f11595fc0cd52ca7/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_BandNoDataValue",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandNoDataValue--af9ebd6cdd16f9d11f9c1badbecee1c44058e4ba09fa8ee41c733d6c23dc7f11/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_BandPath",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:st_fromgeoraster",
+      "diagnostic": "Error during planning: Invalid function 'st_fromgeoraster'.\nDid you mean 'rs_fromgdalraster'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandPath--70c30a94ff883ecdc21fa04c591a8161e786d78cb2bbb428c95758e15e4ecd74/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_BandPixelType",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandPixelType--f93d4b04f50ee28f57364f336c8ba2d70c9971e2fbbd75cd1444b07e40008c45/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_BandToDim",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandToDim--693e2c18dbbd839e930afb5ca9578295de1e241cc267dd9d1c4a6ab7c15bd959/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Clip",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Clip--d1bc4aa96a49daa6b00ea91b6a696bc8408e157d62cdf5d52f9dc5ad2472773b/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Contains",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Contains--a29417c8d67cbd8a5264eba9b8f20994a73d34cb95e2fcc903dff3e5f40b955f/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_ConvexHull",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ConvexHull--c6df15278bfa79e4dc7595b438bf3ad9216e6c8b3682cc4c67e2c0855da99cc3/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_CRS",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_CRS--cfa45437d99482236b48e9808fd41fd4e92a85df16f0a77f1c1b5377fee6ea7c/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_DimNames",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_DimNames--d71c2b61c98734bedb6f945de24273f6826e7f2f44a405f9dd73e91352287f6a/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_DimSize",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_DimSize--e2a0ead71eeaf1bc582096bada62c442f92371f455e9bf8b65c3aa415c9f91cd/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_DimToBand",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_DimToBand--e91a6367075de129387c36c1a50a92c630a26f3ce598038034e7f3323e5d94eb/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:rs_ensureloaded",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "wrong_raster_argument_type",
+      "diagnostic": "RS_EnsureLoaded expects a Raster (Struct) argument, got Utf8",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_rs_ensureloaded--de601e84d20fa43886b8714d7691084e440d35ba7f9bf8050af157b357fe484f/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Envelope",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Envelope--4b46911eb1fbf15c24a60c5d0b80993023d0d05122f22cabc6c8304a80e62d5f/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_GeoReference",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_GeoReference--7067cb4613fc32448dfc34d4bf942494a5fe89d80758bed42b20b9f8c89a7d97/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_GeoTransform",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_GeoTransform--7a616e779e4fafb5f5d0332777a91fe49ee683777b3dd3727314c5a9ea115d05/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Height",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Height--5b74108dcd4cea3cb9d928517efdb683a4b9937601a11ca8c8bea9f994a99ee8/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Intersects",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Intersects--ca0c44a6c4f13b69cb3a82c114ae95ae8b1dbeb1579ca489e0e17a024e6124dc/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_IsEmpty",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_IsEmpty--9b2043d0dd293e59734dec9b25cf1e356acc843f2da0654d2434bc98c4d0187e/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_MinConvexHull",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_MinConvexHull--b18d067d04648e203f9aa2707a8ce92190026acd4f6bbf030790dbfe0c38c763/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_NumBands",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_NumBands--2f7e0148ae84b070e778dbe6b55f72a8b897548ba2f4a3c7c0e8e6379a1bd5f4/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_NumDimensions",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:read_binary",
+      "diagnostic": "Error during planning: Invalid function 'read_binary'.\nDid you mean 'st_asbinary'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_NumDimensions--8711bd51baec22288b7f4a3652c3f321cd0393b26b00e56f266c001a8b525c7b/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_PixelAsCentroid",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_PixelAsCentroid--1986e6150e8dc3165ecba692843f8d0f1ce13fc696073a562f3f0041c1bc48e9/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_PixelAsPoint",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_PixelAsPoint--2d01936f70f9980dad2e801749ca289285a22ceddd689f3d801904f17b7eb755/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_PixelAsPolygon",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_PixelAsPolygon--b4c8de12d57d4cc99422d6154d14b81dd8841c60ba77d47b6774ac1a6b1647e0/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Polygonize",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Polygonize--38b00cc298d71688e97ca6af0b2273930e3493e09ce014ec32cda4e0b8254754/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_RasterToWorldCoord",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_RasterToWorldCoord--771e320c4aef740a0e62f3de89d138b26b3a996e35757c3b149bf3939d6c3eb7/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_RasterToWorldCoordX",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_RasterToWorldCoordX--da14c22dd13badf55c6fb682e01d6c8e02fc2a005330b8202c44fe8a2d79bd5f/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_RasterToWorldCoordY",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_RasterToWorldCoordY--a2fefa2f8e347c2bf7880033686d10a08b3c2d2bdc62200b217e0affedec92bc/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_ReplaceBandNoDataValue",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ReplaceBandNoDataValue--30d0b3d2dfaca9912f6db9862bf674286cabb0a78a7d4fc0511bf4d038f2bc36/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_ReprojectMatch",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ReprojectMatch--8b850dbb37f3f90db0bb890c604ac75a70c7f5033f87f40aef30701bc94e3f2f/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Resample",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Resample--86d38c55d9006ed20dce875e43556bb1980bd1a4ba6904286e3f181d033449d8/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Rotation",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Rotation--c11b218df4c761e9ff0f26f87511813d279d75187956e557628702e6eb0acd40/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_ScaleX",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ScaleX--2d380ed7551991ef1be5443b2d7bffc2be6dc51c2d8c9fb1029d81a65c1b26fc/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_ScaleY",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ScaleY--8799ec4a624be142590d6c2d4e5040ecc67479b8a66f4f5c70218ebc02d7d6f2/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SetBandNoDataValue",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetBandNoDataValue--c0c7a033b0a7bc531284a93e3aa4cbe748f0ea389617dc960750b4de17047778/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SetCRS",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetCRS--8fd42af8d0d2e043f89796b369475bfb0a3a2d990a26274a6ddb443b5c375f7f/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SetGeoReference",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetGeoReference--16ccdf782a8e152cfda2287a6fe8498842d46f6da16f9ccea4b6144fde8c79c3/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SetSRID",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetSRID--f7ea5b22421143ff26ba24710f7d268eed71de803711c31aa62536f3a71d5ad7/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SetValue",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "no_matching_kernel",
+      "diagnostic": "rs_makeemptyraster(int64, int64, int64, int64, int64, int64, int64, int64, int64): No kernel matching arguments",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetValue--5d11149e40451679cf5ab0c381ebc45436ea56653be1106a11cfcb010649b591/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Shape",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Shape--435557e62eed03a95f0364d56cd3dba93eb6bea386894c6565bf74dd26b45ab6/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SkewX",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SkewX--da485ec539de018dbc6879ee529eed309fdb01d3f308e92115e06dd7adc40503/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SkewY",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SkewY--4d1522f0bf4931e13ed3c02f5b96e8ad984d1053b9c4ec550f055ec9542903cc/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Slice",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Slice--0bea67beb44b00bd2ab23e2609e1859f30c28ffc2753a1504f41071733150088/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SRID",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SRID--9277396cc3aada03731cde695ad4291acc801129c86583f50b87948be91295b3/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Stack",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Stack--2df133366223f0bae6bb1c72a7769cb89790ff5da73f8ea02db67147a4dc946b/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SummaryStats",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SummaryStats--e73ddadb720938f64a8680ea191d370aef46d76c1d199e05df9894c306bbb3f3/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_SummaryStatsAll",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SummaryStatsAll--f1347a70d8632de06ebcddda6cb3513d14ef9761d68b4ced6b9236bf9dbe1a87/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Tile",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Tile--7a8814b166fb0ca8965bab61a6c2f1ce3988d282cfb4713fb9e6feb673cc578a/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_UpperLeftX",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_UpperLeftX--d83da27e765614f32d020fc53b0e7aaed8674d6b8cf4ab69caa7684b0a99dac4/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_UpperLeftY",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_UpperLeftY--d7465e7e0e18c302b7ac5a78cf68a92a4b07504e967097d8f19bcf8a691cfe7e/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Value",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Value--0acf9c49aff19b6cf2597dad8cb10972a34ebe1789f86646404dd15d9fbcea50/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Values",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Values--842fa06245910edf734cd5e9e3697d56db2e324eaaf9b3655c9a7dbdf7394b29/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Width",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Width--81f0bc50ea42364a1b2af26b563d79a33b6d1797600f3acb389e580c89681fd6/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_Within",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Within--f46ef83dc94aa5e635279fabc2fcb9581833ebe64d40fa769629d5f60de99962/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_WorldToRasterCoord",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_WorldToRasterCoord--784d63eb4ba7a8961497b117b03313c78f0e6099b6832b058d8ff7c301f369cf/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_WorldToRasterCoordX",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_WorldToRasterCoordX--8cf3ea0dd43486c4fdb235585b7286e92a3e823f9b208243de0681c0ab6b5cab/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_WorldToRasterCoordY",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_WorldToRasterCoordY--174eb33f5ddcb36872fded2dbcb6f467922bdf54fd6e75d2dde5a08a8f41d215/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_ZonalStats",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ZonalStats--4f4b4af270c804139d53307d81fda314ef1414c0f12e49a702af722d560c19bd/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:RS_ZonalStatsAll",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "invalid_function:rs_fromgeotiff",
+      "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ZonalStatsAll--146fec610a0053a05a944890850d2c3ecd2da0f3c71298e3a3791a8d7019f518/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:ST_ClosestPoint",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "no_matching_kernel",
+      "diagnostic": "st_closestpoint(geometry, geometry): No kernel matching arguments",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_ClosestPoint--3c040e51bfd5645b4c409563d022957c19ed51a1a3a08f2aa59232a9fb55c3e4/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:ST_Dump",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "unsupported_dot_access",
+      "diagnostic": "Dot access not supported for non-string expr: Identifier(Ident { value: \"geom\", quote_style: None, span: Span(Location(3,97)..Location(3,101)) })",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_Dump--19a0e424c758b0a767ae2d55eef389a16189883331f524dc38e07efd58dec783/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:st_longestline",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "no_matching_kernel",
+      "diagnostic": "st_longestline(geometry, geometry): No kernel matching arguments",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_st_longestline--752f5d24c8d3d0894f2a32195b262bead2625e753e0946c69a51cfc96a946c0b/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:ST_MakeValid",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "no_matching_kernel",
+      "diagnostic": "st_makevalid(geometry, boolean): No kernel matching arguments",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_MakeValid--df1e66c1b9d5a765d44d88a6c9af52154148c4b4696ffb6cee5de7c0ffc131fc/attempt_0001"
+      ]
+    },
+    {
+      "api": "sql:st_shortestline",
+      "recorded_category": "unknown",
+      "reviewed_category": "SQL planning/type/capability failure",
+      "group": "no_matching_kernel",
+      "diagnostic": "st_shortestline(geometry, geometry): No kernel matching arguments",
+      "exit_code": 1,
+      "evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_st_shortestline--0641d89cb8f385d05a036bb9733464d5ea50d1aedc3d628720baad2269eb7c96/attempt_0001"
+      ]
+    }
+  ],
+  "unregistered_function_target_check": {
+    "count": 58,
+    "same_as_target": [],
+    "finding": "All58 unregistered names are helper calls, not the selected target API. Saved generated programs contain the calls. Only one request was checked for prompt provenance; causal attribution across all58 remains unverified."
+  }
+}

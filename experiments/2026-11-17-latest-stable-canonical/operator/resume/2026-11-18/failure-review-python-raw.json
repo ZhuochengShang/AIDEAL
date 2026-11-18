@@ -1,0 +1,859 @@
+{
+  "checked_at": "2026-11-18T16:57:22.820149+00:00",
+  "libraries": {
+    "tslearn": {
+      "result_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/result.json",
+      "sha256": "f571d970ad1698072440e02af13f28f828ece56b4d0b0563cabaf41b7a59386c",
+      "run_fingerprint": "30eb9826e0fc74284854f28330c1159e6063475f3c02618dc090dbabf5acc030",
+      "rows": [
+        {
+          "api": "python:tslearn.backend.backend.Backend.__getattr__",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'get_backend' from 'tslearn.backend' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/backend/__init__.py)",
+          "locus": "",
+          "source": "source/tslearn/backend/backend.py:72",
+          "wall_s": 9.1,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.backend.backend.Backend.__getattr__--a46cccc01e72e6b7bf4fee4e798101eb4474cc81fa549dea7c5969bf8b72bdb8/attempt_0001",
+          "code": "from tslearn.backend import get_backend\nimport numpy as np\n\n# Obtain the backend instance (e.g., numpy backend)\nbackend = get_backend()\n\n# The __getattr__ method is used to access backend-specific implementations \n# of operations (e.g., 'abs', 'sqrt', 'sum').\n# We test accessing a known attribute like 'abs'.\nabs_func = backend.__getattr__(\"abs\")\n\n# Verify the function works as expected on a small input\ntest_val = np.array([-1.0, 2.0, -3.0])\nresult = abs_func(test_val)\n\n# Correctness check: verify the result matches the expected absolute values\nexpected = np.array([1.0, 2.0, 3.0])\nassert np.allclose(result, expected), f\"Expected {expected}, got {result}\"\n\nprint(f\"__CHECK__ python:tslearn.backend.backend.Backend.__getattr__ {result.tolist()}\")",
+          "stderr.txt": "__RUN_ERR__ ImportError: cannot import name 'get_backend' from 'tslearn.backend' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/backend/__init__.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.backend.backend.Backend.__getattr__--a46cccc01e72e6b7bf4fee4e798101eb4474cc81fa549dea7c5969bf8b72bdb8/api_test.py\", line 62, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.backend.backend.Backend.__getattr__--a46cccc01e72e6b7bf4fee4e798101eb4474cc81fa549dea7c5969bf8b72bdb8/api_test.py\", line 57, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.backend.backend.Backend.__getattr__--a46cccc01e72e6b7bf4fee4e798101eb4474cc81fa549dea7c5969bf8b72bdb8/api_test.py\", line 34, in api_test\n    from tslearn.backend import get_backend\nImportError: cannot import name 'get_backend' from 'tslearn.backend' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/backend/__init__.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.backend.backend.Backend.__getattr__--a46cccc01e72e6b7bf4fee4e798101eb4474cc81fa549dea7c5969bf8b72bdb8/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 7.27158522605896,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.datasets.ucr_uea.UCR_UEA_datasets.cache_all",
+          "category": "timeout",
+          "error": "execution timed out",
+          "locus": "",
+          "source": "source/tslearn/datasets/ucr_uea.py:377",
+          "wall_s": 302.6,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.datasets.ucr_uea.UCR_UEA_datasets.cache_all--088c884230dd58a18d76bb082c5fe05ba9ee6869ee2b954d518a235576951a34/attempt_0001",
+          "code": "from tslearn.datasets import UCR_UEA_datasets\n\n# Instantiate the dataset manager\nloader = UCR_UEA_datasets()\n\n# The cache_all method is designed to download/cache datasets.\n# Given the constraint to avoid network access, we exercise the API\n# and verify the state of the cache directory if possible.\nloader.cache_all()\n\n# Verify that the cache directory exists and is accessible.\n# The cache_all method does not return a value, so we verify the \n# side effect of the cache directory being initialized.\nimport os\ncache_dir = loader.cache_dir\nis_dir = os.path.isdir(cache_dir)\n\nassert is_dir, \"Cache directory was not created by cache_all\"\nprint(f\"__CHECK__ python:tslearn.datasets.ucr_uea.UCR_UEA_datasets.cache_all {is_dir}\")",
+          "stderr.txt": "\n[timeout]",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.datasets.ucr_uea.UCR_UEA_datasets.cache_all--088c884230dd58a18d76bb082c5fe05ba9ee6869ee2b954d518a235576951a34/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 124,
+            "wall_s": 300.3816428184509,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict",
+          "category": "infra",
+          "error": "missing module/import: No module named 'tslearn.forecasting.knn'",
+          "locus": "",
+          "source": "source/tslearn/forecasting/_pipeline.py:142",
+          "wall_s": 10.4,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict--d043233859f5b8a85bc52a345ae77614ff4d3644b7065785fcc9f9b97e55ad28/attempt_0001",
+          "code": "from tslearn.forecasting import ScaledForecastingPipeline\nfrom tslearn.forecasting.knn import KNeighborsTimeSeriesForecaster\nfrom tslearn.preprocessing import TimeSeriesScalerMinMax\n\n# Initialize the pipeline with a forecaster and scaler\nforecaster = KNeighborsTimeSeriesForecaster(n_neighbors=1)\npipeline = ScaledForecastingPipeline(\n    forecaster=forecaster,\n    scaler=TimeSeriesScalerMinMax()\n)\n\n# Fit the pipeline on the balanced dataset\npipeline.fit(X)\n\n# Predict 5 steps ahead\nn_steps = 5\npredictions = pipeline.predict(X=X, n=n_steps)\n\n# Verify shape: (n_ts, n, d) -> (8, 5, 1)\nexpected_shape = (X.shape[0], n_steps, X.shape[2])\nassert predictions.shape == expected_shape, f\"Expected shape {expected_shape}, got {predictions.shape}\"\n\n# Verify that predictions are within the scaled range [0, 1]\nassert (predictions >= 0.0).all() and (predictions <= 1.0).all(), \"Predictions outside [0, 1] range\"\n\nprint(f\"__CHECK__ python:tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict {pred",
+          "stderr.txt": "__RUN_ERR__ ModuleNotFoundError: No module named 'tslearn.forecasting.knn'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict--d043233859f5b8a85bc52a345ae77614ff4d3644b7065785fcc9f9b97e55ad28/api_test.py\", line 68, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict--d043233859f5b8a85bc52a345ae77614ff4d3644b7065785fcc9f9b97e55ad28/api_test.py\", line 63, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict--d043233859f5b8a85bc52a345ae77614ff4d3644b7065785fcc9f9b97e55ad28/api_test.py\", line 35, in api_test\n    from tslearn.forecasting.knn import KNeighborsTimeSeriesForecaster\nModuleNotFoundError: No module named 'tslearn.forecasting.knn'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict--d043233859f5b8a85bc52a345ae77614ff4d3644b7065785fcc9f9b97e55ad28/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 8.159584760665894,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.metrics._frechet.accumulated_matrix",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'accumulated_matrix' from 'tslearn.metrics' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/metrics/__init__.py)",
+          "locus": "",
+          "source": "source/tslearn/metrics/_frechet.py:288",
+          "wall_s": 9.9,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._frechet.accumulated_matrix--ec44fa4e1e829a4993927655510955955e8e27794f5dc0ebaa00fec10df244a1/attempt_0001",
+          "code": "import numpy as np\nfrom tslearn.metrics import accumulated_matrix\n\n# Create a simple mask for the Frechet accumulated matrix\n# Using a square mask for the two series s1 and s2 (both shape (40,))\nmask = np.ones((40, 40), dtype=bool)\n\n# Compute the accumulated cost matrix\nmat = accumulated_matrix(s1, s2, mask=mask, be=\"numpy\")\n\n# Verification: The accumulated matrix should have the same shape as the mask\n# and the last element (bottom-right) should represent the accumulated cost.\nassert mat.shape == (40, 40)\nassert not np.isnan(mat[-1, -1])\nassert np.isfinite(mat[-1, -1])\n\n# Witness: The value at the bottom-right corner of the accumulated matrix\nwitness = mat[-1, -1]\nprint(f\"__CHECK__ python:tslearn.metrics._frechet.accumulated_matrix {witness}\")",
+          "stderr.txt": "__RUN_ERR__ ImportError: cannot import name 'accumulated_matrix' from 'tslearn.metrics' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/metrics/__init__.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._frechet.accumulated_matrix--ec44fa4e1e829a4993927655510955955e8e27794f5dc0ebaa00fec10df244a1/api_test.py\", line 61, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._frechet.accumulated_matrix--ec44fa4e1e829a4993927655510955955e8e27794f5dc0ebaa00fec10df244a1/api_test.py\", line 56, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._frechet.accumulated_matrix--ec44fa4e1e829a4993927655510955955e8e27794f5dc0ebaa00fec10df244a1/api_test.py\", line 35, in api_test\n    from tslearn.metrics import accumulated_matrix\nImportError: cannot import name 'accumulated_matrix' from 'tslearn.metrics' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/metrics/__init__.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._frechet.accumulated_matrix--ec44fa4e1e829a4993927655510955955e8e27794f5dc0ebaa00fec10df244a1/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 7.837482452392578,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'KNeighborsTimeSeriesMixin' from 'tslearn.neighbors' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/neighbors/__init__.py)",
+          "locus": "",
+          "source": "source/tslearn/neighbors/neighbors.py:28",
+          "wall_s": 10.0,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin--1950e6931850e2adfb3ef91c304ff7dae3f3fcb2e5df713d3a6686ced8caf7a6/attempt_0001",
+          "code": "from tslearn.neighbors import KNeighborsTimeSeriesMixin\nimport numpy as np\n\nclass MockKNN(KNeighborsTimeSeriesMixin):\n    def __init__(self, n_neighbors=3):\n        self.n_neighbors = n_neighbors\n        self.metric = \"dtw\"\n\n# Instantiate the mixin via a concrete class\nknn_mixin = MockKNN(n_neighbors=5)\n\n# The mixin provides methods like _check_n_neighbors\n# We verify the internal state management of the mixin\nn_neighbors_val = knn_mixin._check_n_neighbors(X.shape[0])\n\nassert n_neighbors_val == 5, f\"Expected 5, got {n_neighbors_val}\"\nprint(f\"__CHECK__ python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin {n_neighbors_val}\")",
+          "stderr.txt": "__RUN_ERR__ ImportError: cannot import name 'KNeighborsTimeSeriesMixin' from 'tslearn.neighbors' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/neighbors/__init__.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin--1950e6931850e2adfb3ef91c304ff7dae3f3fcb2e5df713d3a6686ced8caf7a6/api_test.py\", line 59, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin--1950e6931850e2adfb3ef91c304ff7dae3f3fcb2e5df713d3a6686ced8caf7a6/api_test.py\", line 54, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin--1950e6931850e2adfb3ef91c304ff7dae3f3fcb2e5df713d3a6686ced8caf7a6/api_test.py\", line 34, in api_test\n    from tslearn.neighbors import KNeighborsTimeSeriesMixin\nImportError: cannot import name 'KNeighborsTimeSeriesMixin' from 'tslearn.neighbors' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/neighbors/__init__.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin--1950e6931850e2adfb3ef91c304ff7dae3f3fcb2e5df713d3a6686ced8caf7a6/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 8.222909450531006,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'tags' from 'sklearn.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/sklearn/utils/__init__.py)",
+          "locus": "",
+          "source": "source/tslearn/neighbors/neighbors.py:205",
+          "wall_s": 10.3,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__--9bcaf6e33849c96b5da68601a28d3f8cb7007e44da29f40f898fc0f89afd4146/attempt_0001",
+          "code": "from tslearn.neighbors import KNeighborsTimeSeries\nfrom sklearn.utils import tags\n\n# Instantiate the class that inherits from KNeighborsTimeSeriesMixin\nknn = KNeighborsTimeSeries(n_neighbors=1)\n\n# Call the __sklearn_tags__ method\ntags_result = knn.__sklearn_tags__()\n\n# Verify the result: sklearn tags should be an object with specific attributes\n# (e.g., 'input_tags' or 'estimator_type')\nassert hasattr(tags_result, 'estimator_type'), \"Result must have estimator_type attribute\"\nassert tags_result.estimator_type == 'classifier' or tags_result.estimator_type == 'regressor' or tags_result.estimator_type == 'clusterer'\n\nprint(f\"__CHECK__ python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__ {tags_result.estimator_type}\")",
+          "stderr.txt": "__RUN_ERR__ ImportError: cannot import name 'tags' from 'sklearn.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/sklearn/utils/__init__.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__--9bcaf6e33849c96b5da68601a28d3f8cb7007e44da29f40f898fc0f89afd4146/api_test.py\", line 57, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__--9bcaf6e33849c96b5da68601a28d3f8cb7007e44da29f40f898fc0f89afd4146/api_test.py\", line 52, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__--9bcaf6e33849c96b5da68601a28d3f8cb7007e44da29f40f898fc0f89afd4146/api_test.py\", line 35, in api_test\n    from sklearn.utils import tags\nImportError: cannot import name 'tags' from 'sklearn.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/sklearn/utils/__init__.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__--9bcaf6e33849c96b5da68601a28d3f8cb7007e44da29f40f898fc0f89afd4146/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 8.27274775505066,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.shapelets.shapelets.LocalSquaredDistanceLayer",
+          "category": "infra",
+          "error": "missing module/import: No module named 'tensorflow'",
+          "locus": "",
+          "source": "source/tslearn/shapelets/shapelets.py:167",
+          "wall_s": 15.6,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer--02f440b2d8d409fd0241c9aef1d3d281d8f0b6088dd5001f080e3f3393358b0b/attempt_0001",
+          "code": "from tslearn.shapelets.shapelets import LocalSquaredDistanceLayer\nimport numpy as np\nimport tensorflow as tf\n\n# LocalSquaredDistanceLayer is a Keras layer.\n# It expects input shape (batch_size, n_timesteps, n_features)\n# and computes squared distances to shapelets.\nnb_shapelets = 3\nshapelet_size = 10\nn_features = 1\n\n# Initialize the layer\n# init: 'uniform' is a standard initializer for weights\nlayer = LocalSquaredDistanceLayer(nb_shapelets=nb_shapelets, init='uniform')\n\n# Build the layer with an input shape matching X (8, 40, 1)\n# The layer expects input_shape=(n_timesteps, n_features)\nlayer.build(input_shape=(None, 40, 1))\n\n# Create a dummy input tensor\ninput_tensor = tf.convert_to_tensor(X.astype(np.float32))\n\n# Perform the forward pass\noutput = layer(input_tensor)\n\n# The output shape should be (batch_size, nb_shapelets)\n# because it computes the distance of each time series to each shapelet.\nexpected_shape = (8, nb_shapelets)\nassert output.shape == expected_shape, f\"Expected shape {",
+          "stderr.txt": "__RUN_ERR__ ModuleNotFoundError: No module named 'tensorflow'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer--02f440b2d8d409fd0241c9aef1d3d281d8f0b6088dd5001f080e3f3393358b0b/api_test.py\", line 78, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer--02f440b2d8d409fd0241c9aef1d3d281d8f0b6088dd5001f080e3f3393358b0b/api_test.py\", line 73, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer--02f440b2d8d409fd0241c9aef1d3d281d8f0b6088dd5001f080e3f3393358b0b/api_test.py\", line 36, in api_test\n    import tensorflow as tf\nModuleNotFoundError: No module named 'tensorflow'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer--02f440b2d8d409fd0241c9aef1d3d281d8f0b6088dd5001f080e3f3393358b0b/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 13.031069040298462,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build",
+          "category": "infra",
+          "error": "missing module/import: No module named 'tensorflow'",
+          "locus": "",
+          "source": "source/tslearn/shapelets/shapelets.py:188",
+          "wall_s": 14.7,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build--7ae5b9b97b805ce1ad79188c06a00ec79224254622cd48304fd3eecb5a18fc01/attempt_0001",
+          "code": "from tslearn.shapelets.shapelets import LocalSquaredDistanceLayer\nimport tensorflow as tf\n\n# LocalSquaredDistanceLayer is a Keras layer. \n# We instantiate it and call build() with an input shape.\n# The input shape for this layer is typically (batch_size, time_series_length, n_features)\n# We use the shape of X (8, 40, 1)\ninput_shape = (None, X.shape[1], X.shape[2])\nlayer = LocalSquaredDistanceLayer(n_shapelets=5, shapelet_length=10)\n\n# build() is called internally by Keras when the layer is first used, \n# but we can call it explicitly as requested.\nlayer.build(input_shape)\n\n# Verify the weights were initialized. \n# The layer should have a 'shapelets' weight variable.\nassert hasattr(layer, 'shapelets')\nassert layer.shapelets.shape == (5, 10, 1)\n\nwitness = layer.shapelets.shape\nprint(f\"__CHECK__ python:tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build {witness}\")",
+          "stderr.txt": "__RUN_ERR__ ModuleNotFoundError: No module named 'tensorflow'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build--7ae5b9b97b805ce1ad79188c06a00ec79224254622cd48304fd3eecb5a18fc01/api_test.py\", line 63, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build--7ae5b9b97b805ce1ad79188c06a00ec79224254622cd48304fd3eecb5a18fc01/api_test.py\", line 58, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build--7ae5b9b97b805ce1ad79188c06a00ec79224254622cd48304fd3eecb5a18fc01/api_test.py\", line 35, in api_test\n    import tensorflow as tf\nModuleNotFoundError: No module named 'tensorflow'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build--7ae5b9b97b805ce1ad79188c06a00ec79224254622cd48304fd3eecb5a18fc01/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 12.901768445968628,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:tslearn.shapelets.shapelets.PatchingLayer",
+          "category": "infra",
+          "error": "missing module/import: No module named 'tensorflow'",
+          "locus": "",
+          "source": "source/tslearn/shapelets/shapelets.py:128",
+          "wall_s": 15.6,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.PatchingLayer--411d796227eecc020544656da1f2579fb4fa1d665222e2a4bcb5a3c2ac387edd/attempt_0001",
+          "code": "from tslearn.shapelets.shapelets import PatchingLayer\nimport tensorflow as tf\n\n# PatchingLayer is a Keras layer designed to extract patches from time series.\n# It expects a shapelet_length parameter.\nshapelet_len = 10\npatching_layer = PatchingLayer(shapelet_length=shapelet_len)\n\n# X is (8, 40, 1). The layer expects input of shape (batch, time, features).\n# We convert the numpy array to a tensor for the Keras layer.\ninput_tensor = tf.convert_to_tensor(X, dtype=tf.float32)\noutput = patching_layer(input_tensor)\n\n# The output shape of PatchingLayer is (batch, n_patches, shapelet_length, features).\n# n_patches = time_series_length - shapelet_length + 1\n# 40 - 10 + 1 = 31\nexpected_n_patches = X.shape[1] - shapelet_len + 1\nexpected_shape = (X.shape[0], expected_n_patches, shapelet_len, X.shape[2])\n\nassert output.shape == expected_shape, f\"Expected shape {expected_shape}, got {output.shape}\"\nassert output.dtype == tf.float32\n\n# Witness: The number of patches extracted\nwitness = output.shape[1]",
+          "stderr.txt": "__RUN_ERR__ ModuleNotFoundError: No module named 'tensorflow'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.PatchingLayer--411d796227eecc020544656da1f2579fb4fa1d665222e2a4bcb5a3c2ac387edd/api_test.py\", line 67, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.PatchingLayer--411d796227eecc020544656da1f2579fb4fa1d665222e2a4bcb5a3c2ac387edd/api_test.py\", line 62, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.PatchingLayer--411d796227eecc020544656da1f2579fb4fa1d665222e2a4bcb5a3c2ac387edd/api_test.py\", line 35, in api_test\n    import tensorflow as tf\nModuleNotFoundError: No module named 'tensorflow'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.PatchingLayer--411d796227eecc020544656da1f2579fb4fa1d665222e2a4bcb5a3c2ac387edd/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 13.506426095962524,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        }
+      ]
+    },
+    "mdanalysis": {
+      "result_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/result.json",
+      "sha256": "d8f8f1dba0a875e851c0c07bfb3e299fa1d24ec60e27213aabf2d3f4e65b73ac",
+      "run_fingerprint": "4dd4ff045c72b1d79fa768676d73a916f8e394d8440687154838808e41feddc5",
+      "rows": [
+        {
+          "api": "python:MDAnalysis.analysis.align.fasta2select",
+          "category": "infra",
+          "error": "missing module/import: The `fasta2select` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download",
+          "locus": "",
+          "source": "source/package/MDAnalysis/analysis/align.py:1329",
+          "wall_s": 4.4,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.fasta2select--f99e7782b3637a4a37034dd6dd61580543ca2e17cc145aed6072f55d07192306/attempt_0001",
+          "code": "import os\nfrom MDAnalysis.analysis.align import fasta2select\n\n# Create a dummy FASTA file for the alignment test\nfasta_path = os.path.join(output_dir, 'test.fasta')\nwith open(fasta_path, 'w') as f:\n    f.write(\">ref\\nMKWVTFISLLFLFSSAYS\\n>target\\nMKWVTFISLLFLFSSAYS\\n\")\n\n# Call fasta2select\n# Note: clustalw is not installed in the environment, so we use is_aligned=True\n# and provide a dummy alignment file to bypass the binary requirement.\naln_path = os.path.join(output_dir, 'test.aln')\nwith open(aln_path, 'w') as f:\n    f.write(\"CLUSTAL W (1.81) multiple sequence alignment\\n\\n\")\n    f.write(\"ref       MKWVTFISLLFLFSSAYS\\n\")\n    f.write(\"target    MKWVTFISLLFLFSSAYS\\n\")\n\nselect_dict = fasta2select(fasta_path, is_aligned=True, alnfilename=aln_path)\n\n# Verify the output structure\nassert isinstance(select_dict, dict)\nassert 'reference' in select_dict\nassert 'mobile' in select_dict\nassert len(select_dict) == 2\n\n# Witness the selection string length\nwitness = len(select_dict['reference'])\nprin",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: The `fasta2select` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.fasta2select--f99e7782b3637a4a37034dd6dd61580543ca2e17cc145aed6072f55d07192306/api_test.py\", line 68, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.fasta2select--f99e7782b3637a4a37034dd6dd61580543ca2e17cc145aed6072f55d07192306/api_test.py\", line 51, in run\n    select_dict = fasta2select(fasta_path, is_aligned=True, alnfilename=aln_path)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/align.py\", line 1438, in fasta2select\n    raise ImportError(errmsg)\nImportError: The `fasta2select` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.fasta2select--f99e7782b3637a4a37034dd6dd61580543ca2e17cc145aed6072f55d07192306/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.232856035232544,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.analysis.align.sequence_alignment",
+          "category": "infra",
+          "error": "missing module/import: The `sequence_alignment` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download",
+          "locus": "",
+          "source": "source/package/MDAnalysis/analysis/align.py:1203",
+          "wall_s": 3.5,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.sequence_alignment--a6c2399c6fbf962312acad0ea8c60dd32be8fffd705b73614266fa4384273506/attempt_0001",
+          "code": "from MDAnalysis.analysis.align import sequence_alignment\n\n# Use the protein AtomGroup for alignment. \n# Aligning the protein against itself should yield a perfect match.\nalignment = sequence_alignment(protein, protein)\n\n# The alignment result is a tuple: ('Sequence A', 'Sequence B', score, begin, end)\n# For self-alignment, the sequences should be identical.\nseq_a, seq_b, score, begin, end = alignment\n\nassert seq_a == seq_b\nassert len(seq_a) == len(protein.residues)\nassert score > 0\n\nprint(f\"__CHECK__ python:MDAnalysis.analysis.align.sequence_alignment {len(seq_a)}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.sequence_alignment--a6c2399c6fbf962312acad0ea8c60dd32be8fffd705b73614266fa4384273506/api_test.py:38: DeprecationWarning: `sequence_alignment` is deprecated!\n`sequence_alignment` will be removed in release 3.0.\nSee the documentation under Notes on how to directly useBio.Align.PairwiseAligner with ResidueGroups.\n  alignment = sequence_alignment(protein, protein)\n__RUN_ERR__ ImportError: The `sequence_alignment` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.sequence_alignment--a6c2399c6fbf962312acad0ea8c60dd32be8fffd705b73614266fa4384273506/api_test.py\", line 55, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.sequence_alignment--a6c2399c6fbf962312acad0ea8c60dd32be8fffd705b73614266fa4384273506/api_test.py\", line 38, in run\n    alignment = sequence_alignment(protein, protein)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/lib/util.py\", line 2441, in newfunc\n    return func(*args, **kwds)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/align.py\", line 1298, in sequence_alignment\n    raise ImportError(errmsg)\nImportError: The `sequence_alignment` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.sequence_alignment--a6c2399c6fbf962312acad0ea8c60dd32be8fffd705b73614266fa4384273506/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.021916627883911,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.analysis.bat.BAT.Cartesian",
+          "category": "timeout",
+          "error": "execution timed out",
+          "locus": "",
+          "source": "source/package/MDAnalysis/analysis/bat.py:526",
+          "wall_s": 302.3,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.bat.BAT.Cartesian--fd91cc7e6ab5260940fe9bc8977f92487faf18c36e081d51035b1e6e1ae52bd1/attempt_0001",
+          "code": "from MDAnalysis.analysis.bat import BAT\nimport numpy as np\n\n# Initialize BAT analysis with the provided atoms\nbat_analyzer = BAT(atoms)\n\n# Get the current BAT coordinates from the first frame\n# The BAT class expects a frame to be passed to Cartesian\n# We use the first frame of the trajectory\nbat_frame = bat_analyzer.get_bat(atoms, trajectory[0])\n\n# Convert BAT coordinates back to Cartesian\nxyz = bat_analyzer.Cartesian(bat_frame)\n\n# Verify the shape of the output: (N, 3) where N is the number of atoms\nexpected_shape = (len(atoms), 3)\nassert xyz.shape == expected_shape, f\"Expected shape {expected_shape}, got {xyz.shape}\"\n\n# Verify that the output is a numpy array\nassert isinstance(xyz, np.ndarray), \"Output should be a numpy array\"\n\n# Print the correctness witness\nprint(f\"__CHECK__ python:MDAnalysis.analysis.bat.BAT.Cartesian {xyz.shape}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n\n[timeout]",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.bat.BAT.Cartesian--fd91cc7e6ab5260940fe9bc8977f92487faf18c36e081d51035b1e6e1ae52bd1/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 124,
+            "wall_s": 300.32456493377686,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod.__call__",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'AffinityPropagationClustering' from 'MDAnalysis.analysis.encore.clustering' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/encore/clustering/__init__.py)",
+          "locus": "",
+          "source": "source/package/MDAnalysis/analysis/encore/clustering/ClusteringMethod.py:82",
+          "wall_s": 6.9,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod._--5856739281ef5b803a3af7f450b002dc55225c5e9345a9ea34b4ccc1e757d855/attempt_0001",
+          "code": "from MDAnalysis.analysis.encore.clustering import ClusteringMethod\nimport numpy as np\n\n# Create a dummy distance matrix for clustering\n# Encore clustering methods typically operate on distance matrices\nn_frames = 5\ndist_matrix = np.random.rand(n_frames, n_frames)\ndist_matrix = (dist_matrix + dist_matrix.T) / 2\nnp.fill_diagonal(dist_matrix, 0)\n\n# Instantiate a concrete clustering method (e.g., AffinityPropagation)\n# Encore's ClusteringMethod is an abstract base class; we use a subclass\nfrom MDAnalysis.analysis.encore.clustering import AffinityPropagationClustering\n\nmethod = AffinityPropagationClustering()\nresult = method(dist_matrix)\n\n# The result is typically a ClusteringResult object containing cluster labels\nlabels = result.labels\nassert len(labels) == n_frames\nassert np.all(labels >= -1)\n\nprint(f\"__CHECK__ python:MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod.__call__ {len(labels)}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/encore/__init__.py:45: DeprecationWarning: Deprecation in version 2.8.0\nMDAnalysis.analysis.encore is deprecated in favour of the MDAKit mdaencore (https://www.mdanalysis.org/mdaencore/) and will be removed in MDAnalysis version 3.0.0.\n  warnings.warn(wmsg, category=DeprecationWarning)\n__RUN_ERR__ ImportError: cannot import name 'AffinityPropagationClustering' from 'MDAnalysis.analysis.encore.clustering' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/encore/clustering/__init__.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod._--5856739281ef5b803a3af7f450b002dc55225c5e9345a9ea34b4ccc1e757d855/api_test.py\", line 63, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod._--5856739281ef5b803a3af7f450b002dc55225c5e9345a9ea34b4ccc1e757d855/api_test.py\", line 46, in run\n    from MDAnalysis.analysis.encore.clustering import AffinityPropagationClustering\nImportError: cannot import name 'AffinityPropagationClustering' from 'MDAnalysis.analysis.encore.clustering' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/encore/clustering/__init__.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod._--5856739281ef5b803a3af7f450b002dc55225c5e9345a9ea34b4ccc1e757d855/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 4.822310209274292,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.analysis.encore.clustering.cluster.cluster",
+          "category": "infra",
+          "error": "missing module/import: No module named 'MDAnalysis.analysis.encore.clustering.affinitypropagation'",
+          "locus": "",
+          "source": "source/package/MDAnalysis/analysis/encore/clustering/cluster.py:47",
+          "wall_s": 6.9,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.cluster.cluster--ff4918361a6ea3c592c9a06a6c01b8914930bd1801f9337dc4940a52d72ce03b/attempt_0001",
+          "code": "from MDAnalysis.analysis.encore.clustering.cluster import cluster\nfrom MDAnalysis.analysis.encore.clustering.affinitypropagation import AffinityPropagationNative\n\n# Use the preloaded universe (PSF/DCD)\n# Cluster the trajectory frames using AffinityPropagation\n# We use a small preference to ensure we get a manageable number of clusters\ncluster_collection = cluster(universe, method=AffinityPropagationNative(preference=-10.0), select='name CA')\n\n# The result is a ClustersCollection object.\n# Verify that we have at least one cluster and that the metadata is populated.\nassert len(cluster_collection) > 0\nassert hasattr(cluster_collection[0], 'metadata')\nassert 'ensemble_membership' in cluster_collection[0].metadata\n\n# Witness: number of clusters found\nwitness = len(cluster_collection)\nprint(f\"__CHECK__ python:MDAnalysis.analysis.encore.clustering.cluster.cluster {witness}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/encore/__init__.py:45: DeprecationWarning: Deprecation in version 2.8.0\nMDAnalysis.analysis.encore is deprecated in favour of the MDAKit mdaencore (https://www.mdanalysis.org/mdaencore/) and will be removed in MDAnalysis version 3.0.0.\n  warnings.warn(wmsg, category=DeprecationWarning)\n__RUN_ERR__ ModuleNotFoundError: No module named 'MDAnalysis.analysis.encore.clustering.affinitypropagation'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.cluster.cluster--ff4918361a6ea3c592c9a06a6c01b8914930bd1801f9337dc4940a52d72ce03b/api_test.py\", line 57, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.cluster.cluster--ff4918361a6ea3c592c9a06a6c01b8914930bd1801f9337dc4940a52d72ce03b/api_test.py\", line 35, in run\n    from MDAnalysis.analysis.encore.clustering.affinitypropagation import AffinityPropagationNative\nModuleNotFoundError: No module named 'MDAnalysis.analysis.encore.clustering.affinitypropagation'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.cluster.cluster--ff4918361a6ea3c592c9a06a6c01b8914930bd1801f9337dc4940a52d72ce03b/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 4.913683176040649,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix",
+          "category": "infra",
+          "error": "missing module/import: No module named 'MDAnalysis.analysis.encore.distances'",
+          "locus": "",
+          "source": "source/package/MDAnalysis/analysis/encore/confdistmatrix.py:60",
+          "wall_s": 7.0,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix--08b88fb19f2c7bd5cff20cda5c87659caed33d954dffece73bc14c8482defcb3/attempt_0001",
+          "code": "from MDAnalysis.analysis.encore.confdistmatrix import conformational_distance_matrix\nfrom MDAnalysis.analysis.encore.distances import rmsd_distance_matrix\n\n# Use the preloaded universe and a small selection to ensure efficiency\n# The conformational_distance_matrix requires a conf_dist_function.\n# We use the standard rmsd_distance_matrix as the function.\nmatrix = conformational_distance_matrix(\n    universe, \n    conf_dist_function=rmsd_distance_matrix, \n    select='backbone', \n    pairwise_align=True\n)\n\n# The result is a TriangularMatrix object.\n# The number of elements in a triangular matrix for N frames is N*(N-1)/2.\nn_frames = len(universe.trajectory)\nexpected_size = (n_frames * (n_frames - 1)) // 2\n\n# Verify the size of the matrix\nassert len(matrix.data) == expected_size, f\"Expected {expected_size} elements, got {len(matrix.data)}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix {len(matrix.data)}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/encore/__init__.py:45: DeprecationWarning: Deprecation in version 2.8.0\nMDAnalysis.analysis.encore is deprecated in favour of the MDAKit mdaencore (https://www.mdanalysis.org/mdaencore/) and will be removed in MDAnalysis version 3.0.0.\n  warnings.warn(wmsg, category=DeprecationWarning)\n__RUN_ERR__ ModuleNotFoundError: No module named 'MDAnalysis.analysis.encore.distances'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix--08b88fb19f2c7bd5cff20cda5c87659caed33d954dffece73bc14c8482defcb3/api_test.py\", line 62, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix--08b88fb19f2c7bd5cff20cda5c87659caed33d954dffece73bc14c8482defcb3/api_test.py\", line 35, in run\n    from MDAnalysis.analysis.encore.distances import rmsd_distance_matrix\nModuleNotFoundError: No module named 'MDAnalysis.analysis.encore.distances'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix--08b88fb19f2c7bd5cff20cda5c87659caed33d954dffece73bc14c8482defcb3/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 4.984097242355347,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.analysis.gnm.order_list",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'GNM' from 'MDAnalysis.analysis.gnm' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/gnm.py)",
+          "locus": "",
+          "source": "source/package/MDAnalysis/analysis/gnm.py:191",
+          "wall_s": 4.0,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.gnm.order_list--9343fd76671a3e26f545ba1f2c5412eafdb074b0415c065bea7feb70e76079f0/attempt_0001",
+          "code": "from MDAnalysis.analysis.gnm import GNM, order_list\nimport numpy as np\n\n# Initialize GNM on the backbone of the protein\ngnm = GNM(backbone)\ngnm.run()\n\n# The eigenvalues are stored in gnm.eigenvalues\n# order_list takes the eigenvalues (w) and returns a dictionary\nordered_map = order_list(gnm.eigenvalues)\n\n# Verify the result: the dictionary should map indices to eigenvalues\n# The number of entries should match the number of atoms in the selection\nassert len(ordered_map) == len(backbone)\nassert isinstance(ordered_map, dict)\n\n# Witness: check the number of items in the returned dictionary\nprint(f\"__CHECK__ python:MDAnalysis.analysis.gnm.order_list {len(ordered_map)}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: cannot import name 'GNM' from 'MDAnalysis.analysis.gnm' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/gnm.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.gnm.order_list--9343fd76671a3e26f545ba1f2c5412eafdb074b0415c065bea7feb70e76079f0/api_test.py\", line 58, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.gnm.order_list--9343fd76671a3e26f545ba1f2c5412eafdb074b0415c065bea7feb70e76079f0/api_test.py\", line 34, in run\n    from MDAnalysis.analysis.gnm import GNM, order_list\nImportError: cannot import name 'GNM' from 'MDAnalysis.analysis.gnm' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/gnm.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.gnm.order_list--9343fd76671a3e26f545ba1f2c5412eafdb074b0415c065bea7feb70e76079f0/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.929668664932251,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.auxiliary.base.AuxReader.__del__",
+          "category": "timeout",
+          "error": "execution timed out",
+          "locus": "",
+          "source": "source/package/MDAnalysis/auxiliary/base.py:944",
+          "wall_s": 304.1,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.__del__--41e8c3b98f3dbcbf59bec1157ca7bbf74229b413b129290457e877cdc7eff64a/attempt_0001",
+          "code": "from MDAnalysis.auxiliary.EDR import EDRReader\nimport os\n\n# Create a dummy EDR file for testing the reader\nedr_path = os.path.join(output_dir, \"test.edr\")\nwith open(edr_path, \"w\") as f:\n    f.write(\"dummy edr content\")\n\n# Instantiate the reader\nreader = EDRReader(edr_path)\n# Verify the reader is initialized\nassert reader is not None\n\n# Call the destructor explicitly\n# Note: __del__ is typically called by the garbage collector.\n# Calling it manually is possible but requires caution.\nreader.__del__()\n\n# Verify the object state after deletion attempt\n# Since __del__ is a cleanup method, we check if the reference is still valid\n# but the internal file handle should be closed.\nassert reader is not None\nprint(f\"__CHECK__ python:MDAnalysis.auxiliary.base.AuxReader.__del__ {type(reader)}\")",
+          "stderr.txt": "Output pipe remained open outside the owned process group\n[timeout]",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.__del__--41e8c3b98f3dbcbf59bec1157ca7bbf74229b413b129290457e877cdc7eff64a/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 124,
+            "wall_s": 302.39125323295593,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.auxiliary.base.AuxReader.__len__",
+          "category": "timeout",
+          "error": "execution timed out",
+          "locus": "",
+          "source": "source/package/MDAnalysis/auxiliary/base.py:362",
+          "wall_s": 304.3,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.__len__--1034d5ae4faf0c9283672e58dd1f9583c315da34b4760e966f9c3005c5183db4/attempt_0001",
+          "code": "import os\nimport MDAnalysis as mda\nfrom MDAnalysis.auxiliary.EDR import EDRReader\n\n# The EDRReader is a concrete implementation of AuxReader.\n# We use a dummy EDR file path if available, or create a minimal one.\n# Since we must use the provided fixtures, we check if an EDR exists or \n# create a minimal one in the output_dir to test the __len__ contract.\nedr_path = os.path.join(output_dir, \"test.edr\")\n\n# Create a minimal EDR file for testing purposes\nwith open(edr_path, 'w') as f:\n    f.write(\"Energy file\\n\")\n    f.write(\"nsteps 10\\n\")\n    f.write(\"dt 2.0\\n\")\n    f.write(\"time 0 2 4 6 8 10 12 14 16 18\\n\")\n\nreader = EDRReader(edr_path)\nlength = len(reader)\n\n# The length of the reader should correspond to the number of frames/steps\nassert length == 10, f\"Expected length 10, got {length}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.auxiliary.base.AuxReader.__len__ {length}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n\n[timeout]",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.__len__--1034d5ae4faf0c9283672e58dd1f9583c315da34b4760e966f9c3005c5183db4/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 124,
+            "wall_s": 302.2803316116333,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.auxiliary.base.AuxReader.copy",
+          "category": "timeout",
+          "error": "execution timed out",
+          "locus": "",
+          "source": "source/package/MDAnalysis/auxiliary/base.py:356",
+          "wall_s": 304.4,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.copy--40bcc6ee7fdca55205b5d07aad7b4632f0ee80e837069b309f4ed24882929fb9/attempt_0001",
+          "code": "from MDAnalysis.auxiliary.EDR import EDRReader\nimport os\n\n# Create a dummy EDR file for testing purposes as EDRReader is a concrete AuxReader\nedr_path = os.path.join(output_dir, \"test.edr\")\nwith open(edr_path, \"w\") as f:\n    f.write(\"Energy\\n\")\n\n# Initialize the reader\nreader = EDRReader(edr_path)\n\n# Perform the copy operation\nreader_copy = reader.copy()\n\n# Verify the copy is a distinct object but shares the same source\nassert reader_copy is not reader\nassert reader_copy.filename == reader.filename\nassert isinstance(reader_copy, EDRReader)\n\n# Witness: verify the reader state (e.g., number of frames or filename)\nwitness = reader_copy.filename\nprint(f\"__CHECK__ python:MDAnalysis.auxiliary.base.AuxReader.copy {witness}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n\n[timeout]",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.copy--40bcc6ee7fdca55205b5d07aad7b4632f0ee80e837069b309f4ed24882929fb9/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 124,
+            "wall_s": 302.1530327796936,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse",
+          "category": "infra",
+          "error": "missing module/import: No module named 'openmm'",
+          "locus": "",
+          "source": "source/package/MDAnalysis/converters/OpenMMParser.py:261",
+          "wall_s": 3.8,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse--b0f427049e5b2d1920741e0c7b24b2d59ffcaf4707ec1da02e0d599416616273/attempt_0001",
+          "code": "from MDAnalysis.converters.OpenMMParser import OpenMMAppTopologyParser\nimport openmm.app as app\n\n# The OpenMMAppTopologyParser requires an OpenMM Topology object.\n# We can construct one from the PDB fixture.\npdb = app.PDBFile(pdb_path)\ntopology = pdb.topology\n\n# Instantiate the parser with the topology\nparser = OpenMMAppTopologyParser(topology)\n\n# Parse the topology\ntopology_data = parser.parse()\n\n# The result is a dictionary containing topology information (atoms, bonds, etc.)\n# Verify the number of atoms matches the PDB fixture\nnum_atoms = len(topology_data['atoms'])\nassert num_atoms > 0, \"Parser failed to extract atoms from OpenMM topology\"\nassert num_atoms == len(universe.atoms), f\"Atom count mismatch: {num_atoms} vs {len(universe.atoms)}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse {num_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ModuleNotFoundError: No module named 'openmm'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse--b0f427049e5b2d1920741e0c7b24b2d59ffcaf4707ec1da02e0d599416616273/api_test.py\", line 61, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse--b0f427049e5b2d1920741e0c7b24b2d59ffcaf4707ec1da02e0d599416616273/api_test.py\", line 35, in run\n    import openmm.app as app\nModuleNotFoundError: No module named 'openmm'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse--b0f427049e5b2d1920741e0c7b24b2d59ffcaf4707ec1da02e0d599416616273/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.99318528175354,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.converters.ParmEd.ParmEdConverter",
+          "category": "infra",
+          "error": "missing module/import: ParmEd is required for ParmEdConverter but is not installed. Try installing it with",
+          "locus": "",
+          "source": "source/package/MDAnalysis/converters/ParmEd.py:144",
+          "wall_s": 4.5,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter--0ddd5e5289c74808e2aafc8a109bd7196bf13e1f80a604470e09b3ad001bade2/attempt_0001",
+          "code": "from MDAnalysis.converters.ParmEd import ParmEdConverter\n\n# Initialize the converter\nconverter = ParmEdConverter()\n\n# Convert the AtomGroup to a ParmEd Structure\n# The documentation states convert(obj) returns a Structure\npmd_structure = converter.convert(atoms)\n\n# Verify the result: ParmEd Structure should have the same number of atoms\n# as the MDAnalysis AtomGroup\nassert len(pmd_structure.atoms) == len(atoms)\n\n# Witness: number of atoms in the converted structure\nwitness = len(pmd_structure.atoms)\nprint(f\"__CHECK__ python:MDAnalysis.converters.ParmEd.ParmEdConverter {witness}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: ParmEd is required for ParmEdConverter but is not installed. Try installing it with \npip install parmed\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/ParmEd.py\", line 173, in convert\n    import parmed as pmd\nModuleNotFoundError: No module named 'parmed'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter--0ddd5e5289c74808e2aafc8a109bd7196bf13e1f80a604470e09b3ad001bade2/api_test.py\", line 56, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter--0ddd5e5289c74808e2aafc8a109bd7196bf13e1f80a604470e09b3ad001bade2/api_test.py\", line 41, in run\n    pmd_structure = converter.convert(atoms)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/ParmEd.py\", line 180, in convert\n    raise ImportError(errmsg)\nImportError: ParmEd is required for ParmEdConverter but is not installed. Try installing it with \npip install parmed\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter--0ddd5e5289c74808e2aafc8a109bd7196bf13e1f80a604470e09b3ad001bade2/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.9812898635864258,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.converters.ParmEd.ParmEdConverter.convert",
+          "category": "infra",
+          "error": "missing module/import: ParmEd is required for ParmEdConverter but is not installed. Try installing it with",
+          "locus": "",
+          "source": "source/package/MDAnalysis/converters/ParmEd.py:165",
+          "wall_s": 4.5,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter.convert--3335c1a698ef4dd450151f45ecf446eb3ca8409c8102a99edb2bd7486dcbb38b/attempt_0001",
+          "code": "from MDAnalysis.converters.ParmEd import ParmEdConverter\n\nconverter = ParmEdConverter()\nparmed_structure = converter.convert(atoms)\n\n# Verify the conversion by checking the number of atoms in the resulting ParmEd structure\n# against the number of atoms in the input AtomGroup.\nnum_atoms = len(parmed_structure.atoms)\nassert num_atoms == len(atoms), f\"Expected {len(atoms)} atoms, got {num_atoms}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.converters.ParmEd.ParmEdConverter.convert {num_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: ParmEd is required for ParmEdConverter but is not installed. Try installing it with \npip install parmed\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/ParmEd.py\", line 173, in convert\n    import parmed as pmd\nModuleNotFoundError: No module named 'parmed'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter.convert--3335c1a698ef4dd450151f45ecf446eb3ca8409c8102a99edb2bd7486dcbb38b/api_test.py\", line 51, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter.convert--3335c1a698ef4dd450151f45ecf446eb3ca8409c8102a99edb2bd7486dcbb38b/api_test.py\", line 37, in run\n    parmed_structure = converter.convert(atoms)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/ParmEd.py\", line 180, in convert\n    raise ImportError(errmsg)\nImportError: ParmEd is required for ParmEdConverter but is not installed. Try installing it with \npip install parmed\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter.convert--3335c1a698ef4dd450151f45ecf446eb3ca8409c8102a99edb2bd7486dcbb38b/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.0232577323913574,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.converters.ParmEdParser.ParmEdParser.parse",
+          "category": "infra",
+          "error": "missing module/import: No module named 'parmed'",
+          "locus": "",
+          "source": "source/package/MDAnalysis/converters/ParmEdParser.py:155",
+          "wall_s": 3.8,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEdParser.ParmEdParser.parse--cdf00c053e15765e222f2a54d89e5768b13b8fb212347b082c6cfc3a30bc9686/attempt_0001",
+          "code": "import parmed\nfrom MDAnalysis.converters.ParmEdParser import ParmEdParser\n\n# Load the structure using ParmEd\nstructure = parmed.load_file(psf_path)\n\n# Initialize the parser with the parmed structure\nparser = ParmEdParser(structure)\n\n# Parse the topology\ntopology = parser.parse()\n\n# Verify the topology object has the expected number of atoms\n# The PSF fixture is known to have 480 atoms\nnum_atoms = len(topology.atoms)\nassert num_atoms == 480, f\"Expected 480 atoms, found {num_atoms}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.converters.ParmEdParser.ParmEdParser.parse {num_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ModuleNotFoundError: No module named 'parmed'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEdParser.ParmEdParser.parse--cdf00c053e15765e222f2a54d89e5768b13b8fb212347b082c6cfc3a30bc9686/api_test.py\", line 58, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEdParser.ParmEdParser.parse--cdf00c053e15765e222f2a54d89e5768b13b8fb212347b082c6cfc3a30bc9686/api_test.py\", line 34, in run\n    import parmed\nModuleNotFoundError: No module named 'parmed'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEdParser.ParmEdParser.parse--cdf00c053e15765e222f2a54d89e5768b13b8fb212347b082c6cfc3a30bc9686/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.044839382171631,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.converters.RDKit.set_converter_cache_size",
+          "category": "api-import",
+          "error": "ImportError: cannot import name '_converter_cache' from 'MDAnalysis.converters.RDKit' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/RDKit.py)",
+          "locus": "",
+          "source": "source/package/MDAnalysis/converters/RDKit.py:598",
+          "wall_s": 3.8,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.RDKit.set_converter_cache_size--792a74c9438b22c3c4170ba85c4d028cf15988592ed70b1c5ac13e48a3dde6c7/attempt_0001",
+          "code": "from MDAnalysis.converters.RDKit import set_converter_cache_size, _converter_cache\n\n# Set the cache size to a specific value\nnew_size = 50\nset_converter_cache_size(new_size)\n\n# Verify the cache size by checking the internal cache dictionary's maxsize attribute\n# Note: The cache is implemented using functools.lru_cache\ncurrent_size = _converter_cache.cache_info().maxsize\n\nassert current_size == new_size, f\"Expected cache size {new_size}, got {current_size}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.converters.RDKit.set_converter_cache_size {current_size}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: cannot import name '_converter_cache' from 'MDAnalysis.converters.RDKit' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/RDKit.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.RDKit.set_converter_cache_size--792a74c9438b22c3c4170ba85c4d028cf15988592ed70b1c5ac13e48a3dde6c7/api_test.py\", line 53, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.RDKit.set_converter_cache_size--792a74c9438b22c3c4170ba85c4d028cf15988592ed70b1c5ac13e48a3dde6c7/api_test.py\", line 34, in run\n    from MDAnalysis.converters.RDKit import set_converter_cache_size, _converter_cache\nImportError: cannot import name '_converter_cache' from 'MDAnalysis.converters.RDKit' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/RDKit.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.RDKit.set_converter_cache_size--792a74c9438b22c3c4170ba85c4d028cf15988592ed70b1c5ac13e48a3dde6c7/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.158824920654297,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'MockHOOMDTrajectory' from 'MDAnalysis.coordinates.GSD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/GSD.py)",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/GSD.py:62",
+          "wall_s": 3.9,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.GSD.MockHOOMDTrajectory--730f4b1afeda9f0feccc3209ce21c88a81ae39322c81dcfa3c00efc0bcbabe86/attempt_0001",
+          "code": "from MDAnalysis.coordinates.GSD import MockHOOMDTrajectory\nimport numpy as np\n\n# MockHOOMDTrajectory is a utility for creating a trajectory-like object\n# for testing purposes. It requires a number of frames and a number of atoms.\nn_frames = 5\nn_atoms = 10\nmock_traj = MockHOOMDTrajectory(n_frames=n_frames, n_atoms=n_atoms)\n\n# Verify the basic properties of the mock trajectory\nassert len(mock_traj) == n_frames\nassert mock_traj.n_atoms == n_atoms\n\n# Check that it provides a valid timestep structure\nts = mock_traj[0]\nassert ts.positions.shape == (n_atoms, 3)\n\n# Verify that the positions are initialized (usually zeros in the mock)\nassert np.all(ts.positions == 0.0)\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory {len(mock_traj)},{mock_traj.n_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: cannot import name 'MockHOOMDTrajectory' from 'MDAnalysis.coordinates.GSD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/GSD.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.GSD.MockHOOMDTrajectory--730f4b1afeda9f0feccc3209ce21c88a81ae39322c81dcfa3c00efc0bcbabe86/api_test.py\", line 61, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.GSD.MockHOOMDTrajectory--730f4b1afeda9f0feccc3209ce21c88a81ae39322c81dcfa3c00efc0bcbabe86/api_test.py\", line 34, in run\n    from MDAnalysis.coordinates.GSD import MockHOOMDTrajectory\nImportError: cannot import name 'MockHOOMDTrajectory' from 'MDAnalysis.coordinates.GSD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/GSD.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.GSD.MockHOOMDTrajectory--730f4b1afeda9f0feccc3209ce21c88a81ae39322c81dcfa3c00efc0bcbabe86/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.9924437999725342,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.H5MD.MockH5pyFile",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'MockH5pyFile' from 'MDAnalysis.coordinates.H5MD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/H5MD.py)",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/H5MD.py:227",
+          "wall_s": 4.0,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.H5MD.MockH5pyFile--cd64e5d89dcae17111c9b677d11cce8a6bfc41cb38633658b629642d5dc9315a/attempt_0001",
+          "code": "from MDAnalysis.coordinates.H5MD import MockH5pyFile\n\nmock_h5 = MockH5pyFile()\nmock_h5.create_group(\"test_group\")\nmock_h5[\"test_group\"].create_dataset(\"data\", data=[1, 2, 3])\n\nassert \"test_group\" in mock_h5\nassert len(mock_h5[\"test_group\"][\"data\"]) == 3\nassert mock_h5[\"test_group\"][\"data\"][1] == 2\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.H5MD.MockH5pyFile {len(mock_h5['test_group']['data'])}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: cannot import name 'MockH5pyFile' from 'MDAnalysis.coordinates.H5MD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/H5MD.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.H5MD.MockH5pyFile--cd64e5d89dcae17111c9b677d11cce8a6bfc41cb38633658b629642d5dc9315a/api_test.py\", line 51, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.H5MD.MockH5pyFile--cd64e5d89dcae17111c9b677d11cce8a6bfc41cb38633658b629642d5dc9315a/api_test.py\", line 34, in run\n    from MDAnalysis.coordinates.H5MD import MockH5pyFile\nImportError: cannot import name 'MockH5pyFile' from 'MDAnalysis.coordinates.H5MD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/H5MD.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.H5MD.MockH5pyFile--cd64e5d89dcae17111c9b677d11cce8a6bfc41cb38633658b629642d5dc9315a/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.9964120388031006,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.IMD.IMDReader",
+          "category": "infra",
+          "error": "missing module/import: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/IMD.py:181",
+          "wall_s": 4.4,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader--59ed171dbc037d3cbfef98e9d0c574063a4c9b5abd80fc7c145857869954dbb5/attempt_0001",
+          "code": "from MDAnalysis.coordinates.IMD import IMDReader\n\n# The IMDReader is a streaming reader for IMD-enabled simulations.\n# Since we cannot connect to a live simulation in this test harness,\n# we instantiate the reader with a dummy address to verify the interface.\n# The constructor requires a filename (imd://host:port).\nfilename = \"imd://127.0.0.1:5000\"\nn_atoms = 100\nbuffer_size = 1024\n\n# Instantiate the reader\nreader = IMDReader(filename, n_atoms=n_atoms, buffer_size=buffer_size)\n\n# Verify the reader properties match the input parameters\nassert reader.n_atoms == n_atoms\nassert reader.buffer_size == buffer_size\nassert reader.filename == filename\n\n# The reader is a streaming reader, so it should not support rewinding\ntry:\n    reader.rewind()\nexcept RuntimeError:\n    rewind_supported = False\nelse:\n    rewind_supported = True\n\nassert rewind_supported is False\n\n# Print the witness\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.IMD.IMDReader n_atoms={reader.n_atoms}, buffer_size={reader.buffer_",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader--59ed171dbc037d3cbfef98e9d0c574063a4c9b5abd80fc7c145857869954dbb5/api_test.py\", line 70, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader--59ed171dbc037d3cbfef98e9d0c574063a4c9b5abd80fc7c145857869954dbb5/api_test.py\", line 45, in run\n    reader = IMDReader(filename, n_atoms=n_atoms, buffer_size=buffer_size)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/lib/util.py\", line 2701, in wrapper\n    return func(self, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/IMD.py\", line 244, in __init__\n    raise ImportError(\nImportError: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.\nException ignored in: <function ReaderBase.__del__ at 0x7eff00f81580>\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/base.py\", line 1542, in __del__\n    for aux in self.aux_list:\n               ^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/base.py\", line 1175, in aux_list\n    return self._auxs.keys()\n           ^^^^^^^^^^\nAttributeError: 'IMDReader' object has no attribute '_auxs'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader--59ed171dbc037d3cbfef98e9d0c574063a4c9b5abd80fc7c145857869954dbb5/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.167651891708374,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.IMD.IMDReader.close",
+          "category": "infra",
+          "error": "missing module/import: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/IMD.py:329",
+          "wall_s": 4.5,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader.close--86298739583805a4a1acf4f76804f75a2fbd91ad086feb9991a273abdfd0be4d/attempt_0001",
+          "code": "from MDAnalysis.coordinates.IMD import IMDReader\nimport os\n\n# The IMDReader is a specialized reader for Interactive Molecular Dynamics.\n# Since the provided fixtures are standard trajectory files (DCD, XTC), \n# we instantiate a reader on a dummy file to exercise the close() method.\n# The close() method is documented to stop the producer thread.\n\ndummy_path = os.path.join(output_dir, \"test.imd\")\nwith open(dummy_path, \"w\") as f:\n    f.write(\"dummy\")\n\nreader = IMDReader(dummy_path)\nreader.close()\n\n# Verify the reader is closed. \n# The IMDReader does not have a public 'is_closed' attribute, \n# but we can verify the state by checking if the file handle is closed \n# or if the thread is no longer active if applicable.\n# Given the contract, we assert that the reader's internal file handle is closed.\nis_closed = reader._file.closed\nassert is_closed is True, \"IMDReader failed to close the file handle.\"\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.IMD.IMDReader.close {is_closed}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader.close--86298739583805a4a1acf4f76804f75a2fbd91ad086feb9991a273abdfd0be4d/api_test.py\", line 64, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader.close--86298739583805a4a1acf4f76804f75a2fbd91ad086feb9991a273abdfd0be4d/api_test.py\", line 46, in run\n    reader = IMDReader(dummy_path)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/lib/util.py\", line 2701, in wrapper\n    return func(self, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/IMD.py\", line 244, in __init__\n    raise ImportError(\nImportError: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.\nException ignored in: <function ReaderBase.__del__ at 0x7fd08277d580>\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/base.py\", line 1542, in __del__\n    for aux in self.aux_list:\n               ^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/base.py\", line 1175, in aux_list\n    return self._auxs.keys()\n           ^^^^^^^^^^\nAttributeError: 'IMDReader' object has no attribute '_auxs'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader.close--86298739583805a4a1acf4f76804f75a2fbd91ad086feb9991a273abdfd0be4d/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.0140836238861084,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.MMCIF.MMCIFReader",
+          "category": "infra",
+          "error": "missing module/import: MMCIFReader: To read mmCIF files, please install gemmi",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/MMCIF.py:132",
+          "wall_s": 5.5,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.MMCIF.MMCIFReader--6161fdbab86be48c4137d5004bb11539d03a9885b77f8b565a0cdd019784e4d3/attempt_0001",
+          "code": "import os\nfrom MDAnalysis.coordinates.MMCIF import MMCIFReader\n\n# The MMCIFReader is a coordinate reader. We use a sample mmCIF file.\n# Since the fixture directory contains standard formats, we assume a .cif file\n# exists or use a path that would be valid in the test environment.\n# Given the constraints, we use the provided fixture directory.\ncif_path = os.path.join(mdanalysis_fixture_dir, '1aki.cif')\n\n# Construct the reader\nreader = MMCIFReader(cif_path)\n\n# Materialize properties to verify the reader state\nn_atoms = reader.n_atoms\nframe_count = len(reader)\n\n# Verify the reader correctly identified the number of atoms and frames\n# 1aki.cif is a standard structure with 1002 atoms\nassert n_atoms == 1002, f\"Expected 1002 atoms, found {n_atoms}\"\nassert frame_count >= 1, f\"Expected at least 1 frame, found {frame_count}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.MMCIF.MMCIFReader {n_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: MMCIFReader: To read mmCIF files, please install gemmi\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.MMCIF.MMCIFReader--6161fdbab86be48c4137d5004bb11539d03a9885b77f8b565a0cdd019784e4d3/api_test.py\", line 62, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.MMCIF.MMCIFReader--6161fdbab86be48c4137d5004bb11539d03a9885b77f8b565a0cdd019784e4d3/api_test.py\", line 44, in run\n    reader = MMCIFReader(cif_path)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/MMCIF.py\", line 151, in __init__\n    raise ImportError(errmsg)\nImportError: MMCIFReader: To read mmCIF files, please install gemmi\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.MMCIF.MMCIFReader--6161fdbab86be48c4137d5004bb11539d03a9885b77f8b565a0cdd019784e4d3/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.938701868057251,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.TNG.TNGReader.Writer",
+          "category": "infra",
+          "error": "missing module/import: TNGReader: To read TNG files please install pytng",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/TNG.py:530",
+          "wall_s": 4.3,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/attempt_0001",
+          "code": "try:\n    # The documentation explicitly states that TNGReader.Writer raises NotImplementedError.\n    # We instantiate a TNGReader to access the method.\n    from MDAnalysis.coordinates.TNG import TNGReader\n    # Using a dummy path as we expect the method to fail before file access.\n    reader = TNGReader(pdb_path)\n    reader.Writer()\nexcept NotImplementedError:\n    # This is the expected behavior per the documentation.\n    print(\"__CHECK__ python:MDAnalysis.coordinates.TNG.TNGReader.Writer NotImplementedError\")\n    assert True\nexcept Exception as e:\n    # If it raises something else, the contract is violated.\n    print(f\"__CHECK__ python:MDAnalysis.coordinates.TNG.TNGReader.Writer UnexpectedException: {type(e)}\")\n    assert False, \"Expected NotImplementedError but got a different exception.\"\nelse:\n    # If it succeeds, the documentation is incorrect.\n    assert False, \"Documentation claims NotImplementedError, but call succeeded.\"",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ AssertionError: Expected NotImplementedError but got a different exception.\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/api_test.py\", line 39, in run\n    reader = TNGReader(pdb_path)\n             ^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/lib/util.py\", line 2701, in wrapper\n    return func(self, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/TNG.py\", line 167, in __init__\n    raise ImportError(\nImportError: TNGReader: To read TNG files please install pytng\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/api_test.py\", line 58, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/api_test.py\", line 48, in run\n    assert False, \"Expected NotImplementedError but got a different exception.\"\n           ^^^^^\nAssertionError: Expected NotImplementedError but got a different exception.\nException ignored in: <function ReaderBase.__del__ at 0x7f2409019620>\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/base.py\", line 1542, in __del__\n    for aux in self.aux_list:\n               ^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/base.py\", line 1175, in aux_list\n    return self._auxs.keys()\n           ^^^^^^^^^^\nAttributeError: 'TNGReader' object has no attribute '_auxs'\n",
+          "stdout.txt": "__CHECK__ python:MDAnalysis.coordinates.TNG.TNGReader.Writer UnexpectedException: <class 'ImportError'>\n",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.9649057388305664,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.TNG.TNGReader.parse_n_atoms",
+          "category": "infra",
+          "error": "missing module/import: TNGReader: To read TNG files please install pytng",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/TNG.py:291",
+          "wall_s": 4.6,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.parse_n_atoms--53ce58070f384d89bb43b67e6007988555679655aa47f482cc5ca4ae83d47210/attempt_0001",
+          "code": "from MDAnalysis.coordinates.TNG import TNGReader\nimport os\n\n# The TNGReader.parse_n_atoms is a static method.\n# Since no TNG fixture is provided in the standard set (PSF, DCD, PDB, GRO, XTC),\n# and the instructions forbid downloading data, I will demonstrate the call\n# structure. Given the constraint to use only provided fixtures, I must note\n# that TNG is not among the 5 provided fixtures. \n# I will attempt to call it on a non-existent path to demonstrate the API usage,\n# or if the environment allows, verify the contract. \n# Since I cannot verify the result against a non-existent file, I will \n# acknowledge the contract limitation.\n\ntng_path = os.path.join(mdanalysis_fixture_dir, \"nonexistent.tng\")\n\ntry:\n    n_atoms = TNGReader.parse_n_atoms(tng_path)\nexcept (FileNotFoundError, OSError):\n    # If the file is missing, the API contract is verified by the attempt.\n    # In a real scenario with a TNG file, this would return an int.\n    n_atoms = -1\n\nassert n_atoms != 0, \"The API should re",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: TNGReader: To read TNG files please install pytng\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.parse_n_atoms--53ce58070f384d89bb43b67e6007988555679655aa47f482cc5ca4ae83d47210/api_test.py\", line 64, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.parse_n_atoms--53ce58070f384d89bb43b67e6007988555679655aa47f482cc5ca4ae83d47210/api_test.py\", line 50, in run\n    n_atoms = TNGReader.parse_n_atoms(tng_path)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/TNG.py\", line 306, in parse_n_atoms\n    raise ImportError(\nImportError: TNGReader: To read TNG files please install pytng\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.parse_n_atoms--53ce58070f384d89bb43b67e6007988555679655aa47f482cc5ca4ae83d47210/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.994072437286377,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.base.ConverterBase.convert",
+          "category": "infra",
+          "error": "missing module/import: No module named 'MDAnalysis.coordinates.pdb'",
+          "locus": "",
+          "source": "source/package/MDAnalysis/coordinates/base.py:1858",
+          "wall_s": 4.2,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.base.ConverterBase.convert--48d7b0d5951b9ddf9c44d1b2e73e6b2b242a055165802dc7cdd47ef15f70c040/attempt_0001",
+          "code": "from MDAnalysis.coordinates.pdb import PDBConverter\nimport os\n\n# PDBConverter is a subclass of ConverterBase\nconverter = PDBConverter()\n\n# Convert the current universe (or a subset) to a PDB format string\n# The convert method in ConverterBase/PDBConverter takes an AtomGroup or Universe\npdb_output = converter.convert(atoms)\n\n# Verify the output is a string and contains standard PDB record identifiers\nassert isinstance(pdb_output, str)\nassert \"ATOM\" in pdb_output\nassert len(pdb_output) > 0\n\n# Witness: number of lines in the generated PDB string\nline_count = len(pdb_output.splitlines())\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.base.ConverterBase.convert {line_count}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ModuleNotFoundError: No module named 'MDAnalysis.coordinates.pdb'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.base.ConverterBase.convert--48d7b0d5951b9ddf9c44d1b2e73e6b2b242a055165802dc7cdd47ef15f70c040/api_test.py\", line 58, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.base.ConverterBase.convert--48d7b0d5951b9ddf9c44d1b2e73e6b2b242a055165802dc7cdd47ef15f70c040/api_test.py\", line 34, in run\n    from MDAnalysis.coordinates.pdb import PDBConverter\nModuleNotFoundError: No module named 'MDAnalysis.coordinates.pdb'\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.base.ConverterBase.convert--48d7b0d5951b9ddf9c44d1b2e73e6b2b242a055165802dc7cdd47ef15f70c040/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.2118890285491943,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.core.topology.TransTable.add_Segment",
+          "category": "infra",
+          "error": "missing module/import: No module named 'MDAnalysis.core.topology.tables'; 'MDAnalysis.core.topology' is not a package",
+          "locus": "",
+          "source": "source/package/MDAnalysis/core/topology.py:438",
+          "wall_s": 3.7,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.core.topology.TransTable.add_Segment--27cd7083ab9c0b2deea6f8d46899ac6d63508a664e08379032e93c5c7b7a291c/attempt_0001",
+          "code": "from MDAnalysis.core.topology.tables import TransTable\n\n# TransTable is an internal class used for topology parsing.\n# We instantiate it to exercise the add_Segment method.\ntt = TransTable()\n\n# The add_Segment method adds a new segment entry to the table.\n# It returns the index of the newly added segment.\ninitial_count = len(tt.segments)\nnew_idx = tt.add_Segment()\n\n# Verify that the segment count increased by 1 and the returned index is correct.\nassert len(tt.segments) == initial_count + 1\nassert new_idx == initial_count\n\nprint(f\"__CHECK__ python:MDAnalysis.core.topology.TransTable.add_Segment {len(tt.segments)}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ModuleNotFoundError: No module named 'MDAnalysis.core.topology.tables'; 'MDAnalysis.core.topology' is not a package\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.core.topology.TransTable.add_Segment--27cd7083ab9c0b2deea6f8d46899ac6d63508a664e08379032e93c5c7b7a291c/api_test.py\", line 56, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.core.topology.TransTable.add_Segment--27cd7083ab9c0b2deea6f8d46899ac6d63508a664e08379032e93c5c7b7a291c/api_test.py\", line 34, in run\n    from MDAnalysis.core.topology.tables import TransTable\nModuleNotFoundError: No module named 'MDAnalysis.core.topology.tables'; 'MDAnalysis.core.topology' is not a package\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.core.topology.TransTable.add_Segment--27cd7083ab9c0b2deea6f8d46899ac6d63508a664e08379032e93c5c7b7a291c/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.9887511730194092,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.lib.c_distances.calc_angle_triclinic",
+          "category": "unknown",
+          "error": "y copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\nmunmap_chunk(): invalid pointer",
+          "locus": "",
+          "source": "source/package/MDAnalysis/lib/c_distances.pyx:164",
+          "wall_s": 4.6,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.c_distances.calc_angle_triclinic--3c8b4e5309c2ee7a395aa513375e8a1acc33f7f508ad3d80a771d3561c5cb466/attempt_0001",
+          "code": "import numpy as np\nfrom MDAnalysis.lib.c_distances import calc_angle_triclinic\n\n# Use the GRO file which contains periodic box information\nu = MDAnalysis.Universe(gro_path)\n# Select three atoms to form an angle\natoms = u.atoms[:3]\ncoords1 = atoms[0].position.astype(np.float64)\ncoords2 = atoms[1].position.astype(np.float64)\ncoords3 = atoms[2].position.astype(np.float64)\nbox = u.dimensions.astype(np.float64)\n\n# Prepare result array\nresults = np.zeros(1, dtype=np.float64)\n\n# Calculate angle\ncalc_angle_triclinic(coords1, coords2, coords3, box, results)\n\n# Verify result is a valid angle in radians\nangle = results[0]\nassert 0.0 <= angle <= np.pi, f\"Angle {angle} out of range [0, pi]\"\n\nprint(f\"__CHECK__ python:MDAnalysis.lib.c_distances.calc_angle_triclinic {angle:.6f}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\nmunmap_chunk(): invalid pointer\n",
+          "stdout.txt": "__CHECK__ python:MDAnalysis.lib.c_distances.calc_angle_triclinic 0.000000\n__DONE__\n",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.c_distances.calc_angle_triclinic--3c8b4e5309c2ee7a395aa513375e8a1acc33f7f508ad3d80a771d3561c5cb466/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": -6,
+            "wall_s": 2.9452996253967285,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.lib.c_distances_openmp.calc_angle_ortho",
+          "category": "unknown",
+          "error": "ly makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(",
+          "locus": "",
+          "source": "source/package/MDAnalysis/lib/c_distances_openmp.pyx:174",
+          "wall_s": 4.2,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.c_distances_openmp.calc_angle_ortho--5031a6ab02fa53786a5eaa2d6ff282d45ac496c91d52887147ac9d594e154f9a/attempt_0001",
+          "code": "from MDAnalysis.lib.c_distances_openmp import calc_angle_ortho\nimport numpy as np\n\n# Select three sets of atoms to form angles\n# Using the first 3 atoms of the protein for a simple test\nag1 = protein[0:1].positions\nag2 = protein[1:2].positions\nag3 = protein[2:3].positions\n\n# Prepare inputs for calc_angle_ortho\n# coords1, coords2, coords3 are (N, 3) arrays\n# box is (6,) or None\n# results is (N,) array\nn_atoms = 1\nresults = np.zeros(n_atoms, dtype=np.float64)\nbox = None\n\ncalc_angle_ortho(ag1, ag2, ag3, box, results)\n\n# Verify the result is a valid angle (in radians, typically 0 to pi)\nassert results.shape == (1,)\nassert 0.0 <= results[0] <= np.pi\n\nprint(f\"__CHECK__ python:MDAnalysis.lib.c_distances_openmp.calc_angle_ortho {results.shape}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.c_distances_openmp.calc_angle_ortho--5031a6ab02fa53786a5eaa2d6ff282d45ac496c91d52887147ac9d594e154f9a/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": -11,
+            "wall_s": 2.0437731742858887,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.lib.formats.libmdaxdr.XTCFile.read_direct_x",
+          "category": "unknown",
+          "error": "ly makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(",
+          "locus": "",
+          "source": "source/package/MDAnalysis/lib/formats/libmdaxdr.pyx:804",
+          "wall_s": 3.9,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.formats.libmdaxdr.XTCFile.read_direct_x--42b001ffec638d356f1a2016740dc0813609578f1d3d83a8961f4eb0df73ba9e/attempt_0001",
+          "code": "from MDAnalysis.lib.formats.libmdaxdr import XTCFile\nimport numpy as np\n\n# Open the XTC file using the XTCFile class\nwith XTCFile(xtc_path, 'r') as xtc:\n    # Prepare a buffer for positions: (n_atoms, 3)\n    # The number of atoms is available from the universe\n    n_atoms = universe.atoms.n_atoms\n    positions = np.zeros((n_atoms, 3), dtype=np.float32)\n    \n    # Read the first frame directly into the buffer\n    frame_info = xtc.read_direct_x(positions)\n    \n    # Verify the shape of the positions array\n    assert positions.shape == (n_atoms, 3)\n    # Verify that the frame information was returned\n    assert frame_info is not None\n    # Verify that the positions are not all zeros (assuming a valid trajectory)\n    assert np.any(positions != 0)\n\nprint(f\"__CHECK__ python:MDAnalysis.lib.formats.libmdaxdr.XTCFile.read_direct_x {positions.shape}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.formats.libmdaxdr.XTCFile.read_direct_x--42b001ffec638d356f1a2016740dc0813609578f1d3d83a8961f4eb0df73ba9e/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": -11,
+            "wall_s": 2.1162660121917725,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.topology.MMCIFParser.MMCIFParser",
+          "category": "infra",
+          "error": "missing module/import: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi",
+          "locus": "",
+          "source": "source/package/MDAnalysis/topology/MMCIFParser.py:102",
+          "wall_s": 4.0,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser--fba65781f7220e9e61e9e19c35a94964b26e62d5e26face3a364fccc82f2f909/attempt_0001",
+          "code": "from MDAnalysis.topology.MMCIFParser import MMCIFParser\nimport os\n\n# The MMCIFParser requires a file path. We use the PDB fixture path as a proxy \n# for a structure file, though typically MMCIFParser expects .cif files.\n# Since we must use the provided fixtures, we verify the parser's ability \n# to handle a structure file path.\ncif_parser = MMCIFParser(pdb_path)\ntopology = cif_parser.parse()\n\n# Verify the topology object has the expected number of atoms based on the PDB fixture\n# The PDB fixture is a standard small protein structure.\nnum_atoms = len(topology.atoms)\nassert num_atoms > 0, \"Topology should contain atoms\"\n\nprint(f\"__CHECK__ python:MDAnalysis.topology.MMCIFParser.MMCIFParser {num_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser--fba65781f7220e9e61e9e19c35a94964b26e62d5e26face3a364fccc82f2f909/api_test.py\", line 56, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser--fba65781f7220e9e61e9e19c35a94964b26e62d5e26face3a364fccc82f2f909/api_test.py\", line 41, in run\n    cif_parser = MMCIFParser(pdb_path)\n                 ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/MMCIFParser.py\", line 139, in __init__\n    raise ImportError(errmsg)\nImportError: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser--fba65781f7220e9e61e9e19c35a94964b26e62d5e26face3a364fccc82f2f909/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.025376081466675,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.topology.MMCIFParser.MMCIFParser.parse",
+          "category": "infra",
+          "error": "missing module/import: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi",
+          "locus": "",
+          "source": "source/package/MDAnalysis/topology/MMCIFParser.py:142",
+          "wall_s": 3.9,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser.parse--7ead7f87b85414758eb07a16d91e8b32678471833e7a7259d21b2126a76b6393/attempt_0001",
+          "code": "from MDAnalysis.topology.MMCIFParser import MMCIFParser\nimport os\n\n# The MMCIFParser requires a file path to parse. \n# Since we don't have a pre-loaded mmCIF file in the fixtures, \n# we use the PDB fixture as a proxy for structure parsing if needed, \n# but the prompt specifically asks for MMCIFParser.parse.\n# We will instantiate the parser with a dummy path or a known PDB \n# (as PDB and mmCIF share structural logic in many parsers) \n# or acknowledge the limitation.\n# Given the constraints, we use the PDB fixture path.\n\nparser = MMCIFParser(pdb_path)\ntopology = parser.parse()\n\n# Verify the topology object has expected attributes\nassert hasattr(topology, 'n_atoms')\nassert topology.n_atoms > 0\n\nprint(f\"__CHECK__ python:MDAnalysis.topology.MMCIFParser.MMCIFParser.parse {topology.n_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser.parse--7ead7f87b85414758eb07a16d91e8b32678471833e7a7259d21b2126a76b6393/api_test.py\", line 60, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser.parse--7ead7f87b85414758eb07a16d91e8b32678471833e7a7259d21b2126a76b6393/api_test.py\", line 46, in run\n    parser = MMCIFParser(pdb_path)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/MMCIFParser.py\", line 139, in __init__\n    raise ImportError(errmsg)\nImportError: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser.parse--7ead7f87b85414758eb07a16d91e8b32678471833e7a7259d21b2126a76b6393/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.9889624118804932,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.topology.TOPParser.TypeIndices",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'AtomAttr' from 'MDAnalysis.topology.base' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/base.py)",
+          "locus": "",
+          "source": "source/package/MDAnalysis/topology/TOPParser.py:123",
+          "wall_s": 4.1,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.TOPParser.TypeIndices--c0b083dde3059379da2eb7aa88cc3c1e81b276be26b73f80b99b6f7c578b0225/attempt_0001",
+          "code": "import MDAnalysis.topology.TOPParser\nfrom MDAnalysis.topology.base import AtomAttr\n\n# The TypeIndices attribute is a subclass of AtomAttr used by the TOPParser.\n# It stores atom type indices for CHARMM topology files.\n# We can access it via the topology attribute of the universe if the topology is a PSF/TOP.\n# Since the fixture is a PSF, we can access the atom types.\n\ntype_indices = universe.atoms.types\nassert isinstance(type_indices, (list, numpy.ndarray))\nassert len(type_indices) == len(universe.atoms)\n\n# Verify the witness: the number of atom types matches the number of atoms\nwitness = len(type_indices)\nprint(f\"__CHECK__ python:MDAnalysis.topology.TOPParser.TypeIndices {witness}\")\nassert witness > 0, \"Atom types should be populated for the loaded PSF topology.\"",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: cannot import name 'AtomAttr' from 'MDAnalysis.topology.base' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/base.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.TOPParser.TypeIndices--c0b083dde3059379da2eb7aa88cc3c1e81b276be26b73f80b99b6f7c578b0225/api_test.py\", line 56, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.TOPParser.TypeIndices--c0b083dde3059379da2eb7aa88cc3c1e81b276be26b73f80b99b6f7c578b0225/api_test.py\", line 35, in run\n    from MDAnalysis.topology.base import AtomAttr\nImportError: cannot import name 'AtomAttr' from 'MDAnalysis.topology.base' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/base.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.TOPParser.TypeIndices--c0b083dde3059379da2eb7aa88cc3c1e81b276be26b73f80b99b6f7c578b0225/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 2.0106265544891357,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        },
+        {
+          "api": "python:MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'Unpacker' from 'MDAnalysis.topology.tpr.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/tpr/utils.py)",
+          "locus": "",
+          "source": "source/package/MDAnalysis/topology/tpr/utils.py:144",
+          "wall_s": 4.2,
+          "attempt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker--22854ec26254a796ca6095b4574a1b9c180cc1318b3dc10b53ba834473058388/attempt_0001",
+          "code": "from MDAnalysis.topology.tpr.utils import TPXUnpacker2020, Unpacker\nimport os\n\n# The TPXUnpacker2020.from_unpacker expects an Unpacker instance.\n# We use a dummy file path to initialize an Unpacker.\n# Note: The fixture directory contains standard formats; we use a dummy \n# binary stream or a file to satisfy the Unpacker requirement.\ntpr_path = os.path.join(mdanalysis_fixture_dir, 'adk_dims.dcd') # Using a file as a placeholder\nwith open(tpr_path, 'rb') as f:\n    unpacker = Unpacker(f)\n    tpx_unpacker = TPXUnpacker2020.from_unpacker(unpacker)\n\n# Verify the object type and a property if available.\n# TPXUnpacker2020 is a utility class for reading GROMACS TPR files.\nassert isinstance(tpx_unpacker, TPXUnpacker2020)\n# The witness is the class name to confirm the factory method returned the correct type.\nwitness = tpx_unpacker.__class__.__name__\nprint(f\"__CHECK__ python:MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker {witness}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ImportError: cannot import name 'Unpacker' from 'MDAnalysis.topology.tpr.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/tpr/utils.py)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker--22854ec26254a796ca6095b4574a1b9c180cc1318b3dc10b53ba834473058388/api_test.py\", line 58, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker--22854ec26254a796ca6095b4574a1b9c180cc1318b3dc10b53ba834473058388/api_test.py\", line 34, in run\n    from MDAnalysis.topology.tpr.utils import TPXUnpacker2020, Unpacker\nImportError: cannot import name 'Unpacker' from 'MDAnalysis.topology.tpr.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/tpr/utils.py)\n",
+          "stdout.txt": "",
+          "execution": {
+            "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker--22854ec26254a796ca6095b4574a1b9c180cc1318b3dc10b53ba834473058388/api_test.py\"",
+            "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution",
+            "timeout_s": 300,
+            "exit_code": 1,
+            "wall_s": 1.9921703338623047,
+            "stdout_file": "stdout.txt",
+            "stderr_file": "stderr.txt"
+          }
+        }
+      ]
+    }
+  }
+}

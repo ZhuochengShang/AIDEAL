@@ -1,0 +1,1422 @@
+{
+  "checked_at": "2026-11-18T16:59:26.220163+00:00",
+  "mode": "read_only_no_reruns",
+  "completed_jobs": 14,
+  "scope": "Review infrastructure/import/timeout/unknown classifications, not every failed program",
+  "environment_evidence": {
+    "versions": {
+      "MDAnalysis": "2.11.0",
+      "tslearn": "0.10.0",
+      "biopython": "1.88",
+      "openmm": null,
+      "ParmEd": null,
+      "imdclient": null,
+      "gemmi": null,
+      "pytng": null,
+      "tensorflow": null,
+      "keras": "3.15.1",
+      "torch": "2.15.0+cpu",
+      "scikit-learn": "1.7.2",
+      "h5py": "3.16.0",
+      "gsd": "5.0.1"
+    },
+    "source_excerpts": {
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/coordinates/GSD.py": {
+        "start_line": 55,
+        "end_line": 69,
+        "text": "try:\n    import gsd\n    import gsd.fl\nexcept ImportError:\n    HAS_GSD = False\n    import types\n\n    class MockHOOMDTrajectory:\n        pass\n\n    gsd = types.ModuleType(\"gsd\")\n    gsd.hoomd = types.ModuleType(\"hoomd\")\n    gsd.hoomd.HOOMDTrajectory = MockHOOMDTrajectory\nelse:\n    HAS_GSD = True"
+      },
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/coordinates/H5MD.py": {
+        "start_line": 219,
+        "end_line": 234,
+        "text": "try:\n    import h5py\nexcept ImportError:\n    HAS_H5PY = False\n\n    # Allow building documentation even if h5py is not installed\n    import types\n\n    class MockH5pyFile:\n        pass\n\n    h5py = types.ModuleType(\"h5py\")\n    h5py.File = MockH5pyFile\n\nelse:\n    HAS_H5PY = True"
+      },
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/analysis/align.py": {
+        "start_line": 200,
+        "end_line": 207,
+        "text": "try:\n    import Bio.AlignIO\n    import Bio.Align\n    import Bio.Align.Applications\nexcept ImportError:\n    HAS_BIOPYTHON = False\nelse:\n    HAS_BIOPYTHON = True"
+      },
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/lib/c_distances.pyx": {
+        "start_line": 164,
+        "text": "def calc_angle_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                         numpy.ndarray coords3, numpy.ndarray box,\n                         numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_angle_triclinic(<coordinate*> coords1.data,\n                          <coordinate*> coords2.data,\n                          <coordinate*> coords3.data, numcoords,\n                          <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral(numpy.ndarray coords1, numpy.ndarray coords2,\n                  numpy.ndarray coords3, numpy.ndarray coords4,\n                  numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                   <coordinate*> coords3.data, <coordinate*> coords4.data,\n                   numcoords, <double*> results.data)\n\n\ndef calc_dihedral_ortho(numpy.ndarray coords1, numpy.ndarray coords2,\n                        numpy.ndarray coords3, numpy.ndarray coords4,\n                        numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral_ortho(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                         <coordinate*> coords3.data, <coordinate*> coords4.data,\n                         numcoords, <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                            numpy.ndarray coords3, numpy.ndarray coords4,\n                            numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral_triclinic(<coordinate*> coords1.data,\n                             <coordinate*> coords2.data,\n                             <coordinate*> coords3.data,\n                             <coordinate*> coords4.data, numcoords,\n                             <float*> box.data, <double*> results.data)\n\n\ndef ortho_pbc(numpy.ndarray coords, numpy.ndarray box):\n    cdef uint64_t numcoords\n    numcoords = coords.shape[0]"
+      },
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/source/package/MDAnalysis/lib/c_distances_openmp.pyx": {
+        "start_line": 174,
+        "text": "def calc_angle_ortho(numpy.ndarray coords1, numpy.ndarray coords2,\n                     numpy.ndarray coords3, numpy.ndarray box,\n                     numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_angle_ortho(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                      <coordinate*> coords3.data, numcoords, <float*> box.data,\n                      <double*> results.data)\n\n\ndef calc_angle_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                         numpy.ndarray coords3, numpy.ndarray box,\n                         numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_angle_triclinic(<coordinate*> coords1.data,\n                          <coordinate*> coords2.data,\n                          <coordinate*> coords3.data, numcoords,\n                          <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral(numpy.ndarray coords1, numpy.ndarray coords2,\n                  numpy.ndarray coords3, numpy.ndarray coords4,\n                  numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                   <coordinate*> coords3.data, <coordinate*> coords4.data,\n                   numcoords, <double*> results.data)\n\n\ndef calc_dihedral_ortho(numpy.ndarray coords1, numpy.ndarray coords2,\n                        numpy.ndarray coords3, numpy.ndarray coords4,\n                        numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]\n\n    _calc_dihedral_ortho(<coordinate*> coords1.data, <coordinate*> coords2.data,\n                         <coordinate*> coords3.data, <coordinate*> coords4.data,\n                         numcoords, <float*> box.data, <double*> results.data)\n\n\ndef calc_dihedral_triclinic(numpy.ndarray coords1, numpy.ndarray coords2,\n                            numpy.ndarray coords3, numpy.ndarray coords4,\n                            numpy.ndarray box, numpy.ndarray results):\n    cdef uint64_t numcoords\n    numcoords = coords1.shape[0]"
+      }
+    },
+    "biopython_applications_spec_present": false
+  },
+  "libraries": {
+    "tslearn": {
+      "result_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/result.json",
+      "result_sha256": "f571d970ad1698072440e02af13f28f828ece56b4d0b0563cabaf41b7a59386c",
+      "experiment_fingerprint": "30eb9826e0fc74284854f28330c1159e6063475f3c02618dc090dbabf5acc030",
+      "review_counts": {
+        "generated_invalid_symbol_import": 4,
+        "execution_timeout": 1,
+        "generated_invalid_internal_import": 1,
+        "generated_optional_backend_import": 3
+      },
+      "rows": [
+        {
+          "api": "python:tslearn.backend.backend.Backend.__getattr__",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'get_backend' from 'tslearn.backend' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/backend/__init__.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.backend.backend.Backend.__getattr__--a46cccc01e72e6b7bf4fee4e798101eb4474cc81fa549dea7c5969bf8b72bdb8/attempt_0001",
+          "source": "source/tslearn/backend/backend.py:72"
+        },
+        {
+          "api": "python:tslearn.datasets.ucr_uea.UCR_UEA_datasets.cache_all",
+          "recorded_category": "timeout",
+          "review_category": "execution_timeout",
+          "confidence": "cause_provisional",
+          "reason": "Snippet calls unbounded dataset download/cache_all and exceeds300seconds; bulk network caching needs a suitable fixture/scope policy rather than a blind longer timeout.",
+          "diagnostic": "execution timed out",
+          "exit_code": 124,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.datasets.ucr_uea.UCR_UEA_datasets.cache_all--088c884230dd58a18d76bb082c5fe05ba9ee6869ee2b954d518a235576951a34/attempt_0001",
+          "source": "source/tslearn/datasets/ucr_uea.py:377"
+        },
+        {
+          "api": "python:tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict",
+          "recorded_category": "infra",
+          "review_category": "generated_invalid_internal_import",
+          "confidence": "confirmed",
+          "reason": "Generated program names a nonexistent library-internal module. A blanket missing-module classifier mislabels this as infrastructure.",
+          "diagnostic": "missing module/import: No module named 'tslearn.forecasting.knn'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.forecasting._pipeline.ScaledForecastingPipeline.predict--d043233859f5b8a85bc52a345ae77614ff4d3644b7065785fcc9f9b97e55ad28/attempt_0001",
+          "source": "source/tslearn/forecasting/_pipeline.py:142"
+        },
+        {
+          "api": "python:tslearn.metrics._frechet.accumulated_matrix",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'accumulated_matrix' from 'tslearn.metrics' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/metrics/__init__.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._frechet.accumulated_matrix--ec44fa4e1e829a4993927655510955955e8e27794f5dc0ebaa00fec10df244a1/attempt_0001",
+          "source": "source/tslearn/metrics/_frechet.py:288"
+        },
+        {
+          "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'KNeighborsTimeSeriesMixin' from 'tslearn.neighbors' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/neighbors/__init__.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin--1950e6931850e2adfb3ef91c304ff7dae3f3fcb2e5df713d3a6686ced8caf7a6/attempt_0001",
+          "source": "source/tslearn/neighbors/neighbors.py:28"
+        },
+        {
+          "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'tags' from 'sklearn.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/sklearn/utils/__init__.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__--9bcaf6e33849c96b5da68601a28d3f8cb7007e44da29f40f898fc0f89afd4146/attempt_0001",
+          "source": "source/tslearn/neighbors/neighbors.py:205"
+        },
+        {
+          "api": "python:tslearn.shapelets.shapelets.LocalSquaredDistanceLayer",
+          "recorded_category": "infra",
+          "review_category": "generated_optional_backend_import",
+          "confidence": "confirmed",
+          "reason": "Generated snippet itself imports tensorflow. Configured runtime uses Keras3 with torch, and the target tslearn import completes before the extra TensorFlow import fails. Installing TensorFlow is not established as necessary for this API.",
+          "diagnostic": "missing module/import: No module named 'tensorflow'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer--02f440b2d8d409fd0241c9aef1d3d281d8f0b6088dd5001f080e3f3393358b0b/attempt_0001",
+          "source": "source/tslearn/shapelets/shapelets.py:167"
+        },
+        {
+          "api": "python:tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build",
+          "recorded_category": "infra",
+          "review_category": "generated_optional_backend_import",
+          "confidence": "confirmed",
+          "reason": "Generated snippet itself imports tensorflow. Configured runtime uses Keras3 with torch, and the target tslearn import completes before the extra TensorFlow import fails. Installing TensorFlow is not established as necessary for this API.",
+          "diagnostic": "missing module/import: No module named 'tensorflow'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.LocalSquaredDistanceLayer.build--7ae5b9b97b805ce1ad79188c06a00ec79224254622cd48304fd3eecb5a18fc01/attempt_0001",
+          "source": "source/tslearn/shapelets/shapelets.py:188"
+        },
+        {
+          "api": "python:tslearn.shapelets.shapelets.PatchingLayer",
+          "recorded_category": "infra",
+          "review_category": "generated_optional_backend_import",
+          "confidence": "confirmed",
+          "reason": "Generated snippet itself imports tensorflow. Configured runtime uses Keras3 with torch, and the target tslearn import completes before the extra TensorFlow import fails. Installing TensorFlow is not established as necessary for this API.",
+          "diagnostic": "missing module/import: No module named 'tensorflow'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.shapelets.shapelets.PatchingLayer--411d796227eecc020544656da1f2579fb4fa1d665222e2a4bcb5a3c2ac387edd/attempt_0001",
+          "source": "source/tslearn/shapelets/shapelets.py:128"
+        }
+      ]
+    },
+    "mdanalysis": {
+      "result_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/result.json",
+      "result_sha256": "d8f8f1dba0a875e851c0c07bfb3e299fa1d24ec60e27213aabf2d3f4e65b73ac",
+      "experiment_fingerprint": "4dd4ff045c72b1d79fa768676d73a916f8e394d8440687154838808e41feddc5",
+      "review_counts": {
+        "installed_dependency_incompatible": 2,
+        "execution_timeout": 4,
+        "generated_invalid_symbol_import": 5,
+        "generated_invalid_internal_import": 4,
+        "missing_optional_dependency": 11,
+        "conditional_fallback_target_unavailable": 2,
+        "native_process_crash": 3
+      },
+      "rows": [
+        {
+          "api": "python:MDAnalysis.analysis.align.fasta2select",
+          "recorded_category": "infra",
+          "review_category": "installed_dependency_incompatible",
+          "confidence": "confirmed",
+          "reason": "Biopython1.88 is installed, but Bio.Align.Applications is absent. MDAnalysis align.py includes this import in a shared guard and reports the whole dependency unavailable.",
+          "diagnostic": "missing module/import: The `fasta2select` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.fasta2select--f99e7782b3637a4a37034dd6dd61580543ca2e17cc145aed6072f55d07192306/attempt_0001",
+          "source": "source/package/MDAnalysis/analysis/align.py:1329"
+        },
+        {
+          "api": "python:MDAnalysis.analysis.align.sequence_alignment",
+          "recorded_category": "infra",
+          "review_category": "installed_dependency_incompatible",
+          "confidence": "confirmed",
+          "reason": "Biopython1.88 is installed, but Bio.Align.Applications is absent. MDAnalysis align.py includes this import in a shared guard and reports the whole dependency unavailable.",
+          "diagnostic": "missing module/import: The `sequence_alignment` method requires an installation of `Biopython`. Please install `Biopython` to use this method: https://biopython.org/wiki/Download",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.align.sequence_alignment--a6c2399c6fbf962312acad0ea8c60dd32be8fffd705b73614266fa4384273506/attempt_0001",
+          "source": "source/package/MDAnalysis/analysis/align.py:1203"
+        },
+        {
+          "api": "python:MDAnalysis.analysis.bat.BAT.Cartesian",
+          "recorded_category": "timeout",
+          "review_category": "execution_timeout",
+          "confidence": "cause_provisional",
+          "reason": "BAT snippet constructs analysis over the supplied atoms and times out. Exact stall point is not established by the retained diagnostic; do not infer a provider or missing-dependency failure.",
+          "diagnostic": "execution timed out",
+          "exit_code": 124,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.bat.BAT.Cartesian--fd91cc7e6ab5260940fe9bc8977f92487faf18c36e081d51035b1e6e1ae52bd1/attempt_0001",
+          "source": "source/package/MDAnalysis/analysis/bat.py:526"
+        },
+        {
+          "api": "python:MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod.__call__",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'AffinityPropagationClustering' from 'MDAnalysis.analysis.encore.clustering' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/encore/clustering/__init__.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod._--5856739281ef5b803a3af7f450b002dc55225c5e9345a9ea34b4ccc1e757d855/attempt_0001",
+          "source": "source/package/MDAnalysis/analysis/encore/clustering/ClusteringMethod.py:82"
+        },
+        {
+          "api": "python:MDAnalysis.analysis.encore.clustering.cluster.cluster",
+          "recorded_category": "infra",
+          "review_category": "generated_invalid_internal_import",
+          "confidence": "confirmed",
+          "reason": "Generated program names a nonexistent library-internal module. A blanket missing-module classifier mislabels this as infrastructure.",
+          "diagnostic": "missing module/import: No module named 'MDAnalysis.analysis.encore.clustering.affinitypropagation'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.clustering.cluster.cluster--ff4918361a6ea3c592c9a06a6c01b8914930bd1801f9337dc4940a52d72ce03b/attempt_0001",
+          "source": "source/package/MDAnalysis/analysis/encore/clustering/cluster.py:47"
+        },
+        {
+          "api": "python:MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix",
+          "recorded_category": "infra",
+          "review_category": "generated_invalid_internal_import",
+          "confidence": "confirmed",
+          "reason": "Generated program names a nonexistent library-internal module. A blanket missing-module classifier mislabels this as infrastructure.",
+          "diagnostic": "missing module/import: No module named 'MDAnalysis.analysis.encore.distances'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix--08b88fb19f2c7bd5cff20cda5c87659caed33d954dffece73bc14c8482defcb3/attempt_0001",
+          "source": "source/package/MDAnalysis/analysis/encore/confdistmatrix.py:60"
+        },
+        {
+          "api": "python:MDAnalysis.analysis.gnm.order_list",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'GNM' from 'MDAnalysis.analysis.gnm' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/analysis/gnm.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.analysis.gnm.order_list--9343fd76671a3e26f545ba1f2c5412eafdb074b0415c065bea7feb70e76079f0/attempt_0001",
+          "source": "source/package/MDAnalysis/analysis/gnm.py:191"
+        },
+        {
+          "api": "python:MDAnalysis.auxiliary.base.AuxReader.__del__",
+          "recorded_category": "timeout",
+          "review_category": "execution_timeout",
+          "confidence": "cause_provisional",
+          "reason": "Snippet writes a plain-text fake .edr file then opens it through a binary EDR reader. Execution exceeds300seconds. Exact stall point was not instrumented; one receipt also reports an output pipe outside the owned process group.",
+          "diagnostic": "execution timed out",
+          "exit_code": 124,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.__del__--41e8c3b98f3dbcbf59bec1157ca7bbf74229b413b129290457e877cdc7eff64a/attempt_0001",
+          "source": "source/package/MDAnalysis/auxiliary/base.py:944"
+        },
+        {
+          "api": "python:MDAnalysis.auxiliary.base.AuxReader.__len__",
+          "recorded_category": "timeout",
+          "review_category": "execution_timeout",
+          "confidence": "cause_provisional",
+          "reason": "Snippet writes a plain-text fake .edr file then opens it through a binary EDR reader. Execution exceeds300seconds. Exact stall point was not instrumented; one receipt also reports an output pipe outside the owned process group.",
+          "diagnostic": "execution timed out",
+          "exit_code": 124,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.__len__--1034d5ae4faf0c9283672e58dd1f9583c315da34b4760e966f9c3005c5183db4/attempt_0001",
+          "source": "source/package/MDAnalysis/auxiliary/base.py:362"
+        },
+        {
+          "api": "python:MDAnalysis.auxiliary.base.AuxReader.copy",
+          "recorded_category": "timeout",
+          "review_category": "execution_timeout",
+          "confidence": "cause_provisional",
+          "reason": "Snippet writes a plain-text fake .edr file then opens it through a binary EDR reader. Execution exceeds300seconds. Exact stall point was not instrumented; one receipt also reports an output pipe outside the owned process group.",
+          "diagnostic": "execution timed out",
+          "exit_code": 124,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.auxiliary.base.AuxReader.copy--40bcc6ee7fdca55205b5d07aad7b4632f0ee80e837069b309f4ed24882929fb9/attempt_0001",
+          "source": "source/package/MDAnalysis/auxiliary/base.py:356"
+        },
+        {
+          "api": "python:MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: No module named 'openmm'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.OpenMMParser.OpenMMAppTopologyParser.parse--b0f427049e5b2d1920741e0c7b24b2d59ffcaf4707ec1da02e0d599416616273/attempt_0001",
+          "source": "source/package/MDAnalysis/converters/OpenMMParser.py:261"
+        },
+        {
+          "api": "python:MDAnalysis.converters.ParmEd.ParmEdConverter",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: ParmEd is required for ParmEdConverter but is not installed. Try installing it with",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter--0ddd5e5289c74808e2aafc8a109bd7196bf13e1f80a604470e09b3ad001bade2/attempt_0001",
+          "source": "source/package/MDAnalysis/converters/ParmEd.py:144"
+        },
+        {
+          "api": "python:MDAnalysis.converters.ParmEd.ParmEdConverter.convert",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: ParmEd is required for ParmEdConverter but is not installed. Try installing it with",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEd.ParmEdConverter.convert--3335c1a698ef4dd450151f45ecf446eb3ca8409c8102a99edb2bd7486dcbb38b/attempt_0001",
+          "source": "source/package/MDAnalysis/converters/ParmEd.py:165"
+        },
+        {
+          "api": "python:MDAnalysis.converters.ParmEdParser.ParmEdParser.parse",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: No module named 'parmed'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.ParmEdParser.ParmEdParser.parse--cdf00c053e15765e222f2a54d89e5768b13b8fb212347b082c6cfc3a30bc9686/attempt_0001",
+          "source": "source/package/MDAnalysis/converters/ParmEdParser.py:155"
+        },
+        {
+          "api": "python:MDAnalysis.converters.RDKit.set_converter_cache_size",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name '_converter_cache' from 'MDAnalysis.converters.RDKit' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/converters/RDKit.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.converters.RDKit.set_converter_cache_size--792a74c9438b22c3c4170ba85c4d028cf15988592ed70b1c5ac13e48a3dde6c7/attempt_0001",
+          "source": "source/package/MDAnalysis/converters/RDKit.py:598"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory",
+          "recorded_category": "api-import",
+          "review_category": "conditional_fallback_target_unavailable",
+          "confidence": "confirmed",
+          "reason": "Source defines this empty fallback class only under ImportError. The corresponding gsd/h5py dependency is installed, so the target is not defined in this runtime. Discovery should retain it as conditional context, not a runnable public API.",
+          "diagnostic": "ImportError: cannot import name 'MockHOOMDTrajectory' from 'MDAnalysis.coordinates.GSD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/GSD.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.GSD.MockHOOMDTrajectory--730f4b1afeda9f0feccc3209ce21c88a81ae39322c81dcfa3c00efc0bcbabe86/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/GSD.py:62"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.H5MD.MockH5pyFile",
+          "recorded_category": "api-import",
+          "review_category": "conditional_fallback_target_unavailable",
+          "confidence": "confirmed",
+          "reason": "Source defines this empty fallback class only under ImportError. The corresponding gsd/h5py dependency is installed, so the target is not defined in this runtime. Discovery should retain it as conditional context, not a runnable public API.",
+          "diagnostic": "ImportError: cannot import name 'MockH5pyFile' from 'MDAnalysis.coordinates.H5MD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/H5MD.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.H5MD.MockH5pyFile--cd64e5d89dcae17111c9b677d11cce8a6bfc41cb38633658b629642d5dc9315a/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/H5MD.py:227"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.IMD.IMDReader",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader--59ed171dbc037d3cbfef98e9d0c574063a4c9b5abd80fc7c145857869954dbb5/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/IMD.py:181"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.IMD.IMDReader.close",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: IMDReader requires the imdclient package. Please install it with 'pip install imdclient'.",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.IMD.IMDReader.close--86298739583805a4a1acf4f76804f75a2fbd91ad086feb9991a273abdfd0be4d/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/IMD.py:329"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.MMCIF.MMCIFReader",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: MMCIFReader: To read mmCIF files, please install gemmi",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.MMCIF.MMCIFReader--6161fdbab86be48c4137d5004bb11539d03a9885b77f8b565a0cdd019784e4d3/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/MMCIF.py:132"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.TNG.TNGReader.Writer",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: TNGReader: To read TNG files please install pytng",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/TNG.py:530"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.TNG.TNGReader.parse_n_atoms",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: TNGReader: To read TNG files please install pytng",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.TNG.TNGReader.parse_n_atoms--53ce58070f384d89bb43b67e6007988555679655aa47f482cc5ca4ae83d47210/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/TNG.py:291"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.base.ConverterBase.convert",
+          "recorded_category": "infra",
+          "review_category": "generated_invalid_internal_import",
+          "confidence": "confirmed",
+          "reason": "Generated program names a nonexistent library-internal module. A blanket missing-module classifier mislabels this as infrastructure.",
+          "diagnostic": "missing module/import: No module named 'MDAnalysis.coordinates.pdb'",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.coordinates.base.ConverterBase.convert--48d7b0d5951b9ddf9c44d1b2e73e6b2b242a055165802dc7cdd47ef15f70c040/attempt_0001",
+          "source": "source/package/MDAnalysis/coordinates/base.py:1858"
+        },
+        {
+          "api": "python:MDAnalysis.core.topology.TransTable.add_Segment",
+          "recorded_category": "infra",
+          "review_category": "generated_invalid_internal_import",
+          "confidence": "confirmed",
+          "reason": "Generated program names a nonexistent library-internal module. A blanket missing-module classifier mislabels this as infrastructure.",
+          "diagnostic": "missing module/import: No module named 'MDAnalysis.core.topology.tables'; 'MDAnalysis.core.topology' is not a package",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.core.topology.TransTable.add_Segment--27cd7083ab9c0b2deea6f8d46899ac6d63508a664e08379032e93c5c7b7a291c/attempt_0001",
+          "source": "source/package/MDAnalysis/core/topology.py:438"
+        },
+        {
+          "api": "python:MDAnalysis.lib.c_distances.calc_angle_triclinic",
+          "recorded_category": "unknown",
+          "review_category": "native_process_crash",
+          "confidence": "confirmed",
+          "reason": "Execution exit-6 indicates a native-process termination, not an unknown successful run. Program supplies one-dimensional float64 coordinate vectors and a one-element output buffer; the low-level source treats coords1.shape[0] as the number of coordinates and casts raw buffers. This is direct evidence of an invalid call and potential out-of-bounds native write.",
+          "diagnostic": "y copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\nmunmap_chunk(): invalid pointer",
+          "exit_code": -6,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.c_distances.calc_angle_triclinic--3c8b4e5309c2ee7a395aa513375e8a1acc33f7f508ad3d80a771d3561c5cb466/attempt_0001",
+          "source": "source/package/MDAnalysis/lib/c_distances.pyx:164"
+        },
+        {
+          "api": "python:MDAnalysis.lib.c_distances_openmp.calc_angle_ortho",
+          "recorded_category": "unknown",
+          "review_category": "native_process_crash",
+          "confidence": "confirmed",
+          "reason": "Execution exit-11 indicates a native-process termination, not an unknown successful run. Program passes box=None to low-level source that dereferences box.data without a missing-box branch.",
+          "diagnostic": "ly makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(",
+          "exit_code": -11,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.c_distances_openmp.calc_angle_ortho--5031a6ab02fa53786a5eaa2d6ff282d45ac496c91d52887147ac9d594e154f9a/attempt_0001",
+          "source": "source/package/MDAnalysis/lib/c_distances_openmp.pyx:174"
+        },
+        {
+          "api": "python:MDAnalysis.lib.formats.libmdaxdr.XTCFile.read_direct_x",
+          "recorded_category": "unknown",
+          "review_category": "native_process_crash",
+          "confidence": "cause_provisional",
+          "reason": "Execution exit-11 indicates a native-process termination, not an unknown successful run. Buffer size derives from a separate Universe rather than the opened XTC file. This may mismatch the file atom count; exact crash cause remains unverified.",
+          "diagnostic": "ly makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(",
+          "exit_code": -11,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.lib.formats.libmdaxdr.XTCFile.read_direct_x--42b001ffec638d356f1a2016740dc0813609578f1d3d83a8961f4eb0df73ba9e/attempt_0001",
+          "source": "source/package/MDAnalysis/lib/formats/libmdaxdr.pyx:804"
+        },
+        {
+          "api": "python:MDAnalysis.topology.MMCIFParser.MMCIFParser",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser--fba65781f7220e9e61e9e19c35a94964b26e62d5e26face3a364fccc82f2f909/attempt_0001",
+          "source": "source/package/MDAnalysis/topology/MMCIFParser.py:102"
+        },
+        {
+          "api": "python:MDAnalysis.topology.MMCIFParser.MMCIFParser.parse",
+          "recorded_category": "infra",
+          "review_category": "missing_optional_dependency",
+          "confidence": "confirmed",
+          "reason": "Existing program diagnostic and installed-distribution inspection agree that this format/converter dependency is absent.",
+          "diagnostic": "missing module/import: MMCIFParser: To read a Topology from an mmCIF file, please install gemmi",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.MMCIFParser.MMCIFParser.parse--7ead7f87b85414758eb07a16d91e8b32678471833e7a7259d21b2126a76b6393/attempt_0001",
+          "source": "source/package/MDAnalysis/topology/MMCIFParser.py:142"
+        },
+        {
+          "api": "python:MDAnalysis.topology.TOPParser.TypeIndices",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'AtomAttr' from 'MDAnalysis.topology.base' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/base.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.TOPParser.TypeIndices--c0b083dde3059379da2eb7aa88cc3c1e81b276be26b73f80b99b6f7c578b0225/attempt_0001",
+          "source": "source/package/MDAnalysis/topology/TOPParser.py:123"
+        },
+        {
+          "api": "python:MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker",
+          "recorded_category": "api-import",
+          "review_category": "generated_invalid_symbol_import",
+          "confidence": "confirmed",
+          "reason": "Saved traceback identifies a requested symbol absent from the named module; this is not evidence that the containing installed package is missing.",
+          "diagnostic": "ImportError: cannot import name 'Unpacker' from 'MDAnalysis.topology.tpr.utils' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/topology/tpr/utils.py)",
+          "exit_code": 1,
+          "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/run_python_MDAnalysis.topology.tpr.utils.TPXUnpacker2020.from_unpacker--22854ec26254a796ca6095b4574a1b9c180cc1318b3dc10b53ba834473058388/attempt_0001",
+          "source": "source/package/MDAnalysis/topology/tpr/utils.py:144"
+        }
+      ]
+    },
+    "sedonadb": {
+      "checked_at_utc": "2026-11-18T16:59:59.081738+00:00",
+      "read_only": true,
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/result.json",
+      "totals": {
+        "targets": 217,
+        "pass": 78,
+        "recorded_runtime": 74,
+        "recorded_unknown": 65
+      },
+      "group_counts": {
+        "invalid_function:rs_fromgeotiff": 56,
+        "invalid_function:st_fromgeoraster": 1,
+        "wrong_raster_argument_type": 1,
+        "invalid_function:read_binary": 1,
+        "no_matching_kernel": 5,
+        "unsupported_dot_access": 1
+      },
+      "groups": {
+        "invalid_function:rs_fromgeotiff": [
+          "sql:RS_AsGeoTiff",
+          "sql:RS_BandNoDataValue",
+          "sql:RS_BandPixelType",
+          "sql:RS_BandToDim",
+          "sql:RS_Clip",
+          "sql:RS_Contains",
+          "sql:RS_ConvexHull",
+          "sql:RS_CRS",
+          "sql:RS_DimNames",
+          "sql:RS_DimSize",
+          "sql:RS_DimToBand",
+          "sql:RS_Envelope",
+          "sql:RS_GeoReference",
+          "sql:RS_GeoTransform",
+          "sql:RS_Height",
+          "sql:RS_Intersects",
+          "sql:RS_IsEmpty",
+          "sql:RS_MinConvexHull",
+          "sql:RS_NumBands",
+          "sql:RS_PixelAsCentroid",
+          "sql:RS_PixelAsPoint",
+          "sql:RS_PixelAsPolygon",
+          "sql:RS_Polygonize",
+          "sql:RS_RasterToWorldCoord",
+          "sql:RS_RasterToWorldCoordX",
+          "sql:RS_RasterToWorldCoordY",
+          "sql:RS_ReplaceBandNoDataValue",
+          "sql:RS_ReprojectMatch",
+          "sql:RS_Resample",
+          "sql:RS_Rotation",
+          "sql:RS_ScaleX",
+          "sql:RS_ScaleY",
+          "sql:RS_SetBandNoDataValue",
+          "sql:RS_SetCRS",
+          "sql:RS_SetGeoReference",
+          "sql:RS_SetSRID",
+          "sql:RS_Shape",
+          "sql:RS_SkewX",
+          "sql:RS_SkewY",
+          "sql:RS_Slice",
+          "sql:RS_SRID",
+          "sql:RS_Stack",
+          "sql:RS_SummaryStats",
+          "sql:RS_SummaryStatsAll",
+          "sql:RS_Tile",
+          "sql:RS_UpperLeftX",
+          "sql:RS_UpperLeftY",
+          "sql:RS_Value",
+          "sql:RS_Values",
+          "sql:RS_Width",
+          "sql:RS_Within",
+          "sql:RS_WorldToRasterCoord",
+          "sql:RS_WorldToRasterCoordX",
+          "sql:RS_WorldToRasterCoordY",
+          "sql:RS_ZonalStats",
+          "sql:RS_ZonalStatsAll"
+        ],
+        "invalid_function:st_fromgeoraster": [
+          "sql:RS_BandPath"
+        ],
+        "wrong_raster_argument_type": [
+          "sql:rs_ensureloaded"
+        ],
+        "invalid_function:read_binary": [
+          "sql:RS_NumDimensions"
+        ],
+        "no_matching_kernel": [
+          "sql:RS_SetValue",
+          "sql:ST_ClosestPoint",
+          "sql:st_longestline",
+          "sql:ST_MakeValid",
+          "sql:st_shortestline"
+        ],
+        "unsupported_dot_access": [
+          "sql:ST_Dump"
+        ]
+      },
+      "classifier": {
+        "frozen_file": "/home/zshan011/apps/aideal/releases/2026-11-17-qualified-api-f3c6fd6fe802/vendor/aideal_engine/src/aideal/doc_check_errors.py",
+        "line": 33,
+        "pattern": "^(\\w*(?:Error|Exception)\\b.*)$",
+        "problem": "Cannot match qualified Python exception name sedonadb._lib.SedonaError; native traceback lacks configured __RUN_ERR__ marker. Unknown here does not mean execution did not run.",
+        "safe_fix": "Accept module-qualified exception classes and test this form. Reclassify immutable saved diagnostics in a derived report without any model/execution rerun."
+      },
+      "capability_findings": [
+        {
+          "apis": [
+            "sql:ST_ClosestPoint",
+            "sql:st_longestline",
+            "sql:st_shortestline"
+          ],
+          "finding": "Generated geometry arguments do not match the pinned S2 geography-only kernels. No GEOS implementations for these names occur in its register.rs. At least ST_ClosestPoint original reference metadata nevertheless advertises a geometry overload, so documentation/capability mismatch contributes; do not call this missing dependency from this evidence.",
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/c/sedona-s2geography/src/kernels.rs:110",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/c/sedona-geos/src/register.rs",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_closestpoint.qmd:21"
+          ]
+        },
+        {
+          "apis": [
+            "sql:ST_MakeValid"
+          ],
+          "finding": "Generated program first calls the supported one-argument function, then fails when testing (geometry, boolean). Original reference explicitly advertises keepCollapsed:boolean but pinned GEOS implementation matches one geometry argument only. This is a documented-overload/runtime capability mismatch.",
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_makevalid.qmd:24",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/c/sedona-geos/src/st_makevalid.rs:46"
+          ]
+        },
+        {
+          "apis": [
+            "sql:RS_SetValue"
+          ],
+          "finding": "Failure occurs in helper RS_MakeEmptyRaster with nine integer arguments before the target operation. This is a helper-call kernel/argument mismatch; no missing-module diagnostic is present.",
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetValue--5d11149e40451679cf5ab0c381ebc45436ea56653be1106a11cfcb010649b591/attempt_0001"
+          ]
+        }
+      ],
+      "findings": [
+        "All65 unknown rows terminated with exit1 and explicit SedonaError diagnostics. No missing dependency or provider failure is confirmed among these65.",
+        "56 programs invent RS_FromGeoTiff; one invents ST_FromGeoRaster, one read_binary. These calls occur in saved generated code. The inspected RS_AsGeoTiff request contains neither RS_FromGeoTiff nor RS_FromGDALRaster, so no evidence that the invalid name was supplied by the scaffold or that prompt.",
+        "One record passes Utf8 where Raster is required; one uses unsupported dot access. Five fail SQL kernel dispatch as detailed above.",
+        "Classify captured errors more precisely without overwriting historical results. If changing supplied docs, runtime kernels, fixtures or environment, use a new versioned evaluation namespace and do not mix new outcomes into the frozen R0 run.",
+        "No experiments, files on cluster, dependencies or model calls were changed by this audit."
+      ],
+      "records": [
+        {
+          "api": "sql:RS_AsGeoTiff",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_AsGeoTiff--ef4c8603bac37a37f00dd09b9798b2952260278e4db13828f11595fc0cd52ca7/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_BandNoDataValue",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandNoDataValue--af9ebd6cdd16f9d11f9c1badbecee1c44058e4ba09fa8ee41c733d6c23dc7f11/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_BandPath",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:st_fromgeoraster",
+          "diagnostic": "Error during planning: Invalid function 'st_fromgeoraster'.\nDid you mean 'rs_fromgdalraster'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandPath--70c30a94ff883ecdc21fa04c591a8161e786d78cb2bbb428c95758e15e4ecd74/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_BandPixelType",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandPixelType--f93d4b04f50ee28f57364f336c8ba2d70c9971e2fbbd75cd1444b07e40008c45/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_BandToDim",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_BandToDim--693e2c18dbbd839e930afb5ca9578295de1e241cc267dd9d1c4a6ab7c15bd959/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Clip",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Clip--d1bc4aa96a49daa6b00ea91b6a696bc8408e157d62cdf5d52f9dc5ad2472773b/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Contains",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Contains--a29417c8d67cbd8a5264eba9b8f20994a73d34cb95e2fcc903dff3e5f40b955f/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_ConvexHull",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ConvexHull--c6df15278bfa79e4dc7595b438bf3ad9216e6c8b3682cc4c67e2c0855da99cc3/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_CRS",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_CRS--cfa45437d99482236b48e9808fd41fd4e92a85df16f0a77f1c1b5377fee6ea7c/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_DimNames",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_DimNames--d71c2b61c98734bedb6f945de24273f6826e7f2f44a405f9dd73e91352287f6a/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_DimSize",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_DimSize--e2a0ead71eeaf1bc582096bada62c442f92371f455e9bf8b65c3aa415c9f91cd/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_DimToBand",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_DimToBand--e91a6367075de129387c36c1a50a92c630a26f3ce598038034e7f3323e5d94eb/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:rs_ensureloaded",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "wrong_raster_argument_type",
+          "diagnostic": "RS_EnsureLoaded expects a Raster (Struct) argument, got Utf8",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_rs_ensureloaded--de601e84d20fa43886b8714d7691084e440d35ba7f9bf8050af157b357fe484f/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Envelope",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Envelope--4b46911eb1fbf15c24a60c5d0b80993023d0d05122f22cabc6c8304a80e62d5f/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_GeoReference",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_GeoReference--7067cb4613fc32448dfc34d4bf942494a5fe89d80758bed42b20b9f8c89a7d97/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_GeoTransform",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_GeoTransform--7a616e779e4fafb5f5d0332777a91fe49ee683777b3dd3727314c5a9ea115d05/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Height",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Height--5b74108dcd4cea3cb9d928517efdb683a4b9937601a11ca8c8bea9f994a99ee8/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Intersects",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Intersects--ca0c44a6c4f13b69cb3a82c114ae95ae8b1dbeb1579ca489e0e17a024e6124dc/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_IsEmpty",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_IsEmpty--9b2043d0dd293e59734dec9b25cf1e356acc843f2da0654d2434bc98c4d0187e/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_MinConvexHull",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_MinConvexHull--b18d067d04648e203f9aa2707a8ce92190026acd4f6bbf030790dbfe0c38c763/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_NumBands",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_NumBands--2f7e0148ae84b070e778dbe6b55f72a8b897548ba2f4a3c7c0e8e6379a1bd5f4/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_NumDimensions",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:read_binary",
+          "diagnostic": "Error during planning: Invalid function 'read_binary'.\nDid you mean 'st_asbinary'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_NumDimensions--8711bd51baec22288b7f4a3652c3f321cd0393b26b00e56f266c001a8b525c7b/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_PixelAsCentroid",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_PixelAsCentroid--1986e6150e8dc3165ecba692843f8d0f1ce13fc696073a562f3f0041c1bc48e9/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_PixelAsPoint",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_PixelAsPoint--2d01936f70f9980dad2e801749ca289285a22ceddd689f3d801904f17b7eb755/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_PixelAsPolygon",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_PixelAsPolygon--b4c8de12d57d4cc99422d6154d14b81dd8841c60ba77d47b6774ac1a6b1647e0/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Polygonize",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Polygonize--38b00cc298d71688e97ca6af0b2273930e3493e09ce014ec32cda4e0b8254754/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_RasterToWorldCoord",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_RasterToWorldCoord--771e320c4aef740a0e62f3de89d138b26b3a996e35757c3b149bf3939d6c3eb7/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_RasterToWorldCoordX",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_RasterToWorldCoordX--da14c22dd13badf55c6fb682e01d6c8e02fc2a005330b8202c44fe8a2d79bd5f/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_RasterToWorldCoordY",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_RasterToWorldCoordY--a2fefa2f8e347c2bf7880033686d10a08b3c2d2bdc62200b217e0affedec92bc/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_ReplaceBandNoDataValue",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ReplaceBandNoDataValue--30d0b3d2dfaca9912f6db9862bf674286cabb0a78a7d4fc0511bf4d038f2bc36/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_ReprojectMatch",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ReprojectMatch--8b850dbb37f3f90db0bb890c604ac75a70c7f5033f87f40aef30701bc94e3f2f/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Resample",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Resample--86d38c55d9006ed20dce875e43556bb1980bd1a4ba6904286e3f181d033449d8/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Rotation",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Rotation--c11b218df4c761e9ff0f26f87511813d279d75187956e557628702e6eb0acd40/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_ScaleX",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ScaleX--2d380ed7551991ef1be5443b2d7bffc2be6dc51c2d8c9fb1029d81a65c1b26fc/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_ScaleY",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ScaleY--8799ec4a624be142590d6c2d4e5040ecc67479b8a66f4f5c70218ebc02d7d6f2/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SetBandNoDataValue",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetBandNoDataValue--c0c7a033b0a7bc531284a93e3aa4cbe748f0ea389617dc960750b4de17047778/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SetCRS",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetCRS--8fd42af8d0d2e043f89796b369475bfb0a3a2d990a26274a6ddb443b5c375f7f/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SetGeoReference",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetGeoReference--16ccdf782a8e152cfda2287a6fe8498842d46f6da16f9ccea4b6144fde8c79c3/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SetSRID",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetSRID--f7ea5b22421143ff26ba24710f7d268eed71de803711c31aa62536f3a71d5ad7/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SetValue",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "no_matching_kernel",
+          "diagnostic": "rs_makeemptyraster(int64, int64, int64, int64, int64, int64, int64, int64, int64): No kernel matching arguments",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SetValue--5d11149e40451679cf5ab0c381ebc45436ea56653be1106a11cfcb010649b591/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Shape",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Shape--435557e62eed03a95f0364d56cd3dba93eb6bea386894c6565bf74dd26b45ab6/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SkewX",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SkewX--da485ec539de018dbc6879ee529eed309fdb01d3f308e92115e06dd7adc40503/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SkewY",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SkewY--4d1522f0bf4931e13ed3c02f5b96e8ad984d1053b9c4ec550f055ec9542903cc/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Slice",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Slice--0bea67beb44b00bd2ab23e2609e1859f30c28ffc2753a1504f41071733150088/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SRID",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SRID--9277396cc3aada03731cde695ad4291acc801129c86583f50b87948be91295b3/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Stack",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Stack--2df133366223f0bae6bb1c72a7769cb89790ff5da73f8ea02db67147a4dc946b/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SummaryStats",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SummaryStats--e73ddadb720938f64a8680ea191d370aef46d76c1d199e05df9894c306bbb3f3/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_SummaryStatsAll",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_SummaryStatsAll--f1347a70d8632de06ebcddda6cb3513d14ef9761d68b4ced6b9236bf9dbe1a87/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Tile",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Tile--7a8814b166fb0ca8965bab61a6c2f1ce3988d282cfb4713fb9e6feb673cc578a/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_UpperLeftX",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_UpperLeftX--d83da27e765614f32d020fc53b0e7aaed8674d6b8cf4ab69caa7684b0a99dac4/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_UpperLeftY",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_UpperLeftY--d7465e7e0e18c302b7ac5a78cf68a92a4b07504e967097d8f19bcf8a691cfe7e/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Value",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Value--0acf9c49aff19b6cf2597dad8cb10972a34ebe1789f86646404dd15d9fbcea50/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Values",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Values--842fa06245910edf734cd5e9e3697d56db2e324eaaf9b3655c9a7dbdf7394b29/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Width",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Width--81f0bc50ea42364a1b2af26b563d79a33b6d1797600f3acb389e580c89681fd6/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_Within",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_Within--f46ef83dc94aa5e635279fabc2fcb9581833ebe64d40fa769629d5f60de99962/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_WorldToRasterCoord",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_WorldToRasterCoord--784d63eb4ba7a8961497b117b03313c78f0e6099b6832b058d8ff7c301f369cf/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_WorldToRasterCoordX",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_WorldToRasterCoordX--8cf3ea0dd43486c4fdb235585b7286e92a3e823f9b208243de0681c0ab6b5cab/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_WorldToRasterCoordY",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_WorldToRasterCoordY--174eb33f5ddcb36872fded2dbcb6f467922bdf54fd6e75d2dde5a08a8f41d215/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_ZonalStats",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ZonalStats--4f4b4af270c804139d53307d81fda314ef1414c0f12e49a702af722d560c19bd/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:RS_ZonalStatsAll",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "invalid_function:rs_fromgeotiff",
+          "diagnostic": "Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_RS_ZonalStatsAll--146fec610a0053a05a944890850d2c3ecd2da0f3c71298e3a3791a8d7019f518/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:ST_ClosestPoint",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "no_matching_kernel",
+          "diagnostic": "st_closestpoint(geometry, geometry): No kernel matching arguments",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_ClosestPoint--3c040e51bfd5645b4c409563d022957c19ed51a1a3a08f2aa59232a9fb55c3e4/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:ST_Dump",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "unsupported_dot_access",
+          "diagnostic": "Dot access not supported for non-string expr: Identifier(Ident { value: \"geom\", quote_style: None, span: Span(Location(3,97)..Location(3,101)) })",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_Dump--19a0e424c758b0a767ae2d55eef389a16189883331f524dc38e07efd58dec783/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:st_longestline",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "no_matching_kernel",
+          "diagnostic": "st_longestline(geometry, geometry): No kernel matching arguments",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_st_longestline--752f5d24c8d3d0894f2a32195b262bead2625e753e0946c69a51cfc96a946c0b/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:ST_MakeValid",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "no_matching_kernel",
+          "diagnostic": "st_makevalid(geometry, boolean): No kernel matching arguments",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_MakeValid--df1e66c1b9d5a765d44d88a6c9af52154148c4b4696ffb6cee5de7c0ffc131fc/attempt_0001"
+          ]
+        },
+        {
+          "api": "sql:st_shortestline",
+          "recorded_category": "unknown",
+          "reviewed_category": "SQL planning/type/capability failure",
+          "group": "no_matching_kernel",
+          "diagnostic": "st_shortestline(geometry, geometry): No kernel matching arguments",
+          "exit_code": 1,
+          "evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_st_shortestline--0641d89cb8f385d05a036bb9733464d5ea50d1aedc3d628720baad2269eb7c96/attempt_0001"
+          ]
+        }
+      ]
+    }
+  },
+  "measured_results_modified": false,
+  "recommendations": [
+    {
+      "action": "Preserve all completed results and original labels; attach this classification review as an audit layer.",
+      "new_namespace_required": false
+    },
+    {
+      "action": "Before future comparisons, pin compatible Biopython and review/install the optional format/converter dependencies supported by the selected bank. Changes must create a new environment fingerprint and run namespace. Do not mix repaired-environment results into the completed R0 scores.",
+      "new_namespace_required": true
+    },
+    {
+      "action": "Mark missing-dependency fallback classes as conditional context or exclude them from a newly frozen bank; preserve the old denominator in historical reports.",
+      "new_namespace_required": true
+    },
+    {
+      "action": "Classify nonexistent own-library imports separately from absent third-party dependencies, SQL errors separately from unknown, and negative subprocess exit codes as native crashes. A report-only reclassification can reuse saved evidence; changing runner semantics applies to a new release/run.",
+      "new_namespace_required": "depends on report-only versus runner change"
+    },
+    {
+      "action": "Review bounded dataset/EDR fixtures and low-level numeric-buffer contracts. Use existing failed code in a separate diagnostic run if later authorized; no new model call is needed to inspect environment corrections.",
+      "new_namespace_required": true
+    }
+  ],
+  "sedona_invalid_function_relationship": {
+    "count": 58,
+    "relationship": "all58 are generated setup/helper calls rather than the declared target API",
+    "by_helper": {
+      "rs_fromgeotiff": 56,
+      "st_fromgeoraster": 1,
+      "read_binary": 1
+    },
+    "examples": {
+      "rs_fromgeotiff": "sql:RS_AsGeoTiff",
+      "st_fromgeoraster": "sql:RS_BandPath",
+      "read_binary": "sql:RS_NumDimensions"
+    },
+    "provenance_limit": "Helpers are present in generated program text. One sampled request did not contain the invalid helper name; this is not a provenance audit of all58prompts."
+  }
+}

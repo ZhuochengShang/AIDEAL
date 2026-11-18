@@ -1,6 +1,6 @@
 # AIDEAL experiment guide
 
-**Latest recovery, November 18:** [current progress and recovery guide](operator/resume/2026-11-18/README.md). RDPro R0 and README authoring are complete. tslearn R0 is resuming; a separate MDAnalysis README recovery corrects a source-note validation error. Dated queue snapshots below preserve the earlier launch record.
+**Verified completion, November 18:** All six libraries finished Original R0 and README authoring. [Results and verification](operator/resume/2026-11-18/COMPLETION.md). Older dated queue snapshots below preserve the launch history; the full ablation study is not yet complete.
 
 Updated November 17, 2026. The current scope is **2,850 selected targets across six libraries and seven language banks**. RDPro now covers Raptor and its supporting raster types. Other libraries retain their inputs, releases and running/completed jobs.
 
