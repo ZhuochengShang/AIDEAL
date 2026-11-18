@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "tests": 3,
+  "production_patch_required": false,
+  "earlier_suspected_credential_inheritance": "Not confirmed: native execution already removes the configured provider keys before subprocess launch.",
+  "tested_paths": [
+    "Native Python child and nested child",
+    "Shell build chain with actual Scala compiler and JVM runtime",
+    "Actual Sedona run_snippet.py/runpy adapter and nested child without importing the scientific library"
+  ],
+  "removed_dummy_names": [
+    "GOOGLE_API_KEY",
+    "GEMINI_API_KEY",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "AZURE_OPENAI_API_KEY",
+    "DUMMY_API_TOKEN",
+    "DUMMY_ACCESS_TOKEN",
+    "AWS_SECRET_ACCESS_KEY"
+  ],
+  "safe_variable_preserved": true,
+  "controller_environment_unchanged": true,
+  "new_model_calls": 0,
+  "subject_library_executions": 0,
+  "test_sha256": "ab69b21916be90a02290abbb322966ec4f2762effb7a9bd5812f800d9b2afd75",
+  "log_sha256": "c4797a9aed266ab23ff90a9b68105d079d00ba5f35ff04f57dbf19660db6952f",
+  "observed_at": "2026-11-18T00:48:01.790965+00:00",
+  "limitation": "Environment credential removal is not filesystem or network sandboxing. Unrecognized secret variable names are not covered by this suffix rule."
+}
