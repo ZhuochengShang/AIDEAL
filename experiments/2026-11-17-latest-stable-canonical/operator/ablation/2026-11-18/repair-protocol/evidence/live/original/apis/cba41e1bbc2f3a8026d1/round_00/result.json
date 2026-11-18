@@ -1,0 +1,264 @@
+{
+  "check": "comprehension",
+  "mode": "execute",
+  "doc_source": "original",
+  "run": {
+    "run_id": "20261118-180344Z",
+    "api_count": 1,
+    "selected_api_count": 1,
+    "attempted_api_count": 1,
+    "remaining_api_count": 0,
+    "complete": true,
+    "stopped_on_provider_error": false,
+    "manifest_api_count": 1,
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite"
+    },
+    "max_fix_rounds": 0,
+    "class_context": false,
+    "timeout_s": 300,
+    "wall_s": 8.1,
+    "usage": {
+      "calls": 1,
+      "input_tokens": 2234,
+      "output_tokens": 200,
+      "missing_usage_calls": 0,
+      "usage_complete": true,
+      "by_model": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 1,
+          "input_tokens": 2234,
+          "output_tokens": 200,
+          "missing_usage_calls": 0,
+          "usage_complete": true
+        }
+      }
+    },
+    "checkpoint": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution/comprehension_progress.jsonl",
+    "resumed_apis": 0,
+    "manifest_sha256": "cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912",
+    "document_sha256": "a0111cfa9eb91ae8d397f9984627a60c55dc242459e74c13ba31c4020b09e7f2",
+    "experiment_fingerprint": "3948379617801401e22abf079618678a30722f8feb36e3b8ed4b9a65cd19bcde",
+    "fingerprint_components": {
+      "schema": 4,
+      "prompt_contract": {
+        "templates": {
+          "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+        },
+        "profile_sha256": "4360078492c0f41b9ba0eedd8384cb316bce3c0c3c990282181b81143396c442"
+      },
+      "transport_contract": {
+        "temperature": 0.0,
+        "google_request_timeout_s": 300.0,
+        "google_sdk_attempts": 2,
+        "google_outer_deadline_s": 630.0,
+        "adapter_sha256": null,
+        "policy_sha256": null,
+        "setup_policy_sha256": null
+      },
+      "project": "mir_eval",
+      "language": "Python",
+      "doc_source": "original",
+      "doc_scope": "relevant",
+      "max_fix_rounds": 0,
+      "manifest_sha256": "cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912",
+      "document_sha256": "a0111cfa9eb91ae8d397f9984627a60c55dc242459e74c13ba31c4020b09e7f2",
+      "original_document_files": {
+        "sha256": "773460cc199ce04dd20500e0f609b3ab51975db2cd390f6d4a6e1629a1db1908",
+        "file_count": 197
+      },
+      "models": {
+        "audience": "google:gemini-3.1-flash-lite",
+        "fixer": "google:gemini-3.1-flash-lite",
+        "audience_max_output_tokens": 8192,
+        "fixer_max_output_tokens": 8192
+      },
+      "class_context": false,
+      "owner_overrides": {},
+      "timeout_s": 300,
+      "execute_config": {
+        "execution_context": "A runnable headless Python harness is already in scope. Write statements only for the marked function body. Reuse the small arrays, labels, and repository fixture paths already defined; import the target from its public mir_eval module, call it, validate a deterministic property with assert, and print a compact witness. Do not download or play audio.",
+        "region": [
+          "# TODO API_TEST_START",
+          "# TODO API_TEST_END"
+        ],
+        "strip_snippet_imports": false,
+        "output_tail_chars": 2000,
+        "success_marker": "__DONE__",
+        "error_marker": "__RUN_ERR__",
+        "work_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution",
+        "timeout_seconds": 300,
+        "max_fix_rounds": 0,
+        "auto_report": false,
+        "test_filename": "api_test.py",
+        "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/mir_runtime.py --binding /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/runtime.original.json \"{test_file}\"",
+        "exec_hints": "mir_eval functions generally accept NumPy event times, intervals, labels, frequencies, or source matrices. Keep plotting headless. For I/O functions use only the configured files under source/tests/data. Avoid deprecated aliases when the documented public function is available.",
+        "scaffold": "inputs/api_test_scaffold.py",
+        "local_uris": false,
+        "output_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/output",
+        "preamble": "times = np.array([0.0, 0.5, 1.0, 1.5, 2.0])  # type: numpy.ndarray event/frame times\nref_events = np.array([0.0, 0.5, 1.0, 1.5])  # type: numpy.ndarray reference events\nest_events = np.array([0.02, 0.48, 1.03, 1.52])  # type: numpy.ndarray estimated events\nref_intervals = np.array([[0.0, 0.5], [0.5, 1.0], [1.0, 1.5], [1.5, 2.0]])  # type: numpy.ndarray reference intervals\nest_intervals = np.array([[0.0, 0.48], [0.48, 1.02], [1.02, 1.48], [1.48, 2.0]])  # type: numpy.ndarray estimated intervals\nref_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] reference labels\nest_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] estimated labels\nref_freqs = np.array([440.0, 440.0, 0.0, 523.25, 523.25])  # type: numpy.ndarray reference frequencies\nest_freqs = np.array([442.0, 438.0, 0.0, 525.0, 520.0])  # type: numpy.ndarray estimated frequencies\nref_sources = np.vstack([np.sin(2*np.pi*3*times), np.cos(2*np.pi*2*times)])  # type: numpy.ndarray reference sources\nest_sources = ref_sources + 0.001  # type: numpy.ndarray estimated sources\n",
+        "sample_data": {
+          "beat_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.txt",
+          "beat_estimate_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/est00.txt",
+          "chord_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/chord/ref00.lab",
+          "melody_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/melody/ref00.txt"
+        },
+        "require_correctness": true,
+        "stop_on_provider_error": true,
+        "build": "",
+        "probe_on_missing": false,
+        "study_repair_protocol": {
+          "policy": {
+            "version": "matched-native-repair-1",
+            "max_repairs": 2,
+            "diagnostic_chars": 8000,
+            "program_chars": 60000,
+            "alias_chars": 4000,
+            "history": "previous round of this API only",
+            "hints": "ordinary emitted exception diagnostics only",
+            "memory": false,
+            "generic_fix_guide": false
+          },
+          "logical_round": 0,
+          "context_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "launch_sha256": "aa27273a920f56219002bae5d1a9fe502487e74e9a0b0269a572b5353be70f58"
+        }
+      },
+      "scaffold": {
+        "sha256": "785329178f1742f96f9d1922dfc8e97403757c39b6736c434f1f5f2ef8fe8da7",
+        "file_count": 1
+      },
+      "source": {
+        "sha256": "332e10850183c8605d023025aded3b0452f9e85a1c0a74df767713f4acbaea75",
+        "file_count": 19
+      },
+      "api_inventory": {
+        "sha256": "0977f20341e0364cfe1eca12da30e8d3481ab0737d3128d6c59f71163a5d9271",
+        "file_count": 1
+      },
+      "fixtures": {
+        "sha256": "bb3cf9e4ca8f442c9bd8f94a1b9e06859a3c92189e1a58a2d754b92f239431de",
+        "file_count": 4
+      },
+      "engine": {
+        "sha256": "9752ba56f8465cd91157abb9d1eeff7da82962dcdbf2c937fabf4b907a4ffdf7",
+        "file_count": 38
+      },
+      "interpreter": {
+        "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+        "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+        "environment_sha256": ""
+      },
+      "canonical_requested_targets": {
+        "protocol_version": 1,
+        "targets_sha256": "1d74f49a1b53bfdca6f049df9287fee762ec73f09209ea732e7e5e2502775cb9",
+        "targets_count": 178
+      }
+    },
+    "checkpoint_reuse": {},
+    "doc_scope": "relevant",
+    "full_doc": false,
+    "doc_chars": 2231,
+    "manifest": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/api_manifest.json",
+      "apis": 1
+    }
+  },
+  "score_scope": "selected_apis",
+  "passed": false,
+  "score": 0.0,
+  "score_with_infra": 0.0,
+  "infra_excluded": 0,
+  "coverage": {
+    "raw_surface": 178,
+    "intended_surface": 178,
+    "surface_filter": "all",
+    "selected": 1,
+    "executed": 1,
+    "scored": 1,
+    "infra_excluded": 0,
+    "untested_intended": [
+      "python:mir_eval.alignment.absolute_error",
+      "python:mir_eval.alignment.evaluate",
+      "python:mir_eval.alignment.karaoke_perceptual_metric",
+      "python:mir_eval.alignment.percentage_correct",
+      "python:mir_eval.alignment.percentage_correct_segments",
+      "python:mir_eval.alignment.validate",
+      "python:mir_eval.beat.cemgil",
+      "python:mir_eval.beat.continuity",
+      "python:mir_eval.beat.evaluate",
+      "python:mir_eval.beat.f_measure",
+      "python:mir_eval.beat.goto",
+      "python:mir_eval.beat.information_gain",
+      "python:mir_eval.beat.p_score",
+      "python:mir_eval.beat.trim_beats",
+      "python:mir_eval.beat.validate",
+      "python:mir_eval.chord.InvalidChordException",
+      "python:mir_eval.chord.directional_hamming_distance",
+      "python:mir_eval.chord.encode",
+      "python:mir_eval.chord.encode_many",
+      "python:mir_eval.chord.evaluate"
+    ]
+  },
+  "sample_data_warnings": [],
+  "metrics": {
+    "python:mir_eval.transcription.validate": {
+      "status": "fail",
+      "attempts": 1,
+      "rendered_prompt_sha256": [
+        "33005a5d050e98099df52043f3c2645ec6e79a39191d315c22f9e4564402a0cc"
+      ],
+      "attempt_evidence": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001"
+      ],
+      "pass_round": null,
+      "wall_s": 6.5,
+      "llm_calls": 1,
+      "input_tokens": 2234,
+      "output_tokens": 200,
+      "by_model": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 1,
+          "input_tokens": 2234,
+          "output_tokens": 200,
+          "missing_usage_calls": 0,
+          "usage_complete": true
+        }
+      },
+      "error_category": "runtime",
+      "error": "ValueError: Reference intervals and pitches have different lengths.",
+      "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/transcription.py:137",
+      "doc_chars": 2231,
+      "document_sha256": "843f585da26065329d63811e368690245b5a2bed01607edc6895ba5d6d467c96",
+      "source": "source/mir_eval/transcription.py:117",
+      "source_other_sites": 0,
+      "codebase_frames": [
+        "source/mir_eval/transcription.py:137"
+      ]
+    }
+  },
+  "details": {
+    "python:mir_eval.transcription.validate": {
+      "status": "fail",
+      "rounds": [
+        {
+          "round": 0,
+          "status": "fail",
+          "category": "runtime",
+          "error": "ValueError: Reference intervals and pitches have different lengths.",
+          "codebase_frames": [
+            "source/mir_eval/transcription.py:137"
+          ]
+        }
+      ],
+      "error_category": "runtime",
+      "error": "ValueError: Reference intervals and pitches have different lengths.",
+      "code": "import mir_eval.transcription\n\n# Validate the transcription inputs using the provided reference and estimated arrays\n# The function returns None if valid, or raises an exception if invalid.\nmir_eval.transcription.validate(ref_intervals, ref_freqs, est_intervals, est_freqs)\n\n# Verify the input shapes match the expected transcription format (n, 2) for intervals\n# and (n,) for frequencies.\nassert ref_intervals.shape[1] == 2\nassert ref_freqs.shape[0] == ref_intervals.shape[0]\nassert est_intervals.shape[1] == 2\nassert est_freqs.shape[0] == est_intervals.shape[0]\n\n# Witness: The number of reference notes validated\nwitness = ref_intervals.shape[0]\nprint(f\"__CHECK__ python:mir_eval.transcription.validate {witness}\")",
+      "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py",
+      "exit_code": 1,
+      "stdout_tail": "",
+      "stderr_tail": "__RUN_ERR__ ValueError: Reference intervals and pitches have different lengths.\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py\", line 57, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py\", line 52, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py\", line 37, in api_test\n    mir_eval.transcription.validate(ref_intervals, ref_freqs, est_intervals, est_freqs)\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/transcription.py\", line 137, in validate\n    raise ValueError(\"Reference intervals and pitches have different \" \"lengths.\")\nValueError: Reference intervals and pitches have different lengths.\n"
+    }
+  }
+}

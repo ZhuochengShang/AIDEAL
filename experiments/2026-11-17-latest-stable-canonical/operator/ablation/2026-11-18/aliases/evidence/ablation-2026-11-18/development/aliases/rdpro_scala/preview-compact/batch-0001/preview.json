@@ -1,0 +1,2102 @@
+{
+  "schema_version": 1,
+  "study": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_scala/attachment",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_scala/attachment/Original/source",
+  "baseline_revision": "547f7f912131a8032f6b5d26991415a5faf05cef",
+  "context": {
+    "project": "RDPro Raptor raster scope \u2014 Beast 0.10.1",
+    "language": "Scala",
+    "baseline_revision": "547f7f912131a8032f6b5d26991415a5faf05cef",
+    "configuration": {
+      "source_globs": [
+        "source/**/src/main/scala/**/*.scala"
+      ],
+      "test_globs": [
+        "source/**/src/test/scala/**/*.scala"
+      ],
+      "public_def_regex": "def\\s+([a-zA-Z][A-Za-z0-9_]*)",
+      "exclude_names": [],
+      "visibility": {},
+      "surface_filter": "all",
+      "exclude_path_patterns": [
+        "(^|/)commontest/",
+        "/src/main/resources/"
+      ],
+      "discovery_scope": "All discovered public definitions in tracked configured sources; no LLM intent filter."
+    },
+    "project_profile": {
+      "project_name": "RDPro / Raptor",
+      "role": "An expert Scala developer using public RDPro/Raptor raster APIs.",
+      "project": {
+        "name": "RDPro",
+        "language": "Scala",
+        "description": "Pinned official Beast0.10.1 production source"
+      },
+      "domain": "Geospatial computing",
+      "target_users": [
+        "Scala geospatial developers"
+      ],
+      "use_cases": [
+        "Raster processing and raster metadata",
+        "Raster/vector joins and zonal statistics",
+        "Local Spark transformations supporting raster workflows"
+      ],
+      "constraints": [
+        "Use original APIs only.",
+        "Use provided local raster, shapefile, and HDF4 fixtures or tiny in-memory values.",
+        "Write temporary outputs only under the run output directory.",
+        "Do not contact services or change repository files."
+      ]
+    },
+    "profile_status": "supplied",
+    "library_overview": {
+      "module_count": 10,
+      "modules": [
+        {
+          "module": "beast-spark",
+          "public_definitions": 63
+        },
+        {
+          "module": "cg",
+          "public_definitions": 314
+        },
+        {
+          "module": "common",
+          "public_definitions": 152
+        },
+        {
+          "module": "dataExplorer",
+          "public_definitions": 41
+        },
+        {
+          "module": "dynoviz",
+          "public_definitions": 48
+        },
+        {
+          "module": "io",
+          "public_definitions": 376
+        },
+        {
+          "module": "raptor",
+          "public_definitions": 196
+        },
+        {
+          "module": "satex",
+          "public_definitions": 11
+        },
+        {
+          "module": "spatialtest",
+          "public_definitions": 5
+        },
+        {
+          "module": "visualization",
+          "public_definitions": 105
+        }
+      ],
+      "omitted_modules": 0,
+      "api_catalog": [
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.isSpatiallyPartitioned",
+          "name": "isSpatiallyPartitioned",
+          "signature": "[](rdd:JavaSpatialRDD):Boolean"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.saveAsShapefile",
+          "name": "saveAsShapefile",
+          "signature": "[](rdd:JavaSpatialRDD,filename:String):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.saveAsGeoJSON",
+          "name": "saveAsGeoJSON",
+          "signature": "[](rdd:JavaSpatialRDD,filename:String):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.saveAsCSVPoints",
+          "name": "saveAsCSVPoints",
+          "signature": "[](rdd:JavaSpatialRDD,filename:String,xColumn:Int,yColumn:Int,delimiter:Char,header:Boolean):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.saveAsWKTFile",
+          "name": "saveAsWKTFile",
+          "signature": "[](rdd:JavaSpatialRDD,filename:String,wktColumn:Int,delimiter:Char,header:Boolean):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.saveAsKML",
+          "name": "saveAsKML",
+          "signature": "[](rdd:JavaSpatialRDD,filename:String):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.writeSpatialFile",
+          "name": "writeSpatialFile",
+          "signature": "[](rdd:JavaSpatialRDD,filename:String,oformat:String,opts:BeastOptions):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.reproject",
+          "name": "reproject",
+          "signature": "[](rdd:JavaSpatialRDD,targetCRS:CoordinateReferenceSystem):JavaSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.rangeQuery",
+          "name": "rangeQuery",
+          "signature": "[](rdd:JavaSpatialRDD,range:Geometry,mbrCount:LongAccumulator):JavaSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.spatialJoin",
+          "name": "spatialJoin",
+          "signature": "[](rdd1:JavaSpatialRDD,rdd2:JavaSpatialRDD,predicate:SpatialJoinAlgorithms.ESJPredicate,algorithm:SpatialJoinAlgorithms.ESJDistributedAlgorithm):JavaPairRDD[IFeature, IFeature]"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.summary",
+          "name": "summary",
+          "signature": "[](rdd:JavaSpatialRDD):Summary"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.spatialPartition",
+          "name": "spatialPartition",
+          "signature": "[](rdd:JavaSpatialRDD,partitionerClass:Class[_$2] forSome { \n  <synthetic> type _$2 <: SpatialPartitioner\n},numPartitions:Int,opts:BeastOptions):JavaPartitionedSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.saveAsIndex",
+          "name": "saveAsIndex",
+          "signature": "[](partitionedRDD:JavaPartitionedSpatialRDD,indexPath:String):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.plotImage",
+          "name": "plotImage",
+          "signature": "[](rdd:JavaSpatialRDD,imageWidth:Int,imageHeight:Int,imagePath:String,plotterClass:Class[_$4] forSome { \n  <synthetic> type _$4 <: Plotter\n},opts:BeastOptions):Unit"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.raptorJoin",
+          "name": "raptorJoin",
+          "signature": "[type T](vectors:JavaSpatialRDD,rasters:JavaRasterRDD[T],opts:BeastOptions):JavaRDD[RaptorJoinFeature[T]]"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.spatialFile",
+          "name": "spatialFile",
+          "signature": "[](filename:String,iformat:String,opts:BeastOptions):JavaSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.shapefile",
+          "name": "shapefile",
+          "signature": "[](filename:String):JavaSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.geojsonFile",
+          "name": "geojsonFile",
+          "signature": "[](filename:String):JavaSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.readCSVPoint",
+          "name": "readCSVPoint",
+          "signature": "[](filename:String,xColumn:String,yColumn:String,delimiter:Char,skipHeader:Boolean):JavaSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.readWKTFile",
+          "name": "readWKTFile",
+          "signature": "[](filename:String,wktColumn:String,delimiter:Char,skipHeader:Boolean):JavaSpatialRDD"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.hdfFile",
+          "name": "hdfFile",
+          "signature": "[](filename:String,layer:String):JavaRasterRDD[Float]"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.geoTiff",
+          "name": "geoTiff",
+          "signature": "[type T](filename:String,layer:Int,opts:BeastOptions):JavaRasterRDD[T]"
+        },
+        {
+          "id": "scala:edu.ucr.cs.bdlab.beast.SpatialOperationsMixin.RDDSpatialFunctions2",
+          "name": "RDDSpatialFunctions2",
+          "signature": "[](rdd:SpatialRDD):<type ?>"
+        }
+      ],
+      "omitted_catalog_entries": 1288,
+      "scope": "Compact cross-batch orientation only; source evidence remains batch-local."
+    },
+    "library_scope": {
+      "public_definitions": 1311,
+      "requested_definitions": 261,
+      "catalog_sha256": "dbd6c2af08bb08e9bfe7786ac67abc1d8b7d03165a6cd77a04a679de4bd62d44",
+      "limitations": "Cross-batch bodies are not supplied. Discovery can miss syntax unsupported by the configured adapter."
+    },
+    "batch_id": "batch-0001",
+    "alias_destination": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/AidealScalaAliases0001.scala",
+    "apis": [
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "name": "DefaultReadOnlyTile",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:38:DefaultReadOnlyTile",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 38,
+        "signature": "[](tileID:Int,metadata:RasterMetadata,numComponents:Int,componentType:DataType,pixelExists:Array[Byte],pixelData:Array[Byte],compression:Int,rasterFeature:RasterFeature):<type ?>",
+        "kind": "class_constructor",
+        "definition_kind": "class_constructor",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner_kind": "class",
+        "params": [
+          {
+            "name": "tileID",
+            "type": "Int",
+            "default": ""
+          },
+          {
+            "name": "metadata",
+            "type": "RasterMetadata",
+            "default": ""
+          },
+          {
+            "name": "numComponents",
+            "type": "Int",
+            "default": ""
+          },
+          {
+            "name": "componentType",
+            "type": "DataType",
+            "default": ""
+          },
+          {
+            "name": "pixelExists",
+            "type": "Array[Byte]",
+            "default": ""
+          },
+          {
+            "name": "pixelData",
+            "type": "Array[Byte]",
+            "default": ""
+          },
+          {
+            "name": "compression",
+            "type": "Int",
+            "default": ""
+          },
+          {
+            "name": "rasterFeature",
+            "type": "RasterFeature",
+            "default": ""
+          }
+        ],
+        "parameter_count": 8,
+        "parameter_count_status": "compiler_declared",
+        "returns": "",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 35,
+          "end_line": 98,
+          "text": " * @tparam T the type of measurement values in tiles\n */\n@DefaultSerializer(classOf[ITileSerializer[Any]])\nclass DefaultReadOnlyTile[T](tileID: Int, metadata: RasterMetadata, override val numComponents: Int,\n                             override val componentType: DataType, var pixelExists: Array[Byte],\n                             var pixelData: Array[Byte], compression: Int, override val rasterFeature: RasterFeature)\n  extends ITile[T](tileID, metadata, rasterFeature) {\n\n  // Duplicate compression to store which array is decompressed separately\n  var pixelExistsCompression: Int = compression\n  var pixelDataCompression: Int = compression\n\n  override def isEmpty(i: Int, j: Int): Boolean = {\n    decompressPixelExists\n    !BitArray.isBitSet(pixelExists, pixelOffset(i, j))\n  }\n\n  private def pixelOffset(i: Int, j: Int) = (j - y1) * tileWidth + (i - x1)\n\n  override def getPixelValue(i: Int, j: Int): T = {\n    decompressPixelData\n    val offset = pixelOffset(i, j) * bytesPerPixel\n    if (numComponents == 1)\n      valueReader(pixelData, offset)\n    else {\n      val value: Array[_] = pixelValueTemplate.asInstanceOf[Array[_]].clone()\n      for (i <- 0 until numComponents) {\n        java.lang.reflect.Array.set(value, i, valueReader(pixelData, offset + i * componentType.defaultSize))\n      }\n      value.asInstanceOf[T]\n    }\n  }\n\n  private def decompressPixelExists: Unit = {\n    if (pixelExistsCompression == 0) return\n    pixelExistsCompression match {\n      case LZW => pixelExists = LZWCodec.decode(pixelExists, (numPixels + 7) / 8, true)\n    }\n    // Zero the pixel exists side of the compression\n    pixelExistsCompression = 0\n  }\n\n  private def decompressPixelData: Unit = {\n    if (pixelDataCompression == 0)\n      return\n    pixelDataCompression match {\n      case LZW => pixelData = LZWCodec.decode(pixelData, 0, false)\n    }\n    pixelDataCompression = 0\n  }\n\n  lazy val valueReader: (Array[Byte], Int) => T = valueReaders(componentType).asInstanceOf[(Array[Byte], Int) => T]\n\n  /**\n   * Number of pixels in the tile including possible empty pixels\n   * @return\n   */\n  private def numPixels: Int = tileWidth * tileHeight\n\n  private lazy val bytesPerPixel: Int = numComponents * componentType.defaultSize\n\n  /**\n   * Create and store an array that holds a pixel value.\n   * This method should only be called if [[numComponents]] is greater than one",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n38: class DefaultReadOnlyTile[T](tileID: Int, metadata: RasterMetadata, override val numComponents: Int,\n17: import com.esotericsoftware.kryo.DefaultSerializer\n18: import edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.{LZW, sparkTypeToJavaType, valueReaders}\n19: import edu.ucr.cs.bdlab.beast.util.{BitArray, LZWCodec}\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.types._\n23: import java.util",
+          "source_characters": 462,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty",
+        "name": "isEmpty",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:47:isEmpty",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 47,
+        "signature": "[](i:Int,j:Int):Boolean",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner_kind": "class",
+        "params": [
+          {
+            "name": "i",
+            "type": "Int",
+            "default": ""
+          },
+          {
+            "name": "j",
+            "type": "Int",
+            "default": ""
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "compiler_declared",
+        "returns": "Boolean",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 44,
+          "end_line": 107,
+          "text": "  var pixelExistsCompression: Int = compression\n  var pixelDataCompression: Int = compression\n\n  override def isEmpty(i: Int, j: Int): Boolean = {\n    decompressPixelExists\n    !BitArray.isBitSet(pixelExists, pixelOffset(i, j))\n  }\n\n  private def pixelOffset(i: Int, j: Int) = (j - y1) * tileWidth + (i - x1)\n\n  override def getPixelValue(i: Int, j: Int): T = {\n    decompressPixelData\n    val offset = pixelOffset(i, j) * bytesPerPixel\n    if (numComponents == 1)\n      valueReader(pixelData, offset)\n    else {\n      val value: Array[_] = pixelValueTemplate.asInstanceOf[Array[_]].clone()\n      for (i <- 0 until numComponents) {\n        java.lang.reflect.Array.set(value, i, valueReader(pixelData, offset + i * componentType.defaultSize))\n      }\n      value.asInstanceOf[T]\n    }\n  }\n\n  private def decompressPixelExists: Unit = {\n    if (pixelExistsCompression == 0) return\n    pixelExistsCompression match {\n      case LZW => pixelExists = LZWCodec.decode(pixelExists, (numPixels + 7) / 8, true)\n    }\n    // Zero the pixel exists side of the compression\n    pixelExistsCompression = 0\n  }\n\n  private def decompressPixelData: Unit = {\n    if (pixelDataCompression == 0)\n      return\n    pixelDataCompression match {\n      case LZW => pixelData = LZWCodec.decode(pixelData, 0, false)\n    }\n    pixelDataCompression = 0\n  }\n\n  lazy val valueReader: (Array[Byte], Int) => T = valueReaders(componentType).asInstanceOf[(Array[Byte], Int) => T]\n\n  /**\n   * Number of pixels in the tile including possible empty pixels\n   * @return\n   */\n  private def numPixels: Int = tileWidth * tileHeight\n\n  private lazy val bytesPerPixel: Int = numComponents * componentType.defaultSize\n\n  /**\n   * Create and store an array that holds a pixel value.\n   * This method should only be called if [[numComponents]] is greater than one\n   * @return a primitive array that can store a single pixel value\n   */\n  private lazy val pixelValueTemplate = {\n    assert(numComponents > 1, \"The method createPixelValue should only be called when the value is of type array\")\n    java.lang.reflect.Array.newInstance(componentJavaType, numComponents)\n  }\n\n  lazy val componentJavaType: Class[_] = sparkTypeToJavaType(componentType)\n",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n38: class DefaultReadOnlyTile[T](tileID: Int, metadata: RasterMetadata, override val numComponents: Int,\n17: import com.esotericsoftware.kryo.DefaultSerializer\n18: import edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.{LZW, sparkTypeToJavaType, valueReaders}\n19: import edu.ucr.cs.bdlab.beast.util.{BitArray, LZWCodec}\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.types._\n23: import java.util",
+          "source_characters": 462,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue",
+        "name": "getPixelValue",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:54:getPixelValue",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 54,
+        "signature": "[](i:Int,j:Int):T",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner_kind": "class",
+        "params": [
+          {
+            "name": "i",
+            "type": "Int",
+            "default": ""
+          },
+          {
+            "name": "j",
+            "type": "Int",
+            "default": ""
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "compiler_declared",
+        "returns": "T",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 51,
+          "end_line": 114,
+          "text": "\n  private def pixelOffset(i: Int, j: Int) = (j - y1) * tileWidth + (i - x1)\n\n  override def getPixelValue(i: Int, j: Int): T = {\n    decompressPixelData\n    val offset = pixelOffset(i, j) * bytesPerPixel\n    if (numComponents == 1)\n      valueReader(pixelData, offset)\n    else {\n      val value: Array[_] = pixelValueTemplate.asInstanceOf[Array[_]].clone()\n      for (i <- 0 until numComponents) {\n        java.lang.reflect.Array.set(value, i, valueReader(pixelData, offset + i * componentType.defaultSize))\n      }\n      value.asInstanceOf[T]\n    }\n  }\n\n  private def decompressPixelExists: Unit = {\n    if (pixelExistsCompression == 0) return\n    pixelExistsCompression match {\n      case LZW => pixelExists = LZWCodec.decode(pixelExists, (numPixels + 7) / 8, true)\n    }\n    // Zero the pixel exists side of the compression\n    pixelExistsCompression = 0\n  }\n\n  private def decompressPixelData: Unit = {\n    if (pixelDataCompression == 0)\n      return\n    pixelDataCompression match {\n      case LZW => pixelData = LZWCodec.decode(pixelData, 0, false)\n    }\n    pixelDataCompression = 0\n  }\n\n  lazy val valueReader: (Array[Byte], Int) => T = valueReaders(componentType).asInstanceOf[(Array[Byte], Int) => T]\n\n  /**\n   * Number of pixels in the tile including possible empty pixels\n   * @return\n   */\n  private def numPixels: Int = tileWidth * tileHeight\n\n  private lazy val bytesPerPixel: Int = numComponents * componentType.defaultSize\n\n  /**\n   * Create and store an array that holds a pixel value.\n   * This method should only be called if [[numComponents]] is greater than one\n   * @return a primitive array that can store a single pixel value\n   */\n  private lazy val pixelValueTemplate = {\n    assert(numComponents > 1, \"The method createPixelValue should only be called when the value is of type array\")\n    java.lang.reflect.Array.newInstance(componentJavaType, numComponents)\n  }\n\n  lazy val componentJavaType: Class[_] = sparkTypeToJavaType(componentType)\n\n  override def copy(): Row = this\n}\n\nobject DefaultReadOnlyTile {\n  val LZW = 1\n\n  val valueReaders: Map[DataType, (Array[Byte], Int) => Any] = Map(",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n38: class DefaultReadOnlyTile[T](tileID: Int, metadata: RasterMetadata, override val numComponents: Int,\n17: import com.esotericsoftware.kryo.DefaultSerializer\n18: import edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.{LZW, sparkTypeToJavaType, valueReaders}\n19: import edu.ucr.cs.bdlab.beast.util.{BitArray, LZWCodec}\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.types._\n23: import java.util",
+          "source_characters": 462,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy",
+        "name": "copy",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:108:copy",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 108,
+        "signature": "[]():Row",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "Row",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 105,
+          "end_line": 165,
+          "text": "\n  lazy val componentJavaType: Class[_] = sparkTypeToJavaType(componentType)\n\n  override def copy(): Row = this\n}\n\nobject DefaultReadOnlyTile {\n  val LZW = 1\n\n  val valueReaders: Map[DataType, (Array[Byte], Int) => Any] = Map(\n    (ByteType, (data, offset) => data(offset)),\n    (ShortType, (data, offset) => {\n      (((data(offset).toShort & 0xff) << 8) | (data(offset + 1) & 0xff)).toShort\n    }),\n    (IntegerType, (data: Array[Byte], offset: Int) => {\n      val b1: Int = data(offset).toInt & 0xff\n      val b2: Int = data(offset+1).toInt & 0xff\n      val b3: Int = data(offset+2).toInt & 0xff\n      val b4: Int = data(offset+3).toInt & 0xff\n      (b1 << 24) | (b2 << 16) | (b3 << 8) | b4\n    }),\n    (LongType, (data: Array[Byte], offset: Int) => {\n      val b1: Long = data(offset+0) & 0xffL\n      val b2: Long = data(offset+1) & 0xffL\n      val b3: Long = data(offset+2) & 0xffL\n      val b4: Long = data(offset+3) & 0xffL\n      val b5: Long = data(offset+4) & 0xffL\n      val b6: Long = data(offset+5) & 0xffL\n      val b7: Long = data(offset+6) & 0xffL\n      val b8: Long = data(offset+7) & 0xffL\n      (b1 << 54) | (b2 << 48) | (b3 << 40) | (b4 << 32) | (b5 << 24) | (b6 << 16) | (b7 << 8) | b8\n    }),\n    (FloatType, (data: Array[Byte], offset: Int) => {\n      val b1: Int = data(offset).toInt & 0xff\n      val b2: Int = data(offset+1).toInt & 0xff\n      val b3: Int = data(offset+2).toInt & 0xff\n      val b4: Int = data(offset+3).toInt & 0xff\n      java.lang.Float.intBitsToFloat((b1 << 24) | (b2 << 16) | (b3 << 8) | b4)\n    }),\n    (DoubleType, (data: Array[Byte], offset: Int) => {\n      val b1: Long = data(offset+0) & 0xffL\n      val b2: Long = data(offset+1) & 0xffL\n      val b3: Long = data(offset+2) & 0xffL\n      val b4: Long = data(offset+3) & 0xffL\n      val b5: Long = data(offset+4) & 0xffL\n      val b6: Long = data(offset+5) & 0xffL\n      val b7: Long = data(offset+6) & 0xffL\n      val b8: Long = data(offset+7) & 0xffL\n      java.lang.Double.longBitsToDouble((b1 << 54) | (b2 << 48) | (b3 << 40) | (b4 << 32) | (b5 << 24) | (b6 << 16) | (b7 << 8) | b8)\n    }),\n  )\n\n  val sparkTypeToJavaType: Map[DataType, Class[_]] = Map(\n    (ByteType, classOf[Byte]),\n    (ShortType, classOf[Short]),\n    (IntegerType, classOf[Int]),\n    (LongType, classOf[Long]),\n    (FloatType, classOf[Float]),\n    (DoubleType, classOf[Double])\n  )\n}",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n38: class DefaultReadOnlyTile[T](tileID: Int, metadata: RasterMetadata, override val numComponents: Int,\n17: import com.esotericsoftware.kryo.DefaultSerializer\n18: import edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.{LZW, sparkTypeToJavaType, valueReaders}\n19: import edu.ucr.cs.bdlab.beast.util.{BitArray, LZWCodec}\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.types._\n23: import java.util",
+          "source_characters": 462,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.schema",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.schema",
+        "name": "schema",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.ITile.schema",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:40:schema",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+        "line": 40,
+        "signature": "[]:StructType",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "StructType",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 37,
+          "end_line": 100,
+          "text": "abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature)\n  extends java.io.Serializable with Row {\n\n  override def schema: StructType = {\n    var attributes = Seq(StructField(\"tileID\", IntegerType, false),\n      StructField(\"mapLocator\", RasterMetadataType, false),\n      StructField(\"imageValues\", ArrayType.apply(pixelType)))\n    if (rasterFeature != null)\n      attributes = attributes ++ rasterFeature.schema\n    StructType(attributes)\n  }\n\n  /** The lowest index of the column of this tile (inclusive)*/\n  val x1: Int = rasterMetadata.getTileX1(tileID)\n\n  /**The highest index of the column of this tile (inclusive)*/\n  val x2: Int = rasterMetadata.getTileX2(tileID)\n\n  /**Number of columns in the tile*/\n  val tileWidth: Int = x2 - x1 + 1\n\n  /** The lowest index of a row of this tile (inclusive) */\n  val y1: Int = rasterMetadata.getTileY1(tileID)\n\n  /** The highest index of a row of this tile (inclusive)*/\n  val y2: Int = rasterMetadata.getTileY2(tileID)\n\n  /**Total number of scan lines in this tile*/\n  val tileHeight: Int = y2 - y1 + 1\n\n  /**\n   * The value of the given pixel which depends on the tile data type and number of bands.\n   * For example, if the data type is integer with three bands, it will return an integer array of 3.\n   * If the data type is float and one band, it will return a single float value.\n   * @param i the index of the column\n   * @param j the index of the row\n   * @return the pixel value\n   */\n  def getPixelValue(i: Int, j: Int): T\n\n  /**\n   * An iterator that goes over all pixels in this tile\n   * @return an iterator that goes over all pixels (whether empty or not) in this tile\n   */\n  def pixelLocations: Iterator[(Int, Int)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator) yield (x, y)\n\n  def pixels: Iterator[(Int, Int, T)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator; if isDefined(x, y)) yield (x, y, getPixelValue(x, y))\n\n  /**\n   * Return the value of the pixel that contains the given point at model (world) coordinates.\n   * @param x the x-coordinate of the point, e.g., longitude\n   * @param y the y-coordinate of the point, e.g., latitude\n   * @return the value of all components of the given pixel\n   */\n  def getPointValue(x: Double, y: Double): T = {\n    val pixel: Point2D.Double = new Point2D.Double()\n    rasterMetadata.modelToGrid(x, y, pixel)\n    getPixelValue(pixel.x.toInt, pixel.y.toInt)\n  }\n\n  /**\n   * Check whether the given pixel is empty or not. A pixel is empty if it has no data or if its pixel value is",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n37: abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature)\n18: import com.esotericsoftware.kryo.DefaultSerializer\n19: import edu.ucr.cs.bdlab.beast.sql.RasterMetadataType\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema\n22: import org.apache.spark.sql.types._\n23: import org.locationtech.jts.geom.{Coordinate, CoordinateXY, Geometry}\n25: import java.awt.geom.Point2D\n26: import scala.collection.mutable.ArrayBuffer",
+          "source_characters": 574,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.ITile.schema",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.ITile.schema"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations",
+        "name": "pixelLocations",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:81:pixelLocations",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+        "line": 81,
+        "signature": "[]:Iterator[scala.Tuple2[Int, Int]]",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "Iterator[scala.Tuple2[Int, Int]]",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 78,
+          "end_line": 141,
+          "text": "   * An iterator that goes over all pixels in this tile\n   * @return an iterator that goes over all pixels (whether empty or not) in this tile\n   */\n  def pixelLocations: Iterator[(Int, Int)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator) yield (x, y)\n\n  def pixels: Iterator[(Int, Int, T)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator; if isDefined(x, y)) yield (x, y, getPixelValue(x, y))\n\n  /**\n   * Return the value of the pixel that contains the given point at model (world) coordinates.\n   * @param x the x-coordinate of the point, e.g., longitude\n   * @param y the y-coordinate of the point, e.g., latitude\n   * @return the value of all components of the given pixel\n   */\n  def getPointValue(x: Double, y: Double): T = {\n    val pixel: Point2D.Double = new Point2D.Double()\n    rasterMetadata.modelToGrid(x, y, pixel)\n    getPixelValue(pixel.x.toInt, pixel.y.toInt)\n  }\n\n  /**\n   * Check whether the given pixel is empty or not. A pixel is empty if it has no data or if its pixel value is\n   * equal to a fill value defined by the raster layer.\n   * @param i the index of the column\n   * @param j the index of the row\n   * @return `false` if pixel has a valid value or `true` if it does not.\n   */\n  def isEmpty(i: Int, j: Int): Boolean\n\n  /**\n   * Check if the pixel that contains the given location is empty\n   * @param x the x-coordinate of the point, e.g., longitude\n   * @param y the y-coordinate of the point, e.g., latitude\n   * @return `true` if the pixel at the location is empty, i.e., contains no data\n   */\n  def isEmptyAt(x: Double, y: Double): Boolean = {\n    val pixel: Point2D.Double = new Point2D.Double()\n    rasterMetadata.modelToGrid(x, y, pixel)\n    isEmpty(pixel.x.toInt, pixel.y.toInt)\n  }\n\n  /**\n   * Checks if the given pixel is defined (not empty)\n   * @param i the index of the column\n   * @param j the index of the row\n   * @return `true` if pixel has a valid value or `false` if it does not.\n   */\n  @inline def isDefined(i: Int, j: Int): Boolean = !isEmpty(i, j)\n\n  /**\n   * Number of components for each pixel in this raster file.\n   * @return the number of components in each pixel, e.g., 3 for RGB or 1 for grayscale\n   */\n  def numComponents: Int\n\n  /**\n   * Returns the type of the pixel as an SQL data type\n   * @return the type of the pixel values\n   */\n  def pixelType: DataType = if (numComponents == 1)\n    componentType\n  else\n    new ArrayType(componentType, false)",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n37: abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature)\n18: import com.esotericsoftware.kryo.DefaultSerializer\n19: import edu.ucr.cs.bdlab.beast.sql.RasterMetadataType\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema\n22: import org.apache.spark.sql.types._\n23: import org.locationtech.jts.geom.{Coordinate, CoordinateXY, Geometry}\n25: import java.awt.geom.Point2D\n26: import scala.collection.mutable.ArrayBuffer",
+          "source_characters": 574,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixels",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixels",
+        "name": "pixels",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.ITile.pixels",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:84:pixels",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+        "line": 84,
+        "signature": "[]:Iterator[scala.Tuple3[Int, Int, T]]",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "Iterator[scala.Tuple3[Int, Int, T]]",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 81,
+          "end_line": 144,
+          "text": "  def pixelLocations: Iterator[(Int, Int)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator) yield (x, y)\n\n  def pixels: Iterator[(Int, Int, T)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator; if isDefined(x, y)) yield (x, y, getPixelValue(x, y))\n\n  /**\n   * Return the value of the pixel that contains the given point at model (world) coordinates.\n   * @param x the x-coordinate of the point, e.g., longitude\n   * @param y the y-coordinate of the point, e.g., latitude\n   * @return the value of all components of the given pixel\n   */\n  def getPointValue(x: Double, y: Double): T = {\n    val pixel: Point2D.Double = new Point2D.Double()\n    rasterMetadata.modelToGrid(x, y, pixel)\n    getPixelValue(pixel.x.toInt, pixel.y.toInt)\n  }\n\n  /**\n   * Check whether the given pixel is empty or not. A pixel is empty if it has no data or if its pixel value is\n   * equal to a fill value defined by the raster layer.\n   * @param i the index of the column\n   * @param j the index of the row\n   * @return `false` if pixel has a valid value or `true` if it does not.\n   */\n  def isEmpty(i: Int, j: Int): Boolean\n\n  /**\n   * Check if the pixel that contains the given location is empty\n   * @param x the x-coordinate of the point, e.g., longitude\n   * @param y the y-coordinate of the point, e.g., latitude\n   * @return `true` if the pixel at the location is empty, i.e., contains no data\n   */\n  def isEmptyAt(x: Double, y: Double): Boolean = {\n    val pixel: Point2D.Double = new Point2D.Double()\n    rasterMetadata.modelToGrid(x, y, pixel)\n    isEmpty(pixel.x.toInt, pixel.y.toInt)\n  }\n\n  /**\n   * Checks if the given pixel is defined (not empty)\n   * @param i the index of the column\n   * @param j the index of the row\n   * @return `true` if pixel has a valid value or `false` if it does not.\n   */\n  @inline def isDefined(i: Int, j: Int): Boolean = !isEmpty(i, j)\n\n  /**\n   * Number of components for each pixel in this raster file.\n   * @return the number of components in each pixel, e.g., 3 for RGB or 1 for grayscale\n   */\n  def numComponents: Int\n\n  /**\n   * Returns the type of the pixel as an SQL data type\n   * @return the type of the pixel values\n   */\n  def pixelType: DataType = if (numComponents == 1)\n    componentType\n  else\n    new ArrayType(componentType, false)\n\n  def componentType: DataType\n",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n37: abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature)\n18: import com.esotericsoftware.kryo.DefaultSerializer\n19: import edu.ucr.cs.bdlab.beast.sql.RasterMetadataType\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema\n22: import org.apache.spark.sql.types._\n23: import org.locationtech.jts.geom.{Coordinate, CoordinateXY, Geometry}\n25: import java.awt.geom.Point2D\n26: import scala.collection.mutable.ArrayBuffer",
+          "source_characters": 574,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.ITile.pixels",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.ITile.pixels"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue",
+        "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue",
+        "name": "getPointValue",
+        "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue",
+        "source_function_id": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:93:getPointValue",
+        "file": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+        "line": 93,
+        "signature": "[](x:Double,y:Double):T",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Scala",
+        "source_language": "Scala",
+        "module": "cg",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner": "edu.ucr.cs.bdlab.beast.geolite.ITile",
+        "defining_owner_kind": "class",
+        "params": [
+          {
+            "name": "x",
+            "type": "Double",
+            "default": ""
+          },
+          {
+            "name": "y",
+            "type": "Double",
+            "default": ""
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "compiler_declared",
+        "returns": "T",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 90,
+          "end_line": 153,
+          "text": "   * @param y the y-coordinate of the point, e.g., latitude\n   * @return the value of all components of the given pixel\n   */\n  def getPointValue(x: Double, y: Double): T = {\n    val pixel: Point2D.Double = new Point2D.Double()\n    rasterMetadata.modelToGrid(x, y, pixel)\n    getPixelValue(pixel.x.toInt, pixel.y.toInt)\n  }\n\n  /**\n   * Check whether the given pixel is empty or not. A pixel is empty if it has no data or if its pixel value is\n   * equal to a fill value defined by the raster layer.\n   * @param i the index of the column\n   * @param j the index of the row\n   * @return `false` if pixel has a valid value or `true` if it does not.\n   */\n  def isEmpty(i: Int, j: Int): Boolean\n\n  /**\n   * Check if the pixel that contains the given location is empty\n   * @param x the x-coordinate of the point, e.g., longitude\n   * @param y the y-coordinate of the point, e.g., latitude\n   * @return `true` if the pixel at the location is empty, i.e., contains no data\n   */\n  def isEmptyAt(x: Double, y: Double): Boolean = {\n    val pixel: Point2D.Double = new Point2D.Double()\n    rasterMetadata.modelToGrid(x, y, pixel)\n    isEmpty(pixel.x.toInt, pixel.y.toInt)\n  }\n\n  /**\n   * Checks if the given pixel is defined (not empty)\n   * @param i the index of the column\n   * @param j the index of the row\n   * @return `true` if pixel has a valid value or `false` if it does not.\n   */\n  @inline def isDefined(i: Int, j: Int): Boolean = !isEmpty(i, j)\n\n  /**\n   * Number of components for each pixel in this raster file.\n   * @return the number of components in each pixel, e.g., 3 for RGB or 1 for grayscale\n   */\n  def numComponents: Int\n\n  /**\n   * Returns the type of the pixel as an SQL data type\n   * @return the type of the pixel values\n   */\n  def pixelType: DataType = if (numComponents == 1)\n    componentType\n  else\n    new ArrayType(componentType, false)\n\n  def componentType: DataType\n\n  override def toString: String =\n    s\"Tile #$tileID ($x1,$y1) - ($x2,$y2)\"\n\n  /**\n   * Returns a polygon that represents the boundaries of this tile in the model space.\n   * @return a polygon (rectangle) that represents the boundaries of this tile\n   */\n  def extents: Geometry = {\n    val values = Array[Double](x1, y1, x2+1, y1, x2+1, y2+1, x1, y2+1, x1, y1)",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "16: package edu.ucr.cs.bdlab.beast.geolite\n37: abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature)\n18: import com.esotericsoftware.kryo.DefaultSerializer\n19: import edu.ucr.cs.bdlab.beast.sql.RasterMetadataType\n20: import org.apache.spark.sql.Row\n21: import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema\n22: import org.apache.spark.sql.types._\n23: import org.locationtech.jts.geom.{Coordinate, CoordinateXY, Geometry}\n25: import java.awt.geom.Point2D\n26: import scala.collection.mutable.ArrayBuffer",
+          "source_characters": 574,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      }
+    ],
+    "development_errors": [],
+    "api_function_ids": {
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:38:DefaultReadOnlyTile",
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:47:isEmpty",
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:54:getPixelValue",
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala:108:copy",
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.schema": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:40:schema",
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:81:pixelLocations",
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixels": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:84:pixels",
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:93:getPointValue"
+    },
+    "api_public_paths": {
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile": [
+        "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile"
+      ],
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty": [
+        "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.isEmpty"
+      ],
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue": [
+        "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.getPixelValue"
+      ],
+      "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy": [
+        "edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy"
+      ],
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.schema": [
+        "edu.ucr.cs.bdlab.beast.geolite.ITile.schema"
+      ],
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations": [
+        "edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations"
+      ],
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixels": [
+        "edu.ucr.cs.bdlab.beast.geolite.ITile.pixels"
+      ],
+      "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue": [
+        "edu.ucr.cs.bdlab.beast.geolite.ITile.getPointValue"
+      ]
+    },
+    "coverage": {
+      "matching_definitions": 261,
+      "selected_definitions": 8,
+      "omitted_definitions": 253,
+      "omitted_error_rows": 0,
+      "source_window_policy": "Three preceding and up to sixty following lines; not complete function bodies."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_scala/attachment/Original/source/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+      "sha256": "0e187e8429a0e8875c1c8fe7f4230f76366737172eac0f5a02ed9f3c5650682d",
+      "bytes": 6566
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_scala/attachment/Original/source/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+      "sha256": "b9d1248a25e3e84778897f1e7c7af5fa048b04683f9817fafc2390d904f630e7",
+      "bytes": 8740
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/releases/2026-11-18-strict-raptor-source-note-0b1635f2457b/vendor/aideal_engine/src/aideal/defaults.yaml",
+      "sha256": "1778d383c06f3796b56c9db6b47a985a1adeb5c2451a0a896cfbc8f0fea298aa",
+      "bytes": 5298
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/configs/aideal.yaml",
+      "sha256": "99383df8a9f1b6b5c92fe736e7d772aa881c28937246f460fac7e4c16b02e4b0",
+      "bytes": 12191
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/inputs/api_inventory.json",
+      "sha256": "e14a707a398af0b6f7763ffc2230c829758be035e509a6dde07ddd35798f33e8",
+      "bytes": 405502
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json",
+      "sha256": "0585c743a2e6e574cbc5b369b74a59bcd752a762ab88d81381a08520c175ecdd",
+      "bytes": 215915
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/README.md",
+      "sha256": "740f9c54cbe9b01bf9d559a4da13c857ebe1a0597cdbddbe70c6992125005229",
+      "bytes": 1823
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/Home.md",
+      "sha256": "c4456bec68834278f1856a40d6942c970504baa4faad7cef20033970911d55af",
+      "bytes": 4050
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/davinci.md",
+      "sha256": "782b640e81b087fcc614d0e4fffb14ab116de0aba8e75a980803e17ff20d1995",
+      "bytes": 5988
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/dev-setup.md",
+      "sha256": "cfa7d5c174247ffb9c0cf34d658ee594a85c64c8271a8b98e9c3af163ffd75ab",
+      "bytes": 2736
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/development.md",
+      "sha256": "589be5bd510f3814e7924e091c2ccf86661decbb4084c9ddb934cb3cc6ce78e9",
+      "bytes": 1571
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/input-output.md",
+      "sha256": "d45a68c95ec2b149c45591a0d4507a6d65332078bbd2c5a767050dd47477befe",
+      "bytes": 13978
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/installation.md",
+      "sha256": "a97750d5a360cc94b15ada6d9148d7b639a5a4f73ff53102e9162a24a3cc1468",
+      "bytes": 2873
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/partitioning-indexing.md",
+      "sha256": "034c240a4de17c50883e824ce3477d6f1dbf7f06f3501258f4a06468d4196e08",
+      "bytes": 6265
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/raptor-join.md",
+      "sha256": "f8079ee4f6db7a0d372a8e451a16e4aaa8b634dc802cb48a1b3f36f4eac16c90",
+      "bytes": 10152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/rdpro.md",
+      "sha256": "c5bab8686f3dabdb11f9e1e5022308c835d588a24af28537161b79982b4ba3a7",
+      "bytes": 15105
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/scala-quickguide.md",
+      "sha256": "8f3fdec40188d4af88739b6224f73f3753471c4536923c8042ec2c828e2f7749",
+      "bytes": 3637
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/spatial-data-generator.md",
+      "sha256": "186f600040b81c7a8f533a20be9bd74e79d2cedf0bf228e49d45d22bb236fba0",
+      "bytes": 11482
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/spatial-join.md",
+      "sha256": "176b32a0d87387b90a74ab70484167ecf41eb29ec5ac996d7cd0ae4d1af4dcdd",
+      "bytes": 6311
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/summarization.md",
+      "sha256": "0868e48f22d388cb6d5c027d12d8271c997884e8a998ca655a7b45962c4a8921",
+      "bytes": 7544
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/visualization.md",
+      "sha256": "72df3512c793f531fe2c37736ca3e1a75b530e64794e751870e3bfc0850daec5",
+      "bytes": 5958
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/visualization_mvt.md",
+      "sha256": "c0d4b9a0f4b89e4a3b40cc703667660c549462076985f2013821cc718ef3b069",
+      "bytes": 6286
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/web-operations.md",
+      "sha256": "42a16b6780ebe8690cb7cdeb9188bddf831936a0fa45ff167d143bd8e79e6c07",
+      "bytes": 7788
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/dataExplorer/README.md",
+      "sha256": "0ab60febc9f1c80795af5b5eeb71557ec01bffa4dea80b368680e7a67cdc3c29",
+      "bytes": 11948
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/distribution/README.txt",
+      "sha256": "6a8a47dbddb5f5a194a0f5335820c91caf6f116f3906a16343a668f300cdd2d1",
+      "bytes": 113
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/dynoviz/README.md",
+      "sha256": "e39cdd76b8a43a98953208ee14c9133a0505660d3ffa9ab01b59eb3baed714fe",
+      "bytes": 996
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/satex/README.md",
+      "sha256": "c5739bb8824030ed252bff71d0b92e55b43d2c4ffdf44c31b38dd5620dad2e37",
+      "bytes": 2912
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L1-L13.md",
+      "sha256": "ba50b1fd36a27981571fab254491c2317b322e2d0d289629db4ed5c6ca6e1f95",
+      "bytes": 699
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L14-L53.md",
+      "sha256": "07c38632c9571fdf3ef5970b6a59d59121d830dadb6a01072f7bade05dbb6e18",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L54-L88.md",
+      "sha256": "fd5fd01c430822d1035c52d09eb126cfd9f07d4a534fa98f761b84bc9eb9ca19",
+      "bytes": 1611
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L92-L105.md",
+      "sha256": "56ddef14323681e8155c3e6ffdef60dd255ccb449974af6f47a38d0cf25359b5",
+      "bytes": 740
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L246-L291.md",
+      "sha256": "ef9472aea783e13f61e091db5894848794dc0b275c5b4a1036ecb39971d07560",
+      "bytes": 2719
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L225-L245.md",
+      "sha256": "ef12d310d4276575b898e9213fa28b857bb7b304508ec912edf19eca15c9e549",
+      "bytes": 1324
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/raptor-join-L1-L225.md",
+      "sha256": "f8079ee4f6db7a0d372a8e451a16e4aaa8b634dc802cb48a1b3f36f4eac16c90",
+      "bytes": 10152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L169-L178.md",
+      "sha256": "8d54d1f41b5e255c0802a3a91332f2de88abd303589471033adf3c7492123769",
+      "bytes": 423
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L179-L189.md",
+      "sha256": "053d8a1664d97bf5cf9c60adf9f161c651663454ddfb6c3aa39f6717a7e06367",
+      "bytes": 549
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L190-L224.md",
+      "sha256": "f5db7824c2ee79a3bfdde8b577118d5a827120614011e0c8e450360f7369df5f",
+      "bytes": 2282
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L144-L154.md",
+      "sha256": "c407b26865eb5eb92a7cd29e4c47db71a496770da04bf6c4274007e44cf9b05f",
+      "bytes": 461
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L115-L129.md",
+      "sha256": "0c890d2028749ea40792810c1222ec1dc9173964890190635b3ecaf64e8b239b",
+      "bytes": 875
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L155-L168.md",
+      "sha256": "8cb545c349ace08e6c7ff01881c79c65d16b9716d12ea9fd6b9318423ba2ca05",
+      "bytes": 696
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L106-L114.md",
+      "sha256": "bb08b62de8d85d3c0106677e99d3a46135daad8b51d4d8c3ba6229fb5ce6f370",
+      "bytes": 383
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L130-L140.md",
+      "sha256": "6539734eeb11bd864abf0deed5b32e0df732e7380754b6d85519befb68970ee3",
+      "bytes": 535
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/rdpro/ledger.json",
+      "sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699",
+      "bytes": 34058479
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/canonical-selection.json",
+      "sha256": "feb40fcb7087800d57195bf3d4b7241702de4a5bbf8acf1a10552830f1ac8e08",
+      "bytes": 650632
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+      "sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+      "bytes": 19322
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialRDDHelper.scala",
+      "sha256": "a8f52cf19dd8567b5ffd9651ec566fd031181ac26ce4278bc4d8a938b5addcae",
+      "bytes": 12716
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialSparkContext.scala",
+      "sha256": "c4fe60043ab75ea8b4eb2be989b3f90f186a23b30a62e474e37b79d758a80fc6",
+      "bytes": 9698
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/SpatialOperationsMixin.scala",
+      "sha256": "f3ba6fe271b6787486c378b746fd930ba240b234530dbeae3baaf0f2a67dd539",
+      "bytes": 3447
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/CGOperationsMixin.scala",
+      "sha256": "09c1cd00cc7966a3fbfc97d618bc34ebe23082e45581af70f6e9a53d64ed30ae",
+      "bytes": 9349
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/GeometryQuadSplitter.scala",
+      "sha256": "0958f0b079df40050c1d91fc622c8646dff87309bb2a1db33d4641e1de1ee29f",
+      "bytes": 7359
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/PlaneSweepSelfJoinIterator.scala",
+      "sha256": "ffc38c5c7f7c21aaffd207c077f94c5c115d3483734ff551e87270a69052db0b",
+      "bytes": 4881
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/PlaneSweepSpatialJoinIterator.scala",
+      "sha256": "7e07863b201cecde85a369c206a4b79c317d012ebaf84a60076cd6e175e54b08",
+      "bytes": 6641
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/Reprojector.scala",
+      "sha256": "723690ad1500d17ad1474a57cdcfe268072338de0277349ee6c1f4db0e76a2b0",
+      "bytes": 24239
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/SnapTransform.scala",
+      "sha256": "77c79f5c98d85efea0329aa46cef7163432d3e48346491687609db01564988ed",
+      "bytes": 4224
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/SpatialJoinHelper.scala",
+      "sha256": "68523cc14c2cd9d800293c192868d0854fe47c5c07b71fd44e9a1e338dab6f32",
+      "bytes": 1232
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/SpatialPartition.scala",
+      "sha256": "9e330a19c1411bc3cb07229d5d436390c8d0b0a8d3d71184264da508dbf7069b",
+      "bytes": 2849
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/cg/WrappedSpatialPartition.scala",
+      "sha256": "e6133fac096d9aa08f5ec3504dfa3f6abd2c201b2bde5722c283b44ef4a0defe",
+      "bytes": 1607
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/common/BeastOptions.scala",
+      "sha256": "70ae7d812036be6b6e784bfc433a955cd566ffeedaadc72baa693cfc440c6211",
+      "bytes": 13393
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/common/BlockCartesianRDD.scala",
+      "sha256": "1d62e1a1037b33015a0f922225b1915878518412c983fd5d275a4ac3d63b748a",
+      "bytes": 2580
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/common/CLIOperation.scala",
+      "sha256": "c8fe3c0826976f07f56e3fb9bec507998630c0a94a8e00b4200f095b571b52e6",
+      "bytes": 1754
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/common/JCLIOperation.scala",
+      "sha256": "37e7145ece21e0a11a858ceac9148c4029f3840d1271f4c1043b3deea6adfc10",
+      "bytes": 1152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dataExplorer/src/main/scala/edu/ucr/cs/bdlab/beast/dataExplorer/DataExplorerServer.scala",
+      "sha256": "eef995c36697b2e688300ba65f17ea3c293ec1bcf7034cdeb5a5d0acc745d5b0",
+      "bytes": 61173
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dataExplorer/src/main/scala/edu/ucr/cs/bdlab/beast/dataExplorer/DatasetProcessor.scala",
+      "sha256": "5b579f1feaa39c6ac818a4ce45041b3d734160065363b5e57e8515cc4826c091",
+      "bytes": 31240
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dataExplorer/src/main/scala/edu/ucr/cs/bdlab/beast/dataExplorer/SQLQueryHelper.scala",
+      "sha256": "8d3ec48a1ccc25a0d9f158a0f92abc3c988b6770dd92fb42ceb1e3829243446c",
+      "bytes": 3036
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dataExplorer/src/main/scala/edu/ucr/cs/bdlab/beast/dataExplorer/WorkspaceProcessor.scala",
+      "sha256": "af595e04b29b6097e08540d1a4edfa4d2a5d9b1d8cf33fc64f12302dcffb3d20",
+      "bytes": 635
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/RandomSpatialRDD.scala",
+      "sha256": "b45f1c9e04144398b7cdedb8e699538868951a514032f625fcba287a08c244e9",
+      "bytes": 8870
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/BitGenerator.scala",
+      "sha256": "61f885112632a3172611f41ffbe2b9eee9721e89902b982fde93666e8dbe7bd5",
+      "bytes": 1458
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/DiagonalGenerator.scala",
+      "sha256": "208f6c0e7e2d4eb2e6025526dbe11255935ddcae004497fdcfdd25fc501f131a",
+      "bytes": 1652
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/GaussianGenerator.scala",
+      "sha256": "1a3299629a614c479e945af69cf510940b8d5ab9d45dddc9fbd361bbd1be9925",
+      "bytes": 1125
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/JavaSpatialGeneratorBuilder.scala",
+      "sha256": "3870886bc239203c90cee852c81422e8171107e4d4721adaecbbeeeac4e8877d",
+      "bytes": 5756
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/ParcelGenerator.scala",
+      "sha256": "5ebb7e304288d5fb8109ac57b540e2eb3c38ad6bd79c5c2e0b39f6b9f2db2661",
+      "bytes": 4972
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/PointBasedGenerator.scala",
+      "sha256": "20688d292919834bc8b9c6e1d70e90e1b6314cf0db3c00720e3322d588e55bd2",
+      "bytes": 5275
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/SierpinskiGenerator.scala",
+      "sha256": "d43d2fe3a67519058844072cfc97df49dda08989bcde428c39b59f2ba9faadbf",
+      "bytes": 1914
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/SpatialGenerator.scala",
+      "sha256": "26ef5cbe90a8a822ba36380806b91ba120df6ba64e2ca75d901bfc0ea617f23f",
+      "bytes": 6059
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/SpatialGeneratorBuilder.scala",
+      "sha256": "09b426d8a05257f2ea90a32b3f9ccf22e68821adc91732fe172d1e93bec4fba5",
+      "bytes": 7781
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/generator/UniformGenerator.scala",
+      "sha256": "2931b236065708667db699c6b4ac1838fc5b2b5382b00986e9068afb293f28bd",
+      "bytes": 1127
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+      "sha256": "0e187e8429a0e8875c1c8fe7f4230f76366737172eac0f5a02ed9f3c5650682d",
+      "bytes": 6566
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/Feature.scala",
+      "sha256": "2f498adcf4ce8dccf07f9a546a9fe2b3a58233e4df52e076c0805c4d4fe2f013",
+      "bytes": 17102
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/IFeature.scala",
+      "sha256": "58d38341928fb63451d05a2b6be2185ad4a78c8ee1c6cd36410508216599185d",
+      "bytes": 5155
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+      "sha256": "b9d1248a25e3e84778897f1e7c7af5fa048b04683f9817fafc2390d904f630e7",
+      "bytes": 8740
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITileSerializer.scala",
+      "sha256": "61083e46efc2590713f36572b3c55d9f5a9420d9b4b915a7d1531d19331a41e0",
+      "bytes": 5056
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeature.scala",
+      "sha256": "39114b175f23a8ed20b03b94bc6f7d7e4809e4fa8eeb6f74087c58a54f84d70b",
+      "bytes": 2392
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeatureSerializer.scala",
+      "sha256": "39ac99263480d52c940aac83b4579bd361a13944a7a857ac09e7721f54a2da1e",
+      "bytes": 1365
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala",
+      "sha256": "cfe6f7ca39136e9341dd9ebb1961b3de5f91c636d5e1c70de25b73abe8ed45f0",
+      "bytes": 1884
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala",
+      "sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+      "bytes": 5249
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/indexing/IndexHelper.scala",
+      "sha256": "61676ab9e23cc37b46cd7121f6a4a67b6723842fa45745d98d829d33cee29d86",
+      "bytes": 33977
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/indexing/IndexMixin.scala",
+      "sha256": "6aae644011562db4be53aea320f0117abde407bd0b17a59f105be613aa2e2341",
+      "bytes": 4505
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/CSVHelper.scala",
+      "sha256": "2797109b2c590c7d4cfe9b4088609dfd8f9877a7f46d8c54d96d97eef16a1613",
+      "bytes": 1528
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/CSVReaderLite.scala",
+      "sha256": "0ca99c15135d3b18fabe6793e5912126452f1f17c643c2ad44f72214d4c981da",
+      "bytes": 3427
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/Cat.scala",
+      "sha256": "612817f198a4b86470bdf38be63ddc3c6fc9a3c2df15988a65991f4841288def",
+      "bytes": 2553
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/GPXReader.scala",
+      "sha256": "151b397807fcbd9533957cd92709936793bd5569c6655ba89995fa9011f18a34",
+      "bytes": 6911
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/JSONWKTSource.scala",
+      "sha256": "221dfc5f6ff8e6b88b6f28bf534e5b2143124c091bc59f0bcf360737a854141b",
+      "bytes": 1354
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/JsonWKTWriter.scala",
+      "sha256": "7779c173bd92f9520e0c0e61392b0825057a7f35768f63f6bd2c602102dd964d",
+      "bytes": 2868
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/PushDownSpatialFilter.scala",
+      "sha256": "c63aeefde2528ddce2e64ab47f7b14179ca9f380588bb7d864eabdbc025503ad",
+      "bytes": 2883
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/RTreeSource.scala",
+      "sha256": "e9e13095f0583a049c18f8b762ca4129ce745bd428122d0d8fd72800bf06cd3a",
+      "bytes": 314
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/ReadWriteMixin.scala",
+      "sha256": "8ba04c084710b0d5e7f0fbfae1597b6881a43455d9d5d8c2b768c4c6d3c00957",
+      "bytes": 13439
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialFileWriter.scala",
+      "sha256": "9b38d5849cb11ab5b8553153a4eefb4142e05d4b6b92421e15386de5c5228575",
+      "bytes": 7128
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialCSVSource.scala",
+      "sha256": "3b1b10c97c99eb71e8299ce55277c470d2223f8f047768b7458975073b246f18",
+      "bytes": 5656
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialReaderFile.scala",
+      "sha256": "6c824ae1722e62cf5419ded79d9bd161eaf420f1231478f40223d2b4197281b6",
+      "bytes": 5629
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialFilePartition2.scala",
+      "sha256": "c6a6baae1a82adfb4db6f3ed1f8f8ecd2c0e8ce5fbe03d8b256bdc328a89bce2",
+      "bytes": 1171
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialFilePartitioner.scala",
+      "sha256": "e086ff28cb7fed63a46f6ee9770c455803ca94209282167f386d28d51ef9b75b",
+      "bytes": 9814
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialFileRDD.scala",
+      "sha256": "42599f98f9f1edfb07ec016288b8d539e2df71b37da10603c784deb398d83648",
+      "bytes": 26572
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialFileSource.scala",
+      "sha256": "232b630163e39a8d9addef18a12b4b63e030340d281b193bd35b4a8caae713b2",
+      "bytes": 10080
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialParquetSource.scala",
+      "sha256": "3b6c66d8d5029aa4c13294d72daec7564dce78df91d689b03e17458d9b0025b5",
+      "bytes": 5011
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialReader.scala",
+      "sha256": "35fbb690f04cf71bf12d223f487c72474840563cf84db8cdcb59a4c0a9250e38",
+      "bytes": 12334
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/SpatialWriter.scala",
+      "sha256": "463c7774f6f5469b58875d4c41274f96103b04d4fe04441e472bff175073ca75",
+      "bytes": 11570
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONFormat.scala",
+      "sha256": "0997200dc6ab29f7232d33bb9dad8a95a649392afeb8ade929828ebc62c54aca",
+      "bytes": 3175
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONPartitionReaderFactory.scala",
+      "sha256": "e99bb95e09d1338f96a3b2d89e1b310ae57eab0125f16bc9c84ea37a37e0af90",
+      "bytes": 3991
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONReader.scala",
+      "sha256": "5ca0abe5a91e4e5bef5e63124998093453ce71b9f2841ac015413b8ff8a3a094",
+      "bytes": 18146
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONScan.scala",
+      "sha256": "5d2c9428df2c91dfa63f3badef0de3210944350d53bb3c9313744d555d5c3979",
+      "bytes": 3677
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONScanBuilder.scala",
+      "sha256": "c6b7e1d9230d1d0a396e0bb8f8e250b1bf34519f55e06a5f5322899f3bd08592",
+      "bytes": 1579
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONSourcev2.scala",
+      "sha256": "90143ec3c70b861282a815817a163b127374070026aacc1761ad0351ed2962e6",
+      "bytes": 2208
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONTable.scala",
+      "sha256": "02e6f7f96c642b5b5f67ff29806127c1bcd5691b1473e12b3bd699fc5bff1055",
+      "bytes": 4702
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/geojsonv2/GeoJSONWriter.scala",
+      "sha256": "64326895f0a694f6b862f8a4c991f042d507dae7bd71615a98fa3b2aa72a96b7",
+      "bytes": 12841
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/gpxv2/GPXPartitionReaderFactory.scala",
+      "sha256": "0299e169da6ae48183c6156308469a46ccbae699252783ccec481067da368d44",
+      "bytes": 2445
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/gpxv2/GPXReader2.scala",
+      "sha256": "9b0e3c710742c5b04b30d21d660f9c6bfa5688bfb2e4da816645aeb5d930c626",
+      "bytes": 6944
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/gpxv2/GPXScan.scala",
+      "sha256": "90ea79e2e20fc8da4c0233b0bc61d332dd61f51bc85b936ff46c613717781a95",
+      "bytes": 3280
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/gpxv2/GPXScanBuilder.scala",
+      "sha256": "c25975cca5321b3b3a592ff04b50cc5b1f8dbb25e071eca445fec1460432d793",
+      "bytes": 1233
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/gpxv2/GPXSource.scala",
+      "sha256": "393cc0e1fd087f62c41f689c71e659f82026b48d7d39d346fa62ba15fe82183b",
+      "bytes": 1232
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/gpxv2/GPXTable.scala",
+      "sha256": "c6b2b1ec27c05b1913ec68d58fe935f550334d47d8beab584d46d173ee6944ef",
+      "bytes": 1970
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/kmlv2/KMLFormat.scala",
+      "sha256": "f3a1ef9e43af56f53ec88008375eeeb453c5a58e87c736c8e7caa9f0ef91999c",
+      "bytes": 2282
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/kmlv2/KMLSourcev2.scala",
+      "sha256": "0efdb68bab880dec377a96784097ba8e8777840446cc9e2227a359e589846fdc",
+      "bytes": 954
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/kmlv2/KMLWriter.scala",
+      "sha256": "eeb8cfcea2e3b1b8d012171d04794bc06487334329c781680e6dd96308ffd464",
+      "bytes": 8276
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/kmlv2/KMZFormat.scala",
+      "sha256": "334056d27debd41cf0b079fa31552cda72ea6ba0e0025f7258278f0d0fa9bd5c",
+      "bytes": 2307
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/kmlv2/KMZSourcev2.scala",
+      "sha256": "bf150d12bc237ab763a9f3ce7ed0a27ce1b3bb0ef13045ba07f1eb23f4894aa3",
+      "bytes": 926
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/AbstractShapefileReader.scala",
+      "sha256": "5aff2d7fd25004deac43a3c8c7c491c2dcab321c6f1ffa189bc7af3dd6cdbc28",
+      "bytes": 3023
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/CompressedShapefileReader.scala",
+      "sha256": "a06de05b6b5b41695307f812170430be8dc1312cdbe95860dbc159d4bede204e",
+      "bytes": 8276
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/DBFFieldDescriptor.scala",
+      "sha256": "70fca8a7039555173a2296b10aa1ca8421ddc1468c694ec70cba251faff0fe14",
+      "bytes": 1577
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/DBFFieldProperties.scala",
+      "sha256": "faf8653b1291a5c2eff0785e3b41b371a437c45274c1df2ec8bbd5182a1773d5",
+      "bytes": 813
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/DBFHeader.scala",
+      "sha256": "68b1219fafc972348e0a512750f4f600b945024cce359101552c81dd03f60187",
+      "bytes": 2716
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/DBFHelper.scala",
+      "sha256": "28b6871d20f1db5f9ea916d0e2dc9f69cfc067b0ecea42d65c8cf4c02d5dc6aa",
+      "bytes": 9754
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/DBFReader.scala",
+      "sha256": "15356de1ba8916ec678e787faa57830db104079b66bf04d6a8c14d7070c8e7e0",
+      "bytes": 7811
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/DBFWriter.scala",
+      "sha256": "c5ac600bf816b0044c5edbdf340962b71598f4c41c81705b8e35bcaf00e3f765",
+      "bytes": 9603
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileDataSourcev2.scala",
+      "sha256": "c2837fa4db4190b1aaebb4ef0060d6de0860db02b4239d82243389a40f4f8a25",
+      "bytes": 2526
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileFormat.scala",
+      "sha256": "ae1ca50a82d4480afa6e8f830a028f59efac0487816d5a905b5eb1d1598db844",
+      "bytes": 1718
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileGeometryReader.scala",
+      "sha256": "922fb6bf1ec73137c985b19d9cbcada7661a780fb7675b1f4d58b11f08893232",
+      "bytes": 13121
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileGeometryWriter.scala",
+      "sha256": "7f48004fde1430d82e1d041b1815501107595c11b901e8b045556af2bd2cebeb",
+      "bytes": 18429
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileHeader.scala",
+      "sha256": "00d1e3ebee303aba7031ccc5308c1f06ac9ede8d0dc657532460d250df2722a9",
+      "bytes": 4809
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileHelper.scala",
+      "sha256": "694fdee83f56ad007c650da29faea70191c64bbfe8829881bfb60d9ffe9bf3ef",
+      "bytes": 2143
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefilePartitionReaderFactory.scala",
+      "sha256": "354433a7726ae513a08229193cd296cc5aead986670c4825e8086540e117b084",
+      "bytes": 2638
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileReader.scala",
+      "sha256": "affe1902cde436d7cea1308e734a90942ba5dee55def0c5a5573df4b8e3f0249",
+      "bytes": 5264
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileScan.scala",
+      "sha256": "e959e2a926d93d28f900e649f04f4b1a09ec2aa1f28c26f04bfc09c26ab66aec",
+      "bytes": 4861
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileScanBuilder.scala",
+      "sha256": "0b8f5e76ac1f4226c2ad9f07fb1e9e3bd129a9c3552ae09d4d7f6e6b75e2396b",
+      "bytes": 1668
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileTable.scala",
+      "sha256": "4b91bc33b3c9bd27652b5db1ed3df9fd083a1e1141f2102bf2cbe9c54f429f62",
+      "bytes": 4544
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/scala/edu/ucr/cs/bdlab/beast/io/shapefilev2/ShapefileWriter.scala",
+      "sha256": "15c76b3c12c3a96cf237d70cbaae7806de640c1a65700eb084b2b61da5168585",
+      "bytes": 3799
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/FeatureWriterSize.scala",
+      "sha256": "4d6f7dcc84a2c3d567b75af09984afcc5f0e0c413c11e62fe08620ab71a74501",
+      "bytes": 1399
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/GeometricSummary.scala",
+      "sha256": "f0c0d5529814097438efd9a9298415f95f719c0f91b94df4698175e8dcc7469a",
+      "bytes": 7407
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/GriddedSummary.scala",
+      "sha256": "6ca9a03b2bf6ca841da0c2ac3fad56549500a9c24ebb2efa7b3bad28e0c22257",
+      "bytes": 6058
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/Histogram.scala",
+      "sha256": "00ef3f9eecb5dd906b011eada2ad23368cd8a6048b10a0445e14d56469fbb7db",
+      "bytes": 4390
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/Index.scala",
+      "sha256": "6e4e87818957c1758ec14f30286ca18ce314d76b78e7f0985e244d84b2e4f84a",
+      "bytes": 3193
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/SpatialIntersectionRDD.scala",
+      "sha256": "d56f8b2dd5dca51f3a40a743eec726c1ecaf01fd750b1c95b56a881bdb4e9a59",
+      "bytes": 6332
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/Main.scala",
+      "sha256": "9a8da3b3ad6815c75c6d8bd67358d2d448c59c917bc2d7bfb1b68adca7a0e141",
+      "bytes": 4023
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/RasterThumbnail.scala",
+      "sha256": "0b40584ff4ed3e5f5563162a8aab94fd49e13e84dc10059ef65dc90c75cf8cdd",
+      "bytes": 8310
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/operations/SpatialJoin.scala",
+      "sha256": "185b55a07019f298356220dbab169a7e1e7ad93e86f265611f5a8ba532dabd34",
+      "bytes": 29699
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/satex/src/main/scala/edu/ucr/cs/bdlab/beast/satex/ImageExtractor.scala",
+      "sha256": "1068fbeb96e57566dbc781e15a966f8caa1cd8467e0e7431fc8f8d8b6b182d86",
+      "bytes": 29505
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/satex/src/main/scala/edu/ucr/cs/bdlab/beast/satex/ImageIterator.scala",
+      "sha256": "3d32f6cd673a360829568c05567ac2ed7d16c3661892acb69526d4848e23fbca",
+      "bytes": 5403
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/CreationFunctions.scala",
+      "sha256": "ae6716e0a47011ccb4245476c356fecf964368b49e8a5160217792bf2686e981",
+      "bytes": 8627
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/RasterMetadataType.scala",
+      "sha256": "568de9583f26838869ab3f2ba1d437dcab8e1e6ffb3579d07d35c34976949082",
+      "bytes": 1527
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/ST_BreakLine.scala",
+      "sha256": "5e32a46e2442ae46f78b7cfb7643228f589f70e2c0b06b117d4cf67fa10fa4a1",
+      "bytes": 3182
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/ST_Connect.scala",
+      "sha256": "2ac00cb573817307d282a003917b04acf7bf08db894f41ec0015cb69ac52210d",
+      "bytes": 8714
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/ST_CreateLinePolygon.scala",
+      "sha256": "91930ec310927c65cb3994dfe653a7978b1a733d8bc1e29b9f7de40d5ddde2db",
+      "bytes": 5008
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/ST_FromSpatialParquet.scala",
+      "sha256": "d1ed6eb4fb064291bff39205d9b9601a558983d12fe8f7ec48c34e3d5729a0df",
+      "bytes": 3225
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/ST_ToSpatialParquet.scala",
+      "sha256": "087859d71d4604993dad92fc519e2f001bbc3482fd99ae9b7b059d73cbe07b00",
+      "bytes": 3783
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/SpatialParquetHelper.scala",
+      "sha256": "f94f519a40432ef5f0204aca4a43c98093286f469a8467750f0ba5f3809c010d",
+      "bytes": 9123
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/sql/SpatialPredicates.scala",
+      "sha256": "689d8dd1bd6763211b706123b5203b34202263b316e34585c7deaec3cdab25be",
+      "bytes": 5929
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/BoxCounting.scala",
+      "sha256": "2b4a36d8a38e59996f73fa0daf4e24018162b5c476d4593000fb3cb9ad6bc151",
+      "bytes": 7871
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/GeometryToPoints.scala",
+      "sha256": "8ac30441e8b83949e18022225898e53ab79110371b89dfc927ccad5339c299fe",
+      "bytes": 3616
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/HistogramOP.scala",
+      "sha256": "f6e964ef6770c58e44a3088a3e5d3bdd069f353fe7b754fcf2d27415caf5f03b",
+      "bytes": 17574
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/PointSampleAccumulator.scala",
+      "sha256": "42905b8bed081995386d233412e7b56c13e2c7f8ba4adf5ea2eabaa74a978eb7",
+      "bytes": 4639
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/PointSampler.scala",
+      "sha256": "c545343aa62de9a028f6cac8a71bb3eb3aa404f0b732f0e2fce3c99fae08163f",
+      "bytes": 4049
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/Summary.scala",
+      "sha256": "14547048035a713bd348227abaaa1232f43bc3d8ea91a8c81e0d3f1deaa62b7d",
+      "bytes": 18771
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/SummaryAccumulator.scala",
+      "sha256": "ceee278f76d370a411a25acf6e3254b45a7045eb62008745fa015767a1eb3ff1",
+      "bytes": 3056
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/synopses/Synopsis.scala",
+      "sha256": "76932705faf1b3559fbde07f99ae5fe47fe7fae68e5f3a69d6f9e9f7d31263c1",
+      "bytes": 2811
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/BufferedFSDataInputStream.scala",
+      "sha256": "553453e3a981e1edaeb7fa189ecf03a57006313b43609c4b161e5b24741ea62a",
+      "bytes": 6855
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/FileListRDD.scala",
+      "sha256": "7b322544a947b2484d366ee7a3281fda189b5ffae03d5c37736356a3a358c516",
+      "bytes": 830
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/KryoInputToObjectInput.scala",
+      "sha256": "d7a82368f5f08dd7b3185db12ad3904a56bd27d4cf4527e26a8c73f5476adabb",
+      "bytes": 2444
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/KryoOutputToObjectOutput.scala",
+      "sha256": "35dcce709e1de5e81e09f3e1726d9c5dc430d0a796edfdf5d4d31a71c016d99e",
+      "bytes": 2249
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/LRUCache.scala",
+      "sha256": "8f0969c7c324faab797cbff076a279faee7e9dc37d6c831ac143aba903479205",
+      "bytes": 1937
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/OperationHelper.scala",
+      "sha256": "2e05b3e0780022190fe8eca7276f1eb5ffd14135de38305c54a2c64f90fa9e29",
+      "bytes": 18317
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/Parallel2.scala",
+      "sha256": "fcff98958029b42cbda933576535e093079484fde4bfb58cd41c020c7b0f5303",
+      "bytes": 3097
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/StaticFileWebHandler.scala",
+      "sha256": "e9aa4a64fddbb8a1720d0df662e5fcf9d7c0690ff4e98b76ebf10977e40d1429",
+      "bytes": 4206
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/WebUtil.scala",
+      "sha256": "e356c8191054936cc59910c4cec2838458ffcd4c87c8442e7a73eeb14af8c90b",
+      "bytes": 13013
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/scala/edu/ucr/cs/bdlab/beast/util/ZipUtil.scala",
+      "sha256": "a0f021a6ec541ebb73567055a93ed2e24c6bd217b2c6abb256399c6a2fcb5805",
+      "bytes": 30660
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/CanvasModified.scala",
+      "sha256": "f90720b9eaa14146abf8c258ab1444285ea2b07ccb5bd8588eb29eba5f42b244",
+      "bytes": 106
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/DiskTileHashtable.scala",
+      "sha256": "68331332b185ab5133c4096f641fb258db95038837c2e555ab90a1507b288b15",
+      "bytes": 5689
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/IntermediateVectorTile.scala",
+      "sha256": "77802377a1e700b4e8a7635761d57af14d0e6eb56acb03b87972cf0096b08f93",
+      "bytes": 42802
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/IntermediateVectorTileSerializer.scala",
+      "sha256": "148311212e8503e360b58971e922a5c6192db32ede2095ae65b424c29166adce",
+      "bytes": 1768
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/LiteGeometry.scala",
+      "sha256": "92774ebf822d87b10a50ea5fb1147038e134992864ea9614d4337c1c6bc71872",
+      "bytes": 6966
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/MVTDataVisualizer.scala",
+      "sha256": "ac1735d4d7797370bfb2e7a0c16add03e6561a7a124cca7b336230d9759f05d6",
+      "bytes": 36078
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/MultilevelPlot.scala",
+      "sha256": "7bc6637e6c7a248078fee5797f793f476aef16bbb1ce752dba13ee77cd15c957",
+      "bytes": 32783
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/SVGPlotter.scala",
+      "sha256": "8eccf0075e50f539dadda11d54b8717e2537e3ad38bff34464cc1ccf70b8a140",
+      "bytes": 4915
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/SingleLevelPlot.scala",
+      "sha256": "496f53a73c8ca3838928f652050539976d8a7eb7a2464993fd3e5e3c9a79b709",
+      "bytes": 5510
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/TileCreatorFlatPartiotioning.scala",
+      "sha256": "8ed2e9f2a6410ea5909fd707a4d00f17c3d13d5979f92757ccd494af09e571e3",
+      "bytes": 3429
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/TileCreatorPyramidPartitioning.scala",
+      "sha256": "01fb6cca41123589c82664d36aee6bd5561aa87bf997535180fb8c1d2cc5be63",
+      "bytes": 5056
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/VectorCanvas.scala",
+      "sha256": "f0bb1a0f395519ee7aaa3548c476991b5236e51cf724e209dad6c4df00d59fb3",
+      "bytes": 34492
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/VectorLayerBuilder.scala",
+      "sha256": "b33fc86ebf067ace3c20c18629d22475435613c634f7ef5bc97ed2d64c90ba9d",
+      "bytes": 15500
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/VectorTileCreatorFlatPartitioning.scala",
+      "sha256": "8f7b0d136eadacd1fb5f04db0808183f636eacf8331c59da9d8bb846c2635ec4",
+      "bytes": 3462
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/VisualizationHelper.scala",
+      "sha256": "60847988283ef7d3bb73e2fbd174e9bdd4815af1400a35bc29c61c283e62a45e",
+      "bytes": 6470
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/scala/edu/ucr/cs/bdlab/davinci/VisualizationMixin.scala",
+      "sha256": "9282c853838b177da4b20f9b5ca3488850077e5d2b4fbfbca8c1eecebb39b1ea",
+      "bytes": 2686
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/FetchGenerator.scala",
+      "sha256": "fec12f9436911c6f7ad5097a2e83139a483660937e3b9c25d0f8d8ffbac402c9",
+      "bytes": 6807
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/HTMLGenerator.scala",
+      "sha256": "733261016745f4921161f6349109fb9f1fabb510c9b532d7839a4919cac76677",
+      "bytes": 3067
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/HTMLnpyGenerator.scala",
+      "sha256": "85b34482e92bcf8458b53b902d1cdd54e81ba6cbf84eb0953bfb8ab2801a628e",
+      "bytes": 3236
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/IndexBuilderParallel.scala",
+      "sha256": "f3169ccf815ee29545341c4f2a7b9381e168843efad4107789386eea1dff7c61",
+      "bytes": 10946
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/NPYTileGeneratorOnthefly.scala",
+      "sha256": "fb81612c0449285eaf3b74afde44102a3e4cd27dc72c4e10d5f931c06a0f64ea",
+      "bytes": 9289
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/NPYUtils.scala",
+      "sha256": "3a22f4254e677913d4346284268e460ac0ba343ca8f50124084066ecb80aee11",
+      "bytes": 2884
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/OntheflyGenerator.scala",
+      "sha256": "e34e7c1cb811906186a552bfa08ff7fb30ac9d1647b54232173b0e4333a2f181",
+      "bytes": 9250
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/PNGUtils.scala",
+      "sha256": "7ac711e3db28a2bfa0202774c814759b947ee674ede68784d7ad9cd0b2af999d",
+      "bytes": 2527
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/RasterMetaDataGenerator.scala",
+      "sha256": "1ff4d132ae19a353832fe537fc4a949d0c61647c8826654a8512a7aa45f764b2",
+      "bytes": 1373
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/RasterMetaDataGeneratorFilter.scala",
+      "sha256": "35ac7404c6b17990c51e09e7dca2804a9f258e35b9e474f3766119ce83c0e17e",
+      "bytes": 2089
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/RasterMultiLevelPlot.scala",
+      "sha256": "a8822e40b6ed177215529dbc7590e3c0696c307d4cd2fd1b079d15b0b075c272",
+      "bytes": 6088
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/RasterMultiLevelPlotAtOnce.scala",
+      "sha256": "7742435f7866dfa0ebce91efa5d4571d510efca90c1960c6167beb8ff0517fd3",
+      "bytes": 9047
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/CalculateDensityValue.scala",
+      "sha256": "5b5fc1e71a6cdecd832b3e1c5fd9ad45aaf68703bcc272293cb789d7b6094a8e",
+      "bytes": 2155
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/DownloadDataInVisibleRegions.scala",
+      "sha256": "b561f1391fbaaddbccbf0af84b470d57430c4e793189968deb74a24cb74c9f43",
+      "bytes": 6839
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/GetPointValue.scala",
+      "sha256": "0c0753d9b507657c08536c4725bd9feff57f0224e30555e2e4ed0df9bd188ff6",
+      "bytes": 7752
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/IndexBuilder.scala",
+      "sha256": "fcb966908335a7d6923cabe53ff03548e329f1d8e4d5df3a27a427897bf59349",
+      "bytes": 10793
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/IndexReader.scala",
+      "sha256": "2decb03570f6b551d5714fc3b77918196e77e763bcf19b8142420ce6b25b1919",
+      "bytes": 1158
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/MathTransformCache.scala",
+      "sha256": "67d9fafb12e56331f9c372909d13436bee9c4266f164f397b70c79e551538251",
+      "bytes": 620
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/NPYTileGenerator.scala",
+      "sha256": "7c241f04f9a12cd3ebf53feb51c5fff8efd0d0fc462df0f0c0379c7d196910d5",
+      "bytes": 12876
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/RaptorUtils.scala",
+      "sha256": "a2957aa368ddc2dd45b7558818657d51e6eea11b0392276827fa886d9e3b833c",
+      "bytes": 7093
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/Rectangle.scala",
+      "sha256": "d24a072dc4feb65c20dbf4414371ef891599a1997c42f22700b5b113a14db1e3",
+      "bytes": 1060
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/TileGenerator.scala",
+      "sha256": "c0de12b5a249511e8aa4c66053949d4e66298c66a46d17be9c6330da9c4bc59d",
+      "bytes": 12231
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/scala/edu/ucr/cs/bdlab/dynoviz/raptorhunt/TileGeneratorOnthefly.scala",
+      "sha256": "f609864eadee0208aaf230d06ee5699721a96bd7841536921c666d42f78d2637",
+      "bytes": 8800
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala",
+      "sha256": "df44481bb8c21e07af59d0670b75d081ad20df25897a8e3b21d63f704980d106",
+      "bytes": 8123
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/AbstractGeoTiffTile.scala",
+      "sha256": "02d5b10ab79b6a88ed1f35012ff79ed91c19ec8bcdf3aea148508df0350fce3b",
+      "bytes": 2148
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/CompactIntersectionsIterator.scala",
+      "sha256": "658251be3702057b23828b2da513ebf55c6b6c99f7f35731c080b21aff71205e",
+      "bytes": 1901
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/CompactIntersectionsTileBreaker.scala",
+      "sha256": "20a6011885b6b1a0260b9e475941f92b7cce55da9a80a49e1a20017422c208f2",
+      "bytes": 2608
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTileSerializer.scala",
+      "sha256": "a38a1d3cc6ad8b39f9fcf7e6623b68b8d2f2f7e119f98bbc52c618d4cd2497e2",
+      "bytes": 3404
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/EmptyTile.scala",
+      "sha256": "91941dc383f41e529d2d6a016f0b2419e1ca1af4f472feda4a36f5ef1ef94127",
+      "bytes": 1086
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ExplodedTile.scala",
+      "sha256": "2eb946ffe8f369e9dd0939c7be9386273ed8766888c9fb3c9db1ee6acfff9622",
+      "bytes": 1587
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala",
+      "sha256": "7a23974082108ab8fa1783b92041f44a6faab5d8ef76bd0e335c62124b84e812",
+      "bytes": 1458
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffConstants.scala",
+      "sha256": "7d880a00a11472aea931c5f93e50b9bfa00c35437f98862030ea7ccd69979095",
+      "bytes": 35956
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffReader.scala",
+      "sha256": "3e306e836a223d38b347cad023af495356daa7fd89940570417513552def558a",
+      "bytes": 11661
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDouble.scala",
+      "sha256": "f60456baccfe74d014a6f3548a43f08d5db0275ae11e41b2c4e1f37f5c767d3c",
+      "bytes": 1236
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDoubleArray.scala",
+      "sha256": "11552abe7788f35d976f7e234db06e252bb81f21c18fea12d3fe7814878d7fc8",
+      "bytes": 1387
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloat.scala",
+      "sha256": "f43d986a17ad0fa90c77db987ea562506fd5fc6aef4903770ea5dc92c8b6f1fc",
+      "bytes": 1150
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloatArray.scala",
+      "sha256": "83b731a3894231dea1e2f3976f4e9d8a3fb1259b1479618596ba98973dd7455e",
+      "bytes": 1300
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala",
+      "sha256": "4217435599d24999ac5e8fc38d62937669c9a1c08ada8c0afda5d5f3a0649bd8",
+      "bytes": 1218
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileIntArray.scala",
+      "sha256": "86991b9b69eba2a229d70f3174154405d17520672c530b7b36f2b2a91c90a8be",
+      "bytes": 1309
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileSerializer.scala",
+      "sha256": "9bf2ac3e6cea959515e5cbd88dfb2a55695c2393cbaeb9de92eee5d3a2c41ed5",
+      "bytes": 3510
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+      "sha256": "4e7f75f555a553a4fe0b18a19c19d6505c2fec21beb20a0b3170ae26c89d4162",
+      "bytes": 45148
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDF4Reader.scala",
+      "sha256": "464154efe4055f9fa563f40e0f87528bbc7d3efd2baab35dd38fc45883e7ba2e",
+      "bytes": 12571
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDFTile.scala",
+      "sha256": "8c91eee4b0a3aec99a9f025dd1bc1e5aff7cef5f25198789eae31ba00cac5286",
+      "bytes": 2641
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/IRasterReader.scala",
+      "sha256": "e5e1a861f184359031505ecd5711f2cf61bccd83b0c5eec676b65f7c5de276bf",
+      "bytes": 3738
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/IntersectionsIterator.scala",
+      "sha256": "701c824356dfe518f770960d3e5e056378a59c139578bf735f3220ab2c3aab52",
+      "bytes": 2484
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/IntersectionsIterator1.scala",
+      "sha256": "53c3da666dc3cf6df0c2aa3a2ac0af3dd220529d32e2264dce731d1ec6fd6974",
+      "bytes": 1315
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MapPixelsTile.scala",
+      "sha256": "d8691b18de88789126cc79d8434df2cbdf6201ba8104f9dcd81188365e4ef136",
+      "bytes": 2867
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala",
+      "sha256": "bc8c9a8ed27949c38ebca85b388995406b43f8fdb53ded9243ce54fe61449a3a",
+      "bytes": 2020
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTileSerializer.scala",
+      "sha256": "cced7f22d37307eab46bc5655cfc550e164e2b1d12245cc05b69906d8d5bd194",
+      "bytes": 1479
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile.scala",
+      "sha256": "624dabbe259b273dbc936dd595fc02f5f5650baf37b7632c57b50bb5d413b0b8",
+      "bytes": 12308
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile2.scala",
+      "sha256": "70159497db0bd2eb51dceb90c87fc3e3767ab9fcd2506e493884d31083f87458",
+      "bytes": 3615
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileSerializer.scala",
+      "sha256": "cc8666fb3653d8021599ab6f22b425acacc222f129f984409268d9d1218b9203",
+      "bytes": 2391
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileWindow.scala",
+      "sha256": "140f20395d3cd1f4f07e1eee9737f213e3e7d9361f81d74a5c3b9b962b6ca379",
+      "bytes": 4275
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileWindowSerializer.scala",
+      "sha256": "c0cb9b5eb7d61ee893c61b2d04f3d79eafb8d94b5ef81598a5750344e5835769",
+      "bytes": 1379
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelIterator.scala",
+      "sha256": "39479ac68ae5d697dca180ed18f459f3a29bf628217087bd615bb9d5e32df5ec",
+      "bytes": 3658
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelIterator3.scala",
+      "sha256": "336114144e3a2565a686177bf86bbf2fd316e93d4ed8c3c4fc52f66207816e79",
+      "bytes": 3070
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelRange.scala",
+      "sha256": "6c2edc904dd1fd370292fd16f727ec0c47048c5bbca230e07b97dfa462a6ddd4",
+      "bytes": 984
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelsInside.scala",
+      "sha256": "f3c7e95c988d53b9d6912c3a8441a4451a269a966b9b2e95d3b7765d0badbe9f",
+      "bytes": 8609
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "bytes": 15668
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoinResult.scala",
+      "sha256": "b2754ce9efa75c760cd9af9c91602cee0ae65063f5ca5e3b30173c5c036a67af",
+      "bytes": 1496
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala",
+      "sha256": "f0ce494271cbaef810992daeacf4e26ecf3cc0944f2ff093f9dc3f3e79493f22",
+      "bytes": 12689
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+      "sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+      "bytes": 49013
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+      "sha256": "acf14983bf3a74ca925b51c04de6900963da61c653fc9f38c989929c9b9a2e0f",
+      "bytes": 2895
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "sha256": "67163c7a7773b469b0cfb27a8de0064f8e411ce3b2b4001acd6944db0b99e7f8",
+      "bytes": 3499
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterPartitioner.scala",
+      "sha256": "63958ee67f12884c4b433b3263c89907922af93e79e51497879f347500e3e7ac",
+      "bytes": 2206
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ReshapeTile.scala",
+      "sha256": "e6425b76c11f1f792373c6de6b4d3456247cf2a84916212ed2e142b5be8881eb",
+      "bytes": 11047
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+      "sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+      "bytes": 7035
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/StackedTile.scala",
+      "sha256": "9700995b5c2a69931c938030cb1707e0621b35a204f5ceb18ee4974896d5e88d",
+      "bytes": 2529
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/TileIterator.scala",
+      "sha256": "15b5216fef80e9c44dc41de2ee1b0aeb809ae311953a6241bd53d9c1ee668169",
+      "bytes": 4357
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ZonalStatistics.scala",
+      "sha256": "5d5d01c770afee2636272e300ce101c81febeb71fdad2902a13c9ce6bb99b334",
+      "bytes": 13036
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/spatialtest/src/main/scala/edu/ucr/cs/bdlab/test/BeastSpatialTest.scala",
+      "sha256": "de49539b16971d65b3abd106819b0eb6d03ba0b7eff731d7db7cc202c400a15c",
+      "bytes": 1138
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/spatialtest/src/main/scala/edu/ucr/cs/bdlab/test/JavaSpatialSparkTest.scala",
+      "sha256": "db168ccc46087e320ee951e88e0b0f2ecbca76bd06d483f457c0fb2ed49683c2",
+      "bytes": 1031
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "bytes": 17596
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c",
+      "bytes": 9541
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "bytes": 1891
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "bytes": 3442
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/configs/project_profile.yaml",
+      "sha256": "27acd542cd0cf97659ba9ada7c89323d216dbf1c8521b6fe78c0fd039e643744",
+      "bytes": 667
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_scala/preview-compact/api_evidence.json",
+      "sha256": "c73afd7079c67fbd2d4c48a25a74c756fd2b26986f068edb5b675bb3f7e63646",
+      "bytes": 2336920
+    }
+  ],
+  "error_scope": "operator-designated development logs only",
+  "api_evidence": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_scala/preview-compact/api_evidence.json",
+    "sha256": "c73afd7079c67fbd2d4c48a25a74c756fd2b26986f068edb5b675bb3f7e63646",
+    "bytes": 2336920
+  },
+  "context_policy": "calling-facts-and-source-v1",
+  "llm_calls": 0,
+  "preview_sha256": "a8d044addce534ce887541dc0d48d6ee8176a94d1b38126933186c6008409b2d"
+}

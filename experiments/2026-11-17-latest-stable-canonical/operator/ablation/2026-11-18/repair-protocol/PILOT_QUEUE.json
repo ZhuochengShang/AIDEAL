@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval",
+  "release": "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+  "scope": "same-bank-mir-transcription-mechanism-pilot",
+  "workers": 1,
+  "note": "Fresh R0 and at most two repairs per condition; development mechanism evidence, not held-out generalization. No automatic full-bank expansion.",
+  "offline_proofs": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-protocol-checks/mir_eval/original/MOCK_VALIDATION.json",
+      "sha256": "c969b1f5eee37e953f904f1fe4d396faea030fda02f41d0506b29ed64a578c63"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-protocol-checks/mir_eval/error_hints/MOCK_VALIDATION.json",
+      "sha256": "e7b802400cc3d38a8fb3765c93330298166d8c2fd86cbc990319009145a45a24"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "mir-transcription-original-r0-r2",
+      "library": "mir_eval",
+      "stage": "development",
+      "condition": "original",
+      "protocol": "matched-repair-mechanism-pilot",
+      "command": [
+        "/home/zshan011/apps/aideal/venv/bin/python",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py",
+        "--spec",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.original.json",
+        "--run"
+      ],
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original",
+      "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/completion.json"
+    },
+    {
+      "id": "mir-transcription-error-hints-r0-r2",
+      "library": "mir_eval",
+      "stage": "development",
+      "condition": "error_hints",
+      "protocol": "matched-repair-mechanism-pilot",
+      "command": [
+        "/home/zshan011/apps/aideal/venv/bin/python",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py",
+        "--spec",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.error_hints.json",
+        "--run"
+      ],
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints",
+      "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/completion.json"
+    }
+  ]
+}

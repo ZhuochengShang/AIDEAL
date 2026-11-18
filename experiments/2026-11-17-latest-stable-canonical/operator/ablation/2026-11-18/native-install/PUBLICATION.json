@@ -1,0 +1,91 @@
+{
+  "status": "native_hint_validated_installed_published_not_audience_measured",
+  "target": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only",
+  "branch": "study/2026-11-17-latest-stable-canonical/error-hints-only",
+  "expected_public_head": "967a2466f1dec09730850b9785a7a972ad0955d7",
+  "source_before_sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c",
+  "source_after_sha256": "c0d37914d7e426db5b1ad1f2de300a3c7946ecb62c15be9eb9e21ba2672a41bb",
+  "validation": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/checks/validation.json",
+  "replay": {
+    "validation": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/operator/ablation/2026-11-18/native-install/mir_eval/replayed-controls/validation.json",
+    "status": "validated"
+  },
+  "paired_checks": [
+    {
+      "case_id": "native-b44041df1dc5b255aee959ba",
+      "role": "trigger",
+      "valid": true
+    },
+    {
+      "case_id": "native-b44041df1dc5b255aee959ba",
+      "role": "corrected",
+      "valid": true
+    },
+    {
+      "case_id": "native-b44041df1dc5b255aee959ba",
+      "role": "valid",
+      "valid": true
+    },
+    {
+      "case_id": "native-b44041df1dc5b255aee959ba",
+      "role": "nearby_negative",
+      "valid": true
+    }
+  ],
+  "execution_records": 8,
+  "installation": {
+    "status": "installed_uncommitted",
+    "target": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only",
+    "receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only/.aideal/treatments/native_hints_validation.json",
+    "sources": [
+      "mir_eval/transcription.py"
+    ]
+  },
+  "source_coverage_sites": 1,
+  "files_to_commit": [
+    "mir_eval/transcription.py",
+    ".aideal/treatments/native_hints_validation.json"
+  ],
+  "smoke": {
+    "module": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only/mir_eval/__init__.py",
+    "diagnostic": "Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+    "valid_return": null,
+    "nearby_negative": "Estimated intervals and pitches have different lengths."
+  },
+  "original_checkout_index_refs_preserved": true,
+  "limitation": "Corrected caller uses a two-note valid example; does not preserve the original fixture/scaffold or prove audience repair or held-out benefit.",
+  "commit": "4906acce7dedff49af5d33ce854548169c6b2361",
+  "github": "https://github.com/ZhuochengShang/AIDEAL-mir_eval/commit/4906acce7dedff49af5d33ce854548169c6b2361",
+  "source_link": "https://github.com/ZhuochengShang/AIDEAL-mir_eval/blob/4906acce7dedff49af5d33ce854548169c6b2361/mir_eval/transcription.py#L137",
+  "local_sync": {
+    "repository": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/.local/library_publications/mir_eval",
+    "commit": "4906acce7dedff49af5d33ce854548169c6b2361",
+    "tracking_ref": "refs/remotes/aideal-github/study/2026-11-17-latest-stable-canonical/error-hints-only",
+    "local_branch": "refs/heads/study/2026-11-17-latest-stable-canonical/error-hints-only",
+    "checkout_index_preserved": true,
+    "other_refs_preserved": true
+  },
+  "cluster_sync": {
+    "repository": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval",
+    "condition_checkout": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only",
+    "commit": "4906acce7dedff49af5d33ce854548169c6b2361",
+    "condition_clean": true,
+    "source_sha256": "c0d37914d7e426db5b1ad1f2de300a3c7946ecb62c15be9eb9e21ba2672a41bb",
+    "original_checkout_index_preserved": true,
+    "other_refs_preserved": true
+  },
+  "public_ref_update": {
+    "force": false,
+    "expected_old": "967a2466f1dec09730850b9785a7a972ad0955d7",
+    "verified_other_study_refs": {
+      "original": "967a2466f1dec09730850b9785a7a972ad0955d7",
+      "alias-only": "967a2466f1dec09730850b9785a7a972ad0955d7",
+      "readme-only": "477d66dcca3929b56e8771cd4e74b00875251b97",
+      "combined": "477d66dcca3929b56e8771cd4e74b00875251b97"
+    }
+  },
+  "combined_status": "README only; native hint intentionally pending alias bundle installation",
+  "no_legacy_error_hints_json": true,
+  "provenance_receipt_sha256": "19f07b297008e2b3f2bbcfd07a0b333963fc4f1f1a5ae713d88d59f7f661c0de",
+  "independent_review": "Second agent verified only one source-message line changes, all paired receipts, and corrected-example limitation."
+}

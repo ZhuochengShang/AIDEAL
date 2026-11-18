@@ -1,0 +1,43 @@
+{
+  "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java",
+  "release": "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+  "jobs": [
+    {
+      "id": "rdpro-java-aliases-only",
+      "library": "rdpro_java",
+      "stage": "development",
+      "command": [
+        "/home/zshan011/apps/aideal/venv/bin/python",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/run_alias_proposals.py",
+        "--release",
+        "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+        "--model-config",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/MODEL_CONFIG.aliases_only.yaml",
+        "--preview",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/preview-compact/manifest.json",
+        "--output",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java/collection",
+        "--bank",
+        "rdpro_java",
+        "--preparation-progress",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/COMPACT_PROGRESS.json",
+        "--original-config",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/configs/aideal.yaml",
+        "--original-manifest",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/inputs/api_manifest.json",
+        "--expected-apis",
+        "69",
+        "--wait-preview-seconds",
+        "3600"
+      ],
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java/collection",
+      "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java/collection/DEVELOPMENT_COMPLETION.json"
+    }
+  ],
+  "purpose": "Generate unvalidated alias proposals for exactly the current Original microbenchmark API identities; do not install or evaluate aliases.",
+  "model_calls_policy": "One development worker; no calls until compact preview is ready and its exact Original API set verifies.",
+  "historical_proposals": "Earlier general-suggestion pilot remains in development/aliases/rdpro_java/proposals; it returned no aliases in two paid calls.",
+  "unsupported": {
+    "sedonadb": "The source-bound proposal adapter rejects registered SQL inventories. A native SQL registration/wrapper adapter and execution validation are required; no Rust alias is substituted."
+  }
+}

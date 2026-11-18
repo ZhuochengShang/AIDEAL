@@ -1,0 +1,670 @@
+{
+  "observed_at": "2026-11-18T18:05:09.391421+00:00",
+  "condition": "generated_readme",
+  "repair_rounds": 0,
+  "controller": {
+    "status": "RUNNING",
+    "pid": 2863977,
+    "started_at": "2026-11-18T17:20:55.235961+00:00",
+    "queue_sha256": "5861ad1636f7e20f6d0683c324f5eec031dd70d91941ddfd54bd8b6444377d8e",
+    "workers": 2,
+    "jobs": [
+      "mir_eval-generated-r0",
+      "thumbnailator-generated-r0",
+      "sedonadb-generated-r0",
+      "tslearn-generated-r0",
+      "rdpro_java-generated-r0",
+      "rdpro_scala-generated-r0",
+      "mdanalysis-generated-r0"
+    ]
+  },
+  "controller_pid_live": true,
+  "processes": [
+    {
+      "pid": 2863977,
+      "state": "S",
+      "scripts": [
+        "start_generated.py"
+      ],
+      "spec_basenames": [],
+      "started_at": "2026-11-18T17:20:54.780000+00:00"
+    },
+    {
+      "pid": 2879744,
+      "state": "S",
+      "scripts": [
+        "generated_readme_r0.py"
+      ],
+      "spec_basenames": [
+        "tslearn.json"
+      ],
+      "started_at": "2026-11-18T17:34:44.410000+00:00"
+    },
+    {
+      "pid": 2903974,
+      "state": "S",
+      "scripts": [
+        "generated_readme_r0.py"
+      ],
+      "spec_basenames": [
+        "rdpro_scala.json"
+      ],
+      "started_at": "2026-11-18T17:59:28.130000+00:00"
+    }
+  ],
+  "banks": [
+    {
+      "bank": "mir_eval",
+      "status": "complete",
+      "selected": 178,
+      "recorded": 178,
+      "statuses": {
+        "pass": 119,
+        "fail": 59
+      },
+      "provider_blocked": 0,
+      "partial_checkpoint_lines": 0,
+      "usage_scope": "completed result metrics",
+      "usage": {
+        "input_tokens": 436815,
+        "output_tokens": 39441,
+        "llm_calls": 178,
+        "metric_rows_without_usage": 0
+      },
+      "actual_models": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 178,
+          "input_tokens": 436815,
+          "output_tokens": 39441,
+          "missing_usage_calls": 0
+        }
+      },
+      "error_categories": {
+        "runtime": 59
+      },
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval",
+      "completion": {
+        "condition": "generated_readme",
+        "status": "complete",
+        "selected": 178,
+        "recorded": 178,
+        "passes": 119,
+        "score_with_infra": 0.669,
+        "score": 0.669,
+        "updated_at": "2026-11-18T17:33:34.473936+00:00",
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/result.json",
+          "sha256": "511553e98120dfe51f15c1d60b05d0b86f34d247dd7348577d123d8f00c6f704"
+        },
+        "launch": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/GENERATED_LAUNCH.json",
+          "sha256": "8f56d14faab8417f2a5890888968e16663132795cff5eaed823082d76f25f660"
+        }
+      },
+      "state": {
+        "job": "mir_eval-generated-r0",
+        "library": "mir_eval",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-18T17:20:56.156734+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "912dedbca63294d6356aa7a373b384ab36ce6ddead82804f7063e47c7320ddc3",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/completion.json",
+        "artifact_sha256": "de9d783967537154d60cf8c530b5e16141df8aa924c2c3764031044efff74bef",
+        "finished_at": "2026-11-18T17:33:34.963509+00:00"
+      },
+      "result_summary": {
+        "check": "comprehension",
+        "mode": "execute",
+        "doc_source": "aideal",
+        "score_scope": "selected_apis",
+        "passed": false,
+        "score": 0.669,
+        "score_with_infra": 0.669,
+        "infra_excluded": 0,
+        "run": {
+          "run_id": "20261118-172101Z",
+          "api_count": 178,
+          "selected_api_count": 178,
+          "attempted_api_count": 178,
+          "remaining_api_count": 0,
+          "complete": true,
+          "stopped_on_provider_error": false,
+          "manifest_api_count": 178,
+          "max_fix_rounds": 0,
+          "class_context": false,
+          "timeout_s": 300,
+          "wall_s": 751.2,
+          "checkpoint": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/execution/comprehension_progress.jsonl",
+          "resumed_apis": 0,
+          "manifest_sha256": "db70ac0f38d34361a0c42ee3399533cae045f9091e2b9d11568b9d414d1dbd57",
+          "document_sha256": "2621e3d84a84727bf0702ff8b3e9500aeea7c87986143eef2d99c5c51663caf0",
+          "experiment_fingerprint": "985e8ba2d4a5a6cd6389ca1cc8bb55b78895ca714691ae92121b26aa5155b273",
+          "doc_scope": "relevant",
+          "full_doc": false,
+          "doc_chars": 646595
+        }
+      },
+      "result_matches_completion": true,
+      "artifacts": {
+        "completion.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/completion.json",
+          "sha256": "de9d783967537154d60cf8c530b5e16141df8aa924c2c3764031044efff74bef",
+          "bytes": 718
+        },
+        "result.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/result.json",
+          "sha256": "511553e98120dfe51f15c1d60b05d0b86f34d247dd7348577d123d8f00c6f704",
+          "bytes": 577435
+        },
+        "REPORT.md": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/REPORT.md",
+          "sha256": "017ae93b8687818e8c23829b08c9e5d09c6bd1cb89d51dfb7dc112227db1e352",
+          "bytes": 28770
+        },
+        "GENERATED_LAUNCH.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/GENERATED_LAUNCH.json",
+          "sha256": "8f56d14faab8417f2a5890888968e16663132795cff5eaed823082d76f25f660",
+          "bytes": 4325
+        }
+      },
+      "report_text": "# Fix-loop report \u2014 result\n\n_Generated 2026-11-18 09:33 by `aideal fix-report`._\n\n- kind: **comprehension**  \u00b7  run_id: `20261118-172101Z`  \u00b7  models: audience=google:gemini-3.1-flash-lite, fixer=google:gemini-3.1-flash-lite\n- pass **119/178** raw (66.9%)  \u00b7  scored **119/178** (66.9%) after excluding 0 infra\n- wall 0.21 h  \u00b7  tokens in 436,815 / out 39,441 \u00b7  llm calls 178  \u00b7  max_fix_rounds 0\n- pass-by-round: r0:119  \u00b7  **0 rescued by the fix loop** (pass@0 = 119)\n\n## Failure clusters (one issue, many APIs)\n\n_Current failures grouped by normalized error signature (identifiers masked). Fixing the top cluster's root cause pays across all its APIs._\n\n- **19x** [runtime] UnboundLocalError: cannot access local variable <name> where it is not associated with a value\n  - `python:mir_eval.alignment.evaluate`, `python:mir_eval.chord.directional_hamming_distance`, `python:mir_eval.segment.detection`, `python:mir_eval.segment.deviation`, `python:mir_eval.segment.mutual_information`, `python:mir_eval.segment.pairwise`, `python:mir_eval.segment.rand_index`, `python:mir_eval.segment.validate_structure`, `python:mir_eval.segment.vmeasure`, `python:mir_eval.transcription.evaluate`, `python:mir_eval.transcription.match_note_offsets`, `python:mir_eval.transcription.match_note_onsets`, `python:mir_eval.transcription.offset_precision_recall_f1`, `python:mir_eval.transcription.onset_precision_recall_f1` \u2026\n- **6x** [runtime] AssertionError:\n  - `python:mir_eval.chord.evaluate`, `python:mir_eval.chord.reduce_extended_quality`, `python:mir_eval.separation.bss_eval_images`, `python:mir_eval.separation.bss_eval_images_framewise`, `python:mir_eval.separation.evaluate`, `python:mir_eval.util.deprecated`\n- **4x** [runtime] ValueError: <name> is not in the form <name> or <name>\n  - `python:mir_eval.key.evaluate`, `python:mir_eval.key.validate`, `python:mir_eval.key.validate_key`, `python:mir_eval.key.weighted_score`\n- **4x** [runtime] TypeError: object of type <name> has no len()\n  - `python:mir_eval.pattern.first_n_target_proportion_R`, `python:mir_eval.pattern.occurrence_FPR`, `python:mir_eval.pattern.three_layer_FPR`, `python:mir_eval.pattern.validate`\n- **3x** [runtime] ValueError: A frequency of 0.0 was found which is less than the minimum allowable value <name> min_freq = 20.0 (did you supply frequency val\n  - `python:mir_eval.multipitch.evaluate`, `python:mir_eval.multipitch.metrics`, `python:mir_eval.util.validate_frequencies`\n- **3x** [runtime] FileNotFoundError: [Errno 2] No such file or directory: <name>\n  - `python:mir_eval.pattern.establishment_FPR`, `python:mir_eval.pattern.evaluate`, `python:mir_eval.pattern.first_n_three_layer_P`\n- **2x** [runtime] AttributeError: <name> object has no attribute <name>\n  - `python:mir_eval.chord.seg`, `python:mir_eval.display.IntervalFormatter`\n- **2x** [runtime] ValueError: Expected 2 columns, got 1 at /home/zshan011/apps/aideal/studies/<num>-11-17-latest-stable-canonical/sources/mir_eval/tests/data/\n  - `python:mir_eval.io.load_delimited`, `python:mir_eval.io.load_labeled_events`\n- **1x** [runtime] AssertionError: Expected <name>, got C:maj(7)/5\n  - `python:mir_eval.chord.join`\n- **1x** [runtime] TypeError: only length-1 arrays can be converted to Python scalars\n  - `python:mir_eval.display.IntervalFormatter.__call__`\n- **1x** [runtime] AttributeError: module <name> has no attribute <name>\n  - `python:mir_eval.display.events`\n- **1x** [runtime] AssertionError: Ticker did not set y-axis to MIDI note integer values\n  - `python:mir_eval.display.ticker_pitch`\n\n## Why each API fails (59 failing)\n\n### `python:mir_eval.alignment.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/alignment.py:312`\n- last error: UnboundLocalError: cannot access local variable 'ref_events' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_events' where it is not associated with a value\n\n### `python:mir_eval.chord.directional_hamming_distance` \u2014 runtime\n\n- canonical source: `source/mir_eval/chord.py:1358`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.chord.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/chord.py:1524`\n- last error: AssertionError:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError:\n\n### `python:mir_eval.chord.join` \u2014 runtime\n\n- canonical source: `source/mir_eval/chord.py:435`\n- last error: AssertionError: Expected 'C:maj7/5', got C:maj(7)/5\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError: Expected 'C:maj7/5', got C:maj(7)/5\n\n### `python:mir_eval.chord.reduce_extended_quality` \u2014 runtime\n\n- canonical source: `source/mir_eval/chord.py:318`\n- last error: AssertionError:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError:\n\n### `python:mir_eval.chord.seg` \u2014 runtime\n\n- canonical source: `source/mir_eval/chord.py:1460` \u00b7 reached: `source/mir_eval/chord.py:1484`, `source/mir_eval/chord.py:1457`, `source/mir_eval/chord.py:1389`\n- last error: AttributeError: 'tuple' object has no attribute 'ndim'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AttributeError: 'tuple' object has no attribute 'ndim'\n\n### `python:mir_eval.display.IntervalFormatter` \u2014 runtime\n\n- canonical source: `source/mir_eval/display.py:364`\n- last error: AttributeError: 'IntervalFormatter' object has no attribute 'base'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AttributeError: 'IntervalFormatter' object has no attribute 'base'\n\n### `python:mir_eval.display.IntervalFormatter.__call__` \u2014 runtime\n\n- canonical source: `source/mir_eval/display.py:379` \u00b7 reached: `source/mir_eval/display.py:377`\n- last error: TypeError: only length-1 arrays can be converted to Python scalars\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] TypeError: only length-1 arrays can be converted to Python scalars\n\n### `python:mir_eval.display.events` \u2014 runtime\n\n- canonical source: `source/mir_eval/display.py:429`\n- last error: AttributeError: module 'matplotlib.pyplot' has no attribute 'LineCollection'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AttributeError: module 'matplotlib.pyplot' has no attribute 'LineCollection'\n\n### `python:mir_eval.display.ticker_pitch` \u2014 runtime\n\n- canonical source: `source/mir_eval/display.py:981`\n- last error: AssertionError: Ticker did not set y-axis to MIDI note integer values\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError: Ticker did not set y-axis to MIDI note integer values\n\n### `python:mir_eval.io.load_delimited` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:32` \u00b7 reached: `source/mir_eval/io.py:98`\n- last error: ValueError: Expected 2 columns, got 1 at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.txt:1:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: Expected 2 columns, got 1 at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.\n\n### `python:mir_eval.io.load_intervals` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:206` \u00b7 reached: `source/mir_eval/io.py:106`, `source/mir_eval/io.py:234`, `source/mir_eval/io.py:108`\n- last error: ValueError: Couldn't convert value 0.7353 N using float found at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/chord/ref00.lab:1:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: Couldn't convert value 0.7353 N using float found at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eva\n\n### `python:mir_eval.io.load_key` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:497`\n- last error: AssertionError: Test fixture tests/data/key/test_key.txt not found.\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError: Test fixture tests/data/key/test_key.txt not found.\n\n### `python:mir_eval.io.load_labeled_events` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:162` \u00b7 reached: `source/mir_eval/io.py:193`, `source/mir_eval/io.py:98`\n- last error: ValueError: Expected 2 columns, got 1 at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.txt:1:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: Expected 2 columns, got 1 at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.\n\n### `python:mir_eval.io.load_patterns` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:331`\n- last error: AssertionError: Test fixture tests/data/patterns/example.txt not found, cannot verify load_patterns.\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError: Test fixture tests/data/patterns/example.txt not found, cannot verify load_patterns.\n\n### `python:mir_eval.io.load_tempo` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:542`\n- last error: FileNotFoundError: Test fixture tests/data/tempo/mirex_tempo.txt not found.\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] FileNotFoundError: Test fixture tests/data/tempo/mirex_tempo.txt not found.\n\n### `python:mir_eval.io.load_valued_intervals` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:448` \u00b7 reached: `source/mir_eval/io.py:106`, `source/mir_eval/io.py:480`, `source/mir_eval/io.py:108`\n- last error: ValueError: Couldn't convert value N using float found at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/chord/ref00.lab:1:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: Couldn't convert value N using float found at /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests\n\n### `python:mir_eval.io.load_wav` \u2014 runtime\n\n- canonical source: `source/mir_eval/io.py:409` \u00b7 reached: `source/mir_eval/__init__.py:247`, `source/mir_eval/util.py:960`, `source/mir_eval/io.py:432`\n- last error: ValueError: File format b'5.98' not understood. Only 'RIFF', 'RIFX', and 'RF64' supported.\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: File format b'5.98' not understood. Only 'RIFF', 'RIFX', and 'RF64' supported.\n\n### `python:mir_eval.key.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/key.py:184` \u00b7 reached: `source/mir_eval/key.py:212`, `source/mir_eval/util.py:889`, `source/mir_eval/key.py:152`\n- last error: ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n\n### `python:mir_eval.key.validate` \u2014 runtime\n\n- canonical source: `source/mir_eval/key.py:77` \u00b7 reached: `source/mir_eval/key.py:89`, `source/mir_eval/key.py:57`\n- last error: ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n\n### `python:mir_eval.key.validate_key` \u2014 runtime\n\n- canonical source: `source/mir_eval/key.py:46` \u00b7 reached: `source/mir_eval/key.py:57`\n- last error: ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n\n### `python:mir_eval.key.weighted_score` \u2014 runtime\n\n- canonical source: `source/mir_eval/key.py:116` \u00b7 reached: `source/mir_eval/key.py:152`, `source/mir_eval/key.py:89`, `source/mir_eval/key.py:57`\n- last error: ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: 'C:maj' is not in the form '(key) (mode)' or 'X'\n\n### `python:mir_eval.multipitch.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/multipitch.py:479` \u00b7 reached: `source/mir_eval/multipitch.py:529`, `source/mir_eval/util.py:878`, `source/mir_eval/multipitch.py:409`\n- last error: ValueError: A frequency of 0.0 was found which is less than the minimum allowable value of min_freq = 20.0 (did you supply frequency values in Hz?)\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: A frequency of 0.0 was found which is less than the minimum allowable value of min_freq = 20.0 (did you supply frequency values in Hz?)\n\n### `python:mir_eval.multipitch.metrics` \u2014 runtime\n\n- canonical source: `source/mir_eval/multipitch.py:349` \u00b7 reached: `source/mir_eval/multipitch.py:409`, `source/mir_eval/multipitch.py:92`, `source/mir_eval/util.py:824`\n- last error: ValueError: A frequency of 0.0 was found which is less than the minimum allowable value of min_freq = 20.0 (did you supply frequency values in Hz?)\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: A frequency of 0.0 was found which is less than the minimum allowable value of min_freq = 20.0 (did you supply frequency values in Hz?)\n\n### `python:mir_eval.pattern.establishment_FPR` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:238` \u00b7 reached: `source/mir_eval/io.py:380`, `source/mir_eval/io.py:26`\n- last error: FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/pattern/ref_pattern.txt'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/pattern/ref_pattern.txt'\n\n### `python:mir_eval.pattern.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:597` \u00b7 reached: `source/mir_eval/io.py:380`, `source/mir_eval/io.py:26`\n- last error: FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/pattern/ref.txt'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/pattern/ref.txt'\n\n### `python:mir_eval.pattern.first_n_target_proportion_R` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:554` \u00b7 reached: `source/mir_eval/pattern.py:585`, `source/mir_eval/pattern.py:106`\n- last error: TypeError: object of type 'float' has no len()\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] TypeError: object of type 'float' has no len()\n\n### `python:mir_eval.pattern.first_n_three_layer_P` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:509` \u00b7 reached: `source/mir_eval/io.py:380`, `source/mir_eval/io.py:26`\n- last error: FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/pattern/ref_pattern.txt'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/pattern/ref_pattern.txt'\n\n### `python:mir_eval.pattern.occurrence_FPR` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:299` \u00b7 reached: `source/mir_eval/pattern.py:346`, `source/mir_eval/pattern.py:106`\n- last error: TypeError: object of type 'float' has no len()\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] TypeError: object of type 'float' has no len()\n\n### `python:mir_eval.pattern.standard_FPR` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:171`\n- last error: NameError: name 'pattern_reference_file' is not defined\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] NameError: name 'pattern_reference_file' is not defined\n\n### `python:mir_eval.pattern.three_layer_FPR` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:382` \u00b7 reached: `source/mir_eval/pattern.py:410`, `source/mir_eval/pattern.py:106`\n- last error: TypeError: object of type 'float' has no len()\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] TypeError: object of type 'float' has no len()\n\n### `python:mir_eval.pattern.validate` \u2014 runtime\n\n- canonical source: `source/mir_eval/pattern.py:81` \u00b7 reached: `source/mir_eval/pattern.py:106`\n- last error: TypeError: object of type 'float' has no len()\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] TypeError: object of type 'float' has no len()\n\n### `python:mir_eval.segment.detection` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:168`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.segment.deviation` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:252`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.segment.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:1181` \u00b7 reached: `source/mir_eval/util.py:319`\n- last error: ValueError: operands could not be broadcast together with shapes (4,) (4,2)\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: operands could not be broadcast together with shapes (4,) (4,2)\n\n### `python:mir_eval.segment.mutual_information` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:869`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.segment.pairwise` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:310`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.segment.rand_index` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:413`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.segment.validate_structure` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:121`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.segment.vmeasure` \u2014 runtime\n\n- canonical source: `source/mir_eval/segment.py:1100`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.separation.bss_eval_images` \u2014 runtime\n\n- canonical source: `source/mir_eval/separation.py:373`\n- last error: AssertionError:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError:\n\n### `python:mir_eval.separation.bss_eval_images_framewise` \u2014 runtime\n\n- canonical source: `source/mir_eval/separation.py:508`\n- last error: AssertionError:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError:\n\n### `python:mir_eval.separation.bss_eval_sources_framewise` \u2014 runtime\n\n- canonical source: `source/mir_eval/separation.py:261`\n- last error: AssertionError: Expected shape (2, -1), got (2, 1)\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError: Expected shape (2, -1), got (2, 1)\n\n### `python:mir_eval.separation.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/separation.py:854`\n- last error: AssertionError:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError:\n\n### `python:mir_eval.transcription.average_overlap_ratio` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:592`\n- last error: TypeError: validate_intervals() missing 1 required positional argument: 'est_intervals'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] TypeError: validate_intervals() missing 1 required positional argument: 'est_intervals'\n\n### `python:mir_eval.transcription.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:785`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription.match_note_offsets` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:170`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription.match_note_onsets` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:263`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription.offset_precision_recall_f1` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:706`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription.onset_precision_recall_f1` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:644`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription.precision_recall_f1_overlap` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:477` \u00b7 reached: `source/mir_eval/transcription.py:566`, `source/mir_eval/transcription.py:143`\n- last error: ValueError: Reference contains at least one non-positive pitch value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: Reference contains at least one non-positive pitch value\n\n### `python:mir_eval.transcription.validate` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:117`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription.validate_intervals` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription.py:148`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription_velocity.evaluate` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription_velocity.py:359`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription_velocity.match_notes` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription_velocity.py:107`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.transcription_velocity.precision_recall_f1_overlap` \u2014 runtime\n\n- canonical source: `source/mir_eval/transcription_velocity.py:230`\n- last error: UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] UnboundLocalError: cannot access local variable 'ref_intervals' where it is not associated with a value\n\n### `python:mir_eval.util.adjust_events` \u2014 runtime\n\n- canonical source: `source/mir_eval/util.py:359`\n- last error: TypeError: '>=' not supported between instances of 'tuple' and 'float'\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] TypeError: '>=' not supported between instances of 'tuple' and 'float'\n\n### `python:mir_eval.util.deprecated` \u2014 runtime\n\n- canonical source: `source/mir_eval/util.py:946`\n- last error: AssertionError:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] AssertionError:\n\n### `python:mir_eval.util.validate_frequencies` \u2014 runtime\n\n- canonical source: `source/mir_eval/util.py:794` \u00b7 reached: `source/mir_eval/util.py:824`\n- last error: ValueError: A frequency of 0.0 was found which is less than the minimum allowable value of min_freq = 20.0 (did you supply frequency values in Hz?)\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [runtime] ValueError: A frequency of 0.0 was found which is less than the minimum allowable value of min_freq = 20.0 (did you supply frequency values in Hz?)\n",
+      "report_copy_complete": true
+    },
+    {
+      "bank": "thumbnailator",
+      "status": "complete",
+      "selected": 225,
+      "recorded": 225,
+      "statuses": {
+        "pass": 83,
+        "fail": 142
+      },
+      "provider_blocked": 0,
+      "partial_checkpoint_lines": 0,
+      "usage_scope": "completed result metrics",
+      "usage": {
+        "input_tokens": 455856,
+        "output_tokens": 47313,
+        "llm_calls": 225,
+        "metric_rows_without_usage": 0
+      },
+      "actual_models": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 225,
+          "input_tokens": 455856,
+          "output_tokens": 47313,
+          "missing_usage_calls": 0
+        }
+      },
+      "error_categories": {
+        "compile": 101,
+        "runtime": 41
+      },
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator",
+      "completion": {
+        "condition": "generated_readme",
+        "status": "complete",
+        "selected": 225,
+        "recorded": 225,
+        "passes": 83,
+        "score_with_infra": 0.369,
+        "score": 0.369,
+        "updated_at": "2026-11-18T17:34:43.833971+00:00",
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/result.json",
+          "sha256": "d14e32bf536ad72f530eb414497513567850c17d0cdb2b64c38716051d7214b1"
+        },
+        "launch": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/GENERATED_LAUNCH.json",
+          "sha256": "8d0bd7dce86a0837d4d3fd2202335b0dcab51d0afc755d0a22627d8f36555321"
+        }
+      },
+      "state": {
+        "job": "thumbnailator-generated-r0",
+        "library": "thumbnailator",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-18T17:20:56.156875+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "c1f1b6532de6e842f82677f70167ccc8aab682b5e75d588b84d028f2a33daaca",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/completion.json",
+        "artifact_sha256": "1b31023449667b748528ad555b445c0a36dc6ea30d030679942839a550bace0b",
+        "finished_at": "2026-11-18T17:34:44.326367+00:00"
+      },
+      "result_summary": {
+        "check": "comprehension",
+        "mode": "execute",
+        "doc_source": "aideal",
+        "score_scope": "selected_apis",
+        "passed": false,
+        "score": 0.369,
+        "score_with_infra": 0.369,
+        "infra_excluded": 0,
+        "run": {
+          "run_id": "20261118-172105Z",
+          "api_count": 225,
+          "selected_api_count": 225,
+          "attempted_api_count": 225,
+          "remaining_api_count": 0,
+          "complete": true,
+          "stopped_on_provider_error": false,
+          "manifest_api_count": 225,
+          "max_fix_rounds": 0,
+          "class_context": false,
+          "timeout_s": 300,
+          "wall_s": 816.1,
+          "checkpoint": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/execution/comprehension_progress.jsonl",
+          "resumed_apis": 0,
+          "manifest_sha256": "78ef404620983b2fcecd321054f136fb4dbbc39f3c93a9ef3213642f8acb794c",
+          "document_sha256": "befabacdc5b03271468da40df15e6fb77cccc460f2063bdba128cc80a66d1be3",
+          "experiment_fingerprint": "708b58cbdafa17bf537a782db629abb218485116518a41fddf564e59f4560b04",
+          "doc_scope": "relevant",
+          "full_doc": false,
+          "doc_chars": 535603
+        }
+      },
+      "result_matches_completion": true,
+      "artifacts": {
+        "completion.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/completion.json",
+          "sha256": "1b31023449667b748528ad555b445c0a36dc6ea30d030679942839a550bace0b",
+          "bytes": 727
+        },
+        "result.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/result.json",
+          "sha256": "d14e32bf536ad72f530eb414497513567850c17d0cdb2b64c38716051d7214b1",
+          "bytes": 875971
+        },
+        "REPORT.md": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/REPORT.md",
+          "sha256": "bf98ed6b385ed5e1d1aadfb5b259c3f1ba098c16bc57d5e6231ea7be463c6685",
+          "bytes": 43815
+        },
+        "GENERATED_LAUNCH.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/GENERATED_LAUNCH.json",
+          "sha256": "8d0bd7dce86a0837d4d3fd2202335b0dcab51d0afc755d0a22627d8f36555321",
+          "bytes": 4472
+        }
+      },
+      "report_text": "# Fix-loop report \u2014 result\n\n_Generated 2026-11-18 09:34 by `aideal fix-report`._\n\n- kind: **comprehension**  \u00b7  run_id: `20261118-172105Z`  \u00b7  models: audience=google:gemini-3.1-flash-lite, fixer=google:gemini-3.1-flash-lite\n- pass **83/225** raw (36.9%)  \u00b7  scored **83/225** (36.9%) after excluding 0 infra\n- wall 0.23 h  \u00b7  tokens in 455,856 / out 47,313 \u00b7  llm calls 225  \u00b7  max_fix_rounds 0\n- pass-by-round: r0:83  \u00b7  **0 rescued by the fix loop** (pass@0 = 83)\n\n## Failure clusters (one issue, many APIs)\n\n_Current failures grouped by normalized error signature (identifiers masked). Fixing the top cluster's root cause pays across all its APIs._\n\n- **9x** [runtime] IllegalStateException: Maker not ready to make thumbnail.\n  - `java:net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker.keepAspectRatio`, `java:net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker.make`, `java:net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker.size`, `java:net.coobird.thumbnailator.makers.ThumbnailMaker`, `java:net.coobird.thumbnailator.makers.ThumbnailMaker.defaultImageType`, `java:net.coobird.thumbnailator.makers.ThumbnailMaker.defaultResizer`, `java:net.coobird.thumbnailator.makers.ThumbnailMaker.defaultResizerFactory`, `java:net.coobird.thumbnailator.makers.ThumbnailMaker.imageType`, `java:net.coobird.thumbnailator.makers.ThumbnailMaker.resizer`\n- **8x** [compile] <path>:<n>\n  - `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.fitWithinDimensions`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.keepAspectRatio`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.resizerFactory`, `java:net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation.getKey`, `java:net.coobird.thumbnailator.tasks.io.AbstractImageSink.preferredOutputFormatName`, `java:net.coobird.thumbnailator.tasks.io.AbstractImageSource.setThumbnailParameter`, `java:net.coobird.thumbnailator.tasks.io.InputStreamImageSource.setThumbnailParameter`, `java:net.coobird.thumbnailator.util.exif.ExifFilterUtils.getFilterForOrientation`\n- **7x** [compile] <path>:<n>: error:\n  - `java:net.coobird.thumbnailator.ThumbnailParameter.getHeightScalingFactor`, `java:net.coobird.thumbnailator.ThumbnailParameter.getWidthScalingFactor`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.build`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.region`, `java:net.coobird.thumbnailator.resizers.DefaultResizerFactory.getResizer`, `java:net.coobird.thumbnailator.resizers.configurations.Rendering.getKey`, `java:net.coobird.thumbnailator.tasks.StreamThumbnailTask.getDestination`\n- **6x** [compile] <path>:<n>: error: cannot\n  - `java:net.coobird.thumbnailator.ThumbnailParameter.getImageFilters`, `java:net.coobird.thumbnailator.ThumbnailParameter.getOutputFormat`, `java:net.coobird.thumbnailator.ThumbnailParameter.getSourceRegion`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder`, `java:net.coobird.thumbnailator.tasks.SourceSinkThumbnailTask.read`, `java:net.coobird.thumbnailator.tasks.io.URLImageSource.getSource`\n- **5x** [runtime] FileNotFoundException: /home/zshan011/apps/aideal/studies/<num>-11-17-latest-stable-canonical/ablation-<num>-11-18/generated-readme-r0/thumb\n  - `java:net.coobird.thumbnailator.Thumbnails.Builder.allowOverwrite`, `java:net.coobird.thumbnailator.Thumbnails.Builder.determineOutputFormat`, `java:net.coobird.thumbnailator.Thumbnails.Builder.outputQuality`, `java:net.coobird.thumbnailator.Thumbnails.Builder.useOriginalFormat`, `java:net.coobird.thumbnailator.tasks.io.FileImageSink.write`\n- **4x** [compile] <path>:<n>: error: cannot find\n  - `java:net.coobird.thumbnailator.Thumbnails.Builder.addFilters`, `java:net.coobird.thumbnailator.tasks.SourceSinkThumbnailTask`, `java:net.coobird.thumbnailator.tasks.ThumbnailTask.getParam`, `java:net.coobird.thumbnailator.util.exif.IfdStructure.getTag`\n- **4x** [compile] <path>:<n>: error: cannot fin\n  - `java:net.coobird.thumbnailator.Thumbnails.Builder.scalingMode`, `java:net.coobird.thumbnailator.tasks.StreamThumbnailTask.read`, `java:net.coobird.thumbnailator.tasks.io.OutputStreamImageSink`, `java:net.coobird.thumbnailator.util.exif.IfdStructure.isValue`\n- **4x** [runtime] IllegalStateException: The size nor the scaling factor has been set.\n  - `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.format`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.imageType`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.quality`, `java:net.coobird.thumbnailator.builders.ThumbnailParameterBuilder.resizer`\n- **4x** [compile] <path>:<n>: error: cannot find symbo\n  - `java:net.coobird.thumbnailator.geometry.Region.getSize`, `java:net.coobird.thumbnailator.resizers.BicubicResizer`, `java:net.coobird.thumbnailator.tasks.FileThumbnailTask`, `java:net.coobird.thumbnailator.tasks.io.URLImageSource`\n- **4x** [compile] <path>:<n>: error: canno\n  - `java:net.coobird.thumbnailator.name.ConsecutivelyNumberedFilenames`, `java:net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer`, `java:net.coobird.thumbnailator.tasks.SourceSinkThumbnailTask.write`, `java:net.coobird.thumbnailator.tasks.StreamThumbnailTask.getSource`\n- **3x** [compile] <path>:<n>: error: can\n  - `java:net.coobird.thumbnailator.ThumbnailParameter.fitWithinDimenions`, `java:net.coobird.thumbnailator.ThumbnailParameter.useExifOrientation`, `java:net.coobird.thumbnailator.util.exif.IfdStructure.getOffsetValue`\n- **3x** [compile] <path>:<n>: error: no su\n  - `java:net.coobird.thumbnailator.ThumbnailParameter.getOutputQuality`, `java:net.coobird.thumbnailator.builders.BufferedImageBuilder.build`, `java:net.coobird.thumbnailator.builders.BufferedImageBuilder.width`\n\n## Why each API fails (142 failing)\n\n### `java:net.coobird.thumbnailator.ThumbnailParameter.fitWithinDimenions` \u2014 compile\n\n- canonical source: `source/src/main/java/net/coobird/thumbnailator/ThumbnailParameter.java:980`\n- last error: ApiTest.java:58: error: can\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [compile] /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/execution/run_java_net.coo\n\n### `java:net.coobird.thumbnailator.ThumbnailParameter.getHeightScalingFactor` \u2014 compile\n\n- canonical source: `source/src/main/java/net/coobird/thumbnailator/ThumbnailParameter.java:840`\n- last error: ApiTest.java:53: error:\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [compile] /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/execution/run_java_net.coo\n\n### `java:net.coobird.thumbnailator.ThumbnailParameter.getImageFilters` \u2014 compile\n\n- canonical source: `source/src/main/java/net/coobird/thumbnailator/ThumbnailParameter.java:919`\n- last error: ApiTest.java:58: error: cannot",
+      "report_copy_complete": false
+    },
+    {
+      "bank": "sedonadb",
+      "status": "complete",
+      "selected": 217,
+      "recorded": 217,
+      "statuses": {
+        "fail": 117,
+        "pass": 100
+      },
+      "provider_blocked": 0,
+      "partial_checkpoint_lines": 0,
+      "usage_scope": "completed result metrics",
+      "usage": {
+        "input_tokens": 511581,
+        "output_tokens": 56231,
+        "llm_calls": 217,
+        "metric_rows_without_usage": 0
+      },
+      "actual_models": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 217,
+          "input_tokens": 511581,
+          "output_tokens": 56231,
+          "missing_usage_calls": 0
+        }
+      },
+      "error_categories": {
+        "unknown": 41,
+        "runtime": 76
+      },
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb",
+      "completion": {
+        "condition": "generated_readme",
+        "status": "complete",
+        "selected": 217,
+        "recorded": 217,
+        "passes": 100,
+        "score_with_infra": 0.461,
+        "score": 0.461,
+        "updated_at": "2026-11-18T17:46:25.139838+00:00",
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/result.json",
+          "sha256": "9ea2f26a59ec46fa43604cd015f6792681b3119375c155e6c4760423e0fd7ea2"
+        },
+        "launch": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/GENERATED_LAUNCH.json",
+          "sha256": "cd04f455b2749c41f6c6335d3910b7907b4ccf438a0f6cf0b492d2927440f6df"
+        }
+      },
+      "state": {
+        "job": "sedonadb-generated-r0",
+        "library": "sedonadb",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-18T17:33:35.167301+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "2dd1bf32ecb00e62f036337323122953818424ded7e64e6e155b6ec97ffd532c",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/completion.json",
+        "artifact_sha256": "c1a61dffe209c3344da00544dcb1ee357020f478e271a97b79bc9c16797044ee",
+        "finished_at": "2026-11-18T17:46:25.583223+00:00"
+      },
+      "result_summary": {
+        "check": "comprehension",
+        "mode": "execute",
+        "doc_source": "aideal",
+        "score_scope": "selected_apis",
+        "passed": false,
+        "score": 0.461,
+        "score_with_infra": 0.461,
+        "infra_excluded": 0,
+        "run": {
+          "run_id": "20261118-173346Z",
+          "api_count": 217,
+          "selected_api_count": 217,
+          "attempted_api_count": 217,
+          "remaining_api_count": 0,
+          "complete": true,
+          "stopped_on_provider_error": false,
+          "manifest_api_count": 217,
+          "max_fix_rounds": 0,
+          "class_context": false,
+          "timeout_s": 60,
+          "wall_s": 758.5,
+          "checkpoint": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/execution/comprehension_progress.jsonl",
+          "resumed_apis": 0,
+          "manifest_sha256": "2e8da0b20aca11ac7a96d011cd9d204010a480fc56f6245189fe53d074cd21d6",
+          "document_sha256": "ad3182ba06f504a27da5dae1bbfb9fa553fa7ed0841d06f03996eab0e01ef4de",
+          "experiment_fingerprint": "ba60481a332d0a4824b21c1d3fbb187752274b63a2588466cd3b78ee10f67b17",
+          "doc_scope": "relevant",
+          "full_doc": false,
+          "doc_chars": 690543
+        }
+      },
+      "result_matches_completion": true,
+      "artifacts": {
+        "completion.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/completion.json",
+          "sha256": "c1a61dffe209c3344da00544dcb1ee357020f478e271a97b79bc9c16797044ee",
+          "bytes": 718
+        },
+        "result.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/result.json",
+          "sha256": "9ea2f26a59ec46fa43604cd015f6792681b3119375c155e6c4760423e0fd7ea2",
+          "bytes": 748454
+        },
+        "REPORT.md": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/REPORT.md",
+          "sha256": "f636c39fe5cfaba2008f1ef07ab4fb666eb52af0e86dd26049b0d76df09f134f",
+          "bytes": 41318
+        },
+        "GENERATED_LAUNCH.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/GENERATED_LAUNCH.json",
+          "sha256": "cd04f455b2749c41f6c6335d3910b7907b4ccf438a0f6cf0b492d2927440f6df",
+          "bytes": 4325
+        }
+      },
+      "report_text": "# Fix-loop report \u2014 result\n\n_Generated 2026-11-18 09:46 by `aideal fix-report`._\n\n- kind: **comprehension**  \u00b7  run_id: `20261118-173346Z`  \u00b7  models: audience=google:gemini-3.1-flash-lite, fixer=google:gemini-3.1-flash-lite\n- pass **100/217** raw (46.1%)  \u00b7  scored **100/217** (46.1%) after excluding 0 infra\n- wall 0.21 h  \u00b7  tokens in 511,581 / out 56,231 \u00b7  llm calls 217  \u00b7  max_fix_rounds 0\n- pass-by-round: r0:100  \u00b7  **0 rescued by the fix loop** (pass@0 = 100)\n\n## Failure clusters (one issue, many APIs)\n\n_Current failures grouped by normalized error signature (identifiers masked). Fixing the top cluster's root cause pays across all its APIs._\n\n- **40x** [runtime] AssertionError\n  - `sql:RS_UpperLeftY`, `sql:ST_Affine`, `sql:ST_AsText`, `sql:ST_Boundary`, `sql:ST_Contains`, `sql:ST_Difference`, `sql:ST_EndPoint`, `sql:ST_Envelope`, `sql:ST_Envelope_Agg`, `sql:ST_Force3D`, `sql:ST_GeomCollFromText`, `sql:ST_GeomFromEWKB`, `sql:ST_GeomFromEWKT`, `sql:ST_InteriorRingN` \u2026\n- **23x** [unknown] args), self, File \"<path>\", line <n>, in sql df = DataFrame(self, self._impl.sql(sql)) sedonadb._lib.SedonaError: Error during planning: Inv\n  - `sql:RS_AsGeoTiff`, `sql:RS_BandPath`, `sql:RS_BandToDim`, `sql:RS_Clip`, `sql:RS_DimToBand`, `sql:RS_IsEmpty`, `sql:RS_MinConvexHull`, `sql:RS_PixelAsPolygon`, `sql:RS_ReplaceBandNoDataValue`, `sql:RS_ReprojectMatch`, `sql:RS_Resample`, `sql:RS_SetCRS`, `sql:RS_SetGeoReference`, `sql:RS_Slice` \u2026\n- **11x** [runtime] AttributeError: <name> object has no attribute <name>\n  - `sql:RS_BandPixelType`, `sql:RS_ConvexHull`, `sql:RS_Envelope`, `sql:RS_PixelAsCentroid`, `sql:RS_PixelAsPoint`, `sql:RS_RasterToWorldCoord`, `sql:RS_RasterToWorldCoordX`, `sql:RS_RasterToWorldCoordY`, `sql:RS_Shape`, `sql:ST_SimplifyPreserveTopology`, `sql:rs_ensureloaded`\n- **2x** [unknown] me.to_arrow_table(*args, **kwargs) File \"<path>\", line <n>, in to_arrow_table batches = self._impl.to_batches(schema) sedonadb._lib.SedonaEr\n  - `sql:RS_AsRaster`, `sql:RS_Value`\n- **2x** [unknown] s) File \"<path>\", line <n>, in to_arrow_table batches = self._impl.to_batches(schema) sedonadb._lib.SedonaError: Cannot evaluate spatial pre\n  - `sql:RS_Contains`, `sql:RS_Intersects`\n- **2x** [unknown] sql(query, **kwargs), self, File \"<path>\", line <n>, in sql df = DataFrame(self, self._impl.sql(sql)) sedonadb._lib.SedonaError: Error durin\n  - `sql:RS_GeoReference`, `sql:RS_WorldToRasterCoordY`\n- **2x** [runtime] TypeError: a bytes-like object is required, not <name>\n  - `sql:ST_DelaunayTriangles`, `sql:ST_MLineFromText`\n- **2x** [unknown] to_arrow_table result = self._frame.to_arrow_table(*args, **kwargs) File \"<path>\", line <n>, in to_arrow_table batches = self._impl.to_batch\n  - `sql:ST_X`, `sql:ST_Y`\n- **1x** [unknown] elf, File \"<path>\", line <n>, in sql df = DataFrame(self, self._impl.sql(sql)) sedonadb._lib.SedonaError: Error during planning: Invalid fun\n  - `sql:RS_BandIsNoData`\n- **1x** [runtime] AssertionError: Expected width 5, got 64\n  - `sql:RS_Example`\n- **1x** [unknown] **kwargs), self, File \"<path>\", line <n>, in sql df = DataFrame(self, self._impl.sql(sql)) sedonadb._lib.SedonaError: Error during planning:\n  - `sql:RS_FromGDALRaster`\n- **1x** [unknown] _arrow_table(*args, **kwargs) File \"<path>\", line <n>, in to_arrow_table batches = self._impl.to_batches(schema) sedonadb._lib.SedonaError:\n  - `sql:RS_SetValue`\n\n## Why each API fails (117 failing)\n\n### `sql:RS_AsGeoTiff` \u2014 unknown\n\n- canonical source: `source/docs/reference/sql/rs_asgeotiff.qmd:19`\n- last error: args), self,\n  File \"/home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/lib/python3.10/site-packages/sedonadb/context.py\", line 424, in sql\n    df = DataFrame(self, self._impl.sql(sql))\nsedonadb._lib.SedonaError: Error during planning: Invalid function 'rs_fromgeotiff'.\nDid you mean 'rs_asgeotiff'?\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [unknown] args), self,\n  File \"/home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/lib/python3.10/site-packages/sedonadb/context.py\", line 424, in sql\n    df = \n\n### `sql:RS_AsRaster` \u2014 unknown\n\n- canonical source: `source/docs/reference/sql/rs_asraster.qmd:19`\n- last error: me.to_arrow_table(*args, **kwargs)\n  File \"/home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/lib/python3.10/site-packages/sedonadb/dataframe.py\", line 1496, in to_arrow_table\n    batches = self._impl.to_batches(schema)",
+      "report_copy_complete": false
+    },
+    {
+      "bank": "tslearn",
+      "status": "running",
+      "selected": 362,
+      "recorded": 135,
+      "statuses": {
+        "pass": 90,
+        "fail": 45
+      },
+      "provider_blocked": 0,
+      "partial_checkpoint_lines": 0,
+      "usage_scope": "latest recorded checkpoint rows; in-flight calls excluded",
+      "usage": {
+        "input_tokens": 325850,
+        "output_tokens": 32982,
+        "llm_calls": 135,
+        "metric_rows_without_usage": 0
+      },
+      "actual_models": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 135,
+          "input_tokens": 325850,
+          "output_tokens": 32982,
+          "missing_usage_calls": 0
+        }
+      },
+      "error_categories": {
+        "runtime": 41,
+        "infra": 3,
+        "timeout": 1
+      },
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/tslearn",
+      "completion": {},
+      "state": {
+        "job": "tslearn-generated-r0",
+        "library": "tslearn",
+        "stage": "r0",
+        "status": "running",
+        "started_at": "2026-11-18T17:34:44.500264+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "b99e5896dc0b4c1c27c52ba40fd8f82d29fa40042e308a56ca93137f635d2915"
+      },
+      "result_summary": null,
+      "result_matches_completion": null,
+      "artifacts": {
+        "GENERATED_LAUNCH.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/tslearn/GENERATED_LAUNCH.json",
+          "sha256": "63a3fdafcfa7df26a9fd730a4c45f07a98c0cfcc3e6c75ea7ea840ef5318af49",
+          "bytes": 4309
+        }
+      }
+    },
+    {
+      "bank": "rdpro_java",
+      "status": "complete",
+      "selected": 69,
+      "recorded": 69,
+      "statuses": {
+        "fail": 64,
+        "pass": 5
+      },
+      "provider_blocked": 0,
+      "partial_checkpoint_lines": 0,
+      "usage_scope": "completed result metrics",
+      "usage": {
+        "input_tokens": 133382,
+        "output_tokens": 14820,
+        "llm_calls": 69,
+        "metric_rows_without_usage": 0
+      },
+      "actual_models": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 69,
+          "input_tokens": 133382,
+          "output_tokens": 14820,
+          "missing_usage_calls": 0
+        }
+      },
+      "error_categories": {
+        "compile": 63,
+        "runtime": 1
+      },
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java",
+      "completion": {
+        "condition": "generated_readme",
+        "status": "complete",
+        "selected": 69,
+        "recorded": 69,
+        "passes": 5,
+        "score_with_infra": 0.072,
+        "score": 0.072,
+        "updated_at": "2026-11-18T17:59:27.703230+00:00",
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/result.json",
+          "sha256": "340d15d7d0d392011947b1443bae359908f77c1d7e1a798d7483f0b1bd1d8f2f"
+        },
+        "launch": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/GENERATED_LAUNCH.json",
+          "sha256": "1d5149fc7fbc041e1bec355d2866f2474b83258133abd823e1f80cc1fa6794e6"
+        }
+      },
+      "state": {
+        "job": "rdpro_java-generated-r0",
+        "library": "rdpro_java",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-18T17:46:25.721387+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "4968d14a687d8619f160f2ad21f308410f42c16e299280e9622c08d54296aaff",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/completion.json",
+        "artifact_sha256": "b4633a61c61c000ed0839431f7ef8ff0ef26116ae271e25ab92af53fca6e6d4d",
+        "finished_at": "2026-11-18T17:59:28.109119+00:00"
+      },
+      "result_summary": {
+        "check": "comprehension",
+        "mode": "execute",
+        "doc_source": "aideal",
+        "score_scope": "selected_apis",
+        "passed": false,
+        "score": 0.072,
+        "score_with_infra": 0.072,
+        "infra_excluded": 0,
+        "run": {
+          "run_id": "20261118-174705Z",
+          "api_count": 69,
+          "selected_api_count": 69,
+          "attempted_api_count": 69,
+          "remaining_api_count": 0,
+          "complete": true,
+          "stopped_on_provider_error": false,
+          "manifest_api_count": 69,
+          "max_fix_rounds": 0,
+          "class_context": false,
+          "timeout_s": 600,
+          "wall_s": 724.9,
+          "checkpoint": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/comprehension_progress.jsonl",
+          "resumed_apis": 0,
+          "manifest_sha256": "f65e34ff07001a2289a0df3913cba7b677dbeba7ae3ce563d31e06546cf1a509",
+          "document_sha256": "d9b575907fa7df469489090fe01800ff9dec06a0c973ae702305fc5824411e54",
+          "experiment_fingerprint": "a5f5e300a83666afa4d3860b81cd249c90ca791ea753dc49776adf618c483b09",
+          "doc_scope": "relevant",
+          "full_doc": false,
+          "doc_chars": 152275
+        }
+      },
+      "result_matches_completion": true,
+      "artifacts": {
+        "completion.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/completion.json",
+          "sha256": "b4633a61c61c000ed0839431f7ef8ff0ef26116ae271e25ab92af53fca6e6d4d",
+          "bytes": 718
+        },
+        "result.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/result.json",
+          "sha256": "340d15d7d0d392011947b1443bae359908f77c1d7e1a798d7483f0b1bd1d8f2f",
+          "bytes": 343414
+        },
+        "REPORT.md": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/REPORT.md",
+          "sha256": "6e5747e4ae5523b44c9fa916eab205f00477a4729e24ca80c95ab42e852bd2ca",
+          "bytes": 33884
+        },
+        "GENERATED_LAUNCH.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/GENERATED_LAUNCH.json",
+          "sha256": "1d5149fc7fbc041e1bec355d2866f2474b83258133abd823e1f80cc1fa6794e6",
+          "bytes": 4423
+        }
+      },
+      "report_text": "# Fix-loop report \u2014 result\n\n_Generated 2026-11-18 09:59 by `aideal fix-report`._\n\n- kind: **comprehension**  \u00b7  run_id: `20261118-174705Z`  \u00b7  models: audience=google:gemini-3.1-flash-lite, fixer=google:gemini-3.1-flash-lite\n- pass **5/69** raw (7.2%)  \u00b7  scored **5/69** (7.2%) after excluding 0 infra\n- wall 0.2 h  \u00b7  tokens in 133,382 / out 14,820 \u00b7  llm calls 69  \u00b7  max_fix_rounds 0\n- pass-by-round: r0:5  \u00b7  **0 rescued by the fix loop** (pass@0 = 5)\n\n## Failure clusters (one issue, many APIs)\n\n_Current failures grouped by normalized error signature (identifiers masked). Fixing the top cluster's root cause pays across all its APIs._\n\n- **9x** [compile] <path>:<n>: error: cannot find symbol\n  - `java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata`, `java:edu.ucr.cs.bdlab.raptor.Intersections.getY`, `java:edu.ucr.cs.bdlab.raptor.PixelScale.getScaleX`, `java:edu.ucr.cs.bdlab.raptor.PixelScale.getScaleY`, `java:edu.ucr.cs.bdlab.raptor.PixelScale.getValues`, `java:edu.ucr.cs.bdlab.raptor.Statistics.accumulate`, `java:edu.ucr.cs.bdlab.raptor.Statistics.setNumBands`, `java:edu.ucr.cs.bdlab.raptor.TiePoint`, `java:edu.ucr.cs.bdlab.raptor.TiePoint.set`\n- **3x** [compile] <path>:<n>: error: illegal start of ex\n  - `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getValueOffset`, `java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata2CRSAdapter`, `java:edu.ucr.cs.bdlab.raptor.Intersections.getFeatureID`\n- **3x** [compile] <path>:<n>: error: constructor GeoKeyEntry i\n  - `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.hashCode`, `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.setCount`, `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.setKeyID`\n- **3x** [compile] <path>:<n>: error: no suitable constructor fo\n  - `java:edu.ucr.cs.bdlab.raptor.PixelScale.hashCode`, `java:edu.ucr.cs.bdlab.raptor.PixelScale.toString`, `java:edu.ucr.cs.bdlab.raptor.TiePoint.getValueAt`\n- **2x** [compile] <path>:<n>: error: constructor GeoKeyEntry\n  - `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.compareTo`, `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getValues`\n- **2x** [compile] <path>:<n>: error: illegal start of expressi\n  - `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getKeyID`, `java:edu.ucr.cs.bdlab.raptor.PixelScale.getScaleZ`\n- **2x** [compile] <path>:<n>: error: constructor Geo\n  - `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.setTiffTagLocation`, `java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.hasPixelScales`\n- **2x** [compile] <path>:<n>: error: constru\n  - `java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision`, `java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation`\n- **2x** [compile] <path>:<n>: error: constructor\n  - `java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision`, `java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints`\n- **2x** [compile] <path>:<n>: error: no suitable constructor foun\n  - `java:edu.ucr.cs.bdlab.raptor.PixelScale.equals`, `java:edu.ucr.cs.bdlab.raptor.TiePoint.toString`\n- **2x** [compile] <path>:<n>: error: no suitable constructor found\n  - `java:edu.ucr.cs.bdlab.raptor.PixelScale.isSet`, `java:edu.ucr.cs.bdlab.raptor.TiePoint.equals`\n- **1x** [compile] <path>:<n>: error: keyID has private access in GeoKey\n  - `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry`\n\n## Why each API fails (64 failing)\n\n### `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry` \u2014 compile\n\n- canonical source: `source/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoKeyEntry.java:56`\n- last error: ApiTest.java:50: error: keyID has private access in GeoKey\n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [compile] /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs\n\n### `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.compareTo` \u2014 compile\n\n- canonical source: `source/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoKeyEntry.java:109`\n- last error: ApiTest.java:41: error: constructor GeoKeyEntry \n- loop trajectory: **PROGRESSING (error changed every round, 1 rounds)**\n- rounds:\n  - r0 [compile] /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs\n\n### `java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.equals` \u2014 compile\n\n- canonical source: `source/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoKeyEntry.java:27`\n- last error: ApiTest.java:41: error: constructor GeoKeyEntry in ",
+      "report_copy_complete": false
+    },
+    {
+      "bank": "rdpro_scala",
+      "status": "running",
+      "selected": 261,
+      "recorded": 21,
+      "statuses": {
+        "fail": 20,
+        "pass": 1
+      },
+      "provider_blocked": 0,
+      "partial_checkpoint_lines": 0,
+      "usage_scope": "latest recorded checkpoint rows; in-flight calls excluded",
+      "usage": {
+        "input_tokens": 47939,
+        "output_tokens": 4068,
+        "llm_calls": 21,
+        "metric_rows_without_usage": 0
+      },
+      "actual_models": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 21,
+          "input_tokens": 47939,
+          "output_tokens": 4068,
+          "missing_usage_calls": 0
+        }
+      },
+      "error_categories": {
+        "compile": 19,
+        "runtime": 1
+      },
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala",
+      "completion": {},
+      "state": {
+        "job": "rdpro_scala-generated-r0",
+        "library": "rdpro_scala",
+        "stage": "r0",
+        "status": "running",
+        "started_at": "2026-11-18T17:59:28.261957+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "b87e4661bd73d83eeba8fadf5bda0ccc63da1024b615873bf088c3b5a809bf47"
+      },
+      "result_summary": null,
+      "result_matches_completion": null,
+      "artifacts": {
+        "GENERATED_LAUNCH.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala/GENERATED_LAUNCH.json",
+          "sha256": "7cfe7cfd3f83aafd3203f88edaa8e05f315f7628cb6ab884308e987463389081",
+          "bytes": 4440
+        }
+      }
+    },
+    {
+      "bank": "mdanalysis",
+      "status": "pending",
+      "selected": 1538,
+      "recorded": 0,
+      "statuses": {},
+      "provider_blocked": 0,
+      "partial_checkpoint_lines": 0,
+      "usage_scope": "latest recorded checkpoint rows; in-flight calls excluded",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "llm_calls": 0,
+        "metric_rows_without_usage": 0
+      },
+      "actual_models": {},
+      "error_categories": {},
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis",
+      "completion": {},
+      "state": {},
+      "result_summary": null,
+      "result_matches_completion": null,
+      "artifacts": {
+        "GENERATED_LAUNCH.json": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/GENERATED_LAUNCH.json",
+          "sha256": "55e09dc1d7fac3f8c9550b693175be6c55a55659f9377a3d44af84ac0dc33553",
+          "bytes": 4396
+        }
+      }
+    }
+  ],
+  "note": "Read-only snapshot. No active calls are included in partial token totals; no jobs or frozen inputs changed."
+}

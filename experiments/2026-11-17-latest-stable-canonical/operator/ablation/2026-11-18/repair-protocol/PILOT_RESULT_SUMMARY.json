@@ -1,0 +1,245 @@
+{
+  "scope": "same-bank mir_eval transcription mechanism pilot; one target, one trial per condition",
+  "state": {
+    "status": "COMPLETE",
+    "pid": 2910730,
+    "workers": 1,
+    "started_at": "2026-11-18T18:03:40.592956+00:00",
+    "queue_sha256": "68b2beacaea421358c3fc1798bec4b24abd783dc1797b7a759cbed2b7b452c25",
+    "scope": "same-bank-mir-transcription-mechanism-pilot",
+    "automatic_full_bank_expansion": false,
+    "finished_at": "2026-11-18T18:04:50.163571+00:00",
+    "outcomes": {
+      "mir-transcription-original-r0-r2": "complete",
+      "mir-transcription-error-hints-r0-r2": "complete"
+    }
+  },
+  "conditions": {
+    "original": {
+      "status": "complete",
+      "cumulative_passes": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 0
+      },
+      "terminal_counts": {
+        "pass": 0,
+        "fail": 1,
+        "infra": 0,
+        "provider_pending": 0,
+        "generation_invalid": 0
+      },
+      "rounds": [
+        {
+          "round": 0,
+          "outcome": "fail",
+          "error": "ValueError: Reference intervals and pitches have different lengths."
+        },
+        {
+          "round": 1,
+          "outcome": "fail",
+          "error": "ValueError: Reference contains at least one non-positive pitch value"
+        },
+        {
+          "round": 2,
+          "outcome": "fail",
+          "error": "IndexError: boolean index did not match indexed array along axis 0; size of axis is 4 but size of corresponding boolean axis is 5"
+        }
+      ],
+      "calls": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/provider.json",
+          "status": "returned",
+          "usage": {
+            "calls": 1,
+            "input_tokens": 2234,
+            "output_tokens": 200,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 1,
+                "input_tokens": 2234,
+                "output_tokens": 200,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "provider_wall_s": 4.229252576828003,
+          "execution_wall_s": 1.807798147201538,
+          "exit_code": 1,
+          "hint_in_prompt": false,
+          "hint_emitted": false
+        },
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/provider.json",
+          "status": "returned",
+          "usage": {
+            "calls": 1,
+            "input_tokens": 3194,
+            "output_tokens": 325,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 1,
+                "input_tokens": 3194,
+                "output_tokens": 325,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "provider_wall_s": 2.435114622116089,
+          "execution_wall_s": 1.6048409938812256,
+          "exit_code": 1,
+          "hint_in_prompt": false,
+          "hint_emitted": false
+        },
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/apis/cba41e1bbc2f3a8026d1/round_02/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/provider.json",
+          "status": "returned",
+          "usage": {
+            "calls": 1,
+            "input_tokens": 3336,
+            "output_tokens": 316,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 1,
+                "input_tokens": 3336,
+                "output_tokens": 316,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "provider_wall_s": 1.7407019138336182,
+          "execution_wall_s": 1.6657142639160156,
+          "exit_code": 1,
+          "hint_in_prompt": false,
+          "hint_emitted": false
+        }
+      ],
+      "total_input_tokens": 8764,
+      "total_output_tokens": 841,
+      "provider_wall_s": 8.40506911277771,
+      "execution_wall_s": 5.078353404998779
+    },
+    "error_hints": {
+      "status": "complete",
+      "cumulative_passes": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 0
+      },
+      "terminal_counts": {
+        "pass": 0,
+        "fail": 1,
+        "infra": 0,
+        "provider_pending": 0,
+        "generation_invalid": 0
+      },
+      "rounds": [
+        {
+          "round": 0,
+          "outcome": "fail",
+          "error": "ValueError: Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array."
+        },
+        {
+          "round": 1,
+          "outcome": "fail",
+          "error": "ValueError: Reference contains at least one non-positive pitch value"
+        },
+        {
+          "round": 2,
+          "outcome": "fail",
+          "error": "IndexError: boolean index did not match indexed array along axis 0; size of axis is 4 but size of corresponding boolean axis is 5"
+        }
+      ],
+      "calls": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/provider.json",
+          "status": "returned",
+          "usage": {
+            "calls": 1,
+            "input_tokens": 2234,
+            "output_tokens": 200,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 1,
+                "input_tokens": 2234,
+                "output_tokens": 200,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "provider_wall_s": 4.086434602737427,
+          "execution_wall_s": 1.6382861137390137,
+          "exit_code": 1,
+          "hint_in_prompt": false,
+          "hint_emitted": true
+        },
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/provider.json",
+          "status": "returned",
+          "usage": {
+            "calls": 1,
+            "input_tokens": 3320,
+            "output_tokens": 311,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 1,
+                "input_tokens": 3320,
+                "output_tokens": 311,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "provider_wall_s": 2.852976083755493,
+          "execution_wall_s": 1.6324515342712402,
+          "exit_code": 1,
+          "hint_in_prompt": true,
+          "hint_emitted": false
+        },
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_02/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/provider.json",
+          "status": "returned",
+          "usage": {
+            "calls": 1,
+            "input_tokens": 3351,
+            "output_tokens": 355,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 1,
+                "input_tokens": 3351,
+                "output_tokens": 355,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "provider_wall_s": 2.5943219661712646,
+          "execution_wall_s": 1.5052545070648193,
+          "exit_code": 1,
+          "hint_in_prompt": false,
+          "hint_emitted": false
+        }
+      ],
+      "total_input_tokens": 8905,
+      "total_output_tokens": 866,
+      "provider_wall_s": 9.533732652664185,
+      "execution_wall_s": 4.775992155075073
+    }
+  }
+}

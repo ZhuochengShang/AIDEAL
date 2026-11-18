@@ -1,0 +1,142 @@
+{
+  "condition": "error_hints",
+  "mode": "live",
+  "selected": 1,
+  "rows": {
+    "python:mir_eval.transcription.validate": [
+      {
+        "logical_round": 0,
+        "outcome": "fail",
+        "result": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_00/result.json",
+        "metrics": {
+          "status": "fail",
+          "attempts": 1,
+          "rendered_prompt_sha256": [
+            "33005a5d050e98099df52043f3c2645ec6e79a39191d315c22f9e4564402a0cc"
+          ],
+          "attempt_evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_00/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001"
+          ],
+          "pass_round": null,
+          "wall_s": 6.2,
+          "llm_calls": 1,
+          "input_tokens": 2234,
+          "output_tokens": 200,
+          "by_model": {
+            "google:gemini-3.1-flash-lite": {
+              "calls": 1,
+              "input_tokens": 2234,
+              "output_tokens": 200,
+              "missing_usage_calls": 0,
+              "usage_complete": true
+            }
+          },
+          "error_category": "runtime",
+          "error": "ValueError: Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+          "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only/mir_eval/transcription.py:137",
+          "doc_chars": 2231,
+          "document_sha256": "843f585da26065329d63811e368690245b5a2bed01607edc6895ba5d6d467c96",
+          "source": "source/mir_eval/transcription.py:117",
+          "source_other_sites": 0,
+          "codebase_frames": [
+            "source/mir_eval/transcription.py:137"
+          ]
+        }
+      },
+      {
+        "logical_round": 1,
+        "outcome": "fail",
+        "result": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/result.json",
+        "metrics": {
+          "status": "fail",
+          "attempts": 1,
+          "rendered_prompt_sha256": [
+            "a06c2aa174e8e4e12d154a6077580c832da08a89b0368d42281b4d0088986290"
+          ],
+          "attempt_evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001"
+          ],
+          "pass_round": null,
+          "wall_s": 4.8,
+          "llm_calls": 1,
+          "input_tokens": 3320,
+          "output_tokens": 311,
+          "by_model": {
+            "google:gemini-3.1-flash-lite": {
+              "calls": 1,
+              "input_tokens": 3320,
+              "output_tokens": 311,
+              "missing_usage_calls": 0,
+              "usage_complete": true
+            }
+          },
+          "error_category": "runtime",
+          "error": "ValueError: Reference contains at least one non-positive pitch value",
+          "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only/mir_eval/transcription.py:143",
+          "doc_chars": 2231,
+          "document_sha256": "843f585da26065329d63811e368690245b5a2bed01607edc6895ba5d6d467c96",
+          "source": "source/mir_eval/transcription.py:117",
+          "source_other_sites": 0,
+          "codebase_frames": [
+            "source/mir_eval/transcription.py:143"
+          ]
+        }
+      },
+      {
+        "logical_round": 2,
+        "outcome": "fail",
+        "result": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_02/result.json",
+        "metrics": {
+          "status": "fail",
+          "attempts": 1,
+          "rendered_prompt_sha256": [
+            "a0222de8a870e90169fabffd2b784c48fe33acfd8c9808164cf8a468430a37a9"
+          ],
+          "attempt_evidence": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_02/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001"
+          ],
+          "pass_round": null,
+          "wall_s": 4.4,
+          "llm_calls": 1,
+          "input_tokens": 3351,
+          "output_tokens": 355,
+          "by_model": {
+            "google:gemini-3.1-flash-lite": {
+              "calls": 1,
+              "input_tokens": 3351,
+              "output_tokens": 355,
+              "missing_usage_calls": 0,
+              "usage_complete": true
+            }
+          },
+          "error_category": "runtime",
+          "error": "IndexError: boolean index did not match indexed array along axis 0; size of axis is 4 but size of corresponding boolean axis is 5",
+          "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_02/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py:41",
+          "doc_chars": 2231,
+          "document_sha256": "843f585da26065329d63811e368690245b5a2bed01607edc6895ba5d6d467c96",
+          "source": "source/mir_eval/transcription.py:117",
+          "source_other_sites": 0,
+          "codebase_frames": null
+        }
+      }
+    ]
+  },
+  "cumulative_passes": {
+    "R0": 0,
+    "R1": 0,
+    "R2": 0
+  },
+  "complete": true,
+  "terminal_counts": {
+    "pass": 0,
+    "fail": 1,
+    "infra": 0,
+    "provider_pending": 0,
+    "generation_invalid": 0
+  },
+  "score_scope": "native execution and configured self-check; no held-out oracle",
+  "launch": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/LAUNCH.json",
+    "sha256": "e8ab6e6f09b20b43510f898d2700949251e25dac218c4d417201423b0a73dd6c"
+  }
+}

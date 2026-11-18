@@ -1,0 +1,296 @@
+[
+  {
+    "library": "mdanalysis",
+    "condition": "error-hints-only",
+    "parent": "ce6e8ddbfe7fb32244c84be689744e20deda8c43",
+    "status": "native_hint_validated_installed_published_not_audience_measured",
+    "branch": "study/2026-11-17-latest-stable-canonical/error-hints-only",
+    "source_checkout": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/error-hints-only",
+    "source_relative_path": "package/MDAnalysis/lib/util.py",
+    "source_before_sha256": "4d37165adcc10536b8f51308924285fa02858e0ec84165082498308c135b46da",
+    "source_after_sha256": "fcc026d39549ae3e9b0a8dedfb069e82d90b98b8bff26f3626d34dfd138778d9",
+    "files_to_commit": [
+      "package/MDAnalysis/lib/util.py",
+      ".aideal/treatments/native_hints_validation.json"
+    ],
+    "validation": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/checks/validation.json",
+    "paired_checks": [
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "trigger",
+        "valid": true
+      },
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "corrected",
+        "valid": true
+      },
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "valid",
+        "valid": true
+      },
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "nearby_negative",
+        "valid": true
+      }
+    ],
+    "executions": 8,
+    "source_coverage_sites": 1,
+    "installation": {
+      "status": "installed_uncommitted",
+      "target": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/error-hints-only",
+      "receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/error-hints-only/.aideal/treatments/native_hints_validation.json",
+      "sources": [
+        "package/MDAnalysis/lib/util.py"
+      ]
+    },
+    "runtime_command": [
+      "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/mdanalysis_condition_runtime.py",
+      "--source-root",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/error-hints-only",
+      "--receipt",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/error-hints-only/runtime_selection.json",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/mdanalysis_native_smoke.py"
+    ],
+    "smoke": {
+      "messages": {
+        "direct": "Box is None [AIDEAL fix:box_cannot_be_none] Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None.",
+        "dependent_module": "Box is None [AIDEAL fix:box_cannot_be_none] Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None.",
+        "nearby_negative": "Invalid box information. Must be of the form [lx, ly, lz, alpha, beta, gamma]."
+      },
+      "valid_kind": "ortho",
+      "valid_lengths": [
+        10.0,
+        20.0,
+        30.0
+      ],
+      "dependent_function_binding": true
+    },
+    "readme_sha256": null,
+    "original_checkout_index_refs_preserved": true,
+    "aliases_installed": false,
+    "limitation": "Synthetic 50-unit cell; not original trajectory/fixture repair.",
+    "audience_or_heldout_improvement_claim": false,
+    "repository": "ZhuochengShang/AIDEAL-MDAnalysis",
+    "commit": "9a34377a60a346e47265a3845dd3b9c3b68e5481",
+    "tree": "2e8b12a876777c271abd1e02426dcbacd92797ee",
+    "public_ref_updated": true,
+    "local_cluster_ref_sync_pending": false,
+    "local_sync": {
+      "library": "mdanalysis",
+      "condition": "error-hints-only",
+      "commit": "9a34377a60a346e47265a3845dd3b9c3b68e5481",
+      "repository": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/.local/library_publications/mdanalysis",
+      "mode": "local",
+      "checkout_index_preserved": true,
+      "other_refs_preserved": true
+    },
+    "cluster_sync": {
+      "library": "mdanalysis",
+      "condition": "error-hints-only",
+      "commit": "9a34377a60a346e47265a3845dd3b9c3b68e5481",
+      "repository": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis",
+      "mode": "cluster",
+      "checkout_index_preserved": true,
+      "other_refs_preserved": true
+    },
+    "publication_method": "non-force expected-head compare-and-set",
+    "source_hint_and_receipt_identical_between_hint_conditions": true,
+    "runtime_selector_sha256": "63070c5e1e1513ef7a610bf0a99f8bce7c1b2e1199f641d9b946cbcf2f977856",
+    "paired_replay_validation": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/error-hints-only/paired-replay/validation.json"
+  },
+  {
+    "library": "mdanalysis",
+    "condition": "combined",
+    "parent": "abb2a0c22ebfd684ea635d6de7da4008f6664431",
+    "status": "native_hint_validated_installed_published_not_audience_measured",
+    "branch": "study/2026-11-17-latest-stable-canonical/combined",
+    "source_checkout": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/combined",
+    "source_relative_path": "package/MDAnalysis/lib/util.py",
+    "source_before_sha256": "4d37165adcc10536b8f51308924285fa02858e0ec84165082498308c135b46da",
+    "source_after_sha256": "fcc026d39549ae3e9b0a8dedfb069e82d90b98b8bff26f3626d34dfd138778d9",
+    "files_to_commit": [
+      "package/MDAnalysis/lib/util.py",
+      ".aideal/treatments/native_hints_validation.json"
+    ],
+    "validation": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/checks/validation.json",
+    "paired_checks": [
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "trigger",
+        "valid": true
+      },
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "corrected",
+        "valid": true
+      },
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "valid",
+        "valid": true
+      },
+      {
+        "case_id": "native-72cc3ddb0a88f53b873bd022",
+        "role": "nearby_negative",
+        "valid": true
+      }
+    ],
+    "executions": 8,
+    "source_coverage_sites": 1,
+    "installation": {
+      "status": "installed_uncommitted",
+      "target": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/combined",
+      "receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/combined/.aideal/treatments/native_hints_validation.json",
+      "sources": [
+        "package/MDAnalysis/lib/util.py"
+      ]
+    },
+    "runtime_command": [
+      "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/mdanalysis_condition_runtime.py",
+      "--source-root",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mdanalysis/combined",
+      "--receipt",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/combined/runtime_selection.json",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/mdanalysis_native_smoke.py"
+    ],
+    "smoke": {
+      "messages": {
+        "direct": "Box is None [AIDEAL fix:box_cannot_be_none] Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None.",
+        "dependent_module": "Box is None [AIDEAL fix:box_cannot_be_none] Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None.",
+        "nearby_negative": "Invalid box information. Must be of the form [lx, ly, lz, alpha, beta, gamma]."
+      },
+      "valid_kind": "ortho",
+      "valid_lengths": [
+        10.0,
+        20.0,
+        30.0
+      ],
+      "dependent_function_binding": true
+    },
+    "readme_sha256": "926de232a1b28191565fa975ed1730bd6dc13589351f18a7f949360255036c61",
+    "original_checkout_index_refs_preserved": true,
+    "aliases_installed": false,
+    "limitation": "Synthetic 50-unit cell; not original trajectory/fixture repair.",
+    "audience_or_heldout_improvement_claim": false,
+    "repository": "ZhuochengShang/AIDEAL-MDAnalysis",
+    "commit": "88f27c4a4143cb15ad4ee68738d17e4590792daa",
+    "tree": "f61e032f02826ebc25b359cb608b56855f51f405",
+    "public_ref_updated": true,
+    "local_cluster_ref_sync_pending": false,
+    "local_sync": {
+      "library": "mdanalysis",
+      "condition": "combined",
+      "commit": "88f27c4a4143cb15ad4ee68738d17e4590792daa",
+      "repository": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/.local/library_publications/mdanalysis",
+      "mode": "local",
+      "checkout_index_preserved": true,
+      "other_refs_preserved": true
+    },
+    "cluster_sync": {
+      "library": "mdanalysis",
+      "condition": "combined",
+      "commit": "88f27c4a4143cb15ad4ee68738d17e4590792daa",
+      "repository": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis",
+      "mode": "cluster",
+      "checkout_index_preserved": true,
+      "other_refs_preserved": true
+    },
+    "publication_method": "non-force expected-head compare-and-set",
+    "source_hint_and_receipt_identical_between_hint_conditions": true,
+    "runtime_selector_sha256": "63070c5e1e1513ef7a610bf0a99f8bce7c1b2e1199f641d9b946cbcf2f977856",
+    "paired_replay_validation": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mdanalysis/error-hints-only/paired-replay/validation.json"
+  },
+  {
+    "library": "mir_eval",
+    "condition": "combined",
+    "parent": "477d66dcca3929b56e8771cd4e74b00875251b97",
+    "status": "native_hint_validated_installed_published_not_audience_measured",
+    "branch": "study/2026-11-17-latest-stable-canonical/combined",
+    "source_checkout": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/combined",
+    "source_relative_path": "mir_eval/transcription.py",
+    "source_before_sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c",
+    "source_after_sha256": "c0d37914d7e426db5b1ad1f2de300a3c7946ecb62c15be9eb9e21ba2672a41bb",
+    "files_to_commit": [
+      "mir_eval/transcription.py",
+      ".aideal/treatments/native_hints_validation.json"
+    ],
+    "validation": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/checks/validation.json",
+    "paired_checks": [
+      {
+        "case_id": "native-b44041df1dc5b255aee959ba",
+        "role": "trigger",
+        "valid": true
+      },
+      {
+        "case_id": "native-b44041df1dc5b255aee959ba",
+        "role": "corrected",
+        "valid": true
+      },
+      {
+        "case_id": "native-b44041df1dc5b255aee959ba",
+        "role": "valid",
+        "valid": true
+      },
+      {
+        "case_id": "native-b44041df1dc5b255aee959ba",
+        "role": "nearby_negative",
+        "valid": true
+      }
+    ],
+    "executions": 8,
+    "source_coverage_sites": 1,
+    "installation": {
+      "status": "installed_uncommitted",
+      "target": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/combined",
+      "receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/combined/.aideal/treatments/native_hints_validation.json",
+      "sources": [
+        "mir_eval/transcription.py"
+      ]
+    },
+    "runtime_command": [
+      "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/native-install/mir_eval/smoke.py"
+    ],
+    "smoke": {
+      "module": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/combined/mir_eval/__init__.py",
+      "diagnostic": "Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+      "valid_return": null,
+      "nearby_negative": "Estimated intervals and pitches have different lengths."
+    },
+    "readme_sha256": "bf100825efe7c88ea4bdd22946d62afb7853dbac219ca4f80ffb51cb70a7c369",
+    "original_checkout_index_refs_preserved": true,
+    "aliases_installed": false,
+    "limitation": "Two-note corrected caller; not original fixture repair.",
+    "audience_or_heldout_improvement_claim": false,
+    "repository": "ZhuochengShang/AIDEAL-mir_eval",
+    "commit": "b1e3c200cddd4bbb03d26d8d4992d47ec2566b8e",
+    "tree": "fa0bd4cb5e64cf42f78a3efa9221c9455f82b9bd",
+    "public_ref_updated": true,
+    "local_cluster_ref_sync_pending": false,
+    "local_sync": {
+      "library": "mir_eval",
+      "condition": "combined",
+      "commit": "b1e3c200cddd4bbb03d26d8d4992d47ec2566b8e",
+      "repository": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/.local/library_publications/mir_eval",
+      "mode": "local",
+      "checkout_index_preserved": true,
+      "other_refs_preserved": true
+    },
+    "cluster_sync": {
+      "library": "mir_eval",
+      "condition": "combined",
+      "commit": "b1e3c200cddd4bbb03d26d8d4992d47ec2566b8e",
+      "repository": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval",
+      "mode": "cluster",
+      "checkout_index_preserved": true,
+      "other_refs_preserved": true
+    },
+    "publication_method": "non-force expected-head compare-and-set",
+    "source_hint_and_receipt_identical_between_hint_conditions": true
+  }
+]

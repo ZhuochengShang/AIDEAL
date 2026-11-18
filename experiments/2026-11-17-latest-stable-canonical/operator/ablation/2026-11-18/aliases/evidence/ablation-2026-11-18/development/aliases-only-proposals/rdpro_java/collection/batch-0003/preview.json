@@ -1,0 +1,1558 @@
+{
+  "schema_version": 1,
+  "study": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/attachment",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/attachment/Original/source",
+  "baseline_revision": "547f7f912131a8032f6b5d26991415a5faf05cef",
+  "context": {
+    "project": "RDPro Raptor raster scope \u2014 Beast 0.10.1",
+    "language": "Java",
+    "baseline_revision": "547f7f912131a8032f6b5d26991415a5faf05cef",
+    "configuration": {
+      "source_globs": [
+        "source/**/src/main/**/*.java"
+      ],
+      "test_globs": [
+        "source/**/src/test/**/*.java"
+      ],
+      "public_def_regex": "^\\s*(?:(?:(?:public|protected|private|static|final|abstract|synchronized|native|strictfp|default)(?:\\s+|(?=<)))+(?:<[^{};]+>\\s+)?(?:[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^{};]+>)?(?:\\[\\])*\\s+)?|(?!(?:if|for|while|switch|return|throw|new|assert)\\b)(?:<[^{};]+>\\s+)?[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^{};]+>)?(?:\\[\\])*\\s+)([A-Za-z_$][A-Za-z0-9_$]*)\\s*(?=\\()",
+      "exclude_names": [],
+      "visibility": {
+        "mode": "deny",
+        "private": [
+          "\\bprivate\\b",
+          "\\bprotected\\b"
+        ]
+      },
+      "surface_filter": "all",
+      "exclude_path_patterns": [
+        "(^|/)commontest/",
+        "/src/main/resources/"
+      ],
+      "discovery_scope": "All discovered public definitions in tracked configured sources; no LLM intent filter."
+    },
+    "project_profile": {
+      "project_name": "RDPro / Raptor",
+      "role": "An expert Java developer using public RDPro/Raptor raster APIs.",
+      "project": {
+        "name": "RDPro Java",
+        "language": "Java",
+        "description": "Pinned official Beast0.10.1 production source"
+      },
+      "domain": "Geospatial computing",
+      "target_users": [
+        "Java geospatial developers"
+      ],
+      "use_cases": [
+        "Raster processing and raster metadata",
+        "Raster/vector joins and zonal statistics",
+        "Local Spark transformations supporting raster workflows"
+      ],
+      "constraints": [
+        "Use original APIs only.",
+        "Use provided local raster, shapefile, and HDF4 fixtures or tiny in-memory values.",
+        "Write temporary outputs only under the run output directory.",
+        "Do not contact services or change repository files."
+      ]
+    },
+    "profile_status": "supplied",
+    "library_overview": {
+      "module_count": 8,
+      "modules": [
+        {
+          "module": "beast-spark",
+          "public_definitions": 3
+        },
+        {
+          "module": "cg",
+          "public_definitions": 203
+        },
+        {
+          "module": "common",
+          "public_definitions": 172
+        },
+        {
+          "module": "distribution",
+          "public_definitions": 1
+        },
+        {
+          "module": "dynoviz",
+          "public_definitions": 10
+        },
+        {
+          "module": "io",
+          "public_definitions": 446
+        },
+        {
+          "module": "raptor",
+          "public_definitions": 69
+        },
+        {
+          "module": "visualization",
+          "public_definitions": 480
+        }
+      ],
+      "omitted_modules": 0,
+      "api_catalog": [
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.operations.ComputeIndexMetadata.createPartitioners",
+          "name": "createPartitioners",
+          "signature": "(JavaSparkContext context,BeastOptions opts,JavaRDD<IFeature> features,String[] gindexes,boolean disjoint,String partitionInfo,long synopsisSize):SpatialPartitioner[]"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.operations.ComputeIndexMetadata.run",
+          "name": "run",
+          "signature": "(BeastOptions opts,String[] inputs,String[] outputs,JavaSparkContext sc):Object"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.operations.ComputeIndexMetadata.printUsage",
+          "name": "printUsage",
+          "signature": "(PrintStream out):void"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.ClosestPair.closestPairInMemory",
+          "name": "closestPairInMemory",
+          "signature": "(final int[] xs,final int[] ys,final int numPoints):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.HCurveSortable",
+          "name": "HCurveSortable",
+          "signature": "(EnvelopeNDLite mbr):null"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.HCurveSortable.setPoints",
+          "name": "setPoints",
+          "signature": "(double[][] points):void"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.HCurveSortable.compare",
+          "name": "compare",
+          "signature": "(int i,int j):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.HCurveSortable.swap",
+          "name": "swap",
+          "signature": "(int i,int j):void"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.planeSweepRectangles",
+          "name": "planeSweepRectangles",
+          "signature": "(double[][] minCoord1,double[][] maxCoord1,double[][] minCoord2,double[][] maxCoord2,SJResult results,LongAccumulator mbrTests):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.spatialJoinIntersectsPlaneSweep",
+          "name": "spatialJoinIntersectsPlaneSweep",
+          "signature": "(List<Geometry> r,List<Geometry> s,SJResult results,LongAccumulator mbrTests):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.getMBRs",
+          "name": "getMBRs",
+          "signature": "(List<Geometry> geometries):double[][]"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.getMBRs2",
+          "name": "getMBRs2",
+          "signature": "(List<IFeature> geometries):double[][]"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.spatialJoinIntersectsWithSimplification",
+          "name": "spatialJoinIntersectsWithSimplification",
+          "signature": "(List<Geometry> r,List<Geometry> s,int threshold,SJResult results,LongAccumulator mbrTests):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.spatialJoinIntersectsWithSimplification2",
+          "name": "spatialJoinIntersectsWithSimplification2",
+          "signature": "(List<IFeature> r,List<IFeature> s,int threshold,SJResult results,LongAccumulator mbrTests):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.quadSplit",
+          "name": "quadSplit",
+          "signature": "(Geometry geometry,int threshold):List<Geometry>"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.setup",
+          "name": "setup",
+          "signature": "(BeastOptions conf,boolean disjoint):void"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.overlapPartitions",
+          "name": "overlapPartitions",
+          "signature": "(EnvelopeND mbr,IntArray matchedPartitions):void"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.overlapPartition",
+          "name": "overlapPartition",
+          "signature": "(EnvelopeND mbr):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.getPartition",
+          "name": "getPartition",
+          "signature": "(Object key):int"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.getPartitionMBR",
+          "name": "getPartitionMBR",
+          "signature": "(int partitionID):EnvelopeNDLite"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.getMetadata",
+          "name": "getMetadata",
+          "signature": "():Metadata"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.iterator",
+          "name": "iterator",
+          "signature": "():Iterator<EnvelopeNDLite>"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.toWKT",
+          "name": "toWKT",
+          "signature": "(PrintStream out):void"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.EnvelopeIterator",
+          "name": "EnvelopeIterator",
+          "signature": "(SpatialPartitioner p):null"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.EnvelopeIterator.hasNext",
+          "name": "hasNext",
+          "signature": "():boolean"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner.EnvelopeIterator.next",
+          "name": "next",
+          "signature": "():EnvelopeNDLite"
+        },
+        {
+          "id": "java:edu.ucr.cs.bdlab.beast.geolite.EmptyGeometry.getArea",
+          "name": "getArea",
+          "signature": "():double"
+        }
+      ],
+      "omitted_catalog_entries": 1357,
+      "scope": "Compact cross-batch orientation only; source evidence remains batch-local."
+    },
+    "library_scope": {
+      "public_definitions": 1384,
+      "requested_definitions": 69,
+      "catalog_sha256": "1f3c1d4da139ffc156439c6bb9482605260d659312c9661fadbc7c0b50417614",
+      "limitations": "Cross-batch bodies are not supplied. Discovery can miss syntax unsupported by the configured adapter."
+    },
+    "batch_id": "batch-0003",
+    "alias_destination": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/AidealJavaAliases0003.java",
+    "apis": [
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "name": "GeoTiffMetadata",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:46:GeoTiffMetadata",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 46,
+        "signature": "(ITiffReader reader,TiffRaster raster):null",
+        "kind": "class_constructor",
+        "definition_kind": "class_constructor",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [
+          {
+            "name": "reader",
+            "type": "ITiffReader",
+            "default": ""
+          },
+          {
+            "name": "raster",
+            "type": "TiffRaster",
+            "default": ""
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "compiler_declared",
+        "returns": "null",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 43,
+          "end_line": 106,
+          "text": "    private final AffineTransform modelTransformation;\n    public static final int TAG_GEO_KEY_DIRECTORY = 34735;\n\n    public GeoTiffMetadata(ITiffReader reader , TiffRaster raster) throws IOException {\n        this.reader = reader;\n        this.raster = raster;\n        geoKeys = new HashMap<>();\n\n        // 1. Get value associated with GeoKeyDirectoryTag.\n        AbstractIFDEntry entry = raster.getEntry((short) TAG_GEO_KEY_DIRECTORY);\n        if(entry != null)\n        {\n            // Get No of keys indexed by GeoKeyDirectory.\n            // GeoKeyDirectory header  consists of {KeyDirectoryVersion, KeyRevision, MinorRevision, NumberOfKeys}\n            // Value Type SHORT (2-byte unsigned short).\n            ByteBuffer buffer = reader.readEntry(entry, null);\n\n            geoKeyDirVersion = buffer.getShort() & 0xffff;\n            geoKeyRevision = buffer.getShort() & 0xffff;\n            geoKeyMinorRevision = buffer.getShort() & 0xffff;\n            short NumberofKeys = buffer.getShort();\n\n            for(short i=0;i<NumberofKeys;i++)\n            {\n                // next lines of GeoKeyDirectory follows the structure : { KeyID, TIFFTagLocation, Count, Value_Offset }\n                int keyID = buffer.getShort()& 0xffff;\n                GeoKeyEntry directoryEntry = new GeoKeyEntry(\n                        keyID,\n                        buffer.getShort()& 0xffff, // Tiff tag location\n                        buffer.getShort()& 0xffff, // count\n                        buffer.getShort()& 0xffff); // value offset\n\n                if(!geoKeys.containsKey(keyID))\n                {\n                    geoKeys.put(keyID,directoryEntry);\n                }\n            }\n        }\n        pixelScale = calculatePixelScales();\n        modelTransformation = calculateModelTransformation();\n        tiePoints = calculateTiePoints();\n        noData = calculateNoData();\n    }\n    public static final int TIFFTAG_NODATA = 42113;\n\n    private double calculateNoData() throws IOException {\n        AbstractIFDEntry entry = raster.getEntry((short) TIFFTAG_NODATA);\n        if (entry != null) {\n            ByteBuffer buffer = reader.readEntry(entry,null);\n            String noData = getTiffAscii(buffer,-1,-1);\n\n            try {\n                return Double.parseDouble(noData);\n            }\n            catch (NumberFormatException nfe)\n            {\n                nfe.printStackTrace();\n                return Double.NaN;\n            }\n        }\n\n        return Double.NaN;\n    }\n    public static final int TAG_MODEL_TRANSFORMATION = 34264;",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion",
+        "name": "getGeoKeyDirectoryVersion",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:195:getGeoKeyDirectoryVersion",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 195,
+        "signature": "():int",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "int",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 192,
+          "end_line": 255,
+          "text": "     * check that the data is of a valid format.\n     * @return the directory version index as an integer\n     */\n    public int getGeoKeyDirectoryVersion() {\n        // now get the value from the correct TIFFShort location\n        return geoKeyDirVersion;\n    }\n\n    /**\n     * Gets the revision number of the GeoKeys in this metadata.\n     * @return the revision as an integer\n     */\n    public int getGeoKeyRevision() {\n        // Get the value from the correct TIFFShort\n        return geoKeyRevision;\n    }\n\n    /**\n     * Gets the minor revision number of the GeoKeys in this metadata.\n     * @return the minor revision as an integer\n     */\n    public int getGeoKeyMinorRevision() {\n        // Get the value from the correct TIFFShort\n        return geoKeyMinorRevision;\n    }\n\n    /**\n     * Gets a GeoKey value as a String. This implementation should be &quot;quiet&quot; in the sense\n     * that it should not throw any exceptions but only return null in the event that the data\n     * organization is not as expected.\n     *\n     * @param keyID The numeric ID of the GeoKey\n     * @return A string representing the value, or null if the key was not found.\n     * @throws IOException if an error happens while reading the given key from the file\n     */\n    public String getGeoKey(final int keyID) throws IOException {\n\n        final GeoKeyEntry rec = getGeoKeyRecord(keyID);\n        if (rec == null) {\n            return null;\n        }\n        if (rec.getTiffTagLocation() == 0) {\n            // value is stored directly in the GeoKey record\n            return String.valueOf(rec.getValueOffset());\n        }\n\n        // value is stored externally\n        // get the TIFF field where the data is actually stored\n        AbstractIFDEntry field = raster.getEntry((short) rec.getTiffTagLocation());\n        if (field == null) {\n            return null;\n        }\n        ByteBuffer buffer = reader.readEntry(field, null);\n        return field.type == TiffConstants.TYPE_ASCII ? getTiffAscii(buffer,rec.getValueOffset(), rec.getCount()) : getValueAttribute(buffer,field.type,rec.getValueOffset());\n    }\n\n    /**\n     * Gets a record containing the four TIFFShort values for a geokey entry. For more information\n     * see the GeoTIFFWritingUtilities specification.\n     *\n     * @param keyID the ID of the key to read\n     * @return the record with the given keyID, or null if none is found\n     */\n    public GeoKeyEntry getGeoKeyRecord(int keyID) {",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision",
+        "name": "getGeoKeyRevision",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:204:getGeoKeyRevision",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 204,
+        "signature": "():int",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "int",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 201,
+          "end_line": 264,
+          "text": "     * Gets the revision number of the GeoKeys in this metadata.\n     * @return the revision as an integer\n     */\n    public int getGeoKeyRevision() {\n        // Get the value from the correct TIFFShort\n        return geoKeyRevision;\n    }\n\n    /**\n     * Gets the minor revision number of the GeoKeys in this metadata.\n     * @return the minor revision as an integer\n     */\n    public int getGeoKeyMinorRevision() {\n        // Get the value from the correct TIFFShort\n        return geoKeyMinorRevision;\n    }\n\n    /**\n     * Gets a GeoKey value as a String. This implementation should be &quot;quiet&quot; in the sense\n     * that it should not throw any exceptions but only return null in the event that the data\n     * organization is not as expected.\n     *\n     * @param keyID The numeric ID of the GeoKey\n     * @return A string representing the value, or null if the key was not found.\n     * @throws IOException if an error happens while reading the given key from the file\n     */\n    public String getGeoKey(final int keyID) throws IOException {\n\n        final GeoKeyEntry rec = getGeoKeyRecord(keyID);\n        if (rec == null) {\n            return null;\n        }\n        if (rec.getTiffTagLocation() == 0) {\n            // value is stored directly in the GeoKey record\n            return String.valueOf(rec.getValueOffset());\n        }\n\n        // value is stored externally\n        // get the TIFF field where the data is actually stored\n        AbstractIFDEntry field = raster.getEntry((short) rec.getTiffTagLocation());\n        if (field == null) {\n            return null;\n        }\n        ByteBuffer buffer = reader.readEntry(field, null);\n        return field.type == TiffConstants.TYPE_ASCII ? getTiffAscii(buffer,rec.getValueOffset(), rec.getCount()) : getValueAttribute(buffer,field.type,rec.getValueOffset());\n    }\n\n    /**\n     * Gets a record containing the four TIFFShort values for a geokey entry. For more information\n     * see the GeoTIFFWritingUtilities specification.\n     *\n     * @param keyID the ID of the key to read\n     * @return the record with the given keyID, or null if none is found\n     */\n    public GeoKeyEntry getGeoKeyRecord(int keyID) {\n        return geoKeys.get(keyID);\n    }\n\n    /**\n     * Gets a portion of a TIFFAscii string with the specified start character and length;\n     *\n     * @param buffer An ByteBuffer pointing to a TIFFField element that contains a\n     *     TIFFAsciis element. This element should contain a single TiffAscii element.\n     * @return A substring of the value contained in the TIFFAscii node, with the final '|'",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision",
+        "name": "getGeoKeyMinorRevision",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:213:getGeoKeyMinorRevision",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 213,
+        "signature": "():int",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "int",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 210,
+          "end_line": 273,
+          "text": "     * Gets the minor revision number of the GeoKeys in this metadata.\n     * @return the minor revision as an integer\n     */\n    public int getGeoKeyMinorRevision() {\n        // Get the value from the correct TIFFShort\n        return geoKeyMinorRevision;\n    }\n\n    /**\n     * Gets a GeoKey value as a String. This implementation should be &quot;quiet&quot; in the sense\n     * that it should not throw any exceptions but only return null in the event that the data\n     * organization is not as expected.\n     *\n     * @param keyID The numeric ID of the GeoKey\n     * @return A string representing the value, or null if the key was not found.\n     * @throws IOException if an error happens while reading the given key from the file\n     */\n    public String getGeoKey(final int keyID) throws IOException {\n\n        final GeoKeyEntry rec = getGeoKeyRecord(keyID);\n        if (rec == null) {\n            return null;\n        }\n        if (rec.getTiffTagLocation() == 0) {\n            // value is stored directly in the GeoKey record\n            return String.valueOf(rec.getValueOffset());\n        }\n\n        // value is stored externally\n        // get the TIFF field where the data is actually stored\n        AbstractIFDEntry field = raster.getEntry((short) rec.getTiffTagLocation());\n        if (field == null) {\n            return null;\n        }\n        ByteBuffer buffer = reader.readEntry(field, null);\n        return field.type == TiffConstants.TYPE_ASCII ? getTiffAscii(buffer,rec.getValueOffset(), rec.getCount()) : getValueAttribute(buffer,field.type,rec.getValueOffset());\n    }\n\n    /**\n     * Gets a record containing the four TIFFShort values for a geokey entry. For more information\n     * see the GeoTIFFWritingUtilities specification.\n     *\n     * @param keyID the ID of the key to read\n     * @return the record with the given keyID, or null if none is found\n     */\n    public GeoKeyEntry getGeoKeyRecord(int keyID) {\n        return geoKeys.get(keyID);\n    }\n\n    /**\n     * Gets a portion of a TIFFAscii string with the specified start character and length;\n     *\n     * @param buffer An ByteBuffer pointing to a TIFFField element that contains a\n     *     TIFFAsciis element. This element should contain a single TiffAscii element.\n     * @return A substring of the value contained in the TIFFAscii node, with the final '|'\n     *     character removed.\n     */\n    private String getTiffAscii(final ByteBuffer buffer, int start, int length) {\n\n        // there should be only one, so get the first\n        // GeoTIFFWritingUtilities specification places a vertical bar '|' in\n        // place of \\0\n        // null delimiters so drop off the vertical bar for Java Strings\n        String valueAttribute = new String(buffer.array(), StandardCharsets.US_ASCII);",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey",
+        "name": "getGeoKey",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:227:getGeoKey",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 227,
+        "signature": "(final int keyID):String",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [
+          {
+            "name": "keyID",
+            "type": "final int",
+            "default": ""
+          }
+        ],
+        "parameter_count": 1,
+        "parameter_count_status": "compiler_declared",
+        "returns": "String",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 224,
+          "end_line": 287,
+          "text": "     * @return A string representing the value, or null if the key was not found.\n     * @throws IOException if an error happens while reading the given key from the file\n     */\n    public String getGeoKey(final int keyID) throws IOException {\n\n        final GeoKeyEntry rec = getGeoKeyRecord(keyID);\n        if (rec == null) {\n            return null;\n        }\n        if (rec.getTiffTagLocation() == 0) {\n            // value is stored directly in the GeoKey record\n            return String.valueOf(rec.getValueOffset());\n        }\n\n        // value is stored externally\n        // get the TIFF field where the data is actually stored\n        AbstractIFDEntry field = raster.getEntry((short) rec.getTiffTagLocation());\n        if (field == null) {\n            return null;\n        }\n        ByteBuffer buffer = reader.readEntry(field, null);\n        return field.type == TiffConstants.TYPE_ASCII ? getTiffAscii(buffer,rec.getValueOffset(), rec.getCount()) : getValueAttribute(buffer,field.type,rec.getValueOffset());\n    }\n\n    /**\n     * Gets a record containing the four TIFFShort values for a geokey entry. For more information\n     * see the GeoTIFFWritingUtilities specification.\n     *\n     * @param keyID the ID of the key to read\n     * @return the record with the given keyID, or null if none is found\n     */\n    public GeoKeyEntry getGeoKeyRecord(int keyID) {\n        return geoKeys.get(keyID);\n    }\n\n    /**\n     * Gets a portion of a TIFFAscii string with the specified start character and length;\n     *\n     * @param buffer An ByteBuffer pointing to a TIFFField element that contains a\n     *     TIFFAsciis element. This element should contain a single TiffAscii element.\n     * @return A substring of the value contained in the TIFFAscii node, with the final '|'\n     *     character removed.\n     */\n    private String getTiffAscii(final ByteBuffer buffer, int start, int length) {\n\n        // there should be only one, so get the first\n        // GeoTIFFWritingUtilities specification places a vertical bar '|' in\n        // place of \\0\n        // null delimiters so drop off the vertical bar for Java Strings\n        String valueAttribute = new String(buffer.array(), StandardCharsets.US_ASCII);\n\n        if (start == -1) {\n            start = 0;\n        }\n        if (length == -1) {\n            length = valueAttribute.length() + 1;\n        }\n        return valueAttribute.substring(start, start + length - 1);\n    }\n\n    private String getValueAttribute(ByteBuffer buffer,short type, int offset)\n    {\n        String retVal = null;\n        switch (type) {",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation",
+        "name": "getModelTransformation",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:316:getModelTransformation",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 316,
+        "signature": "():AffineTransform",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "AffineTransform",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 313,
+          "end_line": 376,
+          "text": "        return retVal;\n    }\n\n    public AffineTransform getModelTransformation() {\n        return modelTransformation;\n    }\n\n    /**\n     * Return the GeoKeys.\n     * @return the collection of all model keys\n     */\n    public Collection<GeoKeyEntry> getGeoKeys() {\n        return geoKeys.values();\n    }\n\n    /**\n     * Gets the model pixel scales from the correct TIFFField\n     * @return the model pixel scales\n     */\n    public PixelScale getModelPixelScales() {\n        return pixelScale;\n    }\n\n    /**\n     * Gets the model tie points from the appropriate TIFFField\n     *\n     * @return the tie points, or null if not found\n     */\n    public TiePoint[] getModelTiePoints() {\n        return tiePoints;\n    }\n\n    /**\n     * Tells me if the underlying metdata contains ModelTiepointTag tag for {@link TiePoint}.\n     *\n     * @return true if ModelTiepointTag is present, false otherwise.\n     */\n    public boolean hasTiePoints() {\n        return tiePoints != null && tiePoints.length > 0;\n    }\n\n    /**\n     * Tells me if the underlying metdata contains ModelTransformationTag tag for {@link\n     * AffineTransform} that map from Raster Space to World Space.\n     *\n     * @return true if ModelTransformationTag is present, false otherwise.\n     */\n    public boolean hasModelTrasformation() {\n        return modelTransformation != null;\n    }\n\n    /**\n     * Tells me if the underlying metadata contains ModelTiepointTag tag for {@link TiePoint}.\n     *\n     * @return true if ModelTiepointTag is present, false otherwise.\n     */\n    public boolean hasPixelScales() {\n        if (pixelScale == null) {\n            return false;\n        } else {\n            final double[] values = pixelScale.getValues();\n            for (double value : values) {\n                if (Double.isInfinite(value) || Double.isNaN(value)) {\n                    return false;",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales",
+        "name": "getModelPixelScales",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:332:getModelPixelScales",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 332,
+        "signature": "():PixelScale",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "PixelScale",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 329,
+          "end_line": 382,
+          "text": "     * Gets the model pixel scales from the correct TIFFField\n     * @return the model pixel scales\n     */\n    public PixelScale getModelPixelScales() {\n        return pixelScale;\n    }\n\n    /**\n     * Gets the model tie points from the appropriate TIFFField\n     *\n     * @return the tie points, or null if not found\n     */\n    public TiePoint[] getModelTiePoints() {\n        return tiePoints;\n    }\n\n    /**\n     * Tells me if the underlying metdata contains ModelTiepointTag tag for {@link TiePoint}.\n     *\n     * @return true if ModelTiepointTag is present, false otherwise.\n     */\n    public boolean hasTiePoints() {\n        return tiePoints != null && tiePoints.length > 0;\n    }\n\n    /**\n     * Tells me if the underlying metdata contains ModelTransformationTag tag for {@link\n     * AffineTransform} that map from Raster Space to World Space.\n     *\n     * @return true if ModelTransformationTag is present, false otherwise.\n     */\n    public boolean hasModelTrasformation() {\n        return modelTransformation != null;\n    }\n\n    /**\n     * Tells me if the underlying metadata contains ModelTiepointTag tag for {@link TiePoint}.\n     *\n     * @return true if ModelTiepointTag is present, false otherwise.\n     */\n    public boolean hasPixelScales() {\n        if (pixelScale == null) {\n            return false;\n        } else {\n            final double[] values = pixelScale.getValues();\n            for (double value : values) {\n                if (Double.isInfinite(value) || Double.isNaN(value)) {\n                    return false;\n                }\n            }\n            return true;\n        }\n    }\n}",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      },
+      {
+        "id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints",
+        "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints",
+        "name": "getModelTiePoints",
+        "qualified_name": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints",
+        "source_function_id": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:341:getModelTiePoints",
+        "file": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+        "line": 341,
+        "signature": "():TiePoint[]",
+        "kind": "method",
+        "definition_kind": "method",
+        "language": "Java",
+        "source_language": "Java",
+        "module": "raptor",
+        "scope": "production",
+        "owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+        "defining_owner_kind": "class",
+        "params": [],
+        "parameter_count": 0,
+        "parameter_count_status": "compiler_declared",
+        "returns": "TiePoint[]",
+        "public_owner_chain": true,
+        "is_abstract": false,
+        "source_window": {
+          "start_line": 338,
+          "end_line": 382,
+          "text": "     *\n     * @return the tie points, or null if not found\n     */\n    public TiePoint[] getModelTiePoints() {\n        return tiePoints;\n    }\n\n    /**\n     * Tells me if the underlying metdata contains ModelTiepointTag tag for {@link TiePoint}.\n     *\n     * @return true if ModelTiepointTag is present, false otherwise.\n     */\n    public boolean hasTiePoints() {\n        return tiePoints != null && tiePoints.length > 0;\n    }\n\n    /**\n     * Tells me if the underlying metdata contains ModelTransformationTag tag for {@link\n     * AffineTransform} that map from Raster Space to World Space.\n     *\n     * @return true if ModelTransformationTag is present, false otherwise.\n     */\n    public boolean hasModelTrasformation() {\n        return modelTransformation != null;\n    }\n\n    /**\n     * Tells me if the underlying metadata contains ModelTiepointTag tag for {@link TiePoint}.\n     *\n     * @return true if ModelTiepointTag is present, false otherwise.\n     */\n    public boolean hasPixelScales() {\n        if (pixelScale == null) {\n            return false;\n        } else {\n            final double[] values = pixelScale.getValues();\n            for (double value : values) {\n                if (Double.isInfinite(value) || Double.isNaN(value)) {\n                    return false;\n                }\n            }\n            return true;\n        }\n    }\n}",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "1: package edu.ucr.cs.bdlab.raptor;\n21: public class GeoTiffMetadata {\n3: import edu.ucr.cs.bdlab.beast.io.tiff.AbstractIFDEntry;\n4: import edu.ucr.cs.bdlab.beast.io.tiff.ITiffReader;\n5: import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants;\n6: import edu.ucr.cs.bdlab.beast.io.tiff.TiffRaster;\n8: import java.awt.geom.AffineTransform;\n9: import java.io.IOException;\n10: import java.nio.ByteBuffer;\n11: import java.nio.charset.StandardCharsets;\n12: import java.util.Collection;\n13: import java.util.HashMap;\n14: import java.util.Map;",
+          "source_characters": 531,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints",
+        "public_access_paths": [
+          "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "",
+        "description_characters": 0,
+        "description_truncated": false
+      }
+    ],
+    "development_errors": [],
+    "api_function_ids": {
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:46:GeoTiffMetadata",
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:195:getGeoKeyDirectoryVersion",
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:204:getGeoKeyRevision",
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:213:getGeoKeyMinorRevision",
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:227:getGeoKey",
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:316:getModelTransformation",
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:332:getModelPixelScales",
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:341:getModelTiePoints"
+    },
+    "api_public_paths": {
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata"
+      ],
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyDirectoryVersion"
+      ],
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRevision"
+      ],
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyMinorRevision"
+      ],
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey"
+      ],
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTransformation"
+      ],
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelPixelScales"
+      ],
+      "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints": [
+        "edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getModelTiePoints"
+      ]
+    },
+    "coverage": {
+      "matching_definitions": 69,
+      "selected_definitions": 8,
+      "omitted_definitions": 61,
+      "omitted_error_rows": 0,
+      "source_window_policy": "Three preceding and up to sixty following lines; not complete function bodies."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/attachment/Original/source/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+      "sha256": "40bd1e93013212159d64d443a88132a3b4d3c05da8483fec958557f117f999e1",
+      "bytes": 13775
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/releases/2026-11-18-strict-raptor-source-note-0b1635f2457b/vendor/aideal_engine/src/aideal/defaults.yaml",
+      "sha256": "1778d383c06f3796b56c9db6b47a985a1adeb5c2451a0a896cfbc8f0fea298aa",
+      "bytes": 5298
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/configs/aideal.yaml",
+      "sha256": "824eb8582661f2575296df47af7baf1d63be86224436a26968efad82cb46e8b7",
+      "bytes": 11387
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/inputs/api_inventory.json",
+      "sha256": "441e186c80096bfdbb74190497914863e7d25459b7a09ed54601b9fe51a74577",
+      "bytes": 430473
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json",
+      "sha256": "0585c743a2e6e574cbc5b369b74a59bcd752a762ab88d81381a08520c175ecdd",
+      "bytes": 215915
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/README.md",
+      "sha256": "740f9c54cbe9b01bf9d559a4da13c857ebe1a0597cdbddbe70c6992125005229",
+      "bytes": 1823
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/Home.md",
+      "sha256": "c4456bec68834278f1856a40d6942c970504baa4faad7cef20033970911d55af",
+      "bytes": 4050
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/davinci.md",
+      "sha256": "782b640e81b087fcc614d0e4fffb14ab116de0aba8e75a980803e17ff20d1995",
+      "bytes": 5988
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/dev-setup.md",
+      "sha256": "cfa7d5c174247ffb9c0cf34d658ee594a85c64c8271a8b98e9c3af163ffd75ab",
+      "bytes": 2736
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/development.md",
+      "sha256": "589be5bd510f3814e7924e091c2ccf86661decbb4084c9ddb934cb3cc6ce78e9",
+      "bytes": 1571
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/input-output.md",
+      "sha256": "d45a68c95ec2b149c45591a0d4507a6d65332078bbd2c5a767050dd47477befe",
+      "bytes": 13978
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/installation.md",
+      "sha256": "a97750d5a360cc94b15ada6d9148d7b639a5a4f73ff53102e9162a24a3cc1468",
+      "bytes": 2873
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/partitioning-indexing.md",
+      "sha256": "034c240a4de17c50883e824ce3477d6f1dbf7f06f3501258f4a06468d4196e08",
+      "bytes": 6265
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/raptor-join.md",
+      "sha256": "f8079ee4f6db7a0d372a8e451a16e4aaa8b634dc802cb48a1b3f36f4eac16c90",
+      "bytes": 10152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/rdpro.md",
+      "sha256": "c5bab8686f3dabdb11f9e1e5022308c835d588a24af28537161b79982b4ba3a7",
+      "bytes": 15105
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/scala-quickguide.md",
+      "sha256": "8f3fdec40188d4af88739b6224f73f3753471c4536923c8042ec2c828e2f7749",
+      "bytes": 3637
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/spatial-data-generator.md",
+      "sha256": "186f600040b81c7a8f533a20be9bd74e79d2cedf0bf228e49d45d22bb236fba0",
+      "bytes": 11482
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/spatial-join.md",
+      "sha256": "176b32a0d87387b90a74ab70484167ecf41eb29ec5ac996d7cd0ae4d1af4dcdd",
+      "bytes": 6311
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/summarization.md",
+      "sha256": "0868e48f22d388cb6d5c027d12d8271c997884e8a998ca655a7b45962c4a8921",
+      "bytes": 7544
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/visualization.md",
+      "sha256": "72df3512c793f531fe2c37736ca3e1a75b530e64794e751870e3bfc0850daec5",
+      "bytes": 5958
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/visualization_mvt.md",
+      "sha256": "c0d4b9a0f4b89e4a3b40cc703667660c549462076985f2013821cc718ef3b069",
+      "bytes": 6286
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/doc/web-operations.md",
+      "sha256": "42a16b6780ebe8690cb7cdeb9188bddf831936a0fa45ff167d143bd8e79e6c07",
+      "bytes": 7788
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/dataExplorer/README.md",
+      "sha256": "0ab60febc9f1c80795af5b5eeb71557ec01bffa4dea80b368680e7a67cdc3c29",
+      "bytes": 11948
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/distribution/README.txt",
+      "sha256": "6a8a47dbddb5f5a194a0f5335820c91caf6f116f3906a16343a668f300cdd2d1",
+      "bytes": 113
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/dynoviz/README.md",
+      "sha256": "e39cdd76b8a43a98953208ee14c9133a0505660d3ffa9ab01b59eb3baed714fe",
+      "bytes": 996
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/raw/satex/README.md",
+      "sha256": "c5739bb8824030ed252bff71d0b92e55b43d2c4ffdf44c31b38dd5620dad2e37",
+      "bytes": 2912
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L1-L13.md",
+      "sha256": "ba50b1fd36a27981571fab254491c2317b322e2d0d289629db4ed5c6ca6e1f95",
+      "bytes": 699
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L14-L53.md",
+      "sha256": "07c38632c9571fdf3ef5970b6a59d59121d830dadb6a01072f7bade05dbb6e18",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L54-L88.md",
+      "sha256": "fd5fd01c430822d1035c52d09eb126cfd9f07d4a534fa98f761b84bc9eb9ca19",
+      "bytes": 1611
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L92-L105.md",
+      "sha256": "56ddef14323681e8155c3e6ffdef60dd255ccb449974af6f47a38d0cf25359b5",
+      "bytes": 740
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L246-L291.md",
+      "sha256": "ef9472aea783e13f61e091db5894848794dc0b275c5b4a1036ecb39971d07560",
+      "bytes": 2719
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L225-L245.md",
+      "sha256": "ef12d310d4276575b898e9213fa28b857bb7b304508ec912edf19eca15c9e549",
+      "bytes": 1324
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/raptor-join-L1-L225.md",
+      "sha256": "f8079ee4f6db7a0d372a8e451a16e4aaa8b634dc802cb48a1b3f36f4eac16c90",
+      "bytes": 10152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L169-L178.md",
+      "sha256": "8d54d1f41b5e255c0802a3a91332f2de88abd303589471033adf3c7492123769",
+      "bytes": 423
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L179-L189.md",
+      "sha256": "053d8a1664d97bf5cf9c60adf9f161c651663454ddfb6c3aa39f6717a7e06367",
+      "bytes": 549
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L190-L224.md",
+      "sha256": "f5db7824c2ee79a3bfdde8b577118d5a827120614011e0c8e450360f7369df5f",
+      "bytes": 2282
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L144-L154.md",
+      "sha256": "c407b26865eb5eb92a7cd29e4c47db71a496770da04bf6c4274007e44cf9b05f",
+      "bytes": 461
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L115-L129.md",
+      "sha256": "0c890d2028749ea40792810c1222ec1dc9173964890190635b3ecaf64e8b239b",
+      "bytes": 875
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L155-L168.md",
+      "sha256": "8cb545c349ace08e6c7ff01881c79c65d16b9716d12ea9fd6b9318423ba2ca05",
+      "bytes": 696
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L106-L114.md",
+      "sha256": "bb08b62de8d85d3c0106677e99d3a46135daad8b51d4d8c3ba6229fb5ce6f370",
+      "bytes": 383
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/excerpts/rdpro-L130-L140.md",
+      "sha256": "6539734eeb11bd864abf0deed5b32e0df732e7380754b6d85519befb68970ee3",
+      "bytes": 535
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/rdpro/ledger.json",
+      "sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699",
+      "bytes": 34058479
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/canonical-selection.json",
+      "sha256": "feb40fcb7087800d57195bf3d4b7241702de4a5bbf8acf1a10552830f1ac8e08",
+      "bytes": 650632
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/cg/ClosestPair.java",
+      "sha256": "e39d0b5c488bd932f5b8aa40a85c559ab4f55d5ae648882840f0ab3bdf8e69f0",
+      "bytes": 8178
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/cg/HCurveSortable.java",
+      "sha256": "5d94e8dd59fb702dbbdfb865ae81904b96d57603ff707a19170ef6931b79230b",
+      "bytes": 6865
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/cg/SpatialJoinAlgorithms.java",
+      "sha256": "467259b4884651e630b1365c1150c036e4343aef6bfbdb778e79fee92cdf4805",
+      "bytes": 20999
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/cg/SpatialPartitioner.java",
+      "sha256": "0451d70b307158f7774712f7607d05603220a024b8e9b1e1c28be79e85b02f06",
+      "bytes": 8193
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/distribution/src/main/java/edu/ucr/cs/bdlab/beast/distribution/VersionReplacer.java",
+      "sha256": "69fe17a4448a5c21bd1336a46f130c52abce4831e88bcd3078847b58c282779c",
+      "bytes": 2770
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/EmptyGeometry.java",
+      "sha256": "9d22d412832b7512c7a33049f132c5454abc2a27fec7b645f2d6998acf65c1a1",
+      "bytes": 3954
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/EnvelopeND.java",
+      "sha256": "7b7a5c55ad1bee0a5784b4c5b32d4b4611e844d4d817c5c3ef46656e7975e73c",
+      "bytes": 18221
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/EnvelopeNDLite.java",
+      "sha256": "2dc27ca76ecee7da2f57fcaee57031a0a085d89f0ab8c43a5fd9afac0eccea56",
+      "bytes": 21475
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/GeometryHelper.java",
+      "sha256": "517aca6ae1a3a52c5d2bfc6d6ac80ce4d212b3b688f108277c98de2dc90db175",
+      "bytes": 10223
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/GeometryReader.java",
+      "sha256": "c39263e1d1d86c2e7eaccdfef053ecd947d5324b07c993b12b9868dfda1abcff",
+      "bytes": 10635
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/GeometryType.java",
+      "sha256": "d710207ab9027a6f3fa16529ae2b9a73af0feab457b0dc7d729f3b188b37b231",
+      "bytes": 3177
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/GeometryWriter.java",
+      "sha256": "f5702f5dda9b509c58c48b20ad8af6dc0236ee5b134401ed4189c60a6d2535b2",
+      "bytes": 7180
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/geolite/PointND.java",
+      "sha256": "39b068f1c0056e7813ca03e622a432eefce4b99fb4edbab718449c86fa4d47fa",
+      "bytes": 7996
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/AbstractRTreeBBPartitioner.java",
+      "sha256": "ca0b71c71637100b5b4a43007862713c6d75c83faca89643c8de527f3e5b3972",
+      "bytes": 9140
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/AuxiliarySearchStructure.java",
+      "sha256": "112349f369d5f5ae3a7ab6e6d2c0afd2fbc52be88986076ac55e8902ab8c739e",
+      "bytes": 5753
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/CellPartitioner.java",
+      "sha256": "2e1553f9648ec2bad199f5a5b57f8279fa32e5147a103e9858168088d0501dc8",
+      "bytes": 8866
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/GridPartitioner.java",
+      "sha256": "f26ce125ea572191063ba06bc8a3b382b7dd723fd6f482dc02e629c3681dfca2",
+      "bytes": 10257
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/HCurvePartitioner.java",
+      "sha256": "c0a8705609e58a405c46205cdb4c105c080707e44e34221985fe11b075b33922",
+      "bytes": 6712
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/IndexMasterFileCommitter.java",
+      "sha256": "633e2a7d9ebe0254ee2d5819066aa79c2cc2086355867d032f0cd18cdda42f32",
+      "bytes": 3595
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/KDTreePartitioner.java",
+      "sha256": "c24435e2e68f9c94e5da6c6b169af8dcf7e93370149031241d58626fea18b428",
+      "bytes": 10248
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RGrovePartitioner.java",
+      "sha256": "970f2e157253bac2fcfd8f8575ae99aa212c5d9ed6e11715a1292ed84e4f3c35",
+      "bytes": 7596
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RRStarTree.java",
+      "sha256": "d08c45ce0f8feabbc9cab09b0239d84243859ce17481feca624b01f963c759d8",
+      "bytes": 29938
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RSGrovePartitioner.java",
+      "sha256": "cf94be3e16a7b6b93df653bc16280e1191dd5989968594c444bc5f45f8d678ec",
+      "bytes": 14404
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RStarTree.java",
+      "sha256": "7ba43c38c4e028a6b5712ffe4a7a6a74ad04db1d8c1e4e28cfcecfdb0c905bfe",
+      "bytes": 49380
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RTreeFeatureReader.java",
+      "sha256": "262d1dc2396e126d4a55b8413f3af7c33cce901df3f46a9be8da4c791de24afe",
+      "bytes": 12095
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RTreeFeatureWriter.java",
+      "sha256": "7afc678e9e007e1b79959a69bf21d36706ae467b5ff32a326b5eccf6992402b7",
+      "bytes": 24109
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RTreeGuttman.java",
+      "sha256": "beb2a01730b33d656eb1a89c01e3f68cb10b5bd2190f88bf907e1202c5e7bdb4",
+      "bytes": 70804
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/RTreeGuttmanQuadraticSplit.java",
+      "sha256": "246a656b1ce4c6b181d8b902f5b8f7a0b1c4a454a276387d1ebc9880e446c1a3",
+      "bytes": 5367
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/STRPartitioner.java",
+      "sha256": "241452f01230e3caf74048764ce76970d25405f3e9e937cb9c8386e5af8feafa",
+      "bytes": 12832
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/indexing/ZCurvePartitioner.java",
+      "sha256": "a566c02ce51db40bd32476196d2f259effd94009e64962fb2be73e194182f265",
+      "bytes": 8428
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/CSVEnvelopeDecoder.java",
+      "sha256": "678e7743b16818dc347349cd33bde1b95f63c90fda4d09fd460c57e5a0dc3bbe",
+      "bytes": 1753
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/CSVEnvelopeDecoderJTS.java",
+      "sha256": "e84e600c72aa7cb71ce0259c373748dd162aa45425dac0cb052996af559718ee",
+      "bytes": 1571
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/CSVEnvelopeEncoder.java",
+      "sha256": "7fb9c8f82dc1de4c1438552406e606f46108d3c47913c2b33d5fce9c98f56e93",
+      "bytes": 3152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/CSVFeatureReader.java",
+      "sha256": "815c6fe9bf5b76af69d681c74d22077e9662e5bb7b2efa6eb761875d8d336a50",
+      "bytes": 34965
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/CSVFeatureWriter.java",
+      "sha256": "a64a76104bb52eea7ea5d73a0c9155ac690b5b9902afd7831b266e49f2ddf548",
+      "bytes": 8129
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/CSVPointEncoder.java",
+      "sha256": "87ec3e879f3c199b82d0621529326bc72df191a86ed75637d5d8b89409693c59",
+      "bytes": 2846
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/CSVWKTEncoder.java",
+      "sha256": "17fdfba250c81a94d533a7fdfe158384231277379c304e4e84c5bd4c9317a766",
+      "bytes": 1968
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/FeatureReader.java",
+      "sha256": "c18ce559c11aeaba1dc7f44fb4a3705c15df94a81d47a07d25b5ac89ba09c3ec",
+      "bytes": 9737
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/FeatureWriter.java",
+      "sha256": "e30bea8d1f21ea53677e50954ee1320c1a988fa0880d7dbc4a89d03775cfb3af",
+      "bytes": 5429
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/GeoJSONFeatureReader.java",
+      "sha256": "1d6c3bef8696c02106963e6e094a5a2f2981fe2266e33fdee743183d68ce565a",
+      "bytes": 24481
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/GeoJSONFeatureWriter.java",
+      "sha256": "19e1ee71bf742c48431e0ce8fef887870557ff73da3ebda206103510b28320ea",
+      "bytes": 17569
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/JsonWKTReader.java",
+      "sha256": "50beb27534c09d886f4fe1fedb54171d7336096e8d0a8d6b4b872b72a15e2cbf",
+      "bytes": 5735
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/KMLFeatureWriter.java",
+      "sha256": "56d2dee6f6fb5e28d5f82d70b09e0888902d0ec5653e98d24dac6b2e6e6d6adf",
+      "bytes": 10429
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/KMZFeatureWriter.java",
+      "sha256": "2cdabe0a6723c76c5971bc58201c86806f5fdcf3e2e40ddcb0566156520f19d4",
+      "bytes": 1404
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/MultipartFeatureWriter.java",
+      "sha256": "97c8ddd54ac0b270e2c8b8477318a12efb0a0e77e9dafe97c7a32647be1876f8",
+      "bytes": 3512
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/SilentJsonParser.java",
+      "sha256": "137f0106214218c3b97983497846d178b819869875579749ed54da287102656a",
+      "bytes": 12053
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/SpatialFileSplit.java",
+      "sha256": "74f24196146f66a72b323280f9cff9be71c32915562adc6987cd766cf4907466",
+      "bytes": 3103
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/SpatialOutputFormat.java",
+      "sha256": "6a062bf2caff026073030f097fc6563250ddf1494e27011808663b99c60418bd",
+      "bytes": 1592
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/CompressedShapefileWriter.java",
+      "sha256": "3d0ce91083e302d12a8b8d74baa14d9b41167a263530cab0693934fa9715d32b",
+      "bytes": 5426
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/DBFReader.java",
+      "sha256": "49ea973371d173e48c6fc4caeb7b55d6c4d628735dbe9b6a2ad6dbd59947059a",
+      "bytes": 14544
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/DBFWriter.java",
+      "sha256": "8bc2d5e70144fa9d870b7fc069f685f9ba7265e9880a4f6e351a3ed4db94dbbb",
+      "bytes": 17198
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/FieldDescriptor.java",
+      "sha256": "3834bd90989085f7a4f7d41ef80c50a307ff91ce0b9a2d30c51ec2601fee8432",
+      "bytes": 2757
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/ShapefileFeatureReader.java",
+      "sha256": "caecc6fa15d91a6861fac6e5600a4cef8b0b0ee4299f99f742228b3a54b22d99",
+      "bytes": 12244
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/ShapefileFeatureWriter.java",
+      "sha256": "eb8513c3fe5e27fb60c3104c82538496d4c1eeb36d6aec7c9262d337add9e842",
+      "bytes": 3505
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/ShapefileGeometryReader.java",
+      "sha256": "c90c0b5034b4e92bbd3a7e752dbc9c9b558b6dce28a76e976d7ded528504249a",
+      "bytes": 24674
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/ShapefileGeometryWriter.java",
+      "sha256": "522936bccd059c4bfd98333626f18d15264475bb19a374ef62ed63ab7e232406",
+      "bytes": 21729
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/shapefile/ShapefileHeader.java",
+      "sha256": "d9475cf49508b9940a63355648b4048c6e6636e9b172bd4345928c6de63aa902",
+      "bytes": 4192
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/AbstractIFDEntry.java",
+      "sha256": "5782c801775c73022a53b8ca8552478d6cda9401c129a016423b542d25924db3",
+      "bytes": 2641
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/AbstractTiffTile.java",
+      "sha256": "f28ff98771ca9ad6ccb6c995f99b489ed871b2e4a638f87c05cbc93da04f9c5a",
+      "bytes": 9179
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/BigIFDEntry.java",
+      "sha256": "d52e66a046d46bf4363b410c0ac8587728cd4e20a422531be3c57871c80f8c89",
+      "bytes": 5049
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/BigTiffReader.java",
+      "sha256": "47e66bec482bc8e7f2a14eb38c3502cb6f2ffe71107c84a0145a030825d8d30b",
+      "bytes": 9204
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/CompressedTiffTile.java",
+      "sha256": "dbc27b265c91b2031c3a9f853dc165565fe3e4760d6ffcbd6b36683f614e1607",
+      "bytes": 17792
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/CompressedTiffTile8Bit.java",
+      "sha256": "c9db7b4748cad756a1a4e918e673a302c4922e3b65de4ce9f423ae0f1501af32",
+      "bytes": 1597
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/IFDEntry.java",
+      "sha256": "eb14be0d60cffc56fed69b6d2899231acd70442c2646f90658e31c1460e6a300",
+      "bytes": 4946
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/ITiffReader.java",
+      "sha256": "df9ede414fdb00419959a7a0c9ee6ee02adf289a22554f00050c181c8c8e2693",
+      "bytes": 5936
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/ITiffTile.java",
+      "sha256": "ff4a8bf6158270fb9d37ad296803c19683e558414d336b9a7886d31745832e0b",
+      "bytes": 2653
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/PackBitsInputStream.java",
+      "sha256": "1b674d280a9fa017ad5784d93f122b38eb4f6ec441b99615616a4420573040ad",
+      "bytes": 2775
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/TiffRaster.java",
+      "sha256": "5594811c2f8c82fd1c1735c947302c5756ae2b379a968973aee9320cf84cfc5c",
+      "bytes": 26900
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/TiffReader.java",
+      "sha256": "a6c1c6de2e3a49427af6f0dd685420421d859c8186e12a66ddbab96af597ed3c",
+      "bytes": 8237
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/main/java/edu/ucr/cs/bdlab/beast/io/tiff/TiffTileSerializer.java",
+      "sha256": "abfdb0299a95ef312e05bddbc1de619de2fbb039a357e077a5f2bf14e476241d",
+      "bytes": 3116
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/beast-spark/src/main/java/edu/ucr/cs/bdlab/beast/operations/ComputeIndexMetadata.java",
+      "sha256": "f424b6d73ee5acda8084181a645712b1f3bae838cba7f114225001939338cc8e",
+      "bytes": 12128
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/synopses/AbstractHistogram.java",
+      "sha256": "bd19b4c354a42bad2f892d57b1ee4063909cf4e704e165bbb918022b932a4908",
+      "bytes": 4199
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/synopses/EulerHistogram2D.java",
+      "sha256": "0c8267b2b745e3fbc9aa4cd33e97d200ab0695e9ad0a6415a861f9be008f757d",
+      "bytes": 8934
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/synopses/Prefix2DHistogram.java",
+      "sha256": "eb5b91f0f3630449095bb0f2c3f11a662e90b6e90ee5655e1f7b673d21842d33",
+      "bytes": 2984
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/synopses/PrefixEulerHistogram2D.java",
+      "sha256": "2118dccbdaf3c25a6253277ec7b1835b158a037fc192f577b137854b11844b44",
+      "bytes": 4330
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/java/edu/ucr/cs/bdlab/beast/synopses/UniformHistogram.java",
+      "sha256": "eeb325db84fb90b0883f04a2b89e7e1e8d79afe1911173d5a9f65150b07e7568",
+      "bytes": 20360
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/AbstractWebHandler.java",
+      "sha256": "da6fb50ac0f8571a0e6af00432e06d64a239a1eb79ef8f9dd5c4e675687fe5f3",
+      "bytes": 9520
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/BeastServer.java",
+      "sha256": "1b4617e059795b1e7bbbbc3abde1f9176871a2ada8e9454d6599f987fde592f8",
+      "bytes": 15640
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/BitArray.java",
+      "sha256": "1b90000fa7ac4585ab00b12768c62194ced65132457396bf7b6df9e4303d6fab",
+      "bytes": 9817
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/BitCompactLongArray.java",
+      "sha256": "4a8b7e32619e0375dd9741f32dec9191c0f299cd3c32f2bfa8f64d8e4ed1760e",
+      "bytes": 1853
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/BitInputStream.java",
+      "sha256": "fbcd76b7f2bc99e062af002d94051bb601e2bc04d860cbd36f86e17b576f5c6a",
+      "bytes": 1491
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/BitInputStream2.java",
+      "sha256": "c66316996edc1512f5b30f409b8a2d4dec5dae9b43b988164e8538867c6cf7b9",
+      "bytes": 1591
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/BitOutputStream.java",
+      "sha256": "531680ac672243952efce273c6a010022ab89955b377c0c0695bd1ed5ce12bd1",
+      "bytes": 2612
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/CompactLongArray.java",
+      "sha256": "ef2c0be39b8d403c6b19a1144caa42cd61eea8e4290c9ba5714eba99a5dc8a07",
+      "bytes": 7779
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/CounterOutputStream.java",
+      "sha256": "414820243653ab6f3fabc62f349684ae47ec1af94f48560414bdb52ffeb639b4",
+      "bytes": 2244
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/DeltaLongArray.java",
+      "sha256": "4ca4b6f597de952777e9c148cd645c55658175c0694d1a1060a69c964e79ce60",
+      "bytes": 2278
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/DeltaZigzagLongArray.java",
+      "sha256": "7645d87c7b574cce094c1909239981301ddcb17794091a4e947eefa9ef64af64",
+      "bytes": 2379
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/DynamicArrays.java",
+      "sha256": "288888722eb43ba0fa8cb998c1cc0499f792f687a36cb7480f4056792d5cb933",
+      "bytes": 4945
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/FileUtil.java",
+      "sha256": "59dd5adb3fbb936467fc395c5ec87deb6ecbc4e81e59c4e7017ef9afb6392dd8",
+      "bytes": 11381
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/IConfigurable.java",
+      "sha256": "09f935338fdcc9f727e094cf2f7f1869fb36ea8cd4ca75955bf5cee136bcb4d3",
+      "bytes": 1613
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/IOUtil.java",
+      "sha256": "118684c8c5035f5daa3491cb7128ba68be0c98d68d929a51a28ca1c318313b3b",
+      "bytes": 10499
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/IntArray.java",
+      "sha256": "89ef2422768f68cb67e064b5ef9a7cc8d7f903ee3fd59f9166cf28f0958cf636",
+      "bytes": 8105
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/LZWCodec.java",
+      "sha256": "ca7c2eecd8651d920d4c0b0f47fa60df7aecc1fa613d323dda33096ae78ca20a",
+      "bytes": 6538
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/LZWInputStream.java",
+      "sha256": "277392af02dd3bebf23ba67d1b78dca45340971366361aba7f0cf95f12e720a9",
+      "bytes": 5868
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/LZWOutputStream.java",
+      "sha256": "04e176143377b093066a4a0b197f00a098bbbfe5a7b27f5abbdbde2ba1f35840",
+      "bytes": 5179
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/LongArray.java",
+      "sha256": "58ea305b92409bc274a7c10ef223d5aa2ae985cb60c4343274e0b9c23ec1cb31",
+      "bytes": 7426
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/LongArrayInputStream.java",
+      "sha256": "bab80b7aac0b5a0369543921b32bb9194418a10687267aaa12f4db5442c1f70b",
+      "bytes": 1657
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/LongArrayOutputStream.java",
+      "sha256": "66a6f9d08f232c4bc623c8b72a8e13148c03cef067091939114d601cbb899105",
+      "bytes": 2587
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/MathUtil.java",
+      "sha256": "d00ad9fd15bcb82ff54de52b966e7ada537092fbe4379c479e81a4cc6be9ae6c",
+      "bytes": 10426
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/MemoryInputStream.java",
+      "sha256": "a2a4f48b96869c4c6486adb83ef6682abb4c2f537ecf595bff3cb03802eefaa0",
+      "bytes": 2155
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/OperationException.java",
+      "sha256": "6dd986e223b8a865bc973696d324a7564293724330cc21c1df2080ba50e41826",
+      "bytes": 1179
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/Parallel.java",
+      "sha256": "f5b4858eacb377c5ce3ae1189d9bc888f48e40c16600709a59448ed05c19bf13",
+      "bytes": 3739
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/common/src/main/java/edu/ucr/cs/bdlab/beast/util/StringUtil.java",
+      "sha256": "fe189f692f5074f9fe9e8aea02e4738a91a0b8c4dd9c230350a8af17f1fa0fa5",
+      "bytes": 4290
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/Canvas.java",
+      "sha256": "a6dc21af7406cb737de5582e3994991f1c902b0d39da4ce8f7493d3aa5111819",
+      "bytes": 2532
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/CommonVisualizationHelper.java",
+      "sha256": "54d2fb21e646ac4a5d2673c0084389893906ebc4dfbb731d57b2b8aa26fc3400",
+      "bytes": 5739
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/DaVinciServer.java",
+      "sha256": "c1a5dc6b08f47eb502220aa750b1eb1866d8c5c1ae152413e662d01016850f7d",
+      "bytes": 29122
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/GeometricPlotter.java",
+      "sha256": "c472aea7fa019300ef58297f6c3db298a8f1a9612142da6d2a9bfdc45cdd7a40",
+      "bytes": 14404
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/ImageCanvas.java",
+      "sha256": "0a0e0ba9654410b3833bf7c7078bcab491bf68d5df925155befc6c529eb73a36",
+      "bytes": 6731
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/ImageOutputFormat.java",
+      "sha256": "3edd8ab380af625138d3e40d1c54b56ba9e0f50708322822f9efefca73836f75",
+      "bytes": 6465
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/MultilevelPyramidPlotHelper.java",
+      "sha256": "1f47f05cddc443aff84c0c51618727cbe7c4d7234c424eaa5fbe9d03a4b7fb03",
+      "bytes": 26100
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/Plotter.java",
+      "sha256": "5651569fabe68046504083418e14a6601f95b7e39dde5650d833c5fe80296de0",
+      "bytes": 9584
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/PyramidPartitioner.java",
+      "sha256": "c0ee6679a33d2a7c7bfa19e1a24f0791a16f3090c2ea56b42d7e8ee913ea6b33",
+      "bytes": 20184
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/SimpleGraphics.java",
+      "sha256": "2514b1ba028ede5a403bb40cb58fdc4592ee7add6b3daa467da3e080555fccda",
+      "bytes": 19695
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/SingleLevelPlotHelper.java",
+      "sha256": "a684f706f3e29d3774b222b2811476367f2190fbb5ff9f1722295acf60d2bf6b",
+      "bytes": 10119
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/SubPyramid.java",
+      "sha256": "bfec26db4b1d78cdf51046d63aa9a80837ea141a1fd0292383de74e35e3e03f3",
+      "bytes": 16395
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/TileIndex.java",
+      "sha256": "ae6dc62d56601302c3d917d32a938529439c0e87470e63a2c80395d8bf9a3d8e",
+      "bytes": 4389
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/visualization/src/main/java/edu/ucr/cs/bdlab/davinci/VectorTile.java",
+      "sha256": "97f73ccde506491a8cb2ff7cdc10dd1c2bcfd5747ecfad7fd5dadf6a7fe40787",
+      "bytes": 208668
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/java/edu/ucr/cs/bdlab/dynoviz/FetchImage.java",
+      "sha256": "612ef28373d0909db7d149b9116b76a35e0e77369efb998950122a0606752bb3",
+      "bytes": 2370
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/java/edu/ucr/cs/bdlab/dynoviz/NpyWriter.java",
+      "sha256": "f2e3bfd92716038a30c3a6f0180c4af32a14d9c873708752835d5595da3e3260",
+      "bytes": 3390
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/java/edu/ucr/cs/bdlab/dynoviz/RaptorNPYServer.java",
+      "sha256": "cf3087f372d4c9ffb76e0f5baf9d6219aef9cfee228fadcd7d7ebe94dc1870c9",
+      "bytes": 13220
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/dynoviz/src/main/java/edu/ucr/cs/bdlab/dynoviz/RaptorServer.java",
+      "sha256": "4076dd93623664e5058bb69272e53e7024c8d55460e45ea11a878c1917cee6a0",
+      "bytes": 13108
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoKeyEntry.java",
+      "sha256": "6a6409488e69791811f6c3bb646b1233d0de900f27ed9f2ff6c74bf882475aa3",
+      "bytes": 3336
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffException.java",
+      "sha256": "a0ddb236e08622bb36b75765e54d72d06c230159689e9708f9989ee21f308c79",
+      "bytes": 6240
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+      "sha256": "40bd1e93013212159d64d443a88132a3b4d3c05da8483fec958557f117f999e1",
+      "bytes": 13775
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata2CRSAdapter.java",
+      "sha256": "c91b58f775822d998b0ce75b9f2b969a60c689467fb9ba5acaeb7197248ab156",
+      "bytes": 74259
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Intersections.java",
+      "sha256": "7a5b044b8834435343792e143dc6febf13f9374b1b5279f5941b4f86511a7858",
+      "bytes": 25788
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/PixelScale.java",
+      "sha256": "4d417e15ad383aedfbc468e9578d1b875fd3d871b406019b0950c760e1abaf7e",
+      "bytes": 3073
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/RaptorSplit.java",
+      "sha256": "22378451a1dc815ad5953586075fa52d5c77fe72fcd0d83231d8d9892818d139",
+      "bytes": 1875
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/RasterHelper.java",
+      "sha256": "ece6fc66859762978aa2eb2519fe6dc92a91a4bc50ed6327c2c0376d67bfa361",
+      "bytes": 1109
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Statistics.java",
+      "sha256": "e946c3a7f5837b8a25a5fd9d43b1507855ff1ac9cf060cec7926b034a1908535",
+      "bytes": 3719
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/TiePoint.java",
+      "sha256": "d232364d5709163014757139b3e496a828e81d2600b04919705ee97772456bbf",
+      "bytes": 2666
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/configs/project_profile.yaml",
+      "sha256": "6719a9126df03f6769b69cba793ae47135b0138d8bf45ada16463d33657ab40a",
+      "bytes": 669
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/preview-compact/api_evidence.json",
+      "sha256": "326e0dad3dfce8c87e19791c17df491c79cecc2d277da4d0eb86ff5de4aa13b6",
+      "bytes": 553466
+    }
+  ],
+  "error_scope": "operator-designated development logs only",
+  "api_evidence": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/preview-compact/api_evidence.json",
+    "sha256": "326e0dad3dfce8c87e19791c17df491c79cecc2d277da4d0eb86ff5de4aa13b6",
+    "bytes": 553466
+  },
+  "context_policy": "calling-facts-and-source-v1",
+  "llm_calls": 0,
+  "preview_sha256": "9b70c32a58a04e0e51d690b6f6d9b0ae54a8763ce615431f48a65cf775496bc3"
+}

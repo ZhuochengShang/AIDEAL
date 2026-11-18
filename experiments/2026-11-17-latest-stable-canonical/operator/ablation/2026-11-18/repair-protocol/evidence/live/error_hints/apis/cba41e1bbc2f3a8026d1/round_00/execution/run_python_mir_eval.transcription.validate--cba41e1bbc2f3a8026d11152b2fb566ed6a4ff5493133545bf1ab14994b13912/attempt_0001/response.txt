@@ -1,0 +1,16 @@
+import mir_eval.transcription
+
+# Validate the transcription inputs using the provided reference and estimated arrays
+# The function returns None if valid, or raises an exception if invalid.
+mir_eval.transcription.validate(ref_intervals, ref_freqs, est_intervals, est_freqs)
+
+# Verify the input shapes match the expected transcription format (n, 2) for intervals
+# and (n,) for frequencies.
+assert ref_intervals.shape[1] == 2
+assert ref_freqs.shape[0] == ref_intervals.shape[0]
+assert est_intervals.shape[1] == 2
+assert est_freqs.shape[0] == est_intervals.shape[0]
+
+# Witness: The number of reference notes validated
+witness = ref_intervals.shape[0]
+print(f"__CHECK__ python:mir_eval.transcription.validate {witness}")

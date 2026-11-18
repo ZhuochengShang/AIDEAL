@@ -1,0 +1,177 @@
+{
+  "schema": "rdpro_java_generated_readme_review/v1",
+  "read_only": true,
+  "generated_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java",
+  "original_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java",
+  "result": {
+    "selected": 69,
+    "generated_pass": 5,
+    "generated_fail": 64,
+    "original_pass": 13,
+    "original_fail": 56,
+    "original_passes_now_failing": 8,
+    "new_passes": 0,
+    "repairs": 0,
+    "audience_model": "google:gemini-3.1-flash-lite",
+    "provider_calls": 69,
+    "input_tokens": 133382,
+    "output_tokens": 14820,
+    "complete": true
+  },
+  "failure_categories": {
+    "compile": 63,
+    "runtime": 1
+  },
+  "first_diagnostic_groups": {
+    "Private field access": 2,
+    "Invalid constructor": 27,
+    "Type mismatch": 3,
+    "Invalid Java snippet structure": 13,
+    "Unknown symbol / wrong package or member": 10,
+    "Instance method called statically": 6,
+    "Other method/argument mismatch": 2,
+    "Incorrect expected behavior / assertion": 1
+  },
+  "matching_fingerprint_fields": {
+    "models": true,
+    "class_context": true,
+    "max_fix_rounds": true,
+    "timeout_s": true,
+    "source": true,
+    "api_inventory": true,
+    "canonical_requested_targets": true,
+    "scaffold": true,
+    "fixtures": true,
+    "prompt_contract": true,
+    "transport_contract": true,
+    "engine": true,
+    "manifest_sha256": true
+  },
+  "execution_config_identical": true,
+  "classpath": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/runtime/rdpro-classpath.json",
+    "count": 365,
+    "missing": []
+  },
+  "library_jar": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/rdpro-stable-source-build/artifacts/beast-stable-production-0.10.1.jar",
+    "sha256": "862c98c70924194e4feb7fb72f1b028aea03bd63009fff16ebe4f0f77fbf0625",
+    "classes": {
+      "edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.class": true,
+      "edu/ucr/cs/bdlab/raptor/Intersections.class": true,
+      "edu/ucr/cs/bdlab/raptor/Statistics.class": true,
+      "edu/ucr/cs/bdlab/beast/io/tiff/ITiffReader.class": true,
+      "edu/ucr/cs/bdlab/beast/io/tiff/TiffReader.class": true,
+      "edu/ucr/cs/bdlab/beast/common/BeastOptions.class": true
+    },
+    "wrong_package_classes": []
+  },
+  "examples": [
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getKeyID",
+      "category": "compile",
+      "first_error": "illegal start of expression",
+      "contexts": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getKeyID--556c0d7081875acf47737171a0ba84ae101f68d44bac271801a8605e1b9462fd/ApiTest.java:41: error: illegal start of expression\n            import edu.ucr.cs.bdlab.raptor.GeoKeyEntry;\n            ^\n/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getKeyID--556c0d7081875acf47737171a0ba84ae101f68d44bac271801a8605e1b9462fd/ApiTest.java:41: error: not a statement\n            import edu.ucr.cs.bdlab.raptor.GeoKeyEntry;",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getKeyID--556c0d7081875acf47737171a0ba84ae101f68d44bac271801a8605e1b9462fd/ApiTest.java:41: error: not a statement\n            import edu.ucr.cs.bdlab.raptor.GeoKeyEntry;\n                                          ^\n/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getKeyID--556c0d7081875acf47737171a0ba84ae101f68d44bac271801a8605e1b9462fd/ApiTest.java:42: error: illegal start of expression\n            import edu.ucr.cs.bdlab.raptor.RasterMetadata;"
+      ],
+      "runtime_markers": [],
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoKeyEntry.getKeyID--556c0d7081875acf47737171a0ba84ae101f68d44bac271801a8605e1b9462fd/attempt_0001",
+      "original_status": "pass"
+    },
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey",
+      "category": "compile",
+      "first_error": "constructor GeoTiffMetadata in class GeoTiffMetadata cannot be applied to given types;",
+      "contexts": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey--15c7c9486aa6945333ce3511568c3f59d40910be15178cf269f0e96b2e278033/ApiTest.java:41: error: constructor GeoTiffMetadata in class GeoTiffMetadata cannot be applied to given types;\n            edu.ucr.cs.bdlab.raptor.GeoTiffMetadata geoTiffMetadata = new edu.ucr.cs.bdlab.raptor.GeoTiffMetadata(raster_tif);\n                                                                      ^\n  required: ITiffReader,TiffRaster\n  found:    String"
+      ],
+      "runtime_markers": [],
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey--15c7c9486aa6945333ce3511568c3f59d40910be15178cf269f0e96b2e278033/attempt_0001",
+      "original_status": "fail"
+    },
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.Intersections.compute",
+      "category": "compile",
+      "first_error": "non-static method compute(Geometry[],long[],RasterMetadata) cannot be referenced from a static context",
+      "contexts": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.compute--526e59b103842622b49d793cdd9ea2d11f32054c19e5bacd4a7b96287efb08fc/ApiTest.java:43: error: non-static method compute(Geometry[],long[],RasterMetadata) cannot be referenced from a static context\n            edu.ucr.cs.bdlab.raptor.Intersections.compute(geoms, ids, metadata);\n                                                 ^\n1 error"
+      ],
+      "runtime_markers": [],
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Intersections.compute--526e59b103842622b49d793cdd9ea2d11f32054c19e5bacd4a7b96287efb08fc/attempt_0001",
+      "original_status": "fail"
+    },
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+      "category": "runtime",
+      "first_error": null,
+      "contexts": [],
+      "runtime_markers": [
+        "__RUN_ERR__ AssertionError: Statistics object should be invalid before computation."
+      ],
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/attempt_0001",
+      "original_status": "pass"
+    },
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata",
+      "category": "compile",
+      "first_error": "cannot find symbol",
+      "contexts": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata--e667b5296f2f4b1f06508a786a828258eb03b4431ec9749c5cab3c73fadd52a3/ApiTest.java:41: error: cannot find symbol\n            edu.ucr.cs.bdlab.raptor.ITiffReader reader = new edu.ucr.cs.bdlab.raptor.TiffReader(raster_tif);\n                                   ^\n  symbol:   class ITiffReader\n  location: package edu.ucr.cs.bdlab.raptor",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata--e667b5296f2f4b1f06508a786a828258eb03b4431ec9749c5cab3c73fadd52a3/ApiTest.java:41: error: cannot find symbol\n            edu.ucr.cs.bdlab.raptor.ITiffReader reader = new edu.ucr.cs.bdlab.raptor.TiffReader(raster_tif);\n                                                                                    ^\n  symbol:   class TiffReader\n  location: package edu.ucr.cs.bdlab.raptor"
+      ],
+      "runtime_markers": [],
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata--e667b5296f2f4b1f06508a786a828258eb03b4431ec9749c5cab3c73fadd52a3/attempt_0001",
+      "original_status": "fail"
+    },
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.RasterHelper.createRasterReader",
+      "category": "compile",
+      "first_error": "cannot find symbol",
+      "contexts": [
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.RasterHelper.createRasterReader--fe184264ae7fe14be9e4b2f502ef636277bebe96d5e48d39893ca8b469841fd8/ApiTest.java:43: error: cannot find symbol\n            edu.ucr.cs.bdlab.beast.util.BeastOptions opts = new edu.ucr.cs.bdlab.beast.util.BeastOptions();\n                                       ^\n  symbol:   class BeastOptions\n  location: package edu.ucr.cs.bdlab.beast.util",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.RasterHelper.createRasterReader--fe184264ae7fe14be9e4b2f502ef636277bebe96d5e48d39893ca8b469841fd8/ApiTest.java:43: error: cannot find symbol\n            edu.ucr.cs.bdlab.beast.util.BeastOptions opts = new edu.ucr.cs.bdlab.beast.util.BeastOptions();\n                                                                                           ^\n  symbol:   class BeastOptions\n  location: package edu.ucr.cs.bdlab.beast.util"
+      ],
+      "runtime_markers": [],
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.RasterHelper.createRasterReader--fe184264ae7fe14be9e4b2f502ef636277bebe96d5e48d39893ca8b469841fd8/attempt_0001",
+      "original_status": "fail"
+    }
+  ],
+  "verified_documentation_errors": [
+    {
+      "api": "GeoTiffMetadata.getGeoKey",
+      "saved_readme_example": "new GeoTiffMetadata(tiffFilePath)",
+      "actual_constructor": "GeoTiffMetadata(ITiffReader reader, TiffRaster raster)",
+      "source_line": 46,
+      "audience_followed_wrong_readme": true
+    },
+    {
+      "api": "Intersections.compute",
+      "saved_readme_example": "edu.ucr.cs.bdlab.raptor.Intersections.compute(geometries, featureIDs, metadata);",
+      "actual_method": "public void compute(Geometry[] geometries, long[] featureIDs, RasterMetadata metadata)",
+      "source_line": 155,
+      "audience_followed_wrong_readme": true
+    },
+    {
+      "api": "Statistics.isValid",
+      "saved_readme_claim": "Calling isValid() on an object not yet populated by a Raptor operation returns false.",
+      "observed_actual_behavior": "Fresh Statistics().isValid() returned true; model assertion failed.",
+      "source_line": 132,
+      "audience_followed_wrong_readme": true
+    }
+  ],
+  "other_findings": [
+    "Representative request system messages require Java body statements only; GeoKeyEntry.getKeyID nevertheless returns import statements, inserted inside main and rejected by javac.",
+    "Selected instance-method requests include owner-qualified declaration but receiver hint is unresolved. This limitation is shared with Original, not a new generated-condition codepath.",
+    "Missing-symbol examples ITiffReader/TiffReader and BeastOptions use wrong packages. Correct class files exist in the configured jar; no global classpath absence was found."
+  ],
+  "limits": [
+    "One R0 trial per target; no repair or controlled proof of the causal impact of every documentation sentence.",
+    "This review verified representative failure causes, not all complete program semantics or all generated README entries.",
+    "Observed README errors must remain in the measured Generated README R0 result. Any revised README or prompt/environment change requires a new version/namespace, not overwriting these artifacts."
+  ],
+  "evidence_files": {
+    "raw": "RDPRO_JAVA_RAW.json",
+    "context": "RDPRO_JAVA_CONTEXT_REVIEW.json"
+  }
+}

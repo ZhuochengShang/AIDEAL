@@ -1,0 +1,44 @@
+{
+  "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-explicit-wrappers/mir_eval",
+  "release": "/home/zshan011/apps/aideal/releases/2026-11-18-forwarding-alias-authoring-c62c0f824952",
+  "jobs": [
+    {
+      "id": "mir-eval-aliases-only",
+      "library": "mir_eval",
+      "stage": "development",
+      "command": [
+        "/home/zshan011/apps/aideal/venv/bin/python",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/run_alias_proposals.py",
+        "--release",
+        "/home/zshan011/apps/aideal/releases/2026-11-18-forwarding-alias-authoring-c62c0f824952",
+        "--model-config",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/explicit-wrappers/MODEL_CONFIG.aliases_only.yaml",
+        "--preview",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/mir_eval/preview-compact/manifest.json",
+        "--output",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-explicit-wrappers/mir_eval/collection",
+        "--bank",
+        "mir_eval",
+        "--preparation-progress",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-explicit-wrappers/mir_eval/PREPARATION.json",
+        "--original-config",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/configs/aideal.yaml",
+        "--original-manifest",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/inputs/api_manifest.json",
+        "--expected-apis",
+        "178",
+        "--wait-preview-seconds",
+        "3600"
+      ],
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-explicit-wrappers/mir_eval/collection",
+      "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-explicit-wrappers/mir_eval/collection/DEVELOPMENT_COMPLETION.json"
+    }
+  ],
+  "purpose": "Generate unvalidated alias proposals for exactly the current Original microbenchmark API identities; do not install or evaluate aliases.",
+  "model_calls_policy": "One development worker; no calls until compact preview is ready and its exact Original API set verifies.",
+  "historical_proposals": "Earlier general-suggestion pilot remains in development/aliases/rdpro_java/proposals; it returned no aliases in two paid calls.",
+  "unsupported": {
+    "sedonadb": "The source-bound proposal adapter rejects registered SQL inventories. A native SQL registration/wrapper adapter and execution validation are required; no Rust alias is substituted."
+  },
+  "prior_rejected_collection": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/mir_eval/collection"
+}

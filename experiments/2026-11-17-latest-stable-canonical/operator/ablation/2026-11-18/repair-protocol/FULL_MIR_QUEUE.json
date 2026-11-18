@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/matched-repairs/mir_eval",
+  "release": "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+  "scope": "fresh matched mir_eval Original/Generated README/Error Hints R0 through R2",
+  "protocol": "matched-native-repair-1",
+  "workers": 1,
+  "selected_apis_per_condition": 178,
+  "maximum_logical_model_requests": 1602,
+  "prior_result_reuse": false,
+  "score_pooling_with_previous_R0": false,
+  "automatic_other_library_expansion": false,
+  "pending_conditions": [
+    "aliases",
+    "combined"
+  ],
+  "bank": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/inputs/api_manifest.json",
+    "sha256": "4c2eba86928dfb093b603e9df89c7d0db3d819bc0c7b82c488407e7e3fd152fa"
+  },
+  "estimate": {
+    "observed_preparation_seconds_per_attempt": 6.96,
+    "upper_elapsed_hours_at_pilot_rate": 5.2,
+    "note": "Successful targets stop early; provider retries or slower tasks can increase elapsed time."
+  },
+  "interpretation": "Native execution and self-check, same-bank development comparison; not held-out oracle accuracy.",
+  "jobs": [
+    {
+      "id": "mir-full-original-r0-r2",
+      "library": "mir_eval",
+      "stage": "development",
+      "condition": "original",
+      "protocol": "matched-native-repair-1",
+      "command": [
+        "/home/zshan011/apps/aideal/venv/bin/python",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py",
+        "--spec",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.full.original.json",
+        "--run"
+      ],
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/matched-repairs/mir_eval/original",
+      "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/matched-repairs/mir_eval/original/completion.json"
+    },
+    {
+      "id": "mir-full-generated-readme-r0-r2",
+      "library": "mir_eval",
+      "stage": "development",
+      "condition": "generated_readme",
+      "protocol": "matched-native-repair-1",
+      "command": [
+        "/home/zshan011/apps/aideal/venv/bin/python",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py",
+        "--spec",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.full.generated_readme.json",
+        "--run"
+      ],
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/matched-repairs/mir_eval/generated_readme",
+      "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/matched-repairs/mir_eval/generated_readme/completion.json"
+    },
+    {
+      "id": "mir-full-error-hints-r0-r2",
+      "library": "mir_eval",
+      "stage": "development",
+      "condition": "error_hints",
+      "protocol": "matched-native-repair-1",
+      "command": [
+        "/home/zshan011/apps/aideal/venv/bin/python",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py",
+        "--spec",
+        "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.full.error_hints.json",
+        "--run"
+      ],
+      "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/matched-repairs/mir_eval/error_hints",
+      "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/matched-repairs/mir_eval/error_hints/completion.json"
+    }
+  ]
+}

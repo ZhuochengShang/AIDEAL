@@ -1,0 +1,27 @@
+import mir_eval.transcription
+import numpy as np
+
+# The previous error indicated non-positive pitch values.
+# We filter the inputs to ensure all pitches are strictly positive (Hertz).
+ref_mask = ref_freqs > 0
+est_mask = est_freqs > 0
+
+ref_intervals_clean = ref_intervals[ref_mask]
+ref_freqs_clean = ref_freqs[ref_mask]
+est_intervals_clean = est_intervals[est_mask]
+est_freqs_clean = est_freqs[est_mask]
+
+# Ensure intervals are valid (onset < offset) for the validation check
+# mir_eval.transcription.validate expects intervals to be (n, 2)
+# and pitches to be (n,).
+mir_eval.transcription.validate(ref_intervals_clean, ref_freqs_clean, est_intervals_clean, est_freqs_clean)
+
+# Correctness check: Verify that the validated arrays maintain the expected shape
+# and that the number of reference notes is consistent with the filtered input.
+assert ref_intervals_clean.shape[0] == ref_freqs_clean.shape[0]
+assert est_intervals_clean.shape[0] == est_freqs_clean.shape[0]
+assert np.all(ref_freqs_clean > 0)
+assert np.all(est_freqs_clean > 0)
+
+witness = ref_intervals_clean.shape[0]
+print(f"__CHECK__ python:mir_eval.transcription.validate {witness}")

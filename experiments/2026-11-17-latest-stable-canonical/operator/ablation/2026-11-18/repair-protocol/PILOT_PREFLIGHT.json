@@ -1,0 +1,69 @@
+{
+  "status": "pass",
+  "jobs": 2,
+  "workers": 1,
+  "zero_existing_model_requests": true,
+  "plan_sha256": "68b2beacaea421358c3fc1798bec4b24abd783dc1797b7a759cbed2b7b452c25",
+  "binding": {
+    "plan": {
+      "schema_version": 1,
+      "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval",
+      "release": "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+      "scope": "same-bank-mir-transcription-mechanism-pilot",
+      "workers": 1,
+      "note": "Fresh R0 and at most two repairs per condition; development mechanism evidence, not held-out generalization. No automatic full-bank expansion.",
+      "offline_proofs": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-protocol-checks/mir_eval/original/MOCK_VALIDATION.json",
+          "sha256": "c969b1f5eee37e953f904f1fe4d396faea030fda02f41d0506b29ed64a578c63"
+        },
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-protocol-checks/mir_eval/error_hints/MOCK_VALIDATION.json",
+          "sha256": "e7b802400cc3d38a8fb3765c93330298166d8c2fd86cbc990319009145a45a24"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "mir-transcription-original-r0-r2",
+          "library": "mir_eval",
+          "stage": "development",
+          "condition": "original",
+          "protocol": "matched-repair-mechanism-pilot",
+          "command": [
+            "/home/zshan011/apps/aideal/venv/bin/python",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py",
+            "--spec",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.original.json",
+            "--run"
+          ],
+          "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original",
+          "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/original/completion.json"
+        },
+        {
+          "id": "mir-transcription-error-hints-r0-r2",
+          "library": "mir_eval",
+          "stage": "development",
+          "condition": "error_hints",
+          "protocol": "matched-repair-mechanism-pilot",
+          "command": [
+            "/home/zshan011/apps/aideal/venv/bin/python",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py",
+            "--spec",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.error_hints.json",
+            "--run"
+          ],
+          "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints",
+          "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/completion.json"
+        }
+      ]
+    },
+    "release_resolved": "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+    "command_files": {
+      "/home/zshan011/anaconda3/bin/python3.10": "a0882682a93a183ffaa3612e983b7bfb50008256c1b54ee21c79d9a6cc5db23c",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/operator/ablation/2026-11-18/repair-protocol/matched_repairs.py": "4cd6ee00582371c69260bd80d6328d81d63a87034147968f86ad6d4819ced0f9",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.original.json": "610b91d6ecb84678260924d365a12ecc2a24719b3a7c57750c8cab867d6a24e2",
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/operator/ablation/2026-11-18/repair-protocol/specs/mir_eval.error_hints.json": "e67b6193694aa676b5cd3dec01ddba43e0873e4ad01d296d7246e1f79b251e63"
+    },
+    "supervisor_sha256": "0c922f341941d730cd189ce805ad2b93eb4788d0ad4ec97690849d644d64fe1e"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "api": "python:mir_eval.transcription.validate",
+  "context": "{\"logical_round\": 2, \"api\": \"python:mir_eval.transcription.validate\", \"previous_complete_snippet\": \"import mir_eval.transcription\\nimport numpy as np\\n\\n# Ensure inputs are aligned for the validation check\\n# The previous error indicated a length mismatch between intervals and pitches.\\n# We slice the arrays to ensure they are of equal length (n) for the validation.\\nn = min(ref_intervals.shape[0], ref_freqs.shape[0])\\nm = min(est_intervals.shape[0], est_freqs.shape[0])\\n\\nref_intervals_sub = ref_intervals[:n]\\nref_freqs_sub = ref_freqs[:n]\\nest_intervals_sub = est_intervals[:m]\\nest_freqs_sub = est_freqs[:m]\\n\\n# Call the validation function\\nmir_eval.transcription.validate(ref_intervals_sub, ref_freqs_sub, est_intervals_sub, est_freqs_sub)\\n\\n# Correctness check: Verify that the validated arrays maintain the expected shape\\n# and that the number of reference notes is consistent with the input slice.\\nassert ref_intervals_sub.shape[0] == ref_freqs_sub.shape[0]\\nassert est_intervals_sub.shape[0] == est_freqs_sub.shape[0]\\n\\nwitness = ref_intervals_sub.shape[0]\\nprint(f\\\"__CHECK__ python:mir_eval.transcription.validate {witness}\\\")\", \"previous_exit_code\": 1, \"ordinary_execution_feedback\": \"[classified error]\\nValueError: Reference contains at least one non-positive pitch value\\n\\n[stderr line 1]\\n__RUN_ERR__ ValueError: Reference contains at least one non-positive pitch value\\n\\n[stderr line 10]\\n    raise ValueError(\\\"Reference contains at least one non-positive pitch \\\" \\\"value\\\")\\n\\n[stderr tail]\\nTraceback (most recent call last):\\n  File \\\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py\\\", line 65, in <module>\\n    run()\\n  File \\\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py\\\", line 60, in run\\n    api_test()\\n  File \\\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/api_test.py\\\", line 48, in api_test\\n    mir_eval.transcription.validate(ref_intervals_sub, ref_freqs_sub, est_intervals_sub, est_freqs_sub)\\n  File \\\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime-conditions/native-hints-2026-11-18/mir_eval/error-hints-only/mir_eval/transcription.py\\\", line 143, in validate\\n\"}",
+  "context_receipt": {
+    "api": "python:mir_eval.transcription.validate",
+    "bindings": [
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/request.json",
+        "sha256": "97facd76092c69c32306918cb2e0d0657fe857e6325a9b4702a330c3c159fc13"
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/response.txt",
+        "sha256": "5f0e348eea926e16e75513879fece057ae9a37eb7fa3a22cb2e35c132dfbf200"
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/stderr.txt",
+        "sha256": "82a1423a550b0adb030144bcbf47be14a0da772d8b0e03fc318e9ecf7ee6a7c1"
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/repair-pilot/mir_eval/error_hints/apis/cba41e1bbc2f3a8026d1/round_01/execution/run_python_mir_eval.transcription.validate--cba41e1bbc2f3a8026d11152b2fb566ed6a4ff5493133545bf1ab14994b13912/attempt_0001/execution.json",
+        "sha256": "3418adfbb5fadd77d69a62ac4a8a04adc6c05f18ea0757161eb57ec61f16dc42"
+      }
+    ],
+    "context_sha256": "43892908673657879a00c2862fccf2cb8c5469995548c286dfb1720817662615",
+    "logical_round": 2,
+    "program_chars": 1023,
+    "selection": {
+      "embedded_hint_lines": 0,
+      "exact_error_preserved": true,
+      "limit_chars": 8000,
+      "selection": "exact error and complete hint/exception lines, then stderr/stdout tails",
+      "sent_chars": 1622,
+      "stderr_chars": 1553,
+      "stdout_chars": 0,
+      "truncated": false
+    }
+  },
+  "logical_round": 2,
+  "native_round": 0
+}

@@ -1,0 +1,56 @@
+{
+  "plan": {
+    "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java",
+    "release": "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+    "jobs": [
+      {
+        "id": "rdpro-java-aliases-only",
+        "library": "rdpro_java",
+        "stage": "development",
+        "command": [
+          "/home/zshan011/apps/aideal/venv/bin/python",
+          "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/run_alias_proposals.py",
+          "--release",
+          "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+          "--model-config",
+          "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/MODEL_CONFIG.aliases_only.yaml",
+          "--preview",
+          "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/preview-compact/manifest.json",
+          "--output",
+          "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java/collection",
+          "--bank",
+          "rdpro_java",
+          "--preparation-progress",
+          "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/operator/ablation/2026-11-18/aliases/COMPACT_PROGRESS.json",
+          "--original-config",
+          "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/configs/aideal.yaml",
+          "--original-manifest",
+          "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/inputs/api_manifest.json",
+          "--expected-apis",
+          "69",
+          "--wait-preview-seconds",
+          "3600"
+        ],
+        "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java/collection",
+        "complete_artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java/collection/DEVELOPMENT_COMPLETION.json"
+      }
+    ],
+    "purpose": "Generate unvalidated alias proposals for exactly the current Original microbenchmark API identities; do not install or evaluate aliases.",
+    "model_calls_policy": "One development worker; no calls until compact preview is ready and its exact Original API set verifies.",
+    "historical_proposals": "Earlier general-suggestion pilot remains in development/aliases/rdpro_java/proposals; it returned no aliases in two paid calls.",
+    "unsupported": {
+      "sedonadb": "The source-bound proposal adapter rejects registered SQL inventories. A native SQL registration/wrapper adapter and execution validation are required; no Rust alias is substituted."
+    }
+  },
+  "release_resolved": "/home/zshan011/apps/aideal/releases/2026-11-18-compact-ablation-authoring-82c60d34f332",
+  "command_files": {
+    "/home/zshan011/anaconda3/bin/python3.10": "a0882682a93a183ffaa3612e983b7bfb50008256c1b54ee21c79d9a6cc5db23c",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/operator/ablation/2026-11-18/aliases/run_alias_proposals.py": "71cecc84f6c2a0c263232f7517e1da4fd4548477d9e6c4fd1a7845eb4db711ef",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/operator/ablation/2026-11-18/aliases/MODEL_CONFIG.aliases_only.yaml": "7735a3aa220c61903b550b82177033c031d2768ce0730c7f461ecca97d930222",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/rdpro_java/preview-compact/manifest.json": "ba2cb0341f1da04ba99207a749bb21089b6d187e00814d5323bdf315b361a653",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/operator/ablation/2026-11-18/aliases/COMPACT_PROGRESS.json": "c53a62db07af226585169d2ddd2af3ca02026eeda49606556c35cf280ef43ace",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/configs/aideal.yaml": "824eb8582661f2575296df47af7baf1d63be86224436a26968efad82cb46e8b7",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/inputs/api_manifest.json": "fce23e2991aec018c20b5c416a83a1bfe9ad5210f2a4d8b85d9a859dd9ffc2bb"
+  },
+  "supervisor_sha256": "0c922f341941d730cd189ce805ad2b93eb4788d0ad4ec97690849d644d64fe1e"
+}

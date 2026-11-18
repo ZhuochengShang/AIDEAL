@@ -1,0 +1,26 @@
+{
+  "status": "passed_tested_forwarding",
+  "installed": false,
+  "proposal": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases-only-proposals/rdpro_java/collection/batch-0004/proposal.json",
+  "alias_source_sha256": "e36b78011d5b1ea1ac4cb403d9eb0952ab46f80d9e315d2a4105209146c87f02",
+  "source_target": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/AidealJavaAliases0004.java",
+  "tested_cases": [
+    "no transformation",
+    "real TIFF transformation tag",
+    "null receiver exception type"
+  ],
+  "control_program_author": "operator prepared; model alias bytes unchanged",
+  "fixtures": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/io/src/test/resources/tif/glc2000_small.tif",
+      "sha256": "64f98b80512f1a880a153ec1698bb54ca608faf107d02c87bfc83122a52b4111"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/alias-validation/rdpro_java/batch-0004/with-transformation.tif",
+      "sha256": "1f80532f92cd6b34f8ebc3d5f30c597646dd81adfed6bf34f1041727256beda5"
+    }
+  ],
+  "limitations": "Compile and three forwarding controls only; no audience performance claim, no complete semantic proof.",
+  "stdout": "fixture=0 original=false alias=false\nfixture=1 original=true alias=true\nnull_receiver=java.lang.NullPointerException\nFORWARDING_CHECK_PASSED\n",
+  "output": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/alias-validation/rdpro_java/batch-0004"
+}

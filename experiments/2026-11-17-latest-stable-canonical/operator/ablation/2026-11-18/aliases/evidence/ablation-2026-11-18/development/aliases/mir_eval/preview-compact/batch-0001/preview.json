@@ -1,0 +1,2018 @@
+{
+  "schema_version": 1,
+  "study": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/mir_eval/attachment",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/mir_eval/attachment/Original/source",
+  "baseline_revision": "8db0b3812e2032544c1fc00d02d4256cab043f3d",
+  "context": {
+    "project": "mir_eval",
+    "language": "Python",
+    "baseline_revision": "8db0b3812e2032544c1fc00d02d4256cab043f3d",
+    "configuration": {
+      "source_globs": [
+        "source/mir_eval/**/*.py"
+      ],
+      "test_globs": [
+        "source/tests/**/*.py"
+      ],
+      "public_def_regex": "^\\s*(?:def|class)\\s+([A-Za-z][A-Za-z0-9_]*)",
+      "exclude_names": [],
+      "visibility": {},
+      "surface_filter": "all",
+      "exclude_path_patterns": [],
+      "discovery_scope": "All discovered public definitions in tracked configured sources; no LLM intent filter."
+    },
+    "project_profile": {
+      "project_name": "mir_eval",
+      "role": "An expert in reproducible music-information-retrieval evaluation and scientific Python API usage.",
+      "project": {
+        "name": "mir_eval",
+        "language": "Python",
+        "description": "A scientific Python library of evaluation metrics, I/O helpers, displays, and sonification utilities for music and audio information retrieval.",
+        "version": "0.8.2"
+      },
+      "domain": "Audio and music signal evaluation. This label is query provenance, not a manual classification: the repository was returned by both the saved \"audio processing\" and \"signal processing\" GitHub sweeps.",
+      "target_users": [
+        "music-information-retrieval researchers",
+        "audio and signal-processing engineers",
+        "coding agents implementing reproducible metric evaluations"
+      ],
+      "use_cases": [
+        "Score beats, onsets, melody, multipitch, chords, keys, and tempo.",
+        "Evaluate segment, hierarchy, transcription, alignment, and separation outputs.",
+        "Load repository-format annotations and produce deterministic summaries."
+      ],
+      "constraints": [
+        "Use only checked-in test fixtures or deterministic in-memory arrays.",
+        "Keep display tests headless and prohibit network/audio-device access.",
+        "Use every name in the frozen 125-name canonical manifest without sampling; selection is structural filtering and same-name maximum arity, not a proof of arbitrary semantic equivalence."
+      ],
+      "notes": "Pinned official release 0.8.2 at commit 8db0b3812e2032544c1fc00d02d4256cab043f3d.",
+      "knowledge": {
+        "repository": {
+          "upstream_url": "https://github.com/mir-evaluation/mir_eval.git",
+          "pinned_commit": "8db0b3812e2032544c1fc00d02d4256cab043f3d",
+          "pinned_tree": "7f9f80392ab86bff2e0e688ed4890a523f07dc6e",
+          "package_version": "0.8.2",
+          "source_path": "source"
+        },
+        "api_scope": {
+          "selected_api_names": 125,
+          "public_declaration_sites": 177,
+          "public_bare_names": 147,
+          "selection_policy": "Frozen structural body audit; quarantine unknown/wrappers; globally retain highest arity per bare name with deterministic ties.",
+          "semantic_equivalence_guarantee": false,
+          "sampling": "none within the frozen selected set",
+          "manifest_path": "inputs/api_manifest.json",
+          "canonical_selection_receipt": "canonical-selection.json",
+          "manifest_file_sha256": "9a7829adffbe23f7a1963c9d1ff314451be01fd22750effcb86a3b6bd0b0d9c9",
+          "ordered_names_sha256": "a2db02372c64f8aefefad1ab3c77029d1a24dc257162bae9463136e72aeab5ba"
+        },
+        "runtime": {
+          "python": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python",
+          "python_version": "3.12.15",
+          "package_source": "official release wheels; scientific PYTHONHOME/PYTHONPATH explicitly unset",
+          "readiness": "PENDING final runtime and selected-dependency control receipts"
+        },
+        "original_documentation": {
+          "source_roots": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/README.rst",
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs"
+          ],
+          "document_count": 23,
+          "bundle_characters": 30789,
+          "bundle_sha256": "cc3b7fa61dd461c70aa99d768881e093f4735913c1e12f02d743c59a6f4d74fb",
+          "scope_change_note": "Preserved repository README+docs policy on exact stable source; missing/added pages are recorded, and old generated or absent pages are not imported."
+        }
+      }
+    },
+    "profile_status": "supplied",
+    "library_overview": {
+      "module_count": 18,
+      "modules": [
+        {
+          "module": "mir_eval.alignment",
+          "public_definitions": 6
+        },
+        {
+          "module": "mir_eval.beat",
+          "public_definitions": 9
+        },
+        {
+          "module": "mir_eval.chord",
+          "public_definitions": 33
+        },
+        {
+          "module": "mir_eval.display",
+          "public_definitions": 12
+        },
+        {
+          "module": "mir_eval.hierarchy",
+          "public_definitions": 4
+        },
+        {
+          "module": "mir_eval.io",
+          "public_definitions": 12
+        },
+        {
+          "module": "mir_eval.key",
+          "public_definitions": 5
+        },
+        {
+          "module": "mir_eval.melody",
+          "public_definitions": 14
+        },
+        {
+          "module": "mir_eval.multipitch",
+          "public_definitions": 10
+        },
+        {
+          "module": "mir_eval.onset",
+          "public_definitions": 3
+        },
+        {
+          "module": "mir_eval.pattern",
+          "public_definitions": 8
+        },
+        {
+          "module": "mir_eval.segment",
+          "public_definitions": 11
+        },
+        {
+          "module": "mir_eval.separation",
+          "public_definitions": 6
+        },
+        {
+          "module": "mir_eval.sonify",
+          "public_definitions": 5
+        },
+        {
+          "module": "mir_eval.tempo",
+          "public_definitions": 4
+        },
+        {
+          "module": "mir_eval.transcription",
+          "public_definitions": 10
+        },
+        {
+          "module": "mir_eval.transcription_velocity",
+          "public_definitions": 4
+        },
+        {
+          "module": "mir_eval.util",
+          "public_definitions": 22
+        }
+      ],
+      "omitted_modules": 0,
+      "api_catalog": [
+        {
+          "id": "python:mir_eval.alignment.validate",
+          "name": "validate",
+          "signature": "def validate(reference_timestamps: np.ndarray, estimated_timestamps: np.ndarray)"
+        },
+        {
+          "id": "python:mir_eval.alignment.absolute_error",
+          "name": "absolute_error",
+          "signature": "def absolute_error(reference_timestamps, estimated_timestamps)"
+        },
+        {
+          "id": "python:mir_eval.alignment.percentage_correct",
+          "name": "percentage_correct",
+          "signature": "def percentage_correct(reference_timestamps, estimated_timestamps, window=0.3)"
+        },
+        {
+          "id": "python:mir_eval.alignment.percentage_correct_segments",
+          "name": "percentage_correct_segments",
+          "signature": "def percentage_correct_segments(reference_timestamps, estimated_timestamps, duration: Optional[float]=None)"
+        },
+        {
+          "id": "python:mir_eval.alignment.karaoke_perceptual_metric",
+          "name": "karaoke_perceptual_metric",
+          "signature": "def karaoke_perceptual_metric(reference_timestamps, estimated_timestamps)"
+        },
+        {
+          "id": "python:mir_eval.alignment.evaluate",
+          "name": "evaluate",
+          "signature": "def evaluate(reference_timestamps, estimated_timestamps, **kwargs)"
+        },
+        {
+          "id": "python:mir_eval.beat.trim_beats",
+          "name": "trim_beats",
+          "signature": "def trim_beats(beats, min_beat_time=5.0)"
+        },
+        {
+          "id": "python:mir_eval.beat.validate",
+          "name": "validate",
+          "signature": "def validate(reference_beats, estimated_beats)"
+        },
+        {
+          "id": "python:mir_eval.beat.f_measure",
+          "name": "f_measure",
+          "signature": "def f_measure(reference_beats, estimated_beats, f_measure_threshold=0.07)"
+        },
+        {
+          "id": "python:mir_eval.beat.cemgil",
+          "name": "cemgil",
+          "signature": "def cemgil(reference_beats, estimated_beats, cemgil_sigma=0.04)"
+        },
+        {
+          "id": "python:mir_eval.beat.goto",
+          "name": "goto",
+          "signature": "def goto(reference_beats, estimated_beats, goto_threshold=0.35, goto_mu=0.2, goto_sigma=0.2)"
+        },
+        {
+          "id": "python:mir_eval.beat.p_score",
+          "name": "p_score",
+          "signature": "def p_score(reference_beats, estimated_beats, p_score_threshold=0.2)"
+        },
+        {
+          "id": "python:mir_eval.beat.continuity",
+          "name": "continuity",
+          "signature": "def continuity(reference_beats, estimated_beats, continuity_phase_threshold=0.175, continuity_period_threshold=0.175)"
+        },
+        {
+          "id": "python:mir_eval.beat.information_gain",
+          "name": "information_gain",
+          "signature": "def information_gain(reference_beats, estimated_beats, bins=41)"
+        },
+        {
+          "id": "python:mir_eval.beat.evaluate",
+          "name": "evaluate",
+          "signature": "def evaluate(reference_beats, estimated_beats, **kwargs)"
+        },
+        {
+          "id": "python:mir_eval.chord.InvalidChordException",
+          "name": "InvalidChordException",
+          "signature": "class InvalidChordException(Exception)"
+        },
+        {
+          "id": "python:mir_eval.chord.pitch_class_to_semitone",
+          "name": "pitch_class_to_semitone",
+          "signature": "def pitch_class_to_semitone(pitch_class)"
+        },
+        {
+          "id": "python:mir_eval.chord.scale_degree_to_semitone",
+          "name": "scale_degree_to_semitone",
+          "signature": "def scale_degree_to_semitone(scale_degree)"
+        },
+        {
+          "id": "python:mir_eval.chord.scale_degree_to_bitmap",
+          "name": "scale_degree_to_bitmap",
+          "signature": "def scale_degree_to_bitmap(scale_degree, modulo=False, length=BITMAP_LENGTH)"
+        },
+        {
+          "id": "python:mir_eval.chord.quality_to_bitmap",
+          "name": "quality_to_bitmap",
+          "signature": "def quality_to_bitmap(quality)"
+        },
+        {
+          "id": "python:mir_eval.chord.reduce_extended_quality",
+          "name": "reduce_extended_quality",
+          "signature": "def reduce_extended_quality(quality)"
+        },
+        {
+          "id": "python:mir_eval.chord.validate_chord_label",
+          "name": "validate_chord_label",
+          "signature": "def validate_chord_label(chord_label)"
+        },
+        {
+          "id": "python:mir_eval.chord.split",
+          "name": "split",
+          "signature": "def split(chord_label, reduce_extended_chords=False)"
+        },
+        {
+          "id": "python:mir_eval.io.load_wav",
+          "name": "load_wav",
+          "signature": "def load_wav(path, mono=True)"
+        }
+      ],
+      "omitted_catalog_entries": 154,
+      "scope": "Compact cross-batch orientation only; source evidence remains batch-local."
+    },
+    "library_scope": {
+      "public_definitions": 178,
+      "requested_definitions": 178,
+      "catalog_sha256": "5498f50b90bce383898d4215a1fd4001c39843b119b44ee80dbba1b7ffa91013",
+      "limitations": "Cross-batch bodies are not supplied. Discovery can miss syntax unsupported by the configured adapter."
+    },
+    "batch_id": "batch-0001",
+    "alias_destination": "mir_eval/aideal_aliases_0001.py",
+    "apis": [
+      {
+        "id": "python:mir_eval.alignment.validate",
+        "api_id": "python:mir_eval.alignment.validate",
+        "name": "validate",
+        "qualified_name": "mir_eval.alignment.validate",
+        "source_function_id": "mir_eval/alignment.py:59:mir_eval.alignment.validate",
+        "file": "mir_eval/alignment.py",
+        "line": 59,
+        "end_line": 112,
+        "signature": "def validate(reference_timestamps: np.ndarray, estimated_timestamps: np.ndarray)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.alignment",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.alignment",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "reference_timestamps",
+            "type": "np.ndarray",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "estimated_timestamps",
+            "type": "np.ndarray",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 56,
+          "end_line": 119,
+          "text": "from mir_eval.util import filter_kwargs\n\n\ndef validate(reference_timestamps: np.ndarray, estimated_timestamps: np.ndarray):\n    \"\"\"Check that the input annotations to a metric look like valid onset time\n    arrays, and throws helpful errors if not.\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamp locations, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamp locations, in seconds\n    \"\"\"\n    # We need to have 1D numpy arrays\n    if not isinstance(reference_timestamps, np.ndarray):\n        raise ValueError(\n            \"Reference timestamps need to be a numpy array, but got\"\n            f\" {type(reference_timestamps)}\"\n        )\n    if not isinstance(estimated_timestamps, np.ndarray):\n        raise ValueError(\n            \"Estimated timestamps need to be a numpy array, but got\"\n            f\" {type(estimated_timestamps)}\"\n        )\n    if reference_timestamps.ndim != 1:\n        raise ValueError(\n            \"Reference timestamps need to be a one-dimensional vector, but got\"\n            f\" {reference_timestamps.ndim} dimensions\"\n        )\n    if estimated_timestamps.ndim != 1:\n        raise ValueError(\n            \"Estimated timestamps need to be a one-dimensional vector, but got\"\n            f\" {estimated_timestamps.ndim} dimensions\"\n        )\n\n    # If reference or estimated timestamps are empty, cannot compute metric\n    if reference_timestamps.size == 0:\n        raise ValueError(\"Reference timestamps are empty.\")\n    if estimated_timestamps.size != reference_timestamps.size:\n        raise ValueError(\n            \"Number of timestamps must be the same in prediction and ground\"\n            f\" truth, but found {estimated_timestamps.size} in prediction and\"\n            f\" {reference_timestamps.size} in ground truth\"\n        )\n\n    # Check monotonicity\n    if not np.all(reference_timestamps[1:] - reference_timestamps[:-1] >= 0):\n        raise ValueError(\"Reference timestamps are not monotonically increasing!\")\n    if not np.all(estimated_timestamps[1:] - estimated_timestamps[:-1] >= 0):\n        raise ValueError(\"Estimated timestamps are not monotonically increasing!\")\n\n    # Check positivity (need for correct PCS metric calculation)\n    if not np.all(reference_timestamps >= 0):\n        raise ValueError(\"Reference timestamps can not be below 0!\")\n    if not np.all(estimated_timestamps >= 0):\n        raise ValueError(\"Estimated timestamps can not be below 0!\")\n\n\ndef absolute_error(reference_timestamps, estimated_timestamps):\n    \"\"\"Compute the absolute deviations between estimated and reference timestamps,\n    and then returns the median and average over all events\n\n    Examples",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "50: import collections\n51: from typing import Optional\n53: import numpy as np\n54: from scipy.stats import skewnorm\n56: from mir_eval.util import filter_kwargs",
+          "source_characters": 158,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.alignment.validate",
+        "public_access_paths": [
+          "mir_eval.alignment.validate"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Check that the input annotations to a metric look like valid onset time\narrays, and throws helpful errors if not.\n\nParameters\n----------\nreference_timestamps : np.ndarray\n    reference timestamp locations, in seconds\nestimated_timestamps : np.ndarray\n    estimated timestamp locations, in seconds",
+        "description_characters": 296,
+        "description_truncated": false
+      },
+      {
+        "id": "python:mir_eval.alignment.absolute_error",
+        "api_id": "python:mir_eval.alignment.absolute_error",
+        "name": "absolute_error",
+        "qualified_name": "mir_eval.alignment.absolute_error",
+        "source_function_id": "mir_eval/alignment.py:115:mir_eval.alignment.absolute_error",
+        "file": "mir_eval/alignment.py",
+        "line": 115,
+        "end_line": 141,
+        "signature": "def absolute_error(reference_timestamps, estimated_timestamps)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.alignment",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.alignment",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "reference_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "estimated_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 112,
+          "end_line": 175,
+          "text": "        raise ValueError(\"Estimated timestamps can not be below 0!\")\n\n\ndef absolute_error(reference_timestamps, estimated_timestamps):\n    \"\"\"Compute the absolute deviations between estimated and reference timestamps,\n    and then returns the median and average over all events\n\n    Examples\n    --------\n    >>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n    >>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n    >>> mae, aae = mir_eval.align.absolute_error(reference_onsets, estimated_timestamps)\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamps, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamps, in seconds\n\n    Returns\n    -------\n    mae : float\n        Median absolute error\n    aae: float\n        Average absolute error\n    \"\"\"\n    validate(reference_timestamps, estimated_timestamps)\n    deviations = np.abs(reference_timestamps - estimated_timestamps)\n    return np.median(deviations), np.mean(deviations)\n\n\ndef percentage_correct(reference_timestamps, estimated_timestamps, window=0.3):\n    \"\"\"Compute the percentage of correctly predicted timestamps. A timestamp is predicted\n    correctly if its position doesn't deviate more than the window parameter from the ground\n    truth timestamp.\n\n    Examples\n    --------\n    >>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n    >>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n    >>> pc = mir_eval.align.percentage_correct(reference_onsets, estimated_timestamps, window=0.2)\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamps, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamps, in seconds\n    window : float\n        Window size, in seconds\n        (Default value = .3)\n\n    Returns\n    -------\n    pc : float\n        Percentage of correct timestamps\n    \"\"\"\n    validate(reference_timestamps, estimated_timestamps)\n    deviations = np.abs(reference_timestamps - estimated_timestamps)\n    return np.mean(deviations <= window)\n\n\ndef percentage_correct_segments(",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "50: import collections\n51: from typing import Optional\n53: import numpy as np\n54: from scipy.stats import skewnorm\n56: from mir_eval.util import filter_kwargs",
+          "source_characters": 158,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.alignment.absolute_error",
+        "public_access_paths": [
+          "mir_eval.alignment.absolute_error"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Compute the absolute deviations between estimated and reference timestamps,\nand then returns the median and average over all events\n\nExamples\n--------\n>>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n>>> mae, aae = mir_eval.align.absolute_error(reference_onsets, estimated_timestamps)\n\nParameters\n----------\nreference_timestamps : np.ndarray\n    reference timestamps, in seconds\nestimated_timestamps : np.ndarray\n    estimated timestamps, in seconds\n\nReturns\n-------\nmae : float\n    Median absolute error\naae: float\n    Average absolute error",
+        "description_characters": 629,
+        "description_truncated": false
+      },
+      {
+        "id": "python:mir_eval.alignment.percentage_correct",
+        "api_id": "python:mir_eval.alignment.percentage_correct",
+        "name": "percentage_correct",
+        "qualified_name": "mir_eval.alignment.percentage_correct",
+        "source_function_id": "mir_eval/alignment.py:144:mir_eval.alignment.percentage_correct",
+        "file": "mir_eval/alignment.py",
+        "line": 144,
+        "end_line": 172,
+        "signature": "def percentage_correct(reference_timestamps, estimated_timestamps, window=0.3)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.alignment",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.alignment",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "reference_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "estimated_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "window",
+            "type": "",
+            "default": "0.3",
+            "required": false,
+            "kind": "positional_or_keyword"
+          }
+        ],
+        "parameter_count": 3,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 141,
+          "end_line": 204,
+          "text": "    return np.median(deviations), np.mean(deviations)\n\n\ndef percentage_correct(reference_timestamps, estimated_timestamps, window=0.3):\n    \"\"\"Compute the percentage of correctly predicted timestamps. A timestamp is predicted\n    correctly if its position doesn't deviate more than the window parameter from the ground\n    truth timestamp.\n\n    Examples\n    --------\n    >>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n    >>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n    >>> pc = mir_eval.align.percentage_correct(reference_onsets, estimated_timestamps, window=0.2)\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamps, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamps, in seconds\n    window : float\n        Window size, in seconds\n        (Default value = .3)\n\n    Returns\n    -------\n    pc : float\n        Percentage of correct timestamps\n    \"\"\"\n    validate(reference_timestamps, estimated_timestamps)\n    deviations = np.abs(reference_timestamps - estimated_timestamps)\n    return np.mean(deviations <= window)\n\n\ndef percentage_correct_segments(\n    reference_timestamps, estimated_timestamps, duration: Optional[float] = None\n):\n    \"\"\"Calculate the percentage of correct segments (PCS) metric.\n\n    It constructs segments out of predicted and estimated timestamps separately\n    out of each given timestamp vector and calculates the percentage of overlap between correct\n    segments compared to the total duration.\n\n    WARNING: This metrics behaves differently depending on whether \"duration\" is given!\n\n    If duration is not given (default case), the computation follows the MIREX lyrics alignment\n    challenge 2020. For a timestamp vector with entries (t1,t2, ... tN), segments with\n    the following (start, end) boundaries are created: (t1, t2), ... (tN-1, tN).\n    After the segments are created, the overlap between the reference and estimated segments is\n    determined and divided by the total duration, which is the distance between the\n    first and last timestamp in the reference.\n\n    If duration is given, the segment boundaries are instead (0, t1), (t1, t2), ... (tN, duration).\n    The overlap is computed in the same way, but then divided by the duration parameter given to\n    this function.\n    This method follows the original paper [#fujihara2011] more closely, where the metric was\n    proposed.\n    As a result, this variant of the metrics punishes cases where the first estimated timestamp\n    is too early or the last estimated timestamp is too late, whereas the MIREX variant does not.\n    On the other hand, the MIREX metric is invariant to how long the eventless beginning and end\n    parts of the audio are, which might be a desirable property.\n\n    Examples\n    --------",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "50: import collections\n51: from typing import Optional\n53: import numpy as np\n54: from scipy.stats import skewnorm\n56: from mir_eval.util import filter_kwargs",
+          "source_characters": 158,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.alignment.percentage_correct",
+        "public_access_paths": [
+          "mir_eval.alignment.percentage_correct"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Compute the percentage of correctly predicted timestamps. A timestamp is predicted\ncorrectly if its position doesn't deviate more than the window parameter from the ground\ntruth timestamp.\n\nExamples\n--------\n>>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n>>> pc = mir_eval.align.percentage_correct(reference_onsets, estimated_timestamps, window=0.2)\n\nParameters\n----------\nreference_timestamps : np.ndarray\n    reference timestamps, in seconds\nestimated_timestamps : np.ndarray\n    estimated timestamps, in seconds\nwindow : float\n    Window size, in seconds\n    (Default value = .3)\n\nReturns\n-------\npc : float\n    Percentage of correct timestamps",
+        "description_characters": 736,
+        "description_truncated": false
+      },
+      {
+        "id": "python:mir_eval.alignment.percentage_correct_segments",
+        "api_id": "python:mir_eval.alignment.percentage_correct_segments",
+        "name": "percentage_correct_segments",
+        "qualified_name": "mir_eval.alignment.percentage_correct_segments",
+        "source_function_id": "mir_eval/alignment.py:175:mir_eval.alignment.percentage_correct_segments",
+        "file": "mir_eval/alignment.py",
+        "line": 175,
+        "end_line": 266,
+        "signature": "def percentage_correct_segments(reference_timestamps, estimated_timestamps, duration: Optional[float]=None)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.alignment",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.alignment",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "reference_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "estimated_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "duration",
+            "type": "Optional[float]",
+            "default": "None",
+            "required": false,
+            "kind": "positional_or_keyword"
+          }
+        ],
+        "parameter_count": 3,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 172,
+          "end_line": 235,
+          "text": "    return np.mean(deviations <= window)\n\n\ndef percentage_correct_segments(\n    reference_timestamps, estimated_timestamps, duration: Optional[float] = None\n):\n    \"\"\"Calculate the percentage of correct segments (PCS) metric.\n\n    It constructs segments out of predicted and estimated timestamps separately\n    out of each given timestamp vector and calculates the percentage of overlap between correct\n    segments compared to the total duration.\n\n    WARNING: This metrics behaves differently depending on whether \"duration\" is given!\n\n    If duration is not given (default case), the computation follows the MIREX lyrics alignment\n    challenge 2020. For a timestamp vector with entries (t1,t2, ... tN), segments with\n    the following (start, end) boundaries are created: (t1, t2), ... (tN-1, tN).\n    After the segments are created, the overlap between the reference and estimated segments is\n    determined and divided by the total duration, which is the distance between the\n    first and last timestamp in the reference.\n\n    If duration is given, the segment boundaries are instead (0, t1), (t1, t2), ... (tN, duration).\n    The overlap is computed in the same way, but then divided by the duration parameter given to\n    this function.\n    This method follows the original paper [#fujihara2011] more closely, where the metric was\n    proposed.\n    As a result, this variant of the metrics punishes cases where the first estimated timestamp\n    is too early or the last estimated timestamp is too late, whereas the MIREX variant does not.\n    On the other hand, the MIREX metric is invariant to how long the eventless beginning and end\n    parts of the audio are, which might be a desirable property.\n\n    Examples\n    --------\n    >>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n    >>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n    >>> pcs = mir_eval.align.percentage_correct_segments(reference_timestamps, estimated_timestamps)\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamps, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamps, in seconds\n    duration : float\n        Optional. Total duration of audio (seconds). WARNING: Metric is computed differently\n        depending on whether this is provided or not - see documentation above!\n\n    Returns\n    -------\n    pcs : float\n        Percentage of time where ground truth and predicted segments overlap\n    \"\"\"\n    validate(reference_timestamps, estimated_timestamps)\n    if duration is not None:\n        duration = float(duration)\n        if duration <= 0:\n            raise ValueError(\n                f\"Positive duration needs to be provided, but got {duration}\"\n            )\n        if np.max(reference_timestamps) > duration:\n            raise ValueError(\n                \"Expected largest reference timestamp\"\n                f\"{np.max(reference_timestamps)} to not be \"\n                f\"larger than duration {duration}\"",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "50: import collections\n51: from typing import Optional\n53: import numpy as np\n54: from scipy.stats import skewnorm\n56: from mir_eval.util import filter_kwargs",
+          "source_characters": 158,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.alignment.percentage_correct_segments",
+        "public_access_paths": [
+          "mir_eval.alignment.percentage_correct_segments"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Calculate the percentage of correct segments (PCS) metric.\n\nIt constructs segments out of predicted and estimated timestamps separately\nout of each given timestamp vector and calculates the percentage of overlap between correct\nsegments compared to the total duration.\n\nWARNING: This metrics behaves differently depending on whether \"duration\" is given!\n\nIf duration is not given (default case), the computation follows the MIREX lyrics alignment\nchallenge 2020. For a timestamp vector with entries (t1,t2, ... tN), segments with\nthe following (start, end) boundaries are created: (t1, t2), ... (tN-1, tN).\nAfter the segments are created, the overlap between the reference and estimated segments is\ndetermined and divided by the total duration, which is the distance between the\nfirst and last timestamp in the reference.\n\nIf duration is given, the segment boundaries are instead (0, t1), (t1, t2), ... (tN, duration).\nThe overlap is computed in the same way, but then divided by the duration parameter given to\nthis function.\nThis method follows the original paper [#fujihara2011] more closely, where the metric was\nproposed.\nAs a result, this variant of the metrics punishes cases where the first estimated timestamp\nis too early or the last estimated timestamp is too late, whereas the MIREX variant does not.\nOn the other hand, the MIREX metric is invariant to how long the eventless beginning and end\nparts of the audio are, which might be a desirable property.\n\nExamples\n--------\n>>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n>>> pcs = mir_eval.align.percentage_correct_segments(reference_timestamps, estimated_timestamps)\n\nParameters\n----------\nreference_timestamps : np.ndarray\n    reference timestamps, in seconds\nestimated_timestamps : np.ndarray\n    estimated timestamps, in seconds\nduration : float\n    Optional. Total duration of audio (seconds). WARNING: Metric is computed differently\n    depend",
+        "description_characters": 2167,
+        "description_truncated": true
+      },
+      {
+        "id": "python:mir_eval.alignment.karaoke_perceptual_metric",
+        "api_id": "python:mir_eval.alignment.karaoke_perceptual_metric",
+        "name": "karaoke_perceptual_metric",
+        "qualified_name": "mir_eval.alignment.karaoke_perceptual_metric",
+        "source_function_id": "mir_eval/alignment.py:269:mir_eval.alignment.karaoke_perceptual_metric",
+        "file": "mir_eval/alignment.py",
+        "line": 269,
+        "end_line": 309,
+        "signature": "def karaoke_perceptual_metric(reference_timestamps, estimated_timestamps)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.alignment",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.alignment",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "reference_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "estimated_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 266,
+          "end_line": 329,
+          "text": "    return overlap_duration / duration\n\n\ndef karaoke_perceptual_metric(reference_timestamps, estimated_timestamps):\n    \"\"\"Metric based on human synchronicity perception as measured in the paper\n    \"User-centered evaluation of lyrics to audio alignment\" [#lizemasclef2021]\n\n    The parameters of this function were tuned on data collected through a user Karaoke-like\n    experiment\n    It reflects human judgment of how \"synchronous\" lyrics and audio stimuli are perceived\n    in that setup.\n    Beware that this metric is non-symmetrical and by construction it is also not equal to 1 at 0.\n\n    Examples\n    --------\n    >>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n    >>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n    >>> score = mir_eval.align.karaoke_perceptual_metric(reference_onsets, estimated_timestamps)\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamps, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamps, in seconds\n\n    Returns\n    -------\n    perceptual_score : float\n        Perceptual score, averaged over all timestamps\n    \"\"\"\n    validate(reference_timestamps, estimated_timestamps)\n    offsets = estimated_timestamps - reference_timestamps\n\n    # Score offsets using a certain skewed normal distribution\n    skewness = 1.12244251\n    localisation = -0.22270315\n    scale = 0.29779424\n    normalisation_factor = 1.6857\n    perceptual_scores = (1.0 / normalisation_factor) * skewnorm.pdf(\n        offsets, skewness, loc=localisation, scale=scale\n    )\n\n    return np.mean(perceptual_scores)\n\n\ndef evaluate(reference_timestamps, estimated_timestamps, **kwargs):\n    \"\"\"Compute all metrics for the given reference and estimated annotations.\n\n    Examples\n    --------\n    >>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n    >>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n    >>> duration = max(np.max(reference_timestamps), np.max(estimated_timestamps)) + 10\n    >>> scores = mir_eval.align.evaluate(reference_onsets, estimated_timestamps, duration)\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamp locations, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamp locations, in seconds\n    **kwargs\n        Additional keyword arguments which will be passed to the",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "50: import collections\n51: from typing import Optional\n53: import numpy as np\n54: from scipy.stats import skewnorm\n56: from mir_eval.util import filter_kwargs",
+          "source_characters": 158,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.alignment.karaoke_perceptual_metric",
+        "public_access_paths": [
+          "mir_eval.alignment.karaoke_perceptual_metric"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Metric based on human synchronicity perception as measured in the paper\n\"User-centered evaluation of lyrics to audio alignment\" [#lizemasclef2021]\n\nThe parameters of this function were tuned on data collected through a user Karaoke-like\nexperiment\nIt reflects human judgment of how \"synchronous\" lyrics and audio stimuli are perceived\nin that setup.\nBeware that this metric is non-symmetrical and by construction it is also not equal to 1 at 0.\n\nExamples\n--------\n>>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n>>> score = mir_eval.align.karaoke_perceptual_metric(reference_onsets, estimated_timestamps)\n\nParameters\n----------\nreference_timestamps : np.ndarray\n    reference timestamps, in seconds\nestimated_timestamps : np.ndarray\n    estimated timestamps, in seconds\n\nReturns\n-------\nperceptual_score : float\n    Perceptual score, averaged over all timestamps",
+        "description_characters": 950,
+        "description_truncated": false
+      },
+      {
+        "id": "python:mir_eval.alignment.evaluate",
+        "api_id": "python:mir_eval.alignment.evaluate",
+        "name": "evaluate",
+        "qualified_name": "mir_eval.alignment.evaluate",
+        "source_function_id": "mir_eval/alignment.py:312:mir_eval.alignment.evaluate",
+        "file": "mir_eval/alignment.py",
+        "line": 312,
+        "end_line": 357,
+        "signature": "def evaluate(reference_timestamps, estimated_timestamps, **kwargs)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.alignment",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.alignment",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "reference_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "estimated_timestamps",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "kwargs",
+            "type": "",
+            "default": null,
+            "required": false,
+            "kind": "var_keyword"
+          }
+        ],
+        "parameter_count": 3,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 309,
+          "end_line": 357,
+          "text": "    return np.mean(perceptual_scores)\n\n\ndef evaluate(reference_timestamps, estimated_timestamps, **kwargs):\n    \"\"\"Compute all metrics for the given reference and estimated annotations.\n\n    Examples\n    --------\n    >>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n    >>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n    >>> duration = max(np.max(reference_timestamps), np.max(estimated_timestamps)) + 10\n    >>> scores = mir_eval.align.evaluate(reference_onsets, estimated_timestamps, duration)\n\n    Parameters\n    ----------\n    reference_timestamps : np.ndarray\n        reference timestamp locations, in seconds\n    estimated_timestamps : np.ndarray\n        estimated timestamp locations, in seconds\n    **kwargs\n        Additional keyword arguments which will be passed to the\n        appropriate metric or preprocessing functions.\n\n    Returns\n    -------\n    scores : dict\n        Dictionary of scores, where the key is the metric name (str) and\n        the value is the (float) score achieved.\n    \"\"\"\n    # Compute all metrics\n    scores = collections.OrderedDict()\n\n    scores[\"pc\"] = filter_kwargs(\n        percentage_correct, reference_timestamps, estimated_timestamps, **kwargs\n    )\n    scores[\"mae\"], scores[\"aae\"] = absolute_error(\n        reference_timestamps, estimated_timestamps\n    )\n    scores[\"pcs\"] = filter_kwargs(\n        percentage_correct_segments,\n        reference_timestamps,\n        estimated_timestamps,\n        **kwargs,\n    )\n    scores[\"perceptual\"] = karaoke_perceptual_metric(\n        reference_timestamps, estimated_timestamps\n    )\n\n    return scores",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "50: import collections\n51: from typing import Optional\n53: import numpy as np\n54: from scipy.stats import skewnorm\n56: from mir_eval.util import filter_kwargs",
+          "source_characters": 158,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.alignment.evaluate",
+        "public_access_paths": [
+          "mir_eval.alignment.evaluate"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Compute all metrics for the given reference and estimated annotations.\n\nExamples\n--------\n>>> reference_timestamps = mir_eval.io.load_events('reference.txt')\n>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')\n>>> duration = max(np.max(reference_timestamps), np.max(estimated_timestamps)) + 10\n>>> scores = mir_eval.align.evaluate(reference_onsets, estimated_timestamps, duration)\n\nParameters\n----------\nreference_timestamps : np.ndarray\n    reference timestamp locations, in seconds\nestimated_timestamps : np.ndarray\n    estimated timestamp locations, in seconds\n**kwargs\n    Additional keyword arguments which will be passed to the\n    appropriate metric or preprocessing functions.\n\nReturns\n-------\nscores : dict\n    Dictionary of scores, where the key is the metric name (str) and\n    the value is the (float) score achieved.",
+        "description_characters": 845,
+        "description_truncated": false
+      },
+      {
+        "id": "python:mir_eval.beat.trim_beats",
+        "api_id": "python:mir_eval.beat.trim_beats",
+        "name": "trim_beats",
+        "qualified_name": "mir_eval.beat.trim_beats",
+        "source_function_id": "mir_eval/beat.py:57:mir_eval.beat.trim_beats",
+        "file": "mir_eval/beat.py",
+        "line": 57,
+        "end_line": 74,
+        "signature": "def trim_beats(beats, min_beat_time=5.0)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.beat",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.beat",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "beats",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "min_beat_time",
+            "type": "",
+            "default": "5.0",
+            "required": false,
+            "kind": "positional_or_keyword"
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 54,
+          "end_line": 117,
+          "text": "MAX_TIME = 30000.0\n\n\ndef trim_beats(beats, min_beat_time=5.0):\n    \"\"\"Remove beats before min_beat_time.  A common preprocessing step.\n\n    Parameters\n    ----------\n    beats : np.ndarray\n        Array of beat times in seconds.\n    min_beat_time : float\n        Minimum beat time to allow\n        (Default value = 5.)\n\n    Returns\n    -------\n    beats_trimmed : np.ndarray\n        Trimmed beat array.\n    \"\"\"\n    # Remove beats before min_beat_time\n    return beats[beats >= min_beat_time]\n\n\ndef validate(reference_beats, estimated_beats):\n    \"\"\"Check that the input annotations to a metric look like valid beat time\n    arrays, and throws helpful errors if not.\n\n    Parameters\n    ----------\n    reference_beats : np.ndarray\n        reference beat times, in seconds\n    estimated_beats : np.ndarray\n        estimated beat times, in seconds\n    \"\"\"\n    # If reference or estimated beats are empty,\n    # warn because metric will be 0\n    if reference_beats.size == 0:\n        warnings.warn(\"Reference beats are empty.\")\n    if estimated_beats.size == 0:\n        warnings.warn(\"Estimated beats are empty.\")\n    for beats in [reference_beats, estimated_beats]:\n        util.validate_events(beats, MAX_TIME)\n\n\ndef _get_reference_beat_variations(reference_beats):\n    \"\"\"Return metric variations of the reference beats\n\n    Parameters\n    ----------\n    reference_beats : np.ndarray\n        beat locations in seconds\n\n    Returns\n    -------\n    reference_beats : np.ndarray\n        Original beat locations\n    off_beat : np.ndarray\n        180 degrees out of phase from the original beat locations\n    double : np.ndarray\n        Beats at 2x the original tempo\n    half_odd : np.ndarray\n        Half tempo, odd beats\n    half_even : np.ndarray\n        Half tempo, even beats",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "47: import numpy as np\n48: import collections\n49: from . import util\n50: import warnings",
+          "source_characters": 88,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.beat.trim_beats",
+        "public_access_paths": [
+          "mir_eval.beat.trim_beats"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Remove beats before min_beat_time.  A common preprocessing step.\n\nParameters\n----------\nbeats : np.ndarray\n    Array of beat times in seconds.\nmin_beat_time : float\n    Minimum beat time to allow\n    (Default value = 5.)\n\nReturns\n-------\nbeats_trimmed : np.ndarray\n    Trimmed beat array.",
+        "description_characters": 288,
+        "description_truncated": false
+      },
+      {
+        "id": "python:mir_eval.beat.validate",
+        "api_id": "python:mir_eval.beat.validate",
+        "name": "validate",
+        "qualified_name": "mir_eval.beat.validate",
+        "source_function_id": "mir_eval/beat.py:77:mir_eval.beat.validate",
+        "file": "mir_eval/beat.py",
+        "line": 77,
+        "end_line": 95,
+        "signature": "def validate(reference_beats, estimated_beats)",
+        "kind": "function",
+        "definition_kind": "function",
+        "language": "Python",
+        "source_language": "Python",
+        "module": "mir_eval.beat",
+        "scope": "production",
+        "owner": "",
+        "defining_owner": "mir_eval.beat",
+        "defining_owner_kind": "module",
+        "params": [
+          {
+            "name": "reference_beats",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          },
+          {
+            "name": "estimated_beats",
+            "type": "",
+            "default": null,
+            "required": true,
+            "kind": "positional_or_keyword"
+          }
+        ],
+        "parameter_count": 2,
+        "parameter_count_status": "declared",
+        "returns": "",
+        "decorators": [],
+        "implicit_receiver": null,
+        "public_owner_chain": true,
+        "conditional_context": [],
+        "is_abstract": false,
+        "public_exposure_established": true,
+        "source_window": {
+          "start_line": 74,
+          "end_line": 137,
+          "text": "    return beats[beats >= min_beat_time]\n\n\ndef validate(reference_beats, estimated_beats):\n    \"\"\"Check that the input annotations to a metric look like valid beat time\n    arrays, and throws helpful errors if not.\n\n    Parameters\n    ----------\n    reference_beats : np.ndarray\n        reference beat times, in seconds\n    estimated_beats : np.ndarray\n        estimated beat times, in seconds\n    \"\"\"\n    # If reference or estimated beats are empty,\n    # warn because metric will be 0\n    if reference_beats.size == 0:\n        warnings.warn(\"Reference beats are empty.\")\n    if estimated_beats.size == 0:\n        warnings.warn(\"Estimated beats are empty.\")\n    for beats in [reference_beats, estimated_beats]:\n        util.validate_events(beats, MAX_TIME)\n\n\ndef _get_reference_beat_variations(reference_beats):\n    \"\"\"Return metric variations of the reference beats\n\n    Parameters\n    ----------\n    reference_beats : np.ndarray\n        beat locations in seconds\n\n    Returns\n    -------\n    reference_beats : np.ndarray\n        Original beat locations\n    off_beat : np.ndarray\n        180 degrees out of phase from the original beat locations\n    double : np.ndarray\n        Beats at 2x the original tempo\n    half_odd : np.ndarray\n        Half tempo, odd beats\n    half_even : np.ndarray\n        Half tempo, even beats\n    \"\"\"\n    # Create annotations at twice the metric level\n    interpolated_indices = np.arange(0, reference_beats.shape[0] - 0.5, 0.5)\n    original_indices = np.arange(0, reference_beats.shape[0])\n    double_reference_beats = np.interp(\n        interpolated_indices, original_indices, reference_beats\n    )\n    # Return metric variations:\n    # True, off-beat, double tempo, half tempo odd, and half tempo even\n    return (\n        reference_beats,\n        double_reference_beats[1::2],\n        double_reference_beats,\n        reference_beats[::2],\n        reference_beats[1::2],\n    )\n\n\ndef f_measure(reference_beats, estimated_beats, f_measure_threshold=0.07):\n    \"\"\"Compute the F-measure of correct vs incorrectly predicted beats.",
+          "complete_file": false
+        },
+        "declaration_context": {
+          "text": "47: import numpy as np\n48: import collections\n49: from . import util\n50: import warnings",
+          "source_characters": 88,
+          "truncated": false,
+          "meaning": "Preceding declaration lines; lexical observations, not proof of nesting or receiver identity."
+        },
+        "preferred_public_path": "mir_eval.beat.validate",
+        "public_access_paths": [
+          "mir_eval.beat.validate"
+        ],
+        "omitted_public_access_paths": 0,
+        "description": "Check that the input annotations to a metric look like valid beat time\narrays, and throws helpful errors if not.\n\nParameters\n----------\nreference_beats : np.ndarray\n    reference beat times, in seconds\nestimated_beats : np.ndarray\n    estimated beat times, in seconds",
+        "description_characters": 267,
+        "description_truncated": false
+      }
+    ],
+    "development_errors": [],
+    "api_function_ids": {
+      "python:mir_eval.alignment.validate": "mir_eval/alignment.py:59:mir_eval.alignment.validate",
+      "python:mir_eval.alignment.absolute_error": "mir_eval/alignment.py:115:mir_eval.alignment.absolute_error",
+      "python:mir_eval.alignment.percentage_correct": "mir_eval/alignment.py:144:mir_eval.alignment.percentage_correct",
+      "python:mir_eval.alignment.percentage_correct_segments": "mir_eval/alignment.py:175:mir_eval.alignment.percentage_correct_segments",
+      "python:mir_eval.alignment.karaoke_perceptual_metric": "mir_eval/alignment.py:269:mir_eval.alignment.karaoke_perceptual_metric",
+      "python:mir_eval.alignment.evaluate": "mir_eval/alignment.py:312:mir_eval.alignment.evaluate",
+      "python:mir_eval.beat.trim_beats": "mir_eval/beat.py:57:mir_eval.beat.trim_beats",
+      "python:mir_eval.beat.validate": "mir_eval/beat.py:77:mir_eval.beat.validate"
+    },
+    "api_public_paths": {
+      "python:mir_eval.alignment.validate": [
+        "mir_eval.alignment.validate"
+      ],
+      "python:mir_eval.alignment.absolute_error": [
+        "mir_eval.alignment.absolute_error"
+      ],
+      "python:mir_eval.alignment.percentage_correct": [
+        "mir_eval.alignment.percentage_correct"
+      ],
+      "python:mir_eval.alignment.percentage_correct_segments": [
+        "mir_eval.alignment.percentage_correct_segments"
+      ],
+      "python:mir_eval.alignment.karaoke_perceptual_metric": [
+        "mir_eval.alignment.karaoke_perceptual_metric"
+      ],
+      "python:mir_eval.alignment.evaluate": [
+        "mir_eval.alignment.evaluate"
+      ],
+      "python:mir_eval.beat.trim_beats": [
+        "mir_eval.beat.trim_beats"
+      ],
+      "python:mir_eval.beat.validate": [
+        "mir_eval.beat.validate"
+      ]
+    },
+    "coverage": {
+      "matching_definitions": 178,
+      "selected_definitions": 8,
+      "omitted_definitions": 170,
+      "omitted_error_rows": 0,
+      "source_window_policy": "Three preceding and up to sixty following lines; not complete function bodies."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/mir_eval/attachment/Original/source/mir_eval/alignment.py",
+      "sha256": "8808acb21950e4493c7f701f78a21b69dc649172cefc5d73301071de23e60269",
+      "bytes": 14409
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/mir_eval/attachment/Original/source/mir_eval/beat.py",
+      "sha256": "959b9b99abc11dbf51c726868aa3a1da518550d99a1106b630e7c00911965e2a",
+      "bytes": 31152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/releases/2026-11-18-strict-raptor-source-note-0b1635f2457b/vendor/aideal_engine/src/aideal/defaults.yaml",
+      "sha256": "1778d383c06f3796b56c9db6b47a985a1adeb5c2451a0a896cfbc8f0fea298aa",
+      "bytes": 5298
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/configs/aideal.yaml",
+      "sha256": "a52e16bcc5989ec73bf488246f7b5ddf360e8e549e2af8fd962f08e1f73635a6",
+      "bytes": 12957
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/inputs/api_inventory.json",
+      "sha256": "8b7d902cf539e1ce7a4d3939877221b3042d2198776bbeb9b72ccbc40334790b",
+      "bytes": 34456
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/manifest.json",
+      "sha256": "ce678fc082653439e8b678680296a989b271ccda3195ad6994a64e32fde6c342",
+      "bytes": 226898
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/92d90a900d0850b2eb9e607c8eded15b0e20746f84c3b72332c7a500aae17a98.txt",
+      "sha256": "f5e3b3fd698675dffaba96ac2329375d892d01e5b2c2a40ea67d92768ed9b4d4",
+      "bytes": 7365
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/5ab007d110eb1892b40808abbadf7593561b8fdc2082124d5cdd50e6240fd2f8.txt",
+      "sha256": "69bf9e0290fe70334d33c84f61712f48b3792bc73a14c3a1f2afa7f6cd1dedeb",
+      "bytes": 9130
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/d0c7998f94baa1ae2e003ab34eac15734afe28fa29cc2d6e5ac8a736a85f96d1.txt",
+      "sha256": "155c32e41570640b44643c9a6ee0d6875a7b221081710397c4120c6579bc0a30",
+      "bytes": 29983
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/4a5dd5a444f54b5110d8e007314a65141a57334acd3de4b63f0e90253ba8ce64.txt",
+      "sha256": "4e407f9355774d0e46925c6389f5c8d1e9172bb8d720e10bc12688341568e8cf",
+      "bytes": 11345
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/a8b2efcccf5734dd7fe8c74aadcd54a5182ac123852d69886e868475f7cbdaf4.txt",
+      "sha256": "73dc0531f45ec85bd4841819c83a84d9dbf0c05ff354b7f8ff586633345653f4",
+      "bytes": 6911
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/916f03ddf5d32caffa91371061e1a1f1bd3340c57f8e8832e2ad845ec811f234.txt",
+      "sha256": "e7384fca2903fced836994fa7a640902f23ad6a09a5b48ebf06d0c41e0b04a76",
+      "bytes": 10955
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/82137cb31821fed446b74c7d05b604bb6b2c927672f86bc632bf1dd0374fbe73.txt",
+      "sha256": "e8a0715be35b73ad88518e5745b7729a354a7512dead6b8d3417a82b84beedb6",
+      "bytes": 2950
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/d3570dda3f0989a4665610ce264631ab8769272d7c06ec7ac8cb9b5a6705d4b8.txt",
+      "sha256": "ce56c02382c096b46f24ceeedce99266a6b58be014eed1ef3f4ee71827af024a",
+      "bytes": 16890
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/a3abf06014d499d0276e65b1ec24a6855fa0781bb1f33f1a5fc961b6d330058b.txt",
+      "sha256": "6a411a15718f092c2fd528110b3b8099f9aadd56636d9e86b90876272196d04d",
+      "bytes": 7690
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/448d8e27f74881edc8518d9b95dd9ce9e7cd4f8595b3001929a600df3ae4c8a5.txt",
+      "sha256": "043c35a3210b81ab1647b7dad587171d3cd365d5cb42ff0ac42385c22649a4b2",
+      "bytes": 2703
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/b6900533295c2b5ed0d35a3daf9439149d93fe3d2b1b24ff697bd399afbdc2ee.txt",
+      "sha256": "a3de01acdfebc01b51b86f720efe0b9200892e6643bddf41d76ac0283c10d05e",
+      "bytes": 9633
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/04b49847c7a7e45795acd06a895fe86c1a1d1be5789a472cb583338c965bb4b4.txt",
+      "sha256": "98f63b3dc1ee73e065264ab470835c41abb57cf224aa558edaf41050161e4a30",
+      "bytes": 20298
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/767a019c6312e38cebdbfb43f836750fc16b92356063866674f6e6ce471e80fb.txt",
+      "sha256": "8102be68efefd532d595d1f3d75fc346f071faeb79277b0905a6239c0857fbc9",
+      "bytes": 11729
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/d247ac17c731e9b1266243c3f4b9b8f95ad39b5058b15bf25fdcc414531d4212.txt",
+      "sha256": "acd58ede285b6c034f9dc391dba416691ff2c69ba1e6eaa9ff9858e7320c84df",
+      "bytes": 3810
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/4cd7de2215cdf51f507c04d5c047160bb18591c0e447e083a2dfbb884c24189c.txt",
+      "sha256": "12f4b4b97546d6f9a7761772248c987a63ba22e7089803786724c881fa74589d",
+      "bytes": 2830
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/e00cfe4955d4bca7b3cac3df5f848005635b654516f8421d052d5f7af81acbd1.txt",
+      "sha256": "b6e1baae8b1e1f0c2cb1681595a828efa736c1dd94eac994f0a013b3318c0ce5",
+      "bytes": 23173
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/4e6cfa3a248e58c38a7adfa64b9bc6797ea245cd44ef6faffaa6f1a6b9e6825b.txt",
+      "sha256": "43a7cbf4e9266bcdf422ff524131d84c8f1e0acb71fda75d8db5fceacea37bf8",
+      "bytes": 10266
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/pages/54c9ab9fcd853b0d822029243a29c13a4e1667bb50be4ca8c4b23b48728c9b38.txt",
+      "sha256": "a50fe9c5e4bd0973f0a8bcf6febeb17aaa00588ca2b37af3a8d04b7561c3cc6a",
+      "bytes": 11194
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/shared-readme/README.rst",
+      "sha256": "35f7046ec55096df1b66c868cdfb4382022710e46540191dc8af9761598b2b11",
+      "bytes": 1469
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f2d1fa73692ed983263c9ae9e44d348e00f4b0045484edbf0cd58db8cd1193ab.txt",
+      "sha256": "f2d1fa73692ed983263c9ae9e44d348e00f4b0045484edbf0cd58db8cd1193ab",
+      "bytes": 667
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/3847de8dc4131f4ab1e882ee4c6a904495daa78fc06e53aaf6a36b379718d585.txt",
+      "sha256": "3847de8dc4131f4ab1e882ee4c6a904495daa78fc06e53aaf6a36b379718d585",
+      "bytes": 879
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f9d20a2ae6632c29b2a2f3719b53e966eaee3cb015ee422514a7ea8730b973a8.txt",
+      "sha256": "f9d20a2ae6632c29b2a2f3719b53e966eaee3cb015ee422514a7ea8730b973a8",
+      "bytes": 1009
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f14acf38d3eb55a8ba2c52711ef6778d6d25a6b7532ba3874cb895fa1f90103b.txt",
+      "sha256": "f14acf38d3eb55a8ba2c52711ef6778d6d25a6b7532ba3874cb895fa1f90103b",
+      "bytes": 785
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/240ba1081b98645aa6360c023bfd5c1c5622272c3828c1b25af6bad49c580e69.txt",
+      "sha256": "240ba1081b98645aa6360c023bfd5c1c5622272c3828c1b25af6bad49c580e69",
+      "bytes": 2246
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/644cf5c9b30e56d1147932b1ff10d15d6f668c9687f59cc24e53075b1d25c2c0.txt",
+      "sha256": "644cf5c9b30e56d1147932b1ff10d15d6f668c9687f59cc24e53075b1d25c2c0",
+      "bytes": 368
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/0f58814f3c78620bd6fd4dd5fd6a9a53919aa87b8d0553ccba85b1a861114dba.txt",
+      "sha256": "0f58814f3c78620bd6fd4dd5fd6a9a53919aa87b8d0553ccba85b1a861114dba",
+      "bytes": 980
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/9dd8abc577bce8678caa95ce37f972f2816e9e39db9a4500311a5aae6b20761d.txt",
+      "sha256": "9dd8abc577bce8678caa95ce37f972f2816e9e39db9a4500311a5aae6b20761d",
+      "bytes": 1294
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/075674e6f8671cd27cbfd874c48df87803541cc38e8a1d3014985bee2e8ad607.txt",
+      "sha256": "075674e6f8671cd27cbfd874c48df87803541cc38e8a1d3014985bee2e8ad607",
+      "bytes": 721
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/351aa0a15a3b28652d0047d65e7f0ff002913e73739c10a355c121a2b47cb9f7.txt",
+      "sha256": "351aa0a15a3b28652d0047d65e7f0ff002913e73739c10a355c121a2b47cb9f7",
+      "bytes": 845
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d8067a822a121d58034933946253a29e2a96357f7e0d5bcfc4829476ac1220a9.txt",
+      "sha256": "d8067a822a121d58034933946253a29e2a96357f7e0d5bcfc4829476ac1220a9",
+      "bytes": 1084
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/dceebb44381cb050817a966bc01195f492c85b7d64f25fe175cf57d4f5ae13dc.txt",
+      "sha256": "dceebb44381cb050817a966bc01195f492c85b7d64f25fe175cf57d4f5ae13dc",
+      "bytes": 852
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/231aa54643a21e95743d94993f0c64d56fd3e8783432c79aae4b501fc6a959db.txt",
+      "sha256": "231aa54643a21e95743d94993f0c64d56fd3e8783432c79aae4b501fc6a959db",
+      "bytes": 812
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f3b071e7a71665fd09bfd692921e93fcd75980aee000cf9ba45ee22e41bd741d.txt",
+      "sha256": "f3b071e7a71665fd09bfd692921e93fcd75980aee000cf9ba45ee22e41bd741d",
+      "bytes": 304
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/9628da6ebaafb070e1aa6c67ff9919c513b19e91cc421b7ea76172495899920f.txt",
+      "sha256": "9628da6ebaafb070e1aa6c67ff9919c513b19e91cc421b7ea76172495899920f",
+      "bytes": 306
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/550664ee9bb7d60cc2056c7e615472c00fe0133441ef007ccada61d2b4b6f1f7.txt",
+      "sha256": "550664ee9bb7d60cc2056c7e615472c00fe0133441ef007ccada61d2b4b6f1f7",
+      "bytes": 147
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/8bd21d9d6f95f8a9bda458cbb00dd46fab41d5fe498f724724ea6a87483ee049.txt",
+      "sha256": "8bd21d9d6f95f8a9bda458cbb00dd46fab41d5fe498f724724ea6a87483ee049",
+      "bytes": 1029
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/378e4d15ec4ad164788bcebbf0f985118e66390adc5a182db0dcb23c913789a5.txt",
+      "sha256": "378e4d15ec4ad164788bcebbf0f985118e66390adc5a182db0dcb23c913789a5",
+      "bytes": 750
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4a7d24bba734028c74528126fbab8072b6e0227bea75e74073482464e2b194a8.txt",
+      "sha256": "4a7d24bba734028c74528126fbab8072b6e0227bea75e74073482464e2b194a8",
+      "bytes": 643
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/feadfbc06af9fcd951785fc106fd9333184fccfb156f4e6455a3b3ba4e6ce321.txt",
+      "sha256": "feadfbc06af9fcd951785fc106fd9333184fccfb156f4e6455a3b3ba4e6ce321",
+      "bytes": 1257
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/105a843d7f8d7ab0f7594bf427b1b54ff15b7da156420d21e2f279e0c5f642c4.txt",
+      "sha256": "105a843d7f8d7ab0f7594bf427b1b54ff15b7da156420d21e2f279e0c5f642c4",
+      "bytes": 544
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/00a7ffb5de7b4035d6793a420048c3f0f8f87ef76e9ad62e343b402a245b5389.txt",
+      "sha256": "00a7ffb5de7b4035d6793a420048c3f0f8f87ef76e9ad62e343b402a245b5389",
+      "bytes": 1197
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/7006b1797504bd224ab666068606c115d2f3aa9fb9b19f4e7a35793876c41e1d.txt",
+      "sha256": "7006b1797504bd224ab666068606c115d2f3aa9fb9b19f4e7a35793876c41e1d",
+      "bytes": 1285
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/c646c8e9419f45fde2885fa17d6d286e598fecb22322ab7f262bd809a3b9e2be.txt",
+      "sha256": "c646c8e9419f45fde2885fa17d6d286e598fecb22322ab7f262bd809a3b9e2be",
+      "bytes": 488
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/795801dddeb10aae8356501e5b9467b003a42a035a34a61b44bb98462be8050e.txt",
+      "sha256": "795801dddeb10aae8356501e5b9467b003a42a035a34a61b44bb98462be8050e",
+      "bytes": 1083
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/c242b162de260658b533b6853ea2005f0bb38e4be8091016850f9e9a0c80c83a.txt",
+      "sha256": "c242b162de260658b533b6853ea2005f0bb38e4be8091016850f9e9a0c80c83a",
+      "bytes": 680
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/a02d46f95851b53d2866ce19aa55c69fcaf91522a0c8507c9d18ba80751d382d.txt",
+      "sha256": "a02d46f95851b53d2866ce19aa55c69fcaf91522a0c8507c9d18ba80751d382d",
+      "bytes": 235
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/5bbd6270681c80a1c1a6473cabbe772bf107d2d5b62d9f6a6eb4ea024efb46c1.txt",
+      "sha256": "5bbd6270681c80a1c1a6473cabbe772bf107d2d5b62d9f6a6eb4ea024efb46c1",
+      "bytes": 205
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/337571945419113b7008fce7eeae9976551ed6b0a867cac7df123123faad1fae.txt",
+      "sha256": "337571945419113b7008fce7eeae9976551ed6b0a867cac7df123123faad1fae",
+      "bytes": 319
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2aeb83e370901d36ed64a2356b8a1f51786e61aa243e23d6649eacd39d44fc53.txt",
+      "sha256": "2aeb83e370901d36ed64a2356b8a1f51786e61aa243e23d6649eacd39d44fc53",
+      "bytes": 1124
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/52c81232f16a75bb1191fccab8915a1194bde378e9b44c7e78520edcbf97c23c.txt",
+      "sha256": "52c81232f16a75bb1191fccab8915a1194bde378e9b44c7e78520edcbf97c23c",
+      "bytes": 662
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2346cd140c63b6105fbea67c566aa39cbd1bd3fc3d67c9c5048bdb285180f90d.txt",
+      "sha256": "2346cd140c63b6105fbea67c566aa39cbd1bd3fc3d67c9c5048bdb285180f90d",
+      "bytes": 415
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/0a94fcfcdca98e9020e4a93a5c64128c5f55a17e5720dce95129258f8feb7af7.txt",
+      "sha256": "0a94fcfcdca98e9020e4a93a5c64128c5f55a17e5720dce95129258f8feb7af7",
+      "bytes": 647
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/b36bf0794b6d5cb4d95487e1075fc6d5612408fc60245b172214444fd1c9bd5b.txt",
+      "sha256": "b36bf0794b6d5cb4d95487e1075fc6d5612408fc60245b172214444fd1c9bd5b",
+      "bytes": 342
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/a5090b5e6e334ab8f35cefbd9e0e9ed8a83251f3c2e8959cadf30c2197b618e3.txt",
+      "sha256": "a5090b5e6e334ab8f35cefbd9e0e9ed8a83251f3c2e8959cadf30c2197b618e3",
+      "bytes": 669
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/9949117ac670149dee7512a17167ba3a9710ae81934410a5d399e9e03146f742.txt",
+      "sha256": "9949117ac670149dee7512a17167ba3a9710ae81934410a5d399e9e03146f742",
+      "bytes": 1218
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/83b2f53b4124127b9458d5c7c40642e63b10fbfb255af9cbf249f96a633c8721.txt",
+      "sha256": "83b2f53b4124127b9458d5c7c40642e63b10fbfb255af9cbf249f96a633c8721",
+      "bytes": 1226
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/3182079f2d1732ebb4ebc85f5b7dbf50b7836c8024af1d2021c1eb84b181fa0d.txt",
+      "sha256": "3182079f2d1732ebb4ebc85f5b7dbf50b7836c8024af1d2021c1eb84b181fa0d",
+      "bytes": 748
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/95067d95b31c658e33d57dc277fea392219147268e32f19c43fc8309a6cbc5d6.txt",
+      "sha256": "95067d95b31c658e33d57dc277fea392219147268e32f19c43fc8309a6cbc5d6",
+      "bytes": 1118
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f35be6aad228a816a41268463e0148a9d25db897bdb95128bd4f70c4dd037e90.txt",
+      "sha256": "f35be6aad228a816a41268463e0148a9d25db897bdb95128bd4f70c4dd037e90",
+      "bytes": 1133
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/b370bb1e050894a153ae194a9cae32349a93a170bc3b119d133a6e76ad8a8615.txt",
+      "sha256": "b370bb1e050894a153ae194a9cae32349a93a170bc3b119d133a6e76ad8a8615",
+      "bytes": 1100
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/9ed5fd18f85b3873d323550b9360442419d366b5f1d20b2ea21a94c8f2f878f3.txt",
+      "sha256": "9ed5fd18f85b3873d323550b9360442419d366b5f1d20b2ea21a94c8f2f878f3",
+      "bytes": 1102
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/91d33e1e2397883c8b59020cba114dede070b215938fa44dc70b3c8266c5de2b.txt",
+      "sha256": "91d33e1e2397883c8b59020cba114dede070b215938fa44dc70b3c8266c5de2b",
+      "bytes": 1116
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/77d3236e7ddded4705e04ecd30b5b1cdc4104d41290eb9f84f6c761ee6c2775c.txt",
+      "sha256": "77d3236e7ddded4705e04ecd30b5b1cdc4104d41290eb9f84f6c761ee6c2775c",
+      "bytes": 1118
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/49d0d8708a5e0b6667936b8cf945b70046b5a481046b22be4729c7eb2cad7557.txt",
+      "sha256": "49d0d8708a5e0b6667936b8cf945b70046b5a481046b22be4729c7eb2cad7557",
+      "bytes": 685
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/ffe5c5d926f97be74d93e2e8f0e2a37f7781e9f6006c4d1c468caf9c20e8a4b8.txt",
+      "sha256": "ffe5c5d926f97be74d93e2e8f0e2a37f7781e9f6006c4d1c468caf9c20e8a4b8",
+      "bytes": 304
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/ba6dd3df7ffe8043302fde8ffb184e40a120850e8c364c19090ebcc9a86045a0.txt",
+      "sha256": "ba6dd3df7ffe8043302fde8ffb184e40a120850e8c364c19090ebcc9a86045a0",
+      "bytes": 148
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/bd4e376a4ca482c1d8f81cbdc862794cb125f015aba04892c558411bb7f98c8d.txt",
+      "sha256": "bd4e376a4ca482c1d8f81cbdc862794cb125f015aba04892c558411bb7f98c8d",
+      "bytes": 1221
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/df19f87a3780cedca68d4a3367fe1114dbbd9bdeac149c70597bdd53d8778f88.txt",
+      "sha256": "df19f87a3780cedca68d4a3367fe1114dbbd9bdeac149c70597bdd53d8778f88",
+      "bytes": 983
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d688dcd50c1604354ec426187be0296b2cf14332f2a2e9a1a6c75432a8d3c511.txt",
+      "sha256": "d688dcd50c1604354ec426187be0296b2cf14332f2a2e9a1a6c75432a8d3c511",
+      "bytes": 1323
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/a66516784619acbfdf639324c86f1d39ec00d303129f374e79cb3228c16d4840.txt",
+      "sha256": "a66516784619acbfdf639324c86f1d39ec00d303129f374e79cb3228c16d4840",
+      "bytes": 1023
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/94b621251b580ae1c4cf7f502831f5234e366a2a7b60e5869180a615d6c66071.txt",
+      "sha256": "94b621251b580ae1c4cf7f502831f5234e366a2a7b60e5869180a615d6c66071",
+      "bytes": 1902
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/1a5ee1f5254e1fff2f09131beee86404a7d4fed85428ed5117ed462ccc2ca39a.txt",
+      "sha256": "1a5ee1f5254e1fff2f09131beee86404a7d4fed85428ed5117ed462ccc2ca39a",
+      "bytes": 1184
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/18fa541d1ad9cef6c3d2fbee5fca109f6a88d3122c61e30356ed25ee24627da8.txt",
+      "sha256": "18fa541d1ad9cef6c3d2fbee5fca109f6a88d3122c61e30356ed25ee24627da8",
+      "bytes": 692
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/acd862e82f5cfe38c290a02787e1b2285830ad4b1fa452692e6f0c582583a461.txt",
+      "sha256": "acd862e82f5cfe38c290a02787e1b2285830ad4b1fa452692e6f0c582583a461",
+      "bytes": 1097
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/8e0efdd49099eef92e7860f5f7f59eff790c05052bc6e8935d64986752827aba.txt",
+      "sha256": "8e0efdd49099eef92e7860f5f7f59eff790c05052bc6e8935d64986752827aba",
+      "bytes": 1457
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/b5882aaadb4e3001a0353cc64cda26a6037f87797f782d32ab8d8493c51ebe4f.txt",
+      "sha256": "b5882aaadb4e3001a0353cc64cda26a6037f87797f782d32ab8d8493c51ebe4f",
+      "bytes": 1208
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/b90711479dd9c73b09eefa0ca9bef7e81bfde3d8b73c9c240d50c54507800534.txt",
+      "sha256": "b90711479dd9c73b09eefa0ca9bef7e81bfde3d8b73c9c240d50c54507800534",
+      "bytes": 206
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6226a6a3c1a819d6ef3d5eb7603450431e36b22db7a04b48f60b3fb346f892d5.txt",
+      "sha256": "6226a6a3c1a819d6ef3d5eb7603450431e36b22db7a04b48f60b3fb346f892d5",
+      "bytes": 212
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/89bc2220095d827cc4bd838462f7c00f1841091f82e9dffa5f1df48ae3ac957d.txt",
+      "sha256": "89bc2220095d827cc4bd838462f7c00f1841091f82e9dffa5f1df48ae3ac957d",
+      "bytes": 2817
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/ceb00c663d3952859123c79322ca1be6722ee05d5be75e44bd29f0d19becf567.txt",
+      "sha256": "ceb00c663d3952859123c79322ca1be6722ee05d5be75e44bd29f0d19becf567",
+      "bytes": 1280
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/7c0f0276a5a03860c8ed553b2763bad5b139e96eeae343b21a323daf1fb79b41.txt",
+      "sha256": "7c0f0276a5a03860c8ed553b2763bad5b139e96eeae343b21a323daf1fb79b41",
+      "bytes": 1271
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/73912a3a6b4b303f482b8f74e721b0330a9cf09e22c28543919a9bed0953a32c.txt",
+      "sha256": "73912a3a6b4b303f482b8f74e721b0330a9cf09e22c28543919a9bed0953a32c",
+      "bytes": 309
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/a8d0fb02c68fca45db4b32d4120f475ee34649ac44da10fda3efbed9e2f7cef9.txt",
+      "sha256": "a8d0fb02c68fca45db4b32d4120f475ee34649ac44da10fda3efbed9e2f7cef9",
+      "bytes": 1006
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/14fc00150787708a223e4be24fb32e931620202fb1dd499c665741b620ce016c.txt",
+      "sha256": "14fc00150787708a223e4be24fb32e931620202fb1dd499c665741b620ce016c",
+      "bytes": 693
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/5c12491e6f670c0dcc2b6f8eef9f4096be14af010128f6ba126bd8f079c38098.txt",
+      "sha256": "5c12491e6f670c0dcc2b6f8eef9f4096be14af010128f6ba126bd8f079c38098",
+      "bytes": 762
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4c8badd461540c6912abd9211d500fefa22c4c2c5209b5aa7a55b366f66499c2.txt",
+      "sha256": "4c8badd461540c6912abd9211d500fefa22c4c2c5209b5aa7a55b366f66499c2",
+      "bytes": 668
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/bd1dbfd484ae4879f74ce6e60076af86f8f05209338e3de3d4b96cca6470b5ef.txt",
+      "sha256": "bd1dbfd484ae4879f74ce6e60076af86f8f05209338e3de3d4b96cca6470b5ef",
+      "bytes": 863
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/09c9cca1402b4b071f4d32252919511d9d066cfeb4b2f79447fbe3b7c0d3ea30.txt",
+      "sha256": "09c9cca1402b4b071f4d32252919511d9d066cfeb4b2f79447fbe3b7c0d3ea30",
+      "bytes": 886
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/68b14f906c367da7735251df18c7b0872e802417faaa64e6fb685a313b03a4fb.txt",
+      "sha256": "68b14f906c367da7735251df18c7b0872e802417faaa64e6fb685a313b03a4fb",
+      "bytes": 1522
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/5fe4aeae24546a3f24006194882aa148dbead8dec8b291d66e065fce6a6bacad.txt",
+      "sha256": "5fe4aeae24546a3f24006194882aa148dbead8dec8b291d66e065fce6a6bacad",
+      "bytes": 1352
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/e055a7639198bb1be356f534363a9580037ba43dcdd3a94004c6203d239a0415.txt",
+      "sha256": "e055a7639198bb1be356f534363a9580037ba43dcdd3a94004c6203d239a0415",
+      "bytes": 863
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/05fa4a90d0dd780928f8378c89f72f75d0ca4b36b6395c5c5a3a647c5646fed7.txt",
+      "sha256": "05fa4a90d0dd780928f8378c89f72f75d0ca4b36b6395c5c5a3a647c5646fed7",
+      "bytes": 692
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6bfe211ab965fcce67eb12010c24e128ee1309e2f2ec66b4b3637ec17d57c1f8.txt",
+      "sha256": "6bfe211ab965fcce67eb12010c24e128ee1309e2f2ec66b4b3637ec17d57c1f8",
+      "bytes": 971
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/60b944016a11d58915ee757b92ed6ab8fdfbb62f37aace76735b1853eb14152d.txt",
+      "sha256": "60b944016a11d58915ee757b92ed6ab8fdfbb62f37aace76735b1853eb14152d",
+      "bytes": 573
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d01f8455ee8ce4a24b2959e97449568a23acd2a1dd4a8df99829c901dd096aaf.txt",
+      "sha256": "d01f8455ee8ce4a24b2959e97449568a23acd2a1dd4a8df99829c901dd096aaf",
+      "bytes": 641
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4595d988a85244f0dbf90383770e49a4ac8ee76116f41e2e46f5591a1ed1c9b0.txt",
+      "sha256": "4595d988a85244f0dbf90383770e49a4ac8ee76116f41e2e46f5591a1ed1c9b0",
+      "bytes": 322
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/86d2d762cd730e8bc643049e4f21ed69a3dd63e33d85535a6b52d06d3ba1a589.txt",
+      "sha256": "86d2d762cd730e8bc643049e4f21ed69a3dd63e33d85535a6b52d06d3ba1a589",
+      "bytes": 249
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f5e2b10bf8e3cd2f5d1ce0394bd5539956bb87b7f1cf777914c30aa7e649b4d4.txt",
+      "sha256": "f5e2b10bf8e3cd2f5d1ce0394bd5539956bb87b7f1cf777914c30aa7e649b4d4",
+      "bytes": 276
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/0dabc8fc6c7a0a7f7b6c88d673cbef124756c3396fa1bae7bd688e8430777cf3.txt",
+      "sha256": "0dabc8fc6c7a0a7f7b6c88d673cbef124756c3396fa1bae7bd688e8430777cf3",
+      "bytes": 745
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/fd2f33c7457fceb8acd47b2c718fde0d1bea8b57a72fd226a1b85f5f0628cbe0.txt",
+      "sha256": "fd2f33c7457fceb8acd47b2c718fde0d1bea8b57a72fd226a1b85f5f0628cbe0",
+      "bytes": 285
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f959d1d41fcb56575f14b28d90fc0473c9cdee9cce2c850b3d0e76df4db1f496.txt",
+      "sha256": "f959d1d41fcb56575f14b28d90fc0473c9cdee9cce2c850b3d0e76df4db1f496",
+      "bytes": 1396
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/25c22da9a454725759be7f64ae0823bf0911e0555379538eacd86b1fdb6fadc0.txt",
+      "sha256": "25c22da9a454725759be7f64ae0823bf0911e0555379538eacd86b1fdb6fadc0",
+      "bytes": 853
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/ed6d2bc107f770d5014080a144267814a0149bdad12189cb79247fbc90d9eb07.txt",
+      "sha256": "ed6d2bc107f770d5014080a144267814a0149bdad12189cb79247fbc90d9eb07",
+      "bytes": 274
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/038d2b5c37abee583d7889c8b5da06dadfe918c71f1d7cb9ee0fbd7afeb17091.txt",
+      "sha256": "038d2b5c37abee583d7889c8b5da06dadfe918c71f1d7cb9ee0fbd7afeb17091",
+      "bytes": 1553
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2d1194ab4d3e96fb5b2aa079636e35b0e02b3e36e02771080fa95a5c7a1e31a4.txt",
+      "sha256": "2d1194ab4d3e96fb5b2aa079636e35b0e02b3e36e02771080fa95a5c7a1e31a4",
+      "bytes": 1584
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2ffa80dfb8318d0e74c40a3bd21e56c8e1603d919ecfe0fcb5907e931ad2ba80.txt",
+      "sha256": "2ffa80dfb8318d0e74c40a3bd21e56c8e1603d919ecfe0fcb5907e931ad2ba80",
+      "bytes": 1553
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/7ce6acddd291f7d8bea4be59aca75ba58e4d292a74d61142a1916d480d094c9e.txt",
+      "sha256": "7ce6acddd291f7d8bea4be59aca75ba58e4d292a74d61142a1916d480d094c9e",
+      "bytes": 864
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4b6eb89d3ca417315080ee6301d1772402f6bc54dba3cd50f3856cd732a61cfe.txt",
+      "sha256": "4b6eb89d3ca417315080ee6301d1772402f6bc54dba3cd50f3856cd732a61cfe",
+      "bytes": 1677
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/56bc7852a0496d5233c76affe669dbdf76409daa7a74ba003707c84f3f2f387f.txt",
+      "sha256": "56bc7852a0496d5233c76affe669dbdf76409daa7a74ba003707c84f3f2f387f",
+      "bytes": 413
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/b0d00d0ecf87c3cc9bbd7fae5e1bd5f5d1fa27dfe42b60cbed3768e603b83298.txt",
+      "sha256": "b0d00d0ecf87c3cc9bbd7fae5e1bd5f5d1fa27dfe42b60cbed3768e603b83298",
+      "bytes": 234
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/98ba9d03a0169019b73fb2683c6ed36d128f8296c8bb7066b102360e664ca3ba.txt",
+      "sha256": "98ba9d03a0169019b73fb2683c6ed36d128f8296c8bb7066b102360e664ca3ba",
+      "bytes": 980
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/46e8d8fcaedb3bd430ac5cb6201f3d079d85ffb5a8f36e9758411509831fac5b.txt",
+      "sha256": "46e8d8fcaedb3bd430ac5cb6201f3d079d85ffb5a8f36e9758411509831fac5b",
+      "bytes": 1154
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6b383b2f62230218037313897b3915cfa0c400dd28e6f533b71af342990a3e41.txt",
+      "sha256": "6b383b2f62230218037313897b3915cfa0c400dd28e6f533b71af342990a3e41",
+      "bytes": 942
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2ec0f79552fe3809487038d60668042e796f796b474bcd2715ed9d4c177d7581.txt",
+      "sha256": "2ec0f79552fe3809487038d60668042e796f796b474bcd2715ed9d4c177d7581",
+      "bytes": 551
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/c1fefeefc8860efd509b8847b652b52aef2f28868a3eba4b2fe2403412dccc9a.txt",
+      "sha256": "c1fefeefc8860efd509b8847b652b52aef2f28868a3eba4b2fe2403412dccc9a",
+      "bytes": 507
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6de277887553b68fead68adcac36d36309acf71eb46ecc6266399c4a52b3f141.txt",
+      "sha256": "6de277887553b68fead68adcac36d36309acf71eb46ecc6266399c4a52b3f141",
+      "bytes": 243
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/cab5e517de7bd6091319ea48b7bc255050a3e77dd3b1dc092ad517988de13d2d.txt",
+      "sha256": "cab5e517de7bd6091319ea48b7bc255050a3e77dd3b1dc092ad517988de13d2d",
+      "bytes": 642
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/3f483f82904d0e9a6f76e802544565aa046089d7f811b4ed9ec4223930b200bf.txt",
+      "sha256": "3f483f82904d0e9a6f76e802544565aa046089d7f811b4ed9ec4223930b200bf",
+      "bytes": 1068
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/9d0b78dfb3ea995a8bc007e0587dbd0668477573447249affc7aec4c57488f4c.txt",
+      "sha256": "9d0b78dfb3ea995a8bc007e0587dbd0668477573447249affc7aec4c57488f4c",
+      "bytes": 322
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/68bee2371931e24c949221f0829e73534aaa6ae68afe7d461bf0a8a3095f00f7.txt",
+      "sha256": "68bee2371931e24c949221f0829e73534aaa6ae68afe7d461bf0a8a3095f00f7",
+      "bytes": 1525
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/52dd38abaa1d2e2aed5c039829c6cd52996b6bb8f070fba5e45052f15b475850.txt",
+      "sha256": "52dd38abaa1d2e2aed5c039829c6cd52996b6bb8f070fba5e45052f15b475850",
+      "bytes": 278
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f0690e88b94021ed2164681d83f6f36605313607306cc6f2825d74f6193adae1.txt",
+      "sha256": "f0690e88b94021ed2164681d83f6f36605313607306cc6f2825d74f6193adae1",
+      "bytes": 522
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2cd97423eb7246f72c1cb261b273abe57d75bad28ac2836f712453d4a1201bf8.txt",
+      "sha256": "2cd97423eb7246f72c1cb261b273abe57d75bad28ac2836f712453d4a1201bf8",
+      "bytes": 366
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/628e7e0539e09e31dc3310c0228b19638ca62ad99258f99b8c13c60a853c86e4.txt",
+      "sha256": "628e7e0539e09e31dc3310c0228b19638ca62ad99258f99b8c13c60a853c86e4",
+      "bytes": 782
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/39407d384d385340d261bcb2eac11d53411dd50e35bbd80b052bf483985db853.txt",
+      "sha256": "39407d384d385340d261bcb2eac11d53411dd50e35bbd80b052bf483985db853",
+      "bytes": 868
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/fe6e9b024ef33e2ea89acb639b850fd6ef12e73674ba1262413349ea6efe5a06.txt",
+      "sha256": "fe6e9b024ef33e2ea89acb639b850fd6ef12e73674ba1262413349ea6efe5a06",
+      "bytes": 322
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4160fe4a8c009f4cb30c434caa164fcd7ef3a3d613cbcbba504df7cc215f8345.txt",
+      "sha256": "4160fe4a8c009f4cb30c434caa164fcd7ef3a3d613cbcbba504df7cc215f8345",
+      "bytes": 996
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/0707d4266ac2a02335ee4905ca7afe6de9bc714ec14b763236a6ad7e6f51ab41.txt",
+      "sha256": "0707d4266ac2a02335ee4905ca7afe6de9bc714ec14b763236a6ad7e6f51ab41",
+      "bytes": 723
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/9716b3252b01695e49cbacce3092cd2deb9eca4f3663daee362291a084954205.txt",
+      "sha256": "9716b3252b01695e49cbacce3092cd2deb9eca4f3663daee362291a084954205",
+      "bytes": 951
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/c2258d0c99ec7bd4643f8c46cf8e4e76247cb15091736caece5c2e66f2c951fb.txt",
+      "sha256": "c2258d0c99ec7bd4643f8c46cf8e4e76247cb15091736caece5c2e66f2c951fb",
+      "bytes": 932
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d6ffc8852a0616a9004eef72496e866be40a8b4eb4ceab32e3b2734496649a18.txt",
+      "sha256": "d6ffc8852a0616a9004eef72496e866be40a8b4eb4ceab32e3b2734496649a18",
+      "bytes": 1090
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/0bf08d1fecef1a833cc4f8594e6fd430b2ec21a77cda9025abe0aaa3cae76cf4.txt",
+      "sha256": "0bf08d1fecef1a833cc4f8594e6fd430b2ec21a77cda9025abe0aaa3cae76cf4",
+      "bytes": 1128
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/88ef638f882850b13c30a982da595425837dcbef9f171b130142c10f8be585b3.txt",
+      "sha256": "88ef638f882850b13c30a982da595425837dcbef9f171b130142c10f8be585b3",
+      "bytes": 719
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4d4c45576628595fa2808957e70c52beb2cdf7d1f326257306dce24722b4b542.txt",
+      "sha256": "4d4c45576628595fa2808957e70c52beb2cdf7d1f326257306dce24722b4b542",
+      "bytes": 362
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/48cf9b008e5ea1feeceff1a5bff4a43e96228da8906c68c4bac930c87339e9d6.txt",
+      "sha256": "48cf9b008e5ea1feeceff1a5bff4a43e96228da8906c68c4bac930c87339e9d6",
+      "bytes": 1622
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/bfc84f1d8f625e51d312b80449c4059cca17f4a283d3d135f4b8ba539124a6f9.txt",
+      "sha256": "bfc84f1d8f625e51d312b80449c4059cca17f4a283d3d135f4b8ba539124a6f9",
+      "bytes": 2127
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/3d26fbacce75f39771e2f2a0d6e3a16334bc1ea4d998e9d1eced97b4e5097e36.txt",
+      "sha256": "3d26fbacce75f39771e2f2a0d6e3a16334bc1ea4d998e9d1eced97b4e5097e36",
+      "bytes": 1163
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/607b3a85e7d52c45d693a5165bccc4ae8aff217c891db99e0b6f9aa5e58c0180.txt",
+      "sha256": "607b3a85e7d52c45d693a5165bccc4ae8aff217c891db99e0b6f9aa5e58c0180",
+      "bytes": 1236
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/9307ad8befa2907bd03e88f7d4ded3e300b6c0763663aa77944e999ac77c9aff.txt",
+      "sha256": "9307ad8befa2907bd03e88f7d4ded3e300b6c0763663aa77944e999ac77c9aff",
+      "bytes": 1881
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d05386de7df8238c3d4940fbfdedced0a53f10f63b6a954585c04f554d189cb8.txt",
+      "sha256": "d05386de7df8238c3d4940fbfdedced0a53f10f63b6a954585c04f554d189cb8",
+      "bytes": 2383
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2cc2fda9b3a1d960b2963453dfd0fbde37e949d0acc5e843ffaec5d259ff01e2.txt",
+      "sha256": "2cc2fda9b3a1d960b2963453dfd0fbde37e949d0acc5e843ffaec5d259ff01e2",
+      "bytes": 2003
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/af3a7f239d12007b71d2bfbebeff947a7a5bc74da91419e77dee032e6f88de2a.txt",
+      "sha256": "af3a7f239d12007b71d2bfbebeff947a7a5bc74da91419e77dee032e6f88de2a",
+      "bytes": 1724
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/58e563872a6846b6e1f8b1314ddef05e7711ee65bedcdd7f6863070c98f6156d.txt",
+      "sha256": "58e563872a6846b6e1f8b1314ddef05e7711ee65bedcdd7f6863070c98f6156d",
+      "bytes": 678
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/748637dfed8b253e4d1476ef1af6b69c0a64ddd8c37a96378362305a118ec12b.txt",
+      "sha256": "748637dfed8b253e4d1476ef1af6b69c0a64ddd8c37a96378362305a118ec12b",
+      "bytes": 864
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/8cdfb1ce8b2850d2e458f639b8ace68de180add8ea5cbcc118ee9f6d9d496df5.txt",
+      "sha256": "8cdfb1ce8b2850d2e458f639b8ace68de180add8ea5cbcc118ee9f6d9d496df5",
+      "bytes": 2149
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d64e50ecedec5fa5e82c8a63de657216090bae24bd6f79260cb7a7dae5dbfc18.txt",
+      "sha256": "d64e50ecedec5fa5e82c8a63de657216090bae24bd6f79260cb7a7dae5dbfc18",
+      "bytes": 1927
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/f8b1c4aee0e0778fe95e806cfcc0e54ed578120cc8aea00b9a78561f4642855a.txt",
+      "sha256": "f8b1c4aee0e0778fe95e806cfcc0e54ed578120cc8aea00b9a78561f4642855a",
+      "bytes": 2406
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d4f36ffab7b28e8a0d77f031d7c95e4e98a09c890a379f6e7ec0e49be8cd2e66.txt",
+      "sha256": "d4f36ffab7b28e8a0d77f031d7c95e4e98a09c890a379f6e7ec0e49be8cd2e66",
+      "bytes": 1800
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/dfe862bd02d548297c94a2ef1d4846393462c6cbf07ace6c04d03b1d9ca0113c.txt",
+      "sha256": "dfe862bd02d548297c94a2ef1d4846393462c6cbf07ace6c04d03b1d9ca0113c",
+      "bytes": 2432
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/620392dfd7c1db362707bd601472f9d3f022b547da56302762e12c4e8f553650.txt",
+      "sha256": "620392dfd7c1db362707bd601472f9d3f022b547da56302762e12c4e8f553650",
+      "bytes": 1099
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/7b192cbac5d73f6b38cf5774a55b7e7191fbccc306ad05824151181d67e28094.txt",
+      "sha256": "7b192cbac5d73f6b38cf5774a55b7e7191fbccc306ad05824151181d67e28094",
+      "bytes": 335
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2045d314a2a14a67bb80a28fc31e8218aa90ed1bb45c086224f752e5b7ccf684.txt",
+      "sha256": "2045d314a2a14a67bb80a28fc31e8218aa90ed1bb45c086224f752e5b7ccf684",
+      "bytes": 425
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/1d57e90a2f99e139d98059d4ad3430157697312cd22a68b4c61952bb64f34539.txt",
+      "sha256": "1d57e90a2f99e139d98059d4ad3430157697312cd22a68b4c61952bb64f34539",
+      "bytes": 678
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6d8c4141ca2e316ac4e3866408147ac66d7fd9aceba669d58b0f80c7b1b933e9.txt",
+      "sha256": "6d8c4141ca2e316ac4e3866408147ac66d7fd9aceba669d58b0f80c7b1b933e9",
+      "bytes": 475
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/bce2dbb3a8ee3723d2f69cfa7fbb22f8f78be8bc1fc4d4b42eb93136a09c66c8.txt",
+      "sha256": "bce2dbb3a8ee3723d2f69cfa7fbb22f8f78be8bc1fc4d4b42eb93136a09c66c8",
+      "bytes": 860
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/324b8b927a0eec00ae245da47ac9bb8b525650217cfa8a59aea529dcd67394f5.txt",
+      "sha256": "324b8b927a0eec00ae245da47ac9bb8b525650217cfa8a59aea529dcd67394f5",
+      "bytes": 1217
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/dc8117afb00a708146f2263e1393482f764f314fff2237c3983c860536efe75f.txt",
+      "sha256": "dc8117afb00a708146f2263e1393482f764f314fff2237c3983c860536efe75f",
+      "bytes": 948
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/14ac9cbc7effbb2768d38da2c5ecdf5b060237ed2afb89d5da0fb36b4391404d.txt",
+      "sha256": "14ac9cbc7effbb2768d38da2c5ecdf5b060237ed2afb89d5da0fb36b4391404d",
+      "bytes": 657
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6e89ce1fd4b790e93744d57679cdfa72a70eb3d0cc7ae5fd5db662d85feee3d4.txt",
+      "sha256": "6e89ce1fd4b790e93744d57679cdfa72a70eb3d0cc7ae5fd5db662d85feee3d4",
+      "bytes": 359
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/d2420fc55e82bcac9c708c9c891f1637c4d409c1e5e67c26d57d485ed40eadf9.txt",
+      "sha256": "d2420fc55e82bcac9c708c9c891f1637c4d409c1e5e67c26d57d485ed40eadf9",
+      "bytes": 277
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/cb9d303ed61409496b182cb086114a9da51146762cb64f1c2babdc6146a79969.txt",
+      "sha256": "cb9d303ed61409496b182cb086114a9da51146762cb64f1c2babdc6146a79969",
+      "bytes": 1562
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4efe693308adeee5492bbf49f301fb6a22aefe930d93efd8df5af7f9054f9d38.txt",
+      "sha256": "4efe693308adeee5492bbf49f301fb6a22aefe930d93efd8df5af7f9054f9d38",
+      "bytes": 1092
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2a94a495be3a44b63276d3cb8a76fe80bec7a1a5fd38773444a58e61f332022e.txt",
+      "sha256": "2a94a495be3a44b63276d3cb8a76fe80bec7a1a5fd38773444a58e61f332022e",
+      "bytes": 2130
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/17d4eae1685e7c3764785fb73b9d0f276cb8921b9d30fba2126a06e4c5e35374.txt",
+      "sha256": "17d4eae1685e7c3764785fb73b9d0f276cb8921b9d30fba2126a06e4c5e35374",
+      "bytes": 1532
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/1881ed076829e4f3e499084a25bbe8d97d9d2e1b430b02b62a484fccf1760047.txt",
+      "sha256": "1881ed076829e4f3e499084a25bbe8d97d9d2e1b430b02b62a484fccf1760047",
+      "bytes": 3135
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/2fed6fc172f152ab41f697f0cbad6281b5ead5fcd5218b3d8bb01f3919a135ce.txt",
+      "sha256": "2fed6fc172f152ab41f697f0cbad6281b5ead5fcd5218b3d8bb01f3919a135ce",
+      "bytes": 2049
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/dace823bd8cd188675f40f20b4b442aa22904158a9b0bbf468c685e48ee9b8e2.txt",
+      "sha256": "dace823bd8cd188675f40f20b4b442aa22904158a9b0bbf468c685e48ee9b8e2",
+      "bytes": 1670
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/a496d2c0bf309bbb14095ba35e0b9edc5d7465be4cd7473c3b3ff68689794218.txt",
+      "sha256": "a496d2c0bf309bbb14095ba35e0b9edc5d7465be4cd7473c3b3ff68689794218",
+      "bytes": 3428
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/108bc8a66960bbbf012b4318c0c77a210452185504c5509c487beb05f4a30b6f.txt",
+      "sha256": "108bc8a66960bbbf012b4318c0c77a210452185504c5509c487beb05f4a30b6f",
+      "bytes": 586
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6f889807a3bde51609b7dbcc63ddf99a90fc28093977332530011db375d1100b.txt",
+      "sha256": "6f889807a3bde51609b7dbcc63ddf99a90fc28093977332530011db375d1100b",
+      "bytes": 399
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/36f0d0ae0900d2a4089d96fc165ecc34e93e595134287982a809c076e28ab9ff.txt",
+      "sha256": "36f0d0ae0900d2a4089d96fc165ecc34e93e595134287982a809c076e28ab9ff",
+      "bytes": 1046
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/6ef321f952a1f1e5ddd7460020421ebbc6449bbd9124bcd84f56290021b6a6ff.txt",
+      "sha256": "6ef321f952a1f1e5ddd7460020421ebbc6449bbd9124bcd84f56290021b6a6ff",
+      "bytes": 2918
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/ad346af0bbc0420e49ab8d3e240e167a447516fe4853c86c59938554fcb80e7a.txt",
+      "sha256": "ad346af0bbc0420e49ab8d3e240e167a447516fe4853c86c59938554fcb80e7a",
+      "bytes": 3594
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/ae9c104ae0b356852ed2d402a90cdfe21e3344ccf644977b1f184a350e379ddb.txt",
+      "sha256": "ae9c104ae0b356852ed2d402a90cdfe21e3344ccf644977b1f184a350e379ddb",
+      "bytes": 840
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/476497b1f5f21bd16bf7a092fcb5912cec20f1838082482288978086131adfd9.txt",
+      "sha256": "476497b1f5f21bd16bf7a092fcb5912cec20f1838082482288978086131adfd9",
+      "bytes": 754
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/dd2461fc8c7376e37376f454fad58e017c920ce7bb2f39434cc39c7cbdd0f2cb.txt",
+      "sha256": "dd2461fc8c7376e37376f454fad58e017c920ce7bb2f39434cc39c7cbdd0f2cb",
+      "bytes": 1283
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/763f38ab6cd04c9229ef0d2cce863b564ff4845b8c72b8a61959afce6b719a17.txt",
+      "sha256": "763f38ab6cd04c9229ef0d2cce863b564ff4845b8c72b8a61959afce6b719a17",
+      "bytes": 314
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/db49c6e0a91fe6f3556753dbb2c11e10eba87faec7aae651ef84b496f702c0cf.txt",
+      "sha256": "db49c6e0a91fe6f3556753dbb2c11e10eba87faec7aae651ef84b496f702c0cf",
+      "bytes": 148
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/25bdb0ac8ac3b16eecb4325de1be3138491505edcd776dca6ee7bce28b9d8e4c.txt",
+      "sha256": "25bdb0ac8ac3b16eecb4325de1be3138491505edcd776dca6ee7bce28b9d8e4c",
+      "bytes": 310
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/911428132f8088be269fe626374d4cdacbe845cbee6b87c631420aac20693745.txt",
+      "sha256": "911428132f8088be269fe626374d4cdacbe845cbee6b87c631420aac20693745",
+      "bytes": 535
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/7b13c3b00af6751aad6a78d50e79c8566ab3543e312abadfa429abd159af7433.txt",
+      "sha256": "7b13c3b00af6751aad6a78d50e79c8566ab3543e312abadfa429abd159af7433",
+      "bytes": 424
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/572a26fd1223be5b457a931235d24d0be8a329569a8f5c4c16e8dccbae1a82eb.txt",
+      "sha256": "572a26fd1223be5b457a931235d24d0be8a329569a8f5c4c16e8dccbae1a82eb",
+      "bytes": 215
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/e7a1301d180fc027dcd0808cfd1d8774572439db7f464a2280f237fe9dc5cb9e.txt",
+      "sha256": "e7a1301d180fc027dcd0808cfd1d8774572439db7f464a2280f237fe9dc5cb9e",
+      "bytes": 249
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/553a81107fb053e70a6d36db7dae7aca28bfe683fe73960ef27553c8b05f0bda.txt",
+      "sha256": "553a81107fb053e70a6d36db7dae7aca28bfe683fe73960ef27553c8b05f0bda",
+      "bytes": 528
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/a8b2529b11261fb4ccd1fd80b0f852b15e8ac5ac7b5b8ec50179cea3389db999.txt",
+      "sha256": "a8b2529b11261fb4ccd1fd80b0f852b15e8ac5ac7b5b8ec50179cea3389db999",
+      "bytes": 876
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/95d4e4df30079dc8c1f83983a1a83f1b1f8f24c5370d7095c57312bdaa4f9823.txt",
+      "sha256": "95d4e4df30079dc8c1f83983a1a83f1b1f8f24c5370d7095c57312bdaa4f9823",
+      "bytes": 705
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/14048a91a5848f0b2f789b582866564ac84544b0af8e66bcd962d3d880318d73.txt",
+      "sha256": "14048a91a5848f0b2f789b582866564ac84544b0af8e66bcd962d3d880318d73",
+      "bytes": 346
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/68f35c02aef44cf6cdeb432a70aff07568714f45bf40952528d4dbdb31f7b8b3.txt",
+      "sha256": "68f35c02aef44cf6cdeb432a70aff07568714f45bf40952528d4dbdb31f7b8b3",
+      "bytes": 374
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/ad6200a4ca75b3fc7490bf5c4d8fa79335dd709ebb280f51f275e17c2a202c34.txt",
+      "sha256": "ad6200a4ca75b3fc7490bf5c4d8fa79335dd709ebb280f51f275e17c2a202c34",
+      "bytes": 937
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/a1748d91282de182ad489a5a3347acfe12641e842df2d44f36ca7d6eee66b82e.txt",
+      "sha256": "a1748d91282de182ad489a5a3347acfe12641e842df2d44f36ca7d6eee66b82e",
+      "bytes": 879
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/eaa1eefcab7a85b54a983ffed40700fe6b3210ea9f02d1e276727ab9d2087dda.txt",
+      "sha256": "eaa1eefcab7a85b54a983ffed40700fe6b3210ea9f02d1e276727ab9d2087dda",
+      "bytes": 511
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/62c93feb494b472652c0d7a949c0a8a62a7bafd27ae1810e4febdcdc0f146a90.txt",
+      "sha256": "62c93feb494b472652c0d7a949c0a8a62a7bafd27ae1810e4febdcdc0f146a90",
+      "bytes": 192
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/cedce6ba39e36828161b4f57251b6b4c763943f9369ad40ce46376aa90816ea4.txt",
+      "sha256": "cedce6ba39e36828161b4f57251b6b4c763943f9369ad40ce46376aa90816ea4",
+      "bytes": 375
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/3d86ac02523a436c5d54e8ded7edd579ba631f1d188ba24a9b73f0c357e03b9c.txt",
+      "sha256": "3d86ac02523a436c5d54e8ded7edd579ba631f1d188ba24a9b73f0c357e03b9c",
+      "bytes": 312
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/786be4d3c4391a2886c926b17c2d4d1784c8a5bd9fc3021b093f9510a072dade.txt",
+      "sha256": "786be4d3c4391a2886c926b17c2d4d1784c8a5bd9fc3021b093f9510a072dade",
+      "bytes": 537
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/excerpts/4e74f1cc787fd8c37f2093e04277bf1ed11b91a007c092cf4ad1b08eb2717d82.txt",
+      "sha256": "4e74f1cc787fd8c37f2093e04277bf1ed11b91a007c092cf4ad1b08eb2717d82",
+      "bytes": 213
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/ledger.json",
+      "sha256": "09219e3ac65f40b119c702f08e20bd11bf80af9dc129a940c3824b68fe0735cb",
+      "bytes": 1294062
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/canonical-selection.json",
+      "sha256": "55a2cf2734a1f9a56de3ee8baf3607321096a2261ef9e33d35bffba7275a3ef9",
+      "bytes": 2044450
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/alignment.py",
+      "sha256": "8808acb21950e4493c7f701f78a21b69dc649172cefc5d73301071de23e60269",
+      "bytes": 14409
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/beat.py",
+      "sha256": "959b9b99abc11dbf51c726868aa3a1da518550d99a1106b630e7c00911965e2a",
+      "bytes": 31152
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/chord.py",
+      "sha256": "a4354921817a22d6602c0f0fe3eabfea3c480bec672192faf5a704540126ce83",
+      "bytes": 58400
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/display.py",
+      "sha256": "ce883be62a2496946859c1dde6ebc17adbff744d896e97deb9944ecc80ef1c8b",
+      "bytes": 30758
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/hierarchy.py",
+      "sha256": "9f2037e97007947cb796ce5f489f2a1e3ad072beec0f8bf74177e54d13ece37c",
+      "bytes": 23802
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/io.py",
+      "sha256": "415dab76ac4929cab1db49abb9792f640a1718beb129ca0fa1fbe018f2f2997b",
+      "bytes": 22839
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/key.py",
+      "sha256": "baccd1df8d7073f3f0f3e5eed996292beef6d7921e73cacded0e228635e00b49",
+      "bytes": 6893
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/melody.py",
+      "sha256": "97cf790d144af00e4b4f13f335ac9b66708822ff84f2bc290be88ca4d370dd46",
+      "bytes": 31590
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/multipitch.py",
+      "sha256": "b1d31ca4f261603602a15bcf4b84f09991be164b62547ad845f0127d205a2087",
+      "bytes": 16997
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/onset.py",
+      "sha256": "189c0439f35632740a553cd8bbdc78b5c1aee6bb5aa397d5eaf97b41f3d735d8",
+      "bytes": 4369
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/pattern.py",
+      "sha256": "0b7bd11e483e9b57e00ae9c07f62866fa4e60851f254fea4f4cdb0e8562095f3",
+      "bytes": 23189
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/segment.py",
+      "sha256": "7bae89c97c6715d653a139b202e84565104f88efc87b585e726321403c47c440",
+      "bytes": 46806
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/separation.py",
+      "sha256": "3ae17b9558a139a2e35c5dd31b6dcded100d13bbc950fddc326f1ffa738299c5",
+      "bytes": 38153
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/sonify.py",
+      "sha256": "adaebbc4f7be611780367396ef6258c6b1a5abcc276a212226a5a497be53abd8",
+      "bytes": 12813
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/tempo.py",
+      "sha256": "8577ebbe319c3d45b05e007c59b002cbe1033e6844245990a04b0371ba2f4cad",
+      "bytes": 5186
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/transcription.py",
+      "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c",
+      "bytes": 36457
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/transcription_velocity.py",
+      "sha256": "7a041bc1a36450a88c8ad5394e32c4d349334c89df4957bdb9896b5dfb521391",
+      "bytes": 17151
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/util.py",
+      "sha256": "e5d9cf6b7478a6d498c35d3fba28e615b8d4f723ead5eceb575d99aee0ca0922",
+      "bytes": 29719
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/configs/project_profile.yaml",
+      "sha256": "4360078492c0f41b9ba0eedd8384cb316bce3c0c3c990282181b81143396c442",
+      "bytes": 3153
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/mir_eval/preview-compact/api_evidence.json",
+      "sha256": "e1387ef807163f99457ad42e0e78395a2cc03b22511111c74f2cf784ae5bbdf6",
+      "bytes": 1603018
+    }
+  ],
+  "error_scope": "operator-designated development logs only",
+  "api_evidence": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/development/aliases/mir_eval/preview-compact/api_evidence.json",
+    "sha256": "e1387ef807163f99457ad42e0e78395a2cc03b22511111c74f2cf784ae5bbdf6",
+    "bytes": 1603018
+  },
+  "context_policy": "calling-facts-and-source-v1",
+  "llm_calls": 0,
+  "preview_sha256": "c51639cac46b653ef32eaaef394904be449e95dfd111a8a041849278a77a6fed"
+}

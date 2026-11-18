@@ -74,9 +74,13 @@ def validate_suggestions(value, context, *, reserved_names=None):
     # citations must point back to those inputs.
     if not isinstance(value, dict):
         raise ValueError('Model suggestions must be a JSON object')
+    # Notes are optional narrative metadata. Preserve the raw model response and
+    # normalize only an absent field; explicit null/nontext remains invalid below.
+    if 'notes' not in value:
+        value = {**value, 'notes': ''}
     expected = {'aliases', 'alias_code', 'alias_interface', 'hints', 'notes'}
     if set(value) not in (expected, expected | {'refactors'}):
-        raise ValueError('Model response must contain aliases, alias_code, alias_interface, hints, notes and optional refactors')
+        raise ValueError('Model response must contain aliases, alias_code, alias_interface, hints and optional notes/refactors')
     value = {**value, 'refactors': value.get('refactors', [])}
     functions = {row['id']: row for row in context['apis']}
     evidence = {row['id']: row for row in context['development_errors']}
