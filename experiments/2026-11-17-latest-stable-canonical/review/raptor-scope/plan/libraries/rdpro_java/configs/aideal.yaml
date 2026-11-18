@@ -1,0 +1,289 @@
+codebase:
+  intent:
+    weights: {}
+    manual_include: []
+    manual_exclude: []
+    exclude_name_patterns: []
+    use_llm: false
+    refresh_llm: false
+  intended_api:
+    static_include_threshold: 8
+    static_exclude_threshold: 1
+    batch_size: 25
+    cache: docs/intended_api_decisions.json
+    refresh: false
+  public_def_regex: ^\s*(?:(?:(?:public|protected|private|static|final|abstract|synchronized|native|strictfp|default)(?:\s+|(?=<)))+(?:<[^{};]+>\s+)?(?:[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^{};]+>)?(?:\[\])*\s+)?|(?!(?:if|for|while|switch|return|throw|new|assert)\b)(?:<[^{};]+>\s+)?[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^{};]+>)?(?:\[\])*\s+)([A-Za-z_$][A-Za-z0-9_$]*)\s*(?=\()
+  exclude_names: []
+  source_globs:
+  - source/**/src/main/**/*.java
+  test_globs:
+  - source/**/src/test/**/*.java
+  surface_filter: all
+  visibility:
+    mode: deny
+    private:
+    - \bprivate\b
+    - \bprotected\b
+  exclude_path_patterns:
+  - (^|/)commontest/
+  - /src/main/resources/
+  api_inventory: inputs/api_inventory.json
+  api_inventory_sha256: 441e186c80096bfdbb74190497914863e7d25459b7a09ed54601b9fe51a74577
+  path: source
+  identity_mode: qualified
+  api_origin:
+    source_roots:
+    - source
+    library_namespaces:
+    - edu.ucr.cs.bdlab
+    - org.apache.spark.beast
+    external_namespaces:
+    - builtins
+    - math
+    - numpy
+    - scipy
+    - sklearn
+    - java
+    - javax
+    - org.apache.spark
+files:
+  project_profile: configs/project_profile.yaml
+  prompts_dir: /home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/java/prompts
+  original_readme: []
+  llm_readme: docs/LLM_readme.md
+  notes_to_self: docs/notes_to_self.md
+  error_log: logs/error_log.jsonl
+  original_doc_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json
+  original_doc_manifest_sha256: 0585c743a2e6e574cbc5b369b74a59bcd752a762ab88d81381a08520c175ecdd
+models:
+  registry:
+    selected:
+      provider: google
+      model: gemini-3.1-flash-lite
+      max_output_tokens: 8192
+  roles:
+    author: selected
+    audience: selected
+    fixer: selected
+runtime:
+  target: local
+  local: {}
+checks:
+  required_sections:
+  - Signature
+  - Goal
+  - Parameters
+  - Input
+  - Output
+  - Valid Call Patterns|Valid Access Patterns
+  - LLM Instruction Prompt
+  - Prompt Snippet
+  - Common Failure Modes
+  - Fix Code Hint
+  comprehension_apis_sampled: 5
+docfix:
+  allow_repo_called_members: true
+  allowed_member_categories:
+  - language_core
+  - java_core
+  member_categories:
+    language_core:
+    - println
+    - print
+    - require
+    - assert
+    - format
+    - mkString
+    - toString
+    - map
+    - flatMap
+    - filter
+    - foreach
+    - collect
+    - count
+    - take
+    - first
+    - reduce
+    - fold
+    - foldLeft
+    - sum
+    - min
+    - max
+    - size
+    - length
+    - nonEmpty
+    - isEmpty
+    - head
+    - headOption
+    - last
+    - getOrElse
+    - get
+    - exists
+    - forall
+    - contains
+    - indexOf
+    - sortBy
+    - sorted
+    - zip
+    - zipWithIndex
+    - toArray
+    - toList
+    - toSeq
+    - toSet
+    - toMap
+    - distinct
+    - sliding
+    - grouped
+    - apply
+    - update
+    - close
+    - cache
+    - persist
+    - coalesce
+    - repartition
+    - keys
+    - values
+    - trim
+    - split
+    - replace
+    - startsWith
+    - endsWith
+    - toDouble
+    - toInt
+    - toLong
+    - toFloat
+    - abs
+    - floor
+    - ceil
+    - round
+    - find
+    - getPath
+    - getName
+    - getClass
+    - asInstanceOf
+    - isInstanceOf
+    - mkdirs
+    - listFiles
+    - delete
+    - getConstructor
+    - newInstance
+    - getFileSystem
+    - resolve
+    - isNaN
+    - isInfinite
+    - isFinite
+    - toRadians
+    - toDegrees
+    - sqrt
+    - pow
+    - sin
+    - cos
+    - tan
+    - atan2
+    - fill
+    - range
+    - empty
+    - ofDim
+    java_core:
+    - of
+    - valueOf
+    - parse
+    - builder
+    - build
+    - create
+    - add
+    - addAll
+    - remove
+    - clear
+    - put
+    - putAll
+    - get
+    - set
+    - contains
+    - containsKey
+    - containsValue
+    - iterator
+    - stream
+    - collect
+    - map
+    - filter
+    - forEach
+    - size
+    - length
+    - isEmpty
+    - toArray
+    - toList
+    - toSet
+    - toMap
+    - orElse
+    - orElseGet
+    - getAsInt
+    - getAsLong
+    - getAsDouble
+    - close
+    - flush
+    - read
+    - write
+  allowed_members: []
+comprehension:
+  class_context: false
+  relevant_doc_chars: 40000
+  execute:
+    scaffold: inputs/api_test_scaffold.java
+    test_filename: ApiTest.java
+    region:
+    - // TODO API_TEST_START
+    - // TODO API_TEST_END
+    build: ''
+    build_cwd: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro
+    jars: ''
+    uberjar: ''
+    spark_jars: ''
+    packages: []
+    repositories: []
+    command: /home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_java.py
+      --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/runtime/rdpro-classpath.json
+      --work "{work}" --java-file "{test_file}"
+    local_uris: false
+    work_dir: execution
+    output_dir: execution/output
+    max_fix_rounds: 0
+    timeout_seconds: 600
+    require_correctness: true
+    check_marker: __CHECK__
+    success_marker: __DONE__
+    error_marker: __RUN_ERR__
+    stop_on_provider_error: true
+    auto_report: false
+    sample_data:
+      raster_tif: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures/nldas_boston_30m.tif
+      vector_shapefile: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp
+      hdf_file: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures/sample.hdf
+    fixtures_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures
+    preamble: 'EnvelopeNDLite envelope = new EnvelopeNDLite(2, 0.0, 0.0, 2.0, 3.0);
+
+      GeometryFactory geometryFactory = new GeometryFactory();
+
+      Point point = geometryFactory.createPoint(new Coordinate(1.0, 2.0));
+
+      RasterMetadata metadata = new RasterMetadata(0, 0, 4, 4, 2, 2, 4326, new AffineTransform());
+
+      JavaRDD<Integer> numbers = sc.parallelize(Arrays.asList(1, 2, 3), 1);
+
+      Files.createDirectories(Paths.get(output_dir));'
+    io_hints: ''
+    execution_context: Java17 with Spark3.5.1. Write Java statements only. The scaffold
+      provides JavaSparkContext sc, SparkSession spark, a tiny EnvelopeNDLite envelope,
+      JTS point/geometryFactory, 4x4 RasterMetadata metadata, and JavaRDD<Integer>
+      numbers. Local raster_tif, vector_shapefile, hdf_file paths are available. Assert
+      a stable result before printing __CHECK__.
+    exec_hints: Use Java syntax and public library APIs; fully qualify types missing
+      from imports. Throw AssertionError on an unexpected result. Use only tiny local
+      inputs and outputs under output_dir. No network or repository writes. Use the
+      selected target owner and declaration provided in the request.
+    probe_on_missing: false
+project:
+  name: "RDPro Raptor raster scope \u2014 Beast 0.10.1"
+  language: Java
+readme_generation:
+  distill_chunk_chars: 150000

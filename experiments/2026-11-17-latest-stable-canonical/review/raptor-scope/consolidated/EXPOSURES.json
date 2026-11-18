@@ -1,0 +1,578 @@
+{
+  "native_forwarding_forms": [
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.allMetadata",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.allMetadata",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:4893:method:allMetadata",
+      "retained_site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:14913:method:allMetadata",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 111,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "11bad739c88d6cb987d444a890bfb4855e45d5a2e588eeae77917ae1e491ce08",
+        "declaration": "def allMetadata: Array[RasterMetadata] = RasterMetadata.allMetadata(raster)"
+      },
+      "retained_source": {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+        "line": 337,
+        "sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+        "span_sha256": "d5a19c05b79deff45e9725fbc18fba9a7149b298c3812c42269142f2083e153c",
+        "declaration": "def allMetadata[T](raster: RDD[ITile[T]]): Array[RasterMetadata] =\n    // For efficiency, we assume that all metadata in each partition is the same\n    raster.mapPartitions(tiles => {\n        if (tiles.hasNext) {\n          Some(tiles.next().rasterMetadata).iterator\n        } else {\n          Option.empty[RasterMetadata].iterator\n        }\n      }).distinct()\n      .collect()"
+      },
+      "argument_mapping": {
+        "raster": "captured receiver raster"
+      },
+      "defaults_and_types": "No defaults",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.explode",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.explode",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:8597:method:explode",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala:3391:method:explode",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 181,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "83e90ead8ac632881d2daad482ef91836f06876a3a92284e9cea44a253f75efb",
+        "declaration": "def explode: RasterRDD[T] = RasterOperationsLocal.explode(raster)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+        "line": 76,
+        "sha256": "67163c7a7773b469b0cfb27a8de0064f8e411ce3b2b4001acd6944db0b99e7f8",
+        "span_sha256": "c27bbef6bec342cea7df6da4637ec90c327291e4f6b511e6005e6c0a370bd6d0",
+        "declaration": "def explode[T](inputRaster: RasterRDD[T]): RasterRDD[T] = inputRaster.map(tile => new ExplodedTile(tile))"
+      },
+      "argument_mapping": {
+        "inputRaster": "captured receiver raster"
+      },
+      "defaults_and_types": "No defaults",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.filterPixels",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.filterPixels",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:5797:method:filterPixels",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala:1890:method:filterPixels",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 128,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "c4c84fa5b28bd718118cc652bea6af0a33f6feb9a61100ba4c96de57bedcdbad",
+        "declaration": "def filterPixels(f: T => Boolean)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsLocal.filterPixels(raster, f)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+        "line": 48,
+        "sha256": "67163c7a7773b469b0cfb27a8de0064f8e411ce3b2b4001acd6944db0b99e7f8",
+        "span_sha256": "d4ff9cb4a95d55b7abe51bf3f9bc84bc7db65a687bbceb0a1c0e06275897c200",
+        "declaration": "def filterPixels[T: ClassTag](inputRaster: RasterRDD[T], filter: T => Boolean): RasterRDD[T] =\n    inputRaster.map(inputTile => new FilterTile(inputTile, filter))"
+      },
+      "argument_mapping": {
+        "inputRaster": "captured receiver raster",
+        "filter": "f"
+      },
+      "defaults_and_types": "No defaults; implicit ClassTag[T] forwarded by Scala typing",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.flatten",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.flatten",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:8367:method:flatten",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala:2604:method:flatten",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 175,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "4650578fcb514268d48faa64ba414cce036b7b095eeb8728f282c8a22c3aa18a",
+        "declaration": "def flatten: RDD[(Int, Int, RasterMetadata, T)] = RasterOperationsGlobal.flatten(raster)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+        "line": 69,
+        "sha256": "acf14983bf3a74ca925b51c04de6900963da61c653fc9f38c989929c9b9a2e0f",
+        "span_sha256": "45acaa67936289d72747a744f2b902d8c1a10a60411f17af191b6797f7b499ea",
+        "declaration": "def flatten[T](raster: RasterRDD[T]): RDD[(Int, Int, RasterMetadata, T)] = {\n    raster.flatMap(tile => {\n      for (y <- tile.y1 to tile.y2 iterator; x <- tile.x1 to tile.x2 iterator; if tile.isDefined(x, y))\n        yield (x, y, tile.rasterMetadata, tile.getPixelValue(x, y))\n    })\n  }"
+      },
+      "argument_mapping": {
+        "raster": "captured receiver raster"
+      },
+      "defaults_and_types": "No defaults",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.mapPixels",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.mapPixels",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:5274:method:mapPixels",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala:1350:method:mapPixels",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 119,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "047f7e25d7d003accdda64271d911422bcc55311af6b701b31cf6ed81d11fe4c",
+        "declaration": "def mapPixels[U: ClassTag](f: T => U)(implicit t: ClassTag[T]): RasterRDD[U] =\n      RasterOperationsLocal.mapPixels(raster, f)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+        "line": 38,
+        "sha256": "67163c7a7773b469b0cfb27a8de0064f8e411ce3b2b4001acd6944db0b99e7f8",
+        "span_sha256": "d55eba6fa81157d4e2812b43b2234fa6bae075d14bfae0edd9f38805e87440fa",
+        "declaration": "def mapPixels[T: ClassTag, U: ClassTag](inputRaster: RasterRDD[T], f: T => U): RasterRDD[U] =\n    inputRaster.map(inputTile => new MapPixelsTile(inputTile, f))"
+      },
+      "argument_mapping": {
+        "inputRaster": "captured receiver raster",
+        "f": "f"
+      },
+      "defaults_and_types": "No defaults; ClassTag[T] and ClassTag[U] forwarded by Scala typing",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.raptorJoin",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeature",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:3853:method:raptorJoin",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:3546:method:raptorJoinFeature",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 87,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "81d1fa32bbcbba7b4f1ec1848b80f503217016c8cfe97a32bc4acd5c03ab71dd",
+        "declaration": "def raptorJoin(features: SpatialRDD, opts: BeastOptions = new BeastOptions)(implicit t: ClassTag[T]):\n      RDD[RaptorJoinFeature[T]] =\n      RaptorJoin.raptorJoinFeature[T](raster, features, opts, null)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+        "line": 73,
+        "sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+        "span_sha256": "7fe838a220f76a54d11231d18a13d2190cee766e2958f1125fe426a9226336a4",
+        "declaration": "def raptorJoinFeature[T](raster: RasterRDD[T], features: RDD[IFeature], opts: BeastOptions = new BeastOptions(),\n                           numTiles: LongAccumulator = null): RDD[RaptorJoinFeature[T]] = {\n    val featureIDs: RDD[(Long, IFeature)] = features.zipWithUniqueId().map(x => (x._2, x._1))\n    val joinResults = raptorJoinIDFull[T](raster, featureIDs, opts, numTiles)\n      .map(x => (x.featureID, x))\n    val partitioner = new HashPartitioner(joinResults.getNumPartitions max featureIDs.getNumPartitions max featureIDs.sparkContext.defaultParallelism)\n    featureIDs.partitionBy(partitioner)\n      .zipPartitions(joinResults.partitionBy(partitioner))((fs, rjs) => {\n      val fsMap = fs.toMap\n      rjs.map(rj => {\n        RaptorJoinFeature(fsMap(rj._1), rj._2.rasterMetadata, rj._2.x, rj._2.y, rj._2.m)\n      })\n    })\n  }"
+      },
+      "argument_mapping": {
+        "raster": "captured receiver raster",
+        "features": "features",
+        "opts": "opts",
+        "numTiles": "null"
+      },
+      "defaults_and_types": "Wrapper default opts=new BeastOptions; callee also defaults opts to a new BeastOptions and numTiles to null. Explicit opts object is forwarded unchanged.",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.reproject",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.reproject",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:7199:method:reproject",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:29596:method:reproject",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 155,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "da87d04ea51498d020517dbf9f946b034ce540b10ccbb417fd59f70d10b1735d",
+        "declaration": "def reproject(targetCRS: CoordinateReferenceSystem, unifiedRaster: Boolean = false,\n                  interpolationMethod: InterpolationMethod.InterpolationMethod =\n        InterpolationMethod.NearestNeighbor)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.reproject(raster, targetCRS, unifiedRaster, interpolationMethod)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+        "line": 517,
+        "sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+        "span_sha256": "12da5f6370af9dc4134518491a3df6fc6387228c87a89d7fe13f57a52741ff84",
+        "declaration": "def reproject[T: ClassTag](raster: RasterRDD[T], targetCRS: CoordinateReferenceSystem, unifiedRaster: Boolean = false,\n                             interpolationMethod: InterpolationMethod.InterpolationMethod =\n                             InterpolationMethod.NearestNeighbor): RasterRDD[T] = {\n    val targetMetadata: RasterMetadata => RasterMetadata = if (!unifiedRaster) {\n      _.reproject(targetCRS)\n    } else {\n      val unifiedMetadata = RasterMetadata.reproject(RasterMetadata.allMetadata(raster), targetCRS)\n      logInfo(s\"Reprojecting with unified metadata ${unifiedMetadata}\")\n      _ => unifiedMetadata\n    }\n    interpolationMethod match {\n      case InterpolationMethod.Average => reshapeAverage(raster, targetMetadata)\n      case InterpolationMethod.NearestNeighbor => reshapeNN(raster, targetMetadata)\n    }\n  }"
+      },
+      "argument_mapping": {
+        "raster": "captured receiver raster",
+        "targetCRS": "targetCRS",
+        "unifiedRaster": "unifiedRaster",
+        "interpolationMethod": "interpolationMethod"
+      },
+      "defaults_and_types": "Both selected declarations default unifiedRaster=false and interpolationMethod=NearestNeighbor; implicit ClassTag[T] forwarded.",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.rescale",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.rescale",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:7882:method:rescale",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:30988:method:rescale",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 166,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "e951f14e5e36f00432c296dd3485c171fd824b73a77f3ef87852bb2095db20ab",
+        "declaration": "def rescale(rasterWidth: Int, rasterHeight: Int, unifiedRaster: Boolean = false,\n                interpolationMethod: InterpolationMethod.InterpolationMethod =\n        InterpolationMethod.NearestNeighbor)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.rescale(raster, rasterWidth, rasterHeight, unifiedRaster, interpolationMethod)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+        "line": 542,
+        "sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+        "span_sha256": "899388811da67f3f00b572212bc2f4b31135dd6ed448c9fcd546c4b024607dab",
+        "declaration": "def rescale[T: ClassTag](raster: RasterRDD[T], rasterWidth: Int, rasterHeight: Int, unifiedRaster: Boolean = false,\n                           interpolationMethod: InterpolationMethod.InterpolationMethod =\n                           InterpolationMethod.NearestNeighbor): RasterRDD[T] = {\n    val targetMetadata: RasterMetadata => RasterMetadata = if (!unifiedRaster) {\n      _.rescale(rasterWidth, rasterHeight)\n    } else {\n      val unifiedMetadata = RasterMetadata.rescale(RasterMetadata.allMetadata(raster), rasterWidth, rasterHeight)\n      logInfo(s\"Rescaling with unified metadata ${unifiedMetadata}\")\n      _ =>  unifiedMetadata\n    }\n    interpolationMethod match {\n      case InterpolationMethod.Average => reshapeAverage(raster, targetMetadata)\n      case InterpolationMethod.NearestNeighbor => reshapeNN(raster, targetMetadata)\n    }\n  }"
+      },
+      "argument_mapping": {
+        "raster": "captured receiver raster",
+        "rasterWidth": "rasterWidth",
+        "rasterHeight": "rasterHeight",
+        "unifiedRaster": "unifiedRaster",
+        "interpolationMethod": "interpolationMethod"
+      },
+      "defaults_and_types": "Both selected declarations default unifiedRaster=false and interpolationMethod=NearestNeighbor; implicit ClassTag[T] forwarded.",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.retile",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.retile",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:6186:method:retile",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:32183:method:retile",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 137,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "baa18553cdd2b8d69f7a0fea022304cc0b02962d5cc64427d8d15453ea01e7fc",
+        "declaration": "def retile(tileWidth: Int, tileHeight: Int)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.retile(raster, tileWidth, tileHeight)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+        "line": 566,
+        "sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+        "span_sha256": "a5fbd470cc757c15469ee775951b4cc87fd73869b757103bc7f880a0c37de88f",
+        "declaration": "def retile[T: ClassTag](raster: RasterRDD[T], tileWidth: Int, tileHeight: Int): RasterRDD[T] = {\n    // Notice that for retile, there is a one-to-one correspondence in pixels so we use the more efficient NN method\n    reshapeNN(raster, _.retile(tileWidth, tileHeight))\n  }"
+      },
+      "argument_mapping": {
+        "raster": "captured receiver raster",
+        "tileWidth": "tileWidth",
+        "tileHeight": "tileHeight"
+      },
+      "defaults_and_types": "No defaults; implicit ClassTag[T] forwarded.",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.saveAsGeoTiff",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.saveAsGeoTiff",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:4662:method:saveAsGeoTiff",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala:23125:method:saveAsGeoTiff",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 104,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "0bc23ddcedf32458ba2e8581fbad4eb03f7f083156fa67ab8dd1d8ee88c5e0eb",
+        "declaration": "def saveAsGeoTiff(path: String, opts: BeastOptions = new BeastOptions): Unit =\n      GeoTiffWriter.saveAsGeoTiff[T](raster, path, opts)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+        "line": 476,
+        "sha256": "4e7f75f555a553a4fe0b18a19c19d6505c2fec21beb20a0b3170ae26c89d4162",
+        "span_sha256": "9c250ba55d20ffd9d06b19e44732c04538961d9e5eb70401a69a619512d05537",
+        "declaration": "def saveAsGeoTiff[T](rasterRDD: RDD[ITile[T]], outPath: String, opts: BeastOptions): Unit = {\n    def maxArrayB(a: Array[Byte], b: Array[Byte]): Array[Byte] = {\n      for (i <- a.indices)\n        a(i) = a(i) max b(i)\n      a\n    }\n    def maxArrayS(a: Array[Short], b: Array[Short]): Array[Short] = {\n      for (i <- a.indices)\n        a(i) = a(i) max b(i)\n      a\n    }\n    def maxArrayI(a: Array[Int], b: Array[Int]): Array[Int] = {\n      for (i <- a.indices)\n        a(i) = a(i) max b(i)\n      a\n    }\n    def maxArrayL(a: Array[Long], b: Array[Long]): Array[Long] = {\n      for (i <- a.indices)\n        a(i) = a(i) max b(i)\n      a\n    }\n    if (!opts.contains(BitsPerSample) && opts.getBoolean(CompactBits, false)) {\n      // Automatically compute bits per sample based on the maximum value\n      val pixelType = rasterRDD.first().pixelType\n      val measures = RasterOperationsGlobal.flatten(rasterRDD)\n      val max: Array[Long] = pixelType match {\n        case ByteType =>\n          Array(measures.map(_._4.asInstanceOf[Byte]).reduce(_ max _))\n        case ShortType =>\n          Array(measures.map(_._4.asInstanceOf[Short]).reduce(_ max _))\n        case IntegerType =>\n          Array(measures.map(_._4.asInstanceOf[Int]).reduce(_ max _))\n        case LongType =>\n          Array(measures.map(_._4.asInstanceOf[Long]).reduce(_ max _))\n        case ArrayType(ByteType, _) =>\n          measures.map(_._4.asInstanceOf[Array[Byte]]).reduce(maxArrayB).map(_.toLong)\n        case ArrayType(ShortType, _) =>\n          measures.map(_._4.asInstanceOf[Array[Short]]).reduce(maxArrayS).map(_.toLong)\n        case ArrayType(IntegerType, _) =>\n          measures.map(_._4.asInstanceOf[Array[Int]]).reduce(maxArrayI).map(_.toLong)\n        case ArrayType(LongType, _) =>\n          measures.map(_._4.asInstanceOf[Array[Long]]).reduce(maxArrayL).map(_.toLong)\n        case _ => null // Float types will not need a maximum value\n      }\n      if (max != null) {\n        val bitsPerSample = max.map(x => MathUtil.log2(x + 1))\n        opts.set(BitsPerSample, bitsPerSample.mkString(\",\"))\n        opts.set(FillValue, max.max + 1)\n      }\n    }\n    opts.getString(WriteMode, \"distributed\") match {\n      case \"distributed\" => saveAsGeoTiffDistributedMode(rasterRDD, outPath, opts)\n      case \"compatibility\" => saveAsGeoTiffCompatibilityMode(rasterRDD, outPath, opts)\n    }\n  }"
+      },
+      "argument_mapping": {
+        "rasterRDD": "captured receiver raster",
+        "outPath": "path",
+        "opts": "opts"
+      },
+      "defaults_and_types": "Wrapper default opts=new BeastOptions is passed as the explicit callee argument; callee has no competing opts default.",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePixels",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePixels",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:2318:method:rasterizePixels",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala:1200:method:rasterizePixels",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 58,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "b76ad4c84309a2471c728c55720c672edc18253a7c4b16113c1b875c001d4bed",
+        "declaration": "def rasterizePixels[T: ClassTag](pixels: RDD[(Int, Int, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] =\n      RasterOperationsGlobal.rasterizePixels(pixels, metadata, rasterFeature)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+        "line": 35,
+        "sha256": "acf14983bf3a74ca925b51c04de6900963da61c653fc9f38c989929c9b9a2e0f",
+        "span_sha256": "8e71c070d0efefe0818ea185d5c1df9b8d1953ca430436cc2bc238ca70e3eb5d",
+        "declaration": "def rasterizePixels[T: ClassTag](pixels: RDD[(Int, Int, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] = {\n    val pixelsAssignedToTiles: RDD[(Int, (Int, Int, T))] = pixels.map(p => {\n      val tileID = metadata.getTileIDAtPixel(p._1, p._2)\n      (tileID, p)\n    })\n    pixelsAssignedToTiles.groupByKey().map(t => {\n      val tile = new MemoryTile[T](t._1, metadata, rasterFeature)\n      for (p <- t._2)\n        tile.setPixelValue(p._1, p._2, p._3)\n      tile\n    })\n  }"
+      },
+      "argument_mapping": {
+        "pixels": "pixels",
+        "metadata": "metadata",
+        "rasterFeature": "rasterFeature"
+      },
+      "defaults_and_types": "No defaults; implicit ClassTag[T] forwarded.",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePoints",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePoints",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:2850:method:rasterizePoints",
+      "retained_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala:2004:method:rasterizePoints",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 68,
+        "sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "a133318ec3d66a4d03a8c65fed195c4b293a3fad30ce90598f7ffb8571e17c2a",
+        "declaration": "def rasterizePoints[T: ClassTag](points: RDD[(Double, Double, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] =\n      RasterOperationsGlobal.rasterizePoints(points, metadata, rasterFeature)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+        "line": 55,
+        "sha256": "acf14983bf3a74ca925b51c04de6900963da61c653fc9f38c989929c9b9a2e0f",
+        "span_sha256": "2b2ce8fc69c5d88a91dcb4868470f1dbadabc773a96f1a7cc5e4dd71cd4e246e",
+        "declaration": "def rasterizePoints[T: ClassTag](points: RDD[(Double, Double, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] = {\n    rasterizePixels(points.map(p => {\n      val geolocation = Array(p._1, p._2)\n      metadata.g2m.inverseTransform(geolocation, 0, geolocation, 0, 1)\n      (geolocation(0).toInt, geolocation(1).toInt, p._3)\n    }), metadata, rasterFeature)\n  }"
+      },
+      "argument_mapping": {
+        "points": "points",
+        "metadata": "metadata",
+        "rasterFeature": "rasterFeature"
+      },
+      "defaults_and_types": "No defaults; implicit ClassTag[T] forwarded.",
+      "checked_properties": [
+        "single complete expression equals exact named callee invocation",
+        "unique source candidate for target API; no overload ambiguity",
+        "target is retained inside scoped bank",
+        "no wrapper guard, side effect, return conversion or exception handler",
+        "source file and declaration spans match frozen hashes"
+      ],
+      "equivalence_scope": "Same callee result/error for the mapped arguments on a valid wrapper receiver; documentation keeps the convenient calling form. This is source-level forwarding consolidation, not an independent behavioral test."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.x1",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileX1",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:647:method:x1",
+      "retained_site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:4258:method:getTileX1",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+        "line": 14,
+        "sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+        "span_sha256": "e4eef265a2f4451e419fba80827c82788f6704121670a0943dda1e025c0ea89a",
+        "declaration": "def x1: Int = metadata.getTileX1(tileID)"
+      },
+      "retained_source": {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+        "line": 107,
+        "sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+        "span_sha256": "41b28950e61ba8030510bc520b24270b7bde2b01ad8dba47b994a6e745a871f7",
+        "declaration": "def getTileX1(tileID: Int): Int = {\n    val iTile = tileID % numTilesX\n    x1 + iTile * tileWidth\n  }"
+      },
+      "argument_mapping": {
+        "receiver": "captured metadata: RasterMetadata",
+        "tileID": "captured val tileID: Int"
+      },
+      "defaults_and_types": "No defaults or conversion; receiver and argument types declared in SlidingWindowTile constructor.",
+      "checked_properties": [
+        "single exact bound-receiver call",
+        "unique source candidate for target API",
+        "target retained inside scoped bank",
+        "source file and declaration span hashes match",
+        "no extra method computation, guard, mutation or exception handler"
+      ],
+      "equivalence_scope": "For an already valid SlidingWindowTile instance, getter is exactly the retained metadata operation on captured values. Constructor validation and window behavior remain distinct targets; no constructor equivalence claimed."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.x2",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileX2",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:733:method:x2",
+      "retained_site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:4606:method:getTileX2",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+        "line": 16,
+        "sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+        "span_sha256": "633fec2c59affbe4c6918726d4f2c3f740f896cb3b9091fa48b9e830627d3475",
+        "declaration": "def x2: Int = metadata.getTileX2(tileID)"
+      },
+      "retained_source": {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+        "line": 118,
+        "sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+        "span_sha256": "d862d291f894915299a0a5bb2ed9f65fcf868698f4233327539ed5460ca4dec8",
+        "declaration": "def getTileX2(tileID: Int): Int = {\n    val iTile = tileID % numTilesX\n    (x1 + (iTile + 1) * tileWidth - 1) min (x2 - 1)\n  }"
+      },
+      "argument_mapping": {
+        "receiver": "captured metadata: RasterMetadata",
+        "tileID": "captured val tileID: Int"
+      },
+      "defaults_and_types": "No defaults or conversion; receiver and argument types declared in SlidingWindowTile constructor.",
+      "checked_properties": [
+        "single exact bound-receiver call",
+        "unique source candidate for target API",
+        "target retained inside scoped bank",
+        "source file and declaration span hashes match",
+        "no extra method computation, guard, mutation or exception handler"
+      ],
+      "equivalence_scope": "For an already valid SlidingWindowTile instance, getter is exactly the retained metadata operation on captured values. Constructor validation and window behavior remain distinct targets; no constructor equivalence claimed."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.y1",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileY1",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:690:method:y1",
+      "retained_site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:4877:method:getTileY1",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+        "line": 15,
+        "sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+        "span_sha256": "48f820c68c91f8c470ae3074447df6b8e3cb09f2ae792f38e57ce17ddd9cd9ea",
+        "declaration": "def y1: Int = metadata.getTileY1(tileID)"
+      },
+      "retained_source": {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+        "line": 128,
+        "sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+        "span_sha256": "485fb9e54a48d5d714fb02181c1bf0527a6e1c0c2fd57fd542643c95f1aeb98e",
+        "declaration": "def getTileY1(tileID: Int): Int = {\n    val iTile = tileID / numTilesX\n    y1 + iTile * tileHeight\n  }"
+      },
+      "argument_mapping": {
+        "receiver": "captured metadata: RasterMetadata",
+        "tileID": "captured val tileID: Int"
+      },
+      "defaults_and_types": "No defaults or conversion; receiver and argument types declared in SlidingWindowTile constructor.",
+      "checked_properties": [
+        "single exact bound-receiver call",
+        "unique source candidate for target API",
+        "target retained inside scoped bank",
+        "source file and declaration span hashes match",
+        "no extra method computation, guard, mutation or exception handler"
+      ],
+      "equivalence_scope": "For an already valid SlidingWindowTile instance, getter is exactly the retained metadata operation on captured values. Constructor validation and window behavior remain distinct targets; no constructor equivalence claimed."
+    },
+    {
+      "removed_api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.y2",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileY2",
+      "removed_site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:776:method:y2",
+      "retained_site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:5225:method:getTileY2",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+        "line": 17,
+        "sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+        "span_sha256": "2a6030e7d3e030b7f7d1b47c6bb0f97b88a2fc8b911bef59d21bce91bb66ea2a",
+        "declaration": "def y2: Int = metadata.getTileY2(tileID)"
+      },
+      "retained_source": {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+        "line": 139,
+        "sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+        "span_sha256": "147b325d482cd12c895fe181a9de92d6910769673a031fe2066d9c8dbcd39378",
+        "declaration": "def getTileY2(tileID: Int): Int = {\n    val iTile = tileID / numTilesX\n    (y1 + (iTile + 1) * tileHeight - 1) min (y2 - 1)\n  }"
+      },
+      "argument_mapping": {
+        "receiver": "captured metadata: RasterMetadata",
+        "tileID": "captured val tileID: Int"
+      },
+      "defaults_and_types": "No defaults or conversion; receiver and argument types declared in SlidingWindowTile constructor.",
+      "checked_properties": [
+        "single exact bound-receiver call",
+        "unique source candidate for target API",
+        "target retained inside scoped bank",
+        "source file and declaration span hashes match",
+        "no extra method computation, guard, mutation or exception handler"
+      ],
+      "equivalence_scope": "For an already valid SlidingWindowTile instance, getter is exactly the retained metadata operation on captured values. Constructor validation and window behavior remain distinct targets; no constructor equivalence claimed."
+    }
+  ],
+  "java_facades_outside_scope": [
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.raptorJoin",
+      "path": "beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialRDDHelper.scala",
+      "line": 269,
+      "declaration": "def raptorJoin[T](vectors: JavaSpatialRDD, rasters: JavaRasterRDD[T], opts: BeastOptions):\n    JavaRDD[RaptorJoinFeature[T]] = RaptorJoin.raptorJoinFeatureJ(rasters, vectors, opts)",
+      "source_span_sha256": "73f528cede54cce9d47a3741ceeb6c216cc40b0e523e915f8a073d3db222b6c4",
+      "relation": "JavaRDD adapter or forwarding facade",
+      "target_api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeatureJ"
+      ],
+      "recommended_action": "Record as alternate calling form; do not add an independent operation solely because it lives outside raptor."
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.geoTiff",
+      "path": "beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialSparkContext.scala",
+      "line": 119,
+      "declaration": "def geoTiff[T](filename: String, layer: Int, opts: BeastOptions): JavaRasterRDD[T] =\n    JavaRDD.fromRDD(sc.geoTiff(filename, layer, opts))",
+      "source_span_sha256": "e1a94bfd2516e382135991aabea7af2cf7b7b1b4a169e1b21e0f8805335edb98",
+      "relation": "JavaRDD adapter or forwarding facade",
+      "target_api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.geoTiff"
+      ],
+      "recommended_action": "Record as alternate calling form; do not add an independent operation solely because it lives outside raptor."
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.hdfFile",
+      "path": "beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialSparkContext.scala",
+      "line": 109,
+      "declaration": "def hdfFile(filename: String, layer: String): JavaRasterRDD[Float] =\n    JavaRDD.fromRDD(sc.hdfFile(filename, layer))",
+      "source_span_sha256": "46c1f1183d254c6adeda1517e74790818f5bd15c0e85954d76d3334e9b003e52",
+      "relation": "JavaRDD adapter or forwarding facade",
+      "target_api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.hdfFile"
+      ],
+      "recommended_action": "Record as alternate calling form; do not add an independent operation solely because it lives outside raptor."
+    }
+  ]
+}

@@ -1,0 +1,707 @@
+{
+  "schema": "source_bound_selection_exclusions/v1",
+  "review_version": "rdpro-raptor-no-wrappers-2026-11-17",
+  "source_inventory_sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699",
+  "records": [
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/CompactIntersections.java:1271:method:getNumIntersections",
+      "source_span_sha256": "d926ce585a0827890ba48f50104c626782c60b8cf23365e3cb61b44aa36b2a73",
+      "source_sha256": "8f052f7668b15443cb1bab24370bc8ce0d5a9a63c2bdf17fcf5cadd24115df01",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/CompactIntersections.java:1335:method:iterator",
+      "source_span_sha256": "020f81c5dc46a362ebfab91d7b75f3617a741f3e95e83e10be3ed6c45d8b211d",
+      "source_sha256": "8f052f7668b15443cb1bab24370bc8ce0d5a9a63c2bdf17fcf5cadd24115df01",
+      "reason": "wrapper",
+      "evidence": "Only constructs and returns the Iter implementation."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffException.java:1985:method:getModelTransformation",
+      "source_span_sha256": "94d2f54646072d6e9618839c8c7a38a1498cb9465ac4ca9b306dc290a10dd4cf",
+      "source_sha256": "a0ddb236e08622bb36b75765e54d72d06c230159689e9708f9989ee21f308c79",
+      "reason": "wrapper",
+      "evidence": "Null-guarded forwarding to metadata.getModelTransformation; no raster computation."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffException.java:2240:method:getGeoKeys",
+      "source_span_sha256": "35098e77eb073e75f3a927e516476867e7fe9af9aa47c02c5d247236b5c9596f",
+      "source_sha256": "a0ddb236e08622bb36b75765e54d72d06c230159689e9708f9989ee21f308c79",
+      "reason": "wrapper",
+      "evidence": "Null-guarded delegation to metadata.getGeoKeys followed by Collection-to-array conversion."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:12056:method:getGeoKeys",
+      "source_span_sha256": "1373ed170eb191006eab39dbcc76fd83b69aa178baf037816ea9285dbacccabb",
+      "source_sha256": "40bd1e93013212159d64d443a88132a3b4d3c05da8483fec958557f117f999e1",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java:9462:method:getGeoKeyRecord",
+      "source_span_sha256": "35ff41f5407b17fac8d9260624eac0d242b79d30ef812ce78372f709db733ef3",
+      "source_sha256": "40bd1e93013212159d64d443a88132a3b4d3c05da8483fec958557f117f999e1",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Intersections.java:25251:method:iterator",
+      "source_span_sha256": "33df01f0eadabd12c719618af2b55338c7a8cef49ac64d3ad0c83073a6503e26",
+      "source_sha256": "7a5b044b8834435343792e143dc6febf13f9374b1b5279f5941b4f86511a7858",
+      "reason": "wrapper",
+      "evidence": "Only constructs and returns PixelRangeIterator."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Intersections.java:4570:method:compute",
+      "source_span_sha256": "922439a95c9d2677fd26424cf900de8841756a14dbe99fb4099e4b8512c4028b",
+      "source_sha256": "7a5b044b8834435343792e143dc6febf13f9374b1b5279f5941b4f86511a7858",
+      "reason": "wrapper",
+      "evidence": "Lower-arity convenience overload generates sequential IDs and delegates to the core intersections implementation."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Intersections.java:4820:method:compute",
+      "source_span_sha256": "84fcb7e71ab51237bde56c8cb498dffa997bbe75a0be003d55b25351247c38fa",
+      "source_sha256": "7a5b044b8834435343792e143dc6febf13f9374b1b5279f5941b4f86511a7858",
+      "reason": "wrapper",
+      "evidence": "Selected ArrayList<Long> overload copies IDs to long[] then calls compute; the equal-arity core overload is selected after this exclusion."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/TiePoint.java:1358:method:getData",
+      "source_span_sha256": "eca293a2ae5ed211e9d26e4179dabc200b3441c1e55ddf03bbfce2767478678c",
+      "source_sha256": "d232364d5709163014757139b3e496a828e81d2600b04919705ee97772456bbf",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Java:raptor/src/main/java/edu/ucr/cs/bdlab/raptor/TiePoint.java:1965:method:hashCode",
+      "source_span_sha256": "9c1cc87e71b7d38d978a147c845d4855dd4105886895de84c1f34ecac0e0f03d",
+      "source_sha256": "d232364d5709163014757139b3e496a828e81d2600b04919705ee97772456bbf",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:1495:constructor:<init>",
+      "source_span_sha256": "a33d76b577f6cabd533c4a7f1ccfaff7b9647fa9ca3f8e2aeb5b5f53e685a4ed",
+      "source_sha256": "b9d1248a25e3e84778897f1e7c7af5fa048b04683f9817fafc2390d904f630e7",
+      "reason": "abstract_type",
+      "evidence": "Enclosing source declaration is abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature); retain this abstract type as documentation/context, not an independently executable constructor target."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala:6214:method:length",
+      "source_span_sha256": "b6bcdd715d1a3aad384852ecc8a4d213be6c32202cd78dc026cf62ae279f299d",
+      "source_sha256": "b9d1248a25e3e84778897f1e7c7af5fa048b04683f9817fafc2390d904f630e7",
+      "reason": "wrapper",
+      "evidence": "Returns schema.length; delegates to the schema representation."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeature.scala:1780:method:create",
+      "source_span_sha256": "97c67499594c640b4686cce2a3b18e72729cb4e52c15b4cdd95c9ac7783f553a",
+      "source_sha256": "39114b175f23a8ed20b03b94bc6f7d7e4809e4fa8eeb6f74087c58a54f84d70b",
+      "reason": "wrapper",
+      "evidence": "Constructs RasterFeature by combining values with existing RasterSchemaHelper.inferSchema."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeature.scala:1931:method:createEmpty",
+      "source_span_sha256": "6b9ad7f16cee865e5d80e42b8033b64cf220dc2f5b45318383cdc924e75bb62c",
+      "source_sha256": "39114b175f23a8ed20b03b94bc6f7d7e4809e4fa8eeb6f74087c58a54f84d70b",
+      "reason": "wrapper",
+      "evidence": "Constructs RasterFeature with fixed empty defaults and the existing schema inference operation."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:12448:method:retile",
+      "source_span_sha256": "fcb89b56f5cd5ca287477469e230d8721e3c71d650dcce55db5da1da5a8ff2de",
+      "source_sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+      "reason": "wrapper",
+      "evidence": "Constructs RasterMetadata with unchanged bounds/transform and replacement tile dimensions; no independent grid algorithm."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala:3396:method:write",
+      "source_span_sha256": "28dd22567e45e6ddb84661840b4fd983fb824b34952d18a241d24875e1cc9c33",
+      "source_sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala:3524:method:readIn",
+      "source_span_sha256": "4dd43d1daeac8f05370b597c0a3916c797b09b48356cc700f14fd4edffc160b7",
+      "source_sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala:3626:method:writeExternal",
+      "source_span_sha256": "a2c0faabdaa9788c77e838ab6e1a1f514ac71a106724634cb62786dbc653597a",
+      "source_sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala:3687:method:readExternal",
+      "source_span_sha256": "90eb73b19195d5f40110ab38b633801f2725b81d4b014c31328d8339ae16e6cc",
+      "source_sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala:3745:method:write",
+      "source_span_sha256": "8d87512b14cd0a71a4a58b70a45961f378a2cedda28696c33f5396921892e937",
+      "source_sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala:3807:method:read",
+      "source_span_sha256": "198980c2527d842566c26c28d2fbce581359da526e4a62f9b2aeeade9e8db6c4",
+      "source_sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/AbstractGeoTiffTile.scala:1293:constructor:<init>",
+      "source_span_sha256": "72014975bbbf4a3d325ddd03aca0ab9e6ec54157374a06a7a502b947b0212336",
+      "source_sha256": "02d5b10ab79b6a88ed1f35012ff79ed91c19ec8bcdf3aea148508df0350fce3b",
+      "reason": "abstract_type",
+      "evidence": "Enclosing source declaration is abstract class AbstractGeoTiffTile[T](tileID: Int, private[raptor] val tiffTile: AbstractTiffTile,; retain this abstract type as documentation/context, not an independently executable constructor target."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/AbstractGeoTiffTile.scala:2089:method:numComponents",
+      "source_span_sha256": "c992cea855fcbc50284cb7655d15c854ff6dd22cf5c7012be99a3e46551e9fad",
+      "source_sha256": "02d5b10ab79b6a88ed1f35012ff79ed91c19ec8bcdf3aea148508df0350fce3b",
+      "reason": "wrapper",
+      "evidence": "Returns tiffTile.getNumSamples; a parameterless forwarder missed by the earlier syntax labels."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala:6436:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "df44481bb8c21e07af59d0670b75d081ad20df25897a8e3b21d63f704980d106",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala:8090:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "df44481bb8c21e07af59d0670b75d081ad20df25897a8e3b21d63f704980d106",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala:842:constructor:<init>",
+      "source_span_sha256": "e6153090d05b424fb9fd002a141fdd9ba2cf6ba4487120dfd05fa8f249eff7ae",
+      "source_sha256": "df44481bb8c21e07af59d0670b75d081ad20df25897a8e3b21d63f704980d106",
+      "reason": "abstract_type",
+      "evidence": "Enclosing source declaration is abstract class AbstractConvolutionTile[T](tileID: Int, metadata: RasterMetadata, rasterFeature: RasterFeature,; retain this abstract type as documentation/context, not an independently executable constructor target."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/EmptyTile.scala:1049:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "91941dc383f41e529d2d6a016f0b2419e1ca1af4f472feda4a36f5ef1ef94127",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ExplodedTile.scala:1436:method:numComponents",
+      "source_span_sha256": "45c95a49809b0d8868e6f76308727b1a75fdfec577b38d22dcf2e7a7277ddd3b",
+      "source_sha256": "2eb946ffe8f369e9dd0939c7be9386273ed8766888c9fb3c9db1ee6acfff9622",
+      "reason": "wrapper",
+      "evidence": "Returns the wrapped tile.numComponents without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ExplodedTile.scala:1492:method:componentType",
+      "source_span_sha256": "8737a45c4bbd28e096d0f7cab5dc2019157f05aafd8c34d7232a4aceafbdc221",
+      "source_sha256": "2eb946ffe8f369e9dd0939c7be9386273ed8766888c9fb3c9db1ee6acfff9622",
+      "reason": "wrapper",
+      "evidence": "Returns the wrapped tile.componentType without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ExplodedTile.scala:1553:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "2eb946ffe8f369e9dd0939c7be9386273ed8766888c9fb3c9db1ee6acfff9622",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala:1114:method:getPixelValue",
+      "source_span_sha256": "c34b72d4efe9931cf6cf046f82182dbaec5a84b2954172758d151e9b2e08095a",
+      "source_sha256": "7a23974082108ab8fa1783b92041f44a6faab5d8ef76bd0e335c62124b84e812",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala:1307:method:numComponents",
+      "source_span_sha256": "45c95a49809b0d8868e6f76308727b1a75fdfec577b38d22dcf2e7a7277ddd3b",
+      "source_sha256": "7a23974082108ab8fa1783b92041f44a6faab5d8ef76bd0e335c62124b84e812",
+      "reason": "wrapper",
+      "evidence": "Returns the wrapped tile.numComponents without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala:1363:method:componentType",
+      "source_span_sha256": "8737a45c4bbd28e096d0f7cab5dc2019157f05aafd8c34d7232a4aceafbdc221",
+      "source_sha256": "7a23974082108ab8fa1783b92041f44a6faab5d8ef76bd0e335c62124b84e812",
+      "reason": "wrapper",
+      "evidence": "Returns the wrapped tile.componentType without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala:1424:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "7a23974082108ab8fa1783b92041f44a6faab5d8ef76bd0e335c62124b84e812",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffReader.scala:9197:method:getTileOffset",
+      "source_span_sha256": "1bcae9fe93e2a59c486c4ec9d07e485d70172b307800ded0babfc9ffad32a392",
+      "source_sha256": "3e306e836a223d38b347cad023af495356daa7fd89940570417513552def558a",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDouble.scala:1053:method:getPixelValue",
+      "source_span_sha256": "cb2b16e2f5748f9e697521e34100ae7ef93900838d29db31680a49e0578c24d7",
+      "source_sha256": "f60456baccfe74d014a6f3548a43f08d5db0275ae11e41b2c4e1f37f5c767d3c",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDouble.scala:1203:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "f60456baccfe74d014a6f3548a43f08d5db0275ae11e41b2c4e1f37f5c767d3c",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDoubleArray.scala:1354:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "11552abe7788f35d976f7e234db06e252bb81f21c18fea12d3fe7814878d7fc8",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloat.scala:1116:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "f43d986a17ad0fa90c77db987ea562506fd5fc6aef4903770ea5dc92c8b6f1fc",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloat.scala:969:method:getPixelValue",
+      "source_span_sha256": "6e7fe0039d3c2c55c95852dc7075c4a0eba228a22f9de39242e4aae05a771f2b",
+      "source_sha256": "f43d986a17ad0fa90c77db987ea562506fd5fc6aef4903770ea5dc92c8b6f1fc",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloatArray.scala:1266:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "83b731a3894231dea1e2f3976f4e9d8a3fb1259b1479618596ba98973dd7455e",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala:1112:method:length",
+      "source_span_sha256": "856fb5b1d5279fa37be5746ccd9a8846508d259a7972c7dd21a8850f5b7ff71e",
+      "source_sha256": "4217435599d24999ac5e8fc38d62937669c9a1c08ada8c0afda5d5f3a0649bd8",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala:1146:method:get",
+      "source_span_sha256": "017249b1e7fba2a4d41fd56232a17f5bf0eaaee4d805aa308a460cf25c0e005b",
+      "source_sha256": "4217435599d24999ac5e8fc38d62937669c9a1c08ada8c0afda5d5f3a0649bd8",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala:1185:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "4217435599d24999ac5e8fc38d62937669c9a1c08ada8c0afda5d5f3a0649bd8",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala:967:method:getPixelValue",
+      "source_span_sha256": "8ba8181bbbbf290d69ef35515920c00a5ba5058a3232a6d6a50ff95faa01fd9b",
+      "source_sha256": "4217435599d24999ac5e8fc38d62937669c9a1c08ada8c0afda5d5f3a0649bd8",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileIntArray.scala:1275:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "86991b9b69eba2a229d70f3174154405d17520672c530b7b36f2b2a91c90a8be",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDF4Reader.scala:7694:method:close",
+      "source_span_sha256": "f707c53388893d4456251283d6dbcb7e74a8a74953d9cd2898cba1e261b98d26",
+      "source_sha256": "464154efe4055f9fa563f40e0f87528bbc7d3efd2baab35dd38fc45883e7ba2e",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDFTile.scala:2607:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "8c91eee4b0a3aec99a9f025dd1bc1e5aff7cef5f25198789eae31ba00cac5286",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MapPixelsTile.scala:1568:method:isEmpty",
+      "source_span_sha256": "ccaaedaefcef893afdd7171feb267936c2909de323130fd28d99da3bf84159c2",
+      "source_sha256": "d8691b18de88789126cc79d8434df2cbdf6201ba8104f9dcd81188365e4ef136",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MapPixelsTile.scala:2833:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "d8691b18de88789126cc79d8434df2cbdf6201ba8104f9dcd81188365e4ef136",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala:1673:method:getPixelValue",
+      "source_span_sha256": "c34b72d4efe9931cf6cf046f82182dbaec5a84b2954172758d151e9b2e08095a",
+      "source_sha256": "bc8c9a8ed27949c38ebca85b388995406b43f8fdb53ded9243ce54fe61449a3a",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala:1869:method:numComponents",
+      "source_span_sha256": "45c95a49809b0d8868e6f76308727b1a75fdfec577b38d22dcf2e7a7277ddd3b",
+      "source_sha256": "bc8c9a8ed27949c38ebca85b388995406b43f8fdb53ded9243ce54fe61449a3a",
+      "reason": "wrapper",
+      "evidence": "Returns the wrapped tile.numComponents without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala:1925:method:componentType",
+      "source_span_sha256": "8737a45c4bbd28e096d0f7cab5dc2019157f05aafd8c34d7232a4aceafbdc221",
+      "source_sha256": "bc8c9a8ed27949c38ebca85b388995406b43f8fdb53ded9243ce54fe61449a3a",
+      "reason": "wrapper",
+      "evidence": "Returns the wrapped tile.componentType without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala:1986:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "bc8c9a8ed27949c38ebca85b388995406b43f8fdb53ded9243ce54fe61449a3a",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile.scala:11211:method:length",
+      "source_span_sha256": "856fb5b1d5279fa37be5746ccd9a8846508d259a7972c7dd21a8850f5b7ff71e",
+      "source_sha256": "624dabbe259b273dbc936dd595fc02f5f5650baf37b7632c57b50bb5d413b0b8",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile.scala:11245:method:get",
+      "source_span_sha256": "017249b1e7fba2a4d41fd56232a17f5bf0eaaee4d805aa308a460cf25c0e005b",
+      "source_sha256": "624dabbe259b273dbc936dd595fc02f5f5650baf37b7632c57b50bb5d413b0b8",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile.scala:11284:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "624dabbe259b273dbc936dd595fc02f5f5650baf37b7632c57b50bb5d413b0b8",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile2.scala:2655:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "70159497db0bd2eb51dceb90c87fc3e3767ab9fcd2506e493884d31083f87458",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileWindow.scala:3725:method:create",
+      "source_span_sha256": "7cdbd5d8700df36bc5e496b92b4bbade8ca6adef0312a1f9d1b0ac4f96710a76",
+      "source_sha256": "140f20395d3cd1f4f07e1eee9737f213e3e7d9361f81d74a5c3b9b962b6ca379",
+      "reason": "wrapper",
+      "evidence": "Thin factory forwards existing tile metadata and the supplied array to the MemoryTileWindow constructor."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelsInside.scala:8351:method:hasNext",
+      "source_span_sha256": "5f43346ac4784a0e51a723aaa26be8705e27143f46dcf2ba4a2ea913bf9fbb65",
+      "source_sha256": "f3c7e95c988d53b9d6912c3a8441a4451a269a966b9b2e95d3b7765d0badbe9f",
+      "reason": "wrapper",
+      "evidence": "Returns intersectionPId.hasNext on the wrapped iterator."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:11579:method:raptorJoinIDFullJ",
+      "source_span_sha256": "c44389e66b8b0e1eb256aefede78204078ae6488cc6aac7017a3569233598857",
+      "source_sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:12308:method:raptorJoinLocal",
+      "source_span_sha256": "84aa64a7aebde1e416d9a95dd6f0b8db0c8f0ec5e67e1503a8d5f4b3d8b626a3",
+      "source_sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "reason": "wrapper",
+      "evidence": "Selected IFeature overload extracts geometries, calls the Geometry[] overload, and wraps results; the core overload is selected after this source-bound exclusion."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:14745:method:raptorJoinLocalJ",
+      "source_span_sha256": "cedec0ba5964455365e3ad16e3f81291bd45614149bc59af81e8c47179d79fa2",
+      "source_sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "reason": "wrapper",
+      "evidence": "Calls raptorJoinLocal and converts the returned iterator with asJava."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:15436:method:raptorJoinLocalJ",
+      "source_span_sha256": "a1ab2bbab9c2bc24ed4a25b9a2747d0f792f4ee60d00fec6d6ae5bc9a1d0878b",
+      "source_sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "reason": "wrapper",
+      "evidence": "Unselected Java iterator facade calls raptorJoinLocal then asJava; exclude before overload selection."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:1781:method:raptorJoinIDM",
+      "source_span_sha256": "b69891b06699866447376a91a733902dad68e9312541726e76810cb8aa72d1cd",
+      "source_sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "reason": "wrapper",
+      "evidence": "Calls raptorJoinIDFull then projects featureID and m from each returned record."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:2547:method:raptorJoinIDMJ",
+      "source_span_sha256": "05f59d9407e00103a4ad5635935ee6589aef9e9361790bd66d54d61b32b7605c",
+      "source_sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala:4883:method:raptorJoinFeatureJ",
+      "source_span_sha256": "5888b332991ce61732c424095d5dd41c1285a542d6b0abbfd32cbec026de8b17",
+      "source_sha256": "af2c38336232fd80dcb96ffb7c1bf4e8ba336d10913661763f871566e069b2a2",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:1236:constructor:<init>",
+      "source_span_sha256": "3cf09eaba67979e78e718c34b9b965a102ff40ac1156022232a999143a3e9ed3",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Implicit extension class only captures SparkContext for loader convenience methods; it is not an independent raster representation."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:1557:method:geoTiff",
+      "source_span_sha256": "42652cc34eff999c13540f6d0a8534e1609206d0a3e664f46f785b81a42e7245",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Sets a default layer option and constructs RasterFileRDD; keep as an exposure, not an independent test target."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:1824:method:hdfFile",
+      "source_span_sha256": "df52b6238366f76aaaed794a79ad807aeda5cb7799f4f5c71fa72f293b450dcf",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Sets the HDF layer option and constructs RasterFileRDD; keep as an exposure, not an independent test target."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:2318:method:rasterizePixels",
+      "source_span_sha256": "b76ad4c84309a2471c728c55720c672edc18253a7c4b16113c1b875c001d4bed",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePixels with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:2850:method:rasterizePoints",
+      "source_span_sha256": "a133318ec3d66a4d03a8c65fed195c4b293a3fad30ce90598f7ffb8571e17c2a",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePoints with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:3115:constructor:<init>",
+      "source_span_sha256": "2b7ea6f27273c3394ed7366b3032d933678725722a6bfb80c5bbca531bc89f1c",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Implicit extension class only captures a RasterRDD receiver for convenience methods; it is not an independent raster representation."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:3406:method:getSRID",
+      "source_span_sha256": "7e4203a5228230bb55af87956ef874d2ec557658d38f6830f256fd73e22d515a",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Convenience accessor returns raster.first().rasterMetadata.srid."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:3853:method:raptorJoin",
+      "source_span_sha256": "81d1fa32bbcbba7b4f1ec1848b80f503217016c8cfe97a32bc4acd5c03ab71dd",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeature with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:4288:method:overlay",
+      "source_span_sha256": "46349a1621e83a86eddde1c5f7eec5b6d67f853300c099b80a3ea8eca3178c54",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:4662:method:saveAsGeoTiff",
+      "source_span_sha256": "0bc23ddcedf32458ba2e8581fbad4eb03f7f083156fa67ab8dd1d8ee88c5e0eb",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.saveAsGeoTiff with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:4893:method:allMetadata",
+      "source_span_sha256": "11bad739c88d6cb987d444a890bfb4855e45d5a2e588eeae77917ae1e491ce08",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.allMetadata with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:5274:method:mapPixels",
+      "source_span_sha256": "047f7e25d7d003accdda64271d911422bcc55311af6b701b31cf6ed81d11fe4c",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.mapPixels with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:5797:method:filterPixels",
+      "source_span_sha256": "c4c84fa5b28bd718118cc652bea6af0a33f6feb9a61100ba4c96de57bedcdbad",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.filterPixels with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:6186:method:retile",
+      "source_span_sha256": "baa18553cdd2b8d69f7a0fea022304cc0b02962d5cc64427d8d15453ea01e7fc",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.retile with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:6715:method:reproject",
+      "source_span_sha256": "3d38c1c40acba5ddb9c34330e96ac8a92de0c206e0d00a907994eac13556a5db",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Unselected extension-method adapter converts SRID through CRSServer.sridToCRS then forwards to RasterOperationsFocal.reproject."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:7199:method:reproject",
+      "source_span_sha256": "da87d04ea51498d020517dbf9f946b034ce540b10ccbb417fd59f70d10b1735d",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.reproject with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:7882:method:rescale",
+      "source_span_sha256": "e951f14e5e36f00432c296dd3485c171fd824b73a77f3ef87852bb2095db20ab",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.rescale with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:8367:method:flatten",
+      "source_span_sha256": "4650578fcb514268d48faa64ba414cce036b7b095eeb8728f282c8a22c3aa18a",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.flatten with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:8597:method:explode",
+      "source_span_sha256": "83e90ead8ac632881d2daad482ef91836f06876a3a92284e9cea44a253f75efb",
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.explode with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala:8227:method:readRaster",
+      "source_span_sha256": "d71de0f9a3ae13a22629b80a511c7a74573f617c5ce2b17ce413e9482177eecb",
+      "source_sha256": "f0ce494271cbaef810992daeacf4e26ecf3cc0944f2ff093f9dc3f3e79493f22",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:32183:method:retile",
+      "source_span_sha256": "a5fbd470cc757c15469ee775951b4cc87fd73869b757103bc7f880a0c37de88f",
+      "source_sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+      "reason": "wrapper",
+      "evidence": "Calls reshapeNN with the existing metadata.retile function; raster reshaping remains in reshapeNN."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:34867:method:numComponents",
+      "source_span_sha256": "20eddcbb3d3d8da779a947cb08b651da9be025173261494bcbada07b48148458",
+      "source_sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+      "reason": "wrapper",
+      "evidence": "Returns existingTile.numComponents without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:34932:method:componentType",
+      "source_span_sha256": "1cb84a7af598e62f2ba06c093ad63e1c2d371733516029fb0b0e617512a4e06a",
+      "source_sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+      "reason": "wrapper",
+      "evidence": "Returns existingTile.componentType without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ReshapeTile.scala:964:method:addTile",
+      "source_span_sha256": "2b44868231a48b5702849530c79d4a9a896a0d0068d70019518cd2ff5feb6c0e",
+      "source_sha256": "e6425b76c11f1f792373c6de6b4d3456247cf2a84916212ed2e142b5be8881eb",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:647:method:x1",
+      "source_span_sha256": "e4eef265a2f4451e419fba80827c82788f6704121670a0943dda1e025c0ea89a",
+      "source_sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileX1 with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:690:method:y1",
+      "source_span_sha256": "48f820c68c91f8c470ae3074447df6b8e3cb09f2ae792f38e57ce17ddd9cd9ea",
+      "source_sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileY1 with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:733:method:x2",
+      "source_span_sha256": "633fec2c59affbe4c6918726d4f2c3f740f896cb3b9091fa48b9e830627d3475",
+      "source_sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileX2 with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala:776:method:y2",
+      "source_span_sha256": "2a6030e7d3e030b7f7d1b47c6bb0f97b88a2fc8b911bef59d21bce91bb66ea2a",
+      "source_sha256": "942c876df34b72a12fc79649601b98cc2b02b30cdffbe278818d0595791f3d0d",
+      "reason": "wrapper",
+      "evidence": "Single-expression delegation to scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.getTileY2 with the source-bound argument mapping in the prior consolidation receipt."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/StackedTile.scala:2428:method:componentType",
+      "source_span_sha256": "793d67030ddbedc3d895a2e57739f9dc8b7838072fc132a925b401e3de8b252c",
+      "source_sha256": "9700995b5c2a69931c938030cb1707e0621b35a204f5ceb18ee4974896d5e88d",
+      "reason": "wrapper",
+      "evidence": "Returns tiles.head.componentType without alteration."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/StackedTile.scala:2495:method:copy",
+      "source_span_sha256": "7127e7cc0f87c64c3ac7ca35dc57e9c420f3e70d05c6ff110993082dec5cf882",
+      "source_sha256": "9700995b5c2a69931c938030cb1707e0621b35a204f5ceb18ee4974896d5e88d",
+      "reason": "unimplemented",
+      "evidence": "Complete method body is Scala ???, which raises NotImplementedError unconditionally."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ZonalStatistics.scala:12901:method:printUsage",
+      "source_span_sha256": "7fa0b05503d84fbce44cfef5ae35739ece5794d94f86f480be9de92d5e6f9c86",
+      "source_sha256": "5d5d01c770afee2636272e300ce101c81febeb71fdad2902a13c9ce6bb99b334",
+      "reason": "wrapper",
+      "evidence": "Source body delegates to another operation or adapts its arguments/result; excluded by the stricter study scope even when no equivalent retained callee is available."
+    },
+    {
+      "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ZonalStatistics.scala:9305:method:zonalStatsLocal",
+      "source_span_sha256": "05326de93fe20610601edbb26e6923db38135d87d6aaa8312c9e719af40e5580",
+      "source_sha256": "5d5d01c770afee2636272e300ce101c81febeb71fdad2902a13c9ce6bb99b334",
+      "reason": "wrapper",
+      "evidence": "Unselected feature-array adapter extracts geometries then forwards to the core zonalStatsLocal overload."
+    }
+  ]
+}

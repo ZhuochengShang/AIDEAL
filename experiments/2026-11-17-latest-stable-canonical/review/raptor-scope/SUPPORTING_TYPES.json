@@ -1,0 +1,608 @@
+[
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+    "source_sha256": "0e187e8429a0e8875c1c8fe7f4230f76366737172eac0f5a02ed9f3c5650682d",
+    "selected_targets": 4,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITileSerializer.scala",
+        "line": 84,
+        "text": "new DefaultReadOnlyTile[T](tileID, metadata, numComponents, componentType,"
+      }
+    ]
+  },
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+    "source_sha256": "b9d1248a25e3e84778897f1e7c7af5fa048b04683f9817fafc2390d904f630e7",
+    "selected_targets": 15,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 41,
+        "text": "extends ITile[T](tileID, metadata, rasterFeature) {"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITileSerializer.scala",
+        "line": 30,
+        "text": "class ITileSerializer[T] extends Serializer[ITile[T]]{"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+        "line": 337,
+        "text": "def allMetadata[T](raster: RDD[ITile[T]]): Array[RasterMetadata] ="
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/AbstractGeoTiffTile.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/EmptyTile.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ExplodedTile.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffReader.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDF4Reader.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDFTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/IRasterReader.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MapPixelsTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTileSerializer.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile2.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelIterator.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelIterator3.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{IFeature, ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoinResult.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{IFeature, ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterPartitioner.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ReshapeTile.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/StackedTile.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/TileIterator.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.ITile"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ZonalStatistics.scala",
+        "line": 21,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{Feature, IFeature, ITile}"
+      }
+    ]
+  },
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITileSerializer.scala",
+    "source_sha256": "61083e46efc2590713f36572b3c55d9f5a9420d9b4b915a7d1531d19331a41e0",
+    "selected_targets": 3,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 37,
+        "text": "@DefaultSerializer(classOf[ITileSerializer[Any]])"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+        "line": 36,
+        "text": "@DefaultSerializer(classOf[ITileSerializer[Any]])"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/EmptyTile.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDFTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MapPixelsTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile2.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      }
+    ]
+  },
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeature.scala",
+    "source_sha256": "39114b175f23a8ed20b03b94bc6f7d7e4809e4fa8eeb6f74087c58a54f84d70b",
+    "selected_targets": 5,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 40,
+        "text": "var pixelData: Array[Byte], compression: Int, override val rasterFeature: RasterFeature)"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+        "line": 37,
+        "text": "abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature)"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITileSerializer.scala",
+        "line": 77,
+        "text": "val rasterFeature = kryo.readObject(input, classOf[RasterFeature])"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeatureSerializer.scala",
+        "line": 23,
+        "text": "* A Kryo serializer for RasterFeature."
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/AbstractGeoTiffTile.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTileSerializer.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/EmptyTile.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffReader.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDouble.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDoubleArray.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloat.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloatArray.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileIntArray.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileSerializer.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDF4Reader.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDFTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile2.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileSerializer.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileWindow.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ReshapeTile.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      }
+    ]
+  },
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeatureSerializer.scala",
+    "source_sha256": "39ac99263480d52c940aac83b4579bd361a13944a7a857ac09e7721f54a2da1e",
+    "selected_targets": 3,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeature.scala",
+        "line": 6,
+        "text": "@DefaultSerializer(classOf[RasterFeatureSerializer])"
+      }
+    ]
+  },
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+    "source_sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+    "selected_targets": 31,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/DefaultReadOnlyTile.scala",
+        "line": 38,
+        "text": "class DefaultReadOnlyTile[T](tileID: Int, metadata: RasterMetadata, override val numComponents: Int,"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+        "line": 37,
+        "text": "abstract class ITile[T](val tileID: Int, val rasterMetadata: RasterMetadata, val rasterFeature: RasterFeature)"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITileSerializer.scala",
+        "line": 76,
+        "text": "val metadata = kryo.readObject(input, classOf[RasterMetadata])"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala",
+        "line": 24,
+        "text": "* A Kryo serializer for [[RasterMetadata]]"
+      },
+      {
+        "path": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Intersections.java",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.RasterMetadata;"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/AbstractGeoTiffTile.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTileSerializer.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/EmptyTile.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffReader.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDouble.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDoubleArray.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloat.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloatArray.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileIntArray.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileSerializer.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDF4Reader.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDFTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/IRasterReader.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile2.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, ITileSerializer, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileSerializer.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileWindow.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelIterator3.scala",
+        "line": 9,
+        "text": "* 2. RasterMetadata: the metadata of the raster file"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelsInside.scala",
+        "line": 4,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.RasterMetadata"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{IFeature, ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoinResult.scala",
+        "line": 18,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{IFeature, ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterPartitioner.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ReshapeTile.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+        "line": 3,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{ITile, RasterFeature, RasterMetadata}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/TileIterator.scala",
+        "line": 11,
+        "text": "* 2. RasterMetadata: the metadata of the raster file"
+      }
+    ]
+  },
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala",
+    "source_sha256": "cfe6f7ca39136e9341dd9ebb1961b3de5f91c636d5e1c70de25b73abe8ed45f0",
+    "selected_targets": 4,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+        "line": 44,
+        "text": "@DefaultSerializer(classOf[RasterMetadataSerializer])"
+      }
+    ]
+  },
+  {
+    "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala",
+    "source_sha256": "59f7433c79d395705f4265c7a5925f55310ec5b07a532c34dcc8f8efeb87fbaf",
+    "selected_targets": 10,
+    "references": [
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeature.scala",
+        "line": 54,
+        "text": "new RasterFeature(values, RasterSchemaHelper.inferSchema(names, values))"
+      },
+      {
+        "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterFeatureSerializer.scala",
+        "line": 27,
+        "text": "RasterSchemaHelper.write(rasterFeature.schema, kryo, output)"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTileSerializer.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileSerializer.scala",
+        "line": 20,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      },
+      {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTileSerializer.scala",
+        "line": 19,
+        "text": "import edu.ucr.cs.bdlab.beast.geolite.{RasterFeature, RasterMetadata, RasterSchemaHelper}"
+      }
+    ]
+  }
+]

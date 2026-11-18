@@ -1,0 +1,129 @@
+{
+  "schema": "aideal.original-doc-native-exposure/v1",
+  "source_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+  "proofs": [
+    {
+      "excluded_documented_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.geoTiff",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterFileRDD",
+      "relation": "native_configured_constructor_exposure",
+      "exact_source_expression": "new RasterFileRDD[T](sc, path, opts)",
+      "argument_mapping": {
+        "sc": "captured SparkContext receiver",
+        "path": "path argument",
+        "_opts": "opts after default RasterLayerID is added when absent"
+      },
+      "limits": "Original example documents GeoTIFF-loading convenience usage. It does not describe all RasterFileRDD constructor behavior or configuration.",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 40,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:1557:method:geoTiff",
+        "file_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "42652cc34eff999c13540f6d0a8534e1609206d0a3e664f46f785b81a42e7245",
+        "declaration": "def geoTiff[T](path: String, iLayer: Int = 0, opts: BeastOptions = new BeastOptions): RDD[ITile[T]] = {\n      if (!opts.contains(IRasterReader.RasterLayerID))\n        opts.set(IRasterReader.RasterLayerID, iLayer)\n      new RasterFileRDD[T](sc, path, opts)\n    }"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala",
+        "line": 48,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala:1959:constructor:<init>",
+        "signature": "[](sc:SparkContext,path:String,_opts:BeastOptions):<type ?>",
+        "file_sha256": "f0ce494271cbaef810992daeacf4e26ecf3cc0944f2ff093f9dc3f3e79493f22",
+        "span_sha256": "068c43eab6ee6fcec568e569a6b61f49da27f0d6dbcee11f87a2cea4d83915e6"
+      },
+      "evidence_type": "source_verified_retrieval_exposure_not_behavioral_equivalence",
+      "source_used_for_audience_guidance": false
+    },
+    {
+      "excluded_documented_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.hdfFile",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterFileRDD",
+      "relation": "native_configured_constructor_exposure",
+      "exact_source_expression": "new RasterFileRDD(sc, path, opts)",
+      "argument_mapping": {
+        "sc": "captured SparkContext receiver",
+        "path": "path argument",
+        "_opts": "opts after setting RasterLayerID to the layer argument"
+      },
+      "limits": "Original example documents HDF Float-layer convenience usage. It does not describe all RasterFileRDD constructor behavior or configuration.",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 46,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:1824:method:hdfFile",
+        "file_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "df52b6238366f76aaaed794a79ad807aeda5cb7799f4f5c71fa72f293b450dcf",
+        "declaration": "def hdfFile(path: String, layer: String, opts: BeastOptions = new BeastOptions()): RDD[ITile[Float]] = {\n      opts.set(IRasterReader.RasterLayerID, layer)\n      new RasterFileRDD(sc, path, opts)\n    }"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala",
+        "line": 48,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala:1959:constructor:<init>",
+        "signature": "[](sc:SparkContext,path:String,_opts:BeastOptions):<type ?>",
+        "file_sha256": "f0ce494271cbaef810992daeacf4e26ecf3cc0944f2ff093f9dc3f3e79493f22",
+        "span_sha256": "068c43eab6ee6fcec568e569a6b61f49da27f0d6dbcee11f87a2cea4d83915e6"
+      },
+      "evidence_type": "source_verified_retrieval_exposure_not_behavioral_equivalence",
+      "source_used_for_audience_guidance": false
+    },
+    {
+      "excluded_documented_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.overlay",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.overlay",
+      "relation": "native_receiver_and_varargs_exposure",
+      "exact_source_expression": "RasterOperationsLocal.overlay((Seq(raster) ++ rasters):_*)",
+      "argument_mapping": {
+        "inputs": "captured raster followed by the wrapper rasters varargs; argument order preserved"
+      },
+      "limits": "Source proves the named operation and packing relation. No compiled generic-type equivalence or runtime test is claimed.",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+        "line": 96,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala:4288:method:overlay",
+        "file_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+        "span_sha256": "46349a1621e83a86eddde1c5f7eec5b6d67f853300c099b80a3ea8eca3178c54",
+        "declaration": "def overlay[V](rasters: RasterRDD[T]*)(implicit t: ClassTag[T], v: ClassTag[V]): RasterRDD[Array[V]] =\n      RasterOperationsLocal.overlay((Seq(raster) ++ rasters):_*)"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+        "line": 59,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala:2574:method:overlay",
+        "signature": "[type T,type V](inputs:_root_.scala.<repeated>[RDD[ITile[T]]])(evidence$4:ClassTag[T],v:ClassTag[V]):RasterRDD[Array[V]]",
+        "file_sha256": "67163c7a7773b469b0cfb27a8de0064f8e411ce3b2b4001acd6944db0b99e7f8",
+        "span_sha256": "306fefe3ca7fefbfb2bd9fc742b077fe3d6228c44e3aaae85f49087bb4634c50"
+      },
+      "evidence_type": "source_verified_retrieval_exposure_not_behavioral_equivalence",
+      "source_used_for_audience_guidance": false
+    },
+    {
+      "excluded_documented_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.retile",
+      "retained_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.reshapeNN",
+      "relation": "native_specialized_operation_exposure",
+      "exact_source_expression": "reshapeNN(raster, _.retile(tileWidth, tileHeight))",
+      "argument_mapping": {
+        "inputRaster": "raster argument",
+        "rasterMetadataMapping": "existing RasterMetadata.retile with tileWidth and tileHeight"
+      },
+      "limits": "Retile is a published specialized exposure of reshapeNN. It does not document all possible metadata transformations of reshapeNN.",
+      "wrapper_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+        "line": 566,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:32183:method:retile",
+        "file_sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+        "span_sha256": "a5fbd470cc757c15469ee775951b4cc87fd73869b757103bc7f880a0c37de88f",
+        "declaration": "def retile[T: ClassTag](raster: RasterRDD[T], tileWidth: Int, tileHeight: Int): RasterRDD[T] = {\n    // Notice that for retile, there is a one-to-one correspondence in pixels so we use the more efficient NN method\n    reshapeNN(raster, _.retile(tileWidth, tileHeight))\n  }"
+      },
+      "retained_source": {
+        "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+        "line": 408,
+        "site_id": "Scala:raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala:22920:method:reshapeNN",
+        "signature": "[type T](raster:RasterRDD[T],targetMetadataConv:_root_.scala.Function1[RasterMetadata, RasterMetadata],numPartitions:Int)(evidence$3:ClassTag[T]):RasterRDD[T]",
+        "file_sha256": "de9225e55980a620f83a7aa88a96c96adea9d54950c5605685ba77f0302159c1",
+        "span_sha256": "49cd27feb7b7ff4fd03731fc6201927c7bd5a8b9b33c4b828128ec76628722f5"
+      },
+      "evidence_type": "source_verified_retrieval_exposure_not_behavioral_equivalence",
+      "source_used_for_audience_guidance": false
+    }
+  ],
+  "unmapped_excluded_documented_targets": [
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile",
+      "reason": "Abstract ITile type excluded as an independent executable target; its published type context remains in the preserved original corpus. No operation equivalence claimed."
+    }
+  ]
+}

@@ -1,0 +1,1182 @@
+{
+  "status": "source_review_not_semantic_validation",
+  "scope_selected": 422,
+  "body_categories": {
+    "implementation": 150,
+    "unresolved": 201,
+    "direct_forwarder": 39,
+    "wrapper": 32
+  },
+  "explicit_raptor_mixin_forwarders": [
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.allMetadata",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.allMetadata",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 111,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "11bad739c88d6cb987d444a890bfb4855e45d5a2e588eeae77917ae1e491ce08",
+      "declaration": "def allMetadata: Array[RasterMetadata] = RasterMetadata.allMetadata(raster)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.allMetadata",
+      "forwarded_path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+      "forwarded_line": 337,
+      "forwarded_signature": "[type T](raster:RDD[ITile[T]]):Array[RasterMetadata]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.explode",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.explode",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 181,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "83e90ead8ac632881d2daad482ef91836f06876a3a92284e9cea44a253f75efb",
+      "declaration": "def explode: RasterRDD[T] = RasterOperationsLocal.explode(raster)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.explode",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "forwarded_line": 76,
+      "forwarded_signature": "[type T](inputRaster:RasterRDD[T]):RasterRDD[T]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.filterPixels",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.filterPixels",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 128,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "c4c84fa5b28bd718118cc652bea6af0a33f6feb9a61100ba4c96de57bedcdbad",
+      "declaration": "def filterPixels(f: T => Boolean)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsLocal.filterPixels(raster, f)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.filterPixels",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "forwarded_line": 48,
+      "forwarded_signature": "[type T](inputRaster:RasterRDD[T],filter:_root_.scala.Function1[T, Boolean])(evidence$3:ClassTag[T]):RasterRDD[T]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.flatten",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.flatten",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 175,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "4650578fcb514268d48faa64ba414cce036b7b095eeb8728f282c8a22c3aa18a",
+      "declaration": "def flatten: RDD[(Int, Int, RasterMetadata, T)] = RasterOperationsGlobal.flatten(raster)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.flatten",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+      "forwarded_line": 69,
+      "forwarded_signature": "[type T](raster:RasterRDD[T]):RDD[scala.Tuple4[Int, Int, RasterMetadata, T]]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.mapPixels",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.mapPixels",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 119,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "047f7e25d7d003accdda64271d911422bcc55311af6b701b31cf6ed81d11fe4c",
+      "declaration": "def mapPixels[U: ClassTag](f: T => U)(implicit t: ClassTag[T]): RasterRDD[U] =\n      RasterOperationsLocal.mapPixels(raster, f)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.mapPixels",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "forwarded_line": 38,
+      "forwarded_signature": "[type T,type U](inputRaster:RasterRDD[T],f:_root_.scala.Function1[T, U])(evidence$1:ClassTag[T],evidence$2:ClassTag[U]):RasterRDD[U]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.raptorJoin",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.raptorJoin",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 87,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "81d1fa32bbcbba7b4f1ec1848b80f503217016c8cfe97a32bc4acd5c03ab71dd",
+      "declaration": "def raptorJoin(features: SpatialRDD, opts: BeastOptions = new BeastOptions)(implicit t: ClassTag[T]):\n      RDD[RaptorJoinFeature[T]] =\n      RaptorJoin.raptorJoinFeature[T](raster, features, opts, null)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeature",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "forwarded_line": 73,
+      "forwarded_signature": "[type T](raster:RasterRDD[T],features:RDD[IFeature],opts:BeastOptions,numTiles:LongAccumulator):RDD[RaptorJoinFeature[T]]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.reproject",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.reproject",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 155,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "da87d04ea51498d020517dbf9f946b034ce540b10ccbb417fd59f70d10b1735d",
+      "declaration": "def reproject(targetCRS: CoordinateReferenceSystem, unifiedRaster: Boolean = false,\n                  interpolationMethod: InterpolationMethod.InterpolationMethod =\n        InterpolationMethod.NearestNeighbor)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.reproject(raster, targetCRS, unifiedRaster, interpolationMethod)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.reproject",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+      "forwarded_line": 517,
+      "forwarded_signature": "[type T](raster:RasterRDD[T],targetCRS:CoordinateReferenceSystem,unifiedRaster:Boolean,interpolationMethod:InterpolationMethod.InterpolationMethod)(evidence$4:ClassTag[T]):RasterRDD[T]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.rescale",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.rescale",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 166,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "e951f14e5e36f00432c296dd3485c171fd824b73a77f3ef87852bb2095db20ab",
+      "declaration": "def rescale(rasterWidth: Int, rasterHeight: Int, unifiedRaster: Boolean = false,\n                interpolationMethod: InterpolationMethod.InterpolationMethod =\n        InterpolationMethod.NearestNeighbor)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.rescale(raster, rasterWidth, rasterHeight, unifiedRaster, interpolationMethod)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.rescale",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+      "forwarded_line": 542,
+      "forwarded_signature": "[type T](raster:RasterRDD[T],rasterWidth:Int,rasterHeight:Int,unifiedRaster:Boolean,interpolationMethod:InterpolationMethod.InterpolationMethod)(evidence$5:ClassTag[T]):RasterRDD[T]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.retile",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.retile",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 137,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "baa18553cdd2b8d69f7a0fea022304cc0b02962d5cc64427d8d15453ea01e7fc",
+      "declaration": "def retile(tileWidth: Int, tileHeight: Int)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.retile(raster, tileWidth, tileHeight)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.retile",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+      "forwarded_line": 566,
+      "forwarded_signature": "[type T](raster:RasterRDD[T],tileWidth:Int,tileHeight:Int)(evidence$6:ClassTag[T]):RasterRDD[T]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.saveAsGeoTiff",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.saveAsGeoTiff",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 104,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "0bc23ddcedf32458ba2e8581fbad4eb03f7f083156fa67ab8dd1d8ee88c5e0eb",
+      "declaration": "def saveAsGeoTiff(path: String, opts: BeastOptions = new BeastOptions): Unit =\n      GeoTiffWriter.saveAsGeoTiff[T](raster, path, opts)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.saveAsGeoTiff",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+      "forwarded_line": 476,
+      "forwarded_signature": "[type T](rasterRDD:RDD[ITile[T]],outPath:String,opts:BeastOptions):Unit",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePixels",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePixels",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 58,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "b76ad4c84309a2471c728c55720c672edc18253a7c4b16113c1b875c001d4bed",
+      "declaration": "def rasterizePixels[T: ClassTag](pixels: RDD[(Int, Int, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] =\n      RasterOperationsGlobal.rasterizePixels(pixels, metadata, rasterFeature)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePixels",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+      "forwarded_line": 35,
+      "forwarded_signature": "[type T](pixels:RDD[scala.Tuple3[Int, Int, T]],metadata:RasterMetadata,rasterFeature:RasterFeature)(evidence$1:ClassTag[T]):RasterRDD[T]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    },
+    {
+      "public_api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePoints",
+      "public_path": "edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePoints",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 68,
+      "source_sha256": "cd46db878c80f0528434e2424c95fddae322e34c109937b2aafe9d895c780e2d",
+      "source_span_sha256": "a133318ec3d66a4d03a8c65fed195c4b293a3fad30ce90598f7ffb8571e17c2a",
+      "declaration": "def rasterizePoints[T: ClassTag](points: RDD[(Double, Double, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] =\n      RasterOperationsGlobal.rasterizePoints(points, metadata, rasterFeature)",
+      "forwarded_api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePoints",
+      "forwarded_path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+      "forwarded_line": 55,
+      "forwarded_signature": "[type T](points:RDD[scala.Tuple3[Double, Double, T]],metadata:RasterMetadata,rasterFeature:RasterFeature)(evidence$2:ClassTag[T]):RasterRDD[T]",
+      "relation": "explicit named-object method delegation in source",
+      "typechecked_overload_resolution": false,
+      "semantic_equivalence_tested": false,
+      "recommended_reporting": "Expose this calling form in documentation and map to one underlying operation group; do not claim independent algorithm solely from another entry-point name."
+    }
+  ],
+  "outside_module_java_facades": [
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper.raptorJoin",
+      "path": "beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialRDDHelper.scala",
+      "line": 269,
+      "declaration": "def raptorJoin[T](vectors: JavaSpatialRDD, rasters: JavaRasterRDD[T], opts: BeastOptions):\n    JavaRDD[RaptorJoinFeature[T]] = RaptorJoin.raptorJoinFeatureJ(rasters, vectors, opts)",
+      "source_span_sha256": "73f528cede54cce9d47a3741ceeb6c216cc40b0e523e915f8a073d3db222b6c4",
+      "relation": "JavaRDD adapter or forwarding facade",
+      "target_api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeatureJ"
+      ],
+      "recommended_action": "Record as alternate calling form; do not add an independent operation solely because it lives outside raptor."
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.geoTiff",
+      "path": "beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialSparkContext.scala",
+      "line": 119,
+      "declaration": "def geoTiff[T](filename: String, layer: Int, opts: BeastOptions): JavaRasterRDD[T] =\n    JavaRDD.fromRDD(sc.geoTiff(filename, layer, opts))",
+      "source_span_sha256": "e1a94bfd2516e382135991aabea7af2cf7b7b1b4a169e1b21e0f8805335edb98",
+      "relation": "JavaRDD adapter or forwarding facade",
+      "target_api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.geoTiff"
+      ],
+      "recommended_action": "Record as alternate calling form; do not add an independent operation solely because it lives outside raptor."
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext.hdfFile",
+      "path": "beast-spark/src/main/scala/edu/ucr/cs/bdlab/beast/JavaSpatialSparkContext.scala",
+      "line": 109,
+      "declaration": "def hdfFile(filename: String, layer: String): JavaRasterRDD[Float] =\n    JavaRDD.fromRDD(sc.hdfFile(filename, layer))",
+      "source_span_sha256": "46c1f1183d254c6adeda1517e74790818f5bd15c0e85954d76d3334e9b003e52",
+      "relation": "JavaRDD adapter or forwarding facade",
+      "target_api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.hdfFile"
+      ],
+      "recommended_action": "Record as alternate calling form; do not add an independent operation solely because it lives outside raptor."
+    }
+  ],
+  "remaining_structurally_flagged": [
+    {
+      "api_id": "java:edu.ucr.cs.bdlab.raptor.CompactIntersections.getNumIntersections",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/CompactIntersections.java",
+      "line": 40,
+      "signature": "():int",
+      "body": "public int getNumIntersections() {\n    return ys.size();\n  }",
+      "source_span_sha256": "d926ce585a0827890ba48f50104c626782c60b8cf23365e3cb61b44aa36b2a73",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeyRecord",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+      "line": 255,
+      "signature": "(int keyID):GeoKeyEntry",
+      "body": "public GeoKeyEntry getGeoKeyRecord(int keyID) {\n        return geoKeys.get(keyID);\n    }",
+      "source_span_sha256": "35ff41f5407b17fac8d9260624eac0d242b79d30ef812ce78372f709db733ef3",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKeys",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+      "line": 324,
+      "signature": "():Collection<GeoKeyEntry>",
+      "body": "public Collection<GeoKeyEntry> getGeoKeys() {\n        return geoKeys.values();\n    }",
+      "source_span_sha256": "1373ed170eb191006eab39dbcc76fd83b69aa178baf037816ea9285dbacccabb",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "java:edu.ucr.cs.bdlab.raptor.TiePoint.getData",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/TiePoint.java",
+      "line": 47,
+      "signature": "():double[]",
+      "body": "public double[] getData() {\n    return (double[])this.values.clone();\n  }",
+      "source_span_sha256": "eca293a2ae5ed211e9d26e4179dabc200b3441c1e55ddf03bbfce2767478678c",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "java:edu.ucr.cs.bdlab.raptor.TiePoint.hashCode",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/java/edu/ucr/cs/bdlab/raptor/TiePoint.java",
+      "line": 76,
+      "signature": "():int",
+      "body": "public int hashCode() {\n    return Utilities.deepHashCode(this.values);\n  }",
+      "source_span_sha256": "9c1cc87e71b7d38d978a147c845d4855dd4105886895de84c1f34ecac0e0f03d",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixelLocations",
+      "category": "wrapper",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+      "line": 81,
+      "signature": "[]:Iterator[scala.Tuple2[Int, Int]]",
+      "body": "def pixelLocations: Iterator[(Int, Int)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator) yield (x, y)",
+      "source_span_sha256": "9b6d8dea73f7f235719b6c6bf37a08f458ce17eac1e18088222b4e9e7a62c1be",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.pixels",
+      "category": "wrapper",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+      "line": 84,
+      "signature": "[]:Iterator[scala.Tuple3[Int, Int, T]]",
+      "body": "def pixels: Iterator[(Int, Int, T)] =\n    for (y <- (y1 to y2).iterator; x <- (x1 to x2).iterator; if isDefined(x, y)) yield (x, y, getPixelValue(x, y))",
+      "source_span_sha256": "55deb2fe597b55bfe49ff60f888e3823b3ebaa0018169d358f021ee052c82672",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.ITile.toString",
+      "category": "direct_forwarder",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/ITile.scala",
+      "line": 145,
+      "signature": "[]:String",
+      "body": "override def toString: String =\n    s\"Tile #$tileID ($x1,$y1) - ($x2,$y2)\"",
+      "source_span_sha256": "15dd0726053a5748fc7100586aa5286c0e24f5f808ef9597e460d7524727a98d",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.allMetadata",
+      "category": "direct_forwarder",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+      "line": 337,
+      "signature": "[type T](raster:RDD[ITile[T]]):Array[RasterMetadata]",
+      "body": "def allMetadata[T](raster: RDD[ITile[T]]): Array[RasterMetadata] =\n    // For efficiency, we assume that all metadata in each partition is the same\n    raster.mapPartitions(tiles => {\n        if (tiles.hasNext) {\n          Some(tiles.next().rasterMetadata).iterator\n        } else {\n          Option.empty[RasterMetadata].iterator\n        }\n      }).distinct()\n      .collect()",
+      "source_span_sha256": "d5a19c05b79deff45e9725fbc18fba9a7149b298c3812c42269142f2083e153c",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.gridToGridTransform",
+      "category": "wrapper",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+      "line": 425,
+      "signature": "[](sourceMetadata:RasterMetadata,targetMetadata:RasterMetadata):MathTransform",
+      "body": "def gridToGridTransform(sourceMetadata: RasterMetadata, targetMetadata: RasterMetadata): MathTransform = {\n    val sourceG2M: MathTransform = new AffineTransform2D(sourceMetadata.g2m)\n    val sourceM2TargetM: MathTransform = Reprojector.findTransformationInfo(sourceMetadata.srid, targetMetadata.srid).mathTransform\n    val targetM2G: MathTransform = new AffineTransform2D(targetMetadata.g2m).inverse()\n    ConcatenatedTransform.create(ConcatenatedTransform.create(sourceG2M, sourceM2TargetM), targetM2G)\n  }",
+      "source_span_sha256": "ff4247022f23a1a99e99651fb724a67c7e1c1e1216af9458020e861d315f3cbc",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata.toString",
+      "category": "direct_forwarder",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala",
+      "line": 209,
+      "signature": "[]:String",
+      "body": "override def toString: String = {\n    s\"RasterMetadata ($x1, $y1)-($x2, $y2) tile size ${tileWidth}X${tileHeight} SRID: $srid G2M: $g2m\"\n  }",
+      "source_span_sha256": "bcb6c75220b0645abb5d22c795ffd3e45a5a74d3fa210873c567f89b43e1f6e9",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.inferSchema",
+      "category": "wrapper",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala",
+      "line": 101,
+      "signature": "[](names:Array[String],values:Array[Any]):StructType",
+      "body": "def inferSchema(names: Array[String], values: Array[Any]): StructType = StructType(values.zipWithIndex.map(vi => StructField(names(vi._2), detectType(vi._1))))",
+      "source_span_sha256": "dc16b8116454a1636b2fdc25970814ec7573087e35c4b99d8eafdc6c5a2c6566",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.readIn",
+      "category": "direct_forwarder",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala",
+      "line": 86,
+      "signature": "[](kryo:Kryo,in:Input):StructType",
+      "body": "def readIn(kryo:Kryo,in: Input): StructType = readExternalObj(new KryoInputToObjectInput(kryo,in))",
+      "source_span_sha256": "4dd43d1daeac8f05370b597c0a3916c797b09b48356cc700f14fd4edffc160b7",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.write",
+      "category": "direct_forwarder",
+      "path": "cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterSchemaHelper.scala",
+      "line": 84,
+      "signature": "[](schema:StructType,kryo:Kryo,out:Output):Unit",
+      "body": "def write(schema:StructType,kryo: Kryo, out: Output): Unit = writeExternalObj(schema,new KryoOutputToObjectOutput(kryo,out))",
+      "source_span_sha256": "28dd22567e45e6ddb84661840b4fd983fb824b34952d18a241d24875e1cc9c33",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.ConvolutionTileSingleBand.getPixelValue",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ConvolutionTile.scala",
+      "line": 135,
+      "signature": "[](i:Int,j:Int):Float",
+      "body": "override def getPixelValue(i: Int, j: Int): Float = pixelValues(pixelOffset(i, j))",
+      "source_span_sha256": "88aa11a3afc7e3e41718fe88d3947f4fe08d60d41218a51ab0444b7dcf57a869",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.ExplodedTile.getPixelValue",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ExplodedTile.scala",
+      "line": 30,
+      "signature": "[](i:Int,j:Int):T",
+      "body": "override def getPixelValue(i: Int, j: Int): T = tile.getPixelValue(i + tile.x1, j + tile.y1)",
+      "source_span_sha256": "5e71cd237d4df12c06df9fa432c60624e893611f156af1c898c96599f0306914",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.ExplodedTile.isEmpty",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ExplodedTile.scala",
+      "line": 32,
+      "signature": "[](i:Int,j:Int):Boolean",
+      "body": "override def isEmpty(i: Int, j: Int): Boolean = tile.isEmpty(i + tile.x1, j + tile.y1)",
+      "source_span_sha256": "57283c72c3616d7556c34e7b704cbe32e7e09a7927d2db1daf7931b787b46f28",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.FilterTile.getPixelValue",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/FilterTile.scala",
+      "line": 28,
+      "signature": "[](i:Int,j:Int):T",
+      "body": "override def getPixelValue(i: Int, j: Int): T = tile.getPixelValue(i, j)",
+      "source_span_sha256": "c34b72d4efe9931cf6cf046f82182dbaec5a84b2954172758d151e9b2e08095a",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffReader.getTileOffset",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffReader.scala",
+      "line": 203,
+      "signature": "[](tileID:Int):Long",
+      "body": "override def getTileOffset(tileID: Int): Long = tiffDataRaster.getTileOffset(tileID)",
+      "source_span_sha256": "1bcae9fe93e2a59c486c4ec9d07e485d70172b307800ded0babfc9ffad32a392",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileDouble.getPixelValue",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileDouble.scala",
+      "line": 22,
+      "signature": "[](i:Int,j:Int):Double",
+      "body": "override def getPixelValue(i: Int, j: Int): Double = tiffTile.getSampleValueAsDouble(i, j, 0)",
+      "source_span_sha256": "cb2b16e2f5748f9e697521e34100ae7ef93900838d29db31680a49e0578c24d7",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileFloat.getPixelValue",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileFloat.scala",
+      "line": 21,
+      "signature": "[](i:Int,j:Int):Float",
+      "body": "override def getPixelValue(i: Int, j: Int): Float = tiffTile.getSampleValueAsFloat(i, j, 0)",
+      "source_span_sha256": "6e7fe0039d3c2c55c95852dc7075c4a0eba228a22f9de39242e4aae05a771f2b",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileInt.getPixelValue",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffTileInt.scala",
+      "line": 21,
+      "signature": "[](i:Int,j:Int):Int",
+      "body": "override def getPixelValue(i: Int, j: Int): Int = tiffTile.getSampleValueAsInt(i, j, 0)",
+      "source_span_sha256": "8ba8181bbbbf290d69ef35515920c00a5ba5058a3232a6d6a50ff95faa01fd9b",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.TempIFDEntry.toString",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+      "line": 892,
+      "signature": "[]:String",
+      "body": "override def toString: String = {\n      val valueString: String = value match {\n        case s: String => s\"'${s}'\"\n        case v: Array[Int] => s\"[${v.mkString(\",\")}]\"\n        case ar: Array[Double] => s\"[${ar.mkString(\",\")}]\"\n        case ar: Array[Long] => s\"[${ar.mkString(\",\")}]\"\n      }\n      val tagName: String = TiffConstants.TagNames.get(tag)\n      s\"IFDEntry #${tag} ${tagName} value ${valueString} offset ${offset}\"\n    }",
+      "source_span_sha256": "18595f191724d81b90cf07e1a3b3c294edc17b77a177db577e4e6d859225542e",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffWriter.makeIFDEntry",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/GeoTiffWriter.scala",
+      "line": 254,
+      "signature": "[](tag:Short,valueType:Short,value:Any):TempIFDEntry",
+      "body": "def makeIFDEntry(tag: Short, valueType: Short, value: Any): TempIFDEntry = {\n    val finalValue = value match {\n      case s: String => s\n      case v: Array[Int] => v\n      case v: Array[Double] => v\n      case v: Byte => Array[Int](v.toInt)\n      case v: Short => Array[Int](v.toInt)\n      case v: Int => Array[Int](v)\n      case v: Long => Array[Long](v)\n      case v: Double => Array[Double](v)\n      case v: Array[Byte] => v.map(_.toInt)\n      case v: Array[Short] => v.map(_.toInt)\n      case v: Array[Long] => v\n    }\n    TempIFDEntry(tag, valueType, finalValue)\n  }",
+      "source_span_sha256": "2a5d15e23b31bdabf96185f57402c0587728a1e0d1ff971e41f838342b768c14",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.HDF4Reader.close",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/HDF4Reader.scala",
+      "line": 189,
+      "signature": "[]():Unit",
+      "body": "override def close(): Unit = hdfFile.close()",
+      "source_span_sha256": "f707c53388893d4456251283d6dbcb7e74a8a74953d9cd2898cba1e261b98d26",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.IntersectionsIterator.orderingByPolygonID",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/IntersectionsIterator.scala",
+      "line": 56,
+      "signature": "[type A <: IntersectionsIterator]:Ordering[A]",
+      "body": "implicit def orderingByPolygonID[A <: IntersectionsIterator ] : Ordering[A] = {\n    Ordering.by(x => (x.fileTileID,x.geometryID,x.y,x.x1))\n  }",
+      "source_span_sha256": "b98fd77bf93cfa66cda0a5b248a7d28d7fa6b38c15ff2b0db79bb3cd77a88f0a",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.IntersectionsIterator1.orderingByPolygonID",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/IntersectionsIterator1.scala",
+      "line": 48,
+      "signature": "[type A <: IntersectionsIterator1]:Ordering[A]",
+      "body": "implicit def orderingByPolygonID[A <: IntersectionsIterator1 ] : Ordering[A] = {\n    Ordering.by(x => (x.RasterSplitID,x.PolygonIndex,x.Y,x.X1))\n  }",
+      "source_span_sha256": "f4f867f524285d35bdceec9a637ab65374e9c4d9d76a4b01e431d1ced002d496",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MapPixelsTile.scala",
+      "line": 37,
+      "signature": "[](i:Int,j:Int):U",
+      "body": "override def getPixelValue(i: Int, j: Int): U = mapFunction(tile.getPixelValue(i, j))",
+      "source_span_sha256": "7cb60def5ccfdccc598ad46fedc98b907386e90efb88728bdf2ae4276c701a54",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.MapPixelsTile.isEmpty",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MapPixelsTile.scala",
+      "line": 39,
+      "signature": "[](i:Int,j:Int):Boolean",
+      "body": "override def isEmpty(i: Int, j: Int): Boolean = tile.isEmpty(i, j)",
+      "source_span_sha256": "ccaaedaefcef893afdd7171feb267936c2909de323130fd28d99da3bf84159c2",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.MaskTile.getPixelValue",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala",
+      "line": 44,
+      "signature": "[](i:Int,j:Int):T",
+      "body": "override def getPixelValue(i: Int, j: Int): T = tile.getPixelValue(i, j)",
+      "source_span_sha256": "c34b72d4efe9931cf6cf046f82182dbaec5a84b2954172758d151e9b2e08095a",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.MaskTile.setMask",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MaskTile.scala",
+      "line": 42,
+      "signature": "[](i:Int,j:Int):Unit",
+      "body": "def setMask(i: Int, j: Int): Unit = BitArray.setBit(mask, getPixelOffset(i, j))",
+      "source_span_sha256": "6ad8e581e919a639b08d247c872b38a422ae9fdc04fc00ce5b930c4f395bf60e",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.MemoryTile2.getPixelValue",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/MemoryTile2.scala",
+      "line": 24,
+      "signature": "[](i:Int,j:Int):T",
+      "body": "override def getPixelValue(i: Int, j: Int): T = pixelValue(pixelOffset(i, j))",
+      "source_span_sha256": "0dd7148ff2a3ff4071dafcb039400f4ac52a544a5668182253e46a96e44ad22d",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.PixelsInside.next",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/PixelsInside.scala",
+      "line": 207,
+      "signature": "[]():scala.Tuple3[Int, Int, Int]",
+      "body": "override def next(): (Int, Int, Int) = {\n    val pid: Int = intersectionPId.next().toInt\n    val i: Int = intersectionX.next().toInt\n    val j: Int = intersectionY.next().toInt\n    (pid, i, j)\n  }",
+      "source_span_sha256": "30266392eeaf491a3330d90a9e4de85c731af1dca708a55ed5ed55d64c70f03d",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeature",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "line": 73,
+      "signature": "[type T](raster:RasterRDD[T],features:RDD[IFeature],opts:BeastOptions,numTiles:LongAccumulator):RDD[RaptorJoinFeature[T]]",
+      "body": "def raptorJoinFeature[T](raster: RasterRDD[T], features: RDD[IFeature], opts: BeastOptions = new BeastOptions(),\n                           numTiles: LongAccumulator = null): RDD[RaptorJoinFeature[T]] = {\n    val featureIDs: RDD[(Long, IFeature)] = features.zipWithUniqueId().map(x => (x._2, x._1))\n    val joinResults = raptorJoinIDFull[T](raster, featureIDs, opts, numTiles)\n      .map(x => (x.featureID, x))\n    val partitioner = new HashPartitioner(joinResults.getNumPartitions max featureIDs.getNumPartitions max featureIDs.sparkContext.defaultParallelism)\n    featureIDs.partitionBy(partitioner)\n      .zipPartitions(joinResults.partitionBy(partitioner))((fs, rjs) => {\n      val fsMap = fs.toMap\n      rjs.map(rj => {\n        RaptorJoinFeature(fsMap(rj._1), rj._2.rasterMetadata, rj._2.x, rj._2.y, rj._2.m)\n      })\n    })\n  }",
+      "source_span_sha256": "7fe838a220f76a54d11231d18a13d2190cee766e2958f1125fe426a9226336a4",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeatureJ",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "line": 98,
+      "signature": "[type T](raster:JavaRDD[ITile[T]],features:JavaRDD[IFeature],opts:BeastOptions):JavaRDD[RaptorJoinFeature[T]]",
+      "body": "def raptorJoinFeatureJ[T](raster: JavaRDD[ITile[T]], features: JavaRDD[IFeature], opts: BeastOptions):\n      JavaRDD[RaptorJoinFeature[T]] = {\n    JavaRDD.fromRDD(raptorJoinFeature[T](raster, features.rdd, opts, null))\n  }",
+      "source_span_sha256": "5888b332991ce61732c424095d5dd41c1285a542d6b0abbfd32cbec026de8b17",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinFeatureM",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "line": 103,
+      "signature": "[type T](raster:RasterRDD[T],features:RDD[IFeature],opts:BeastOptions,numTiles:LongAccumulator)(t:ClassTag[T]):RDD[scala.Tuple2[IFeature, T]]",
+      "body": "def raptorJoinFeatureM[T](raster: RasterRDD[T], features: RDD[IFeature], opts: BeastOptions = new BeastOptions(),\n                            numTiles: LongAccumulator = null)(implicit t: ClassTag[T]) : RDD[(IFeature, T)] = {\n    val featureIDs: RDD[(Long, IFeature)] = features.zipWithUniqueId().map(x => (x._2, x._1))\n    val rjResult: RDD[(Long, T)] = raptorJoinIDM[T](raster, featureIDs, opts, numTiles)\n    val partitioner = new HashPartitioner(featureIDs.getNumPartitions max rjResult.getNumPartitions max raster.sparkContext.defaultParallelism)\n    featureIDs.partitionBy(partitioner).zipPartitions(rjResult.partitionBy(partitioner))((fs, rjs) =>{\n      val allFeatures = fs.toMap\n      rjs.map(rj => {\n        val f = allFeatures(rj._1)\n        (f, rj._2)\n      })\n    })\n  }",
+      "source_span_sha256": "02aa6289291e68761c2bf031b895c6a11bbe76941ad2b05f78dca4a8be3b2551",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinIDFullJ",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "line": 224,
+      "signature": "[type T](raster:JavaRDD[ITile[T]],vector:JavaPairRDD[java.lang.Long, IFeature],opts:BeastOptions):JavaRDD[RaptorJoinResult[T]]",
+      "body": "def raptorJoinIDFullJ[T](raster: JavaRDD[ITile[T]], vector: JavaPairRDD[java.lang.Long, IFeature], opts: BeastOptions):\n    JavaRDD[RaptorJoinResult[T]] = {\n    JavaRDD.fromRDD(raptorJoinIDFull[T](raster.rdd, vector.rdd.map(x => (x._1.longValue(), x._2)), opts, null))\n  }",
+      "source_span_sha256": "c44389e66b8b0e1eb256aefede78204078ae6488cc6aac7017a3569233598857",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinIDM",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "line": 43,
+      "signature": "[type T](raster:RasterRDD[T],featureIDs:RDD[scala.Tuple2[Long, IFeature]],opts:BeastOptions,numTiles:LongAccumulator):RDD[scala.Tuple2[Long, T]]",
+      "body": "def raptorJoinIDM[T](raster: RasterRDD[T], featureIDs: RDD[(Long, IFeature)], opts: BeastOptions = new BeastOptions(),\n                     numTiles: LongAccumulator = null) : RDD[(Long, T)] =\n    raptorJoinIDFull[T](raster, featureIDs, opts, numTiles)\n      .map(x => (x.featureID, x.m))",
+      "source_span_sha256": "b69891b06699866447376a91a733902dad68e9312541726e76810cb8aa72d1cd",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinIDMJ",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "line": 56,
+      "signature": "[type T](raster:JavaRDD[ITile[T]],vector:JavaPairRDD[java.lang.Long, IFeature],opts:BeastOptions):JavaPairRDD[java.lang.Long, T]",
+      "body": "def raptorJoinIDMJ[T](raster: JavaRDD[ITile[T]], vector: JavaPairRDD[java.lang.Long, IFeature], opts: BeastOptions)\n      : JavaPairRDD[java.lang.Long, T] = {\n    implicit val ctagK: ClassTag[T] = ClassTag.AnyRef.asInstanceOf[ClassTag[T]]\n    JavaPairRDD.fromRDD(raptorJoinIDM[T](raster.rdd, vector.rdd.map(p => (p._1.longValue(), p._2)), opts)\n      .map(p => (java.lang.Long.valueOf(p._1), p._2)))\n  }",
+      "source_span_sha256": "05f59d9407e00103a4ad5635935ee6589aef9e9361790bd66d54d61b32b7605c",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinLocal",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorJoin.scala",
+      "line": 238,
+      "signature": "[type T](rasters:Array[IRasterReader[T]],features:Array[IFeature]):Iterator[RaptorJoinFeature[T]]",
+      "body": "def raptorJoinLocal[T](rasters: Array[IRasterReader[T]], features: Array[IFeature]): Iterator[RaptorJoinFeature[T]] =\n    raptorJoinLocal(rasters, features.map(_.getGeometry))\n      .map(result =>\n        RaptorJoinFeature(features(result.featureID.toInt), result.rasterMetadata, result.x, result.y, result.m))",
+      "source_span_sha256": "84aa64a7aebde1e416d9a95dd6f0b8db0c8f0ec5e67e1503a8d5f4b3d8b626a3",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.allMetadata",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 111,
+      "signature": "[]:Array[RasterMetadata]",
+      "body": "def allMetadata: Array[RasterMetadata] = RasterMetadata.allMetadata(raster)",
+      "source_span_sha256": "11bad739c88d6cb987d444a890bfb4855e45d5a2e588eeae77917ae1e491ce08",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.explode",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 181,
+      "signature": "[]:RasterRDD[T]",
+      "body": "def explode: RasterRDD[T] = RasterOperationsLocal.explode(raster)",
+      "source_span_sha256": "83e90ead8ac632881d2daad482ef91836f06876a3a92284e9cea44a253f75efb",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.filterPixels",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 128,
+      "signature": "[](f:_root_.scala.Function1[T, Boolean])(t:ClassTag[T]):RasterRDD[T]",
+      "body": "def filterPixels(f: T => Boolean)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsLocal.filterPixels(raster, f)",
+      "source_span_sha256": "c4c84fa5b28bd718118cc652bea6af0a33f6feb9a61100ba4c96de57bedcdbad",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.flatten",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 175,
+      "signature": "[]:RDD[scala.Tuple4[Int, Int, RasterMetadata, T]]",
+      "body": "def flatten: RDD[(Int, Int, RasterMetadata, T)] = RasterOperationsGlobal.flatten(raster)",
+      "source_span_sha256": "4650578fcb514268d48faa64ba414cce036b7b095eeb8728f282c8a22c3aa18a",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.mapPixels",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 119,
+      "signature": "[type U](f:_root_.scala.Function1[T, U])(evidence$3:ClassTag[U],t:ClassTag[T]):RasterRDD[U]",
+      "body": "def mapPixels[U: ClassTag](f: T => U)(implicit t: ClassTag[T]): RasterRDD[U] =\n      RasterOperationsLocal.mapPixels(raster, f)",
+      "source_span_sha256": "047f7e25d7d003accdda64271d911422bcc55311af6b701b31cf6ed81d11fe4c",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.overlay",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 96,
+      "signature": "[type V](rasters:_root_.scala.<repeated>[RasterRDD[T]])(t:ClassTag[T],v:ClassTag[V]):RasterRDD[Array[V]]",
+      "body": "def overlay[V](rasters: RasterRDD[T]*)(implicit t: ClassTag[T], v: ClassTag[V]): RasterRDD[Array[V]] =\n      RasterOperationsLocal.overlay((Seq(raster) ++ rasters):_*)",
+      "source_span_sha256": "46349a1621e83a86eddde1c5f7eec5b6d67f853300c099b80a3ea8eca3178c54",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.raptorJoin",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 87,
+      "signature": "[](features:SpatialRDD,opts:BeastOptions)(t:ClassTag[T]):RDD[RaptorJoinFeature[T]]",
+      "body": "def raptorJoin(features: SpatialRDD, opts: BeastOptions = new BeastOptions)(implicit t: ClassTag[T]):\n      RDD[RaptorJoinFeature[T]] =\n      RaptorJoin.raptorJoinFeature[T](raster, features, opts, null)",
+      "source_span_sha256": "81d1fa32bbcbba7b4f1ec1848b80f503217016c8cfe97a32bc4acd5c03ab71dd",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.reproject",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 155,
+      "signature": "[](targetCRS:CoordinateReferenceSystem,unifiedRaster:Boolean,interpolationMethod:InterpolationMethod.InterpolationMethod)(t:ClassTag[T]):RasterRDD[T]",
+      "body": "def reproject(targetCRS: CoordinateReferenceSystem, unifiedRaster: Boolean = false,\n                  interpolationMethod: InterpolationMethod.InterpolationMethod =\n        InterpolationMethod.NearestNeighbor)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.reproject(raster, targetCRS, unifiedRaster, interpolationMethod)",
+      "source_span_sha256": "da87d04ea51498d020517dbf9f946b034ce540b10ccbb417fd59f70d10b1735d",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.rescale",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 166,
+      "signature": "[](rasterWidth:Int,rasterHeight:Int,unifiedRaster:Boolean,interpolationMethod:InterpolationMethod.InterpolationMethod)(t:ClassTag[T]):RasterRDD[T]",
+      "body": "def rescale(rasterWidth: Int, rasterHeight: Int, unifiedRaster: Boolean = false,\n                interpolationMethod: InterpolationMethod.InterpolationMethod =\n        InterpolationMethod.NearestNeighbor)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.rescale(raster, rasterWidth, rasterHeight, unifiedRaster, interpolationMethod)",
+      "source_span_sha256": "e951f14e5e36f00432c296dd3485c171fd824b73a77f3ef87852bb2095db20ab",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.retile",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 137,
+      "signature": "[](tileWidth:Int,tileHeight:Int)(t:ClassTag[T]):RasterRDD[T]",
+      "body": "def retile(tileWidth: Int, tileHeight: Int)(implicit t: ClassTag[T]): RasterRDD[T] =\n      RasterOperationsFocal.retile(raster, tileWidth, tileHeight)",
+      "source_span_sha256": "baa18553cdd2b8d69f7a0fea022304cc0b02962d5cc64427d8d15453ea01e7fc",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RaptorMixinOperations3.saveAsGeoTiff",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 104,
+      "signature": "[](path:String,opts:BeastOptions):Unit",
+      "body": "def saveAsGeoTiff(path: String, opts: BeastOptions = new BeastOptions): Unit =\n      GeoTiffWriter.saveAsGeoTiff[T](raster, path, opts)",
+      "source_span_sha256": "0bc23ddcedf32458ba2e8581fbad4eb03f7f083156fa67ab8dd1d8ee88c5e0eb",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePixels",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 58,
+      "signature": "[type T](pixels:RDD[scala.Tuple3[Int, Int, T]],metadata:RasterMetadata,rasterFeature:RasterFeature)(evidence$1:ClassTag[T]):RasterRDD[T]",
+      "body": "def rasterizePixels[T: ClassTag](pixels: RDD[(Int, Int, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] =\n      RasterOperationsGlobal.rasterizePixels(pixels, metadata, rasterFeature)",
+      "source_span_sha256": "b76ad4c84309a2471c728c55720c672edc18253a7c4b16113c1b875c001d4bed",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions.rasterizePoints",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RaptorMixin.scala",
+      "line": 68,
+      "signature": "[type T](points:RDD[scala.Tuple3[Double, Double, T]],metadata:RasterMetadata,rasterFeature:RasterFeature)(evidence$2:ClassTag[T]):RasterRDD[T]",
+      "body": "def rasterizePoints[T: ClassTag](points: RDD[(Double, Double, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] =\n      RasterOperationsGlobal.rasterizePoints(points, metadata, rasterFeature)",
+      "source_span_sha256": "a133318ec3d66a4d03a8c65fed195c4b293a3fad30ce90598f7ffb8571e17c2a",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": true
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterFilePartition.toString",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala",
+      "line": 42,
+      "signature": "[]:String",
+      "body": "override def toString: String = s\"Raster Partition #$index ($path: $offset+$length)\"",
+      "source_span_sha256": "bfb9db0d9e90c12e3a13046b02be1aa9aecc9e462214072020b0412e1999cfa1",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterFileRDD.readRaster",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterFileRDD.scala",
+      "line": 177,
+      "signature": "[type T](javaSparkContext:JavaSparkContext,path:String,opts:BeastOptions):JavaRDD[ITile[T]]",
+      "body": "def readRaster[T](javaSparkContext: JavaSparkContext, path: String, opts: BeastOptions): JavaRDD[ITile[T]] =\n    JavaRDD.fromRDD(new RasterFileRDD(javaSparkContext.sc, path, opts))",
+      "source_span_sha256": "d71de0f9a3ae13a22629b80a511c7a74573f617c5ce2b17ce413e9482177eecb",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.ReTile.toString",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+      "line": 611,
+      "signature": "[]:String",
+      "body": "override def toString: String = s\"ReTile $existingTile @${existingTile.rasterMetadata} -> #$tileID @$newMetadata + $dx + $dy\"",
+      "source_span_sha256": "c6bf97331ed4fc44b25b28b19b5d3038e8839b60ef7f9b9700e987c4591bdb22",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.reshapeBilinear",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+      "line": 374,
+      "signature": "[type T](raster:RasterRDD[T],targetMetadataConv:_root_.scala.Function1[RasterMetadata, RasterMetadata],numPartitions:Int)(evidence$2:ClassTag[T]):RasterRDD[T]",
+      "body": "def reshapeBilinear[T: ClassTag](raster: RasterRDD[T], targetMetadataConv: RasterMetadata => RasterMetadata,\n                             numPartitions: Int = 0): RasterRDD[T] = {\n    val intermediateReshapedTiles: RDD[(Int, ReshapeTile[T])] = raster.flatMap(sourceTile => {\n      val targetMetadata = targetMetadataConv(sourceTile.rasterMetadata)\n      val allTargetTiles = ReshapeTile.getTargetTilesForSourceTiles(sourceTile.tileID, targetMetadata, sourceTile.rasterMetadata)\n      allTargetTiles.map(targetTileID => {\n        val reshapeTile = new ReshapeTile[T](targetTileID, targetMetadata, sourceTile.rasterFeature)\n        reshapeTile.addTile(sourceTile)\n        (targetTileID, reshapeTile)\n      })\n    })\n    intermediateReshapedTiles.reduceByKey((interTile1, interTile2) => interTile1.merge(interTile2))\n      .map(x => x._2.resultTile)\n  }",
+      "source_span_sha256": "d6684c1986b23aa6e9f24bb99a87107fce3c04f449c12079ad4a844aae27c972",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.retile",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsFocal.scala",
+      "line": 566,
+      "signature": "[type T](raster:RasterRDD[T],tileWidth:Int,tileHeight:Int)(evidence$6:ClassTag[T]):RasterRDD[T]",
+      "body": "def retile[T: ClassTag](raster: RasterRDD[T], tileWidth: Int, tileHeight: Int): RasterRDD[T] = {\n    // Notice that for retile, there is a one-to-one correspondence in pixels so we use the more efficient NN method\n    reshapeNN(raster, _.retile(tileWidth, tileHeight))\n  }",
+      "source_span_sha256": "a5fbd470cc757c15469ee775951b4cc87fd73869b757103bc7f880a0c37de88f",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.flatten",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+      "line": 69,
+      "signature": "[type T](raster:RasterRDD[T]):RDD[scala.Tuple4[Int, Int, RasterMetadata, T]]",
+      "body": "def flatten[T](raster: RasterRDD[T]): RDD[(Int, Int, RasterMetadata, T)] = {\n    raster.flatMap(tile => {\n      for (y <- tile.y1 to tile.y2 iterator; x <- tile.x1 to tile.x2 iterator; if tile.isDefined(x, y))\n        yield (x, y, tile.rasterMetadata, tile.getPixelValue(x, y))\n    })\n  }",
+      "source_span_sha256": "45acaa67936289d72747a744f2b902d8c1a10a60411f17af191b6797f7b499ea",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePixels",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+      "line": 35,
+      "signature": "[type T](pixels:RDD[scala.Tuple3[Int, Int, T]],metadata:RasterMetadata,rasterFeature:RasterFeature)(evidence$1:ClassTag[T]):RasterRDD[T]",
+      "body": "def rasterizePixels[T: ClassTag](pixels: RDD[(Int, Int, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] = {\n    val pixelsAssignedToTiles: RDD[(Int, (Int, Int, T))] = pixels.map(p => {\n      val tileID = metadata.getTileIDAtPixel(p._1, p._2)\n      (tileID, p)\n    })\n    pixelsAssignedToTiles.groupByKey().map(t => {\n      val tile = new MemoryTile[T](t._1, metadata, rasterFeature)\n      for (p <- t._2)\n        tile.setPixelValue(p._1, p._2, p._3)\n      tile\n    })\n  }",
+      "source_span_sha256": "8e71c070d0efefe0818ea185d5c1df9b8d1953ca430436cc2bc238ca70e3eb5d",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal.rasterizePoints",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsGlobal.scala",
+      "line": 55,
+      "signature": "[type T](points:RDD[scala.Tuple3[Double, Double, T]],metadata:RasterMetadata,rasterFeature:RasterFeature)(evidence$2:ClassTag[T]):RasterRDD[T]",
+      "body": "def rasterizePoints[T: ClassTag](points: RDD[(Double, Double, T)], metadata: RasterMetadata, rasterFeature: RasterFeature): RasterRDD[T] = {\n    rasterizePixels(points.map(p => {\n      val geolocation = Array(p._1, p._2)\n      metadata.g2m.inverseTransform(geolocation, 0, geolocation, 0, 1)\n      (geolocation(0).toInt, geolocation(1).toInt, p._3)\n    }), metadata, rasterFeature)\n  }",
+      "source_span_sha256": "2b2ce8fc69c5d88a91dcb4868470f1dbadabc773a96f1a7cc5e4dd71cd4e246e",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.explode",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "line": 76,
+      "signature": "[type T](inputRaster:RasterRDD[T]):RasterRDD[T]",
+      "body": "def explode[T](inputRaster: RasterRDD[T]): RasterRDD[T] = inputRaster.map(tile => new ExplodedTile(tile))",
+      "source_span_sha256": "c27bbef6bec342cea7df6da4637ec90c327291e4f6b511e6005e6c0a370bd6d0",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.filterPixels",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "line": 48,
+      "signature": "[type T](inputRaster:RasterRDD[T],filter:_root_.scala.Function1[T, Boolean])(evidence$3:ClassTag[T]):RasterRDD[T]",
+      "body": "def filterPixels[T: ClassTag](inputRaster: RasterRDD[T], filter: T => Boolean): RasterRDD[T] =\n    inputRaster.map(inputTile => new FilterTile(inputTile, filter))",
+      "source_span_sha256": "d4ff9cb4a95d55b7abe51bf3f9bc84bc7db65a687bbceb0a1c0e06275897c200",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.mapPixels",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "line": 38,
+      "signature": "[type T,type U](inputRaster:RasterRDD[T],f:_root_.scala.Function1[T, U])(evidence$1:ClassTag[T],evidence$2:ClassTag[U]):RasterRDD[U]",
+      "body": "def mapPixels[T: ClassTag, U: ClassTag](inputRaster: RasterRDD[T], f: T => U): RasterRDD[U] =\n    inputRaster.map(inputTile => new MapPixelsTile(inputTile, f))",
+      "source_span_sha256": "d55eba6fa81157d4e2812b43b2234fa6bae075d14bfae0edd9f38805e87440fa",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsLocal.overlay",
+      "category": "wrapper",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/RasterOperationsLocal.scala",
+      "line": 59,
+      "signature": "[type T,type V](inputs:_root_.scala.<repeated>[RDD[ITile[T]]])(evidence$4:ClassTag[T],v:ClassTag[V]):RasterRDD[Array[V]]",
+      "body": "def overlay[T: ClassTag, V](@varargs inputs: RDD[ITile[T]]*)\n                                               (implicit v: ClassTag[V]): RasterRDD[Array[V]] = {\n    val inputsByID: Seq[RDD[(Int, ITile[T])]] = inputs.map(i => i.map(t => (t.tileID, t)))\n    val partitioner = Partitioner.defaultPartitioner(inputsByID.head, inputsByID:_*)\n    val grouped: CoGroupedRDD[Int] = new CoGroupedRDD(inputsByID, partitioner)\n    grouped.map(ts => {\n      val tiles: Array[ITile[T]] = ts._2.flatMap(x => x.map(_.asInstanceOf[ITile[T]]))\n      new StackedTile[V](tiles:_*)\n    })\n  }",
+      "source_span_sha256": "306fefe3ca7fefbfb2bd9fc742b077fe3d6228c44e3aaae85f49087bb4634c50",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.ReshapeTile.addTile",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ReshapeTile.scala",
+      "line": 25,
+      "signature": "[](tile:ITile[T]):Unit",
+      "body": "def addTile(tile: ITile[T]): Unit = {\n    inputTiles.append(tile)\n  }",
+      "source_span_sha256": "2b44868231a48b5702849530c79d4a9a896a0d0068d70019518cd2ff5feb6c0e",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.x1",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+      "line": 14,
+      "signature": "[]:Int",
+      "body": "def x1: Int = metadata.getTileX1(tileID)",
+      "source_span_sha256": "e4eef265a2f4451e419fba80827c82788f6704121670a0943dda1e025c0ea89a",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.x2",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+      "line": 16,
+      "signature": "[]:Int",
+      "body": "def x2: Int = metadata.getTileX2(tileID)",
+      "source_span_sha256": "633fec2c59affbe4c6918726d4f2c3f740f896cb3b9091fa48b9e830627d3475",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.y1",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+      "line": 15,
+      "signature": "[]:Int",
+      "body": "def y1: Int = metadata.getTileY1(tileID)",
+      "source_span_sha256": "48f820c68c91f8c470ae3074447df6b8e3cb09f2ae792f38e57ce17ddd9cd9ea",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.y2",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/SlidingWindowTile.scala",
+      "line": 17,
+      "signature": "[]:Int",
+      "body": "def y2: Int = metadata.getTileY2(tileID)",
+      "source_span_sha256": "2a6030e7d3e030b7f7d1b47c6bb0f97b88a2fc8b911bef59d21bce91bb66ea2a",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    },
+    {
+      "api_id": "scala:edu.ucr.cs.bdlab.raptor.ZonalStatistics.printUsage",
+      "category": "direct_forwarder",
+      "path": "raptor/src/main/scala/edu/ucr/cs/bdlab/raptor/ZonalStatistics.scala",
+      "line": 256,
+      "signature": "[](out:PrintWriter):Unit",
+      "body": "def printUsage(out: PrintWriter): Unit = {\n    out.println(\"zs <vector file> <raster file> layer:<layer> collector:<collector>\")\n  }",
+      "source_span_sha256": "7fa0b05503d84fbce44cfef5ae35739ece5794d94f86f480be9de92d5e6f9c86",
+      "canonical_review_notes": [
+        "Body category does not prove duplication; retain the owned callable unless a forwarding target is established."
+      ],
+      "already_named_forwarding_relation": false
+    }
+  ],
+  "minimum_direct_forwarding_collapses_if_accepted": 12,
+  "count_after_only_these_12_collapses": 410,
+  "warning": "422 is not wrapper-free. This file maps12clear RaptorMixindelegations to selected canonicalAPI families and separatelylists3Javafacades outside scope. Overload/type semantics and allremaining71structuralflagsstill needreview; do not portray410as fullydeduplicated."
+}

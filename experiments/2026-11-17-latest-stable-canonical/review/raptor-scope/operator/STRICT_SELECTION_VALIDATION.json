@@ -1,0 +1,80 @@
+{
+  "status": "PASS",
+  "observed_at": "2026-11-18T02:09:24.832506+00:00",
+  "base": "class-targets evaluator release (5e108 snapshot)",
+  "changed_files": [
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_canonical_selection.py",
+      "old_sha256": "1e238331e2fda620535357cc5f62faed1f41f23d83d63ef8963636ee66f500f0",
+      "new_sha256": "e8f2a440c7b93f4d2aba8f4c3d27149d3cb1e84af3bae8190dbc7d59222e2f78"
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "old_sha256": "c4f7626587923f61ea99c2ecb18f42486077da782e1b27ea9cfa4ceb816b652a",
+      "new_sha256": "eb3e3595ae5ee5b77d614042af953297019b3caf40313c6b66081a0ea6660419"
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_registry.py",
+      "old_sha256": "d0aa2fa8d4193b698ad2adb65bd24f5582b92cb7353ce518d79ea7d29095d077",
+      "new_sha256": "dd6fb20068794db5110c05da439e7c79400af6aaa12b50aa17a0ac9a2101b055"
+    },
+    {
+      "path": "tests/test_reviewed_selection_exclusions.py",
+      "old_sha256": null,
+      "new_sha256": "0b1b3655b7d3516e2b5141b99afee4733cbdda8a2cf252ef8d0cb280f8d93d1b"
+    }
+  ],
+  "tests": {
+    "command": "python -m pytest -q tests/test_reviewed_selection_exclusions.py tests/test_public_api_inventory.py tests/test_qualified_api_selection.py tests/test_qualified_api_discovery.py tests/test_canonical_launch_relocation.py tests/test_qualified_launchers.py",
+    "passed": 98,
+    "subtests_passed": 36,
+    "wall_seconds": 3.24,
+    "new_reader_tests": 12,
+    "model_calls": 0
+  },
+  "real_review_replay": {
+    "status": "PASS",
+    "exclusion_sites": 100,
+    "complete_library_winners": 2695,
+    "compact_canonical_receipt_matches": true
+  },
+  "compact_receipt_contract": {
+    "required_for_qualified_reader": [
+      "policy_version",
+      "selection_exclusions_sha256",
+      "winners[].site_id",
+      "winners[].language"
+    ],
+    "other_native_consumers": "Use freshly verified configured_api_details, not raw winner payloads."
+  },
+  "real_reader_validation": {
+    "status": "PASS",
+    "model_calls": 0,
+    "library_execution": false,
+    "source": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_rdpro_A1/experiments/rdpro/beast",
+    "rows": [
+      {
+        "language": "Java",
+        "validated_entire_library_winners": 1384,
+        "scoped_targets": 69,
+        "replacement_core_sites": {
+          "java:edu.ucr.cs.bdlab.raptor.Intersections.compute": {
+            "line": 155,
+            "signature": "(Geometry[] geometries,long[] featureIDs,RasterMetadata metadata):void"
+          }
+        }
+      },
+      {
+        "language": "Scala",
+        "validated_entire_library_winners": 1311,
+        "scoped_targets": 261,
+        "replacement_core_sites": {
+          "scala:edu.ucr.cs.bdlab.raptor.RaptorJoin.raptorJoinLocal": {
+            "line": 252,
+            "signature": "[type T](rasters:Array[IRasterReader[T]],geometries:Array[Geometry]):Iterator[RaptorJoinResult[T]]"
+          }
+        }
+      }
+    ]
+  }
+}

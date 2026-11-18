@@ -1,0 +1,100 @@
+{
+  "groups": [
+    {
+      "normalized_body": "this",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile.copy",
+        "scala:edu.ucr.cs.bdlab.raptor.RasterOperationsFocal.ReTile.copy"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "DefaultReadOnlyTile.copy and ReTile.copy return their distinct receiver instances; equal expression does not establish interchangeable tile behavior."
+    },
+    {
+      "normalized_body": "true",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+        "scala:edu.ucr.cs.bdlab.raptor.EmptyTile.isEmpty",
+        "scala:edu.ucr.cs.bdlab.raptor.IRasterReader.isValidTile"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "Serializer.isImmutable, EmptyTile.isEmpty, and IRasterReader.isValidTile answer different questions for different owner contracts."
+    },
+    {
+      "normalized_body": "FloatType",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.AbstractConvolutionTile.componentType",
+        "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileFloat.componentType",
+        "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileFloatArray.componentType",
+        "scala:edu.ucr.cs.bdlab.raptor.HDFTile.componentType"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "Separate concrete tile classes describe their own component representation; equal Spark DataType value is not external function ownership."
+    },
+    {
+      "normalized_body": "1",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.ConvolutionTileSingleBand.numComponents",
+        "scala:edu.ucr.cs.bdlab.raptor.HDFTile.numComponents"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "Single-band convolution tiles and HDF tiles expose component counts for distinct concrete representations."
+    },
+    {
+      "normalized_body": "DoubleType",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileDouble.componentType",
+        "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileDoubleArray.componentType"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "GeoTiffTileDouble and GeoTiffTileDoubleArray differ in scalar versus array pixel contract despite equal component type."
+    },
+    {
+      "normalized_body": "IntegerType",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileInt.componentType",
+        "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileIntArray.componentType"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "GeoTiffTileInt and GeoTiffTileIntArray differ in scalar versus array pixel contract despite equal component type."
+    },
+    {
+      "normalized_body": "componentTypeNumbermatch{case1=>ByteTypecase2=>ShortTypecase3=>IntegerTypecase4=>LongTypecase5=>FloatTypecase6=>DoubleTypecase_=>thrownewRuntimeException(s\"Unrecognized component type $componentType\")}",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.MemoryTile.componentType",
+        "scala:edu.ucr.cs.bdlab.raptor.MemoryTile2.componentType"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "MemoryTile and MemoryTile2 perform the same type-code decoding over separate state/backing implementations. MemoryTile2 stores Array[T] (line17); MemoryTile has its own compressed representation. Both source-owner APIs remain distinct under the approved owner rule."
+    },
+    {
+      "normalized_body": "nextTuple!=null",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.PixelIterator.hasNext",
+        "scala:edu.ucr.cs.bdlab.raptor.PixelIterator3.hasNext",
+        "scala:edu.ucr.cs.bdlab.raptor.TileIterator.hasNext"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "Iterator classes maintain distinct state and prefetch implementations; one reads raster files, one consumes supplied tiles, and one returns result tiles."
+    },
+    {
+      "normalized_body": "{valtoReturn=nextTuplenextTuple=prefetchNexttoReturn}",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.PixelIterator.next",
+        "scala:edu.ucr.cs.bdlab.raptor.PixelIterator3.next",
+        "scala:edu.ucr.cs.bdlab.raptor.TileIterator.next"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "Equal next body invokes a different private prefetchNext per owner: PixelIterator opens/reads raster files; PixelIterator3 traverses supplied tiles; TileIterator constructs RaptorJoinResultTile rather than pixel results. Not equivalent operations."
+    },
+    {
+      "normalized_body": "{for(t<-other.inputTiles;ift!=null)addTile(t)this}",
+      "api_ids": [
+        "scala:edu.ucr.cs.bdlab.raptor.ReshapeTile.merge",
+        "scala:edu.ucr.cs.bdlab.raptor.SlidingWindowTile.merge"
+      ],
+      "decision": "retain_distinct_owner_operations",
+      "reason": "ReshapeTile.merge calls addTile that appends to ArrayBuffer (source25); SlidingWindowTile.merge calls addTile with duplicate/range/state assertions and triggers window computation (source51). Identical merge text therefore has different behavior and input/output owner types."
+    }
+  ],
+  "limits": "Exact equality after removing comments/whitespace is a screening signal, not semantic equivalence. Literals and identifier spelling remain intact."
+}

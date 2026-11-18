@@ -334,7 +334,8 @@ def _owner_map(cfg: AidealConfig) -> dict:
     function (Scala's one-top-level-type-per-file convention: the source file stem).
     kind is 'static' when that type is declared `object <stem>` and NOT also a
     class/trait (call as `Owner.method(...)`), else 'instance' (needs a receiver of
-    type Owner: `val r: Owner = ...; r.method(...)`).
+    type Owner: `val r: Owner = ...; r.method(...)`). Qualified class/type entries
+    use 'type': their constructor records must not become same-named methods.
 
     This is the receiver TYPE the flat doc erases into a bare `value.method`, which
     is what sends a snippet calling the method on the wrong type (e.g. `area` on
@@ -351,7 +352,12 @@ def _owner_map(cfg: AidealConfig) -> dict:
         if d.get("api_id"):
             kind = d.get("owner_kind")
             if d.get("owner") and kind in ("object", "class", "trait"):
-                owners[target_key(d)] = (d["owner"], "static" if kind == "object" else "instance")
+                # A constructor record represents the class/type API itself.
+                # Its owner is not a receiver on which to call the class name.
+                definition_kind = d.get("definition_kind") or d.get("kind")
+                receiver_kind = ("type" if definition_kind in ("constructor", "class_constructor")
+                                 else "static" if kind == "object" else "instance")
+                owners[target_key(d)] = (d["owner"], receiver_kind)
             continue
         stem = os.path.basename(f)[:-6]
         if f not in file_kind:
@@ -391,6 +397,15 @@ def _receiver_hint(entry_name: str, owner_map: dict) -> str:
     if not own:
         return ""
     typ, kind = own
+    if kind == "type":
+        # Constructor modifiers do not establish whether the enclosing class is
+        # abstract. Keep both documented construction and concrete/subclass use
+        # available, without exposing source bodies or inventing a factory.
+        return (f"`{entry_name}` denotes the CLASS/TYPE `{typ}`, not a method on an existing value. "
+                "Use its documented construction pattern when it is directly constructible. "
+                "For an abstract class or trait, use a documented concrete implementation or "
+                "a valid subclass instead of directly instantiating the abstract type. "
+                "Do not call the class name as a same-named instance method.")
     call_name = entry_name.split(":", 1)[1].rsplit(".", 1)[-1] if ":" in entry_name else entry_name
     if kind == "static":
         return f"`{entry_name}` is a STATIC method on object `{typ}` — call it as `{typ}.{call_name}(...)`."

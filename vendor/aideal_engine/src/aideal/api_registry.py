@@ -84,7 +84,7 @@ def relocated_inventory_binding(cfg):
         return None
     content = (cfg.root / locator).read_bytes()
     data = json.loads(content)
-    relative = [field for field in ("source_inventory", "canonical_selection", "parser_contract")
+    relative = [field for field in ("source_inventory", "canonical_selection", "parser_contract", "selection_exclusions")
                 if data.get(field) and not Path(data[field]).is_absolute()]
     if not relative:
         return None

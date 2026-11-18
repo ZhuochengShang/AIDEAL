@@ -483,7 +483,8 @@ def qualified_inventory_details(cfg,data):
     """
     from .api_registry import _bound_json
     from .api_origin import audit_api_origins, origin_enabled
-    from .api_canonical_selection import QUALIFIED_POLICY_VERSION, select_canonical_implementations
+    from .api_canonical_selection import (
+        QUALIFIED_POLICY_VERSION, reviewed_selection_exclusion_ids, select_canonical_implementations)
     if data.get('schema')!=2 or data.get('kind')!='qualified_source_api_inventory':raise ValueError('Unsupported qualified inventory')
     if not origin_enabled(cfg):raise ValueError('Qualified inventory requires explicit source-origin policy')
     ledger=_bound_json(cfg,data,'source_inventory')
@@ -517,6 +518,14 @@ def qualified_inventory_details(cfg,data):
         text_by_path[binding['path']]=raw.decode(binding.get('encoding','utf-8'))
     rows=deepcopy(ledger['records'])
     if len({r['site_id'] for r in rows})!=len(rows):raise ValueError('Duplicate definition site')
+    excluded=set()
+    if any(field in data for field in ('selection_exclusions','selection_exclusions_sha256')):
+        if not isinstance(data.get('selection_exclusions'),str) or not data['selection_exclusions'].strip():
+            raise ValueError('Selection exclusions require a bound review file')
+        # Validate the complete review across languages before selecting this
+        # language. The full ledger and candidate manifest remain unchanged.
+        review=_bound_json(cfg,data,'selection_exclusions')
+        excluded=reviewed_selection_exclusion_ids(review,rows,data.get('source_inventory_sha256'))
     requested=data.get('declaration_ids')
     expected=[r['site_id'] for r in rows if r['language'].lower()==cfg.language.lower() and r.get('inventory_status')=='candidate']
     if not isinstance(requested,list) or len(requested)!=len(set(requested)) or set(requested)!=set(expected):raise ValueError('Manifest must bind every candidate definition for its language')
@@ -542,16 +551,19 @@ def qualified_inventory_details(cfg,data):
         if set(actual_python)!={row['site_id'] for row in rows}:
             raise ValueError('Python/Cython ledger omits or adds source definitions')
     for row in rows:
-        if row['site_id'] not in requested:continue
+        if row['site_id'] not in requested and row['site_id'] not in excluded:continue
         text=text_by_path[row['path']];start,end=row['start'],row['end']
         span=text.encode('utf-16-le')[2*start:2*end].decode('utf-16-le') if row.get('offset_unit','').startswith('UTF-16') else text[start:end]
         if _sha(span.encode())!=row['source_span_sha256']:raise ValueError('Definition span changed')
+        if row['site_id'] in excluded and row['source_sha256']!=next(f['sha256'] for f in files if f['path']==row['path']):
+            raise ValueError('Excluded definition source file hash differs')
         if actual_python is not None:
             actual=actual_python.get(row['site_id'])
             fields=('name','module','owner','defining_owner','defining_owner_kind','signature','returns','implicit_receiver','public_access_paths','preferred_public_path','conditional_context','qualified_name','kind','path','line','start','end','parameter_count','parameter_count_status','params','exposure_ids','source_sha256','source_span_sha256',
                     'scope','callable','public_owner_chain','declared_visibility','public_exposure_established','synthetic','body_presence','is_abstract','inventory_status','inventory_reason','forwarding')
             if actual is None or any(actual.get(k)!=row.get(k) for k in fields):
                 raise ValueError('Python/Cython defining facts differ from a fresh static parse')
+        if row['site_id'] in excluded or row['site_id'] not in requested:continue
         row.update(file=str(relative/row['path']),defining_file=str(relative/row['path']),definition_kind=row['kind'],visibility='public')
         candidates.append(row)
     origins=audit_api_origins(cfg,candidates)
@@ -560,6 +572,8 @@ def qualified_inventory_details(cfg,data):
     if selected['counts'].get('unresolved_sites'):
         raise ValueError('Qualified inventory contains unresolved selection families; review the selection receipt')
     receipt=_bound_json(cfg,data,'canonical_selection')
+    if receipt.get('selection_exclusions_sha256')!=data.get('selection_exclusions_sha256'):
+        raise ValueError('Qualified selection exclusions receipt binding differs')
     if data.get('canonical_selection_policy_version')!=QUALIFIED_POLICY_VERSION or receipt.get('policy_version')!=QUALIFIED_POLICY_VERSION:
         raise ValueError('Qualified selection policy differs')
     expected_ids=[r['site_id'] for r in receipt['winners'] if r['language'].lower()==cfg.language.lower()]

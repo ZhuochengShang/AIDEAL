@@ -1,0 +1,92 @@
+===== Shared original document: README.md =====
+# ![Beast](doc/images/beast-logo.svg)
+Beast is a system for Big Exploratory Analytics on Spatio-Temporal data. It supports both vector and raster data with
+multidimensional data types and index structures. Here is a short list of the most important components of Beast.
+
+![Beast Splash Screen](doc/images/splash.svg)
+
+- **Multidimensional data**: Beast can work with arbitrarily multidimensional data.
+- **Input/Output formats**: Beast supports many standard formats including Esri Shapefile, CSV, JSON+WKT, GeoJSON, KML, KMZ, and GPX.
+- **Scalable visualization**: Visualize terabytes of data on an interactive map. Beast powers [UCR-Star](https://star.cs.ucr.edu) the home of terabytes of public geospatial data.
+- **Raptor = Raster + Vector**: Beast hosts a novel component for processing raster and vector data concurrently. It is orders of magnitude faster than competitive systems.
+- **Data Generator**: [Spider](https://spider.cs.ucr.edu) is an award-winning scalable data generator for benchmarking and testing.
+
+## Documentation
+- [Getting Started](doc/Home.md)
+- [Installation](doc/installation.md)
+- [Development Setup](doc/dev-setup.md)
+- [Input/Output Formats](doc/input-output.md)
+- [UCR-Star](https://star.cs.ucr.edu) powered by Beast
+- [Spider Web](https://spider.cs.ucr.edu)
+- [SatEx Satellite Data Extractor](satex/README.md)
+
+## Questions
+
+If you have any questions about any of the packages or modules of beast,
+please ask your question on [StackOverflow](https://stackoverflow.com/)
+and tag your questions with `#ucrbeast` and `#beast`. Beast team members
+follow these tags and will respond to those questions as soon as possible.
+
+## Issues
+
+If you found any bugs or have any recommended features to add, please
+[open a ticket](https://bitbucket.org/bdlabucr/beast/issues/new)
+on the project homepage.
+
+===== https://bitbucket.org/bdlabucr/beast/src/547f7f912131a8032f6b5d26991415a5faf05cef/doc/rdpro.md#lines-1:13 =====
+# Raster processing using RDPro
+Raster data is a very popular format that stores geospatial data in multidimensional arrays.
+The prime example of geospatial raster data is satellite data that come in the form of image-like data.
+Beast provides a special component for processing raster data called RDPro, Raster Distributed Processor.
+This page describes the basic RDPro support in Beast.
+
+## Setup
+- Follow the [setup page](dev-setup.md) to prepare your project for using Beast.
+- If you use Scala, add the following line in your code to import all Beast features.
+```scala
+import edu.ucr.cs.bdlab.beast._
+```
+- In the following examples, we assume the `sc` points to an initialized SparkContext. 
+
+
+===== https://bitbucket.org/bdlabucr/beast/src/547f7f912131a8032f6b5d26991415a5faf05cef/doc/rdpro.md#lines-14:53 =====
+## Raster data Loading
+The first step for processing any dataset in Spark is loading it as an RDD.
+RDPro currently supports both GeoTIFF and HDF as input files.
+The following is an example of loading raster data in Beast.
+Notice that the input can be either a single file or a directory with many files.
+In both cases, the input will be loaded in a single RDD.
+
+```scala
+// Load GeoTiff file
+val raster: RDD[ITile[Int]] = sc.geoTiff("glc2000_v1_1.tif")
+// Or using the RasterRDD alias
+val raster: RasterRDD[Int] = sc.geoTiff("glc2000_v1_1.tif")
+// Load HDF file
+val temperatureK: RasterRDD[Float] = sc.hdfFile("MOD11A1.A2022173.h08v05.006.2022174092443.hdf", "LST_Day_1km")
+```
+
+*Note*: You can download this file at [this link](https://forobs.jrc.ec.europa.eu/products/glc2000/products.php).
+
+The type parameter `[Int]` indicates that each pixel in the GeoTIFF file contains a single integer value.
+This must match the actual contents of the file to work correctly. If you are not sure what type the file contains,
+the following code example could help you figure it out.
+
+```scala
+val raster = sc.geoTiff("glc2000_v1_1.tif")
+println(raster.first.pixelType)
+```
+
+In this case, it will print
+```
+IntegerType
+```
+The possibilities are:
+
+| Type                        | Loading statement          |
+|-----------------------------|----------------------------|
+| IntegerType                 | `sc.geoTiff[Int]`          |
+| FloatType                   | `sc.geoTiff[Float]`        |
+| ArrayType(IntegerType,true) | `sc.geoTiff[Array[Int]]`   |
+| ArrayType(FloatType, true)  | `sc.geoTiff[Array[Float]]` |
+

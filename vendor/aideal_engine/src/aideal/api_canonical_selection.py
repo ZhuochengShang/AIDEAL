@@ -10,6 +10,7 @@ from collections import Counter, defaultdict
 from collections.abc import Iterable, Mapping
 from copy import deepcopy
 import json
+import re
 from typing import Any
 
 
@@ -293,8 +294,54 @@ def _validate_receipt(receipt: Mapping[str, Any]) -> None:
 
 QUALIFIED_POLICY_VERSION = "owner_qualified_max_arity_v2"
 QUALIFIED_IDENTITY_VERSION = "language_qualified_api_v1"
+SELECTION_EXCLUSIONS_SCHEMA = "source_bound_selection_exclusions/v1"
 _SELECTION_FIELDS = ("status", "reason", "relationship", "canonical_site_id",
                      "selection_note", "review_notes")
+
+
+def reviewed_selection_exclusion_ids(review, records, source_inventory_sha256):
+    """Validate an explicit source review before selecting the largest overload.
+
+    The reader independently verifies the bound source files and these spans.
+    This review changes study scope, not ownership or implementation semantics;
+    it does not infer wrappers from names or claim behavioral equivalence.
+    """
+    if not isinstance(review, Mapping) or review.get("schema") != SELECTION_EXCLUSIONS_SCHEMA:
+        raise ValueError("Unsupported source selection exclusions schema")
+    if not isinstance(review.get("review_version"), str) or not review["review_version"].strip():
+        raise ValueError("Selection exclusions require a review version")
+    if (not isinstance(source_inventory_sha256, str)
+            or not re.fullmatch(r"[0-9a-f]{64}", source_inventory_sha256)
+            or review.get("source_inventory_sha256") != source_inventory_sha256):
+        raise ValueError("Selection exclusions source inventory binding differs")
+    entries = review.get("records")
+    if not isinstance(entries, list):
+        raise ValueError("Selection exclusions records must be a list")
+    by_site = {row["site_id"]: row for row in records}
+    if len(by_site) != len(records):
+        raise ValueError("Duplicate source definition in selection review")
+    excluded = set()
+    for entry in entries:
+        if not isinstance(entry, Mapping):
+            raise ValueError("Selection exclusion must be a record")
+        site_id = entry.get("site_id")
+        if not isinstance(site_id, str) or site_id not in by_site:
+            raise ValueError("Selection exclusion names an unknown source site")
+        if site_id in excluded:
+            raise ValueError("Duplicate site in selection exclusions")
+        row = by_site[site_id]
+        if row.get("inventory_status") != "candidate":
+            raise ValueError("Selection exclusion must name a candidate definition")
+        if (entry.get("reason") not in ("wrapper", "unimplemented", "duplicate", "abstract_type")
+                or not isinstance(entry.get("evidence"), str) or not entry["evidence"].strip()):
+            raise ValueError("Selection exclusion requires a supported reason and source evidence")
+        for field in ("source_sha256", "source_span_sha256"):
+            value = entry.get(field)
+            if (not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
+                    or value != row.get(field)):
+                raise ValueError("Selection exclusion source hash differs: " + field)
+        excluded.add(site_id)
+    return excluded
 
 
 def qualified_api_id(row, language=None):
