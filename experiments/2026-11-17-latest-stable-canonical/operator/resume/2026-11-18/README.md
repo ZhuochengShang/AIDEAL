@@ -5,7 +5,7 @@ RDPro finished all 330 Original R0 targets (37 passed) and authored all 330 READ
 | Interrupted job | Recovery | Preserved evidence |
 |---|---|---|
 | tslearn Original R0 | Resume the exact frozen command at R0 |223 completed outcomes; the timed-out API passed on retry |
-| MDAnalysis README | Prepared validation-only replay in a separate output folder |1,334 completed entries and the returned response previously rejected for discussing a source `Todo` note |
+| MDAnalysis README | Running validation-only replay in a separate output folder |1,334 completed entries and the returned response previously rejected for discussing a source `Todo` note |
 
 Only `readme_validation.py` changes production behavior (+18 lines, no new helper). It allows a source-backed inline reference to a TODO note while still rejecting unfinished placeholders. 26 regression tests pass locally and on the cluster. The existing replay engine checks request identity and records reused responses without adding their tokens again.
 
@@ -29,3 +29,9 @@ Add `--json` for exact output paths and replay counts. The operator scripts here
 | MDAnalysis recovery process |`qualified-readme-source-note/STATE.json`|
 
 [Validator tests](tests.log) · [Preparation](author-preparation.json) · [Failure diagnosis](failure-audit.md) · [Original recovery checks](recovery-audit.json).
+
+## Verified recovery snapshot
+
+Observed 2026-11-18T08:56:36.479728+00:00. [All-library progress](PROGRESS.json) · [Checkpoint/replay verification](resume-verification.json) · [Previously rejected response now validates](REAL_RESPONSE_VALIDATION.json).
+
+The live monitor supersedes this saved snapshot. Existing calls retain their original provider receipts; replay references them rather than adding their tokens to the new-call total.
