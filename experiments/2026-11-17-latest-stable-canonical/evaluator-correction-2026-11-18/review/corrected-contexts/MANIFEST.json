@@ -1,0 +1,33 @@
+{
+  "scope": "new_corrected_matched_prompts_only",
+  "overrides": {
+    "rdpro_scala": {
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala/configs/generated_readme.yaml",
+        "sha256": "19e1688405656235c00b308abd5be22ac11158ffac46a7252cde1c3659dc2d6c"
+      },
+      "historical_execution_context": {
+        "execution_context": "Scala2.12 with Spark3.5.1 and Java17. The full historical scaffold provides sc and sparkContext. The explicit preamble binds rasterRDD: RasterRDD[Array[Float]] (11Float32bands,737x628pixels) and featuresRDD: RDD[IFeature] (2polygonfeatures). Use the supplied local fixtures or tiny in-memory values. Assertions must precede the __CHECK__ witness. HDF4 fixture layer is LST_Day_1km. Temporary writes belong in output_dir.",
+        "exec_hints": "Spark specifics: transformations are lazy, so if the result is an RDD / RasterRDD / DataFrame you MUST force it with an action \u2014 .count(), .first(), or .take(1) \u2014 and print that. For an in-memory Array/value, print its size. If the API is a writer, call .coalesce(1) before writing to output_dir to avoid the distributed-write merge error. I/O: read inputs with the high-level library readers on the pre-loaded typed vars (rasterRDD / featuresRDD, or sc.geoTiff / sc.shapefile) \u2014 do NOT open raw Hadoop FileSystem streams (FileSystem.get(conf) causes 'Wrong FS'; if unavoidable use path.getFileSystem(sc.hadoopConfiguration)), and never prepend an extra 'file://' to a path that already has a scheme."
+      },
+      "corrected": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/corrected-contexts/rdpro_scala.json",
+        "sha256": "05a92a250703d725c3b6e1cc47b46b3cd0520b7bb8084c4bfcb142c9ecb70c1c"
+      }
+    },
+    "tslearn": {
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/tslearn/configs/generated_readme.yaml",
+        "sha256": "fd89321bdfbcbb7c946ec6f9f50b8b087ca4c1d6d761e22a5141c61caa2ea13a"
+      },
+      "historical_execution_context": {
+        "execution_context": "A headless Python harness, balanced eight-series training data, a second series set, one-dimensional signals, labels, a small numeric matrix, repository fixture paths, and a pre-created condition-specific output directory are already in scope. Import the target explicitly.",
+        "exec_hints": "Use small deterministic parameters. For file-writing APIs, write only below output_dir. Optional-dependency failures must remain explicit infrastructure outcomes. End with a meaningful assertion and print a compact __CHECK__ witness."
+      },
+      "corrected": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/corrected-contexts/tslearn.json",
+        "sha256": "5e076781359dfda14d2bfb24f8f213c46eddb8843d2f61f18a1ea55b0eab59df"
+      }
+    }
+  }
+}

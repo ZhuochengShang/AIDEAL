@@ -1,0 +1,104 @@
+role: an expert molecular-simulation researcher and scientific Python engineer using
+  MDAnalysis for reproducible trajectory and structure analysis.
+project:
+  name: MDAnalysis
+  language: Python
+  description: MDAnalysis 2.11.0, an object-oriented scientific Python library for
+    reading molecular structures and trajectories, selecting atoms, transforming coordinates,
+    and running molecular-dynamics analyses.
+  version: 2.11.0
+domain: Molecular-dynamics trajectory and structural analysis in Python, including
+  topology/coordinate I/O, atom selections, geometric measurements, trajectory transformations,
+  and reusable analysis algorithms.
+target_users:
+- computational chemists and molecular-simulation researchers
+- scientific Python developers analyzing proteins and materials
+use_cases:
+- Load a topology and trajectory into a Universe and select atoms.
+- Compute structural properties such as centers of mass and radii of gyration.
+- Iterate over trajectory frames and analyze changing coordinates.
+- Run RMSD, distance, contact, and other MDAnalysis.analysis workflows.
+constraints:
+- A Universe owns topology and trajectory state.
+- AtomGroup methods operate on selected atoms at the current trajectory frame.
+- Analysis classes generally require construction followed by run().
+- 'Use only the five read-only fixture copies byte-verified against pinned MDAnalysisTests
+  2.11.0: PSF, DCD, PDB, GRO, and XTC; never substitute downloaded data.'
+- The PSF/DCD pair is preloaded for general trajectory analysis; format-specific APIs
+  may use the matching PDB, GRO, or XTC in mdanalysis_fixture_dir. That directory
+  contains exactly these five approved fixtures.
+- Some readers and converters require optional dependencies. Use only the configured
+  execution environment; do not install packages or reinterpret a missing import as
+  proof of a documentation error.
+- The adk_dims.dcd trajectory has no periodic box dimensions; use a checked-in periodic
+  fixture when an API requires periodic boundaries.
+- Do not download data, invoke a GUI, or write large trajectories.
+- Use the single API identity selected in this request. The frozen manifest defines
+  the complete study scope.
+- Treat the shared fixture directory as read-only. Create any temporary or output
+  files only in output_dir. Source-checkout fixture paths are not execution inputs.
+knowledge:
+  repository:
+    upstream_url: https://github.com/MDAnalysis/mdanalysis.git
+    pinned_commit: ace84dde1363e32aa94cd3f29a42c2f590bd0575
+    pinned_tree: 79fa3ad6639df0b58986752f28a7b89908593e35
+    package_version: 2.11.0
+    source_path: source
+  api_scope:
+    manifest:
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/inputs/api_manifest.json
+      sha256: 3eb5dcc731948a7370978de75e5069c0f8c50ddb5f5dcbc92b0b5a83942f6975
+    selection_policy: Use the current frozen canonical manifest and its preparation
+      receipts; preserve distinct defining owners.
+    sampling: none within the frozen selected set
+  runtime:
+    python: /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+    python_version: 3.12.15
+    package_source: official release wheels; scientific PYTHONHOME/PYTHONPATH explicitly
+      unset
+    readiness: PENDING final runtime and selected-dependency control receipts
+  original_documentation:
+    source_roots:
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/README.rst
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/doc/sphinx/source
+    document_count: 186
+    bundle_characters: 168932
+    bundle_sha256: 7a6577e2bead89675e0c72a59ef411de7429729ca4ebd06adf90d18ec47724f5
+    scope_change_note: Excluded old hosted_docs_2.9.0.md whose first page actually
+      identifies 2.8.0-dev0 (2023). Official versioned 2.11.0 documentation and guide
+      requests returned HTTP 403. Coverage is for exact 2.11.0 repository documentation
+      only; it is not coverage of a complete hosted user guide.
+  fixture:
+    directory: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures
+    source: Five exact copies of pinned source fixtures, independently matched to
+      installed official MDAnalysisTests 2.11.0 data.
+    files:
+    - binding: psf_path
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk.psf
+      bytes: 931992
+      sha256: 96cec916c4b5b19a7acb91bd1e672fb9c8b032aee1e7f0868a50655902c9b5b8
+      mode: '0444'
+    - binding: dcd_path
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_dims.dcd
+      bytes: 3931724
+      sha256: 859a5bd9e7de45a0f2401f7971c5ffc296168e7c23f6f65382bde7c1686c19f1
+      mode: '0444'
+    - binding: pdb_path
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_open.pdb
+      bytes: 257454
+      sha256: d988a6845a7489f8641ce8918471e4b2a19e94f46490571bb33522041fc48f9a
+      mode: '0444'
+    - binding: gro_path
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.gro
+      bytes: 2145787
+      sha256: 6c73737e2231da4f55ebb35ddca073af59f7f7e04cd8211857a1f94ba31f9c43
+      mode: '0444'
+    - binding: xtc_path
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.xtc
+      bytes: 1651716
+      sha256: 64684e9b45de961920d38e42ecddd191a38965a41273e52a8c5936dd9e211d1e
+      mode: '0444'
+    cache_policy: Read-only fixture copies prevent shared XDR offset-cache creation.
+      Native XTC control passed with the expected slow-offset warning and unchanged
+      fixture hashes; source checkout and installed dependencies are untouched.
+    cache_control_receipt: /home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/readonly_xtc_control.json

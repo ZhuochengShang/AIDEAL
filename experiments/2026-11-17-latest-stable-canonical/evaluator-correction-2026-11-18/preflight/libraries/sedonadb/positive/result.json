@@ -1,0 +1,51 @@
+{
+  "api": "sql:ST_Point",
+  "status": "fail",
+  "old_status": "fail",
+  "mode": "development_example",
+  "code": "\ntable = sd.sql(\"SELECT ST_AsText(ST_Point(10.0, 20.0, 4326)) AS wkt\").to_arrow_table()\nwkt = table.column(\"wkt\")[0].as_py()\nassert wkt == 'POINT (10 20)'\nprint(f\"__CHECK__ sql:ST_Point {wkt}\")\n",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/attempt_0001/ApiTest.py",
+  "exit_code": 1,
+  "stdout_tail": "",
+  "stderr_tail": "Traceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/sedonadb/runtime/run_snippet.py\", line 37, in <module>\n    runpy.run_path(str(path), run_name=\"__main__\")\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/attempt_0001/ApiTest.py\", line 26, in <module>\n    main()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/attempt_0001/ApiTest.py\", line 18, in main\n    assert wkt == 'POINT (10 20)'\nAssertionError\n",
+  "error_category": "runtime",
+  "error": "AssertionError",
+  "locus": "",
+  "wall_s": 1.2696743300184608,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/result.json",
+    "sha256": "a5d8e630cc24a6caa3bc5facd4a7d4e9e0225210f633fe42635fdf1577d04aff"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/replay_identity.json",
+      "sha256": "a47cd4a6ed87e1bf6e9d80240798b818f3f3e90f007a075d844056f9aee6f049"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/attempt_0001/ApiTest.py",
+      "sha256": "519af0d764a52d40b13781301db1561a56551e5fd8caafa465cc37e9f6a36355"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/attempt_0001/execution.json",
+      "sha256": "4e838c174c7471ad04b1e7b148af11f1a24290419159cf87d20019d2ed55e40e"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/attempt_0001/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive/attempt_0001/stderr.txt",
+      "sha256": "1baf4a6582345436bd665af6b4e20a3441019eafcaba1c1e15e3ae7cb6474e82"
+    }
+  ]
+}

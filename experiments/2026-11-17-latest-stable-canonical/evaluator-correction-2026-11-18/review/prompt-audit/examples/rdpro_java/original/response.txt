@@ -1,0 +1,6 @@
+edu.ucr.cs.bdlab.raptor.Statistics stats = new edu.ucr.cs.bdlab.raptor.Statistics();
+boolean valid = stats.isValid();
+if (valid != true && valid != false) {
+    throw new AssertionError("Statistics.isValid() returned an unexpected non-boolean value.");
+}
+System.out.println("__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid " + valid);

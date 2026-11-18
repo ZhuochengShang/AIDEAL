@@ -1,0 +1,51 @@
+{
+  "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "edu.ucr.cs.bdlab.raptor.Statistics checkedStats = new edu.ucr.cs.bdlab.raptor.Statistics();\nboolean freshValid = checkedStats.isValid();\ncheckedStats.invalidate();\nboolean invalidatedValid = checkedStats.isValid();\nif (!freshValid || invalidatedValid) { throw new AssertionError(\"Source-defined Statistics validity transition failed\"); }\nSystem.out.println(\"__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=\" + freshValid + \",invalidated=\" + invalidatedValid);\nassert false : \"AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA\";",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/attempt_0001/ApiTest.java",
+  "exit_code": 1,
+  "stdout_tail": "__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=true,invalidated=false\n",
+  "stderr_tail": "4-bb6f9bcc8b15/userFiles-efd6f889-520c-4d69-8f7b-22c41e32f08a/5e115d631b90-kubernetes-model-networking-6.7.2.jar to class loader default\n26/11/18 14:35:52 INFO Executor: Fetching spark://127.0.0.1:46779/jars/7df88d90aa16-janino-3.1.9.jar with timestamp 1795041285829\n26/11/18 14:35:52 INFO Utils: Fetching spark://127.0.0.1:46779/jars/7df88d90aa16-janino-3.1.9.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/attempt_0001/spark-tmp/spark-ac4da8d6-6442-4369-b4e4-bb6f9bcc8b15/userFiles-efd6f889-520c-4d69-8f7b-22c41e32f08a/fetchFileTemp3237776661318730779.tmp\n26/11/18 14:35:52 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/attempt_0001/spark-tmp/spark-ac4da8d6-6442-4369-b4e4-bb6f9bcc8b15/userFiles-efd6f889-520c-4d69-8f7b-22c41e32f08a/7df88d90aa16-janino-3.1.9.jar to class loader default\n26/11/18 14:35:52 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 40763.\n26/11/18 14:35:52 INFO NettyBlockTransferService: Server created on 127.0.0.1:40763\n26/11/18 14:35:52 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/18 14:35:52 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 40763, None)\n26/11/18 14:35:52 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:40763 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 40763, None)\n26/11/18 14:35:52 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 40763, None)\n26/11/18 14:35:52 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 40763, None)\n__RUN_ERR__ AssertionError: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA\njava.lang.AssertionError: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA\n\tat ApiTest.main(ApiTest.java:47)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n",
+  "error_category": "runtime",
+  "error": "AssertionError: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA",
+  "locus": "JFunction0$mcV$sp.java:23",
+  "wall_s": 73.7389616491273,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/result.json",
+    "sha256": "40ab0659784d25e4ecb0c1a61e0532d7e1e63bbde6c7a160db44eb780f11d80c"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/replay_identity.json",
+      "sha256": "bbbabe0baaac0d625f6a2f39e1aee3b2ed5b0688bd755fce0af868a64f9afac1"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/attempt_0001/ApiTest.java",
+      "sha256": "8a68fb0e04cce7bfaefe2871d261461d9c493cea8dd39b1abd22453fcbf0649c"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/attempt_0001/execution.json",
+      "sha256": "465c75cb747d9f30b4d66dc06961b072529571227ce122d0cfc0c1520df80dfb"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/attempt_0001/stdout.txt",
+      "sha256": "1b8ddec5f25495815c816baf27ceb93d9f9b9e0ad6b332834c45a7d42ff793d3"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/attempt_0001/stderr.txt",
+      "sha256": "1cd09e81673b33064fa5487d85283e884dffebb36a72fe7d1d49270bf2f98828"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+mae, aae = mir_eval.alignment.absolute_error(ref_events, est_events)
+assert mae >= 0 and aae >= 0
+assert mae <= aae or aae <= mae
+print(f"__CHECK__ python:mir_eval.alignment.absolute_error {mae:.4f}, {aae:.4f}")

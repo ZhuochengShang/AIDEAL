@@ -1,0 +1,52 @@
+{
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+  "status": "pass",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "val checkedSerializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()\nval immutableFlag = checkedSerializer.isImmutable\nassert(immutableFlag == true, \"Source-defined serializer immutability failed\")\nprintln(s\"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable $immutableFlag\")",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/ApiTest.scala",
+  "exit_code": 0,
+  "stdout_tail": "__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable true\n__DONE__ object=GeoJob\n",
+  "stderr_tail": "mp/spark-a6b15a13-0ef7-40fc-af95-711d602317be/userFiles-c803c487-94f8-4b01-b4cc-7ee9e5551365/54951fae449f-netty-resolver-4.1.96.Final.jar to class loader default\n26/11/18 15:16:38 INFO Executor: Fetching spark://127.0.0.1:32891/jars/d74a3334fb35-lz4-java-1.8.0.jar with timestamp 1795043727236\n26/11/18 15:16:38 INFO Utils: Fetching spark://127.0.0.1:32891/jars/d74a3334fb35-lz4-java-1.8.0.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/spark-tmp/spark-a6b15a13-0ef7-40fc-af95-711d602317be/userFiles-c803c487-94f8-4b01-b4cc-7ee9e5551365/fetchFileTemp15509218114741283131.tmp\n26/11/18 15:16:38 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/spark-tmp/spark-a6b15a13-0ef7-40fc-af95-711d602317be/userFiles-c803c487-94f8-4b01-b4cc-7ee9e5551365/d74a3334fb35-lz4-java-1.8.0.jar to class loader default\n26/11/18 15:16:38 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 42271.\n26/11/18 15:16:38 INFO NettyBlockTransferService: Server created on 127.0.0.1:42271\n26/11/18 15:16:38 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/18 15:16:38 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 42271, None)\n26/11/18 15:16:38 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:42271 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 42271, None)\n26/11/18 15:16:38 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 42271, None)\n26/11/18 15:16:38 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 42271, None)\n26/11/18 15:16:40 INFO ENGINE: dataFileCache open start\n26/11/18 15:16:40 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/18 15:16:40 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/18 15:16:40 INFO MemoryStore: MemoryStore cleared\n26/11/18 15:16:40 INFO BlockManager: BlockManager stopped\n26/11/18 15:16:40 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/18 15:16:40 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/18 15:16:40 INFO SparkContext: Successfully stopped SparkContext\n26/11/18 15:16:40 INFO ShutdownHookManager: Shutdown hook called\n26/11/18 15:16:40 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/spark-tmp/spark-a6b15a13-0ef7-40fc-af95-711d602317be\n26/11/18 15:16:40 INFO ShutdownHookManager: Deleting directory /tmp/spark-e7f77068-904b-4108-a5ef-7dfac3a9e681\n",
+  "error_category": "",
+  "error": "",
+  "locus": "",
+  "wall_s": 82.56060966011137,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "pass"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/result.json",
+    "sha256": "6c04655f35d52a9cd61eb7babb53d3d750ec1b72b6d5da8948b7c34e59080bff"
+  },
+  "runtime_profile": [],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/replay_identity.json",
+      "sha256": "07120a1b3d6df3f1d4476a012a52813e048a4d1a461d8213389d0c17a5d6e59c"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/ApiTest.scala",
+      "sha256": "c14161e0179ecb428a95667c936a80b2287ae2380c91823c72128e07f03554bc"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/execution.json",
+      "sha256": "8a287dde66141da894014d5831e17eb671bd1918a73e624db1462071e5822430"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/stdout.txt",
+      "sha256": "c24811998fd51a5d4ab3dfa97a918b645aea5fb742d0653385e44eb39e74a2b6"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/positive/attempt_0001/stderr.txt",
+      "sha256": "30e8687c94ac8bc9a039356ce74ab149f1e23632322f58313bc8f8360613bcd3"
+    }
+  ]
+}

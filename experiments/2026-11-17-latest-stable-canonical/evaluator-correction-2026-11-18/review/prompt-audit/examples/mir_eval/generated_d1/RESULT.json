@@ -1,0 +1,58 @@
+{
+  "api": "python:mir_eval.alignment.absolute_error",
+  "historical": true,
+  "recorded_detail": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "import numpy as np\nimport mir_eval.alignment\n\n# Ensure inputs are sorted and of equal length as per documentation\nref_sorted = np.sort(ref_events)\nest_sorted = np.sort(est_events)\n\n# Ensure lengths match for the alignment calculation\nmin_len = min(len(ref_sorted), len(est_sorted))\nref_subset = ref_sorted[:min_len]\nest_subset = est_sorted[:min_len]\n\nmae, aae = mir_eval.alignment.absolute_error(ref_subset, est_subset)\n\n# Correctness check: \n# 1. mae must be <= aae (median of absolute values <= mean of absolute values)\n# 2. mae and aae must be non-negative\nassert mae >= 0 and aae >= 0\nassert mae <= aae + 1e-9\n\nprint(f\"__CHECK__ python:mir_eval.alignment.absolute_error mae={mae:.4f}, aae={aae:.4f}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/execution/run_python_mir_eval.alignment.absolute_error--c795d832c4aa4b9f164313c159d83451af116cd75f2d5536bcc41ce8830b6a5d/api_test.py",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ python:mir_eval.alignment.absolute_error mae=0.0200, aae=0.0225\n__DONE__\n",
+    "stderr_tail": ""
+  },
+  "recorded_metrics": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "7f2224e313bfc4774c68ba7656d91c4767c3085dd0b86fc29b3f0b94eb5994b1"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/execution/run_python_mir_eval.alignment.absolute_error--c795d832c4aa4b9f164313c159d83451af116cd75f2d5536bcc41ce8830b6a5d/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 15.4,
+    "llm_calls": 1,
+    "input_tokens": 2251,
+    "output_tokens": 230,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2251,
+        "output_tokens": 230,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 3207,
+    "document_sha256": "3f94a3558f1d9f824cfbf9f8724609218f8be7781a1114264651e3f27840e08c",
+    "source": "source/mir_eval/alignment.py:115",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/result.json",
+    "sha256": "511553e98120dfe51f15c1d60b05d0b86f34d247dd7348577d123d8f00c6f704"
+  },
+  "fixture_fingerprint": {
+    "sha256": "bb3cf9e4ca8f442c9bd8f94a1b9e06859a3c92189e1a58a2d754b92f239431de",
+    "file_count": 4
+  }
+}

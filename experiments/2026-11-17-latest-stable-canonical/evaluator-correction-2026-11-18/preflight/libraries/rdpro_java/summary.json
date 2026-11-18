@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "bank": "rdpro_java",
+  "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+  "new_model_calls": 0,
+  "scope": "manually reviewed software preflight, not an experiment score",
+  "expected_positive": "Fresh Statistics.isValid is true; after invalidate it is false.",
+  "expected_negative": "Explicit assertion must fail even after a check witness was printed",
+  "source": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Statistics.java",
+    "sha256": "e946c3a7f5837b8a25a5fd9d43b1507855ff1ac9cf060cec7926b034a1908535"
+  },
+  "operator": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-18-native-execution-v2-4d5cee57aa1a/scripts/rescore_native_programs.py",
+    "sha256": "142d821a3ed501cdc4a7788356da1b537a351eced80e657468bd98c87c84cd94"
+  },
+  "positive": {
+    "status": "pass",
+    "exit_code": 0,
+    "seconds": 77.83767526037991,
+    "evidence": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/result.json",
+      "sha256": "e78b1ec9f0bb70e38ac8c990b9170d358706ccd2db79c63b8d3451029cb3797a"
+    }
+  },
+  "negative": {
+    "status": "fail",
+    "exit_code": 1,
+    "seconds": 73.7389616491273,
+    "evidence": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/negative/result.json",
+      "sha256": "e02011deeb661cb00bc94d0aa8e3833b5c643d532495a9c0ab4ac663704f8a0b"
+    },
+    "marker_observed": true
+  }
+}

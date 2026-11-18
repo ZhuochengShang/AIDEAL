@@ -1,0 +1,174 @@
+{
+  "created_at": "2026-11-18T22:32:41.026087+00:00",
+  "release_operator": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-18-native-execution-v2-4d5cee57aa1a/scripts/rescore_native_programs.py",
+    "sha256": "142d821a3ed501cdc4a7788356da1b537a351eced80e657468bd98c87c84cd94"
+  },
+  "paid_model_calls": 0,
+  "cases": [
+    {
+      "name": "thumbnailator-original-dimensions",
+      "api": "java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "matched_expectation": true,
+      "purpose": "Previously ignored Java assertion must reject the observed 50x38 result against the recorded 50x50 expectation.",
+      "old_status": "pass",
+      "exit_code": 1,
+      "error": "AssertionError: null",
+      "stdout_tail": "",
+      "stderr_tail": "Picked up JAVA_TOOL_OPTIONS: -ea\nPicked up JAVA_TOOL_OPTIONS: -ea\n__RUN_ERR__ AssertionError: null\njava.lang.AssertionError\n\tat ApiTest.main(ApiTest.java:57)\n",
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-original-dimensions/result.json",
+        "sha256": "25329ce318fa194fbafa06af85b63c062c5d1fd58926b0a17bb20be87a44fdcb"
+      },
+      "frozen_inputs_unchanged": true,
+      "before": {
+        "source": {
+          "sha256": "5ac9982665698bf56a212fb2c65fe5d48de20e24c7daf0bd6b9942ff9590249d",
+          "file_count": 79
+        },
+        "fixtures": {
+          "sha256": "27c50603aa26fb4293ce9f4dae90d1ae06414f79f370b17409cf23ee8b997b32",
+          "file_count": 3
+        },
+        "api_inventory": {
+          "sha256": "c79817f85ba4b779522fc10d0e6fc861eb8a0c681269d4248f1515d088b8c3c6",
+          "file_count": 1
+        },
+        "runtime_artifacts": {
+          "sha256": "350cf787c38757e79d10ba461c1a2b7c8452a14ece8968f479ec21519d267ded",
+          "file_count": 3
+        }
+      },
+      "after": {
+        "source": {
+          "sha256": "5ac9982665698bf56a212fb2c65fe5d48de20e24c7daf0bd6b9942ff9590249d",
+          "file_count": 79
+        },
+        "fixtures": {
+          "sha256": "27c50603aa26fb4293ce9f4dae90d1ae06414f79f370b17409cf23ee8b997b32",
+          "file_count": 3
+        },
+        "api_inventory": {
+          "sha256": "c79817f85ba4b779522fc10d0e6fc861eb8a0c681269d4248f1515d088b8c3c6",
+          "file_count": 1
+        },
+        "runtime_artifacts": {
+          "sha256": "350cf787c38757e79d10ba461c1a2b7c8452a14ece8968f479ec21519d267ded",
+          "file_count": 3
+        }
+      }
+    },
+    {
+      "name": "thumbnailator-generated-write",
+      "api": "java:net.coobird.thumbnailator.tasks.io.AbstractImageSink.write",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "matched_expectation": true,
+      "purpose": "A fresh output directory must remove cross-task file-versus-directory contamination.",
+      "old_status": "fail",
+      "exit_code": 0,
+      "error": "",
+      "stdout_tail": "__CHECK__ java:net.coobird.thumbnailator.tasks.io.AbstractImageSink.write 768\n__DONE__\n",
+      "stderr_tail": "Picked up JAVA_TOOL_OPTIONS: -ea\nPicked up JAVA_TOOL_OPTIONS: -ea\n",
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-generated-write/result.json",
+        "sha256": "47574c291299fb7351302af32da55839bfc8b44f0e9d702ac7061ed34c018d82"
+      },
+      "frozen_inputs_unchanged": true,
+      "before": {
+        "source": {
+          "sha256": "5ac9982665698bf56a212fb2c65fe5d48de20e24c7daf0bd6b9942ff9590249d",
+          "file_count": 79
+        },
+        "fixtures": {
+          "sha256": "27c50603aa26fb4293ce9f4dae90d1ae06414f79f370b17409cf23ee8b997b32",
+          "file_count": 3
+        },
+        "api_inventory": {
+          "sha256": "c79817f85ba4b779522fc10d0e6fc861eb8a0c681269d4248f1515d088b8c3c6",
+          "file_count": 1
+        },
+        "runtime_artifacts": {
+          "sha256": "350cf787c38757e79d10ba461c1a2b7c8452a14ece8968f479ec21519d267ded",
+          "file_count": 3
+        }
+      },
+      "after": {
+        "source": {
+          "sha256": "5ac9982665698bf56a212fb2c65fe5d48de20e24c7daf0bd6b9942ff9590249d",
+          "file_count": 79
+        },
+        "fixtures": {
+          "sha256": "27c50603aa26fb4293ce9f4dae90d1ae06414f79f370b17409cf23ee8b997b32",
+          "file_count": 3
+        },
+        "api_inventory": {
+          "sha256": "c79817f85ba4b779522fc10d0e6fc861eb8a0c681269d4248f1515d088b8c3c6",
+          "file_count": 1
+        },
+        "runtime_artifacts": {
+          "sha256": "350cf787c38757e79d10ba461c1a2b7c8452a14ece8968f479ec21519d267ded",
+          "file_count": 3
+        }
+      }
+    },
+    {
+      "name": "mir-eval-generated-pairwise",
+      "api": "python:mir_eval.segment.pairwise",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "matched_expectation": true,
+      "purpose": "Explicit fixture bindings must allow the recorded program to read and rebind ref_intervals.",
+      "old_status": "fail",
+      "exit_code": 0,
+      "error": "",
+      "stdout_tail": "__CHECK__ python:mir_eval.segment.pairwise 0.8889\n__DONE__\n",
+      "stderr_tail": "",
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/mir-eval-generated-pairwise/result.json",
+        "sha256": "3f164a81589d3bccabfe6daecea4afb0a4709ade40c293ed77ecb204ade17973"
+      },
+      "frozen_inputs_unchanged": true,
+      "before": {
+        "source": {
+          "sha256": "332e10850183c8605d023025aded3b0452f9e85a1c0a74df767713f4acbaea75",
+          "file_count": 19
+        },
+        "fixtures": {
+          "sha256": "bb3cf9e4ca8f442c9bd8f94a1b9e06859a3c92189e1a58a2d754b92f239431de",
+          "file_count": 4
+        },
+        "api_inventory": {
+          "sha256": "0977f20341e0364cfe1eca12da30e8d3481ab0737d3128d6c59f71163a5d9271",
+          "file_count": 1
+        },
+        "runtime_artifacts": {
+          "sha256": "c7ef67da6246664ab6ae249fd9efb169370f97b51a8d80173b8710b4b4dd6d9a",
+          "file_count": 1
+        }
+      },
+      "after": {
+        "source": {
+          "sha256": "332e10850183c8605d023025aded3b0452f9e85a1c0a74df767713f4acbaea75",
+          "file_count": 19
+        },
+        "fixtures": {
+          "sha256": "bb3cf9e4ca8f442c9bd8f94a1b9e06859a3c92189e1a58a2d754b92f239431de",
+          "file_count": 4
+        },
+        "api_inventory": {
+          "sha256": "0977f20341e0364cfe1eca12da30e8d3481ab0737d3128d6c59f71163a5d9271",
+          "file_count": 1
+        },
+        "runtime_artifacts": {
+          "sha256": "c7ef67da6246664ab6ae249fd9efb169370f97b51a8d80173b8710b4b4dd6d9a",
+          "file_count": 1
+        }
+      }
+    }
+  ],
+  "passed": true,
+  "completed_at": "2026-11-18T22:32:50.574269+00:00"
+}

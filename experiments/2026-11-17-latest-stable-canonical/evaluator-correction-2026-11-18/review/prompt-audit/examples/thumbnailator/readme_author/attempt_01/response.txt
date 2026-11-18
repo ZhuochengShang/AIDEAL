@@ -1,0 +1,53 @@
+## API Test: `java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage`
+
+### Signature
+```java
+():BufferedImage
+```
+_Source: source/src/main/java/net/coobird/thumbnailator/Thumbnails.java:2342_
+
+### Goal
+Generates a thumbnail from a single source image and returns the result as an in-memory `BufferedImage` object.
+
+### Parameters
+_None._
+
+### Input
+The caller must provide a single source image (e.g., `File`, `InputStream`, `URL`, or `BufferedImage`) via the `Thumbnails.of()` or `Thumbnails.from...()` entry points. The builder must be configured with a valid transformation (e.g., `.size()`, `.scale()`) before calling this method.
+
+### Output
+Returns `BufferedImage` — The processed thumbnail image. The image type typically matches the input image type unless explicitly overridden via `imageType(int)`.
+
+### Valid Call Patterns
+```java
+BufferedImage thumbnail = Thumbnails.of("image.jpg")
+    .size(200, 200)
+    .asBufferedImage();
+```
+
+### LLM Instruction Prompt
+- Use `asBufferedImage()` only when the builder is configured with a single source image.
+- Ensure the builder has a defined transformation (size or scale) before invocation.
+- Do not use this method if the intent is to write the result directly to a file; use `toFile()` instead to avoid potential color issues with the default JPEG writer when handling alpha channels.
+
+### Prompt Snippet
+```text
+// Example of generating a thumbnail in-memory
+BufferedImage result = Thumbnails.of(sourceFile)
+    .size(100, 100)
+    .asBufferedImage();
+```
+
+### Common Failure Modes
+- **`IllegalArgumentException`**: Thrown if the builder was initialized with multiple source images (e.g., a directory of files).
+- **`IOException`**: Thrown if an error occurs during the reading of the original image.
+- **`IllegalStateException`**: Thrown if both `size()` and `scale()` are called on the same builder instance.
+- **Color/Alpha Issues**: Using the returned `BufferedImage` with the default Java JPEG writer may result in incorrect colors or exceptions if the image contains an alpha channel.
+
+### Fix Code Hint
+```java
+// If writing to a file, prefer toFile() to handle color/alpha workarounds
+Thumbnails.of("input.png")
+    .size(100, 100)
+    .toFile("output.png");
+```

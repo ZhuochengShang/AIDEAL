@@ -1,0 +1,52 @@
+{
+  "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "edu.ucr.cs.bdlab.raptor.Statistics checkedStats = new edu.ucr.cs.bdlab.raptor.Statistics();\nboolean freshValid = checkedStats.isValid();\ncheckedStats.invalidate();\nboolean invalidatedValid = checkedStats.isValid();\nif (!freshValid || invalidatedValid) { throw new AssertionError(\"Source-defined Statistics validity transition failed\"); }\nSystem.out.println(\"__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=\" + freshValid + \",invalidated=\" + invalidatedValid);\nassert false : \"AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA\";",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/attempt_0001/ApiTest.java",
+  "exit_code": 1,
+  "stdout_tail": "__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=true,invalidated=false\n",
+  "stderr_tail": "9-kubernetes-model-common-6.7.2.jar to class loader default\n26/11/18 15:15:15 INFO Executor: Fetching spark://127.0.0.1:39449/jars/8e9865c977b6-spire-macros_2.12-0.17.0.jar with timestamp 1795043646315\n26/11/18 15:15:15 INFO Utils: Fetching spark://127.0.0.1:39449/jars/8e9865c977b6-spire-macros_2.12-0.17.0.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/attempt_0001/spark-tmp/spark-e15592ff-9a0e-4c10-b927-a5aaa5fd8279/userFiles-ccba4af3-d121-4f58-b77c-fd39ae14c50c/fetchFileTemp665796701832392891.tmp\n26/11/18 15:15:15 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/attempt_0001/spark-tmp/spark-e15592ff-9a0e-4c10-b927-a5aaa5fd8279/userFiles-ccba4af3-d121-4f58-b77c-fd39ae14c50c/8e9865c977b6-spire-macros_2.12-0.17.0.jar to class loader default\n26/11/18 15:15:15 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 46079.\n26/11/18 15:15:15 INFO NettyBlockTransferService: Server created on 127.0.0.1:46079\n26/11/18 15:15:15 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/18 15:15:15 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 46079, None)\n26/11/18 15:15:15 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:46079 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 46079, None)\n26/11/18 15:15:15 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 46079, None)\n26/11/18 15:15:15 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 46079, None)\n__RUN_ERR__ AssertionError: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA\njava.lang.AssertionError: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA\n\tat ApiTest.main(ApiTest.java:47)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n",
+  "error_category": "runtime",
+  "error": "AssertionError: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_JAVA",
+  "locus": "JFunction0$mcV$sp.java:23",
+  "wall_s": 76.93662397004664,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/result.json",
+    "sha256": "40ab0659784d25e4ecb0c1a61e0532d7e1e63bbde6c7a160db44eb780f11d80c"
+  },
+  "runtime_profile": [],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/replay_identity.json",
+      "sha256": "3bbd42587af9fa21c512ccab0d6d9166334964997cae02a6039730be5ce8dd32"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/attempt_0001/ApiTest.java",
+      "sha256": "b3063b1770e4c854193f5d113602aa6b7da4d03d6f0faf51e7458b231da1321d"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/attempt_0001/execution.json",
+      "sha256": "36989f79d102823a3ca6fc68ff4facd839e131962fae58dbff112b1c47c99204"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/attempt_0001/stdout.txt",
+      "sha256": "1b8ddec5f25495815c816baf27ceb93d9f9b9e0ad6b332834c45a7d42ff793d3"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/negative/attempt_0001/stderr.txt",
+      "sha256": "0c01231f94e0f4b924a6ea87b6058bd550b29a0c7589a0fd822558c30f89dcdd"
+    }
+  ]
+}

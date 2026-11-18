@@ -1,0 +1,17 @@
+edu.ucr.cs.bdlab.raptor.Statistics stats = new edu.ucr.cs.bdlab.raptor.Statistics();
+
+// The Statistics object is initialized but empty. 
+// According to the documentation, isValid() should return false 
+// because no zonal statistics operation has been performed yet.
+boolean validStatus = stats.isValid();
+
+if (validStatus) {
+    throw new AssertionError("Statistics object should be invalid before computation.");
+}
+
+// Verify the state is indeed false as expected for an uninitialized object
+if (validStatus != false) {
+    throw new AssertionError("Expected isValid() to return false for uninitialized Statistics object.");
+}
+
+System.out.println("__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid " + validStatus);

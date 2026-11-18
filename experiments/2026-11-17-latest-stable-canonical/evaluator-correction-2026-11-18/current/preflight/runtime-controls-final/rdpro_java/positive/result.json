@@ -1,0 +1,52 @@
+{
+  "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+  "status": "pass",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "edu.ucr.cs.bdlab.raptor.Statistics checkedStats = new edu.ucr.cs.bdlab.raptor.Statistics();\nboolean freshValid = checkedStats.isValid();\ncheckedStats.invalidate();\nboolean invalidatedValid = checkedStats.isValid();\nif (!freshValid || invalidatedValid) { throw new AssertionError(\"Source-defined Statistics validity transition failed\"); }\nSystem.out.println(\"__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=\" + freshValid + \",invalidated=\" + invalidatedValid);",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/ApiTest.java",
+  "exit_code": 0,
+  "stdout_tail": "__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=true,invalidated=false\n__DONE__\n",
+  "stderr_tail": "026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/spark-tmp/spark-7e89144a-70e9-4f00-979f-464f76b4c905/userFiles-92d32ba7-fb2f-4c07-8733-205515f982fb/77459ddc1798-imageio-ext-streams-1.4.14.jar to class loader default\n26/11/18 15:15:15 INFO Executor: Fetching spark://127.0.0.1:39015/jars/61fe05a647f0-gt-metadata-26.1.jar with timestamp 1795043646368\n26/11/18 15:15:15 INFO Utils: Fetching spark://127.0.0.1:39015/jars/61fe05a647f0-gt-metadata-26.1.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/spark-tmp/spark-7e89144a-70e9-4f00-979f-464f76b4c905/userFiles-92d32ba7-fb2f-4c07-8733-205515f982fb/fetchFileTemp10758713967007494959.tmp\n26/11/18 15:15:15 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/spark-tmp/spark-7e89144a-70e9-4f00-979f-464f76b4c905/userFiles-92d32ba7-fb2f-4c07-8733-205515f982fb/61fe05a647f0-gt-metadata-26.1.jar to class loader default\n26/11/18 15:15:15 INFO Executor: Fetching spark://127.0.0.1:39015/jars/a457542a40cc-jetty-servlet-9.4.43.v20210629.jar with timestamp 1795043646368\n26/11/18 15:15:15 INFO Utils: Fetching spark://127.0.0.1:39015/jars/a457542a40cc-jetty-servlet-9.4.43.v20210629.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/spark-tmp/spark-7e89144a-70e9-4f00-979f-464f76b4c905/userFiles-92d32ba7-fb2f-4c07-8733-205515f982fb/fetchFileTemp9807504273443309448.tmp\n26/11/18 15:15:15 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/spark-tmp/spark-7e89144a-70e9-4f00-979f-464f76b4c905/userFiles-92d32ba7-fb2f-4c07-8733-205515f982fb/a457542a40cc-jetty-servlet-9.4.43.v20210629.jar to class loader default\n26/11/18 15:15:15 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37531.\n26/11/18 15:15:15 INFO NettyBlockTransferService: Server created on 127.0.0.1:37531\n26/11/18 15:15:15 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/18 15:15:15 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 37531, None)\n26/11/18 15:15:15 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:37531 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 37531, None)\n26/11/18 15:15:15 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 37531, None)\n26/11/18 15:15:15 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 37531, None)\n",
+  "error_category": "",
+  "error": "",
+  "locus": "",
+  "wall_s": 76.86953979171813,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "pass"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/result.json",
+    "sha256": "40ab0659784d25e4ecb0c1a61e0532d7e1e63bbde6c7a160db44eb780f11d80c"
+  },
+  "runtime_profile": [],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/replay_identity.json",
+      "sha256": "95be37a50348b695531cb63226d6ad2b89bc1ee73e439185b0ff2312c06d98d3"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/ApiTest.java",
+      "sha256": "2e265bfd7f4b4cf4f7ab9c8ea022516ecde0c2ba5bb7725b71eb297b2e8da224"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/execution.json",
+      "sha256": "7f4d6bb0ba26f627b0a5dc3c242cfdeb0a51d6e6aba7d23b04db49d177ee4e6f"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/stdout.txt",
+      "sha256": "07657dbd46e0cd2e16a234e3d36f57efbf5cdc81a79d7d25c287d5184472e36e"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_java/positive/attempt_0001/stderr.txt",
+      "sha256": "b9b15d83e34f8ead2acb1c0e19e04b6078be1a354767eff95975994f51d12b71"
+    }
+  ]
+}

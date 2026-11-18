@@ -1,0 +1,51 @@
+{
+  "api": "python:mir_eval.alignment.absolute_error",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "\nfrom mir_eval.alignment import absolute_error\nimport numpy as np\nmedian_error, mean_error = absolute_error(ref_events, est_events)\nexpected = np.abs(ref_events - est_events)\nassert np.isclose(median_error, np.median(expected) + 1.0)\nassert np.isclose(mean_error, np.mean(expected))\nprint(f\"__CHECK__ python:mir_eval.alignment.absolute_error {median_error} {mean_error}\")\n",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/api_test.py",
+  "exit_code": 1,
+  "stdout_tail": "",
+  "stderr_tail": "__RUN_ERR__ AssertionError: \nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/api_test.py\", line 49, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/api_test.py\", line 44, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/api_test.py\", line 38, in api_test\n    assert np.isclose(median_error, np.median(expected) + 1.0)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "error_category": "runtime",
+  "error": "AssertionError:",
+  "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/api_test.py:38",
+  "wall_s": 1.3995580710470676,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/result.json",
+    "sha256": "0da2bed088fceb76cba348b9559494b5e2f8e489bc5b92fae08956a239f1f6ad"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/replay_identity.json",
+      "sha256": "b7bf13589602c043682a69a991a7eb66c712ae9e3e264c287dab6516d71e84ae"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/api_test.py",
+      "sha256": "c523a66fce3a046f52082e5dd35680c0834aadd4fa1f79261759d625f49ded0c"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/execution.json",
+      "sha256": "edcd6a89f500dbcb36057978c13b3a32a2d161eedbe7f6b7b559e53bd0341d3f"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/stderr.txt",
+      "sha256": "9521131585d264e61e22780ac3f8d50acfad6285f422f64f6a5ac1429d2c8420"
+    }
+  ]
+}

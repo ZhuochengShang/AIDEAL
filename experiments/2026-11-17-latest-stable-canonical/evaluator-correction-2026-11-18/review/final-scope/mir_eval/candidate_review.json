@@ -1,0 +1,90 @@
+{
+  "candidates": [
+    {
+      "api": "python:mir_eval.segment.vmeasure",
+      "decision": "retain",
+      "implementation": "return nce(reference_intervals, reference_labels, estimated_intervals, estimated_labels, frame_size=frame_size, beta=beta, marginal=True)",
+      "reason": "Selects a distinct normalization mode via marginal=True; not an unchanged alias.",
+      "source_evidence": [
+        {
+          "line": 1100,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/segment.py",
+          "sha256": "7bae89c97c6715d653a139b202e84565104f88efc87b585e726321403c47c440"
+        }
+      ]
+    },
+    {
+      "api": "python:mir_eval.multipitch.compute_num_freqs",
+      "decision": "retain",
+      "implementation": "return np.array([f.size for f in frequencies])",
+      "reason": "Computes a frequency count for each time point; domain-specific list traversal.",
+      "source_evidence": [
+        {
+          "line": 191,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/multipitch.py",
+          "sha256": "b1d31ca4f261603602a15bcf4b84f09991be164b62547ad845f0127d205a2087"
+        }
+      ]
+    },
+    {
+      "api": "python:mir_eval.util.intervals_to_boundaries",
+      "decision": "retain",
+      "implementation": "return np.unique(np.ravel(np.round(intervals, decimals=q)))",
+      "reason": "Composes quantization, flattening and unique-boundary extraction.",
+      "source_evidence": [
+        {
+          "line": 221,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/util.py",
+          "sha256": "e5d9cf6b7478a6d498c35d3fba28e615b8d4f723ead5eceb575d99aee0ca0922"
+        }
+      ]
+    },
+    {
+      "api": "python:mir_eval.chord.reduce_extended_quality",
+      "decision": "retain",
+      "implementation": "return EXTENDED_QUALITY_REDUX.get(quality, (quality, set()))",
+      "reason": "Applies a library-owned musical chord reduction mapping.",
+      "source_evidence": [
+        {
+          "line": 318,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/chord.py",
+          "sha256": "a4354921817a22d6602c0f0fe3eabfea3c480bec672192faf5a704540126ce83"
+        }
+      ]
+    },
+    {
+      "api": "python:mir_eval.chord.seg",
+      "decision": "retain",
+      "implementation": "return min(underseg(reference_intervals, estimated_intervals), overseg(reference_intervals, estimated_intervals))",
+      "reason": "Combines two different segmentation measures with min.",
+      "source_evidence": [
+        {
+          "line": 1460,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/chord.py",
+          "sha256": "a4354921817a22d6602c0f0fe3eabfea3c480bec672192faf5a704540126ce83"
+        }
+      ]
+    },
+    {
+      "api": "python:mir_eval.display.IntervalFormatter.__call__",
+      "decision": "retain",
+      "implementation": "return self._map.get(int(x), '')",
+      "reason": "Maps a position into a domain-specific interval-label lookup.",
+      "source_evidence": [
+        {
+          "line": 379,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/display.py",
+          "sha256": "ce883be62a2496946859c1dde6ebc17adbff744d896e97deb9944ecc80ef1c8b"
+        }
+      ]
+    }
+  ],
+  "excluded_count": 0,
+  "manifest": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/inputs/api_manifest.json",
+    "sha256": "4c2eba86928dfb093b603e9df89c7d0db3d819bc0c7b82c488407e7e3fd152fa"
+  },
+  "policy": "public_owned_nonwrapper",
+  "scope": "Source review of selected dunder methods and single-call bodies; not an exhaustive equivalence proof. No execution outcomes read.",
+  "selected_count": 178
+}

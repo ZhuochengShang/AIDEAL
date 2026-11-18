@@ -1,0 +1,51 @@
+{
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "val checkedSerializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()\nval immutableFlag = checkedSerializer.isImmutable\nassert(immutableFlag == true, \"Source-defined serializer immutability failed\")\nprintln(s\"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable $immutableFlag\")\nassert(false, \"AIDEAL_PREFLIGHT_EXPECTED_FAILURE_SCALA\")",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/attempt_0001/ApiTest.scala",
+  "exit_code": 1,
+  "stdout_tail": "__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable true\n",
+  "stderr_tail": "al.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/18 14:35:59 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/18 14:35:59 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/18 14:35:59 INFO MemoryStore: MemoryStore cleared\n26/11/18 14:35:59 INFO BlockManager: BlockManager stopped\n26/11/18 14:35:59 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/18 14:35:59 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/18 14:36:00 INFO SparkContext: Successfully stopped SparkContext\nException in thread \"main\" java.lang.AssertionError: assertion failed: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_SCALA\n\tat scala.Predef$.assert(Predef.scala:223)\n\tat GeoJob$.run(ApiTest.scala:356)\n\tat GeoJobMain$.main(ApiTest.scala:365)\n\tat GeoJobMain.main(ApiTest.scala)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/18 14:36:00 INFO ShutdownHookManager: Shutdown hook called\n26/11/18 14:36:00 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/attempt_0001/spark-tmp/spark-148d6f1d-6b14-4f9a-b5a7-672ed13494ff\n26/11/18 14:36:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-e12fefb3-aa4b-442a-a2be-797b1dc4fbb4\n",
+  "error_category": "runtime",
+  "error": "java.lang.AssertionError: assertion failed: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_SCALA",
+  "locus": "at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:677)",
+  "wall_s": 76.63841336313635,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/result.json",
+    "sha256": "6c04655f35d52a9cd61eb7babb53d3d750ec1b72b6d5da8948b7c34e59080bff"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/replay_identity.json",
+      "sha256": "8be727eb297883172a499f429350398a01bb3be655f24bac196e50ca2318d2cd"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/attempt_0001/ApiTest.scala",
+      "sha256": "fe3c9b73187ab52b31fae4a97a0312941ed21b5baf7a3bfad0fa8a6c964888ba"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/attempt_0001/execution.json",
+      "sha256": "49ae931c150cfa11c0bc8c2deb891dfc5c0494901eb8cb97a5fc2a355233da39"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/attempt_0001/stdout.txt",
+      "sha256": "149f681921333448a2b2ddd0b1ab4cdcaead5ffa45d3e273008ce37fd62b0dba"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/attempt_0001/stderr.txt",
+      "sha256": "727f0bc0c99b531e39734b7ed1a5dcad57728973fc2d25c41b68d59dd2565860"
+    }
+  ]
+}

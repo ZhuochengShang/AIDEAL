@@ -1,0 +1,72 @@
+project_name: tslearn
+role: An expert Python time-series machine-learning engineer using tslearn and scikit-learn
+  conventions. Write small deterministic executable checks for every frozen selected
+  public API identity, including low-level backend helpers.
+project:
+  name: tslearn
+  language: Python
+  description: A scientific machine-learning toolkit for time-series data, including
+    distance and alignment metrics, clustering, classification, forecasting, barycenters,
+    preprocessing, shapelets, serialization, and backend helpers.
+  version: 0.10.0
+domain: time-series machine learning
+domain_query_provenance: Pre-existing AIDEAL study target; not selected by the 2026-09-06
+  cross-domain GitHub query sweep.
+target_users:
+- time-series researchers and data scientists
+- ML engineers familiar with NumPy and scikit-learn
+- coding agents generating executable time-series workflows
+use_cases:
+- Compute time-series distances, similarities, alignments, and barycenters.
+- Train compact clustering, classification, and forecasting estimators.
+- Convert, normalize, resample, serialize, and inspect time-series datasets.
+- Exercise public NumPy and PyTorch backend helpers with small arrays.
+constraints:
+- Use only the checked-in Trace fixture and deterministic in-memory derivatives.
+- Do not download datasets, plot interactively, or access the network.
+- Keep estimator sizes, iteration counts, and thread counts small.
+- Import the target explicitly; the shared scaffold does not pre-import tested APIs.
+- Assert a falsifiable property and print the configured correctness witness.
+- Use the single API identity selected in this request. The frozen manifest defines
+  the complete study scope.
+knowledge:
+  repository:
+    upstream_url: https://github.com/tslearn-team/tslearn.git
+    pinned_commit: f6072f237313d610413359ecc899cdb9038f4b7e
+    pinned_tree: cb5169bbd4ef3d0dc061743e71291eb4298c74a2
+    package_version: 0.10.0
+    source_path: source
+  api_scope:
+    manifest:
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/tslearn/inputs/api_manifest.json
+      sha256: ce63f1274128b65df5eb81c19d1d40b5557df4591994f47ee3e92dbcec84a9ff
+    selection_policy: Use the current frozen canonical manifest and its preparation
+      receipts; preserve distinct defining owners.
+    sampling: none within the frozen selected set
+  fixture:
+    path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/.cached_datasets/Trace.npz
+    repository_checked_in: true
+    sha256: 0de0b7fa727cfabaf8481552db2b95fcccd12e54b67058aea79ff05b483cf807
+    arrays:
+    - X_train
+    - X_test
+    - y_train
+    - y_test
+  original_documentation:
+    source_roots:
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/README.md
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/docs
+    document_count: 121
+    bundle_characters: 7109823
+    bundle_sha256: 9a0f95c59a100f45da672aa5e241d389ddda9b2a97074965fa3dec39b0781563
+    scope_change_note: Preserved repository README+docs policy on exact stable source;
+      missing/added pages are recorded, and old generated or absent pages are not
+      imported.
+  runtime:
+    python: /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+    python_version: 3.12.15
+    package_source: official release wheels; scientific PYTHONHOME/PYTHONPATH explicitly
+      unset
+    readiness: PENDING final runtime and selected-dependency control receipts
+    keras_backend: torch
+    gpu_visibility: disabled via CUDA_VISIBLE_DEVICES

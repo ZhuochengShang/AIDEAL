@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "kind": "offline_positive_negative_runtime_controls",
+  "not_an_experiment_result": true,
+  "model_calls": 0,
+  "release_manifest": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/EVALUATOR_RELEASE.json",
+    "sha256": "c93fb88fedc7f8be7811024f45569180f3f8658f0179d19589ebc89c6483a2cb"
+  },
+  "runtime_profile": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-final-2026-11-18/runtime_profile.json",
+    "sha256": "cc272ed3356ef4c4a5befbb9fee61319b9a81604ab54c256f8beca566483799a"
+  },
+  "profile_load_cold_s": 3.7031875923275948,
+  "profile_verify_warm_s": [
+    0.6996371811255813,
+    0.6728137573227286,
+    0.6586944945156574
+  ],
+  "checks": [
+    {
+      "variant": "positive",
+      "expected": "pass",
+      "observed": "pass",
+      "error": "",
+      "exit_code": 0,
+      "execution_s": 2.049510644748807,
+      "total_case_s": 4.893706112168729,
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/positive/result.json",
+        "sha256": "1b0daa6f8164e09fdca9ab53e55223db7daee490f3390b38e39a4c5ead12d81a"
+      },
+      "passed": true
+    },
+    {
+      "variant": "negative",
+      "expected": "fail",
+      "observed": "fail",
+      "error": "AssertionError:",
+      "exit_code": 1,
+      "execution_s": 1.8916352856904268,
+      "total_case_s": 4.686071692034602,
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/result.json",
+        "sha256": "89d26466ed1d2af2bccc701b0547ae35eee4962951d4e2bf3b46aac38d8f2cb7"
+      },
+      "passed": true
+    }
+  ],
+  "source_inputs_unchanged": true,
+  "passed": true
+}

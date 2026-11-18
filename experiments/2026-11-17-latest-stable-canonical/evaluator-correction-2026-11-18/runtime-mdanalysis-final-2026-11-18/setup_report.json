@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "status": "ready",
+  "supported_banks": [
+    "mdanalysis"
+  ],
+  "unresolved_setup": [],
+  "required_selection_revision": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/selection-correction-final/selection_revision.json",
+    "sha256": "6cefe5888ffb9613aa7cd62c7b4d01fdcbd752c5852ca502ba55f52b38386ec4"
+  },
+  "historical_api_count": 1538,
+  "selected_api_count": 1519,
+  "module_import_check_count": 160,
+  "per_api_reference_validation_complete": false,
+  "readiness_scope": "All corrected selected API IDs map to installed modules; every defining module imports. Previously identified required backend/data/stream prerequisites are installed and representative real calls pass. Import/capability checks do not prove every API call is correct or all upstream fixtures are valid.",
+  "validation": {
+    "module_audit": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/module-audit-v2/MODULE_AUDIT.json",
+      "sha256": "62a1686c2b89e210e83d399892ee2066b8649c39f7c4893b27758e3331384b79"
+    },
+    "runtime_v1": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-overlay/VALIDATION.json",
+      "sha256": "d41a88cf1aae367bb35ded681e1e86e0eb8df441d54b23007011215b96da54a8"
+    },
+    "extra_backend_and_fallbacks": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-overlay-v2/VALIDATION.json",
+      "sha256": "b8d6d5080d8ac700f5108ebca805180359d9bfbe8e541c9bf8376b1579830f31"
+    },
+    "chemfiles_corrected_fixture": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-overlay-v2/validation/chemfiles_trr/REPORT.json",
+      "sha256": "2cffde1609ecc4383e2f64daf22cc84bdb6b883121baaaaf3e2ff13480e1ee4d"
+    },
+    "formats": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/fixture_manifest.json",
+      "sha256": "22d9b4e50d120199e3429902b1b320aba0cfd2e604e16b057223ce4c4ceddaf0"
+    },
+    "imd_lifecycle": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/imd_fixture_report.json",
+      "sha256": "80a7ea1aee81924b05bae72605dc0841e6a4329e94e374a617e10f0cf9a80a5d"
+    },
+    "scaffold": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/scaffold_validation.json",
+      "sha256": "1ed90bbbab82cca79f626ce79f48ede41c23616fef8806739823b0e7a0a8c85c"
+    },
+    "x3dna_build": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/x3dna/BUILD.json",
+      "sha256": "d3095e57e3bd75c0ebd143f2548d640cad0facd2acb0df497615c9851b982b7f"
+    },
+    "final_native_controls_on_superset": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/FINAL_NATIVE_CONTROL_RECEIPTS.json",
+      "sha256": "30c943c8959cf8c4e32ed3aeb7b4b1a1be916459720d0e19d085dc7487e72df0"
+    },
+    "additional_source_wrapper_audit": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/selection-correction-addendum/exclusion_proposal.json",
+      "sha256": "b448c71178125c29d0985b33ed6fb53bbc61a746d7a9612c60740c8471a79e87"
+    }
+  },
+  "optional_dependencies_not_required": [
+    {
+      "dependency": "pydssp",
+      "reason": "MDAnalysis ships a NumPy implementation; real DSSP run passed on the configured protein input."
+    },
+    {
+      "dependency": "netCDF4",
+      "reason": "NCDFWriter has a documented SciPy fallback; real write/read roundtrip passed."
+    },
+    {
+      "dependency": "cPickle",
+      "reason": "Python3 uses the source-defined pickle fallback; not a pip dependency."
+    },
+    {
+      "dependency": "duecredit",
+      "reason": "Citation collection has an explicit inactive collector fallback; not required for scientific API execution."
+    },
+    {
+      "dependency": "distopia",
+      "reason": "Optional accelerated backend; serial public distance functions work.15 private forwarding wrappers removed by source-based policy; no remaining direct Distopia target."
+    }
+  ],
+  "retained_probe_failure": {
+    "fixture": "Small upstream PDB CRYST1",
+    "interpretation": "MDAnalysis accepts this shortened record but Chemfiles rejects it; dedicated chemfiles_trajectory_path now uses validatedTRR. Original failed probe preserved."
+  },
+  "known_subject_issue": "Legacy X3DNA defaults to misspelled xdna_ensemble; common input context supplies the real x3dna_executable path for its public executable argument. The evaluated source is unchanged.",
+  "source_library_changes": false,
+  "historical_results_changed": false,
+  "model_calls": 0,
+  "data_catalog": {
+    "file_count": 523,
+    "bytes": 109184091,
+    "contains_negative_test_inputs": true,
+    "all_data_semantically_preflighted": false
+  },
+  "policy": "Use only with the bound 1519-target revision and identical input bundle across Original/D1/D2. Keep new setup failures explicit and preserve all scheduled denominators.",
+  "previous_setup_report": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-reviewed-2026-11-18/setup_report.json",
+    "sha256": "f8c218a4f1e14aa0a408e0bf692fbf3c081f7a60acf62f335309c7775d9612b2"
+  },
+  "runtime_files_changed": false,
+  "fixture_files_changed": false
+}

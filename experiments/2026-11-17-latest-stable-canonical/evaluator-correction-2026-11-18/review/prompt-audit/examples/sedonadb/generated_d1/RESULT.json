@@ -1,0 +1,62 @@
+{
+  "api": "sql:ST_Point",
+  "historical": true,
+  "recorded_detail": {
+    "status": "fail",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "fail",
+        "category": "runtime",
+        "error": "AssertionError: Expected POINT (-74.006 40.7128), got POINT(-74.006 40.7128)"
+      }
+    ],
+    "error_category": "runtime",
+    "error": "AssertionError: Expected POINT (-74.006 40.7128), got POINT(-74.006 40.7128)",
+    "code": "x, y = -74.0060, 40.7128\nsrid = 4326\nquery = f\"SELECT ST_AsText(ST_Point({x}, {y}, {srid})) as wkt\"\nresult = sd.sql(query).to_arrow_table()\nwkt = result.column(\"wkt\")[0].as_py()\n\n# Verify the WKT format matches the input coordinates\nassert wkt == \"POINT (-74.006 40.7128)\", f\"Expected POINT (-74.006 40.7128), got {wkt}\"\n\nprint(f\"__CHECK__ sql:ST_Point {wkt}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/ApiTest.py",
+    "exit_code": 1,
+    "stdout_tail": "",
+    "stderr_tail": "Traceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/sedonadb/runtime/run_snippet.py\", line 37, in <module>\n    runpy.run_path(str(path), run_name=\"__main__\")\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/ApiTest.py\", line 31, in <module>\n    main()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/ApiTest.py\", line 22, in main\n    assert wkt == \"POINT (-74.006 40.7128)\", f\"Expected POINT (-74.006 40.7128), got {wkt}\"\nAssertionError: Expected POINT (-74.006 40.7128), got POINT(-74.006 40.7128)\n"
+  },
+  "recorded_metrics": {
+    "status": "fail",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "81df7a382d1b3220a3a10aea160b34c958de493651807224ee1847bbb874d661"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/attempt_0001"
+    ],
+    "pass_round": null,
+    "wall_s": 3.0,
+    "llm_calls": 1,
+    "input_tokens": 2548,
+    "output_tokens": 166,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2548,
+        "output_tokens": 166,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": "runtime",
+    "error": "AssertionError: Expected POINT (-74.006 40.7128), got POINT(-74.006 40.7128)",
+    "locus": "",
+    "doc_chars": 3704,
+    "document_sha256": "96b7a2745a36c9e607963c864ddda3551d0ddb07b60753518bb9916b5ca46fb4",
+    "source": "source/docs/reference/sql/st_point.qmd:19",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/sedonadb/result.json",
+    "sha256": "9ea2f26a59ec46fa43604cd015f6792681b3119375c155e6c4760423e0fd7ea2"
+  },
+  "fixture_fingerprint": {
+    "sha256": "7333103f8588b0b620660d12cd7f51e643ea9a47b1b62d60ee94a08e70cb019a",
+    "file_count": 2
+  }
+}

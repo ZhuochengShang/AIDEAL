@@ -1,0 +1,473 @@
+codebase:
+  intent:
+    weights:
+      llm_common: 4
+    manual_include: []
+    manual_exclude: []
+    exclude_name_patterns: []
+    use_llm: false
+    refresh_llm: false
+    threshold: 5
+  intended_api:
+    static_include_threshold: 8
+    static_exclude_threshold: 1
+    batch_size: 25
+    cache: docs/intended_api_decisions.json
+    refresh: false
+    require_llm: false
+    selection_limit: 0
+  public_def_regex: ^\s*(?:def|class)\s+([A-Za-z][A-Za-z0-9_]*)
+  exclude_names: []
+  source_globs:
+  - source/package/MDAnalysis/**/*.py
+  - source/package/MDAnalysis/**/*.pyx
+  test_globs:
+  - source/testsuite/MDAnalysisTests/**/*.py
+  surface_filter: all
+  api_inventory: inputs/api_inventory.json
+  api_inventory_sha256: c5433ea70ea1c7585c11931fe9ce9311f7ec95fdf0d32db994234ac239973ee8
+  path: source
+  identity_mode: qualified
+  api_origin:
+    source_roots:
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis
+    library_namespaces:
+    - MDAnalysis
+    external_namespaces:
+    - builtins
+    - math
+    - numpy
+    - scipy
+    - sklearn
+    - java
+    - javax
+    - org.apache.spark
+files:
+  project_profile: configs/project_profile.yaml
+  prompts_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/prompts
+  llm_readme: docs/catalog-unused-for-original.md
+  notes_to_self: docs/notes_to_self.md
+  integration_tasks: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/mdanalysis/configs/integration_tasks.yaml
+  aliases: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/mdanalysis/aliases/aliases.json
+  error_log: logs/error_log.jsonl
+  original_readme:
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/125a7735f188ede2f118a876d32a1d74613126749a4910c9382bd5e050be123c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f5521fdb9058ec774d072215d5816b8a1c4b4e1940c04a4b4cc3e727fda8fd65.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/23c5f56796135d10b41208f0eb22ee084740ebc78303b69078d3fb8355b8fc75.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f84dd2e269b35cb424d671c512d7b93f77b7e9b7f6c69b40c0b566a18cba0fdc.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/4704742ea92fb868a9a8a42db76ecfd87da09830da17ecd37dd2da54f87e3c0f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/0efa073f75a15631726d7339b735f3bcfe9c93d2bc5a4ef39cd7eb2174eeff41.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e298e9836ff0286c60baee54c8c343c8151e7e1022d4c68c2d99b9034a5fa8a0.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/97b8e8f711a4ee29d1de22db6d50df24ae52b2cebd17e991a4375ca17d9d48ed.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/550cbb2bf3b48ca40dfe45a26d6b6508840f7fe82b29e406afa441eea7bbf8b4.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/5a0df277a8f16d3028c352f1343a0ad69394d9a721010fd529a9f3305f6ddb4d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/1117cd7f45cb01866d0ddb1b649237be361651d4f0328eb28aabcde311b77cd8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/93bf0c150b65a0bc47571f75dffb4a5eb6d8b64b3b432a7502e8ddae8d93948f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/a890333609561f6a6eb18b452796c2b4927636bba2b29e4ea63eb73ad4916d57.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/752861e30aec1c4af70a39f3835e9eb36c0acd0ab69f1962bb294d2e70cd4003.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ba2ef35cb85960ba044aaae2ecae8b2ca5c836b42f0de52f1f19e2bcde68d197.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/992cc4248b2db11b12b69ee42e5ac5e9291735cba3fc6324d0d55fed06922a8e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/1792fa4e58de9c7937e5c3c7e5ef5d0d293570dcac8910af06d9e4039fb8727d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/759b2ce28d4a47ed3ec45b1b800d86be9c7f503dde84b9bf2cfd7d8d0e720b75.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/786e9198c78ed5a80bc4579fda203e16b8815269770a2fdcf0c344a6d39212b8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/d5892811995cf0aa4547b185099f33556f9abfddbc1a2addfbf140e19e323460.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/c24f56d02370e0c90f174c651596fee6535cf8d79b330350b3f182a611318419.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/2793e4de2cbe28db950346178c614a9f186129688d6971f71ae41c555d7a3d9e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/3e2866a63c81470b4350c6228a2b321013d13faa6874961c35f2327bc92cbb19.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/0e268217e0d03c12cf28268254a888f5703c65f38a6251471397c7991152484e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/fcab3dc8c196e55d474da21d1ff416b865492ce4070466123bee749807eeabf7.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ca71071fd6681d730490e8c6fb74a4a90dfa3577dbb3c8ed3eb77eed1c1f8ec9.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/9906a56affeef068c70c9396774a634c11d37fca82bfbb4b2a5f3bb3d415e6e8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/c9ba87d3d1657332621864c5b1a953a02b624b217e91d778744709d30e0b9693.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/665d7fa296003af4dbb7361015d9ed656655516f37d3a4b57fe416aabf77c1bc.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/695f0fa10682f18526b8fd96785c9b9db695654ee3d24b68d9ad60e3446eddad.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/286298d889faf3f77bf64d0cbb1a3a7ad11fe924a84f17ebeb7ac3ce4998176f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e41590b6bd54eecb90f15f32d66b373f4669b52df450b09eb0ce46f7c1ab4f01.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/d97a38ea433926c63f628e2b26bd8e402813ccbb606025646c6b158f8d68b591.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f532af6936d2c7f02f35e39c711b29ff19843ed4da958583e88c00b6cc87f868.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/b82f334f00c2e51ff65767faad91a823cfcc746d085f5d101c853c3f10d46c3b.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/3f1b25df5bc66fb4fc855591c7922680acbd2da864efcc6b6a155ac5f6674739.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/a002b5a7c4e0e67640aefede91158daf7f8c9bbe0fafde2bb5f118b284ab59e2.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/dd70bcbf5edd43815d8852afbb8a5da31bc8a9478873b90ba56916205720a68a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ce979bec48fff4b67b763d419a073de25ceaece500aa3f9a86b6b6a6c4231711.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/983ce7b0cefa9013c545c8fd412405fc03f2097d153da8bad4b271dc94805aad.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/d2ea80a9e2d70016a69932579782aff2e65316c2e1e349e00732c14ca59c9e20.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/30e13e0a05ca4e54173add0f77b14c45e7c5f5edafc58b5812938914bc2ca0e6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/0661dda417846f9c59201f29d7d990411c53401cdaf2a873150641aaab1fa1c1.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/9467842e52bab80809e2bfec3ca5b6302ede13e6754d5a03bf4314fb006dca87.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/1016af97f41957a205a57a935c2069e12727f1ee556f290570dc4f8915d26308.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/740293cc7f509423b602b73ac0a2c0dc18ac31df4f4e9fc8e54607b18e8db716.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/c6e6ca246baa95afea9a2878aa50a3bba30f3bf806cff9ac23db15cfd710750a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/476f8a8d69e6921038900dd69321b4e3a90323684833cdb93c7dd475df583255.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/efac382913ba0594d648777311fdc898855f69e2db9a67c82f8e699bd9faecb7.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/5d72411cda98862ddcdbe79f7a92ed38dcef7cd8488b5b385a5c2eef7b7f9373.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e709801a533a77672de8909170091bb3a30c6d473c7f4117540ce30e2fcdef12.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/c70c8639b8a19cdbea11748a15c0760e5ff34a2981893b9652d05f949ebb0015.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/dc9b9d6378425e2099e65cdd2dc8bbc745df2f3a43af4e696475f4752ac9d1ca.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f95026c104cdccaedf6635951d044c71cf86e4ea7d41476014d70dffb919e2c0.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6fe490863ec44fac1182391c50d5c8c77691373cb9b0f46723f54701e141840a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/105aa6ea2fb89d70100c08f3cee033a2178af0ec7763b0adae624b1282915fb7.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/1c4b71c486ecdbcd927e25c301ebc5d670f550900e0caf5cdb711b754133bfc7.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/42d87468f7b9359ad2380722d6e4e94f02329c2e785b664570870870341394a6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/94ab0d191dba35a421a7f36e19fc3ad119bd287fd32a872dafda42f038d6381a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/068bb0b09776f173ebb25630ebce9aef835713bea810b87c2c074932493e18ab.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/7e0aba5e9ca27300ac075af6c8f2d2c82135a66ba4b84e5f65e9e1f468b1088c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/8906a748dd7a98d2bffe47b2052fd54882f546f3b83081e82032747a7bf04b25.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ccfcf8058e6001d717a88136e0fa94eefe4881e1541a64d2fe8d84dd62c9e15d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/16c4a405fde955a9e2b59e9ae2a60e6e182e4ee23cf5eb8c177d31c837fa7cff.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f5543c662e087211972e2df26d52c88f77e2f8aad025fcf5d1aa7a70b104013e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/73fd10a41cf75cf382e021a06632d6c444d383ced831d5f85895b7940c82ef2d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/a9b50d88857bfbd32cce17116e9d7d849656db6778a32aac77ade21b49d4bdb2.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/fdbca26317a0e9ea80e06bf944d537107a476eb9fc54d784668936a7b97917b7.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f3fa49ce4584d22621b2aca54716b71dc3e62eb1d25d413ca0f3c803c1c783d5.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/7fc8639a68ebab3d047ad3e55fec017e85ee29b894452ec1384b40d16ed62b53.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/da129d91db9c570ab6d707e63d1ad6e6b9ab3cdb969e0683655b1970cb9eafde.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f8f65955be41c9bca67a2b948dd8aff160605a14720dac305ae238585ba96bcd.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ce6078eaf090fdc576af8d84bd590d6c68107d0071f7e6a96e87c62e4f758c69.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/22b0f3708b2b08a8149f86a221788625e33544ca3a61e4a8061df9bd0e6ab316.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f10cbd57dd73455e524a12f0bec8cc8eaf0edb45c64e8bfb5b7f52ca3bb12b9d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/518441ee7fdfbdc6da17c348950206ebecadb5dec353ca6f3acb3e678556877f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f3f48ed2a01ccc7f1a7f1aebc0e83707ae6fa3f659efb7c1affbcf2f51773169.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e720990a7ea261059ea52999ad435c46cbd209353d3f2c9e6e74ff0d39ac7379.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/3ef63cdb36b29b3ae6e27291f632efcec67425447f673d170c58a5e9f304ccbc.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/7bb9962c955d32b10ffcfbb0d762a6cb0c60f8f9102f2542614c9ab6c3d80b17.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/8735e0f889e59ee1c5a1c9ddd6381779f2d8be7089ac9e0f1db41f3e1a2eba6b.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/eef42ce5f7687025102f33c5ab34b3b8706d9a3a23aef6ed03371d0d456848f2.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/8e2844e644d780ddb72f6dd2d942f6555069c83ae46baef90cf533941f3d3809.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6b4bf9de4771f29e5bb9291dffe599af6a2693875c98a17aad10dca066c17516.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f6abf69cfe9d4d181a1c05ebb5eb6296136327ec77ca666a653e4e779e9ac81c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/26387f1f68ad9ba1ee36bc9850a06797aa07cb5239e351e09daeefc01565921d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6caac275576edec8f70bb433ce653007921779f516df3931b442b7f91a43571c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/5a2f0ae571611689ef7a532fe4c20b3bd0ce0431c4078c0cffddfcf0b031135c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/53171d40d65d76b7df2dbd0d3551a9cea1f1716fba8db66936288ae693c1c34d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/0763e81174c7ebfba436c9c340cc3953d9654418e2168222796b4e72df7eba48.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/3a5efe69dad432953f99d8f47bc19456143c89e1852c15dc3cf6389070f0c3ad.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6e28266f2a4589a2606b2673cf55c99229d0b2470105ecb6158a39fb30626f56.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/78b6d7d49ff406ec172267308cae05d5e85dd5c55b89736e335063f6e57ab300.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/a06e85339947fd5bb398df641d87f33b0e589e93ea45ac060c91b606e388e188.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/7654d7604745090a124fb44e76fc64cde91894e1395e6ac76fdb8feeb019c9cc.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/2a66d275f4a2832130fb0c0e918be0982658d76f3967ab3fce1cc9ba3dd0955a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/b65eed2a77d38155fd702f399a6c59fb0f6a089a7a0d9ac93cda056b1bc56b2e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6085692012f15d7938fea60f495dcb19cab46b013c6a846b54b38ad3e84efe63.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/909a0aed5b2859e0521cd69bba68cb21ad35a1f79c1d9fb7274e0eebe52b5dbc.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/85282b60eb4e3bf70e34a014a905a2dd260ccffa038e100cf2edf2927e0c10a3.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/2d92b5df38d1f67b30d49801133e8b66ad80353b73ef3c78d7f5cd3221f32014.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ef077c0078b5395b6e55d96d9cb9835b6a1b1e0b3ba4f3118523a54965588202.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/aa80178f02b586d9c3f84719b605b70f78af97dc897a617e42574fb6d59803e2.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/7d0c137de039028f9679c334852e643d5f9624953f069f44ee070e1125162ed6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e6c9bc68532a6c0aa5db212f0aee8a5241add62a6c9bd6d8c9c29f442028b9f7.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/c09bf5365763559590d440a46833e86df651be997b92654ff10ee8437c310ee9.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/1b2ed245aafc51ce46aecf7eb711d36a2067aa3ece256380298ed9a96dd71257.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/cedd94a074bbc78426d747043023375c1f98870eaa9f565d0f56e691755e18a6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/a97afba8a34aa062866a97a251ad7ec591cbd537a8a89a4a398b1cf3e9412ff9.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/2d83d0b58f16d460f7438a0fcc1e857abcc707019a1f9362c2b32900f7c3a73a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/9b4c212348c3bea4b27dce4c6daeb2ce4d5928babb6e1e101ee0e3e6d21ff8e4.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/702563f7c63796256c4f25ec6dbf71033a5bf88d1f56c8564276ad9ae9a7f55f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/a9002c151b6ea94ef23eadb1ebf6202af854a0bc195b7cd9b62f9b1b018496d2.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/9097cd4b6bec0306d9ad9d36443dbe2a1a7f740024454109187780e23ee25eea.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/69700d67f8e2e15a74303875666ce1bf86d9ab41b63f12d782dcf7887c83155e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6a43766d7d6062331217b62e4f9cf4b86b4e4755020a6e8690c66fc8dd624b49.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/c5828a6abec5b024f14331b3f96d1b73dbac7b3e875e5e84e1724b9df937a5f5.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/b8335417e9cbed77c52524c3175d78dc72a6d68889daa7184e4db1a3df62c9c2.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6158c41a77f777b13066e618097b52c042df79c4fd7f6c3a4aa7cffc310a91f6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/146adfa7ce4aee316a6fb214ab478bfab67efe72945702c1a97e8a75255d069b.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ea4121a669cb921d365e3b1202a92024753dc32905328bf7f0c1aa6a4440f3f8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/0f158c73dd205f200727d56f5f1825d5109253d8079de20450f591a1d57868ce.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/a35fd0f614551c3d1a08685b75dcfb2c41bbc027baad3e845340684741f94662.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6ce9b8ae78d7b35fa10ef2e6af704110881514ae6ea9da88f748782875d8a40c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/74d3b3ecdaa2f77f6b6f981a4da681c5e668e19b9ccafba2255a7d5f73470e45.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/544001c4508e6b3255525817141ec8fab0234ef150096b7a2f7c1dbb9d29151a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ff202b935c27184cdac4631c4103401025e5751d815e6aa017c5177dec619e92.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/53f063201ab1f8d2a754a4f058cdd4d23495f08afae6b906e151de5420ef6c90.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e27bc654be91c3401427b0f252d4a99f2e76e70759c64fc615310cb0ad0c3a11.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/2475ae031c40bf934983760a2d733b2a2d6aaaaf5f7064543b4c5922927f96bb.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/5dddb33c54ef3bd69d401089075a17d5b822f5bafeccfa66b0a3a19c28e7b3d4.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/bf501df1da70694a92b2f9da9c5dfcdbb01f94d9a24ecb8a47a8a699eb635230.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/ab828bcf742b7b15fba20a53e043b601d814670957a0899f1dcdf37703cb4d3d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/00324a24770ca62e3389c921332032807e7d1a390dc3ebaf27bbe09d073806a3.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/146c7d445b1402cd99dc3067b0f9fa71c22e0304fa3141a26b15cd253d72bd84.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/3349ee1c631f690665a68c9164950f8a1a4afd430bfb7bf07f25dd2ed19f0317.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/823603eea4493755c7c1c6d518d75e1e5aff9160aa2f390656e48755f734b85e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6b4ae8a3eeb3e47466695b160fb5730da793407c69ad0468362561744fbd15e5.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/73b60dae76bcb726673ea5f823dbb5d081f1bba791cb812b7d4a6d491f3ef680.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/6009ab643ee35bfcfb45d359099a18550b6df6ddfb73e36ee25ec86c17357553.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/959cfec92318a4e81be280990b8b98b4ffec6c316e657dbbc668e55b982b84dc.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/1e7675286756c4a06aa402a0df6800e5c9b288f101529f83a2c3072c48a0c910.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e6a12a52df83cab5fbd6e5bda69d653bca8333245e9eb0458d26bd59039c47d5.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/3bc2745f0be681381350ef792733afc2d3d20ab10d34d3464a20c58fa4dea472.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/e9cc2e3623c14c0578c57435270cf19e77c82fc289e3985f7c9da06572766e8f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/5ea335ded81b5f8283ef3cef7eebf2a0553c6cd15949faf2cec5e8950fdf361f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/fa22a8bb86d23baad1c597ac2ee6496a0a90b9b699f2d0e9727685c50e7d2850.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/pages/f78543bef4abdfc6112dbcb0ffd7ffe825aeb8311e287ce2e9edb645ec7f90d3.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/shared-readme/README.rst
+  original_doc_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/manifest.json
+  original_doc_manifest_sha256: 73591399303b377384939068a978a18ea414f158cdd2a2207d714a5a5e6e51ff
+models:
+  registry:
+    selected:
+      provider: google
+      model: gemini-3.1-flash-lite
+      max_output_tokens: 8192
+  roles:
+    author: selected
+    audience: selected
+    fixer: selected
+runtime:
+  target: local
+  local: {}
+checks:
+  required_sections:
+  - Signature
+  - Goal
+  - Parameters
+  - Input
+  - Output
+  - Valid Call Patterns|Valid Access Patterns
+  - LLM Instruction Prompt
+  - Prompt Snippet
+  - Common Failure Modes
+  - Fix Code Hint
+  comprehension_apis_sampled: 5
+docfix:
+  allow_repo_called_members: true
+  allowed_member_categories:
+  - language_core
+  - python_core
+  member_categories:
+    language_core:
+    - println
+    - print
+    - require
+    - assert
+    - format
+    - mkString
+    - toString
+    - map
+    - flatMap
+    - filter
+    - foreach
+    - collect
+    - count
+    - take
+    - first
+    - reduce
+    - fold
+    - foldLeft
+    - sum
+    - min
+    - max
+    - size
+    - length
+    - nonEmpty
+    - isEmpty
+    - head
+    - headOption
+    - last
+    - getOrElse
+    - get
+    - exists
+    - forall
+    - contains
+    - indexOf
+    - sortBy
+    - sorted
+    - zip
+    - zipWithIndex
+    - toArray
+    - toList
+    - toSeq
+    - toSet
+    - toMap
+    - distinct
+    - sliding
+    - grouped
+    - apply
+    - update
+    - close
+    - cache
+    - persist
+    - coalesce
+    - repartition
+    - keys
+    - values
+    - trim
+    - split
+    - replace
+    - startsWith
+    - endsWith
+    - toDouble
+    - toInt
+    - toLong
+    - toFloat
+    - abs
+    - floor
+    - ceil
+    - round
+    - find
+    - getPath
+    - getName
+    - getClass
+    - asInstanceOf
+    - isInstanceOf
+    - mkdirs
+    - listFiles
+    - delete
+    - getConstructor
+    - newInstance
+    - getFileSystem
+    - resolve
+    - isNaN
+    - isInfinite
+    - isFinite
+    - toRadians
+    - toDegrees
+    - sqrt
+    - pow
+    - sin
+    - cos
+    - tan
+    - atan2
+    - fill
+    - range
+    - empty
+    - ofDim
+    python_core:
+    - fit
+    - predict
+    - transform
+    - fit_transform
+    - fit_predict
+    - score
+    - ravel
+    - reshape
+    - astype
+    - tolist
+    - copy
+    - mean
+    - sum
+    - std
+    - var
+    - argmin
+    - argmax
+    - cumsum
+    - squeeze
+    - flatten
+    - array
+    - asarray
+    - zeros
+    - ones
+    - arange
+    - linspace
+    - allclose
+    - isclose
+    - seed
+    - rand
+    - randn
+    - randint
+    - normal
+    - shuffle
+    - append
+    - extend
+    - join
+    - format
+    - items
+    - keys
+    - values
+    - get
+    - strip
+    - lower
+    - upper
+    - round
+    - set_params
+    - get_params
+  allowed_members: []
+comprehension:
+  execute:
+    execution_context: A runnable headless Python test harness is already in scope.
+      The snippet is inserted inside a function and the preamble variables listed
+      under available inputs are already defined. Write executable statements only.
+      Import MDAnalysis submodules or optional dependencies only when the documented
+      public call requires them. Do not define another function or process entry point.
+      Assert a deterministic property and print a compact correctness witness containing
+      a shape, scalar, or length.
+    region:
+    - '# TODO API_TEST_START'
+    - '# TODO API_TEST_END'
+    strip_snippet_imports: false
+    output_tail_chars: 2000
+    success_marker: __DONE__
+    error_marker: __RUN_ERR__
+    work_dir: execution
+    timeout_seconds: 300
+    max_fix_rounds: 0
+    auto_report: false
+    test_filename: api_test.py
+    command: env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+      "{test_file}"
+    exec_hints: Use the preloaded Universe, AtomGroups, trajectory, and the pinned
+      molecular fixture paths. Keep atom selections and frame ranges small. For analysis
+      classes construct the documented class, call run() when required, and validate
+      a stable scalar, shape, or length. The PSF/DCD pair has no periodic box; use
+      a matching configured periodic fixture only when the target contract requires
+      it. Write any small output only under output_dir; do not modify source fixtures,
+      download data, or open a GUI.
+    scaffold: inputs/api_test_scaffold.py
+    local_uris: false
+    output_dir: execution/output
+    preamble: 'MDAnalysis = mda  # type: module
+
+      numpy = np  # type: module
+
+      universe = mda.Universe(psf_path, dcd_path)  # type: MDAnalysis.Universe
+
+      atoms = universe.atoms  # type: MDAnalysis.core.groups.AtomGroup
+
+      protein = universe.select_atoms("protein")  # type: MDAnalysis.core.groups.AtomGroup
+
+      backbone = universe.select_atoms("protein and backbone")  # type: MDAnalysis.core.groups.AtomGroup
+
+      trajectory = universe.trajectory  # type: MDAnalysis.coordinates.base.ReaderBase
+
+      timestep = trajectory[0]  # type: MDAnalysis.coordinates.base.Timestep
+
+      '
+    sample_data:
+      psf_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk.psf
+      dcd_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_dims.dcd
+      pdb_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_open.pdb
+      gro_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.gro
+      xtc_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.xtc
+      mdanalysis_fixture_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures
+    require_correctness: true
+    io_hints: ''
+    stop_on_provider_error: true
+    build: ''
+    probe_on_missing: false
+  class_context: false
+  relevant_doc_chars: 92612
+project:
+  language: Python
+  name: MDAnalysis
+provenance:
+  source_revision: ace84dde1363e32aa94cd3f29a42c2f590bd0575
+  source_tree: 79fa3ad6639df0b58986752f28a7b89908593e35
+  source_version: 2.11.0
+  source_tag: package-2.11.0
+  source_provenance_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/source-provenance/mdanalysis.json
+  runtime_validation: PENDING final runtime controls and loaded-config registry verification
+  selection_scope:
+    selected_api_names: 435
+    public_declaration_sites: 1435
+    public_bare_names: 1053
+    selection_policy: Frozen structural body audit; quarantine unknown/wrappers; globally
+      retain highest arity per bare name with deterministic ties.
+    semantic_equivalence_guarantee: false
+    sampling: none within the frozen selected set
+    manifest_path: inputs/api_manifest.json
+    canonical_selection_receipt: canonical-selection.json
+    manifest_file_sha256: f247ed2ba64570403e11eeab8afae74efbdfc2989f5166d75d967a5176fabffa
+    ordered_names_sha256: 421763359354fee7a014cd763c981567335fe554f8acd8dcdfe4086b320f3b34
+  paid_calls_started: false
+readme_generation:
+  distill_chunk_chars: 150000

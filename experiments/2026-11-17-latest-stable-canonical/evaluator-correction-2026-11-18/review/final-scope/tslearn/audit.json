@@ -1,0 +1,109 @@
+{
+  "basis": "Source semantics and established public/nonwrapper scope only; no execution outcomes consulted.",
+  "excluded": [
+    {
+      "api": "python:tslearn.__dir__",
+      "implementation": "return [*globals().keys(), *__all__]",
+      "reason": "Infrastructure-only module introspection: returns globals and exported module names, not a time-series operation.",
+      "source_evidence": [
+        {
+          "line": 42,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/__init__.py",
+          "sha256": "800de28d17217d34afe2328cbf1ecbfa5bf84f7275a3ec8d66894240a55576db"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.__getattr__",
+      "implementation": "if name in __all__:\n    return _importlib.import_module(f'tslearn.{name}')\nelse:\n    try:\n        return globals()[name]\n    except KeyError:\n        raise AttributeError(f\"Module 'tslearn' has no attribute '{name}'\")",
+      "reason": "Infrastructure-only lazy import/namespace lookup: dispatches module attributes through importlib or globals.",
+      "source_evidence": [
+        {
+          "line": 46,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/__init__.py",
+          "sha256": "800de28d17217d34afe2328cbf1ecbfa5bf84f7275a3ec8d66894240a55576db"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.backend.Backend.__getattr__",
+      "implementation": "return getattr(self.backend, item)",
+      "reason": "Unchanged attribute-forwarding hook: returns getattr(self.backend, item); no customized numerical operation.",
+      "source_evidence": [
+        {
+          "line": 72,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/backend.py",
+          "sha256": "9ef1534cc9ef139550ff3bd8e49a43c370ef9358afd8725dc1579976523f749c"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.numpy_backend.NumPyBackend.cast",
+      "implementation": "return x.astype(dtype)",
+      "reason": "Thin NumPy forwarding wrapper: returns x.astype(dtype) without added validation or computation.",
+      "source_evidence": [
+        {
+          "line": 91,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/numpy_backend.py",
+          "sha256": "47d0152effb1499fa841775ebd4b5fe2879557d965b0adfcc83d3332e89bd59b"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.numpy_backend.NumPyBackend.copy",
+      "implementation": "return x.copy()",
+      "reason": "Thin NumPy forwarding wrapper: returns x.copy() without added validation or computation.",
+      "source_evidence": [
+        {
+          "line": 95,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/numpy_backend.py",
+          "sha256": "47d0152effb1499fa841775ebd4b5fe2879557d965b0adfcc83d3332e89bd59b"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.piecewise.piecewise.OneD_SymbolicAggregateApproximation.__sklearn_tags__",
+      "implementation": "return super().__sklearn_tags__()",
+      "reason": "Framework compatibility forwarding hook: returns super().__sklearn_tags__() unchanged.",
+      "source_evidence": [
+        {
+          "line": 800,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/piecewise/piecewise.py",
+          "sha256": "5da0f8e5ab9063f3ca80de3babfae173eb058f3546013fe616d8450fe5c350aa"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.piecewise.piecewise.SymbolicAggregateApproximation.__sklearn_tags__",
+      "implementation": "return super().__sklearn_tags__()",
+      "reason": "Framework compatibility forwarding hook: returns super().__sklearn_tags__() unchanged.",
+      "source_evidence": [
+        {
+          "line": 517,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/piecewise/piecewise.py",
+          "sha256": "5da0f8e5ab9063f3ca80de3babfae173eb058f3546013fe616d8450fe5c350aa"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.utils.cast.from_seglearn_dataset",
+      "implementation": "return to_time_series_dataset(X)",
+      "reason": "Duplicate interface: forwards X unchanged to the separately selected to_time_series_dataset operation.",
+      "source_evidence": [
+        {
+          "line": 182,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/utils/cast.py",
+          "sha256": "2fecfde1ad2a0901584828d7ea28346cf2bc178e2ec49528c36a6c32f5f3c85f"
+        }
+      ]
+    }
+  ],
+  "excluded_count": 8,
+  "historical_count": 362,
+  "historical_manifest": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/inputs/api_manifest.json",
+    "sha256": "ce63f1274128b65df5eb81c19d1d40b5557df4591994f47ee3e92dbcec84a9ff"
+  },
+  "policy": "public_owned_nonwrapper",
+  "selected_count": 354
+}

@@ -1,0 +1,9 @@
+val serializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()
+val isImmutableResult = serializer.isImmutable
+
+// The default constructor for RasterMetadataSerializer typically initializes 
+// a mutable state, so we expect isImmutable to be false.
+val expectedState = false
+assert(isImmutableResult == expectedState, s"Expected isImmutable to be $expectedState, but got $isImmutableResult")
+
+println(s"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable $isImmutableResult")

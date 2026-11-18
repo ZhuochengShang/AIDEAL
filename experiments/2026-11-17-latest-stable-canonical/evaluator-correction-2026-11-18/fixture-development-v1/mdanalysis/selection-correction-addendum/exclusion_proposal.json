@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "policy": "public_owned_nonwrapper",
+  "historical_count": 1538,
+  "previous_reviewed_count": 1522,
+  "proposed_count": 1519,
+  "excluded": [
+    {
+      "api": "python:MDAnalysis.analysis.results.ResultsGroup.ndarray_hstack",
+      "reason": "Direct external-dependency forwarding with unchanged arguments and no library-specific transformation, validation, dispatch or state handling.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/analysis/results.py",
+          "sha256": "792ecc54815ad72185e71f8bbe593c2a11175b584c708e783ccb148c5e15cc84",
+          "line": 301
+        }
+      ],
+      "forwarding_expression": "return np.hstack(arrs)",
+      "runtime_origin_verified": true
+    },
+    {
+      "api": "python:MDAnalysis.analysis.results.ResultsGroup.ndarray_vstack",
+      "reason": "Direct external-dependency forwarding with unchanged arguments and no library-specific transformation, validation, dispatch or state handling.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/analysis/results.py",
+          "sha256": "792ecc54815ad72185e71f8bbe593c2a11175b584c708e783ccb148c5e15cc84",
+          "line": 317
+        }
+      ],
+      "forwarding_expression": "return np.vstack(arrs)",
+      "runtime_origin_verified": true
+    },
+    {
+      "api": "python:MDAnalysis.converters.RDKitInferring.sanitize_mol",
+      "reason": "Direct external-dependency forwarding with unchanged arguments and no library-specific transformation, validation, dispatch or state handling.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/converters/RDKitInferring.py",
+          "sha256": "cf6910a12f4e7db0e8e78883caaa2060090c4fe0a73c791a89b7606fd375571e",
+          "line": 115
+        }
+      ],
+      "forwarding_expression": "Chem.SanitizeMol(mol)",
+      "runtime_origin_verified": true
+    }
+  ],
+  "existing_exclusions_preserved": 16,
+  "not_based_on_evaluation_outcomes": true,
+  "scope": "Python source AST screening followed by source and runtime checks for exact direct external forwarding. No claim that this narrow audit proves all Cython/native code is wrapper-free.",
+  "retained_runtime_overrides": [
+    "python:MDAnalysis.lib.transformations.random_vector",
+    "python:MDAnalysis.lib.transformations.inverse_matrix"
+  ],
+  "retained_runtime_override_reason": "Python forwarding fallbacks are replaced by MDAnalysis _transformations compiled implementations at import.",
+  "module_introspection_hooks_found": [],
+  "class_hook_policy": "Retain domain attribute dispatch, state updates, name translation, and custom errors; no blanket exclusion by dunder spelling."
+}

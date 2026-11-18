@@ -1,0 +1,73 @@
+{
+  "api": "python:MDAnalysis.lib.distances.calc_bonds",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "from MDAnalysis.lib.distances import calc_bonds\nimport numpy as np\nfirst = atoms[:2].positions.copy()\nsecond = atoms[1:3].positions.copy()\nobserved = calc_bonds(first, second, backend=\"serial\")\nexpected = np.linalg.norm(first.astype(float) - second.astype(float), axis=1)\nassert np.allclose(observed, expected + 1.0, rtol=1e-6, atol=1e-6)\nprint(f\"__CHECK__ python:MDAnalysis.lib.distances.calc_bonds {observed.tolist()}\")\n",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/api_test.py",
+  "exit_code": 1,
+  "stdout_tail": "",
+  "stderr_tail": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ AssertionError: \nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/api_test.py\", line 48, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/api_test.py\", line 40, in run\n    assert np.allclose(observed, expected + 1.0, rtol=1e-6, atol=1e-6)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "error_category": "runtime",
+  "error": "AssertionError:",
+  "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/api_test.py:40",
+  "wall_s": 1.8916352856904268,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/result.json",
+    "sha256": "d8f8f1dba0a875e851c0c07bfb3e299fa1d24ec60e27213aabf2d3f4e65b73ac"
+  },
+  "runtime_profile": [
+    {
+      "path": "/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/workflow/runtime_profile.py",
+      "sha256": "5a5888af16dac99b5b3e90696a3f6936e68eafcab68734ddd651fe5cf0036507"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-final-2026-11-18/runtime_profile.json",
+      "sha256": "cc272ed3356ef4c4a5befbb9fee61319b9a81604ab54c256f8beca566483799a"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-final-2026-11-18/setup_report.json",
+      "sha256": "5a6f99a257c855f4fb262391a1651c3c21fab3059d23d42c8488fc7942a704f9"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-reviewed-2026-11-18/environment_manifest.json",
+      "sha256": "326de27272cd7eaa8ff7776409d46298e2e56e30354dfce8314fac857006e0ce"
+    },
+    {
+      "path": "/usr/bin/python3.12",
+      "sha256": "fbc3307aee63d7282f5f1ebfa53b502c2e5934a0f9729e316bb98d29212ae224"
+    }
+  ],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/replay_identity.json",
+      "sha256": "578d3aac0a233ef99e0d0ee5d2457991d49e8fbddf44eff5912d258f1d19cf56"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/api_test.py",
+      "sha256": "f5cbacb39b7f13002bfbaa746b3777cf4155443b02ab3a8b916cbc3957c60056"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/execution.json",
+      "sha256": "d0f48bc3cec66629b8e171e77dd6bbd6c4e3f7cb396d7912249b538b2927d475"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/stderr.txt",
+      "sha256": "98618fdaad8b17e2e10a61c79ed864ab8a9c90d6c3b46dfc41f2d931fbad7126"
+    }
+  ]
+}

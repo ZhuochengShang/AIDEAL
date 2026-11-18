@@ -1,0 +1,58 @@
+{
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+  "historical": true,
+  "recorded_detail": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "val serializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()\nval result = serializer.isImmutable\nprintln(s\"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable $result\")\nassert(result == true, \"RasterMetadataSerializer is expected to be immutable by design contract\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/ApiTest.scala",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable true\n__DONE__ object=GeoJob\n",
+    "stderr_tail": "55:46 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37679.\n26/11/17 20:55:46 INFO NettyBlockTransferService: Server created on 127.0.0.1:37679\n26/11/17 20:55:46 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/17 20:55:46 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 37679, None)\n26/11/17 20:55:46 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:37679 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 37679, None)\n26/11/17 20:55:46 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 37679, None)\n26/11/17 20:55:46 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 37679, None)\n26/11/17 20:55:48 INFO ENGINE: dataFileCache open start\n26/11/17 20:55:48 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/17 20:55:48 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/17 20:55:48 INFO MemoryStore: MemoryStore cleared\n26/11/17 20:55:48 INFO BlockManager: BlockManager stopped\n26/11/17 20:55:48 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/17 20:55:48 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/17 20:55:49 INFO SparkContext: Successfully stopped SparkContext\n26/11/17 20:55:49 INFO ShutdownHookManager: Shutdown hook called\n26/11/17 20:55:49 INFO ShutdownHookManager: Deleting directory /tmp/spark-49d73fa4-6754-4525-b538-5b2ae369139d\n26/11/17 20:55:49 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/spark-tmp/spark-aaa2c3f6-4ae8-48e5-a901-8b7be8ad9db3\n"
+  },
+  "recorded_metrics": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "276b45e2ade20ed16ec64ab04b7ecc1e0120ee8e75f97a3fae7f1ab33bc223d2"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 80.6,
+    "llm_calls": 1,
+    "input_tokens": 2270,
+    "output_tokens": 87,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2270,
+        "output_tokens": 87,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 2276,
+    "document_sha256": "0a439bfdbeec2daa10474af2ba9341173ea53b67bece42412eadaf7947f2a121",
+    "source": "source/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala:53",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/result.json",
+    "sha256": "6c04655f35d52a9cd61eb7babb53d3d750ec1b72b6d5da8948b7c34e59080bff"
+  },
+  "fixture_fingerprint": {
+    "sha256": "7c866aa11c80b1107650c7677b8d475c36e1e996671ea5a20a0fe37423a1f614",
+    "file_count": 3
+  }
+}

@@ -1,0 +1,8 @@
+from MDAnalysis.lib.distances import calc_bonds
+import numpy as np
+first = atoms[:2].positions.copy()
+second = atoms[1:3].positions.copy()
+observed = calc_bonds(first, second, backend="serial")
+expected = np.linalg.norm(first.astype(float) - second.astype(float), axis=1)
+assert np.allclose(observed, expected + 0.0, rtol=1e-6, atol=1e-6)
+print(f"__CHECK__ python:MDAnalysis.lib.distances.calc_bonds {observed.tolist()}")

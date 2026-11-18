@@ -1,0 +1,51 @@
+## API Test: `java:edu.ucr.cs.bdlab.raptor.Statistics.isValid`
+
+### Signature
+```java
+():boolean
+```
+_Source: source/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Statistics.java:131_
+
+### Goal
+Checks if the current `Statistics` object contains valid, computed statistical data ready for retrieval or further processing.
+
+### Parameters
+_None._
+
+### Input
+The caller must have an initialized `edu.ucr.cs.bdlab.raptor.Statistics` object. This method is typically called after a raster-vector join or a zonal statistics operation has been performed on the object to ensure the computation completed successfully.
+
+### Output
+Returns `boolean` — `true` if the statistics have been successfully calculated and are valid; `false` otherwise.
+
+### Valid Call Patterns
+```java
+// Inferred from signature:
+edu.ucr.cs.bdlab.raptor.Statistics stats = new edu.ucr.cs.bdlab.raptor.Statistics();
+// ... perform operations ...
+if (stats.isValid()) {
+    // Access statistical results
+}
+```
+
+### LLM Instruction Prompt
+- When generating code that accesses statistical results from an `edu.ucr.cs.bdlab.raptor.Statistics` instance, always wrap the access in a conditional check using `isValid()` to prevent processing uninitialized or invalid data.
+
+### Prompt Snippet
+```text
+if (statisticsInstance.isValid()) {
+    // Proceed with data extraction
+}
+```
+
+### Common Failure Modes
+- **Uninitialized State:** Calling `isValid()` on a `Statistics` object that has not yet been populated by a Raptor operation will return `false`.
+- **Post-Processing Errors:** If a raster-vector join fails due to CRS mismatch or incompatible data types, the associated `Statistics` object may remain in an invalid state. Always verify `isValid()` before attempting to read values from the object.
+
+### Fix Code Hint
+```java
+// Ensure the statistics object is valid before usage
+if (!stats.isValid()) {
+    throw new IllegalStateException("Statistics computation failed or was not performed.");
+}
+```

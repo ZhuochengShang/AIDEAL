@@ -1,0 +1,58 @@
+{
+  "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+  "historical": true,
+  "recorded_detail": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "edu.ucr.cs.bdlab.raptor.Statistics stats = new edu.ucr.cs.bdlab.raptor.Statistics();\nboolean valid = stats.isValid();\nif (valid != true && valid != false) {\n    throw new AssertionError(\"Statistics.isValid() returned an unexpected non-boolean value.\");\n}\nSystem.out.println(\"__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid \" + valid);",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/ApiTest.java",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid true\n__DONE__\n",
+    "stderr_tail": "/1201ded18969-spark-network-shuffle_2.12-3.5.1.jar to class loader default\n26/11/17 20:54:32 INFO Executor: Fetching spark://127.0.0.1:41971/jars/6de167427fb5-javolution-5.5.1.jar with timestamp 1794977635566\n26/11/17 20:54:32 INFO Utils: Fetching spark://127.0.0.1:41971/jars/6de167427fb5-javolution-5.5.1.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/spark-tmp/spark-0bf43639-d8f9-421a-bacf-2bfe2b81e414/userFiles-b2c56cbf-6cb3-4656-b8d5-7769dfddb82d/fetchFileTemp11039621217557423591.tmp\n26/11/17 20:54:32 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/spark-tmp/spark-0bf43639-d8f9-421a-bacf-2bfe2b81e414/userFiles-b2c56cbf-6cb3-4656-b8d5-7769dfddb82d/6de167427fb5-javolution-5.5.1.jar to class loader default\n26/11/17 20:54:32 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 41257.\n26/11/17 20:54:32 INFO NettyBlockTransferService: Server created on 127.0.0.1:41257\n26/11/17 20:54:32 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/17 20:54:32 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 41257, None)\n26/11/17 20:54:32 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:41257 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 41257, None)\n26/11/17 20:54:32 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 41257, None)\n26/11/17 20:54:32 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 41257, None)\n"
+  },
+  "recorded_metrics": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "6313c0d1bd05df495c8eb89e06b51d859841797ffbf62815ec5692f844e0e7fd"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 45.4,
+    "llm_calls": 1,
+    "input_tokens": 1919,
+    "output_tokens": 103,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 1919,
+        "output_tokens": 103,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 2250,
+    "document_sha256": "213098d5af831017ac26cf1890c8518adcecbb4e366a02ec8eb0acb1dd663a68",
+    "source": "source/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Statistics.java:131",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/result.json",
+    "sha256": "40ab0659784d25e4ecb0c1a61e0532d7e1e63bbde6c7a160db44eb780f11d80c"
+  },
+  "fixture_fingerprint": {
+    "sha256": "7c866aa11c80b1107650c7677b8d475c36e1e996671ea5a20a0fe37423a1f614",
+    "file_count": 3
+  }
+}

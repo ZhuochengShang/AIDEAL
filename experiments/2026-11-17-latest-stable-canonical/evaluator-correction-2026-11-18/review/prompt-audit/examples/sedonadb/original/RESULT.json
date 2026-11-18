@@ -1,0 +1,62 @@
+{
+  "api": "sql:ST_Point",
+  "historical": true,
+  "recorded_detail": {
+    "status": "fail",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "fail",
+        "category": "runtime",
+        "error": "AssertionError"
+      }
+    ],
+    "error_category": "runtime",
+    "error": "AssertionError",
+    "code": "table = sd.sql(\"SELECT ST_AsText(ST_Point(10.0, 20.0, 4326)) as wkt\").to_arrow_table()\nwkt_result = table.column(\"wkt\")[0].as_py()\n\nassert wkt_result == \"POINT (10 20)\"\nprint(f\"__CHECK__ sql:ST_Point {wkt_result}\")\n\ntable_srid = sd.sql(\"SELECT ST_SRID(ST_Point(10.0, 20.0, 3857)) as srid\").to_arrow_table()\nsrid_result = table_srid.column(\"srid\")[0].as_py()\n\nassert srid_result == 3857\nprint(f\"__CHECK__ sql:ST_Point {srid_result}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/ApiTest.py",
+    "exit_code": 1,
+    "stdout_tail": "",
+    "stderr_tail": "Traceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/sedonadb/runtime/run_snippet.py\", line 37, in <module>\n    runpy.run_path(str(path), run_name=\"__main__\")\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/ApiTest.py\", line 32, in <module>\n    main()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/ApiTest.py\", line 18, in main\n    assert wkt_result == \"POINT (10 20)\"\nAssertionError\n"
+  },
+  "recorded_metrics": {
+    "status": "fail",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "155afa69b19699c1d9ce2aa25d1e3ba5ab7182cf846c3223d07d34fcb0102992"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/execution/run_sql_ST_Point--f21a2896a8691a9006891a8769c48de3ad981f2158d9b26685ab0ee96582fefb/attempt_0001"
+    ],
+    "pass_round": null,
+    "wall_s": 2.6,
+    "llm_calls": 1,
+    "input_tokens": 5619,
+    "output_tokens": 197,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 5619,
+        "output_tokens": 197,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": "runtime",
+    "error": "AssertionError",
+    "locus": "",
+    "doc_chars": 10727,
+    "document_sha256": "74486709e44e25f61d014e5bd64e2e4790457b050e6ec7bc50a40ff11b7001e9",
+    "source": "source/docs/reference/sql/st_point.qmd:19",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/result.json",
+    "sha256": "a5d8e630cc24a6caa3bc5facd4a7d4e9e0225210f633fe42635fdf1577d04aff"
+  },
+  "fixture_fingerprint": {
+    "sha256": "7333103f8588b0b620660d12cd7f51e643ea9a47b1b62d60ee94a08e70cb019a",
+    "file_count": 2
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "reports": [
+    {
+      "name": "ordinary",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "status": "passed",
+      "stdout": "__CHECK__ python:MDAnalysis.lib.distances.calc_bonds  1.0\n__DONE__\n",
+      "stderr": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n",
+      "program": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/ordinary/api_test.py"
+    },
+    {
+      "name": "imd",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "status": "passed",
+      "stdout": "__CHECK__ python:MDAnalysis.coordinates.IMD.IMDReader  5\n__DONE__\n",
+      "stderr": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n",
+      "program": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/imd/api_test.py"
+    },
+    {
+      "name": "imd_failed_candidate",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "status": "passed",
+      "stdout": "",
+      "stderr": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ ValueError: intentional cleanup probe\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/imd_failed_candidate/api_test.py\", line 88, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/imd_failed_candidate/api_test.py\", line 83, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/imd_failed_candidate/api_test.py\", line 79, in api_test\n    raise ValueError(\"intentional cleanup probe\")\nValueError: intentional cleanup probe\n",
+      "program": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/imd_failed_candidate/api_test.py"
+    },
+    {
+      "name": "x3dna",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "status": "passed",
+      "stdout": "__CHECK__ python:MDAnalysis.analysis.legacy.x3dna.X3DNA  24\n__DONE__\n",
+      "stderr": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/x3dna/api_test.py:80: DeprecationWarning: `__init__` is deprecated!\n`__init__` will be removed in release 3.0.0.\nX3DNA module is deprecated and will be removed inMDAnalysis 3.0.0, see #3788\n  x=X3DNA(dna_pdb_path,executable=x3dna_executable)\n/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/lib/util.py:599: DeprecationWarning: This method is deprecated as of MDAnalysis version 2.7.0 and will be removed in version 3.0.0. Please use shutil.which instead.\n  warnings.warn(wmsg, DeprecationWarning)\n\n......Processing structure #1: <stdin>......\n\nhandling file </home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/dna_bdl084.pdb>\n\nTime used: 00:00:00:00\nThis structure has broken O3'[i] to P[i+1] linkages\n\nTime used: 00:00:00:00\n",
+      "program": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/validation/scaffold/x3dna/api_test.py"
+    }
+  ],
+  "all_passed": true,
+  "model_calls": 0
+}

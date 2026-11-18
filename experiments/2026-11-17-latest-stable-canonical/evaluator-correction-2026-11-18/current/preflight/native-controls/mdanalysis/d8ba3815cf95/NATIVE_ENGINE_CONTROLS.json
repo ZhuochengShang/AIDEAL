@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "kind": "native_engine_with_mocked_model_and_real_execution",
+  "not_an_experiment_result": true,
+  "paid_model_calls": 0,
+  "driver": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/preflight_md_native_engine.py",
+    "sha256": "88a4b0e7cd14d478a968ed9e673e9895ea7356b9eac7e5ffab5b703cf7f5af0b"
+  },
+  "release": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/EVALUATOR_RELEASE.json",
+    "sha256": "c93fb88fedc7f8be7811024f45569180f3f8658f0179d19589ebc89c6483a2cb"
+  },
+  "prepared_identity": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/continuation/mdanalysis/continuation.json",
+    "sha256": "1368927a2a48ac9663b18f7c75bc64c85ff38a46a4d0188e884adea1a4cefe40"
+  },
+  "checks": [
+    {
+      "arm": "original",
+      "name": "calc_positive",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "mock_requests": 1,
+      "paid_model_calls": 0,
+      "passed": true,
+      "elapsed_s": 58.64871362969279,
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/continuation/mdanalysis/original/configs/continuation.yaml",
+        "sha256": "786f2f8e0ffea06f3241aead261885fbf38e005b685ab71193839315c5959f01"
+      },
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/calc_positive/native_result.json",
+        "sha256": "1a1d99db1c9511731a91a3b6e6ff166d5c882a27bb4e6cfec2b7f5a15783acd3"
+      },
+      "prompts": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/calc_positive/mock_provider_prompts.json",
+        "sha256": "315f66de5a43eb6bd6a3c9d4c7fa330b8b2165e11072b8c9ffdd9b68ca11e143"
+      }
+    },
+    {
+      "arm": "original",
+      "name": "calc_negative",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "mock_requests": 1,
+      "paid_model_calls": 0,
+      "passed": true,
+      "elapsed_s": 49.637637788429856,
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/continuation/mdanalysis/original/configs/continuation.yaml",
+        "sha256": "786f2f8e0ffea06f3241aead261885fbf38e005b685ab71193839315c5959f01"
+      },
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/calc_negative/native_result.json",
+        "sha256": "c2af227fcafee2ce7f0cced0b70dcb87b05a5b1eec7a9b2e179ab14b0b1733ec"
+      },
+      "prompts": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/calc_negative/mock_provider_prompts.json",
+        "sha256": "315f66de5a43eb6bd6a3c9d4c7fa330b8b2165e11072b8c9ffdd9b68ca11e143"
+      }
+    },
+    {
+      "arm": "original",
+      "name": "imd_positive",
+      "api": "python:MDAnalysis.coordinates.IMD.IMDReader",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "mock_requests": 1,
+      "paid_model_calls": 0,
+      "passed": true,
+      "elapsed_s": 49.6886782348156,
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/continuation/mdanalysis/original/configs/continuation.yaml",
+        "sha256": "786f2f8e0ffea06f3241aead261885fbf38e005b685ab71193839315c5959f01"
+      },
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/imd_positive/native_result.json",
+        "sha256": "3d1e5d27be9d057eee3d5bdc895ec20d6e481f33ed73eb50f0b779e9b8013c27"
+      },
+      "prompts": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/imd_positive/mock_provider_prompts.json",
+        "sha256": "a5300e758b6052cbf617dd85b23bf3e940606340f97504a2d0889c6cd8222ac7"
+      }
+    },
+    {
+      "arm": "original",
+      "name": "imd_negative",
+      "api": "python:MDAnalysis.coordinates.IMD.IMDReader",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "mock_requests": 1,
+      "paid_model_calls": 0,
+      "passed": true,
+      "elapsed_s": 50.68897227849811,
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/continuation/mdanalysis/original/configs/continuation.yaml",
+        "sha256": "786f2f8e0ffea06f3241aead261885fbf38e005b685ab71193839315c5959f01"
+      },
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/imd_negative/native_result.json",
+        "sha256": "2cd286f48f2a2f622b12a6d48d3bc2fedbd02fa3541f647c84e5e7c708f753cc"
+      },
+      "prompts": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/imd_negative/mock_provider_prompts.json",
+        "sha256": "a5300e758b6052cbf617dd85b23bf3e940606340f97504a2d0889c6cd8222ac7"
+      }
+    },
+    {
+      "arm": "generated_d1",
+      "name": "calc_positive",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "mock_requests": 1,
+      "paid_model_calls": 0,
+      "passed": true,
+      "elapsed_s": 49.93842443916947,
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/continuation/mdanalysis/generated_d1/configs/continuation.yaml",
+        "sha256": "786f2f8e0ffea06f3241aead261885fbf38e005b685ab71193839315c5959f01"
+      },
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/generated_d1/calc_positive/native_result.json",
+        "sha256": "08b4dd4c2602c937b935621b36d4ec63bc9266589af9e321cb316e91be981462"
+      },
+      "prompts": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/generated_d1/calc_positive/mock_provider_prompts.json",
+        "sha256": "4d36c97764ac05225b47be82c175ea10bafc4b10e42454effdd978fc6b84da12"
+      }
+    },
+    {
+      "arm": "generated_d1",
+      "name": "calc_negative",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "mock_requests": 1,
+      "paid_model_calls": 0,
+      "passed": true,
+      "elapsed_s": 50.50211319420487,
+      "source_config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/continuation/mdanalysis/generated_d1/configs/continuation.yaml",
+        "sha256": "786f2f8e0ffea06f3241aead261885fbf38e005b685ab71193839315c5959f01"
+      },
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/generated_d1/calc_negative/native_result.json",
+        "sha256": "5b5ed8a52aab2754dc8bfd1608a6569adb85f60c75f2855e63a98d7d87b6f67b"
+      },
+      "prompts": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/generated_d1/calc_negative/mock_provider_prompts.json",
+        "sha256": "4d36c97764ac05225b47be82c175ea10bafc4b10e42454effdd978fc6b84da12"
+      }
+    }
+  ],
+  "passed": true
+}

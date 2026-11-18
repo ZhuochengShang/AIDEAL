@@ -1,0 +1,56 @@
+project_name: mir_eval
+role: An expert in reproducible music-information-retrieval evaluation and scientific
+  Python API usage.
+project:
+  name: mir_eval
+  language: Python
+  description: A scientific Python library of evaluation metrics, I/O helpers, displays,
+    and sonification utilities for music and audio information retrieval.
+  version: 0.8.2
+domain: 'Audio and music signal evaluation. This label is query provenance, not a
+  manual classification: the repository was returned by both the saved "audio processing"
+  and "signal processing" GitHub sweeps.'
+target_users:
+- music-information-retrieval researchers
+- audio and signal-processing engineers
+- coding agents implementing reproducible metric evaluations
+use_cases:
+- Score beats, onsets, melody, multipitch, chords, keys, and tempo.
+- Evaluate segment, hierarchy, transcription, alignment, and separation outputs.
+- Load repository-format annotations and produce deterministic summaries.
+constraints:
+- Use only checked-in test fixtures or deterministic in-memory arrays.
+- Keep display tests headless and prohibit network/audio-device access.
+- Use the single API identity selected in this request. The frozen manifest defines
+  the complete study scope.
+notes: Pinned official release 0.8.2 at commit 8db0b3812e2032544c1fc00d02d4256cab043f3d.
+knowledge:
+  repository:
+    upstream_url: https://github.com/mir-evaluation/mir_eval.git
+    pinned_commit: 8db0b3812e2032544c1fc00d02d4256cab043f3d
+    pinned_tree: 7f9f80392ab86bff2e0e688ed4890a523f07dc6e
+    package_version: 0.8.2
+    source_path: source
+  api_scope:
+    manifest:
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mir_eval/inputs/api_manifest.json
+      sha256: 4c2eba86928dfb093b603e9df89c7d0db3d819bc0c7b82c488407e7e3fd152fa
+    selection_policy: Use the current frozen canonical manifest and its preparation
+      receipts; preserve distinct defining owners.
+    sampling: none within the frozen selected set
+  runtime:
+    python: /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+    python_version: 3.12.15
+    package_source: official release wheels; scientific PYTHONHOME/PYTHONPATH explicitly
+      unset
+    readiness: PENDING final runtime and selected-dependency control receipts
+  original_documentation:
+    source_roots:
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/README.rst
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs
+    document_count: 23
+    bundle_characters: 30789
+    bundle_sha256: cc3b7fa61dd461c70aa99d768881e093f4735913c1e12f02d743c59a6f4d74fb
+    scope_change_note: Preserved repository README+docs policy on exact stable source;
+      missing/added pages are recorded, and old generated or absent pages are not
+      imported.

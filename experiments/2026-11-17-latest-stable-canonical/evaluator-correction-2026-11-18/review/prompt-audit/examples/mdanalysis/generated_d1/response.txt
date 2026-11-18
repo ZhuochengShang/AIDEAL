@@ -1,0 +1,24 @@
+import MDAnalysis.lib.distances as dists
+import numpy as np
+
+# Use the first two atoms of the protein to calculate a single bond length
+ag1 = protein[:1]
+ag2 = protein[1:2]
+
+# Calculate bond length
+bond_length = dists.calc_bonds(ag1, ag2)
+
+# Verify the result is a scalar float64 as per documentation
+assert isinstance(bond_length, np.float64)
+assert bond_length > 0.0
+
+# Calculate bond lengths for a subset of the backbone
+ag_a = backbone[:10]
+ag_b = backbone[1:11]
+bond_lengths = dists.calc_bonds(ag_a, ag_b)
+
+# Verify the shape matches the number of pairs
+assert bond_lengths.shape == (10,)
+assert np.all(bond_lengths > 0.0)
+
+print(f"__CHECK__ python:MDAnalysis.lib.distances.calc_bonds {bond_lengths.shape}")

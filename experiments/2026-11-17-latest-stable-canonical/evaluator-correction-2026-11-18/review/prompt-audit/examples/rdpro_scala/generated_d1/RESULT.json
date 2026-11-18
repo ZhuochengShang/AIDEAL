@@ -1,0 +1,62 @@
+{
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+  "historical": true,
+  "recorded_detail": {
+    "status": "fail",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "fail",
+        "category": "runtime",
+        "error": "java.lang.AssertionError: assertion failed: Expected isImmutable to be false, but got true"
+      }
+    ],
+    "error_category": "runtime",
+    "error": "java.lang.AssertionError: assertion failed: Expected isImmutable to be false, but got true",
+    "code": "val serializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()\nval isImmutableResult = serializer.isImmutable\n\n// The default constructor for RasterMetadataSerializer typically initializes \n// a mutable state, so we expect isImmutable to be false.\nval expectedState = false\nassert(isImmutableResult == expectedState, s\"Expected isImmutable to be $expectedState, but got $isImmutableResult\")\n\nprintln(s\"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable $isImmutableResult\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/ApiTest.scala",
+    "exit_code": 1,
+    "stdout_tail": "",
+    "stderr_tail": "26/11/18 10:12:43 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/18 10:12:43 INFO SparkContext: Successfully stopped SparkContext\nException in thread \"main\" java.lang.AssertionError: assertion failed: Expected isImmutable to be false, but got true\n\tat scala.Predef$.assert(Predef.scala:223)\n\tat GeoJob$.run(ApiTest.scala:358)\n\tat GeoJobMain$.main(ApiTest.scala:369)\n\tat GeoJobMain.main(ApiTest.scala)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/18 10:12:43 INFO ShutdownHookManager: Shutdown hook called\n26/11/18 10:12:43 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/spark-tmp/spark-851409fc-f22a-4990-9e9b-6efd9b475a58\n26/11/18 10:12:43 INFO ShutdownHookManager: Deleting directory /tmp/spark-a62f437c-3afe-42eb-87a9-3f8405bb3f7e\n"
+  },
+  "recorded_metrics": {
+    "status": "fail",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "770fdc275fd6c6f7927874123673807951ea543ee889448adf61dcee8dc3f273"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/attempt_0001"
+    ],
+    "pass_round": null,
+    "wall_s": 51.4,
+    "llm_calls": 1,
+    "input_tokens": 2152,
+    "output_tokens": 132,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2152,
+        "output_tokens": 132,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": "runtime",
+    "error": "java.lang.AssertionError: assertion failed: Expected isImmutable to be false, but got true",
+    "locus": "at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:677)",
+    "doc_chars": 1961,
+    "document_sha256": "b9434095774822fdd9895a83d9020a3d0e0428bf1a43c51fe3b86b4777269ec8",
+    "source": "source/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala:53",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_scala/result.json",
+    "sha256": "9c46402a10a2a165e9873171fa8293277972b2100edf59c52efc2d82bab33e84"
+  },
+  "fixture_fingerprint": {
+    "sha256": "7c866aa11c80b1107650c7677b8d475c36e1e996671ea5a20a0fe37423a1f614",
+    "file_count": 3
+  }
+}

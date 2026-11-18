@@ -1,0 +1,51 @@
+{
+  "api": "java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "saved_program_replay",
+  "code": "java.awt.image.BufferedImage result = net.coobird.thumbnailator.Thumbnails.of(sourceImage)\n    .size(50, 50)\n    .asBufferedImage();\n\nassert result != null;\nassert result.getWidth() == 50;\nassert result.getHeight() == 50;\n\nSystem.out.println(\"__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage \" + result.getWidth() + \"x\" + result.getHeight());",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-original-dimensions/attempt_0001/ApiTest.java",
+  "exit_code": 1,
+  "stdout_tail": "",
+  "stderr_tail": "Picked up JAVA_TOOL_OPTIONS: -ea\nPicked up JAVA_TOOL_OPTIONS: -ea\n__RUN_ERR__ AssertionError: null\njava.lang.AssertionError\n\tat ApiTest.main(ApiTest.java:57)\n",
+  "error_category": "runtime",
+  "error": "AssertionError: null",
+  "locus": "ApiTest.java:57",
+  "wall_s": 1.3098825570195913,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/thumbnailator/thumbnailator/result.json",
+    "sha256": "e728eefb8b21c409ca50578c4d40023bacf996ac4e618d270692adcf8320917f"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-original-dimensions/replay_identity.json",
+      "sha256": "357d3c98d0f764177f325aef8c260ed2a079a5814c6b40e82b2a32fa9b7f6207"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-original-dimensions/attempt_0001/ApiTest.java",
+      "sha256": "917c0b6f9a65f10ca92b0c84ad551e1baf040dee0501a1b16b01d3b41815653d"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-original-dimensions/attempt_0001/execution.json",
+      "sha256": "320b4535b5c5b13dd589fcc435258307765d32b0eccd2f7785b1b41920b6f565"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-original-dimensions/attempt_0001/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-original-dimensions/attempt_0001/stderr.txt",
+      "sha256": "d02e416fb67a3e578feca8d9e3fa7d03b1d0882f481e93af3dcf99aa1e35e350"
+    }
+  ]
+}

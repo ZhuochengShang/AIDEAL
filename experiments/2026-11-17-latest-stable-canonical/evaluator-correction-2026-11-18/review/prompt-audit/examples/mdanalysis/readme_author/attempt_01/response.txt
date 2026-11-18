@@ -1,0 +1,121 @@
+## API Test: `python:MDAnalysis.lib.distances.calc_bonds`
+
+### Signature
+```python
+def calc_bonds(coords1: Union[npt.NDArray, 'AtomGroup'], coords2: Union[npt.NDArray, 'AtomGroup'], box: Optional[npt.NDArray]=None, result: Optional[npt.NDArray]=None, backend: str='serial')
+```
+_Source: source/package/MDAnalysis/lib/distances.py:1678_
+
+_Source doc:_ Calculates the bond lengths between pairs of atom positions from the two
+coordinate arrays `coords1` and `coords2`, which must contain the same
+number of coordinates. ``coords1[i]`` and ``coords2[i]`` represent the
+positions of atoms connected by the ``i``-th bond. If single coordinates are
+supplied, a single distance will be returned.
+
+In comparison to :meth:`distance_array` and :meth:`self_distance_array`,
+which calculate distances between all possible combinations of coordinates,
+:meth:`calc_bonds` only calculates distances between pairs of coordinates,
+similar to::
+
+   numpy.linalg.norm(a - b) for a, b in zip(coords1, coords2)
+
+If the optional argument `box` is supplied, the minimum image convention is
+applied when calculating distances. Either orthogonal or triclinic boxes are
+supported.
+
+If a numpy array of dtype ``numpy.float64`` with shape ``(n,)`` (for ``n``
+coordinate pairs) is provided in `result`, then this preallocated array is
+filled. This can speed up calculations.
+
+Parameters
+----------
+coords1 : numpy.ndarray or :class:`~MDAnalysis.core.groups.AtomGroup`
+    Coordinate array of shape ``(3,)`` or ``(n, 3)`` for one half of a
+    single or ``n`` bonds, respectively (dtype is arbitrary, will be
+    converted to ``numpy.float32`` internally).  Also accepts an
+    :class:`~MDAnalysis.core.groups.AtomGroup`.
+coords2 : numpy.ndarray or :class:`~MDAnalysis.core.groups.AtomGroup`
+    Coordinate array of shape ``(3,)`` or ``(n, 3)`` for the other half of
+    a single or ``n`` bonds, respectively (dtype is arbitrary, will be
+    converted to ``numpy.float32`` internally). Also accepts an
+    :class:`~MDAnalysis.core.groups.AtomGroup`.
+box : numpy.ndarray, optional
+    The unitcell dimensions of the system, which can be orthogonal or
+    triclinic and must be provided in the same format as returned by
+    :attr:`MDAnalysis.coordinates.timestep.Timestep.dimensions`:
+    ``[lx, ly, lz, alpha, beta, gamma]``.
+result : numpy.ndarray, optional
+    Preallocated result array of dtype ``numpy.float64`` and shape ``(n,)``
+    (for ``n`` coordinate pairs). Avoids recreating the array in repeated
+    function calls.
+backend : {'serial', 'OpenMP', 'distopia'}, optional
+    Keyword selecting the type of acceleration. Defaults to 'serial'.
+
+Returns
+-------
+bondlengths : numpy.ndarray (``dtype=numpy.float64``, ``shape=(n,)``) or
+    numpy.float64 Array containing the bond lengths between each pair of
+    coordinates. If two single coordinates were supplied, their distance is
+    returned as a single number instead of an array.
+
+
+.. versionadded:: 0.8
+.. versionchanged:: 0.13.0
+   Added *backend* keyword.
+.. versionchanged:: 0.19.0
+   Internal dtype conversion of input coordinates to ``numpy.float32``.
+   Now also accepts single coordinates as input.
+.. versionchanged:: 2.3.0
+   Can now accept an :class:`~MDAnalysis.core.groups.AtomGroup` as an
+   argument in any position and checks inputs using type hinting.
+.. versionchanged:: 2.5.0
+   Can now optionally use the fast distance functions from distopia
+
+### Goal
+Calculates the Euclidean distances between corresponding pairs of atoms or coordinate points, optionally applying periodic boundary conditions.
+
+### Parameters
+- `coords1` (`Union[npt.NDArray, 'AtomGroup']`): Coordinate array of shape `(3,)` or `(n, 3)` representing the first set of points.
+- `coords2` (`Union[npt.NDArray, 'AtomGroup']`): Coordinate array of shape `(3,)` or `(n, 3)` representing the second set of points. Must have the same number of coordinates as `coords1`.
+- `box` (`Optional[npt.NDArray]`), default `None`: Unit cell dimensions `[lx, ly, lz, alpha, beta, gamma]` used to apply the minimum image convention.
+- `result` (`Optional[npt.NDArray]`), default `None`: A preallocated `numpy.float64` array of shape `(n,)` to store the output, improving performance in iterative workflows.
+- `backend` (`str`), default `'serial'`: Acceleration backend to use; options are `'serial'`, `'OpenMP'`, or `'distopia'`.
+
+### Input
+- `coords1` and `coords2` must contain the same number of coordinates.
+- If `box` is provided, it must match the format of `Timestep.dimensions`.
+- Inputs are internally converted to `numpy.float32` for calculation.
+
+### Output
+Returns `npt.NDArray` — A `numpy.float64` array of shape `(n,)` containing the calculated bond lengths. If single coordinates were provided, returns a single `numpy.float64` scalar.
+
+### Valid Call Patterns
+```python
+# Inferred from signature:
+import MDAnalysis.lib.distances as dists
+bond_lengths = dists.calc_bonds(ag1, ag2, box=u.dimensions)
+```
+
+### LLM Instruction Prompt
+- Always ensure `coords1` and `coords2` have the same number of elements.
+- If performing analysis over a trajectory, use the `result` parameter with a preallocated array to optimize performance.
+- If periodic boundary conditions are required, ensure the `box` parameter is provided using the `Universe.dimensions` attribute.
+
+### Prompt Snippet
+```text
+Use MDAnalysis.lib.distances.calc_bonds(coords1, coords2, box=None, result=None, backend='serial') to compute pairwise distances between two sets of coordinates.
+```
+
+### Common Failure Modes
+- Providing `coords1` and `coords2` with mismatched lengths, which raises a `ValueError`.
+- Providing a `box` array with incorrect dimensions or format (must be 6 elements).
+- Passing a `result` array with an incorrect shape or `dtype` (must be `float64`).
+
+### Fix Code Hint
+```python
+# Ensure inputs are aligned and box is provided for PBC
+import numpy as np
+n_bonds = len(ag1)
+result_array = np.zeros(n_bonds, dtype=np.float64)
+dists = MDAnalysis.lib.distances.calc_bonds(ag1, ag2, box=u.dimensions, result=result_array)
+```

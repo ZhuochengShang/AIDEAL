@@ -1,0 +1,59 @@
+{
+  "api": "python:tslearn.metrics._dtw.dtw",
+  "historical": true,
+  "recorded_detail": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "from tslearn.metrics import dtw\nimport numpy as np\n\n# Use the provided 1D series s1 and s2\n# Compute DTW distance\ndist = dtw(s1, s2)\n\n# Verification:\n# DTW distance between two identical series should be 0.0\ndist_self = dtw(s1, s1)\nassert dist_self == 0.0, f\"Expected 0.0 for self-distance, got {dist_self}\"\n\n# DTW distance must be non-negative\nassert dist >= 0.0, f\"Expected non-negative distance, got {dist}\"\n\n# Print witness\nprint(f\"__CHECK__ python:tslearn.metrics._dtw.dtw {dist:.4f}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/api_test.py",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ python:tslearn.metrics._dtw.dtw 0.2702\n__DONE__\n",
+    "stderr_tail": ""
+  },
+  "recorded_metrics": {
+    "status": "pass",
+    "attempts": 1,
+    "pass_round": 0,
+    "wall_s": 20.5,
+    "llm_calls": 1,
+    "input_tokens": 6295,
+    "output_tokens": 168,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 6295,
+        "output_tokens": 168,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 18313,
+    "document_sha256": "ea4933b6e1cd6b2c4f2d05d06fbc1dce6d546039b765525b70203a7f4c9706d7",
+    "source": "source/tslearn/metrics/_dtw.py:30",
+    "source_other_sites": 0,
+    "codebase_frames": null,
+    "rendered_prompt_sha256": [
+      "e8bfcd007a9e1918704ac3e7e5469bddd69f767615eeb9e535366e040e058eed"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001"
+    ],
+    "evidence_fingerprint": "30eb9826e0fc74284854f28330c1159e6063475f3c02618dc090dbabf5acc030"
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/result.json",
+    "sha256": "f571d970ad1698072440e02af13f28f828ece56b4d0b0563cabaf41b7a59386c"
+  },
+  "fixture_fingerprint": {
+    "sha256": "756d1e1693be66b29dfda1415e621ef93f9643f80be70a4625de9f41b01f49c4",
+    "file_count": 1
+  }
+}

@@ -1,0 +1,9 @@
+from MDAnalysis.coordinates.IMD import IMDReader
+assert imd_url.startswith('imd://127.0.0.1:')
+with IMDReader(imd_url,n_atoms=imd_n_atoms) as reader:
+ count=1
+ while True:
+  try:next(reader);count+=1
+  except (StopIteration,EOFError):break
+assert count == 6
+print(f"__CHECK__ python:MDAnalysis.coordinates.IMD.IMDReader {count}")

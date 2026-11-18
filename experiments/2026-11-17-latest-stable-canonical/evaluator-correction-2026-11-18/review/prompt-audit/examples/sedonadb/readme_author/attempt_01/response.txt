@@ -1,0 +1,112 @@
+## API Test: `sql:ST_Point`
+
+### Signature
+```python
+ST_Point(x: double, y: double, srid: crs) -> geometry
+```
+_Source: source/docs/reference/sql/st_point.qmd:19_
+
+_Source doc:_ ---
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+title: ST_Point
+description: Constructs a Point Geometry from X and Y.
+kernels:
+  - returns: geometry
+    args:
+    - name: x
+      type: double
+    - name: "y"
+      type: double
+    - name: srid
+      type: crs
+---
+
+## Description
+
+Constructs a Point geometry from X and Y coordinates. An optional SRID or CRS can be provided as a third argument.
+
+## Examples
+
+```sql
+SELECT ST_AsText(ST_Point(-74.0060, 40.7128));
+```
+
+With an SRID:
+
+```sql
+SELECT ST_Point(-74.0060, 40.7128, 4326);
+```
+
+With a CRS:
+
+```sql
+SELECT ST_Point(-74.0060, 40.7128, 'EPSG:3857');
+```
+
+
+### Goal
+Constructs a new `geometry` object of type Point from provided X and Y coordinate values, with optional spatial reference system metadata.
+
+### Parameters
+- `x` (`double`): The X-coordinate (longitude or easting) of the point.
+- `y` (`double`): The Y-coordinate (latitude or northing) of the point.
+- `srid` (`crs`): Optional coordinate reference system identifier, provided as an integer (SRID) or a string (e.g., 'EPSG:4326').
+
+### Input
+Requires two `double` values for coordinates. An optional third argument can be an integer SRID or a string representing the CRS. No specific file format is required as this is a constructor for in-memory geometry objects.
+
+### Output
+Returns a `geometry` object representing a single point in the specified or default coordinate system.
+
+### Valid Call Patterns
+```python
+# Basic construction
+sd.sql("SELECT ST_Point(-74.0060, 40.7128) as geom").to_arrow_table()
+
+# Construction with SRID
+sd.sql("SELECT ST_Point(-74.0060, 40.7128, 4326) as geom").to_arrow_table()
+
+# Construction with CRS string
+sd.sql("SELECT ST_Point(-74.0060, 40.7128, 'EPSG:3857') as geom").to_arrow_table()
+```
+
+### LLM Instruction Prompt
+- Always use `sd.sql(query).to_arrow_table()` for executing queries.
+- When constructing points for spatial predicates, ensure the `srid` matches the reference geometry's CRS to avoid implicit conversion errors.
+- Use `ST_AsText()` if you need to verify the geometry output in a human-readable format.
+
+### Prompt Snippet
+```text
+sd.sql("SELECT ST_Point(x_val, y_val, srid_val)").to_arrow_table()
+```
+
+### Common Failure Modes
+- Providing non-numeric values for `x` or `y` coordinates.
+- Mismatched CRS: If performing spatial operations (e.g., `ST_Intersects`) between a point and another geometry, ensure both share the same CRS or are explicitly transformed.
+- Invalid CRS strings: Providing a string that does not conform to standard EPSG or OGC formats.
+
+### Fix Code Hint
+```python
+# Ensure coordinates are floats and CRS is a valid string or integer
+x, y = -74.0060, 40.7128
+srid = 4326
+query = f"SELECT ST_Point({x}, {y}, {srid}) as geom"
+result = sd.sql(query).to_arrow_table()
+print("__CHECK__")
+```

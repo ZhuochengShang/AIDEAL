@@ -1,0 +1,51 @@
+{
+  "api": "sql:ST_Point",
+  "status": "pass",
+  "old_status": "fail",
+  "mode": "development_example",
+  "code": "table = sd.sql(\"SELECT ST_AsText(ST_Point(10.0, 20.0, 4326)) AS wkt, ST_X(ST_Point(10.0, 20.0, 4326)) AS x, ST_Y(ST_Point(10.0, 20.0, 4326)) AS y\").to_arrow_table()\nrow = table.to_pylist()[0]\nprint(\"OBSERVED_POINT\", repr(row))\nassert row[\"x\"] == 10.0 and row[\"y\"] == 20.0\nassert row[\"wkt\"].replace(\" \", \"\") == \"POINT(1020)\"\nprint(f\"__CHECK__ sql:ST_Point {row}\")\n",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive_coordinates/attempt_0001/ApiTest.py",
+  "exit_code": 0,
+  "stdout_tail": "OBSERVED_POINT {'wkt': 'POINT(10 20)', 'x': 10.0, 'y': 20.0}\n__CHECK__ sql:ST_Point {'wkt': 'POINT(10 20)', 'x': 10.0, 'y': 20.0}\n__DONE__\n",
+  "stderr_tail": "",
+  "error_category": "",
+  "error": "",
+  "locus": "",
+  "wall_s": 0.9492337852716446,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "pass"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/result.json",
+    "sha256": "a5d8e630cc24a6caa3bc5facd4a7d4e9e0225210f633fe42635fdf1577d04aff"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive_coordinates/replay_identity.json",
+      "sha256": "3fb0c97e61257b5c5cbe9dae39acb64ef938c8369d3057f16856b3f057daf816"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive_coordinates/attempt_0001/ApiTest.py",
+      "sha256": "24987eaaf2b5c856c7c8aee988b258eab4aacf334c7fe997a9c8e923f9401bb9"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive_coordinates/attempt_0001/execution.json",
+      "sha256": "668e329da4a643791934308cb94e6611df9ded56489df65c355955b5ec826647"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive_coordinates/attempt_0001/stdout.txt",
+      "sha256": "886dd5f4cd05d7990734e2a854c55a1ec43d19d91955d6c5c4008205f4678e13"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive_coordinates/attempt_0001/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

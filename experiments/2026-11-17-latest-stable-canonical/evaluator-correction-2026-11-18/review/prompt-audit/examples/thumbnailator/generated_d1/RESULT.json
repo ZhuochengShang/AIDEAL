@@ -1,0 +1,62 @@
+{
+  "api": "java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage",
+  "historical": true,
+  "recorded_detail": {
+    "status": "fail",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "fail",
+        "category": "runtime",
+        "error": "AssertionError: Dimension mismatch: expected 50x50, got 50x38"
+      }
+    ],
+    "error_category": "runtime",
+    "error": "AssertionError: Dimension mismatch: expected 50x50, got 50x38",
+    "code": "java.awt.image.BufferedImage result = net.coobird.thumbnailator.Thumbnails.of(sourceImage)\n    .size(50, 50)\n    .asBufferedImage();\n\nif (result == null) {\n    throw new AssertionError(\"Resulting BufferedImage is null\");\n}\n\nint width = result.getWidth();\nint height = result.getHeight();\nint pixel = result.getRGB(0, 0);\n\nif (width != 50 || height != 50) {\n    throw new AssertionError(\"Dimension mismatch: expected 50x50, got \" + width + \"x\" + height);\n}\n\nSystem.out.println(\"__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage \" + width + \"x\" + height + \"@\" + Integer.toHexString(pixel));",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/ApiTest.java",
+    "exit_code": 1,
+    "stdout_tail": "",
+    "stderr_tail": "__RUN_ERR__ AssertionError: Dimension mismatch: expected 50x50, got 50x38\njava.lang.AssertionError: Dimension mismatch: expected 50x50, got 50x38\n\tat ApiTest.main(ApiTest.java:64)\n"
+  },
+  "recorded_metrics": {
+    "status": "fail",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "9051896496b6048b1f7d0569388e72af5f95adc8ff3f254e021ed884bf1f491a"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001"
+    ],
+    "pass_round": null,
+    "wall_s": 4.0,
+    "llm_calls": 1,
+    "input_tokens": 2003,
+    "output_tokens": 189,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2003,
+        "output_tokens": 189,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": "runtime",
+    "error": "AssertionError: Dimension mismatch: expected 50x50, got 50x38",
+    "locus": "ApiTest.java:64",
+    "doc_chars": 2239,
+    "document_sha256": "c403c6fb54964dbc54a0f50145fee54f0510b85a00eb2d62565de94fb4935e57",
+    "source": "source/src/main/java/net/coobird/thumbnailator/Thumbnails.java:2342",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/result.json",
+    "sha256": "d14e32bf536ad72f530eb414497513567850c17d0cdb2b64c38716051d7214b1"
+  },
+  "fixture_fingerprint": {
+    "sha256": "27c50603aa26fb4293ce9f4dae90d1ae06414f79f370b17409cf23ee8b997b32",
+    "file_count": 3
+  }
+}

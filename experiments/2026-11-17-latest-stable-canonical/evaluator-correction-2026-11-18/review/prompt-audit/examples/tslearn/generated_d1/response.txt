@@ -1,0 +1,22 @@
+from tslearn.metrics import dtw
+import numpy as np
+
+# Use the provided 1D series s1 and s2
+# dtw expects (sz, d) or (sz,)
+# s1 and s2 are (40,) which is valid for univariate DTW
+dist = dtw(s1, s2)
+
+# Verify the result is a float and non-negative
+assert isinstance(dist, float)
+assert dist >= 0.0
+
+# Compute a small witness: DTW of a series with itself should be 0.0
+dist_self = dtw(s1, s1)
+assert np.isclose(dist_self, 0.0), f"DTW(s, s) should be 0, got {dist_self}"
+
+# Compute with Sakoe-Chiba constraint
+dist_constrained = dtw(s1, s2, global_constraint="sakoe_chiba", sakoe_chiba_radius=5)
+assert isinstance(dist_constrained, float)
+assert dist_constrained >= 0.0
+
+print(f"__CHECK__ python:tslearn.metrics._dtw.dtw {dist:.4f}")

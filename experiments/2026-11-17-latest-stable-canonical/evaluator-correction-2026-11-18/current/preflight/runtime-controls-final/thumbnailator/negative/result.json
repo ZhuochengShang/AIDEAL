@@ -1,0 +1,52 @@
+{
+  "api": "java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "java.awt.image.BufferedImage image = net.coobird.thumbnailator.Thumbnails.of(sourceImage).size(50, 50).asBufferedImage();\nassert image.getWidth() == 50 && image.getHeight() == 38 : \"aspect-ratio preservation mismatch\";\nSystem.out.println(\"__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage \" + image.getWidth() + \"x\" + image.getHeight());\nassert false : \"AIDEAL deliberate negative control\";",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/thumbnailator/negative/attempt_0001/ApiTest.java",
+  "exit_code": 1,
+  "stdout_tail": "__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage 50x38\n",
+  "stderr_tail": "Picked up JAVA_TOOL_OPTIONS: -ea\nPicked up JAVA_TOOL_OPTIONS: -ea\n__RUN_ERR__ AssertionError: AIDEAL deliberate negative control\njava.lang.AssertionError: AIDEAL deliberate negative control\n\tat ApiTest.main(ApiTest.java:54)\n",
+  "error_category": "runtime",
+  "error": "AssertionError: AIDEAL deliberate negative control",
+  "locus": "ApiTest.java:54",
+  "wall_s": 1.15068007260561,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/thumbnailator/thumbnailator/result.json",
+    "sha256": "e728eefb8b21c409ca50578c4d40023bacf996ac4e618d270692adcf8320917f"
+  },
+  "runtime_profile": [],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/thumbnailator/negative/replay_identity.json",
+      "sha256": "89a33b3f8781d63df6ba656d4083e01a45e3d8f3f4cc209b43f1e74d18b5786c"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/thumbnailator/negative/attempt_0001/ApiTest.java",
+      "sha256": "16c58ebfcb0656f095f60996c57dce26b176b9d0761b738d302a0645baf18b88"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/thumbnailator/negative/attempt_0001/execution.json",
+      "sha256": "e9f7a607dce423c48f0af59502cae1e8b7cfd4a26967c4f2419b9d49ecc4e679"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/thumbnailator/negative/attempt_0001/stdout.txt",
+      "sha256": "df0e8f80c6cf8b0417a85c0cc539f55b4fec08c6e832787678edec84662f57e1"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/thumbnailator/negative/attempt_0001/stderr.txt",
+      "sha256": "ed92eab740998409824b7093eaabc1e8bf197d1802722e3000948082d1bdf88c"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-18-native-correctness-overlay-v2/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/api_test.py\"",
+  "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001",
+  "timeout_s": 300,
+  "exit_code": 1,
+  "wall_s": 1.8916352856904268,
+  "contract": {
+    "version": "native-execution-v2",
+    "working_directory": "per_attempt",
+    "output_bindings": "per_attempt",
+    "correctness_witness": "exact_target_stdout",
+    "jvm_assertions": false,
+    "python_fixture_scope": "explicit_function_bindings"
+  },
+  "runtime_profile": [
+    {
+      "path": "/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/workflow/runtime_profile.py",
+      "sha256": "5a5888af16dac99b5b3e90696a3f6936e68eafcab68734ddd651fe5cf0036507"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-final-2026-11-18/runtime_profile.json",
+      "sha256": "cc272ed3356ef4c4a5befbb9fee61319b9a81604ab54c256f8beca566483799a"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-final-2026-11-18/setup_report.json",
+      "sha256": "5a6f99a257c855f4fb262391a1651c3c21fab3059d23d42c8488fc7942a704f9"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-reviewed-2026-11-18/environment_manifest.json",
+      "sha256": "326de27272cd7eaa8ff7776409d46298e2e56e30354dfce8314fac857006e0ce"
+    },
+    {
+      "path": "/usr/bin/python3.12",
+      "sha256": "fbc3307aee63d7282f5f1ebfa53b502c2e5934a0f9729e316bb98d29212ae224"
+    }
+  ],
+  "java_assertions_requested": false,
+  "output_bindings": {
+    "version": "native-execution-v2",
+    "output_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/output",
+    "bindings": [
+      {
+        "name": "output_dir",
+        "original": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/output",
+        "isolated": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls/mdanalysis/final1519-d8ba3815cf95/negative/attempt_0001/output"
+      }
+    ],
+    "source_inputs_unchanged": true,
+    "input_bindings": {
+      "psf_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk.psf",
+      "dcd_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_dims.dcd",
+      "pdb_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_open.pdb",
+      "gro_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.gro",
+      "xtc_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.xtc",
+      "mdanalysis_fixture_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures"
+    }
+  },
+  "stdout_file": "stdout.txt",
+  "stderr_file": "stderr.txt"
+}

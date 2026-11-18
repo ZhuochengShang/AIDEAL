@@ -1,0 +1,234 @@
+{
+  "schema": 1,
+  "policy": "public_owned_nonwrapper",
+  "historical_count": 1538,
+  "selected_count": 1522,
+  "historical_manifest": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/inputs/api_manifest.json",
+    "sha256": "3eb5dcc731948a7370978de75e5069c0f8c50ddb5f5dcbc92b0b5a83942f6975"
+  },
+  "excluded": [
+    {
+      "api": "python:MDAnalysis.coordinates.chemfiles.MockTrajectory",
+      "reason": "Empty documentation-only fallback class inside except ImportError; absent when the required Chemfiles backend is installed and not listed as a documented public API.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/chemfiles.py",
+          "sha256": "4eaf7e3a36e30002e3c17ad23143ecf702eb1230f5943e0927f64b915b2a1e48",
+          "line": 94
+        },
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/chemfiles.py",
+          "sha256": "4eaf7e3a36e30002e3c17ad23143ecf702eb1230f5943e0927f64b915b2a1e48",
+          "line": 88
+        }
+      ],
+      "end_line": 95
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_angle",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 87
+        }
+      ],
+      "end_line": 93,
+      "forwarding_expression": "distopia.angles_no_box(coords1, coords2, coords3, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_angle_ortho",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 96
+        }
+      ],
+      "end_line": 103,
+      "forwarding_expression": "distopia.angles_ortho(coords1, coords2, coords3, box[:3], results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_angle_triclinic",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 106
+        }
+      ],
+      "end_line": 114,
+      "forwarding_expression": "distopia.angles_triclinic(coords1, coords2, coords3, box, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_bond_distance",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 72
+        }
+      ],
+      "end_line": 75,
+      "forwarding_expression": "distopia.distances_no_box(coords1, coords2, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_bond_distance_ortho",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 63
+        }
+      ],
+      "end_line": 69,
+      "forwarding_expression": "distopia.distances_ortho(coords1, coords2, box[:3], results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_bond_distance_triclinic",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 78
+        }
+      ],
+      "end_line": 84,
+      "forwarding_expression": "distopia.distances_triclinic(coords1, coords2, box, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_dihedral",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 117
+        }
+      ],
+      "end_line": 126,
+      "forwarding_expression": "distopia.dihedrals_no_box(coords1, coords2, coords3, coords4, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_dihedral_ortho",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 129
+        }
+      ],
+      "end_line": 139,
+      "forwarding_expression": "distopia.dihedrals_ortho(coords1, coords2, coords3, coords4, box[:3], results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_dihedral_triclinic",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 142
+        }
+      ],
+      "end_line": 152,
+      "forwarding_expression": "distopia.dihedrals_triclinic(coords1, coords2, coords3, coords4, box, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_distance_array",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 155
+        }
+      ],
+      "end_line": 158,
+      "forwarding_expression": "distopia.distance_array_no_box(coords1, coords2, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_distance_array_ortho",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 161
+        }
+      ],
+      "end_line": 167,
+      "forwarding_expression": "distopia.distance_array_ortho(coords1, coords2, box[:3], results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_distance_array_triclinic",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 170
+        }
+      ],
+      "end_line": 176,
+      "forwarding_expression": "distopia.distance_array_triclinic(coords1, coords2, box, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_self_distance_array",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 179
+        }
+      ],
+      "end_line": 180,
+      "forwarding_expression": "distopia.self_distance_array_no_box(coords, results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_self_distance_array_ortho",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 183
+        }
+      ],
+      "end_line": 186,
+      "forwarding_expression": "distopia.self_distance_array_ortho(coords, box[:3], results=results)"
+    },
+    {
+      "api": "python:MDAnalysis.lib._distopia.calc_self_distance_array_triclinic",
+      "reason": "Private selectable-backend stub: the entire body forwards once to the third-party distopia package; excludes wrappers under the existing public-owned-nonwrapper policy.",
+      "source_evidence": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/_distopia.py",
+          "sha256": "f92633a134fed2e5b01772df8294a5c4b56a3577953cd008ab9e605f9065b8c9",
+          "line": 189
+        }
+      ],
+      "end_line": 192,
+      "forwarding_expression": "distopia.self_distance_array_triclinic(coords, box, results=results)"
+    }
+  ],
+  "distopia_import_scan": [
+    {
+      "source": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/lib/distances.py",
+      "line": 155,
+      "names": [
+        "HAS_DISTOPIA"
+      ]
+    }
+  ],
+  "selection_basis": "Source ownership, module privacy and forwarding/empty-body structure only; no execution outcomes used. All historical results and original1538-target manifest preserved."
+}

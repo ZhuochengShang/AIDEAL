@@ -1,0 +1,40 @@
+{
+  "execution_context": "Java17 with Spark3.5.1. Write Java statements only. The scaffold provides JavaSparkContext sc, SparkSession spark, a tiny EnvelopeNDLite envelope, JTS point/geometryFactory, 4x4 RasterMetadata metadata, and JavaRDD<Integer> numbers. Local raster_tif, vector_shapefile, hdf_file paths are available. Assert a stable result before printing __CHECK__.",
+  "region": [
+    "// TODO API_TEST_START",
+    "// TODO API_TEST_END"
+  ],
+  "strip_snippet_imports": false,
+  "output_tail_chars": 2000,
+  "success_marker": "__DONE__",
+  "error_marker": "__RUN_ERR__",
+  "work_dir": "execution",
+  "timeout_seconds": 600,
+  "max_fix_rounds": 0,
+  "auto_report": false,
+  "scaffold": "inputs/api_test_scaffold.java",
+  "test_filename": "ApiTest.java",
+  "build": "",
+  "build_cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro",
+  "jars": "",
+  "uberjar": "",
+  "spark_jars": "",
+  "packages": [],
+  "repositories": [],
+  "command": "/home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_java.py --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/runtime/rdpro-classpath.json --work \"{work}\" --java-file \"{test_file}\"",
+  "local_uris": false,
+  "output_dir": "execution/output",
+  "require_correctness": true,
+  "check_marker": "__CHECK__",
+  "stop_on_provider_error": true,
+  "sample_data": {
+    "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+    "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+    "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf"
+  },
+  "fixtures_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures",
+  "preamble": "EnvelopeNDLite envelope = new EnvelopeNDLite(2, 0.0, 0.0, 2.0, 3.0);\nGeometryFactory geometryFactory = new GeometryFactory();\nPoint point = geometryFactory.createPoint(new Coordinate(1.0, 2.0));\nRasterMetadata metadata = new RasterMetadata(0, 0, 4, 4, 2, 2, 4326, new AffineTransform());\nJavaRDD<Integer> numbers = sc.parallelize(Arrays.asList(1, 2, 3), 1);\nFiles.createDirectories(Paths.get(output_dir));",
+  "io_hints": "",
+  "exec_hints": "Use Java syntax and public library APIs; fully qualify types missing from imports. Throw AssertionError on an unexpected result. Use only tiny local inputs and outputs under output_dir. No network or repository writes. Use the selected target owner and declaration provided in the request.",
+  "probe_on_missing": false
+}

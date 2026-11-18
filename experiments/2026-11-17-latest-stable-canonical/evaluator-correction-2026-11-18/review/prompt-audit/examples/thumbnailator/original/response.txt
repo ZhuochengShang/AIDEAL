@@ -1,0 +1,9 @@
+java.awt.image.BufferedImage result = net.coobird.thumbnailator.Thumbnails.of(sourceImage)
+    .size(50, 50)
+    .asBufferedImage();
+
+assert result != null;
+assert result.getWidth() == 50;
+assert result.getHeight() == 50;
+
+System.out.println("__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage " + result.getWidth() + "x" + result.getHeight());

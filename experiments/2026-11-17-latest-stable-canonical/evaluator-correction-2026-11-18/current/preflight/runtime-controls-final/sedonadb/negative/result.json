@@ -1,0 +1,52 @@
+{
+  "api": "sql:ST_Point",
+  "status": "fail",
+  "old_status": "fail",
+  "mode": "development_example",
+  "code": "table = sd.sql(\"SELECT ST_AsText(ST_Point(10.0, 20.0, 4326)) AS wkt, ST_X(ST_Point(10.0, 20.0, 4326)) AS x, ST_Y(ST_Point(10.0, 20.0, 4326)) AS y\").to_arrow_table()\nrow = table.to_pylist()[0]\nprint(\"OBSERVED_POINT\", repr(row))\nassert row[\"x\"] == 99.0 and row[\"y\"] == 20.0\nassert row[\"wkt\"].replace(\" \", \"\") == \"POINT(1020)\"\nprint(f\"__CHECK__ sql:ST_Point {row}\")\n",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/attempt_0001/ApiTest.py",
+  "exit_code": 1,
+  "stdout_tail": "OBSERVED_POINT {'wkt': 'POINT(10 20)', 'x': 10.0, 'y': 20.0}\n",
+  "stderr_tail": "Traceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/sedonadb/runtime/run_snippet.py\", line 37, in <module>\n    runpy.run_path(str(path), run_name=\"__main__\")\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/home/zshan011/anaconda3/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/attempt_0001/ApiTest.py\", line 27, in <module>\n    main()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/attempt_0001/ApiTest.py\", line 18, in main\n    assert row[\"x\"] == 99.0 and row[\"y\"] == 20.0\nAssertionError\n",
+  "error_category": "runtime",
+  "error": "AssertionError",
+  "locus": "",
+  "wall_s": 0.9844888662919402,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/sedonadb/sedonadb/result.json",
+    "sha256": "a5d8e630cc24a6caa3bc5facd4a7d4e9e0225210f633fe42635fdf1577d04aff"
+  },
+  "runtime_profile": [],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/replay_identity.json",
+      "sha256": "96a03b48f5f443dc19455068ebdb7c84302a84ec92af2dd71746683eb466467b"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/attempt_0001/ApiTest.py",
+      "sha256": "f07a4559bdcee47938525273a66e27cf0ac230aa1f1b8d5c29284b945aa8f905"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/attempt_0001/execution.json",
+      "sha256": "555c3b37919448b1830a88e76f65b9e4521d0c4c488eb8de4ccb76334b4a5918"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/attempt_0001/stdout.txt",
+      "sha256": "aa9415db617e150cb6dbf01557c244eb1f2b3eec831a929dced92d23da1fbe4d"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/sedonadb/negative/attempt_0001/stderr.txt",
+      "sha256": "200e0f973bce0a17a685c65800811361dd3983d2119a95b159b26b67f677bdcc"
+    }
+  ]
+}

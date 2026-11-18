@@ -1,0 +1,51 @@
+{
+  "api": "java:net.coobird.thumbnailator.tasks.io.AbstractImageSink.write",
+  "status": "pass",
+  "old_status": "fail",
+  "mode": "saved_program_replay",
+  "code": "try {\n    net.coobird.thumbnailator.tasks.io.FileImageSink sink = new net.coobird.thumbnailator.tasks.io.FileImageSink(outputPath.toFile());\n    sink.setOutputFormatName(\"png\");\n    sink.write(sourceImage);\n\n    java.awt.image.BufferedImage readBack = javax.imageio.ImageIO.read(outputPath.toFile());\n    int witness = readBack.getWidth() * readBack.getHeight();\n\n    if (readBack.getWidth() != sourceImage.getWidth() || readBack.getHeight() != sourceImage.getHeight()) {\n        throw new AssertionError(\"Dimension mismatch after write/read cycle\");\n    }\n\n    System.out.println(\"__CHECK__ java:net.coobird.thumbnailator.tasks.io.AbstractImageSink.write \" + witness);\n} catch (java.io.IOException e) {\n    throw new RuntimeException(\"I/O failure during sink write test\", e);\n}",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-generated-write/attempt_0001/ApiTest.java",
+  "exit_code": 0,
+  "stdout_tail": "__CHECK__ java:net.coobird.thumbnailator.tasks.io.AbstractImageSink.write 768\n__DONE__\n",
+  "stderr_tail": "Picked up JAVA_TOOL_OPTIONS: -ea\nPicked up JAVA_TOOL_OPTIONS: -ea\n",
+  "error_category": "",
+  "error": "",
+  "locus": "",
+  "wall_s": 1.1716545931994915,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "pass"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/result.json",
+    "sha256": "d14e32bf536ad72f530eb414497513567850c17d0cdb2b64c38716051d7214b1"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-generated-write/replay_identity.json",
+      "sha256": "3986057d42b41c3a20fe0435ae3b8b3a8790c8158a0952caf06ab58ff362913c"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-generated-write/attempt_0001/ApiTest.java",
+      "sha256": "4e68d10fe66c4c60c5a6eaf2d1767401e5f60d8a8fa08c95f5ea077c8bec1716"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-generated-write/attempt_0001/execution.json",
+      "sha256": "5e15e5bcf076e824191f32983e57974497e8f21b1991533a8c8cd9736643805a"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-generated-write/attempt_0001/stdout.txt",
+      "sha256": "ed3a45b095c2ef9d7bd768da2c8438279f0a4833d0f2c6c91bfa3d9f458a3224"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/mechanisms/thumbnailator-generated-write/attempt_0001/stderr.txt",
+      "sha256": "8c32a7bba5f3acbc068c539fceafa98ca584ebd9e67bf9b6e95ae49b57e4fe11"
+    }
+  ]
+}

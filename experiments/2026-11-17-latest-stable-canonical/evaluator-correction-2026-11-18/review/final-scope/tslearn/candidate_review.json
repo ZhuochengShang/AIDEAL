@@ -1,0 +1,590 @@
+{
+  "candidates": [
+    {
+      "api": "python:tslearn.__dir__",
+      "decision": "exclude",
+      "implementation": "return [*globals().keys(), *__all__]",
+      "reason": "Infrastructure-only module introspection: returns globals and exported module names, not a time-series operation.",
+      "source_evidence": [
+        {
+          "line": 42,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/__init__.py",
+          "sha256": "800de28d17217d34afe2328cbf1ecbfa5bf84f7275a3ec8d66894240a55576db"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.__getattr__",
+      "decision": "exclude",
+      "implementation": "if name in __all__:\n    return _importlib.import_module(f'tslearn.{name}')\nelse:\n    try:\n        return globals()[name]\n    except KeyError:\n        raise AttributeError(f\"Module 'tslearn' has no attribute '{name}'\")",
+      "reason": "Infrastructure-only lazy import/namespace lookup: dispatches module attributes through importlib or globals.",
+      "source_evidence": [
+        {
+          "line": 46,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/__init__.py",
+          "sha256": "800de28d17217d34afe2328cbf1ecbfa5bf84f7275a3ec8d66894240a55576db"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.matrix_profile.matrix_profile.MatrixProfile.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 259,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/matrix_profile/matrix_profile.py",
+          "sha256": "485b5d604b0251c3aaf352d1cc87b6d759709a42fbaf263d02480de8e2837a36"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesResampler.fit_transform",
+      "decision": "retain",
+      "implementation": "return self.fit(X).transform(X)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 73,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesResampler.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 134,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesScalerMinMax.fit_transform",
+      "decision": "retain",
+      "implementation": "return self.fit(X).transform(X)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 234,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesScalerMinMax.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 333,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesScalerMeanVariance.fit_transform",
+      "decision": "retain",
+      "implementation": "return self.fit(X).transform(X)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 443,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesScalerMeanVariance.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 522,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesImputer.fit_transform",
+      "decision": "retain",
+      "implementation": "return self.fit(X).transform(X, **kwargs)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 707,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing.preprocessing.TimeSeriesImputer.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 767,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/preprocessing.py",
+          "sha256": "15d1ba35fbf2a3ac86c2aabbb4d7479e47544c509c7d1e8bff40a0928a6402fe"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing._synchronizer.TimeSeriesFeatureSynchronizer.fit_transform",
+      "decision": "retain",
+      "implementation": "return self.fit(X, y).transform(X, y, **transform_params)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 150,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/_synchronizer.py",
+          "sha256": "ace935bfd02d94d85e22a7f03a708c66743406b0bf50d1a7a11962af53855ed5"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.preprocessing._synchronizer.TimeSeriesFeatureSynchronizer.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 174,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/preprocessing/_synchronizer.py",
+          "sha256": "ace935bfd02d94d85e22a7f03a708c66743406b0bf50d1a7a11962af53855ed5"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.utils.cast.from_seglearn_dataset",
+      "decision": "exclude",
+      "implementation": "return to_time_series_dataset(X)",
+      "reason": "Duplicate interface: forwards X unchanged to the separately selected to_time_series_dataset operation.",
+      "source_evidence": [
+        {
+          "line": 182,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/utils/cast.py",
+          "sha256": "2fecfde1ad2a0901584828d7ea28346cf2bc178e2ec49528c36a6c32f5f3c85f"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.utils.utils.ts_zeros",
+      "decision": "retain",
+      "implementation": "return numpy.zeros((sz, d))",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 521,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/utils/utils.py",
+          "sha256": "687d6be8d26198b98c5827f6a947c95bb01f179257d486a5d9326d427546bf36"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.piecewise.piecewise.PiecewiseAggregateApproximation.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 265,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/piecewise/piecewise.py",
+          "sha256": "5da0f8e5ab9063f3ca80de3babfae173eb058f3546013fe616d8450fe5c350aa"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.piecewise.piecewise.SymbolicAggregateApproximation.__sklearn_tags__",
+      "decision": "exclude",
+      "implementation": "return super().__sklearn_tags__()",
+      "reason": "Framework compatibility forwarding hook: returns super().__sklearn_tags__() unchanged.",
+      "source_evidence": [
+        {
+          "line": 517,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/piecewise/piecewise.py",
+          "sha256": "5da0f8e5ab9063f3ca80de3babfae173eb058f3546013fe616d8450fe5c350aa"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.piecewise.piecewise.OneD_SymbolicAggregateApproximation.__sklearn_tags__",
+      "decision": "exclude",
+      "implementation": "return super().__sklearn_tags__()",
+      "reason": "Framework compatibility forwarding hook: returns super().__sklearn_tags__() unchanged.",
+      "source_evidence": [
+        {
+          "line": 800,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/piecewise/piecewise.py",
+          "sha256": "5da0f8e5ab9063f3ca80de3babfae173eb058f3546013fe616d8450fe5c350aa"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.early_classification.early_classification.NonMyopicEarlyClassifier.get_early_predict_generator",
+      "decision": "retain",
+      "implementation": "return self._get_early_predict_generator(n_ts, predict_proba=False)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 627,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/early_classification/early_classification.py",
+          "sha256": "2b6df8a542044dd88171b551e9b947fd2633943032339c21fac6b5a53250b9c3"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.early_classification.early_classification.NonMyopicEarlyClassifier.get_early_predict_proba_generator",
+      "decision": "retain",
+      "implementation": "return self._get_early_predict_generator(n_ts, predict_proba=True)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 677,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/early_classification/early_classification.py",
+          "sha256": "2b6df8a542044dd88171b551e9b947fd2633943032339c21fac6b5a53250b9c3"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.early_classification.early_classification.NonMyopicEarlyClassifier.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.no_validation = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 779,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/early_classification/early_classification.py",
+          "sha256": "2b6df8a542044dd88171b551e9b947fd2633943032339c21fac6b5a53250b9c3"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesMixin.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 205,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/neighbors/neighbors.py",
+          "sha256": "dee5c1ca5ad1671c5966121699d989c1029412a532a366418c194cde8cb80527"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesClassifier.predict",
+      "decision": "retain",
+      "implementation": "return _predict_generic(self, X, super().predict)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 597,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/neighbors/neighbors.py",
+          "sha256": "dee5c1ca5ad1671c5966121699d989c1029412a532a366418c194cde8cb80527"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesClassifier.predict_proba",
+      "decision": "retain",
+      "implementation": "return _predict_generic(self, X, super().predict_proba)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 612,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/neighbors/neighbors.py",
+          "sha256": "dee5c1ca5ad1671c5966121699d989c1029412a532a366418c194cde8cb80527"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeriesRegressor.predict",
+      "decision": "retain",
+      "implementation": "return _predict_generic(self, X, super().predict)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 751,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/neighbors/neighbors.py",
+          "sha256": "dee5c1ca5ad1671c5966121699d989c1029412a532a366418c194cde8cb80527"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.shapelets.shapelets.LearningShapelets.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 1005,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/shapelets/shapelets.py",
+          "sha256": "16f750c43d2edfbb3c4a23c4ad12b2379681c30185cbc39b7023ad1c5d19a3a8"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.forecasting._arima.VARIMA.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.target_tags.required = False\ntags.allow_variable_length = True\ntags.input_tags.allow_nan = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 453,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/forecasting/_arima.py",
+          "sha256": "0b2cae06a57f1bbb9e11f3cd4cd57bb5b22449c70a4861559fece3c555d5f28c"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.forecasting._arima.AutoVARIMA.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.target_tags.required = False\ntags.allow_variable_length = True\ntags.input_tags.allow_nan = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 793,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/forecasting/_arima.py",
+          "sha256": "0b2cae06a57f1bbb9e11f3cd4cd57bb5b22449c70a4861559fece3c555d5f28c"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.forecasting._pipeline.ScaledForecastingPipeline.fit_predict",
+      "decision": "retain",
+      "implementation": "return self.fit(X, y).predict(X, n=n)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 179,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/forecasting/_pipeline.py",
+          "sha256": "e37f7009cf0928cf51464f2ed341bed4c995577b1ba7d0b0eee2078d252b365a"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.svm.svm.TimeSeriesSVMMixin.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = False\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 103,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/svm/svm.py",
+          "sha256": "395e3bfae1cb150528b6fc6e17e33cc0d584d2b2126f8cc5cc597fbe7d3aff2c"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.numpy_backend.NumPyBackend.cast",
+      "decision": "exclude",
+      "implementation": "return x.astype(dtype)",
+      "reason": "Thin NumPy forwarding wrapper: returns x.astype(dtype) without added validation or computation.",
+      "source_evidence": [
+        {
+          "line": 91,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/numpy_backend.py",
+          "sha256": "47d0152effb1499fa841775ebd4b5fe2879557d965b0adfcc83d3332e89bd59b"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.numpy_backend.NumPyBackend.copy",
+      "decision": "exclude",
+      "implementation": "return x.copy()",
+      "reason": "Thin NumPy forwarding wrapper: returns x.copy() without added validation or computation.",
+      "source_evidence": [
+        {
+          "line": 95,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/numpy_backend.py",
+          "sha256": "47d0152effb1499fa841775ebd4b5fe2879557d965b0adfcc83d3332e89bd59b"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.numpy_backend.NumPyBackend.is_float",
+      "decision": "retain",
+      "implementation": "return isinstance(x, (_np.floating, float))",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 107,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/numpy_backend.py",
+          "sha256": "47d0152effb1499fa841775ebd4b5fe2879557d965b0adfcc83d3332e89bd59b"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.numpy_backend.NumPyBackend.is_float32",
+      "decision": "retain",
+      "implementation": "return isinstance(x, _np.float32)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 111,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/numpy_backend.py",
+          "sha256": "47d0152effb1499fa841775ebd4b5fe2879557d965b0adfcc83d3332e89bd59b"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.numpy_backend.NumPyBackend.is_float64",
+      "decision": "retain",
+      "implementation": "return isinstance(x, _np.float64)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 115,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/numpy_backend.py",
+          "sha256": "47d0152effb1499fa841775ebd4b5fe2879557d965b0adfcc83d3332e89bd59b"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.backend.backend.Backend.__getattr__",
+      "decision": "exclude",
+      "implementation": "return getattr(self.backend, item)",
+      "reason": "Unchanged attribute-forwarding hook: returns getattr(self.backend, item); no customized numerical operation.",
+      "source_evidence": [
+        {
+          "line": 72,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/backend/backend.py",
+          "sha256": "9ef1534cc9ef139550ff3bd8e49a43c370ef9358afd8725dc1579976523f749c"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.clustering.kmeans.KernelKMeans.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = True\ntags.allow_variable_length = True\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 469,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/clustering/kmeans.py",
+          "sha256": "84a0be8f3c6e67615285d2328d628b4c2af2adfc7f927451622549508b4674a3"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.clustering.kmeans.TimeSeriesKMeans.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = self.metric != 'euclidean'\ntags.allow_variable_length = self.metric != 'euclidean'\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 946,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/clustering/kmeans.py",
+          "sha256": "84a0be8f3c6e67615285d2328d628b4c2af2adfc7f927451622549508b4674a3"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.clustering.utils.EmptyClusterError.__str__",
+      "decision": "retain",
+      "implementation": "if len(self.message) > 0:\n    suffix = ' (%s)' % self.message\nelse:\n    suffix = ''\nreturn 'Cluster assignments lead to at least one empty cluster' + suffix",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 25,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/clustering/utils.py",
+          "sha256": "30cabed318d5b992ff1ce88c8dc08f64a31db8e0bb3965d10645fa91a740c6d0"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.clustering.dbscan.TimeSeriesDBSCAN.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.input_tags.allow_nan = self.metric in VARIABLE_LENGTH_METRICS\ntags.allow_variable_length = self.metric in VARIABLE_LENGTH_METRICS\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 222,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/clustering/dbscan.py",
+          "sha256": "392e746187d0e6393af41f044f2f60106ab245504a6932d932d2016416d747e2"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.foundation._forecasting._BaseFoundationForecaster.fit_predict",
+      "decision": "retain",
+      "implementation": "return self.fit(X, y).predict(X, n=n)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 228,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/foundation/_forecasting.py",
+          "sha256": "55831a2957dacc1b6a2b3dd92f234ee03b680b56bf7d73ae03e875044cc85cdd"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.foundation._forecasting._BaseFoundationForecaster.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.target_tags.required = False\ntags.input_tags.allow_nan = False\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 247,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/foundation/_forecasting.py",
+          "sha256": "55831a2957dacc1b6a2b3dd92f234ee03b680b56bf7d73ae03e875044cc85cdd"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.foundation._embedding.TimeSeriesFoundationEmbedder.fit_transform",
+      "decision": "retain",
+      "implementation": "return self.fit(X, y).transform(X)",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 551,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/foundation/_embedding.py",
+          "sha256": "feeaea130bcf2ff61034c73f5c391ab6abb6b82e87d1d3700e01d10245b843fd"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.foundation._embedding.TimeSeriesFoundationEmbedder.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags = super().__sklearn_tags__()\ntags.target_tags.required = False\ntags.input_tags.allow_nan = False\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 569,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/foundation/_embedding.py",
+          "sha256": "feeaea130bcf2ff61034c73f5c391ab6abb6b82e87d1d3700e01d10245b843fd"
+        }
+      ]
+    },
+    {
+      "api": "python:tslearn.bases.bases.TimeSeriesMixin.__sklearn_tags__",
+      "decision": "retain",
+      "implementation": "tags_orig = super().__sklearn_tags__()\nas_dict = {field.name: getattr(tags_orig, field.name) for field in fields(tags_orig)}\ntags = TsLearnTags(**as_dict)\nreturn tags",
+      "reason": "Source adds numerical/domain choices, composition, mapping, or customized owner state; a special name or short body alone is insufficient to exclude it.",
+      "source_evidence": [
+        {
+          "line": 68,
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/bases/bases.py",
+          "sha256": "bdcc045be977c1b4a8649d005eecfacd4e437be50c35f2d806cfd6f3f1175347"
+        }
+      ]
+    }
+  ],
+  "scope": "Selected dunder methods and single-call bodies, not an exhaustive semantic equivalence proof."
+}

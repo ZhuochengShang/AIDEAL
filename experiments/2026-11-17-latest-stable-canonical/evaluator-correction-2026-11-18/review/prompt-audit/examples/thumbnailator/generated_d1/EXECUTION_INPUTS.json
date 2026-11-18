@@ -1,0 +1,35 @@
+{
+  "execution_context": "A Java headless harness compiled for Java 8 compatibility and run on JDK 17 is already in scope. Write statements only for the marked region. Reuse the in-memory images, output stream/path, and checked-in image paths. Exercise the target public API, assert a stable dimension/pixel/byte/file property, and print a compact witness.",
+  "region": [
+    "// TODO API_TEST_START",
+    "// TODO API_TEST_END"
+  ],
+  "strip_snippet_imports": false,
+  "output_tail_chars": 2000,
+  "success_marker": "__DONE__",
+  "error_marker": "__RUN_ERR__",
+  "work_dir": "execution",
+  "timeout_seconds": 300,
+  "max_fix_rounds": 0,
+  "auto_report": false,
+  "test_filename": "ApiTest.java",
+  "exec_hints": "Use Java 8 syntax. Prefer BufferedImage and the provided tiny PNG/JPEG fixtures. Do not open windows, URLs, cameras, or network resources. Close streams you create and avoid overwriting repository fixtures.",
+  "scaffold": "inputs/api_test_scaffold.java",
+  "build_cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/source",
+  "uberjar": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar",
+  "local_uris": false,
+  "output_dir": "execution/output",
+  "preamble": "BufferedImage sourceImage = new BufferedImage(32, 24, BufferedImage.TYPE_INT_RGB);\nGraphics2D graphics = sourceImage.createGraphics();\ngraphics.setColor(Color.BLUE);\ngraphics.fillRect(0, 0, 32, 24);\ngraphics.setColor(Color.YELLOW);\ngraphics.fillRect(8, 6, 16, 12);\ngraphics.dispose();\nBufferedImage destinationImage = new BufferedImage(16, 12, BufferedImage.TYPE_INT_RGB);\nByteArrayOutputStream imageBytes = new ByteArrayOutputStream();\nPath outputPath = Paths.get(output_dir, \"thumbnail.png\");\nFiles.createDirectories(outputPath.getParent());\n",
+  "sample_data": {
+    "grid_png": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.png",
+    "grid_jpeg": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.jpg",
+    "exif_jpeg": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Exif/original.jpg"
+  },
+  "require_correctness": true,
+  "command": "mkdir -p \"{work}/classes\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/javac --release 8 -cp \"{classpath}\" -d \"{work}/classes\" \"{test_file}\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/java -Djava.awt.headless=true -cp \"{work}/classes:{classpath}\" ApiTest",
+  "stop_on_provider_error": true,
+  "build": "",
+  "jars": "",
+  "spark_jars": "",
+  "probe_on_missing": false
+}

@@ -1,0 +1,112 @@
+{
+  "kind": "real_library_positive_and_negative_controls",
+  "not_an_experiment_score": true,
+  "model_calls": 0,
+  "checks": [
+    {
+      "bank": "mir_eval",
+      "variant": "positive",
+      "api": "python:mir_eval.alignment.absolute_error",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "control_passed": true,
+      "error_category": "",
+      "error": "",
+      "wall_s": 1.7058320781216025,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/positive/result.json"
+    },
+    {
+      "bank": "mir_eval",
+      "variant": "negative",
+      "api": "python:mir_eval.alignment.absolute_error",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "control_passed": true,
+      "error_category": "runtime",
+      "error": "AssertionError:",
+      "wall_s": 1.3995580710470676,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/result.json"
+    },
+    {
+      "bank": "mdanalysis",
+      "variant": "positive",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "control_passed": true,
+      "error_category": "",
+      "error": "",
+      "wall_s": 1.4356853645294905,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mdanalysis/positive/result.json"
+    },
+    {
+      "bank": "mdanalysis",
+      "variant": "negative",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "control_passed": true,
+      "error_category": "runtime",
+      "error": "AssertionError:",
+      "wall_s": 1.2991566183045506,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mdanalysis/negative/result.json"
+    },
+    {
+      "bank": "tslearn",
+      "variant": "positive",
+      "api": "python:tslearn.metrics._dtw.dtw",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "control_passed": true,
+      "error_category": "",
+      "error": "",
+      "wall_s": 19.411310466006398,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/tslearn/positive/result.json"
+    },
+    {
+      "bank": "tslearn",
+      "variant": "negative",
+      "api": "python:tslearn.metrics._dtw.dtw",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "control_passed": true,
+      "error_category": "runtime",
+      "error": "AssertionError:",
+      "wall_s": 17.4574515549466,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/tslearn/negative/result.json"
+    },
+    {
+      "bank": "sedonadb",
+      "variant": "positive_coordinates",
+      "api": "sql:ST_Point",
+      "expected_status": "pass",
+      "observed_status": "pass",
+      "control_passed": true,
+      "error_category": "",
+      "error": "",
+      "wall_s": 0.9492337852716446,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/positive_coordinates/result.json"
+    },
+    {
+      "bank": "sedonadb",
+      "variant": "negative_coordinates",
+      "api": "sql:ST_Point",
+      "expected_status": "fail",
+      "observed_status": "fail",
+      "control_passed": true,
+      "error_category": "runtime",
+      "error": "AssertionError",
+      "wall_s": 0.944173663854599,
+      "model_calls": 0,
+      "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/sedonadb/negative_coordinates/result.json"
+    }
+  ],
+  "superseded_control_note": "Initial Sedona positive used saved Original expected WKT POINT (10 20), but library emits POINT(10 20). Preserved initial controls; replacement checks independent x=10,y=20 coordinates and WKT whitespace normalization, with matching incorrect-coordinate negative control."
+}

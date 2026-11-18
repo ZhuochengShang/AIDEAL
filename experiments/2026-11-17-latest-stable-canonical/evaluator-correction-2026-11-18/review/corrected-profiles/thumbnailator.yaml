@@ -1,0 +1,53 @@
+project_name: Thumbnailator
+role: An expert in deterministic Java image processing, image I/O, and safe headless
+  test harnesses.
+project:
+  name: Thumbnailator
+  language: Java
+  description: A small Java image-processing library for producing thumbnails from
+    files, streams, URLs, and in-memory images.
+  version: 0.4.21
+domain: Deterministic Java image processing; selected for this latest-stable study.
+target_users:
+- Java imaging and media developers
+- scientific software users needing deterministic image transformations
+- coding agents composing type-safe thumbnail pipelines
+use_cases:
+- Resize, crop, rotate, watermark, and transform BufferedImages.
+- Read and write thumbnails through files and streams.
+- Exercise filters, geometry, resizers, naming, and task abstractions.
+constraints:
+- Use only in-memory images and 95 checked-in test files.
+- Run headless and prohibit network, cameras, and desktop UI.
+- Compile snippets with JDK 17 javac --release 8; execute headlessly on JDK 17 with
+  the official Maven 0.4.21 binary.
+- Use the single API identity selected in this request. The frozen manifest defines
+  the complete study scope.
+notes: Pinned official release 0.4.21, source commit c9d99613878bbbf1f4d9369585b4cb5352c3b474.
+  The official binary and Javadoc artifacts are independently hash-bound in preparation/thumbnailator-official-artifacts.json.
+selection_provenance: 'Image processing. Provenance caveat: Thumbnailator was manually
+  proposed after the sweep and does not occur in the saved top-10 domain result files;
+  it is not yet query-qualified under the strict discovery rule.'
+knowledge:
+  repository:
+    upstream_url: https://github.com/coobird/thumbnailator.git
+    pinned_commit: c9d99613878bbbf1f4d9369585b4cb5352c3b474
+    pinned_tree: bea09a3170bf507338dc89214598e7ac45cdc107
+    package_version: 0.4.21
+    source_path: source
+  api_scope:
+    manifest:
+      path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/thumbnailator/inputs/api_manifest.json
+      sha256: 562de04b84cf4f2334fbe7f80c8f1071655065f484c662b5a2e7e39a97186cc9
+    selection_policy: Use the current frozen canonical manifest and its preparation
+      receipts; preserve distinct defining owners.
+    sampling: none within the frozen selected set
+  original_documentation:
+    source_roots:
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/README.md
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/extras/thumbnailator/original_docs
+    document_count: 117
+    bundle_characters: 2138581
+    bundle_sha256: f068a3f44f32f0e940b91521347a7f12e496138b26c1ae4dc37b26050aea80e4
+    scope_change_note: Replaced 116 locally generated 0.4.21 Javadoc pages with the
+      official Maven 0.4.21 Javadoc artifact; old locally built binary is not reused.

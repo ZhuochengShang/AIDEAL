@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "bank": "rdpro_scala",
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+  "new_model_calls": 0,
+  "scope": "manually reviewed software preflight, not an experiment score",
+  "expected_positive": "isImmutable explicitly returns true in pinned source.",
+  "expected_negative": "Explicit assertion must fail even after a check witness was printed",
+  "source": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala",
+    "sha256": "cfe6f7ca39136e9341dd9ebb1961b3de5f91c636d5e1c70de25b73abe8ed45f0"
+  },
+  "operator": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-18-native-execution-v2-4d5cee57aa1a/scripts/rescore_native_programs.py",
+    "sha256": "142d821a3ed501cdc4a7788356da1b537a351eced80e657468bd98c87c84cd94"
+  },
+  "positive": {
+    "status": "pass",
+    "exit_code": 0,
+    "seconds": 81.74630593229085,
+    "evidence": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/positive/result.json",
+      "sha256": "1fe1b87e8dd5561ee85f4ba28b37a873bf3520cc26d1d74aa7765a3f5ed7b23d"
+    }
+  },
+  "negative": {
+    "status": "fail",
+    "exit_code": 1,
+    "seconds": 76.63841336313635,
+    "evidence": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_scala/negative/result.json",
+      "sha256": "a3edaba489e5c9959f70a1466919c49a18e8cc08463d4b1ac4d27f12e2e064d6"
+    },
+    "marker_observed": true
+  }
+}

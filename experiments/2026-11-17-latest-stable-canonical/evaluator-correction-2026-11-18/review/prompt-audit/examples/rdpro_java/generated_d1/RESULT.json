@@ -1,0 +1,62 @@
+{
+  "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+  "historical": true,
+  "recorded_detail": {
+    "status": "fail",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "fail",
+        "category": "runtime",
+        "error": "AssertionError: Statistics object should be invalid before computation."
+      }
+    ],
+    "error_category": "runtime",
+    "error": "AssertionError: Statistics object should be invalid before computation.",
+    "code": "edu.ucr.cs.bdlab.raptor.Statistics stats = new edu.ucr.cs.bdlab.raptor.Statistics();\n\n// The Statistics object is initialized but empty. \n// According to the documentation, isValid() should return false \n// because no zonal statistics operation has been performed yet.\nboolean validStatus = stats.isValid();\n\nif (validStatus) {\n    throw new AssertionError(\"Statistics object should be invalid before computation.\");\n}\n\n// Verify the state is indeed false as expected for an uninitialized object\nif (validStatus != false) {\n    throw new AssertionError(\"Expected isValid() to return false for uninitialized Statistics object.\");\n}\n\nSystem.out.println(\"__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid \" + validStatus);",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/ApiTest.java",
+    "exit_code": 1,
+    "stdout_tail": "",
+    "stderr_tail": "FO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 34355.\n26/11/18 09:58:29 INFO NettyBlockTransferService: Server created on 127.0.0.1:34355\n26/11/18 09:58:29 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/18 09:58:29 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 34355, None)\n26/11/18 09:58:29 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:34355 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 34355, None)\n26/11/18 09:58:29 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 34355, None)\n26/11/18 09:58:29 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 34355, None)\n__RUN_ERR__ AssertionError: Statistics object should be invalid before computation.\njava.lang.AssertionError: Statistics object should be invalid before computation.\n\tat ApiTest.main(ApiTest.java:49)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n"
+  },
+  "recorded_metrics": {
+    "status": "fail",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "43ca2ba8d2df27b1f813900a865bec1c49f3fd45384c8f1e11fc940010abf85c"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/attempt_0001"
+    ],
+    "pass_round": null,
+    "wall_s": 65.7,
+    "llm_calls": 1,
+    "input_tokens": 1827,
+    "output_tokens": 176,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 1827,
+        "output_tokens": 176,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": "runtime",
+    "error": "AssertionError: Statistics object should be invalid before computation.",
+    "locus": "JFunction0$mcV$sp.java:23",
+    "doc_chars": 1963,
+    "document_sha256": "9ab44146a46564011130190e7aa519823e8df5f6c111e2baf88d274290d93f95",
+    "source": "source/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Statistics.java:131",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/rdpro_java/result.json",
+    "sha256": "340d15d7d0d392011947b1443bae359908f77c1d7e1a798d7483f0b1bd1d8f2f"
+  },
+  "fixture_fingerprint": {
+    "sha256": "7c866aa11c80b1107650c7677b8d475c36e1e996671ea5a20a0fe37423a1f614",
+    "file_count": 3
+  }
+}

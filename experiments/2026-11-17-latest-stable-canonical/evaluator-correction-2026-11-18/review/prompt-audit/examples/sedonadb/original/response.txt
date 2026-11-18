@@ -1,0 +1,11 @@
+table = sd.sql("SELECT ST_AsText(ST_Point(10.0, 20.0, 4326)) as wkt").to_arrow_table()
+wkt_result = table.column("wkt")[0].as_py()
+
+assert wkt_result == "POINT (10 20)"
+print(f"__CHECK__ sql:ST_Point {wkt_result}")
+
+table_srid = sd.sql("SELECT ST_SRID(ST_Point(10.0, 20.0, 3857)) as srid").to_arrow_table()
+srid_result = table_srid.column("srid")[0].as_py()
+
+assert srid_result == 3857
+print(f"__CHECK__ sql:ST_Point {srid_result}")

@@ -1,0 +1,51 @@
+{
+  "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+  "status": "pass",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "edu.ucr.cs.bdlab.raptor.Statistics checkedStats = new edu.ucr.cs.bdlab.raptor.Statistics();\nboolean freshValid = checkedStats.isValid();\ncheckedStats.invalidate();\nboolean invalidatedValid = checkedStats.isValid();\nif (!freshValid || invalidatedValid) { throw new AssertionError(\"Source-defined Statistics validity transition failed\"); }\nSystem.out.println(\"__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=\" + freshValid + \",invalidated=\" + invalidatedValid);",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/ApiTest.java",
+  "exit_code": 0,
+  "stdout_tail": "__CHECK__ java:edu.ucr.cs.bdlab.raptor.Statistics.isValid fresh=true,invalidated=false\n__DONE__\n",
+  "stderr_tail": " more\n26/11/18 14:34:37 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/spark-tmp/spark-957a240c-d9f9-41e4-b195-cc4838ab7555/userFiles-40b03870-ec09-4f16-b4da-438a3652969d/c297213b0e6f-leveldbjni-all-1.8.jar to class loader default\n26/11/18 14:34:37 INFO Executor: Fetching spark://127.0.0.1:42943/jars/a3f9f5901f4c-gt-main-26.1.jar with timestamp 1795041208117\n26/11/18 14:34:37 INFO Utils: Fetching spark://127.0.0.1:42943/jars/a3f9f5901f4c-gt-main-26.1.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/spark-tmp/spark-957a240c-d9f9-41e4-b195-cc4838ab7555/userFiles-40b03870-ec09-4f16-b4da-438a3652969d/fetchFileTemp4330041040379733425.tmp\n26/11/18 14:34:38 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/spark-tmp/spark-957a240c-d9f9-41e4-b195-cc4838ab7555/userFiles-40b03870-ec09-4f16-b4da-438a3652969d/a3f9f5901f4c-gt-main-26.1.jar to class loader default\n26/11/18 14:34:38 INFO Executor: Fetching spark://127.0.0.1:42943/jars/8e9865c977b6-spire-macros_2.12-0.17.0.jar with timestamp 1795041208117\n26/11/18 14:34:38 INFO Utils: Fetching spark://127.0.0.1:42943/jars/8e9865c977b6-spire-macros_2.12-0.17.0.jar to /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/spark-tmp/spark-957a240c-d9f9-41e4-b195-cc4838ab7555/userFiles-40b03870-ec09-4f16-b4da-438a3652969d/fetchFileTemp10785837206124885659.tmp\n26/11/18 14:34:38 INFO Executor: Adding file:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/spark-tmp/spark-957a240c-d9f9-41e4-b195-cc4838ab7555/userFiles-40b03870-ec09-4f16-b4da-438a3652969d/8e9865c977b6-spire-macros_2.12-0.17.0.jar to class loader default\n26/11/18 14:34:38 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 40281.\n26/11/18 14:34:38 INFO NettyBlockTransferService: Server created on 127.0.0.1:40281\n26/11/18 14:34:38 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/18 14:34:38 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 40281, None)\n26/11/18 14:34:38 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:40281 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 40281, None)\n26/11/18 14:34:38 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 40281, None)\n26/11/18 14:34:38 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 40281, None)\n",
+  "error_category": "",
+  "error": "",
+  "locus": "",
+  "wall_s": 77.83767526037991,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "pass"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_java/rdpro_java/result.json",
+    "sha256": "40ab0659784d25e4ecb0c1a61e0532d7e1e63bbde6c7a160db44eb780f11d80c"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/replay_identity.json",
+      "sha256": "cf285ba8f2891c5ead9bda01ff383f9eda45186e68b8ab05a1589098dad4e281"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/ApiTest.java",
+      "sha256": "06f04c6120abda1503cc7f46f54dcff601f8c46cfb289a5dc5b59cd7573321ee"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/execution.json",
+      "sha256": "350c49e4d23f08fc1d8bbd717d9dc7ecde551c9bbcac5fc5775ebfefaf01e5e5"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/stdout.txt",
+      "sha256": "07657dbd46e0cd2e16a234e3d36f57efbf5cdc81a79d7d25c287d5184472e36e"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/rdpro_java/positive/attempt_0001/stderr.txt",
+      "sha256": "ab8fd2bcdd899c00556ad77b4485a775c58200c655270dd9c32f771c30a2fd07"
+    }
+  ]
+}

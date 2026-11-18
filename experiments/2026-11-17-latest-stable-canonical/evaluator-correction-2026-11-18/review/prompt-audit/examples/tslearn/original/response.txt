@@ -1,0 +1,17 @@
+from tslearn.metrics import dtw
+import numpy as np
+
+# Use the provided 1D series s1 and s2
+# Compute DTW distance
+dist = dtw(s1, s2)
+
+# Verification:
+# DTW distance between two identical series should be 0.0
+dist_self = dtw(s1, s1)
+assert dist_self == 0.0, f"Expected 0.0 for self-distance, got {dist_self}"
+
+# DTW distance must be non-negative
+assert dist >= 0.0, f"Expected non-negative distance, got {dist}"
+
+# Print witness
+print(f"__CHECK__ python:tslearn.metrics._dtw.dtw {dist:.4f}")

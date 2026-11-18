@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "experiment_fingerprint": "07e7272cb71f90a766cdf10e953187d5adac4336f4d858faaf9d0e7d56c934b0",
+  "fingerprint_components": {
+    "schema": 4,
+    "runtime_profile": [
+      {
+        "path": "/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/workflow/runtime_profile.py",
+        "sha256": "5a5888af16dac99b5b3e90696a3f6936e68eafcab68734ddd651fe5cf0036507"
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-reviewed-2026-11-18/environment_manifest.json",
+        "sha256": "326de27272cd7eaa8ff7776409d46298e2e56e30354dfce8314fac857006e0ce"
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-reviewed-2026-11-18/runtime_profile.json",
+        "sha256": "e15d4caaaf6c6cc53f8a0b2aeb602bd5bf1deb640d6f87bcbc93c2591829851c"
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-reviewed-2026-11-18/setup_report.json",
+        "sha256": "f8c218a4f1e14aa0a408e0bf692fbf3c081f7a60acf62f335309c7775d9612b2"
+      },
+      {
+        "path": "/usr/bin/python3.12",
+        "sha256": "fbc3307aee63d7282f5f1ebfa53b502c2e5934a0f9729e316bb98d29212ae224"
+      }
+    ],
+    "prompt_contract": {
+      "templates": {
+        "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+      },
+      "profile_sha256": "dad1d77e2abc3ac0ae3b88e067ca675e29eb8dca7c40976d991c014ead07dee1"
+    },
+    "transport_contract": {
+      "temperature": 0.0,
+      "google_request_timeout_s": 300.0,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630.0,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "project": "MDAnalysis",
+    "language": "Python",
+    "doc_source": "original",
+    "doc_scope": "relevant",
+    "max_fix_rounds": 0,
+    "manifest_sha256": "c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc",
+    "document_sha256": "d51e3f6bd38d02d9cf9e3e9aaa5af144b80d89f49a590228c58a7c18c3c60cfc",
+    "original_document_files": {
+      "sha256": "c5d4ef276fbef79f06bb973293c6b30563fc80d9fb4c796279d9bc3b6ec192e7",
+      "file_count": 1412
+    },
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite",
+      "audience_max_output_tokens": 8192,
+      "fixer_max_output_tokens": 8192
+    },
+    "class_context": false,
+    "owner_overrides": {},
+    "timeout_s": 300,
+    "execute_config": {
+      "execution_context": "A runnable headless Python test harness is already in scope. The snippet is inserted inside a function and the preamble variables listed under available inputs are already defined. Write executable statements only. Import MDAnalysis submodules or optional dependencies only when the documented public call requires them. Do not define another function or process entry point. Assert a deterministic property and print a compact correctness witness containing a shape, scalar, or length.\nThe same versioned input bundle is available in every documentation condition. File roles tng_path, h5md_path, mmcif_path, gsd_path, tpr_path, edr_path, xvg_path and fasta_path identify actual inputs in those formats. small_pdb_path and imd_trr_path identify a small topology and trajectory. Existing protein-system paths and preloaded universe/atoms remain available. For an IMD or StreamReaderBase target only, a controlled local IMDv3 server is already running: imd_url (str), imd_host (str), imd_port (int) and imd_n_atoms (int) are available; construct the actual documented reader and close it when done. For legacy X3DNA operations, dna_pdb_path is a DNA structure and x3dna_executable is the installed official executable path. The child process already has X3DNA and PATH set for this tool. Output files belong under output_dir. These are input/environment facts, not expected result values. chemfiles_trajectory_path is the trajectory validated with the Chemfiles backend. fixture_catalog_path is a JSON catalog of additional public MDAnalysisTests2.11 inputs; its files entries provide path, relative_path and suffix. The catalog also includes deliberately malformed/negative specimens, so choose data suitable for the intended format. New deterministic synthetic data may be created under output_dir; never modify supplied files.",
+      "region": [
+        "# TODO API_TEST_START",
+        "# TODO API_TEST_END"
+      ],
+      "strip_snippet_imports": false,
+      "output_tail_chars": 2000,
+      "success_marker": "__DONE__",
+      "error_marker": "__RUN_ERR__",
+      "work_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/calc_negative/execution",
+      "timeout_seconds": 300,
+      "max_fix_rounds": 0,
+      "auto_report": false,
+      "test_filename": "api_test.py",
+      "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-18-native-correctness-overlay-v2/bin/python \"{test_file}\"",
+      "exec_hints": "Use the preloaded Universe, AtomGroups, trajectory, and the pinned molecular fixture paths. Keep atom selections and frame ranges small. For analysis classes construct the documented class, call run() when required, and validate a stable scalar, shape, or length. The PSF/DCD pair has no periodic box; use a matching configured periodic fixture only when the target contract requires it. Write any small output only under output_dir; do not modify source fixtures, download data, or open a GUI.",
+      "scaffold": "inputs/reviewed_api_test_scaffold.py",
+      "local_uris": false,
+      "output_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/native-controls/mdanalysis/d8ba3815cf95/original/calc_negative/output",
+      "preamble": "MDAnalysis = mda  # type: module\nnumpy = np  # type: module\nuniverse = mda.Universe(psf_path, dcd_path)  # type: MDAnalysis.Universe\natoms = universe.atoms  # type: MDAnalysis.core.groups.AtomGroup\nprotein = universe.select_atoms(\"protein\")  # type: MDAnalysis.core.groups.AtomGroup\nbackbone = universe.select_atoms(\"protein and backbone\")  # type: MDAnalysis.core.groups.AtomGroup\ntrajectory = universe.trajectory  # type: MDAnalysis.coordinates.base.ReaderBase\ntimestep = trajectory[0]  # type: MDAnalysis.coordinates.base.Timestep\n",
+      "sample_data": {
+        "psf_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk.psf",
+        "dcd_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_dims.dcd",
+        "pdb_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_open.pdb",
+        "gro_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.gro",
+        "xtc_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.xtc",
+        "mdanalysis_fixture_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures",
+        "tng_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/coordinates/test.tng",
+        "h5md_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/coordinates/test.h5md",
+        "mmcif_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/mmcif/1YJP.cif",
+        "gsd_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/example_bonds.gsd",
+        "tpr_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/tprs/Linear_Angle.tpr",
+        "edr_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/test.edr",
+        "xvg_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/test.xvg",
+        "fasta_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/test.fasta",
+        "imd_trr_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/coordinates/test.trr",
+        "small_pdb_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/coordinates/test_topology.pdb",
+        "dna_pdb_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/dna_bdl084.pdb",
+        "fixture_catalog_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/upstream_data_catalog.json",
+        "chemfiles_trajectory_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/inputs/coordinates/test.trr"
+      },
+      "require_correctness": true,
+      "io_hints": "",
+      "stop_on_provider_error": true,
+      "build": "",
+      "probe_on_missing": false,
+      "runtime_profile": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-reviewed-2026-11-18/runtime_profile.json"
+    },
+    "scaffold": {
+      "sha256": "9d088f352fa6ae7a07d7282b66eb90b05eeff7aecd61f2e86845521debec027d",
+      "file_count": 1
+    },
+    "source": {
+      "sha256": "f7f35a41ac3fc3b5175d6291d651c54d373e7b512f320a1f69bbdaff7303052b",
+      "file_count": 208
+    },
+    "api_inventory": {
+      "sha256": "2347273382785d810843285ccb3f3f1138c05fde218425b6f85430ddd11d499a",
+      "file_count": 1
+    },
+    "fixtures": {
+      "sha256": "54532b724c961824a4fcfefaff143a4baa2a9681c09704378591d4bdc6bf1b99",
+      "file_count": 17
+    },
+    "engine": {
+      "sha256": "44bb36e6903fc4f6227b6f24a27778f8b0a487d4ced53c0792edeabf294de976",
+      "file_count": 40
+    },
+    "interpreter": {
+      "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+      "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+      "environment_sha256": ""
+    },
+    "canonical_requested_targets": {
+      "protocol_version": 1,
+      "targets_sha256": "d4326ec2dbfd460d313eccdc212a7dd6c3d320d253533d5ce7b085ba38760d24",
+      "targets_count": 1538
+    },
+    "native_execution_contract": {
+      "version": "native-execution-v2",
+      "working_directory": "per_attempt",
+      "output_bindings": "per_attempt",
+      "correctness_witness": "exact_target_stdout",
+      "jvm_assertions": false,
+      "python_fixture_scope": "explicit_function_bindings"
+    }
+  }
+}

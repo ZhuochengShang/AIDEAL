@@ -1,0 +1,446 @@
+codebase:
+  intent:
+    weights:
+      llm_common: 4
+      many_impls: -10
+    manual_include: []
+    manual_exclude: []
+    exclude_name_patterns: []
+    use_llm: false
+    refresh_llm: false
+    threshold: 5
+    many_impls_threshold: 4
+  intended_api:
+    static_include_threshold: 8
+    static_exclude_threshold: 1
+    batch_size: 25
+    cache: docs/intended_api_decisions.json
+    refresh: false
+    require_llm: false
+    selection_limit: 0
+  public_def_regex: ^\s*(?:def|class)\s+([A-Za-z][A-Za-z0-9_]*)
+  exclude_names: []
+  source_globs:
+  - source/tslearn/**/*.py
+  test_globs:
+  - source/tslearn/tests/**/*.py
+  - source/tests/**/*.py
+  surface_filter: all
+  api_inventory: inputs/api_inventory.json
+  api_inventory_sha256: d6f2f64eaa4343b963a166f2e2f13878a64d232734df4d27b0f9ee78f941a525
+  path: source
+  identity_mode: qualified
+  api_origin:
+    source_roots:
+    - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn
+    library_namespaces:
+    - tslearn
+    external_namespaces:
+    - builtins
+    - math
+    - numpy
+    - scipy
+    - sklearn
+    - java
+    - javax
+    - org.apache.spark
+files:
+  project_profile: configs/project_profile.yaml
+  prompts_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/tslearn/prompts
+  llm_readme: docs/LLM_readme.md
+  notes_to_self: docs/notes_to_self.md
+  integration_tasks: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/tslearn/configs/integration_tasks.yaml
+  aliases: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/tslearn/aliases/aliases.json
+  error_log: logs/error_log.jsonl
+  original_readme:
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/e895f8bc2876f657baf20ab1272da3438bf5720851650d42dfb67397dc8c98c0.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/c3910b5c77b2d62ae3cdae75ae3cf4261e0f8e06899026c6fb8b204c7712430e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/f4c8934e0e3476a078733603879d242ed050905843ce36cce1f9cf7dbcb37657.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/fffffebed96a56f5b52f69945dd47d65f65ffcda491118670d41de8864ae4a5f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/459c3c55398fc0a466faf51f9f98ebb9e0f39e0a38809c158f234ed533b21368.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/2c12e57e903f25ff1530c67c260529c22bf2b49905f8bf8e1787cbc31d7336c4.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/e51d0a41319cc06bfddbc3c3ae1148252d7e2128b46c4c9039e9477a3c3cdfbd.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/624c297cde4a15466302dfcb05d79b7ec54dfeab22e2f13ef2c837f1ff169f25.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/9a5f8f9f3061b657598bb653e5e0bbb89bd940aa9a3a5a114d2489e2ad3f5c26.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/97a81c4bab7b303e34cf9f0f02d40fbf2a1477da8bc5a3d17b2a51a3ff1d6407.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/a9279b8b63b33e91b61e7bd96d2eea755d7b6e4ae2199fe4848d69409d9ac9b6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/b7c16e51e64c8115debd3066bfdbb110d73836fb53b600aa52980f5dd48aa7ce.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/1b9e6f1057c31508c0c0c13e9d900903f7c73511b827349ec75d58295a98a82f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/dc5ecda1cc2c237d37569f873833f49f07c551696abfb2d37f55ea236cf83902.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/67bb9280a4669d15efdd94a578fdfebcd99c55c1989cca6b0018b199e3868f8f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/c11b8de4333deab1ec0512c8de1f7f26eb3ac390d333010fdbeb87c4fb68aca7.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/30a4a24f5f61a922c487e4d149274a266c71d4d02a867cfc67799a20b799602b.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/6bf536e245b25684cc5f0dfbb6f90c4eeaa0ff1b37e1da11d4b9c72f0ede447e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/c813d8c090a9851f77ebaac9639b814b4aea669f87767275139e5fa97d60a617.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/2813ca2f847b7d89df0413037a37f72951e983c28fef4b1e9aacd647f1ab5d8c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/7b925660d8e61c2f3b068449acf3c7ad151fca0fdf531ddbf2596f3ad2c5029a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/ed2e402ec1c57834e0a61a2b8e2bee7213d4ba656df0083f26dbc9076d98d0ae.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/1141059a1fc36ae05fbe8359814a8c0cb9aa7f2e66697a2552cbf6c4e43d3f3c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/9da8c88ebc81b4cc28d5152217f5f0be72d4b04eb6a8c0b4e197283b18146715.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/8da712bc85996e98ba2c5e4fb97bf641518fe44f702a02648b8ff94af1bf8c86.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/011ea0c1c3aef9dc00538d68ba05d40092cf7c8f058932813d44b84c29ae7219.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/be1eb697137c6c005aa625cd32b9ba4913932c88459b4d444c19d64fbad8f8ed.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/7b2c2370f0032dcb781f48c6516d613e2390c986c803f4af00fd66cb35bb74c4.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/19dbae106da42cffe3eb997cf18f3ef8487dc3cd4a74364c164c86de51d419f6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/c589b75a507dadb157399e37bc9519c797ba2eb67dc4c9c2565b07776a9eefb3.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/59c029c1ddcbbf08eff036507c93584182147256fe24b316acea01adc01ddf17.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/44d57c76aac7c99eeed78c9ecf0bb8475bdfce9c539c9073df0ae541a1f99479.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/40abd071041430161fc818262cde6e12df4e54d810e9c786ce0eda6a483ada1a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/f124d03dec25c708b02cc712061ea40f3ed47003b8cc91b4ed94515c8fcf0896.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/af8158c025564a4536f84c63688e8db073f70bc0331be7e70e70e980d4d7eae0.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/533892155dedc5f82a8473e590bb813fef1c98d20f5cc6d74123d3756694cbb8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/cc5a2686757f83aee8a6aaedf47c98bcf124765996c76e1ded712d03f878257d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/d1e7d846550552ceec9c8b2dd95a907a691fa267de12af837a79582e31d59a13.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/e15ed79e1fa219d6e3f17e7426388c76ae9d3ad8188c0a9baea444caf8cee361.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/affbed915b2a17928536777b605da098bdacc652892f5c23f531fe9a76361a72.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/6a2add7ee766d3647dde5964677dc6f7806e4b0ea2cdc1eece44c777ac8e0e72.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/26d134512070ef6398e9d27cf2c3689edbe9a8f2f17fdecd64092a3046b1c94b.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/40c7ca8bb00ca3a4379df166e09ab63566a59287dd91236e872c96b10296054a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/08525d8029902d928418a6ba637a91eb5d706941f0ef9d6fc0f1fa25fe134572.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/5d2dc1219d1e6233c6242207415f9d439d9caa3324b73ba26a85ca7eea8dd91e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/6d1a39e04490dd861c8eb54794499412e97202c94ef1a315f97a2fccd2ce978c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/0486ae0d0f000910b4f83e7ff8e717fa606e1647dc135b34137e5e11ec5b56ff.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/e3010ba50aabe86836604da7852857c66e1b80c05c9e8ef004980ddfbb23a8cd.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/2e1d20740830e180e0c1de4cb52b17ef9d4237b1e8278801f5b9a19585321e39.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/4cfb2d33874fce4825140e517523cf198917026e8a188435a7ed31b658712d98.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/f10d53a6168404b9dfea506a376e5c0e92bce2a04847e791b0786315489f4223.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/bb53adfe5f8c61239b3f509646c2cb3d18c0726e372f502cd1629eb482eb66ac.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/7ca133ed8942abafa96bd13a46972960fe2522d443170cade1b32fc97e2a833d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/a40ff511477768c285ba124b950d0e8cacf8ba32e077f37653a0fd830cc94332.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/dba2278195aef0853801796bcfd90625426e76b21c9e78e2c9c053e7f97ddb0d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/8e6add51cb68f8e59fefdb347a31d366fea39a91d11061368958be4b91eb68e2.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/24c8e5e7af839b55dfb4cc3a672fe0ae40bd1499f0fe5e24e209200020a74458.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/d9ca0c7b8199a2412fa94f48724858727346d39b5c9df30860bc86346fe8c9a0.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/24ff21e2df5d7a1d0e65e768b8b56ab9f770385d4d85fe850536d416230c06c8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/7541f26d20d10ce24acb1b246e42abff3036f7b782f8e4aa115e8af5e11ada25.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/679ee9c368183cd120ef2a05ad3bb4fd8738506cc539d938406910507b0ab3b8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/56215fe7e59889206576187a6d90f0b6b5b738cd638e407ab2862893e613935f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/fd97b79fe58470e5078227e8f9ccdb0d47d1bf170498be4915a93d552d61836c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/174501bfe478ca6f0ab0f43f1f7c1f4157690033cf2f6c80e5028252fe328813.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/d9df613d998d2cfe9d90ec9e0d9070c78b94239372f9cf6ccc8de7a1f6dc4047.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/bd341a7d162c3aeb314793c47eec0875bc1cf2cbcbe87352c930a65fc5e7a695.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/61004ce09e86b2e7690e83fef6f86980f6448e7a08ed32426d6dfae1b569d8a8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/1c4cbad07e3effb5f786486ebbe206570d2dddc23aaa3fd28ec4e43c206f92ea.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/c5bcb172fe5d0000e759a3b8516ae5ce3b530f16c160e9ccd80cb230b20ecb14.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/c4e904384425bda1b52ac365a8eebd0db8ec6ceadbfe164c200a6c1ca1c1db2f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/b0315ad460bf0a4a0578ccc8124ea0ee13f8c5958e964511645a331c470c2ee1.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/4a856e1d381894ab98afbb5167a452c1ebc1b873a6f9380c00ebcec0313c8630.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/6d200d1cab3d1c2de335f32c57891319e2c0ad66b078059297d67ac2fa9d79c8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/403b7eb1e0c0e02366af10da171cfa40cfabe148cc2b06b94dc7ced5fccf2a9d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/1c7b102895adf2c2383f4b03ba8c84f74a17d8f31496ded2d3c3468cf88c6ba1.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/0f4efcd228e6a83f21a5abd0638f06afc7be0064f677b5ccf1329f1443efced6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/9ef8b78334b21972e0dc3ef78d983415c7580917cba66ae28dd9e62ccf9af74d.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/cd3de7c3e18e0577e877381fd926156d91b259642ac2eecfc2f782741468d7bc.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/0d26eff778069e814e076db359e9e19fd04a2a84199680be786ae0c39bf01730.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/cd74d20f2c2dff6abb9f74038cac67e2ad5f330e4c931b3869a7f0c9b1110499.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/7225ced775ecb29ec69ff77882bff1fe0bae10a4908b42cfefab9fbcae02221c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/5a92b30ad22a1145f5a9798e578fe93063aad9e4cf29c36b5da61b4a27d79c38.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/7797cdc561804d7f4f1e1e5f1dbd74e866622b08838b3e3a9dc6c5039d4f056f.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/b230af6d1d9a7238255d525a0cc014c68695ac8c9e3a257e375f02aade039a86.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/324a1510c98b35e0b199d674745a83c261962e1e28d2421e51f0875216de0ba6.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/30f1d2571960cc333e347a913037a27ae1a4d03e3b038009e85e03daf855a83c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/8f3d1962ff46e32d809aa0d58b88bf03f32632ce167b0435154e469ad42681b0.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/d2267ad034b329f8b65ca7cf6291f97d094b9953130b0db524e20b94b02f9e30.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/e18f026d66f346cbb9965211127a6bb7d09beefd7f2d12abfe9ce756ee208089.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/e2ca601a8d5cd4dcb5028b4046246ea42b554d9b1bb7b68c38ef04fee2569343.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/56dfa923502443b5a2374ef7b698f2a8f975d27fc0b00a911c96f48acbbee943.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/de1118711eff80896715b204fc9fe62f62dd0ec93de8b521dc5425f4faf978e9.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/1be62283a315d500f8061a174a677eff3a34933f37c7915583ccfea492847168.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/b2da3d0ed7b2e973ce384cf5d2ff0d796f7d5198e018e349a8f2b89794f4028c.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/86fb0e3a0a186a3ce7423b8f6c00be51281c7a34ed2f94a543f4a5a6b3374c0a.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/b5d14c8f1f0d7b7ac6cd8567879bf2ac8151ce97f334297e121b2bb1c749a9f9.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/f2740828b2391f671b7cd6b173fbd4d4b122e466ec6ac0ecb721463a5db7ecfe.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/11fc40f0b2ddc4542c3aef7ba8d94601dea5025b5937f0f90b2c8e76995dd7b8.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/pages/38cdb3e0e9e08acf48e2a9796f84e7d13b15f3c5f0f813a6fed09071f04b591e.txt
+  - /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/shared-readme/README.md
+  original_doc_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/manifest.json
+  original_doc_manifest_sha256: 29eedff49476bfc96c99e2951a72eba34d06596a66be25fb29a73be399ec94da
+models:
+  registry:
+    gpt-4o:
+      provider: openai
+      model: gpt-4o
+    gpt-4o-mini:
+      provider: openai
+      model: gpt-4o-mini
+    codex-5.3:
+      provider: codex
+      model: gpt-5.3-codex
+    gemini-2.5-pro:
+      provider: google
+      model: gemini-2.5-pro
+    gemini-3.1-pro:
+      provider: google
+      model: gemini-3.1-pro-preview
+    gemini-3.2-pro:
+      provider: google
+      model: gemini-3.2-pro-preview
+    claude-sonnet:
+      provider: anthropic
+      model: claude-sonnet-4-6
+    qwen:
+      provider: ollama
+      model: qwen3:32b
+    llama3:
+      provider: ollama
+      model: llama3
+    selected:
+      provider: google
+      model: gemini-3.1-flash-lite
+      max_output_tokens: 8192
+  roles:
+    author: selected
+    audience: selected
+    fixer: selected
+runtime:
+  target: local
+  local: {}
+checks:
+  required_sections:
+  - Signature
+  - Goal
+  - Parameters
+  - Input
+  - Output
+  - Valid Call Patterns|Valid Access Patterns
+  - LLM Instruction Prompt
+  - Prompt Snippet
+  - Common Failure Modes
+  - Fix Code Hint
+  comprehension_apis_sampled: 5
+docfix:
+  allow_repo_called_members: true
+  allowed_member_categories:
+  - language_core
+  - python_core
+  member_categories:
+    language_core:
+    - println
+    - print
+    - require
+    - assert
+    - format
+    - mkString
+    - toString
+    - map
+    - flatMap
+    - filter
+    - foreach
+    - collect
+    - count
+    - take
+    - first
+    - reduce
+    - fold
+    - foldLeft
+    - sum
+    - min
+    - max
+    - size
+    - length
+    - nonEmpty
+    - isEmpty
+    - head
+    - headOption
+    - last
+    - getOrElse
+    - get
+    - exists
+    - forall
+    - contains
+    - indexOf
+    - sortBy
+    - sorted
+    - zip
+    - zipWithIndex
+    - toArray
+    - toList
+    - toSeq
+    - toSet
+    - toMap
+    - distinct
+    - sliding
+    - grouped
+    - apply
+    - update
+    - close
+    - cache
+    - persist
+    - coalesce
+    - repartition
+    - keys
+    - values
+    - trim
+    - split
+    - replace
+    - startsWith
+    - endsWith
+    - toDouble
+    - toInt
+    - toLong
+    - toFloat
+    - abs
+    - floor
+    - ceil
+    - round
+    - find
+    - getPath
+    - getName
+    - getClass
+    - asInstanceOf
+    - isInstanceOf
+    - mkdirs
+    - listFiles
+    - delete
+    - getConstructor
+    - newInstance
+    - getFileSystem
+    - resolve
+    - isNaN
+    - isInfinite
+    - isFinite
+    - toRadians
+    - toDegrees
+    - sqrt
+    - pow
+    - sin
+    - cos
+    - tan
+    - atan2
+    - fill
+    - range
+    - empty
+    - ofDim
+    python_core:
+    - fit
+    - predict
+    - transform
+    - fit_transform
+    - fit_predict
+    - score
+    - ravel
+    - reshape
+    - astype
+    - tolist
+    - copy
+    - mean
+    - sum
+    - std
+    - var
+    - argmin
+    - argmax
+    - cumsum
+    - squeeze
+    - flatten
+    - array
+    - asarray
+    - zeros
+    - ones
+    - arange
+    - linspace
+    - allclose
+    - isclose
+    - seed
+    - rand
+    - randn
+    - randint
+    - normal
+    - shuffle
+    - append
+    - extend
+    - join
+    - format
+    - items
+    - keys
+    - values
+    - get
+    - strip
+    - lower
+    - upper
+    - round
+    - set_params
+    - get_params
+  allowed_members: []
+comprehension:
+  execute:
+    execution_context: A headless Python harness, balanced eight-series training data,
+      a second series set, one-dimensional signals, labels, a small numeric matrix,
+      repository fixture paths, and a pre-created condition-specific output directory
+      are already in scope. Import the target explicitly.
+    region:
+    - '# TODO API_TEST_START'
+    - '# TODO API_TEST_END'
+    strip_snippet_imports: false
+    output_tail_chars: 4000
+    success_marker: __DONE__
+    error_marker: __RUN_ERR__
+    work_dir: execution
+    timeout_seconds: 300
+    max_fix_rounds: 0
+    auto_report: false
+    test_filename: api_test.py
+    command: env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue
+      KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+      "{test_file}"
+    exec_hints: Use small deterministic parameters. For file-writing APIs, write only
+      below output_dir. Optional-dependency failures must remain explicit infrastructure
+      outcomes. End with a meaningful assertion and print a compact __CHECK__ witness.
+    scaffold: inputs/api_test_scaffold.py
+    preamble: 'Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+      _trace = np.load(trace_npz)
+
+      _balanced = np.array([0, 4, 1, 17, 3, 13, 2, 5], dtype=int)
+
+      X = _trace["X_train"][_balanced, :40, :]  # type: balanced time-series dataset
+      ndarray (8, 40, 1)
+
+      X2 = _trace["X_test"][:4, :32, :]  # type: second dataset ndarray (4, 32, 1)
+
+      s1 = X[0].ravel()  # type: 1-D series ndarray (40,)
+
+      s2 = X[1].ravel()  # type: 1-D series ndarray (40,)
+
+      y = _trace["y_train"][_balanced]  # type: four balanced labels, two examples
+      per class
+
+      tiny_matrix = np.arange(12.0).reshape(3, 4)  # type: deterministic numeric matrix
+
+      '
+    sample_data:
+      trace_npz: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/.cached_datasets/Trace.npz
+    require_correctness: true
+    io_hints: ''
+    local_uris: false
+    output_dir: execution/output
+    stop_on_provider_error: true
+    build: ''
+    probe_on_missing: false
+  class_context: false
+  relevant_doc_chars: 35155
+project:
+  language: Python
+  name: tslearn
+provenance:
+  source_revision: f6072f237313d610413359ecc899cdb9038f4b7e
+  source_tree: cb5169bbd4ef3d0dc061743e71291eb4298c74a2
+  source_version: 0.10.0
+  source_tag: v0.10.0
+  source_provenance_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/source-provenance/tslearn.json
+  runtime_validation: PENDING final runtime controls and loaded-config registry verification
+  selection_scope:
+    selected_api_names: 116
+    public_declaration_sites: 348
+    public_bare_names: 237
+    selection_policy: Frozen structural body audit; quarantine unknown/wrappers; globally
+      retain highest arity per bare name with deterministic ties.
+    semantic_equivalence_guarantee: false
+    sampling: none within the frozen selected set
+    manifest_path: inputs/api_manifest.json
+    canonical_selection_receipt: canonical-selection.json
+    manifest_file_sha256: d154c450d3bd98f90c564cfce9db494cd2e80d32e8bf36964dba184249f1ec1e
+    ordered_names_sha256: dc12d4e3fd423262c30d1732f3f647aae26d920e9924bc7e36e401b12f0355db
+  paid_calls_started: false
+readme_generation:
+  distill_chunk_chars: 150000

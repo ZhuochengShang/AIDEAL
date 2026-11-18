@@ -1,0 +1,52 @@
+{
+  "api": "python:tslearn.metrics._dtw.dtw",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "\nfrom tslearn.metrics import dtw\nobserved = dtw(s1, s1)\nassert observed == 1.0\nprint(f\"__CHECK__ python:tslearn.metrics._dtw.dtw {observed}\")\n",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/api_test.py",
+  "exit_code": 1,
+  "stdout_tail": "",
+  "stderr_tail": "__RUN_ERR__ AssertionError: \nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/api_test.py\", line 47, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/api_test.py\", line 42, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/api_test.py\", line 37, in api_test\n    assert observed == 1.0\n           ^^^^^^^^^^^^^^^\nAssertionError\n",
+  "error_category": "runtime",
+  "error": "AssertionError:",
+  "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/api_test.py:37",
+  "wall_s": 17.590947254560888,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/result.json",
+    "sha256": "f571d970ad1698072440e02af13f28f828ece56b4d0b0563cabaf41b7a59386c"
+  },
+  "runtime_profile": [],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/replay_identity.json",
+      "sha256": "8253b66dbfbd7dc647b9c001425a7de353f83fc27d06e1a53528069acfa01360"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/api_test.py",
+      "sha256": "aa6d09db1bd9c69bb2d97f6a649dd97c120d3911604092426239ef0957946163"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/execution.json",
+      "sha256": "9dfceec4b0066ef34a8c8dceaaa3020cc9b5eb61a5cd148a8006772a25c28cdf"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/tslearn/negative/attempt_0001/stderr.txt",
+      "sha256": "8abaac23c14de5230bfc3f1e5644cf2ba1754c0dce7a4a1ace255d7c8c822782"
+    }
+  ]
+}

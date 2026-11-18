@@ -1,0 +1,52 @@
+{
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+  "status": "fail",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "val checkedSerializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()\nval immutableFlag = checkedSerializer.isImmutable\nassert(immutableFlag == true, \"Source-defined serializer immutability failed\")\nprintln(s\"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable $immutableFlag\")\nassert(false, \"AIDEAL_PREFLIGHT_EXPECTED_FAILURE_SCALA\")",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/negative/attempt_0001/ApiTest.scala",
+  "exit_code": 1,
+  "stdout_tail": "__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable true\n",
+  "stderr_tail": "MethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/18 15:16:40 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/18 15:16:40 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/18 15:16:40 INFO MemoryStore: MemoryStore cleared\n26/11/18 15:16:40 INFO BlockManager: BlockManager stopped\n26/11/18 15:16:40 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/18 15:16:40 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/18 15:16:40 INFO SparkContext: Successfully stopped SparkContext\nException in thread \"main\" java.lang.AssertionError: assertion failed: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_SCALA\n\tat scala.Predef$.assert(Predef.scala:223)\n\tat GeoJob$.run(ApiTest.scala:356)\n\tat GeoJobMain$.main(ApiTest.scala:365)\n\tat GeoJobMain.main(ApiTest.scala)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)\n\tat org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:1029)\n\tat org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:194)\n\tat org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:217)\n\tat org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:91)\n\tat org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1120)\n\tat org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1129)\n\tat org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)\n26/11/18 15:16:40 INFO ShutdownHookManager: Shutdown hook called\n26/11/18 15:16:40 INFO ShutdownHookManager: Deleting directory /tmp/spark-365290cf-6e61-4db7-bdf7-aa7e9d3edd8c\n26/11/18 15:16:40 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/negative/attempt_0001/spark-tmp/spark-a065a491-6359-4988-91a3-9e7b9831d193\n",
+  "error_category": "runtime",
+  "error": "java.lang.AssertionError: assertion failed: AIDEAL_PREFLIGHT_EXPECTED_FAILURE_SCALA",
+  "locus": "at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:677)",
+  "wall_s": 82.42746858019382,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "fail"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/rdpro_scala/rdpro_scala/result.json",
+    "sha256": "6c04655f35d52a9cd61eb7babb53d3d750ec1b72b6d5da8948b7c34e59080bff"
+  },
+  "runtime_profile": [],
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/negative/replay_identity.json",
+      "sha256": "87d9dbe72ea7d5dd5f367b10aab772f6d1270b7962b4e3ee3644d00277df220d"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/negative/attempt_0001/ApiTest.scala",
+      "sha256": "5c01b786b24a9c442513ca9435de2f32729a7efa076dee5b5d736cfd77376336"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/negative/attempt_0001/execution.json",
+      "sha256": "efab0a16fd66e480d1f7e11a96d26afcdcb531cfd40c4eeca47408c0fd57d42e"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/negative/attempt_0001/stdout.txt",
+      "sha256": "149f681921333448a2b2ddd0b1ab4cdcaead5ffa45d3e273008ce37fd62b0dba"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/current/preflight/runtime-controls-final/rdpro_scala/negative/attempt_0001/stderr.txt",
+      "sha256": "3dba1438db6b6d22b2305433cac1370395f0f9f3103b51d03c3536b7a6ee4e19"
+    }
+  ]
+}

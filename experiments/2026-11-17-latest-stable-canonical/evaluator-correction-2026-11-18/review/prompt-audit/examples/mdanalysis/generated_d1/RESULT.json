@@ -1,0 +1,63 @@
+{
+  "api": "python:MDAnalysis.lib.distances.calc_bonds",
+  "historical": true,
+  "recorded_detail": {
+    "status": "fail",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "fail",
+        "category": "runtime",
+        "error": "AssertionError:"
+      }
+    ],
+    "error_category": "runtime",
+    "error": "AssertionError:",
+    "code": "import MDAnalysis.lib.distances as dists\nimport numpy as np\n\n# Use the first two atoms of the protein to calculate a single bond length\nag1 = protein[:1]\nag2 = protein[1:2]\n\n# Calculate bond length\nbond_length = dists.calc_bonds(ag1, ag2)\n\n# Verify the result is a scalar float64 as per documentation\nassert isinstance(bond_length, np.float64)\nassert bond_length > 0.0\n\n# Calculate bond lengths for a subset of the backbone\nag_a = backbone[:10]\nag_b = backbone[1:11]\nbond_lengths = dists.calc_bonds(ag_a, ag_b)\n\n# Verify the shape matches the number of pairs\nassert bond_lengths.shape == (10,)\nassert np.all(bond_lengths > 0.0)\n\nprint(f\"__CHECK__ python:MDAnalysis.lib.distances.calc_bonds {bond_lengths.shape}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/api_test.py",
+    "exit_code": 1,
+    "stdout_tail": "",
+    "stderr_tail": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ AssertionError: \nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/api_test.py\", line 64, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/api_test.py\", line 45, in run\n    assert isinstance(bond_length, np.float64)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "recorded_metrics": {
+    "status": "fail",
+    "attempts": 1,
+    "pass_round": null,
+    "wall_s": 3.9,
+    "llm_calls": 1,
+    "input_tokens": 3571,
+    "output_tokens": 230,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 3571,
+        "output_tokens": 230,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": "runtime",
+    "error": "AssertionError:",
+    "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/api_test.py:45",
+    "doc_chars": 6024,
+    "document_sha256": "1cb5f25b75113946d67b9d22df709c0cd2dc3c5c1e2b7ce0b005f70b384ebe1d",
+    "source": "source/package/MDAnalysis/lib/distances.py:1678",
+    "source_other_sites": 0,
+    "codebase_frames": null,
+    "rendered_prompt_sha256": [
+      "9c4be601b05ffd7c51bf658fd3ed96a82b64882255a3a6a5ab1d0d85de4a7a77"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001"
+    ],
+    "evidence_fingerprint": "3d16cab5a268541b33427e070f047aca5a4db74dc057a4f2a95bcc92fa441fba"
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/result.json",
+    "sha256": "eeaf1d684a468ed59dc0552acc192a3a4f9382801214d322da9a4219653c9fba"
+  },
+  "fixture_fingerprint": {
+    "sha256": "cbdcbf3db542a84163288b5e75902a7ccf71e40fb285d9e821e05984e0984ed3",
+    "file_count": 5
+  }
+}

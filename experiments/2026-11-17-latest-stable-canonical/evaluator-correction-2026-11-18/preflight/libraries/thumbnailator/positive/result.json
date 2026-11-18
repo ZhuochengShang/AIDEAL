@@ -1,0 +1,51 @@
+{
+  "api": "java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage",
+  "status": "pass",
+  "old_status": "pass",
+  "mode": "development_example",
+  "code": "java.awt.image.BufferedImage image = net.coobird.thumbnailator.Thumbnails.of(sourceImage).size(50, 50).asBufferedImage();\nassert image.getWidth() == 50 && image.getHeight() == 38 : \"aspect-ratio preservation mismatch\";\nSystem.out.println(\"__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage \" + image.getWidth() + \"x\" + image.getHeight());",
+  "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/thumbnailator/positive/attempt_0001/ApiTest.java",
+  "exit_code": 0,
+  "stdout_tail": "__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage 50x38\n__DONE__\n",
+  "stderr_tail": "Picked up JAVA_TOOL_OPTIONS: -ea\nPicked up JAVA_TOOL_OPTIONS: -ea\n",
+  "error_category": "",
+  "error": "",
+  "locus": "",
+  "wall_s": 1.308537139557302,
+  "llm_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "validation_scope": "native_examples_not_independent",
+  "rounds": [
+    {
+      "round": 0,
+      "status": "pass"
+    }
+  ],
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/runs/original/thumbnailator/thumbnailator/result.json",
+    "sha256": "e728eefb8b21c409ca50578c4d40023bacf996ac4e618d270692adcf8320917f"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/thumbnailator/positive/replay_identity.json",
+      "sha256": "bf03c270afecaa51330096ec9e21afb20c72515f765206317924da1e11277c31"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/thumbnailator/positive/attempt_0001/ApiTest.java",
+      "sha256": "cf810eef184335b88a2bb7c0adb0a11931826278fccdfebe3bc752dc3acfe372"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/thumbnailator/positive/attempt_0001/execution.json",
+      "sha256": "ac273f6479e48e0c6a9b98ba8c88421f412c3a7e5a05bd436fc693385a5032f2"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/thumbnailator/positive/attempt_0001/stdout.txt",
+      "sha256": "0598df5dffb58ba9833c528c49bc026e012b4c73ee425e7f7c6811df478de5a1"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/thumbnailator/positive/attempt_0001/stderr.txt",
+      "sha256": "8c32a7bba5f3acbc068c539fceafa98ca584ebd9e67bf9b6e95ae49b57e4fe11"
+    }
+  ]
+}

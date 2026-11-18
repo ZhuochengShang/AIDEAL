@@ -1,0 +1,21 @@
+import numpy as np
+import mir_eval.alignment
+
+# Ensure inputs are sorted and of equal length as per documentation
+ref_sorted = np.sort(ref_events)
+est_sorted = np.sort(est_events)
+
+# Ensure lengths match for the alignment calculation
+min_len = min(len(ref_sorted), len(est_sorted))
+ref_subset = ref_sorted[:min_len]
+est_subset = est_sorted[:min_len]
+
+mae, aae = mir_eval.alignment.absolute_error(ref_subset, est_subset)
+
+# Correctness check: 
+# 1. mae must be <= aae (median of absolute values <= mean of absolute values)
+# 2. mae and aae must be non-negative
+assert mae >= 0 and aae >= 0
+assert mae <= aae + 1e-9
+
+print(f"__CHECK__ python:mir_eval.alignment.absolute_error mae={mae:.4f}, aae={aae:.4f}")

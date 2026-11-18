@@ -1,0 +1,17 @@
+java.awt.image.BufferedImage result = net.coobird.thumbnailator.Thumbnails.of(sourceImage)
+    .size(50, 50)
+    .asBufferedImage();
+
+if (result == null) {
+    throw new AssertionError("Resulting BufferedImage is null");
+}
+
+int width = result.getWidth();
+int height = result.getHeight();
+int pixel = result.getRGB(0, 0);
+
+if (width != 50 || height != 50) {
+    throw new AssertionError("Dimension mismatch: expected 50x50, got " + width + "x" + height);
+}
+
+System.out.println("__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage " + width + "x" + height + "@" + Integer.toHexString(pixel));

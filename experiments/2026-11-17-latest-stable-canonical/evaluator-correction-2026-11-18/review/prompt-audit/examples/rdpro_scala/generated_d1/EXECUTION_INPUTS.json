@@ -1,0 +1,42 @@
+{
+  "execution_context": "Scala2.12 with Spark3.5.1 and Java17. The full historical scaffold provides sc and sparkContext. The explicit preamble binds rasterRDD: RasterRDD[Array[Float]] (11Float32bands,737x628pixels) and featuresRDD: RDD[IFeature] (2polygonfeatures). Use the supplied local fixtures or tiny in-memory values. Assertions must precede the __CHECK__ witness. HDF4 fixture layer is LST_Day_1km. Temporary writes belong in output_dir.",
+  "region": [
+    "// TODO API_TEST_START",
+    "// TODO API_TEST_END"
+  ],
+  "strip_snippet_imports": false,
+  "output_tail_chars": 2000,
+  "success_marker": "__DONE__",
+  "error_marker": "__RUN_ERR__",
+  "work_dir": "execution",
+  "timeout_seconds": 600,
+  "max_fix_rounds": 0,
+  "auto_report": false,
+  "exec_hints": "Spark specifics: transformations are lazy, so if the result is an RDD / RasterRDD / DataFrame you MUST force it with an action — .count(), .first(), or .take(1) — and print that. For an in-memory Array/value, print its size. If the API is a writer, call .coalesce(1) before writing to output_dir to avoid the distributed-write merge error. I/O: read inputs with the high-level library readers on the pre-loaded typed vars (rasterRDD / featuresRDD, or sc.geoTiff / sc.shapefile) — do NOT open raw Hadoop FileSystem streams (FileSystem.get(conf) causes 'Wrong FS'; if unavoidable use path.getFileSystem(sc.hadoopConfiguration)), and never prepend an extra 'file://' to a path that already has a scheme.",
+  "fixtures_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures",
+  "output_dir": "execution/output",
+  "command": "/home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_scala.py --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/runtime/rdpro-classpath.json --work \"{work}\" --scala-file \"{scala_file}\"",
+  "scaffold": "inputs/api_test_scaffold.scala",
+  "preamble": "// Fixed input contract shared by all conditions: the supplied GeoTIFF has11Float32bands.\nval rasterRDD: RasterRDD[Array[Float]] = sc.geoTiff[Array[Float]](raster_tif)\nval featuresRDD: RDD[IFeature] = sc.shapefile(vector_shapefile)\n",
+  "sample_data": {
+    "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+    "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+    "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf"
+  },
+  "require_correctness": true,
+  "io_hints": "",
+  "jars": "",
+  "uberjar": "",
+  "build_cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro",
+  "repositories": [],
+  "packages": [],
+  "imports": "from-tests",
+  "extra_imports": [
+    "import edu.ucr.cs.bdlab.raptor._"
+  ],
+  "build": "",
+  "spark_jars": "",
+  "check_marker": "__CHECK__",
+  "stop_on_provider_error": true,
+  "probe_on_missing": false
+}

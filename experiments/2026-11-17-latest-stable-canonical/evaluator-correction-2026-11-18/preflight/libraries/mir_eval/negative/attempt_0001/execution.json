@@ -1,0 +1,36 @@
+{
+  "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/api_test.py\"",
+  "cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001",
+  "timeout_s": 300,
+  "exit_code": 1,
+  "wall_s": 1.3995580710470676,
+  "contract": {
+    "version": "native-execution-v2",
+    "working_directory": "per_attempt",
+    "output_bindings": "per_attempt",
+    "correctness_witness": "exact_target_stdout",
+    "jvm_assertions": false,
+    "python_fixture_scope": "explicit_function_bindings"
+  },
+  "java_assertions_requested": false,
+  "output_bindings": {
+    "version": "native-execution-v2",
+    "output_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/output",
+    "bindings": [
+      {
+        "name": "output_dir",
+        "original": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/output",
+        "isolated": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/preflight/libraries/mir_eval/negative/attempt_0001/output"
+      }
+    ],
+    "source_inputs_unchanged": true,
+    "input_bindings": {
+      "beat_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.txt",
+      "beat_estimate_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/est00.txt",
+      "chord_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/chord/ref00.lab",
+      "melody_reference_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/melody/ref00.txt"
+    }
+  },
+  "stdout_file": "stdout.txt",
+  "stderr_file": "stderr.txt"
+}

@@ -1,0 +1,52 @@
+## API Test: `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable`
+
+### Signature
+```scala
+[]:Boolean
+```
+_Source: source/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala:53_
+
+### Goal
+Determines whether the current `RasterMetadataSerializer` instance is configured as immutable, indicating that its metadata state cannot be modified after initialization.
+
+### Parameters
+_None._
+
+### Input
+No input parameters are required. The caller must ensure that the `RasterMetadataSerializer` instance has been properly instantiated within the context of a raster processing workflow.
+
+### Output
+Returns `Boolean` — `true` if the serializer is immutable, `false` otherwise.
+
+### Valid Call Patterns
+```scala
+// Inferred from signature:
+val serializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()
+val isReadOnly = serializer.isImmutable
+```
+
+### LLM Instruction Prompt
+- When generating code involving `RasterMetadataSerializer`, use `isImmutable` to check the mutability state of the serializer before attempting any configuration changes.
+- Do not pass any arguments to this method as it takes zero parameters.
+
+### Prompt Snippet
+```text
+val serializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()
+if (!serializer.isImmutable) {
+  // Perform configuration
+}
+```
+
+### Common Failure Modes
+- **Null Pointer Exception:** Calling this method on an uninitialized or null `RasterMetadataSerializer` reference.
+- **Assumption of Mutability:** Attempting to modify metadata on a serializer instance where `isImmutable` returns `true`, which may lead to runtime exceptions depending on the specific implementation of the serializer.
+
+### Fix Code Hint
+```scala
+// Ensure the serializer is mutable before applying changes
+if (!serializer.isImmutable) {
+  // Apply metadata updates here
+} else {
+  throw new IllegalStateException("Cannot modify immutable RasterMetadataSerializer")
+}
+```

@@ -1,0 +1,79 @@
+## API Test: `python:mir_eval.alignment.absolute_error`
+
+### Signature
+```python
+def absolute_error(reference_timestamps, estimated_timestamps)
+```
+_Source: source/mir_eval/alignment.py:115_
+
+_Source doc:_ Compute the absolute deviations between estimated and reference timestamps,
+and then returns the median and average over all events
+
+Examples
+--------
+>>> reference_timestamps = mir_eval.io.load_events('reference.txt')
+>>> estimated_timestamps = mir_eval.io.load_events('estimated.txt')
+>>> mae, aae = mir_eval.align.absolute_error(reference_onsets, estimated_timestamps)
+
+Parameters
+----------
+reference_timestamps : np.ndarray
+    reference timestamps, in seconds
+estimated_timestamps : np.ndarray
+    estimated timestamps, in seconds
+
+Returns
+-------
+mae : float
+    Median absolute error
+aae: float
+    Average absolute error
+
+### Goal
+Computes the median and average absolute deviation between a set of estimated timestamps and ground-truth reference timestamps to evaluate alignment accuracy.
+
+### Parameters
+- `reference_timestamps`: A 1D `np.ndarray` containing ground-truth event timestamps in seconds.
+- `estimated_timestamps`: A 1D `np.ndarray` containing the estimated event timestamps in seconds.
+
+### Input
+- **Data Format:** Both inputs must be 1D `np.ndarray` objects representing time in seconds.
+- **Preconditions:** Inputs should be sorted by time. The arrays must contain the same number of events to compute a direct correspondence.
+
+### Output
+Returns a tuple `(mae, aae)`:
+- `mae` (float): The median of the absolute differences between the reference and estimated timestamps.
+- `aae` (float): The arithmetic mean of the absolute differences between the reference and estimated timestamps.
+
+### Valid Call Patterns
+```python
+import mir_eval
+# Assuming reference_timestamps and estimated_timestamps are loaded via mir_eval.io.load_events
+mae, aae = mir_eval.alignment.absolute_error(reference_timestamps, estimated_timestamps)
+```
+
+### LLM Instruction Prompt
+- When calling `mir_eval.alignment.absolute_error`, ensure both `reference_timestamps` and `estimated_timestamps` are 1D NumPy arrays of floats representing time in seconds.
+- Ensure the arrays are sorted chronologically before passing them to the function.
+- Note that the function expects a direct mapping between the two arrays; ensure the number of elements matches.
+
+### Prompt Snippet
+```text
+# Example usage of absolute_error for alignment evaluation
+mae, aae = mir_eval.alignment.absolute_error(ref_times, est_times)
+```
+
+### Common Failure Modes
+- **Shape Mismatch:** Passing arrays of different lengths will result in a `ValueError` during the subtraction operation.
+- **Unsorted Input:** If the input arrays are not sorted by time, the computed errors will not reflect the intended temporal alignment.
+- **Unit Mismatch:** Providing timestamps in samples rather than seconds will lead to incorrect metric values.
+
+### Fix Code Hint
+```python
+import numpy as np
+# Ensure inputs are sorted and of equal length
+ref_sorted = np.sort(reference_timestamps)
+est_sorted = np.sort(estimated_timestamps)
+if len(ref_sorted) == len(est_sorted):
+    mae, aae = mir_eval.alignment.absolute_error(ref_sorted, est_sorted)
+```

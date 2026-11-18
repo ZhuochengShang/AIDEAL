@@ -1,0 +1,4 @@
+val serializer = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer()
+val result = serializer.isImmutable
+println(s"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable $result")
+assert(result == true, "RasterMetadataSerializer is expected to be immutable by design contract")

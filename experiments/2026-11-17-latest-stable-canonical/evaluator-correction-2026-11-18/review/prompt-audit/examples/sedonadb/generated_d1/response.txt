@@ -1,0 +1,10 @@
+x, y = -74.0060, 40.7128
+srid = 4326
+query = f"SELECT ST_AsText(ST_Point({x}, {y}, {srid})) as wkt"
+result = sd.sql(query).to_arrow_table()
+wkt = result.column("wkt")[0].as_py()
+
+# Verify the WKT format matches the input coordinates
+assert wkt == "POINT (-74.006 40.7128)", f"Expected POINT (-74.006 40.7128), got {wkt}"
+
+print(f"__CHECK__ sql:ST_Point {wkt}")
