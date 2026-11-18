@@ -48,9 +48,14 @@ def _inputs(manifest):
     refs = [native[key] for key in ('result', 'launch', 'config', 'api_manifest')]
     paths = [_bound(ref, root) for ref in refs]
     result, launch, cfg = load(paths[0]), load(paths[1]), load_config(paths[2])
-    names = load(paths[3])
-    if (not isinstance(names, list) or len(set(names)) != len(names)
-            or any(not isinstance(name, str) for name in names)):
+    api_manifest = load(paths[3])
+    # Match the evaluator's manifest reader: a frozen bank is a list or an
+    # object whose `apis` field is that ordered list. Keep the complete bound
+    # artifact above; the run fingerprint below still hashes only these IDs.
+    names = api_manifest.get('apis') if isinstance(api_manifest, dict) else api_manifest
+    if (not isinstance(names, list)
+            or any(not isinstance(name, str) or not name for name in names)
+            or len(set(names)) != len(names)):
         raise ValueError('Native API manifest must contain distinct exact IDs')
     run = result.get('run', {})
     components = run.get('fingerprint_components', {})

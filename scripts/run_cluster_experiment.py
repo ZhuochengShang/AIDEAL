@@ -46,8 +46,11 @@ def prepare(plan, secret):
         if not isinstance(name, str) or not name.replace('-', '').replace('_', '').isalnum() or name in names:
             raise ValueError('Job IDs must be unique simple names')
         names.add(name)
-        if job['stage'] not in ('r0', 'readme') or not isinstance(job.get('library'), str):
-            raise ValueError('Each job requires a library and r0/readme stage')
+        if job['stage'] not in ('r0', 'readme', 'development') or not isinstance(job.get('library'), str):
+            raise ValueError('Each job requires a library and r0/readme/development stage')
+        # Development produces proposals, not evaluation scores or authored READMEs.
+        if job['stage'] == 'development' and not job.get('complete_artifact'):
+            raise ValueError('Development jobs require an explicit completion artifact')
         command = job['command']
         if not isinstance(command, list) or not command or not all(isinstance(x, str) and x for x in command):
             raise ValueError('Commands must be nonempty argument lists')

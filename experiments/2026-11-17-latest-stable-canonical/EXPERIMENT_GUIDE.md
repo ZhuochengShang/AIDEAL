@@ -1,3 +1,17 @@
+# November 18 continuation: Generated README and remaining ablations
+
+Original R0 and README authoring have completed for **2,850 targets across six libraries**. All seven Generated README R0 jobs passed actual cluster preparation checks. The generated READMEs are installed and synchronized in each library's `readme-only` and `combined` branches. Combined currently contains the README only; aliases and native exception edits still require generation and validation.
+
+- [Full continuation plan, condition table, workflow diagram and review commands](operator/ablation/2026-11-18/PLAN.md)
+- [Published branch commits and exact README hashes](operator/ablation/2026-11-18/branches/README.md)
+- [Actual seven-bank preflight evidence](operator/ablation/2026-11-18/PREFLIGHT.json)
+- [Generated README queue](operator/ablation/2026-11-18/QUEUE.json)
+- [Completed Original results and remaining quality issues](operator/resume/2026-11-18/COMPLETION.md)
+
+Use the cluster command `python operator/ablation/2026-11-18/progress.py` with the recorded AIDEAL interpreter for live progress. A prepared or running job is not a completed result. The sections below preserve the earlier setup and bank-review history.
+
+---
+
 # AIDEAL experiment guide
 
 **Verified completion, November 18:** All six libraries finished Original R0 and README authoring. [Results and verification](operator/resume/2026-11-18/COMPLETION.md). Older dated queue snapshots below preserve the launch history; the full ablation study is not yet complete.

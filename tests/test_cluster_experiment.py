@@ -59,6 +59,24 @@ class ClusterExperimentTests(unittest.TestCase):
         self.assertEqual(2, len(attempts))
         self.assertEqual(3, json.loads((attempts[0] / 'result.json').read_text())['exit_code'])
 
+    def test_development_jobs_require_explicit_completion_artifact(self):
+        self.plan['jobs'][0]['stage'] = 'development'
+        with self.assertRaisesRegex(ValueError, 'explicit completion artifact'):
+            queue.prepare(self.plan, 'offline-test-credential')
+
+    def test_development_completion_is_distinct_from_evaluation_result(self):
+        self.plan['jobs'] = [self.plan['jobs'][0]]
+        job = self.plan['jobs'][0]
+        job['stage'] = 'development'
+        artifact = Path(job['output']) / 'proposal_completion.json'
+        job['complete_artifact'] = str(artifact)
+        job['command'][-1] = str(artifact)
+        result = queue.supervise(self.plan, self.key)
+        self.assertTrue(result['complete'])
+        self.assertEqual(result['jobs']['a']['stage'], 'development')
+        self.assertTrue(artifact.is_file())
+        self.assertFalse((Path(job['output']) / 'result.json').exists())
+
     def test_changed_commands_and_duplicate_ids_are_rejected(self):
         queue.supervise(self.plan, self.key)
         self.script.write_text('print("changed")\n')

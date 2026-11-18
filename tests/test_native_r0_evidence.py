@@ -131,6 +131,54 @@ class NativeR0EvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'matching Original/source/config'):
             self.preview()
 
+    def test_structured_manifest_preserves_full_binding_and_exact_ids(self):
+        path = self.run / 'inputs/api_manifest.json'
+        self.write(path, {'schema': 2, 'identity_mode': 'qualified',
+                          'apis': self.names, 'api_names': self.names})
+        self.save()
+        result, preview = self.preview()
+        self.assertEqual(1, result['cases'])
+        self.assertIn(bind(path), preview['artifacts'])
+        self.assertEqual(set(self.names), {row['api_id'] for row in preview['intake']})
+
+    def test_structured_manifest_order_must_match_recorded_denominator(self):
+        self.write(self.run / 'inputs/api_manifest.json',
+                   {'schema': 2, 'identity_mode': 'qualified',
+                    'apis': list(reversed(self.names)), 'api_names': self.names})
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'matching Original/source/config'):
+            self.preview()
+
+    def test_structured_manifest_rejects_malformed_or_duplicate_ids(self):
+        for names in [None, 'python:lib.f', [''], [5], [['python:lib.f']],
+                      ['python:lib.f', 'python:lib.f']]:
+            with self.subTest(names=names):
+                self.write(self.run / 'inputs/api_manifest.json', {'apis': names})
+                self.save()
+                with self.assertRaisesRegex(ValueError, 'distinct exact IDs'):
+                    self.preview()
+
+    def test_structured_manifest_unknown_id_fails_even_with_matching_name_hash(self):
+        names = [*self.names, 'python:lib.unknown']
+        self.write(self.run / 'inputs/api_manifest.json', {'apis': names})
+        self.result['run']['manifest_sha256'] = hashlib.sha256('\n'.join(names).encode()).hexdigest()
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'outside the frozen bank'):
+            self.preview()
+
+    def test_structured_manifest_metadata_change_breaks_artifact_binding(self):
+        path = self.run / 'inputs/api_manifest.json'
+        data = {'schema': 2, 'identity_mode': 'qualified',
+                'apis': self.names, 'api_names': self.names}
+        self.write(path, data)
+        self.save()
+        # Metadata is not a second API selection source, but its exact bytes
+        # remain part of the frozen evidence and cannot be changed in place.
+        data['api_names'] = list(reversed(self.names))
+        self.write(path, data)
+        with self.assertRaisesRegex(ValueError, 'changed native R0 evidence'):
+            self.preview()
+
     def test_uninstalled_cli_resolves_its_vendored_engine(self):
         import sys
         root=Path(__file__).resolve().parents[1]
