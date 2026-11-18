@@ -1,0 +1,75 @@
+{
+  "observed_at": "2026-11-18T02:54:03.993581+00:00",
+  "job": "tslearn-r0",
+  "status": "failed",
+  "exit_code": 2,
+  "selected": 362,
+  "recorded_metric_rows": 224,
+  "completed_program_outcomes": 223,
+  "passes": 132,
+  "program_failures": 91,
+  "provider_blocked_targets": 1,
+  "not_attempted_targets": 138,
+  "run_complete": false,
+  "max_fix_rounds": 0,
+  "failure": {
+    "api": "python:tslearn.neighbors.neighbors.KNeighborsTimeSeries.kneighbors",
+    "category": "llm-error",
+    "error": "ReadTimeout: The read operation timed out",
+    "provider_wall_seconds": 300.8977167606354,
+    "attempt": "attempt_0001",
+    "execution_record_exists": false,
+    "evidence": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/tslearn/tslearn/execution/run_python_tslearn.neighbors.neighbors.KNeighborsTimeSeries.kneighbors--6ee88f44b93e96cf94a69d4e24e2beb68fac63dcbd8e668cb9f6dee78afadab6/attempt_0001/provider.json"
+  },
+  "supervisor": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/supervisor/summary.json",
+    "observed_at": "2026-11-18T02:54:01.871021+00:00",
+    "job_finished_at": "2026-11-18T02:25:38.214519+00:00",
+    "running_jobs": [
+      "mdanalysis-r0",
+      "mdanalysis-readme"
+    ],
+    "pending_jobs": [
+      "rdpro_java-r0",
+      "rdpro_java-readme",
+      "rdpro_scala-r0",
+      "rdpro_scala-readme"
+    ],
+    "tslearn_readme_status": "complete"
+  },
+  "raptor_gate": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/launch/STATE.json",
+    "status": "WAITING_FOR_ORIGINAL_QUEUE",
+    "started_at": "2026-11-18T02:22:37.254609+00:00",
+    "controller": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified-raptor/launch/start_after_queue.py",
+    "conditions": [
+      {
+        "line": 51,
+        "text": "state.update(status='WAITING_FOR_ORIGINAL_QUEUE',plan_sha256=sha(root/'QUEUE.json'));save(root/'STATE.json',state)"
+      },
+      {
+        "line": 54,
+        "text": "fcntl.flock(upstream,fcntl.LOCK_EX)"
+      },
+      {
+        "line": 58,
+        "text": "require(set(terminal['jobs'])==expected,'Original terminal job coverage is incomplete')"
+      },
+      {
+        "line": 59,
+        "text": "require(all(j['status'] in ('complete','failed') for j in terminal['jobs'].values()),'Original queue ended with unfinished jobs; inspect before recovery')"
+      },
+      {
+        "line": 60,
+        "text": "require(all(terminal['jobs'][name]['status']=='failed' for name in checks['replaces_jobs']),'A recovery bank already completed or lacks its failed receipt')"
+      }
+    ]
+  },
+  "interpretation": "The stopping event is a model-provider read timeout after about300seconds, not a library execution failure or evidence of depleted credits. The original queue continues other jobs. The gate accepts terminal complete/failed original jobs and waits for its lock, so this tslearn failure alone does not block the corrected RDPro queue. No retry was performed.",
+  "safety": {
+    "credential_files_read": false,
+    "environment_files_read": false,
+    "model_calls": 0,
+    "process_changes": false
+  }
+}

@@ -8,6 +8,8 @@ The strict bank excludes reviewed wrappers/adapters, unimplemented bodies and ab
 
 **Final cluster preparation passed for all six jobs; the replacement is queued and waiting for the current library jobs.** Evaluator `2026-11-17-strict-raptor-64fcd34eb17c` passed 98 focused tests and 36 subtests, and the actual reader resolved all 330 targets. The earlier constructor correction separately passed 664 tests. No new Raptor model requests have started at this checkpoint. The gate is waiting for the existing queue to finish. Read cluster progress with `qualified-raptor/launch/progress_all.py`; the guide gives its full command and output folders. The older [5,307-target browser](experiments/2026-11-17-latest-stable-canonical/review/qualified-bank/INDEX.html) remains useful for unchanged libraries; its full-Beast RDPro rows are historical.
 
+**Review navigation:** [RDPro current bank and folder map](experiments/2026-11-17-latest-stable-canonical/review/raptor-scope/README.md) · [selection differences across libraries](experiments/2026-11-17-latest-stable-canonical/review/raptor-scope/maintenance/SELECTION_POLICY.md) · [four changed code files and cleanup](experiments/2026-11-17-latest-stable-canonical/review/raptor-scope/maintenance/CODE_AND_CLEANUP.md). Only RDPro has the completed strict wrapper/stub review; the other banks keep their recorded selection policies.
+
 **Run readiness checked November 12, 2026:** [automation, study prerequisites and code-review route](docs/AUTOMATION_READINESS.md).
 
 [Codex pilot and shared budget](docs/OPENAI_CODEX_PILOT.md) · [Gemini Flash settings](docs/GEMINI_FLASH.md) · [Legacy-code review](docs/LEGACY_CODE_REVIEW.md)

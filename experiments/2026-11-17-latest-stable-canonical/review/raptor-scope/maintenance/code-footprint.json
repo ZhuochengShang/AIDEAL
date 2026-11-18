@@ -1,0 +1,157 @@
+{
+  "base": "aedf677016489e51737264e95aa560b12dfe7402",
+  "head": "21e5f20c200f18718cfc29e4ee818ddbdc12fb17",
+  "categories": {
+    "copied_library_source_evidence": {
+      "files": 15,
+      "added_lines": 3417,
+      "deleted_lines": 0,
+      "net_lines": 3417,
+      "new_function_definitions": 0,
+      "published_bytes": 162895
+    },
+    "data_docs_configs_logs": {
+      "files": 173,
+      "added_lines": 159870,
+      "deleted_lines": 214,
+      "net_lines": 159656,
+      "new_function_definitions": 0,
+      "published_bytes": 9523808
+    },
+    "frozen_task_scaffolds": {
+      "files": 2,
+      "added_lines": 404,
+      "deleted_lines": 0,
+      "net_lines": 404,
+      "new_function_definitions": 0,
+      "published_bytes": 19845
+    },
+    "production_runtime": {
+      "files": 4,
+      "added_lines": 81,
+      "deleted_lines": 5,
+      "net_lines": 76,
+      "new_function_definitions": 1,
+      "published_bytes": 121427
+    },
+    "runtime_tests": {
+      "files": 2,
+      "added_lines": 318,
+      "deleted_lines": 0,
+      "net_lines": 318,
+      "new_function_definitions": 28,
+      "published_bytes": 18490
+    },
+    "study_operator_scripts": {
+      "files": 3,
+      "added_lines": 132,
+      "deleted_lines": 0,
+      "net_lines": 132,
+      "new_function_definitions": 9,
+      "published_bytes": 11469
+    },
+    "study_operator_tests": {
+      "files": 1,
+      "added_lines": 133,
+      "deleted_lines": 0,
+      "net_lines": 133,
+      "new_function_definitions": 21,
+      "published_bytes": 10637
+    },
+    "study_rebuild_audit_scripts": {
+      "files": 5,
+      "added_lines": 438,
+      "deleted_lines": 0,
+      "net_lines": 438,
+      "new_function_definitions": 8,
+      "published_bytes": 41153
+    }
+  },
+  "observed_at": "2026-11-18T02:50:24.182777+00:00",
+  "production_new_functions": [
+    "vendor/aideal_engine/src/aideal/api_canonical_selection.py:reviewed_selection_exclusion_ids"
+  ],
+  "new_public_toolkit_cli_commands": 0,
+  "new_production_modules": 0,
+  "production_unused_findings": [],
+  "provenance": {
+    "comparison": "git diff --numstat aedf677 21e5f20; AST def comparison for changed Python files only",
+    "lines_include_comments_blank_lines": true,
+    "category_note": "Study JSON, copied library code, scaffolds and one-off audit scripts are separated from reusable AIDEAL runtime source."
+  },
+  "helper_references": [
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_canonical_selection.py",
+      "line": 302,
+      "role": "Definition: validates an explicit review against source IDs/hashes."
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "line": 528,
+      "role": "Production caller: before overload selection; validates both language reviews."
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_registry.py",
+      "line": 87,
+      "role": "Relocates the review binding when R0/README output directories change."
+    },
+    {
+      "path": "tests/test_reviewed_selection_exclusions.py",
+      "line": 173,
+      "role": "Malformed-review checks, alongside integration tests."
+    }
+  ],
+  "deletion_conclusion": "No newly introduced production function or public CLI is provably unused. Every new runtime branch serves source review integrity, relocation or constructor request correctness. Do not delete frozen operator scripts or review inputs from a running recorded release.",
+  "runtime_files": [
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_canonical_selection.py",
+      "category": "production_runtime",
+      "added_lines": 47,
+      "deleted_lines": 0,
+      "new_functions": [
+        "reviewed_selection_exclusion_ids"
+      ],
+      "removed_functions": [],
+      "published_bytes": 31595,
+      "published_sha256": "e8f2a440c7b93f4d2aba8f4c3d27149d3cb1e84af3bae8190dbc7d59222e2f78",
+      "local_sha256": "e8f2a440c7b93f4d2aba8f4c3d27149d3cb1e84af3bae8190dbc7d59222e2f78",
+      "local_matches_published": true
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "category": "production_runtime",
+      "added_lines": 16,
+      "deleted_lines": 2,
+      "new_functions": [],
+      "removed_functions": [],
+      "published_bytes": 49809,
+      "published_sha256": "eb3e3595ae5ee5b77d614042af953297019b3caf40313c6b66081a0ea6660419",
+      "local_sha256": "eb3e3595ae5ee5b77d614042af953297019b3caf40313c6b66081a0ea6660419",
+      "local_matches_published": true
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_registry.py",
+      "category": "production_runtime",
+      "added_lines": 1,
+      "deleted_lines": 1,
+      "new_functions": [],
+      "removed_functions": [],
+      "published_bytes": 18374,
+      "published_sha256": "dd6fb20068794db5110c05da439e7c79400af6aaa12b50aa17a0ac9a2101b055",
+      "local_sha256": "dd6fb20068794db5110c05da439e7c79400af6aaa12b50aa17a0ac9a2101b055",
+      "local_matches_published": true
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/doc_check_inputs.py",
+      "category": "production_runtime",
+      "added_lines": 17,
+      "deleted_lines": 2,
+      "new_functions": [],
+      "removed_functions": [],
+      "published_bytes": 21649,
+      "published_sha256": "0450e24754de2a6f2d4f8cfdc9da94189af366041b5fddbc7bba41f0a71e2360",
+      "local_sha256": "0450e24754de2a6f2d4f8cfdc9da94189af366041b5fddbc7bba41f0a71e2360",
+      "local_matches_published": true
+    }
+  ]
+}

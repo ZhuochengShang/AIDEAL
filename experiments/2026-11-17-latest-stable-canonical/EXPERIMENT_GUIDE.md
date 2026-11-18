@@ -2,9 +2,17 @@
 
 Updated November 17, 2026. The current scope is **2,850 selected targets across six libraries and seven language banks**. RDPro now covers Raptor and its supporting raster types. Other libraries retain their inputs, releases and running/completed jobs.
 
-**Queue status observed at 2026-11-18T02:23:47.650280+00:00.** All six final cluster preparation checks passed with zero model calls. The strict 330-target bank uses evaluator `2026-11-17-strict-raptor-64fcd34eb17c`. The selection/reader checks passed 98 tests and 36 subtests, and the actual reader resolved all 330 targets. A separate constructor-correction release passed its 664-test suite. These are software checks, not new experiment results. The replacement was published before launch and is queued behind the current library jobs; no new Raptor model request has started at this checkpoint. The gate waits for the existing queue to release its process lock. README authoring and R0 are separate stages; an authored entry is not an evaluation pass.
+**Queue status observed at 2026-11-18T02:52:21.811279+00:00.** All six final cluster preparation checks passed with zero model calls. The strict 330-target bank uses evaluator `2026-11-17-strict-raptor-64fcd34eb17c`. The selection/reader checks passed 98 tests and 36 subtests, and the actual reader resolved all 330 targets. A separate constructor-correction release passed its 664-test suite. These are software checks, not new experiment results. The replacement was published before launch and is queued behind the current library jobs; no new Raptor model request has started at this checkpoint. The gate waits for the existing queue to release its process lock. README authoring and R0 are separate stages; an authored entry is not an evaluation pass.
 
 [RDPro count explanation](review/raptor-scope/COUNT_EXPLANATION.md) · [replacement catalog](review/raptor-scope/plan/RUN_CATALOG.cluster.yaml) · [exact reduction decisions](review/raptor-scope/strict-no-wrappers/README.md) · [completed results](operator/launch/completed/) · [replacement preparation receipt](review/raptor-scope/operator/RECOVERY_CHECKS.json) · [code review route](CODE_REVIEW_ROUTE.md)
+
+## Start with the current bank
+
+Use the [RDPro entry page](review/raptor-scope/README.md) for the current API list, selection diagram and review order. The [selection-policy comparison](review/raptor-scope/maintenance/SELECTION_POLICY.md) distinguishes shared rules from reviews that are still pending in the other libraries. The [code and cleanup guide](review/raptor-scope/maintenance/CODE_AND_CLEANUP.md) identifies the four changed runtime files.
+
+**The six banks are not yet identically filtered.** Only RDPro has the completed strict wrapper/stub exclusion review. MDAnalysis retains 15 `NotImplementedError` stubs; Thumbnailator retains 23 forwarder and three wrapper classifications. Python forwarding candidates need source review. SedonaDB uses registered SQL names and has one unresolved dynamic registration. Existing runs retain their saved inputs and counts.
+
+The saved progress snapshot records a provider-blocked tslearn R0 attempt after 223 of 362 targets; this is not a completed 362-target result. MDAnalysis R0 and README authoring continue, and the strict Raptor queue is still waiting. See the timestamped [progress record](review/raptor-scope/operator/PROGRESS.json).
 
 ## 1. Current scope
 
@@ -110,6 +118,8 @@ Local study root:
 /Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/
   EXPERIMENT_GUIDE.md
   review/raptor-scope/
+    README.md                     START HERE: current bank and review order
+    maintenance/                  cross-library policy, code changes and cleanup
     COUNT_EXPLANATION.md
     SCOPE_CHANGE.json
     strict-no-wrappers/           CURRENT 330 targets, exclusions, API inventories
