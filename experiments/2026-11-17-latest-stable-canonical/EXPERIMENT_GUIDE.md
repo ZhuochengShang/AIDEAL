@@ -2,7 +2,7 @@
 
 Updated November 17, 2026. The current scope is **2,850 selected targets across six libraries and seven language banks**. RDPro now covers Raptor and its supporting raster types. Other libraries retain their inputs, releases and running/completed jobs.
 
-**Launch status at 2026-11-18T02:19:17.352865+00:00.** All six final cluster preparation checks passed with zero model calls. The strict 330-target bank uses evaluator `2026-11-17-strict-raptor-64fcd34eb17c`. The selection/reader checks passed 98 tests and 36 subtests, and the actual reader resolved all 330 targets. A separate constructor-correction release passed its 664-test suite. These are software checks, not new experiment results. The replacement is ready to queue after publication; no new Raptor model request has started at this checkpoint. The gate waits for the existing queue to release its process lock. README authoring and R0 are separate stages; an authored entry is not an evaluation pass.
+**Launch status at 2026-11-18T02:19:17.352865+00:00.** All six final cluster preparation checks passed with zero model calls. The strict 330-target bank uses evaluator `2026-11-17-strict-raptor-64fcd34eb17c`. The selection/reader checks passed 98 tests and 36 subtests, and the actual reader resolved all 330 targets. A separate constructor-correction release passed its 664-test suite. These are software checks, not new experiment results. The replacement was published before launch and is queued behind the current library jobs; no new Raptor model request has started at this checkpoint. The gate waits for the existing queue to release its process lock. README authoring and R0 are separate stages; an authored entry is not an evaluation pass.
 
 [RDPro count explanation](review/raptor-scope/COUNT_EXPLANATION.md) · [replacement catalog](review/raptor-scope/plan/RUN_CATALOG.cluster.yaml) · [exact reduction decisions](review/raptor-scope/strict-no-wrappers/README.md) · [completed results](operator/launch/completed/) · [replacement preparation receipt](review/raptor-scope/operator/RECOVERY_CHECKS.json) · [code review route](CODE_REVIEW_ROUTE.md)
 
@@ -81,7 +81,7 @@ flowchart TD
 
 | Stage | What it does | Current interpretation |
 |---|---|---|
-| Original micro R0 |One audience program per selected target, zero snippet repairs|Other libraries continue unchanged; strict Raptor passed final cluster preparation and is ready to queue|
+| Original micro R0 |One audience program per selected target, zero snippet repairs|Other libraries continue unchanged; strict Raptor passed final preparation and is queued behind current jobs|
 | README authoring |Generate every selected manifest entry using `--scope manifest`|Independent authoring job; completion does not prove correctness|
 | R1 / R2 |First and second program repair after an actual failure|Later study stages, not enabled by the current zero-repair R0 launch|
 | README-only evaluation |Run the same bank against generated documentation|Separate evaluation after authoring and validation|
@@ -98,7 +98,7 @@ Provider retries are not R1 or R2. A startup/infrastructure failure is not a fai
 | Original-document audience reader | All 330 targets resolved; 16 mapped | Confirms unchanged excerpt delivery, not example correctness |
 | Earlier constructor-correction suite | 664 tests passed | Separate release/checkpoint; not a claim of rerunning 664 on the final strict release |
 | **Final strict cluster preflight** | **PASS: six jobs, zero model calls** | Exact counts and frozen input hashes verified |
-| **Replacement gate / Raptor requests** | **NOT STARTED** | No new experiment results at this checkpoint |
+| **Replacement gate / Raptor requests** | **WAITING FOR CURRENT QUEUE** | Gate process verified alive; no new Raptor model requests yet |
 
 [Final release](review/raptor-scope/operator/EVALUATOR_RELEASE.json), [strict checks](review/raptor-scope/operator/STRICT_SELECTION_VALIDATION.json), and [constructor suite log](review/raptor-scope/operator/CONSTRUCTOR_FULL_TESTS.log) preserve the evidence. The final [cluster preparation receipt](review/raptor-scope/operator/RECOVERY_CHECKS.json) records the verified release and inputs.
 
@@ -191,3 +191,6 @@ Inspect refs with `git show` or `git log`; switching a review checkout is not ho
 The [preserved 5,307-target preparation guide](HISTORICAL_GUIDE_5307.md) keeps the earlier review checkpoint. Keep its full-Beast manifests, qualified preparation checks, original launch receipts and earlier measured studies as historical evidence. Their 5,307/2,787 counts and old review-hold wording describe their saved preparation snapshot, not the current Raptor plan. [RUN_RECOVERY.md](RUN_RECOVERY.md), [RUN_FLOW.md](RUN_FLOW.md) and older figures explain the earlier launch; use this guide, the Raptor receipts and current monitor for the replacement scope.
 
 The source-selection review is a structural audit, not proof that all semantic duplicates or runtime bugs are absent. Preflight confirms preparation checks only. Report native runs and model outcomes when their recorded jobs actually finish.
+
+
+The historical `SYNC_MANIFEST.json` and `verify_snapshot.py` describe the earlier full-Beast preparation. For the current overlay, use [review file hashes](review/raptor-scope/REVIEW_FILE_HASHES.json) and the [evaluator binding](review/raptor-scope/operator/EVALUATOR_RELEASE.json). The cluster retains the original frozen review snapshot; the revised guide is stored beside it at the study root.
