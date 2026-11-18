@@ -1,0 +1,33 @@
+mir_eval.util.intersect_files(flist1, flist2)
+
+Return the intersection of two sets of filepaths, based on the file name (after the final ‘/’) and ignoring the file extension.
+
+Parameters:
+
+flist1list
+
+first list of filepaths
+
+flist2list
+
+second list of filepaths
+
+Returns:
+
+sublist1list
+
+subset of filepaths with matching stems from flist1
+
+sublist2list
+
+corresponding filepaths from flist2
+
+Examples
+
+>>> flist1 = ['/a/b/abc.lab', '/c/d/123.lab', '/e/f/xyz.lab']
+>>> flist2 = ['/g/h/xyz.npy', '/i/j/123.txt', '/k/l/456.lab']
+>>> sublist1, sublist2 = mir_eval.util.intersect_files(flist1, flist2)
+>>> print sublist1
+['/e/f/xyz.lab', '/c/d/123.lab']
+>>> print sublist2
+['/g/h/xyz.npy', '/i/j/123.txt']

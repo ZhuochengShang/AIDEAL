@@ -1,0 +1,46 @@
+MDAnalysis.lib.picklable_file_io.bz2_pickle_open(name, mode='rb')[source]
+
+Open a bzip2-compressed file in binary or text mode with pickle function implemented.
+
+This function returns a BZ2Picklable object when given the “rb” or “r” reading mode, or a BZ2Picklable object wrapped in a TextIOPicklable class with the “rt” reading mode. It can be used as a context manager, and replace the built-in bz2.open() function in read mode that only returns an unpicklable file object.
+
+Note
+
+Can be only used with read mode.
+
+Parameters:
+
+name (str) – either a text or byte string giving the name (and the path if the file isn’t in the current working directory) of the file to be opened.
+
+mode ({'r', 'rt', 'rb'} (optional)) – ‘r’: open for reading in binary mode; ‘rt’: read in text mode; ‘rb’: read in binary mode; (default)
+
+Returns:
+
+stream-like object – when mode is ‘rt’, returns TextIOPicklable; when mode is ‘r’ or ‘rb’, returns BZ2Picklable
+
+Return type:
+
+BZ2Picklable or TextIOPicklable
+
+Raises:
+
+ValueError – if mode is not one of the allowed read modes
+
+Examples
+
+open as context manager:
+
+with bz2_pickle_open('filename') as f:
+    line = f.readline()
+
+open as function:
+
+f = bz2_pickle_open('filename')
+line = f.readline()
+f.close()
+
+See also
+
+io.open(), bz2.open(), MDAnalysis.lib.util.anyopen(), MDAnalysis.lib.picklable_file_io.pickle_open(), MDAnalysis.lib.picklable_file_io.gzip_pickle_open()
+
+Added in version 2.0.0.

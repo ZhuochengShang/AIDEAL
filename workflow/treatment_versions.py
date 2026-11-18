@@ -29,6 +29,8 @@ ROUTES = {'readme': ('readme_only', 'combined'),
 
 
 def _run(root, *args):
+    # Run the supplied Git arguments in the chosen worktree. Reject environment
+    # overrides that could redirect the command to a different repository or index.
     # Generated .gitattributes cannot activate clean filters: staging below uses
     # raw blobs and update-index. Hooks, signing, and automatic maintenance are
     # disabled per command; no repository/global configuration is changed.
@@ -44,6 +46,8 @@ def _run(root, *args):
 
 
 def _relative(value):
+    # Accept only repository-relative filenames with explicit path segments. Reject
+    # traversal and paths into Git metadata.
     if (not isinstance(value, str) or not value or '\\' in value or '\0' in value
             or PurePosixPath(value).is_absolute()
             or any(p in ('', '.', '..') or p.casefold() == '.git' for p in value.split('/'))):
@@ -52,6 +56,8 @@ def _relative(value):
 
 
 def _safe_path(root, relative):
+    # Walk each component below root and reject symlinks before returning a path that
+    # an installer may read or write.
     path = root
     for part in _relative(relative).split('/'):
         path = path / part
@@ -61,16 +67,22 @@ def _safe_path(root, relative):
 
 
 def _record(path, value):
+    # Check the record path and its temporary sibling before atomically writing the
+    # complete journal or application record.
     if path.parent.resolve() != path.parent or path.is_symlink() or path.with_suffix(path.suffix + '.tmp').is_symlink():
         raise ValueError('Symlink in application record path')
     atomic_json(path, value)
 
 
 def _artifact_role(key):
+    # A numbered alias key still uses the alias routing rules. Keep the original key
+    # for looking up its individual bytes.
     return 'alias' if re.fullmatch(r'alias_[0-9]{4,6}', key) else key
 
 
 def _read_proposal(path, baseline):
+    # Return the proposal and its exact artifact bytes after checking the baseline,
+    # paths, file sizes, hashes, and destination conflicts.
     path = Path(path).expanduser().absolute()
     if path.is_symlink():
         raise ValueError('Proposal must not be a symlink')
@@ -122,10 +134,14 @@ def _read_proposal(path, baseline):
 
 
 def _blob(data, algorithm):
+    # Git hashes a blob header plus the original bytes. Use the object hash format of
+    # the attached repository.
     return hashlib.new(algorithm, b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
 
 
 def _trees(root, revision=None):
+    # Return a path-to-mode-and-hash map from a commit tree or the current staged
+    # index. The two Git commands place the hash in different columns.
     records = (_run(root, 'ls-tree', '-rz', revision) if revision else
                _run(root, 'ls-files', '--stage', '-z'))
     result = {}
@@ -143,6 +159,8 @@ def _trees(root, revision=None):
 
 
 def _disk_entry(root, name, algorithm):
+    # Read a worktree path as Git would identify its raw bytes and mode. A missing
+    # path has no entry.
     path = root / name
     if path.is_symlink():
         resolved = path.resolve()
@@ -157,6 +175,8 @@ def _disk_entry(root, name, algorithm):
 
 
 def _bundle(proposal, data, algorithm):
+    # Translate artifact roles into the files each condition receives. A numbered
+    # alias keeps its own data key even when its role is shared.
     bundle = {arm: {} for arm in CONDITION_FOLDERS}
     for key, binding in proposal['artifacts'].items():
         role = _artifact_role(key)
@@ -170,10 +190,14 @@ def _bundle(proposal, data, algorithm):
 
 
 def _binding_entry(binding):
+    # Reduce an artifact binding to the file mode and blob hash used in Git tree and
+    # index comparisons.
     return (binding.get('mode', '100644'), binding['git_blob'])
 
 
 def _check_target_paths(root, baseline, files):
+    # Check each destination against the current directory structure. Alias source
+    # must have a new path with no baseline file or directory conflict.
     for target, binding in files.items():
         path = _safe_path(root, target)
         if path.exists() and not path.is_file():
@@ -188,6 +212,8 @@ def _check_target_paths(root, baseline, files):
 
 def _check_worktree(root, head, desired, *, installing=False):
     """Compare raw file/index blobs, without invoking attributes or Git filters."""
+    # Compare the committed tree, the staged index, and the files on disk. While
+    # resuming an install, accept only the recorded old or intended new entries.
     algorithm = _run(root, 'rev-parse', '--show-object-format')
     tree, index = _trees(root, head), _trees(root)
     changes = {name: _binding_entry(binding) if binding is not None else None
@@ -226,6 +252,8 @@ def _check_worktree(root, head, desired, *, installing=False):
 
 
 def _attachment(study):
+    # Verify the attachment describes all five expected worktrees, including their
+    # branches, paths, baseline, and shared clone.
     attachment = load(_safe_path(study, 'attachment.json'))
     if (attachment.get('status') != 'attached_scaffolded_pending_validation'
             or set(attachment.get('worktrees', {})) != set(CONDITION_FOLDERS)):
@@ -253,6 +281,8 @@ def _attachment(study):
 
 
 def _current(versions):
+    # Return the current version and its application record after checking the pointer
+    # checksum. A study without a pointer has no current treatment.
     path = _safe_path(versions, 'current.json')
     if not path.exists():
         return None, None
@@ -269,6 +299,8 @@ def _current(versions):
 
 
 def _expected_changes(root, parent, files, removed):
+    # Describe just the entries that differ from the parent commit. A removal is
+    # represented by None.
     tree = _trees(root, parent)
     after = {name: _binding_entry(binding) for name, binding in files.items()}
     after.update({name: None for name in removed})
@@ -276,6 +308,8 @@ def _expected_changes(root, parent, files, removed):
 
 
 def _committed(root, parent, head, files, removed, message):
+    # Recognize a resumed commit by its parent, message, and exact changed entries
+    # before treating the install as complete.
     if _run(root, 'show', '-s', '--format=%P', head) != parent:
         return False
     if _run(root, 'show', '-s', '--format=%B', head) != message:
@@ -286,6 +320,8 @@ def _committed(root, parent, head, files, removed, message):
 
 
 def _install(root, files, removed, data, temporary):
+    # Write each bound file through a scratch path, then stage its raw blob and mode.
+    # Remove only the destinations named in the journal.
     temporary.mkdir(parents=True, exist_ok=True)
     for index, (target, binding) in enumerate(files.items()):
         destination = _safe_path(root, target)
@@ -307,12 +343,18 @@ def _install(root, files, removed, data, temporary):
 
 
 def apply_treatments(study, proposal_path):
+    # Install a complete treatment bundle into the attached condition worktrees.
+    # Verify existing versions, preserve evidence and journal each installation step.
+    # Create local commits and reuse a matching completed installation on resume.
+    # Installation reports unvalidated status; it does not establish task improvement.
     """Install a complete proposal, preserving all earlier versions and evidence.
 
     An omitted artifact removes only its previous AIDEAL-owned treatment files.
     This creates local commits and reports applied_unvalidated, never approval
     or measured results. Reapplying the current version is a checked no-op.
     """
+    # Use the proposal hash as the version directory name. Hold an output lock while
+    # reading or advancing the application journal.
     study = Path(study).expanduser().resolve(strict=True)
     assert_review_released(study)
     attachment = _attachment(study)
@@ -340,6 +382,8 @@ def apply_treatments(study, proposal_path):
         algorithm = _run(clone, 'rev-parse', '--show-object-format')
         bundle = _bundle(proposal, data, algorithm)
         baseline_tree = _trees(clone, attachment['revision'])
+        # Plan every arm and its parent before installation. Persist the plan so
+        # interrupted work has an exact recovery target.
         if journal is None:
             arms = {}
             for arm, info in attachment['worktrees'].items():
@@ -409,6 +453,8 @@ def apply_treatments(study, proposal_path):
                             installing=entry['state'] == 'installing')
             if arm == 'original' and (head != attachment['revision'] or entry['files'] or entry['removed_paths']):
                 raise ValueError('Original condition must remain at the unchanged baseline')
+        # After the checks above, install unfinished arms. Mark each arm as installing
+        # before changing any files.
         for arm, entry in journal['arms'].items():
             if entry['state'] == 'complete':
                 continue
@@ -450,6 +496,8 @@ def apply_treatments(study, proposal_path):
         checked_proposal, checked_data = _read_proposal(proposal_path, attachment['revision'])
         if checked_proposal != proposal or checked_data != data:
             raise ValueError('Proposal artifacts changed during installation; preserve the journal')
+        # Publish the application record only after rechecking the inputs and every
+        # installed worktree.
         application = {k: v for k, v in journal.items() if k != 'status'}
         application.update(status='applied_unvalidated', evaluated=False)
         if application_path.exists():

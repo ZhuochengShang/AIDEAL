@@ -1,0 +1,786 @@
+4.3.1. Coordinate fitting and alignment — MDAnalysis.analysis.align
+
+Author:
+
+Oliver Beckstein, Joshua Adelman
+
+Year:
+
+2010–2013
+
+Copyright:
+
+Lesser GNU Public License v2.1+
+
+The module contains functions to fit a target structure to a reference structure. They use the fast QCP algorithm to calculate the root mean square distance (RMSD) between two coordinate sets [Theobald2005] and the rotation matrix R that minimizes the RMSD [Liu2010]. (Please cite these references when using this module.).
+
+Typically, one selects a group of atoms (such as the C-alphas), calculates the RMSD and transformation matrix, and applys the transformation to the current frame of a trajectory to obtain the rotated structure. The alignto() and AlignTraj functions can be used to do this for individual frames and trajectories respectively.
+
+The RMS-fitting tutorial shows how to do the individual steps manually and explains the intermediate steps.
+
+See also
+
+MDAnalysis.analysis.rms
+
+contains functions to compute RMSD (when structural alignment is not required)
+
+MDAnalysis.lib.qcprot
+
+implements the fast RMSD algorithm.
+
+4.3.1.1. RMS-fitting tutorial
+
+The example uses files provided as part of the MDAnalysis test suite (in the variables PSF, DCD, and PDB_small). For all further examples execute first
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.analysis import align
+>>> from MDAnalysis.analysis.rms import rmsd
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, PDB_small
+
+In the simplest case, we can simply calculate the C-alpha RMSD between two structures, using rmsd():
+
+>>> ref = mda.Universe(PDB_small)
+>>> mobile = mda.Universe(PSF, DCD)
+>>> rmsd(mobile.select_atoms('name CA').positions, ref.select_atoms('name CA').positions)
+28.20178579474479
+
+Note that in this example translations have not been removed. In order to look at the pure rotation one needs to superimpose the centres of mass (or geometry) first:
+
+>>> rmsd(mobile.select_atoms('name CA').positions, ref.select_atoms('name CA').positions, center=True)
+21.892591663632704
+
+This has only done a translational superposition. If you want to also do a rotational superposition use the superposition keyword. This will calculate a minimized RMSD between the reference and mobile structure:
+
+>>> rmsd(mobile.select_atoms('name CA').positions, ref.select_atoms('name CA').positions,
+...      superposition=True)
+6.809396586471815
+
+The rotation matrix that superimposes mobile on ref while minimizing the CA-RMSD is obtained with the rotation_matrix() function
+
+>>> mobile0 = mobile.select_atoms('name CA').positions - mobile.select_atoms('name CA').center_of_mass()
+>>> ref0 = ref.select_atoms('name CA').positions - ref.select_atoms('name CA').center_of_mass()
+>>> R, rmsd = align.rotation_matrix(mobile0, ref0)
+>>> rmsd
+6.809396586471805
+>>> R
+array([[ 0.14514539, -0.27259113,  0.95111876],
+...    [ 0.88652593,  0.46267112, -0.00268642],
+...    [-0.43932289,  0.84358136,  0.30881368]])
+
+Putting all this together one can superimpose all of mobile onto ref:
+
+>>> mobile.atoms.translate(-mobile.select_atoms('name CA').center_of_mass())
+<AtomGroup with 3341 atoms>
+>>> mobile.atoms.rotate(R)
+<AtomGroup with 3341 atoms>
+>>> mobile.atoms.translate(ref.select_atoms('name CA').center_of_mass())
+<AtomGroup with 3341 atoms>
+>>> mobile.atoms.write("mobile_on_ref.pdb")
+
+4.3.1.2. Common usage
+
+To fit a single structure with alignto():
+
+>>> ref = mda.Universe(PSF, PDB_small)
+>>> mobile = mda.Universe(PSF, DCD)     # we use the first frame
+>>> align.alignto(mobile, ref, select="protein and name CA", weights="mass")
+(21.892591663632704, 6.809396586471809)
+
+This will change all coordinates in mobile so that the protein C-alpha atoms are optimally superimposed (translation and rotation).
+
+To fit a whole trajectory to a reference structure with the AlignTraj class:
+
+>>> ref = mda.Universe(PSF, PDB_small)   # reference structure 1AKE
+>>> trj = mda.Universe(PSF, DCD)         # trajectory of change 1AKE->4AKE
+>>> alignment = align.AlignTraj(trj, ref, filename='rmsfit.dcd')
+>>> alignment.run()
+<MDAnalysis.analysis.align.AlignTraj object at ...>
+
+It is also possible to align two arbitrary structures by providing a mapping between atoms based on a sequence alignment. This allows fitting of structural homologs or wild type and mutant.
+
+If a alignment was provided as “sequences.aln” one would first produce the appropriate MDAnalysis selections with the fasta2select() function and then feed the resulting dictionary to AlignTraj:
+
+>>> seldict = align.fasta2select('sequences.aln')
+>>> alignment = align.AlignTraj(trj, ref, filename='rmsfit.dcd', select=seldict)
+>>> alignment.run()
+
+(See the documentation of the functions for this advanced usage.)
+
+4.3.1.3. Functions and Classes
+
+Changed in version 0.10.0: Function rmsd() was removed from this module and is now exclusively accessible as rmsd().
+
+Changed in version 0.16.0: Function rms_fit_trj() deprecated in favor of AlignTraj class.
+
+Changed in version 0.17.0: removed deprecated rms_fit_trj()
+
+ MDAnalysis.analysis.align.alignto(mobile, reference, select=None, weights=None, subselection=None, tol_mass=0.1, strict=False, match_atoms=True)[source]
+
+Perform a spatial superposition by minimizing the RMSD.
+
+Spatially align the group of atoms mobile to reference by doing a RMSD fit on select atoms.
+
+The superposition is done in the following way:
+
+A rotation matrix is computed that minimizes the RMSD between the coordinates of mobile.select_atoms(sel1) and reference.select_atoms(sel2); before the rotation, mobile is translated so that its center of geometry (or center of mass) coincides with the one of reference. (See below for explanation of how sel1 and sel2 are derived from select.)
+
+All atoms in Universe that contain mobile are shifted and rotated. (See below for how to change this behavior through the subselection keyword.)
+
+The mobile and reference atom groups can be constructed so that they already match atom by atom. In this case, select should be set to “all” (or None) so that no further selections are applied to mobile and reference, therefore preserving the exact atom ordering (see Ordered selections).
+
+Warning
+
+The atom order for mobile and reference is only preserved when select is either “all” or None. In any other case, a new selection will be made that will sort the resulting AtomGroup by index and therefore destroy the correspondence between the two groups. It is safest not to mix ordered AtomGroups with selection strings.
+
+Parameters:
+
+mobile (Universe or AtomGroup) – structure to be aligned, a AtomGroup or a whole Universe
+
+reference (Universe or AtomGroup) – reference structure, a AtomGroup or a whole Universe
+
+select (str or dict or tuple (optional)) –
+The selection to operate on; can be one of:
+
+any valid selection string for select_atoms() that produces identical selections in mobile and reference; or
+
+a dictionary {'mobile': sel1, 'reference': sel2} where sel1 and sel2 are valid selection strings that are applied to mobile and reference respectively (the MDAnalysis.analysis.align.fasta2select() function returns such a dictionary based on a ClustalW or STAMP sequence alignment); or
+
+a tuple (sel1, sel2)
+
+When using 2. or 3. with sel1 and sel2 then these selection strings are applied to atomgroup and reference respectively and should generate groups of equivalent atoms. sel1 and sel2 can each also be a list of selection strings to generate a AtomGroup with defined atom order as described under Ordered selections).
+
+match_atoms (bool (optional)) – Whether to match the mobile and reference atom-by-atom. Default True.
+
+weights ({“mass”, None} or array_like (optional)) – choose weights. With "mass" uses masses as weights; with None weigh each atom equally. If a float array of the same length as mobile is provided, use each element of the array_like as a weight for the corresponding atom in mobile.
+
+tol_mass (float (optional)) – Reject match if the atomic masses for matched atoms differ by more than tol_mass, default [0.1]
+
+strict (bool (optional)) –
+
+True
+
+Will raise SelectionError if a single atom does not match between the two selections.
+
+False [default]
+
+Will try to prepare a matching selection by dropping residues with non-matching atoms. See get_matching_atoms() for details.
+
+subselection (str or AtomGroup or None (optional)) –
+Apply the transformation only to this selection.
+
+None [default]
+
+Apply to mobile.universe.atoms (i.e., all atoms in the context of the selection from mobile such as the rest of a protein, ligands and the surrounding water)
+
+selection-string
+
+Apply to mobile.select_atoms(selection-string)
+
+AtomGroup
+
+Apply to the arbitrary group of atoms
+
+Returns:
+
+old_rmsd (float) – RMSD before spatial alignment
+
+new_rmsd (float) – RMSD after spatial alignment
+
+See also
+
+AlignTraj
+
+More efficient method for RMSD-fitting trajectories.
+
+Changed in version 1.0.0: Added match_atoms keyword to toggle atom matching.
+
+Changed in version 0.8: Added check that the two groups describe the same atoms including the new tol_mass keyword.
+
+Changed in version 0.10.0: Uses get_matching_atoms() to work with incomplete selections and new strict keyword. The new default is to be lenient whereas the old behavior was the equivalent of strict = True.
+
+Changed in version 0.16.0: new general ‘weights’ kwarg replace mass_weighted, deprecated mass_weighted
+
+Deprecated since version 0.16.0: Instead of mass_weighted=True use new weights='mass'
+
+Changed in version 0.17.0: Deprecated keyword mass_weighted was removed.
+
+ class MDAnalysis.analysis.align.AlignTraj(mobile, reference, select='all', filename=None, prefix='rmsfit_', weights=None, tol_mass=0.1, match_atoms=True, strict=False, force=True, in_memory=False, writer_kwargs=None, **kwargs)[source]
+
+RMS-align trajectory to a reference structure using a selection.
+
+Both the reference reference and the trajectory mobile must be MDAnalysis.Universe instances. If they contain a trajectory then it is used. The output file format is determined by the file extension of filename. One can also use the same universe if one wants to fit to the current frame.
+
+Changed in version 1.0.0: save() has now been removed, as an alternative use np.savetxt() on results.rmsd.
+
+Parameters:
+
+mobile (Universe) – Universe containing trajectory to be fitted to reference
+
+reference (Universe) – Universe containing trajectory frame to be used as reference
+
+select (str (optional)) – Set as default to all, is used for Universe.select_atoms to choose subdomain to be fitted against
+
+filename (str (optional)) – Provide a filename for results to be written to
+
+prefix (str (optional)) – Provide a string to prepend to filename for results to be written to
+
+weights ({“mass”, None} or array_like (optional)) – choose weights. With "mass" uses masses of reference as weights; with None weigh each atom equally. If a float array of the same length as the selection is provided, use each element of the array_like as a weight for the corresponding atom in the selection.
+
+tol_mass (float (optional)) – Tolerance given to get_matching_atoms to find appropriate atoms
+
+match_atoms (bool (optional)) – Whether to match the mobile and reference atom-by-atom. Default True.
+
+strict (bool (optional)) – Force get_matching_atoms to fail if atoms can’t be found using exact methods
+
+force (bool (optional)) – Force overwrite of filename for rmsd-fitting
+
+in_memory (bool (optional)) – Permanently switch mobile to an in-memory trajectory so that alignment can be done in-place, which can improve performance substantially in some cases. In this case, no file is written out (filename and prefix are ignored) and only the coordinates of mobile are changed in memory.
+
+verbose (bool (optional)) – Set logger to show more information and show detailed progress of the calculation if set to True; the default is False.
+
+writer_kwargs (dict (optional)) – kwarg dict to be passed to the constructed writer
+
+ reference_atoms
+
+Atoms of the reference structure to be aligned against
+
+Type:
+
+AtomGroup
+
+ mobile_atoms
+
+Atoms inside each trajectory frame to be rmsd_aligned
+
+Type:
+
+AtomGroup
+
+ results.rmsd
+
+Array of the rmsd values of the least rmsd between the mobile_atoms and reference_atoms after superposition and minimimization of rmsd
+
+Added in version 2.0.0.
+
+Type:
+
+numpy.ndarray
+
+ rmsd
+
+Alias to the results.rmsd attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.rmsd instead.
+
+Type:
+
+numpy.ndarray
+
+ filename
+
+String reflecting the filename of the file where the aligned positions will be written to upon running RMSD alignment
+
+Type:
+
+str
+
+Notes
+
+If set to verbose=False, it is recommended to wrap the statement in a try ... finally to guarantee restoring of the log level in the case of an exception.
+
+The in_memory option changes the mobile universe to an in-memory representation (see MDAnalysis.coordinates.memory) for the remainder of the Python session. If mobile.trajectory is already a MemoryReader then it is always treated as if in_memory had been set to True.
+
+Changed in version 1.0.0: Default filename has now been changed to the current directory.
+
+Deprecated since version 0.19.1: Default filename directory will change in 1.0 to the current directory.
+
+Changed in version 0.16.0: new general weights kwarg replace mass_weights
+
+Deprecated since version 0.16.0: Instead of mass_weighted=True use new weights='mass'
+
+Changed in version 0.17.0: removed deprecated mass_weighted keyword
+
+Changed in version 1.0.0: Support for the start, stop, and step keywords has been removed. These should instead be passed to AlignTraj.run().
+
+Changed in version 2.0.0: rmsd results are now stored in a MDAnalysis.analysis.base.Results instance.
+
+Changed in version 2.8.0: Added writer_kwargs kwarg dict to pass to the writer
+
+ class MDAnalysis.analysis.align.AverageStructure(mobile, reference=None, select='all', filename=None, weights=None, tol_mass=0.1, match_atoms=True, strict=False, force=True, in_memory=False, ref_frame=0, **kwargs)[source]
+
+RMS-align trajectory to a reference structure using a selection, and calculate the average coordinates of the trajectory.
+
+Both the reference reference and the trajectory mobile must be MDAnalysis.Universe instances. If they contain a trajectory, then it is used. You can also use the same universe if you want to fit to the current frame.
+
+The output file format is determined by the file extension of filename.
+
+Example
+
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import PSF, DCD
+from MDAnalysis.analysis import align
+
+u = mda.Universe(PSF, DCD)
+
+# align to the third frame and average structure
+av = align.AverageStructure(u, ref_frame=3).run()
+averaged_universe = av.results.universe
+
+Parameters:
+
+mobile (Universe) – Universe containing trajectory to be fitted to reference
+
+reference (Universe (optional)) – Universe containing trajectory frame to be used as reference
+
+select (str (optional)) – Set as default to all, is used for Universe.select_atoms to choose subdomain to be fitted against
+
+filename (str (optional)) – Provide a filename for results to be written to
+
+weights ({“mass”, None} or array_like (optional)) – choose weights. With "mass" uses masses of reference as weights; with None weigh each atom equally. If a float array of the same length as the selection is provided, use each element of the array_like as a weight for the corresponding atom in the selection.
+
+tol_mass (float (optional)) – Tolerance given to get_matching_atoms to find appropriate atoms
+
+match_atoms (bool (optional)) – Whether to match the mobile and reference atom-by-atom. Default True.
+
+strict (bool (optional)) – Force get_matching_atoms to fail if atoms can’t be found using exact methods
+
+force (bool (optional)) – Force overwrite of filename for rmsd-fitting
+
+in_memory (bool (optional)) – Permanently switch mobile to an in-memory trajectory so that alignment can be done in-place, which can improve performance substantially in some cases. In this case, no file is written out (filename and prefix are ignored) and only the coordinates of mobile are changed in memory.
+
+ref_frame (int (optional)) – frame index to select frame from reference
+
+verbose (bool (optional)) – Set logger to show more information and show detailed progress of the calculation if set to True; the default is False.
+
+ reference_atoms
+
+Atoms of the reference structure to be aligned against
+
+Type:
+
+AtomGroup
+
+ mobile_atoms
+
+Atoms inside each trajectory frame to be rmsd_aligned
+
+Type:
+
+AtomGroup
+
+ results.universe
+
+New Universe with average positions
+
+Added in version 2.0.0.
+
+Type:
+
+MDAnalysis.Universe
+
+ universe
+
+Alias to the results.universe attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.universe instead.
+
+Type:
+
+MDAnalysis.Universe
+
+ results.positions
+
+Average positions
+
+Added in version 2.0.0.
+
+Type:
+
+np.ndarray(dtype=float)
+
+ positions
+
+Alias to the results.positions attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.positions instead.
+
+Type:
+
+np.ndarray(dtype=float)
+
+ results.rmsd
+
+Average RMSD per frame
+
+Added in version 2.0.0.
+
+Type:
+
+float
+
+ rmsd
+
+Alias to the results.rmsd attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.rmsd instead.
+
+Type:
+
+float
+
+ filename
+
+String reflecting the filename of the file where the average structure is written
+
+Type:
+
+str
+
+Notes
+
+If set to verbose=False, it is recommended to wrap the statement in a try ... finally to guarantee restoring of the log level in the case of an exception.
+
+The in_memory option changes the mobile universe to an in-memory representation (see MDAnalysis.coordinates.memory) for the remainder of the Python session. If mobile.trajectory is already a MemoryReader then it is always treated as if in_memory had been set to True.
+
+Added in version 1.0.0.
+
+Changed in version 2.0.0: universe, positions, and rmsd are now stored in a MDAnalysis.analysis.base.Results instance.
+
+ MDAnalysis.analysis.align.rotation_matrix(a, b, weights=None)[source]
+
+Returns the 3x3 rotation matrix R for RMSD fitting coordinate sets a and b.
+
+The rotation matrix R transforms vector a to overlap with vector b (i.e., b is the reference structure):
+
+ \[\mathbf{b} = \mathsf{R} \cdot \mathbf{a}\]
+
+Parameters:
+
+a (array_like) – coordinates that are to be rotated (“mobile set”); array of N atoms of shape N*3 as generated by, e.g., MDAnalysis.core.groups.AtomGroup.positions.
+
+b (array_like) – reference coordinates; array of N atoms of shape N*3 as generated by, e.g., MDAnalysis.core.groups.AtomGroup.positions.
+
+weights (array_like (optional)) – array of floats of size N for doing weighted RMSD fitting (e.g. the masses of the atoms)
+
+Returns:
+
+R (ndarray) – rotation matrix
+
+rmsd (float) – RMSD between a and b before rotation
+
+(R, rmsd) rmsd and rotation matrix R
+
+Example
+
+R can be used as an argument for MDAnalysis.core.groups.AtomGroup.rotate() to generate a rotated selection, e.g.
+
+>>> from MDAnalysisTests.datafiles import TPR, TRR
+>>> from MDAnalysis.analysis import align
+>>> A = mda.Universe(TPR,TRR)
+>>> B = A.copy()
+>>> R = rotation_matrix(A.select_atoms('backbone').positions,
+...                     B.select_atoms('backbone').positions)[0]
+>>> A.atoms.rotate(R)
+<AtomGroup with 47681 atoms>
+>>> A.atoms.write("rotated.pdb")
+
+Notes
+
+The function does not shift the centers of mass or geometry; this needs to be done by the user.
+
+See also
+
+MDAnalysis.analysis.rms.rmsd
+
+Calculates the RMSD between a and b.
+
+alignto
+
+A complete fit of two structures.
+
+AlignTraj
+
+Fit a whole trajectory.
+
+ MDAnalysis.analysis.align.iterative_average(mobile, reference=None, select='all', weights=None, niter=100, eps=1e-06, verbose=False, **kwargs)[source]
+
+Iteratively calculate an optimal reference that is also the average structure after an RMSD alignment.
+
+The optimal reference is defined as average structure of a trajectory, with the optimal reference used as input. This function computes the optimal reference by using a starting reference for the average structure, which is used as the reference to calculate the average structure again. This is repeated until the reference structure has converged. [1]
+
+Parameters:
+
+mobile (mda.Universe) – Universe containing trajectory to be fitted to reference.
+
+reference (mda.Universe (optional)) – Universe containing the initial reference structure.
+
+select (str or tuple or dict (optional)) – Atom selection for fitting a substructue. Default is set to all. Can be tuple or dict to define different selection strings for mobile and target.
+
+weights (str, array_like (optional)) – Weights that can be used. If None use equal weights, if ‘mass’ use masses of ref as weights or give an array of arbitrary weights.
+
+niter (int (optional)) – Maximum number of iterations.
+
+eps (float (optional)) – RMSD distance at which reference and average are assumed to be equal.
+
+verbose (bool (optional)) – Verbosity.
+
+**kwargs (dict (optional)) – AverageStructure kwargs.
+
+Returns:
+
+avg_struc – AverageStructure result from the last iteration.
+
+Return type:
+
+AverageStructure
+
+Example
+
+iterative_average can be used to obtain a MDAnalysis.Universe with the optimal reference structure.
+
+import MDAnalysis as mda
+from MDAnalysis.analysis import align
+from MDAnalysisTests.datafiles import PSF, DCD
+
+u = mda.Universe(PSF, DCD)
+av = align.iterative_average(u, u, verbose=True)
+
+averaged_universe = av.results.universe
+
+References
+
+Added in version 2.8.0.
+
+4.3.1.4. Helper functions
+
+The following functions are used by the other functions in this module. They are probably of more interest to developers than to normal users.
+
+ MDAnalysis.analysis.align._fit_to(mobile_coordinates, ref_coordinates, mobile_atoms, mobile_com, ref_com, weights=None)[source]
+
+Perform an rmsd-fitting to determine rotation matrix and align atoms
+
+Parameters:
+
+mobile_coordinates (ndarray) – Coordinates of atoms to be aligned
+
+ref_coordinates (ndarray) – Coordinates of atoms to be fit against
+
+mobile_atoms (AtomGroup) – Atoms to be translated
+
+mobile_com (ndarray) – array of xyz coordinate of mobile center of mass
+
+ref_com (ndarray) – array of xyz coordinate of reference center of mass
+
+weights (array_like (optional)) – choose weights. With None weigh each atom equally. If a float array of the same length as mobile_coordinates is provided, use each element of the array_like as a weight for the corresponding atom in mobile_coordinates.
+
+Returns:
+
+mobile_atoms (AtomGroup) – AtomGroup of translated and rotated atoms
+
+min_rmsd (float) – Minimum rmsd of coordinates
+
+Notes
+
+This function assumes that mobile_coordinates and ref_coordinates have already been shifted so that their centers of geometry (or centers of mass, depending on weights) coincide at the origin. mobile_com and ref_com are the centers before this shift.
+
+The rotation matrix \(\mathsf{R}\) is determined with rotation_matrix() directly from mobile_coordinates and ref_coordinates.
+
+mobile_atoms \(X\) is rotated according to the rotation matrix and the centers according to
+
+ \[X' = \mathsf{R}(X - \bar{X}) + \bar{X}_{\text{ref}}\]
+
+where \(\bar{X}\) is the center.
+
+ MDAnalysis.analysis.align.fasta2select(fastafilename, is_aligned=False, ref_resids=None, target_resids=None, ref_offset=0, target_offset=0, verbosity=3, alnfilename=None, treefilename=None, clustalw='clustalw2')[source]
+
+Return selection strings that will select equivalent residues.
+
+The function aligns two sequences provided in a FASTA file and constructs MDAnalysis selection strings of the common atoms. When these two strings are applied to the two different proteins they will generate AtomGroups of the aligned residues.
+
+fastafilename contains the two un-aligned sequences in FASTA format. The reference is assumed to be the first sequence, the target the second. ClustalW produces a pairwise alignment (which is written to a file with suffix .aln). The output contains atom selection strings that select the same atoms in the two structures.
+
+Unless ref_offset and/or target_offset are specified, the resids in the structure are assumed to correspond to the positions in the un-aligned sequence, namely the first residue has resid == 1.
+
+In more complicated cases (e.g., when the resid numbering in the input structure has gaps due to missing parts), simply provide the sequence of resids as they appear in the topology in ref_resids or target_resids, e.g.
+
+target_resids = [a.resid for a in trj.select_atoms('name CA')]
+
+(This translation table is combined with any value for ref_offset or target_offset!)
+
+Parameters:
+
+fastafilename (str, path to filename) – FASTA file with first sequence as reference and second the one to be aligned (ORDER IS IMPORTANT!)
+
+is_aligned (bool (optional)) –
+
+False (default)
+
+run clustalw for sequence alignment;
+
+True
+
+use the alignment in the file (e.g. from STAMP) [False]
+
+ref_offset (int (optional)) – add this number to the column number in the FASTA file to get the original residue number, default: 0
+
+target_offset (int (optional)) – add this number to the column number in the FASTA file to get the original residue number, default: 0
+
+ref_resids (str (optional)) – sequence of resids as they appear in the reference structure
+
+target_resids (str (optional)) – sequence of resids as they appear in the target
+
+alnfilename (str (optional)) – filename of ClustalW alignment (clustal format) that is produced by clustalw when is_aligned = False. default None uses the name and path of fastafilename and substitutes the suffix with ‘.aln’.
+
+treefilename (str (optional)) – filename of ClustalW guide tree (Newick format); if default None the the filename is generated from alnfilename with the suffix ‘.dnd’ instead of ‘.aln’
+
+clustalw (str (optional)) – path to the ClustalW (or ClustalW2) binary; only needed for is_aligned = False, default: “ClustalW2”
+
+Returns:
+
+select_dict – dictionary with ‘reference’ and ‘mobile’ selection string that can be used immediately in AlignTraj as select=select_dict.
+
+Return type:
+
+dict
+
+See also
+
+sequence_alignment(), which, programs.
+
+Raises:
+
+ImportError – If optional dependency Biopython is not available.
+
+Changed in version 1.0.0: Passing alnfilename or treefilename as None will create a file in the current working directory.
+
+Changed in version 2.7.0: Biopython is now an optional dependency which this method requires.
+
+ MDAnalysis.analysis.align.sequence_alignment(*args, **kwds)
+
+sequence_alignment is deprecated!
+
+Generate a global sequence alignment between two residue groups.
+
+The residues in reference and mobile will be globally aligned. The global alignment uses the Needleman-Wunsch algorithm as implemented in Bio.Align.PairwiseAligner. The parameters of the dynamic programming algorithm can be tuned with the keywords. The defaults should be suitable for two similar sequences. For sequences with low sequence identity, more specialized tools such as clustalw, muscle, tcoffee, or similar should be used.
+
+Parameters:
+
+mobile (AtomGroup) – Atom group to be aligned
+
+reference (AtomGroup) – Atom group to be aligned against
+
+match_score (float (optional), default 2) – score for matching residues, default 2
+
+mismatch_penalty (float (optional), default -1) – penalty for residues that do not match , default : -1
+
+gap_penalty (float (optional), default -2) – penalty for opening a gap; the high default value creates compact alignments for highly identical sequences but might not be suitable for sequences with low identity, default : -2
+
+gapextension_penalty (float (optional), default -0.1) – penalty for extending a gap, default: -0.1
+
+Returns:
+
+alignment – Tuple of top sequence matching output (‘Sequence A’, ‘Sequence B’, score, begin, end)
+
+Return type:
+
+tuple
+
+Raises:
+
+ImportError – If optional dependency Biopython is not available.
+
+Notes
+
+If you prefer to work directly with Bio.Align objects then you can run your alignment with Bio.Alig.PairwiseAligner as
+
+import Bio.Align.PairwiseAligner
+
+aligner = Bio.Align.PairwiseAligner(
+   mode="global",
+   match_score=match_score,
+   mismatch_score=mismatch_penalty,
+   open_gap_score=gap_penalty,
+   extend_gap_score=gapextension_penalty)
+aln = aligner.align(reference.residues.sequence(format="Seq"),
+                    mobile.residues.sequence(format="Seq"))
+
+# choose top alignment with highest score
+topalignment = aln[0]
+
+The topalignment is a Bio.Align.PairwiseAlignment instance that can be used in your bioinformatics workflows.
+
+See also
+
+BioPython documentation for PairwiseAligner. Alternatively, use fasta2select() with clustalw2 and the option is_aligned=False.
+
+Added in version 0.10.0.
+
+Changed in version 2.4.0: Replace use of deprecated Bio.pairwise2.align.globalms() with Bio.Align.PairwiseAligner.
+
+Changed in version 2.7.0: Biopython is now an optional dependency which this method requires.
+
+Deprecated since version 2.4.0: See the documentation under Notes on how to directly useBio.Align.PairwiseAligner with ResidueGroups. sequence_alignment will be removed in release 3.0.
+
+ MDAnalysis.analysis.align.get_matching_atoms(ag1, ag2, tol_mass=0.1, strict=False, match_atoms=True)[source]
+
+Return two atom groups with one-to-one matched atoms.
+
+The function takes two AtomGroup instances ag1 and ag2 and returns two atom groups g1 and g2 that consist of atoms so that the mass of atom g1[0] is the same as the mass of atom g2[0], g1[1] and g2[1] etc.
+
+The current implementation is very simplistic and works on a per-residue basis:
+
+The two groups must contain the same number of residues.
+
+Any residues in each group that have differing number of atoms are discarded.
+
+The masses of corresponding atoms are compared. and if any masses differ by more than tol_mass the test is considered failed and a SelectionError is raised.
+
+The log file (see MDAnalysis.start_logging()) will contain detailed information about mismatches.
+
+Parameters:
+
+ag1 (AtomGroup) – First AtomGroup instance that is compared
+
+ag2 (AtomGroup) – Second AtomGroup instance that is compared
+
+tol_mass (float (optional)) – Reject if the atomic masses for matched atoms differ by more than tol_mass [0.1]
+
+strict (bool (optional)) –
+
+True
+
+Will raise SelectionError if a single atom does not match between the two selections.
+
+False [default]
+
+Will try to prepare a matching selection by dropping residues with non-matching atoms. See get_matching_atoms() for details.
+
+match_atoms (bool (optional)) –
+
+True
+
+Will attempt to match atoms based on mass
+
+False
+
+Will not attempt to match atoms based on mass
+
+Returns:
+
+(g1, g2) – Tuple with AtomGroup instances that match, atom by atom. The groups are either the original groups if all matched or slices of the original groups.
+
+Return type:
+
+tuple
+
+Raises:
+
+SelectionError – Error raised if the number of residues does not match or if in the final matching masses differ by more than tol.
+
+Notes
+
+The algorithm could be improved by using e.g. the Needleman-Wunsch algorithm in Bio.profile2 to align atoms in each residue (doing a global alignment is too expensive).
+
+Added in version 0.8.
+
+Changed in version 0.10.0: Renamed from check_same_atoms() to get_matching_atoms() and now returns matching atomgroups (possibly with residues removed)

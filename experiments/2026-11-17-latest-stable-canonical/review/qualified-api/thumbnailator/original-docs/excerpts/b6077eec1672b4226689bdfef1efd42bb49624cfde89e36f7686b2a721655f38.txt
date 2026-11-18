@@ -1,0 +1,37 @@
+size
+public
+Thumbnails.Builder
+<
+T
+>
+size
+(int width,
+int height)
+Sets the size of the thumbnail.
+For example, to create thumbnails which should fit within a
+bounding rectangle of 640 x 480, the following code can be used:
+Thumbnails.of(image)
+.size(640, 480)
+.toFile(thumbnail);
+In the above code, the thumbnail will preserve the aspect ratio
+of the original image. If the thumbnail should be forced to the
+specified size, the
+forceSize(int, int)
+method can
+be used instead of this method.
+Once this method is called, calling the
+scale(double)
+method
+will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+Reference to this object.

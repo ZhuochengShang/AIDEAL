@@ -1,0 +1,17 @@
+property fragments
+
+Read-only tuple of
+
+fragments.
+
+Contains all fragments that any Atom in this AtomGroup is part of.
+
+A fragment is a group of atoms which are interconnected by Bonds, i.e., there exists a path along one or more Bonds between any pair of Atoms within a fragment. Thus, a fragment typically corresponds to a molecule.
+
+The contents of the fragments may extend beyond the contents of this AtomGroup.
+
+Added in version 0.9.0.
+
+Note
+
+This requires the underlying topology to have bonds. Otherwise, a NoDataError is raised.

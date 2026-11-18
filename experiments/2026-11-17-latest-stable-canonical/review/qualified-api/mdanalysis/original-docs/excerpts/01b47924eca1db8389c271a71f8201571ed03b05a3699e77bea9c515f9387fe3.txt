@@ -1,0 +1,20 @@
+MDAnalysis.analysis.encore.confdistmatrix.set_rmsd_matrix_elements(tasks, coords, rmsdmat, weights, fit_coords=None, fit_weights=None, *args, **kwargs)[source]
+
+RMSD Matrix calculator
+
+Parameters:
+
+tasks (iterator of int of length 2) –
+Given a triangular matrix, this function will calculate RMSD values from element tasks[0] to tasks[1]. Since the matrix is triangular, the trm_indices matrix automatically calculates the corrisponding i,j matrix indices. The matrix is written as an array in a row-major order (see the TriangularMatrix class for details).
+
+If fit_coords and fit_weights are specified, the structures will be superimposed before calculating RMSD, and fit_coords and fit_weights will be used to place both structures at their center of mass and compute the rotation matrix. In this case, both fit_coords and fit_weights must be specified.
+
+coords (numpy.array) – Array of the ensemble coordinates
+
+weights (numpy.array) – Array of atomic weights, having the same order as the coordinates array
+
+rmsdmat (encore.utils.TriangularMatrix) – Memory-shared triangular matrix object
+
+fit_coords (numpy.array or None, optional) – Array of the coordinates used for fitting
+
+fit_weights (numpy.array. optional) – Array of atomic weights, having the same order as the fit_coords array

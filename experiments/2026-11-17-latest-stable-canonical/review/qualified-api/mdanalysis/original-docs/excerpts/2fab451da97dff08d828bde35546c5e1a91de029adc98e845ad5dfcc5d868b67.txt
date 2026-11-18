@@ -1,0 +1,32 @@
+MDAnalysis.lib.util.unique_rows(arr, return_index=False)[source]
+
+Return the unique rows of an array.
+
+Parameters:
+
+arr (numpy.ndarray) – Array of shape (n1, m).
+
+return_index (bool, optional) – If True, returns indices of array that formed answer (see numpy.unique())
+
+Returns:
+
+unique_rows (numpy.ndarray) – Array of shape (n2, m) containing only the unique rows of arr.
+
+r_idx (numpy.ndarray (optional)) – Array containing the corresponding row indices (if return_index is True).
+
+Examples
+
+Remove dupicate rows from an array:
+
+>>> import numpy as np
+>>> from MDAnalysis.lib.util import unique_rows
+>>> a = np.array([[0, 1], [1, 2], [1, 2], [0, 1], [2, 3]])
+>>> b = unique_rows(a)
+>>> b
+array([[0, 1],
+       [1, 2],
+       [2, 3]])
+
+See also
+
+numpy.unique

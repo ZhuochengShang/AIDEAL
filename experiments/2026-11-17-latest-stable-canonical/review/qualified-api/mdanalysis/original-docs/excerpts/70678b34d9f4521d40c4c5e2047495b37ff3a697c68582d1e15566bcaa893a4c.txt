@@ -1,0 +1,17 @@
+write(obj)[source]
+
+Write selection at current trajectory frame to file.
+
+Parameters:
+
+obj (AtomGroup or Universe)
+
+Note
+
+The GRO format only allows 5 digits for resid and atom number. If these numbers become larger than 99,999 then this routine will chop off the leading digits.
+
+Changed in version 0.7.6: resName and atomName are truncated to a maximum of 5 characters
+
+Changed in version 0.16.0: frame kwarg has been removed
+
+Changed in version 2.0.0: Deprecated support for calling with Timestep has nwo been removed. Use AtomGroup or Universe as an input instead.

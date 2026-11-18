@@ -1,0 +1,15 @@
+radius_of_gyration(wrap=False, **kwargs)
+
+Radius of gyration.
+
+wrapbool, optional
+
+If True, move all atoms within the primary unit cell before calculation. [False]
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.

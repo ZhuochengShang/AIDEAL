@@ -1,0 +1,24 @@
+seek(offset, whence=0)[source]
+
+Change the stream position to the given byte offset .
+
+Parameters:
+
+offset (int) – offset is interpreted relative to the position indicated by whence.
+
+whence ({0, 1, 2} (optional)) –
+Values for whence are:
+
+io.SEEK_SET or 0 – start of the stream (the default); offset should be zero or positive
+
+io.SEEK_CUR or 1 – current stream position; offset may be negative
+
+io.SEEK_END or 2 – end of the stream; offset is usually negative
+
+Returns:
+
+the new absolute position in bytes.
+
+Return type:
+
+int

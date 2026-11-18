@@ -1,0 +1,180 @@
+class MDAnalysis.analysis.dssp.dssp.DSSP(atoms: Universe | AtomGroup, guess_hydrogens: bool = True, *, heavyatom_names: tuple[str] = ('N', 'CA', 'C', 'O O1 OT1'), hydrogen_name: str = 'H HN HT1 HT2 HT3', backend: str = 'serial')[source]
+
+Assign secondary structure using the DSSP algorithm.
+
+Analyze a selection containing a protein and assign secondary structure using the Kabsch-Sander algorithm [1]. Only a subset of secondary structure categories are implemented:
+
+‘H’ represents a generic helix (α-helix, π-helix or \(3_{10}\) helix)
+
+‘E’ represents ‘extended strand’, participating in beta-ladder (parallel or antiparallel)
+
+‘-’ represents unordered part (“loop”)
+
+The implementation was taken from the pydssp package (v. 0.9.0) https://github.com/ShintaroMinami/PyDSSP by Shintaro Minami under the MIT license.
+
+Warning
+
+For DSSP to work properly, your atoms must represent a protein. The hydrogen atom bound to the backbone nitrogen atom is matched by name as given by the keyword argument hydrogen_atom. There may only be a single backbone nitrogen hydrogen atom per residue; the one exception is proline, for which there should not exist any such hydrogens. The default value of hydrogen_atom should handle the common naming conventions in the PDB and in force fields but if you encounter an error or unusual results during your run, try to figure out how to select the correct hydrogen atoms and report an issue in the MDAnalysis issue tracker.
+
+Parameters:
+
+atoms (Union[Universe, AtomGroup]) – input Universe or AtomGroup with at least 6 protein residues. In both cases, only protein residues will be chosen prior to the analysis via select_atoms(‘protein’). Heavy atoms of the protein are then selected by name heavyatom_names, and hydrogens are selected by name hydrogen_name.
+
+guess_hydrogens (bool, optional) – whether you want to guess hydrogens positions, by default True. Guessing is made assuming perfect 120 degrees for all bonds that N atom makes, and a N-H bond length of 1.01 A. If guess_hydrogens is False, hydrogen atom positions on N atoms will be parsed from the trajectory, except for the “hydrogen” atom positions on PRO residues, and an N-terminal residue.
+
+heavyatom_names (tuple[str], default ("N", "CA", "C", "O O1 OT1")) – selection names that will be used to select “N”, “CA”, “C” and “O” atom coordinates for the secondary structure determination. The last string contains multiple values for “O” to account for C-term residues.
+
+hydrogen_name (str, default "H HN HT1 HT2 HT3") –
+This selection should only select a single hydrogen atom in each residue (except proline), namely the one bound to the backbone nitrogen.
+
+Note
+
+To work with different hydrogen-naming conventions by default, the default selection is broad but if hydrogens are incorrectly selected (e.g., a ValueError is raised) you must customize hydrogen_name for your specific case.
+
+backend (str, optional) –
+Backend for distance calculations, by default "serial". Can be set to "distopia" if `distopia`_ is installed.
+
+Added in version 2.11.0.
+
+_distopia (..)
+
+Raises:
+
+ValueError – If fewer than 6 residues are provided in the selection.
+
+ValueError – if guess_hydrogens is True but some non-PRO hydrogens are missing.
+
+Examples
+
+For example, you can assign secondary structure for a single PDB file:
+
+>>> from MDAnalysis.analysis.dssp import DSSP
+>>> from MDAnalysisTests.datafiles import PDB
+>>> import MDAnalysis as mda
+>>> u = mda.Universe(PDB)
+>>> run = DSSP(u).run()
+>>> print("".join(run.results.dssp[0, :20]))
+--EEEEE-----HHHHHHHH
+
+The results.dssp holds the time series of assigned secondary structure, with one character for each residue.
+
+(Note that for displaying purposes we only print the first 20 residues of frame 0 with run.results.dssp[0, :20] but one would typically look at all residues run.results.dssp[0].)
+
+The results.dssp_ndarray attribute holds a (n_frames, n_residues, 3) shape ndarray with a one-hot encoding of loop ‘-’ (index 0), helix ‘H’ (index 1), and sheet ‘E’ (index 2), respectively for each frame of the trajectory. It can be used to compute, for instance, the average secondary structure:
+
+>>> from MDAnalysis.analysis.dssp import translate, DSSP
+>>> from MDAnalysisTests.datafiles import TPR, XTC
+>>> u = mda.Universe(TPR, XTC)
+>>> run = DSSP(u).run()
+>>> mean_secondary_structure = translate(run.results.dssp_ndarray.mean(axis=0))
+>>> print(''.join(mean_secondary_structure)[:20])
+-EEEEEE------HHHHHHH
+
+Added in version 2.8.0: Enabled parallel execution with the multiprocessing and dask backends; use the new method get_supported_backends() to see all supported backends.
+
+Changed in version 2.10.0: Change treatment of proline and follow pydssp 0.9.1 (prolines are now explicitly forbidden to participate in the hydrogen bond network). Previous version could yield wrong assignment of prolines.
+
+ results.dssp
+
+Contains the time series of the DSSP assignment as a numpy.ndarray array of shape (n_frames, n_residues) where each row contains the assigned secondary structure character for each residue (whose corresponding resid is stored in results.resids). The three characters are [‘H’, ‘E’, ‘-’] and representi alpha-helix, sheet and loop, respectively.
+
+ results.dssp_ndarray
+
+Contains the one-hot encoding of the time series of the DSSP assignment as a numpy.ndarray Boolean array of shape (n_frames, n_residues, 3) where for each residue the encoding is stored as (3,) shape numpy.ndarray of Booleans so that True at index 0 represents loop (‘-‘), True at index 1 represents helix (‘H’), and True at index 2 represents sheet ‘E’.
+
+See also
+
+translate()
+
+ results.resids
+
+A numpy.ndarray of length n_residues that contains the residue IDs (resids) for the protein residues that were assigned a secondary structure.
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.

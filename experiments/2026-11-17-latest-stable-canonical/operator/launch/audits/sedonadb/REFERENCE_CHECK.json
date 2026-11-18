@@ -1,0 +1,45 @@
+{
+  "observed_at": "2026-11-18T01:26:16.194623+00:00",
+  "purpose": "Isolated runtime diagnosis, not benchmark results",
+  "model_calls": 0,
+  "measured_files_modified": 0,
+  "checks": [
+    {
+      "status": "pass",
+      "result": [
+        {
+          "result": "POINT(2.466474353124253 2.5021583528406395)"
+        }
+      ],
+      "label": "documented_geography",
+      "sql": "SELECT ST_AsText(ST_ClosestPoint(ST_GeogFromText('LINESTRING(0 0, 10 10)'), ST_GeogPoint(5, 0))) AS result"
+    },
+    {
+      "status": "fail",
+      "error_type": "SedonaError",
+      "error": "st_closestpoint(geometry, geometry): No kernel matching arguments",
+      "label": "documented_geometry_signature",
+      "sql": "SELECT ST_AsText(ST_ClosestPoint(ST_GeomFromText('LINESTRING(0 0, 10 10)'), ST_Point(5, 0))) AS result"
+    },
+    {
+      "status": "pass",
+      "result": [
+        {
+          "result": 3.5355339059327378
+        }
+      ],
+      "label": "geometry_distance_control",
+      "sql": "SELECT ST_Distance(ST_GeomFromText('LINESTRING(0 0, 10 10)'),ST_Point(5,0)) AS result"
+    },
+    {
+      "status": "pass",
+      "result": [
+        {
+          "result": 3.1214451522580524
+        }
+      ],
+      "label": "geometry_buffer_control",
+      "sql": "SELECT ST_Area(ST_Buffer(ST_Point(0,0),1.0)) AS result"
+    }
+  ]
+}

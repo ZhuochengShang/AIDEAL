@@ -5,15 +5,14 @@ trusted adapter can produce an installable validation receipt. This module never
 installs source or learns from held-out failures.
 """
 import json
-import hashlib
 from pathlib import Path
 import re
 
-from .ablation import bind, digest, load, verify_artifact
+from .ablation import bind, bytes_sha256, digest, load, seal_record, verify_artifact
 from .execution import atomic_json, invoke, ownership
 from .failure_diagnosis import diagnose_failure
 from .improvement_suggestions import _model_settings
-from .response_status import solution_state
+from .response_status import solution_state, strip_code_fence
 from .source_hints import (_declaration, _identity, index_source_hints, select_source_hints,
                            insert_source_hint, strip_source_hints)
 from .source_hint_proposals import prepare_source_hints
@@ -25,16 +24,14 @@ PROTOCOL = 'source_hint_development_validation_v1'
 
 
 def _verified(ref):
+    # Verify the file reference before reading its JSON contents.
     if not isinstance(ref, dict) or not verify_artifact(ref):
         raise ValueError('Missing or changed development artifact')
     return load(ref['path'])
 
 
-def _seal(value):
-    return {**value, 'sha256': digest(value)}
-
-
 def _open(path):
+    # Check the record digest, referenced evidence, and pinned source checkout before reuse.
     value = load(path)
     if value.get('sha256') != digest({k: v for k, v in value.items() if k != 'sha256'}):
         raise ValueError('Development record changed')
@@ -45,6 +42,7 @@ def _open(path):
 
 
 def _baseline(root, revision):
+    # Resolve the checkout root and confirm its current commit and worktree state.
     root = Path(root).resolve(strict=True)
     if git(root, 'rev-parse', '--show-toplevel') != str(root) or git(root, 'rev-parse', 'HEAD') != revision:
         raise ValueError('Development source is not the exact pinned Git root/revision')
@@ -53,6 +51,7 @@ def _baseline(root, revision):
 
 
 def _destination(root, output):
+    # Choose a fresh output location outside the source checkout for development files.
     output = Path(output).resolve()
     if output == root or output.is_relative_to(root) or output.exists():
         raise ValueError('Use a new development output outside the source checkout')
@@ -60,16 +59,14 @@ def _destination(root, output):
 
 
 def _scope(value):
+    # Accept evidence from the first attempt under the original condition on development tasks.
     if value.get('split') != 'development' or value.get('condition') != 'original' or type(value.get('round')) is not int or value['round'] != 0:
         raise ValueError('Only Original DEVELOPMENT R0 evidence can develop source hints')
 
 
-def _body(code):
-    match = re.fullmatch(r'\s*```[^\n]*\n(.*?)\n```\s*', code, re.S)
-    return match[1] if match else code
-
-
 def _outcome(process):
+    # Return the checker payload and whether execution, the expected result, and
+    # reaching the target all passed. Require public feedback for diagnosis.
     payload = process.get('payload')
     keys = ('execution_pass', 'oracle_pass', 'target_reached')
     if process.get('status') != 'ok' or not isinstance(payload, dict) or any(type(payload.get(k)) is not bool for k in keys):
@@ -80,6 +77,7 @@ def _outcome(process):
 
 
 def _facts(root, identity):
+    # Find the tracked declaration named by the function ID and return a bounded source excerpt.
     relative, number, name = _identity(identity)
     candidate = root / relative
     path = candidate.resolve(strict=True)
@@ -90,7 +88,7 @@ def _facts(root, identity):
     if relative not in git(root, 'ls-files', '--', relative).splitlines():
         raise ValueError('Development API source must be committed')
     lines = path.read_text().splitlines(keepends=True)
-    actual, signature = _declaration(lines, number - 1, name)
+    actual, signature = _declaration(lines, number - 1, name, relative)
     if actual != number - 1:
         raise ValueError('Canonical ID does not identify the exact source declaration')
     window = ''.join(lines[max(0, actual - 8):actual + 72])
@@ -105,16 +103,31 @@ def _facts(root, identity):
 
 
 def build_development_preview(manifest_path, output, *, max_cases=16):
+    # Read recorded Original R0 development attempts and verify their provenance.
+    # Select complete failures attributable to an API, excluding held-out cases.
+    # Save bounded source context, failed code and diagnostics in preview.json.
+    # Record skipped/duplicate cases; do not call a model or modify source.
     """Harvest bound Original development R0 failures, excluding private fields."""
+    # The manifest identifies the original documents, exact source revision, and recorded attempts.
     manifest = load(manifest_path)
     if manifest.get('schema_version') != 1:
         raise ValueError('Development manifest needs schema_version 1')
+    if manifest.get('evidence_protocol') == 'native_original_r0/v1':
+        from .native_r0_evidence import build_native_r0_preview
+        return build_native_r0_preview(manifest_path, manifest, output, max_cases=max_cases)
+    if manifest.get('evidence_protocol') is not None:
+        raise ValueError('Unsupported development evidence protocol')
     _scope(manifest)
     root = _baseline(manifest['source_root'], manifest['baseline_revision'])
     output = _destination(root, output)
     apis, documents = manifest['api_function_ids'], manifest['original_documents']
     if not isinstance(apis, dict) or not apis or len(set(apis.values())) != len(apis):
         raise ValueError('Supply distinct canonical API identities')
+    public_paths = manifest.get('api_public_paths', {})
+    if (not isinstance(public_paths, dict) or set(public_paths) - set(apis)
+            or any(not isinstance(paths, list) or any(not isinstance(path, str) or not path for path in paths)
+                   for paths in public_paths.values())):
+        raise ValueError('Public access paths must belong to supplied qualified API identities')
     if not isinstance(documents, list) or not documents or not all(verify_artifact(d) for d in documents):
         raise ValueError('Pin the Original documentation artifacts')
     held_out = manifest.get('held_out_case_ids')
@@ -128,7 +141,7 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
         'failure_diagnosis.py', 'response_status.py', 'execution.py', 'ablation.py',
         'treatment_versions.py')]
     refs, cases, skipped, seen_ids, duplicate_groups = [bind(manifest_path), *documents, *controller_refs], [], [], set(), {}
-    index = {'api_function_ids': apis, 'records': []}
+    index = {'api_function_ids': apis, 'api_public_paths': public_paths, 'records': []}
     for row in attempts:
         _scope(row)
         identifier = row.get('case_id')
@@ -156,6 +169,7 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
         if not state['executable']:
             skipped.append({'case_id': identifier, 'reason': 'generation_' + state['status']})
             continue
+        # Check that the saved checker ran exactly the program returned by the model.
         for key in ('execution_request', 'execution_process'):
             evidence[key] = row[key]
             values[key] = _verified(row[key])
@@ -164,7 +178,7 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
         _scope(execution)
         if execution.get('case_id') != identifier or execution.get('source_revision') != manifest['baseline_revision']:
             raise ValueError('Development checker request has different task/source provenance')
-        code = _body(response['payload']['code'])
+        code = strip_code_fence(response['payload']['code'])
         if execution.get('code') != code:
             raise ValueError('Checker did not execute the saved model program')
         payload, passed = _outcome(values['execution_process'])
@@ -178,6 +192,7 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
         if diagnosis['status'] != 'identified':
             skipped.append({'case_id': identifier, 'reason': diagnosis['status']})
             continue
+        # Keep one authoring case for each distinct function, candidate, and diagnostic.
         key = digest([diagnosis['function_id'], code, previous['feedback']])
         if key in duplicate_groups:
             duplicate_groups[key]['duplicate_case_ids'].append(identifier)
@@ -199,8 +214,9 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
         duplicate_groups[key] = item
     if not cases:
         raise ValueError('No attributable complete Original development R0 failures')
-    preview = _seal({'schema_version': 1, 'source_root': str(root), 'baseline_revision': manifest['baseline_revision'],
+    preview = seal_record({'schema_version': 1, 'source_root': str(root), 'baseline_revision': manifest['baseline_revision'],
                      'api_function_ids': apis, 'cases': cases, 'skipped': skipped,
+                     **({'api_public_paths': public_paths} if public_paths else {}),
                      'split': 'development', 'condition': 'original', 'round': 0,
                      'artifacts': list({r['path']: r for r in refs}.values())})
     output.mkdir(parents=True)
@@ -209,6 +225,8 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
 
 
 def _diagnoses(value, preview):
+    # Check every author response against its corresponding preview case.
+    # Return only requirement diagnoses backed by an exact source quote and observed diagnostic.
     if not isinstance(value, dict) or set(value) != {'diagnoses'} or not isinstance(value['diagnoses'], list):
         raise ValueError('Author must return one structured diagnoses list')
     cases = {case['evidence_id']: case for case in preview['cases']}
@@ -245,6 +263,8 @@ def _diagnoses(value, preview):
 
 def propose_source_hints(preview_path, model_config, output):
     """One recorded author call; candidate annotations remain unvalidated."""
+    # Use the verified preview as author input and save the model call with its provenance.
+    # The resulting proposal carries annotated source copies for independent validation.
     preview = _open(preview_path)
     output = _destination(Path(preview['source_root']), output)
     settings = _model_settings(model_config)
@@ -263,7 +283,7 @@ def propose_source_hints(preview_path, model_config, output):
         _open(preview_path)
         if not all(verify_artifact(ref) for ref in refs):
             raise ValueError('Authoring inputs changed during the request')
-        raw = json.loads(_body(process['payload']['code']))
+        raw = json.loads(strip_code_fence(process['payload']['code']))
         accepted = _diagnoses(raw, preview)
         atomic_json(output / 'diagnoses.json', raw)
         if not accepted:
@@ -277,7 +297,7 @@ def propose_source_hints(preview_path, model_config, output):
         prepared = prepare_source_hints(preview['source_root'], output / 'spec.json', output / 'annotated')
         refs.extend([bind(output / 'spec.json'), bind(output / 'diagnoses.json'), bind(output / 'annotated/proposal.json')])
         refs.extend(bind(p) for p in prepared['source_artifacts'])
-        proposal = _seal({'schema_version': 1, 'status': 'unvalidated', 'source_root': preview['source_root'],
+        proposal = seal_record({'schema_version': 1, 'status': 'unvalidated', 'source_root': preview['source_root'],
                           'baseline_revision': preview['baseline_revision'], 'preview': bind(preview_path),
                           'source_proposal': bind(output / 'annotated/proposal.json'),
                           'diagnoses': accepted, 'sources': prepared['sources'], 'artifacts': refs})
@@ -287,6 +307,8 @@ def propose_source_hints(preview_path, model_config, output):
 
 def validate_source_hint_development(proposal_path, plan_path, output):
     """Run trusted-adapter trigger/correction/valid/nearby-negative controls."""
+    # Use the original checkout to execute the controls and the candidate comments to
+    # test whether each diagnostic selects the intended hint.
     proposal = _open(proposal_path)
     preview = _verified(proposal['preview'])
     plan = load(plan_path)
@@ -356,6 +378,7 @@ def validate_source_hint_development(proposal_path, plan_path, output):
         _open(proposal_path)
         if not all(verify_artifact(ref) for ref in refs):
             raise ValueError('Validation evidence changed during checks')
+        # Prepare files marked as validated only after every recorded control passes.
         installable = []
         if all(row['valid'] for row in checks):
             for relative, content in _validated_content(proposal).items():
@@ -366,7 +389,7 @@ def validate_source_hint_development(proposal_path, plan_path, output):
                 refs.append(binding)
                 baseline = next(row['baseline_sha256'] for row in proposal['sources'] if row['path'] == relative)
                 installable.append({'path': relative, 'baseline_sha256': baseline, 'artifact': binding})
-        result = _seal({'schema_version': 1, 'status': 'validated' if all(r['valid'] for r in checks) else 'rejected',
+        result = seal_record({'schema_version': 1, 'status': 'validated' if all(r['valid'] for r in checks) else 'rejected',
                        'source_root': str(root), 'baseline_revision': proposal['baseline_revision'],
                        'proposal': bind(proposal_path), 'source_proposal': proposal['source_proposal'],
                        'sources': proposal['sources'], 'expected_hints': expected,
@@ -379,6 +402,8 @@ def validate_source_hint_development(proposal_path, plan_path, output):
 
 
 def _valid_check(role, passed, key, matches, selection):
+    # Passing controls must succeed. The trigger must select this requirement,
+    # while the nearby failure must leave it out.
     return (passed if role in ('corrected', 'valid') else not passed and
             (key in matches if role == 'trigger' else key not in matches and
              selection['diagnosis']['status'] in ('identified', 'unresolved_function', 'ambiguous_function')))
@@ -387,6 +412,7 @@ def _valid_check(role, passed, key, matches, selection):
 
 def _group_hints(diagnoses):
     """Consolidate identical requirements while retaining every triggering case."""
+    # Group by function and requirement ID. Identical hints can share several evidence IDs.
     grouped = {}
     for diagnosis in diagnoses:
         hint = diagnosis['hint']
@@ -400,11 +426,13 @@ def _group_hints(diagnoses):
 
 def _validated_content(proposal):
     """The source log records measured development checks, not model assertions."""
+    # Rebuild comments on the original bytes using the approved requirement groups.
+    # Return a mapping from source paths to the resulting file bytes.
     root = Path(proposal['source_root'])
     contents = {}
     for row in proposal['sources']:
         original = (root / row['path']).read_bytes()
-        if hashlib.sha256(original).hexdigest() != row['baseline_sha256']:
+        if bytes_sha256(original) != row['baseline_sha256']:
             raise ValueError('Validated source no longer matches its baseline')
         text = original.decode('utf-8')
         for group in _group_hints(proposal['diagnoses']):
@@ -424,6 +452,8 @@ def _validated_content(proposal):
 
 def verify_development_validation(path):
     """Reconstruct all saved checks and exact installable bytes without rerunning."""
+    # Derive the expected set of checks from the proposal and independent plan.
+    # Replay each saved request and verify the exact source bytes that may be installed.
     result = _open(path)
     if result.get('status') != 'validated':
         raise ValueError('Only validated source hints can be installed')

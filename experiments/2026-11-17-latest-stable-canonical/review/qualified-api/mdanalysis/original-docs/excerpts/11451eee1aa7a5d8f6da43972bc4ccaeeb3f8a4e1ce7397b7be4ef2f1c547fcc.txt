@@ -1,0 +1,15 @@
+class MDAnalysis.converters.RDKit.RDKitReader(filename, **kwargs)[source]
+
+Coordinate reader for RDKit.
+
+Added in version 2.0.0.
+
+Read coordinates from an RDKit molecule. Each conformer in the original RDKit molecule will be read as a frame in the resulting universe.
+
+Parameters:
+
+filename (rdkit.Chem.rdchem.Mol) – RDKit molecule
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

@@ -1,0 +1,234 @@
+class tslearn.preprocessing.TimeSeriesScalerMeanVariance(mu=0.0, std=1.0, per_timeseries=True, per_feature=True)[source]
+
+Scaler for time series datasets.
+
+Parameters:
+
+mufloat (default: 0.)
+
+Mean of the output time series.
+
+stdfloat (default: 1.)
+
+Standard deviation of the output time series.
+
+per_timeseriesbool (default: True)
+
+Whether the scaling should be performed per time series. When per_timeseries is False, scales features based on computation led on the fitted data, so that their mean (resp. standard deviation) in given dimensions is mu (resp. std). The transformation is stateless otherwise, dealing with each timeseries individually.
+
+per_featurebool (default: True)
+
+Whether the scaling should be performed per feature. Meaningless for univariate timeseries.
+
+Attributes:
+
+mean_array-like of shape=(1, 1, d or 1)
+
+The mean value(s) seen in input data and used for normalization. Only available when per_timeseries is False. The shape depends on the per_feature parameters.
+
+std_array-like of shape=(1, 1, d or 1)
+
+The standard deviation values seen in input data and used for normalization. Only available when per_timeseries is False. The shape depends on the per_feature parameters.
+
+Notes
+
+NaNs within a time series are ignored when calculating mu and std.
+
+Examples
+
+>>> TimeSeriesScalerMeanVariance(mu=0.,
+...                              std=1.).fit_transform([[0, 3, 6]])
+array([[[-1.22474487],
+        [ 0.        ],
+        [ 1.22474487]]])
+>>> TimeSeriesScalerMeanVariance(mu=0.,
+...                              std=1.).fit_transform([[numpy.nan, 3, 6]])
+array([[[nan],
+        [-1.],
+        [ 1.]]])
+>>> TimeSeriesScalerMeanVariance(per_timeseries=False,
+...                              per_feature=False
+... ).fit_transform([[[1, 2], [2, 3]], [[3, 4], [4, 5]]])
+array([[[-1.63299316, -0.81649658],
+        [-0.81649658,  0.        ]],
+
+       [[ 0.        ,  0.81649658],
+        [ 0.81649658,  1.63299316]]])
+
+Methods
+
+fit(X[, y])
+ |
+Computes the mean and standard deviation to be used for later scaling if per_timeseries is False.
+ |
+
+fit_transform(X[, y])
+ |
+Fit to data, then transform it.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+inverse_transform(X)
+ |
+Undo the scaling of X based on fitted data.
+ |
+
+set_output(*[, transform])
+ |
+Set output container.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+transform(X[, y])
+ |
+Normalizes (mean-std) the dataset.
+ |
+
+ fit(X, y=None, **kwargs)[source]
+
+Computes the mean and standard deviation to be used for later scaling if per_timeseries is False. Just performs dimension checks otherwise.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset reference.
+
+Returns:
+
+self
+
+ fit_transform(X, y=None, **kwargs)[source]
+
+Fit to data, then transform it.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be rescaled.
+
+Returns:
+
+numpy.ndarray
+
+Resampled time series dataset.
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ inverse_transform(X)[source]
+
+Undo the scaling of X based on fitted data. Only available when per_timeseries is False, raises RuntimeError otherwise.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Input dataset.
+
+Returns:
+
+array-like of shape (n_ts, sz, d)
+
+Transformed dataset.
+
+ set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ transform(X, y=None, **kwargs)[source]
+
+Normalizes (mean-std) the dataset. If per_timeseries is True, this transformation is completely stateless, and is applied to each of the timeseries individually. Otherwise, normalization is performed based on the fitted data.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be rescaled.
+
+Returns:
+
+numpy.ndarray
+
+Rescaled time series dataset.

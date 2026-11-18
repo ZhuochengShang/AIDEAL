@@ -1,0 +1,309 @@
+mir_eval.separation
+
+Warning
+
+The mir_eval.separation module is deprecated in mir_eval version 0.8, and will be removed. We recommend that you migrate your code to use an alternative package such as sigsep-museval https://sigsep.github.io/sigsep-mus-eval/
+
+Source separation algorithms attempt to extract recordings of individual sources from a recording of a mixture of sources. Evaluation methods for source separation compare the extracted sources from reference sources and attempt to measure the perceptual quality of the separation.
+
+See also the bss_eval MATLAB toolbox:
+
+http://bass-db.gforge.inria.fr/bss_eval/
+
+Conventions
+
+An audio signal is expected to be in the format of a 1-dimensional array where the entries are the samples of the audio signal. When providing a group of estimated or reference sources, they should be provided in a 2-dimensional array, where the first dimension corresponds to the source number and the second corresponds to the samples.
+
+Metrics
+
+mir_eval.separation.bss_eval_sources(): Computes the bss_eval_sources metrics from bss_eval, which optionally optimally match the estimated sources to the reference sources and measure the distortion and artifacts present in the estimated sources as well as the interference between them.
+
+mir_eval.separation.bss_eval_sources_framewise(): Computes the bss_eval_sources metrics on a frame-by-frame basis.
+
+mir_eval.separation.bss_eval_images(): Computes the bss_eval_images metrics from bss_eval, which includes the metrics in mir_eval.separation.bss_eval_sources() plus the image to spatial distortion ratio.
+
+mir_eval.separation.bss_eval_images_framewise(): Computes the bss_eval_images metrics on a frame-by-frame basis.
+
+References
+
+ mir_eval.separation.validate(reference_sources, estimated_sources)
+
+Check that the input data to a metric are valid, and throws helpful errors if not.
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+matrix containing true sources
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+matrix containing estimated sources
+
+ mir_eval.separation.bss_eval_sources(reference_sources, estimated_sources, compute_permutation=True)
+
+Ordering and measurement of the separation quality for estimated source signals in terms of filtered true source, interference and artifacts.
+
+The decomposition allows a time-invariant filter distortion of length 512, as described in Section III.B of [1].
+
+Passing False for compute_permutation will improve the computation performance of the evaluation; however, it is not always appropriate and is not the way that the BSS_EVAL Matlab toolbox computes bss_eval_sources.
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+matrix containing true sources (must have same shape as estimated_sources)
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+matrix containing estimated sources (must have same shape as reference_sources)
+
+compute_permutationbool, optional
+
+compute permutation of estimate/source combinations (True by default)
+
+Returns:
+
+sdrnp.ndarray, shape=(nsrc,)
+
+vector of Signal to Distortion Ratios (SDR)
+
+sirnp.ndarray, shape=(nsrc,)
+
+vector of Source to Interference Ratios (SIR)
+
+sarnp.ndarray, shape=(nsrc,)
+
+vector of Sources to Artifacts Ratios (SAR)
+
+permnp.ndarray, shape=(nsrc,)
+
+vector containing the best ordering of estimated sources in the mean SIR sense (estimated source number perm[j] corresponds to true source number j). Note: perm will be [0, 1, ..., nsrc-1] if compute_permutation is False.
+
+References
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated
+>>> # source
+>>> (sdr, sir, sar,
+...  perm) = mir_eval.separation.bss_eval_sources(reference_sources,
+...                                               estimated_sources)
+
+ mir_eval.separation.bss_eval_sources_framewise(reference_sources, estimated_sources, window=1323000, hop=661500, compute_permutation=False)
+
+Framewise computation of bss_eval_sources
+
+Please be aware that this function does not compute permutations (by default) on the possible relations between reference_sources and estimated_sources due to the dangers of a changing permutation. Therefore (by default), it assumes that reference_sources[i] corresponds to estimated_sources[i]. To enable computing permutations please set compute_permutation to be True and check that the returned perm is identical for all windows.
+
+NOTE: if reference_sources and estimated_sources would be evaluated using only a single window or are shorter than the window length, the result of mir_eval.separation.bss_eval_sources() called on reference_sources and estimated_sources (with the compute_permutation parameter passed to mir_eval.separation.bss_eval_sources()) is returned.
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+matrix containing true sources (must have the same shape as estimated_sources)
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl)
+
+matrix containing estimated sources (must have the same shape as reference_sources)
+
+windowint, optional
+
+Window length for framewise evaluation (default value is 30s at a sample rate of 44.1kHz)
+
+hopint, optional
+
+Hop size for framewise evaluation (default value is 15s at a sample rate of 44.1kHz)
+
+compute_permutationbool, optional
+
+compute permutation of estimate/source combinations for all windows (False by default)
+
+Returns:
+
+sdrnp.ndarray, shape=(nsrc, nframes)
+
+vector of Signal to Distortion Ratios (SDR)
+
+sirnp.ndarray, shape=(nsrc, nframes)
+
+vector of Source to Interference Ratios (SIR)
+
+sarnp.ndarray, shape=(nsrc, nframes)
+
+vector of Sources to Artifacts Ratios (SAR)
+
+permnp.ndarray, shape=(nsrc, nframes)
+
+vector containing the best ordering of estimated sources in the mean SIR sense (estimated source number perm[j] corresponds to true source number j). Note: perm will be range(nsrc) for all windows if compute_permutation is False
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated
+>>> # source
+>>> (sdr, sir, sar,
+...  perm) = mir_eval.separation.bss_eval_sources_framewise(
+         reference_sources,
+...      estimated_sources)
+
+ mir_eval.separation.bss_eval_images(reference_sources, estimated_sources, compute_permutation=True)
+
+Compute the bss_eval_images function from the BSS_EVAL Matlab toolbox.
+
+Ordering and measurement of the separation quality for estimated source signals in terms of filtered true source, interference and artifacts. This method also provides the ISR measure.
+
+The decomposition allows a time-invariant filter distortion of length 512, as described in Section III.B of [1].
+
+Passing False for compute_permutation will improve the computation performance of the evaluation; however, it is not always appropriate and is not the way that the BSS_EVAL Matlab toolbox computes bss_eval_images.
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing true sources
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing estimated sources
+
+compute_permutationbool, optional
+
+compute permutation of estimate/source combinations (True by default)
+
+Returns:
+
+sdrnp.ndarray, shape=(nsrc,)
+
+vector of Signal to Distortion Ratios (SDR)
+
+isrnp.ndarray, shape=(nsrc,)
+
+vector of source Image to Spatial distortion Ratios (ISR)
+
+sirnp.ndarray, shape=(nsrc,)
+
+vector of Source to Interference Ratios (SIR)
+
+sarnp.ndarray, shape=(nsrc,)
+
+vector of Sources to Artifacts Ratios (SAR)
+
+permnp.ndarray, shape=(nsrc,)
+
+vector containing the best ordering of estimated sources in the mean SIR sense (estimated source number perm[j] corresponds to true source number j). Note: perm will be (1,2,...,nsrc) if compute_permutation is False.
+
+References
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated
+>>> # source
+>>> (sdr, isr, sir, sar,
+...  perm) = mir_eval.separation.bss_eval_images(reference_sources,
+...                                               estimated_sources)
+
+ mir_eval.separation.bss_eval_images_framewise(reference_sources, estimated_sources, window=1323000, hop=661500, compute_permutation=False)
+
+Framewise computation of bss_eval_images
+
+Please be aware that this function does not compute permutations (by default) on the possible relations between reference_sources and estimated_sources due to the dangers of a changing permutation. Therefore (by default), it assumes that reference_sources[i] corresponds to estimated_sources[i]. To enable computing permutations please set compute_permutation to be True and check that the returned perm is identical for all windows.
+
+NOTE: if reference_sources and estimated_sources would be evaluated using only a single window or are shorter than the window length, the result of bss_eval_images called on reference_sources and estimated_sources (with the compute_permutation parameter passed to bss_eval_images) is returned
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing true sources (must have the same shape as estimated_sources)
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing estimated sources (must have the same shape as reference_sources)
+
+windowint
+
+Window length for framewise evaluation
+
+hopint
+
+Hop size for framewise evaluation
+
+compute_permutationbool, optional
+
+compute permutation of estimate/source combinations for all windows (False by default)
+
+Returns:
+
+sdrnp.ndarray, shape=(nsrc, nframes)
+
+vector of Signal to Distortion Ratios (SDR)
+
+isrnp.ndarray, shape=(nsrc, nframes)
+
+vector of source Image to Spatial distortion Ratios (ISR)
+
+sirnp.ndarray, shape=(nsrc, nframes)
+
+vector of Source to Interference Ratios (SIR)
+
+sarnp.ndarray, shape=(nsrc, nframes)
+
+vector of Sources to Artifacts Ratios (SAR)
+
+permnp.ndarray, shape=(nsrc, nframes)
+
+vector containing the best ordering of estimated sources in the mean SIR sense (estimated source number perm[j] corresponds to true source number j) Note: perm will be range(nsrc) for all windows if compute_permutation is False
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated
+>>> # source
+>>> (sdr, isr, sir, sar,
+...  perm) = mir_eval.separation.bss_eval_images_framewise(
+         reference_sources,
+...      estimated_sources,
+         window,
+....     hop)
+
+ mir_eval.separation.evaluate(reference_sources, estimated_sources, **kwargs)
+
+Compute all metrics for the given reference and estimated signals.
+
+NOTE: This will always compute mir_eval.separation.bss_eval_images() for any valid input and will additionally compute mir_eval.separation.bss_eval_sources() for valid input with fewer than 3 dimensions.
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl[, nchan])
+
+matrix containing true sources
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl[, nchan])
+
+matrix containing estimated sources
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated source
+>>> scores = mir_eval.separation.evaluate(reference_sources,
+...                                       estimated_sources)

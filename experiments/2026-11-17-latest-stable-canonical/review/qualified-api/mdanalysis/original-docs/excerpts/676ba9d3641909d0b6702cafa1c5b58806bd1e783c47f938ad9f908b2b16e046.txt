@@ -1,0 +1,54 @@
+MDAnalysis.analysis.base.analysis_class(function)[source]
+
+Transform a function operating on a single frame to an AnalysisBase class.
+
+Parameters:
+
+function (callable) – function to evaluate at each frame
+
+ results.frames
+
+simulation frames used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.timeseries
+
+Results for each frame of the wrapped function, stored after call to AnalysisFromFunction.run().
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – if function has the same kwargs as AnalysisBase
+
+Examples
+
+For use in a library, we recommend the following style
+
+def rotation_matrix(mobile, ref):
+    return mda.analysis.align.rotation_matrix(mobile, ref)[0]
+RotationMatrix = analysis_class(rotation_matrix)
+
+It can also be used as a decorator
+
+@analysis_class
+def RotationMatrix(mobile, ref):
+    return mda.analysis.align.rotation_matrix(mobile, ref)[0]
+
+rot = RotationMatrix(u.trajectory, mobile, ref).run(step=2)
+print(rot.results.timeseries)
+
+Changed in version 2.0.0: Former results are now stored as results.timeseries

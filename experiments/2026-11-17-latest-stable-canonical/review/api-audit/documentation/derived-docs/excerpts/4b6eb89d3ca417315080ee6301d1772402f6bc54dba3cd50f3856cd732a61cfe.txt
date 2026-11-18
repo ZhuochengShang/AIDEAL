@@ -1,0 +1,71 @@
+mir_eval.melody.to_cent_voicing(ref_time, ref_freq, est_time, est_freq, est_voicing=None, ref_reward=None, base_frequency=10.0, hop=None, kind='linear')
+
+Convert reference and estimated time/frequency (Hz) annotations to sampled frequency (cent)/voicing arrays.
+
+A zero frequency indicates “unvoiced”.
+
+If est_voicing is not provided, a negative frequency indicates:
+
+“Predicted as unvoiced, but if it’s voiced, this is the frequency estimate”.
+
+If it is provided, negative frequency values are ignored, and the voicing from est_voicing is directly used.
+
+Parameters:
+
+ref_timenp.ndarray
+
+Time of each reference frequency value
+
+ref_freqnp.ndarray
+
+Array of reference frequency values
+
+est_timenp.ndarray
+
+Time of each estimated frequency value
+
+est_freqnp.ndarray
+
+Array of estimated frequency values
+
+est_voicingnp.ndarray
+
+Estimate voicing confidence. Default None, which means the voicing is inferred from est_freq:
+
+frames with frequency <= 0.0 are considered “unvoiced”
+
+frames with frequency > 0.0 are considered “voiced”
+
+ref_rewardnp.ndarray
+
+Reference voicing reward. Default None, which means all frames are weighted equally.
+
+base_frequencyfloat
+
+Base frequency in Hz for conversion to cents (Default value = 10.)
+
+hopfloat
+
+Hop size, in seconds, to resample, default None which means use ref_time
+
+kindstr
+
+kind parameter to pass to scipy.interpolate.interp1d. (Default value = ‘linear’)
+
+Returns:
+
+ref_voicingnp.ndarray
+
+Resampled reference voicing array
+
+ref_centnp.ndarray
+
+Resampled reference frequency (cent) array
+
+est_voicingnp.ndarray
+
+Resampled estimated voicing array
+
+est_centnp.ndarray
+
+Resampled estimated frequency (cent) array

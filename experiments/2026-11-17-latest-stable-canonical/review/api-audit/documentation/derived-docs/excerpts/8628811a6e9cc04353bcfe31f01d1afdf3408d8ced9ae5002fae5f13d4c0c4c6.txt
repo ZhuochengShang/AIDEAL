@@ -1,0 +1,27 @@
+MDAnalysis.lib.distances.transform_RtoS(coords, box, backend='serial')[source]
+
+Transform an array of coordinates from real space to S space (a.k.a. lambda space)
+
+S space represents fractional space within the unit cell for this system.
+
+Reciprocal operation to transform_StoR().
+
+Parameters:
+
+coords (numpy.ndarray) – A (3,) or (n, 3) array of coordinates (dtype is arbitrary, will be converted to numpy.float32 internally).
+
+box (numpy.ndarray) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+backend ({'serial', 'OpenMP'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+newcoords – An array containing fractional coordiantes.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float32, shape=coords.shape)
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts (and, likewise, returns) a single coordinate.

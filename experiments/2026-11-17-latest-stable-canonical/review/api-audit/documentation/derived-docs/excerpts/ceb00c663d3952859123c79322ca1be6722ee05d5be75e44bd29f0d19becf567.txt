@@ -1,0 +1,51 @@
+mir_eval.hierarchy.lmeasure(reference_intervals_hier, reference_labels_hier, estimated_intervals_hier, estimated_labels_hier, frame_size=0.1, beta=1.0)
+
+Compute the tree measures for hierarchical segment annotations.
+
+Parameters:
+
+reference_intervals_hierlist of ndarray
+
+reference_intervals_hier[i] contains the segment intervals (in seconds) for the i th layer of the annotations. Layers are ordered from top to bottom, so that the last list of intervals should be the most specific.
+
+reference_labels_hierlist of list of str
+
+reference_labels_hier[i] contains the segment labels for the i th layer of the annotations
+
+estimated_intervals_hierlist of ndarray
+
+estimated_labels_hierlist of ndarray
+
+Like reference_intervals_hier and reference_labels_hier but for the estimated annotation
+
+frame_sizefloat > 0
+
+length (in seconds) of frames. The frame size cannot be longer than the window.
+
+betafloat > 0
+
+beta parameter for the F-measure.
+
+Returns:
+
+l_precisionnumber [0, 1]
+
+L-measure Precision
+
+l_recallnumber [0, 1]
+
+L-measure Recall
+
+l_measurenumber [0, 1]
+
+F-beta measure for (l_precision, l_recall)
+
+Raises:
+
+ValueError
+
+If either of the input hierarchies are inconsistent
+
+If the input hierarchies have different time durations
+
+If frame_size > window or frame_size <= 0

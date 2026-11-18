@@ -1,0 +1,11 @@
+search(centers: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], radius: float) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Search all points within radius from centers and their periodic images.
+
+All the centers coordinates are wrapped around the central cell to enable distance evaluations from points in the tree and their images.
+
+Parameters:
+
+centers (array_like (N,3)) – coordinate array to search for neighbors
+
+radius (float) – maximum distance to search for neighbors.

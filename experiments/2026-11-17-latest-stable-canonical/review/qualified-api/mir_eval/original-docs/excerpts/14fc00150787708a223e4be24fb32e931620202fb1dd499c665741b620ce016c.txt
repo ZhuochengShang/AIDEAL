@@ -1,0 +1,25 @@
+mir_eval.io.load_events(filename, delimiter='\\s+', comment='#')
+
+Import time-stamp events from an annotation file. The file should consist of a single column of numeric values corresponding to the event times. This is primarily useful for processing events which lack duration, such as beats or onsets.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+event_timesnp.ndarray
+
+array of event times (float)

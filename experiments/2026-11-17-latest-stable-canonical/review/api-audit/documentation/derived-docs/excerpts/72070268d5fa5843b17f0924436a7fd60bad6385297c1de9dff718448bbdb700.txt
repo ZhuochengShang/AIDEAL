@@ -1,0 +1,21 @@
+class MDAnalysis.coordinates.CRD.CRDReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+CRD reader that implements the standard and extended CRD coordinate formats
+
+Changed in version 0.11.0: Now returns a ValueError instead of FormatError. Frames now 0-based instead of 1-based.
+
+ Writer(filename, **kwargs)[source]
+
+Returns a CRDWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output CRD file
+
+Return type:
+
+CRDWriter
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

@@ -1,0 +1,55 @@
+gak
+
+ tslearn.metrics.gak(s1, s2, sigma=1.0, be=None)[source]
+
+Compute Global Alignment Kernel (GAK) between (possibly multidimensional) time series and return it.
+
+ \[\text{gak}(\mathbf{x}, \mathbf{y}) = \frac{k(\mathbf{x}, \mathbf{y})} {\sqrt{k(\mathbf{x}, \mathbf{x})k(\mathbf{y}, \mathbf{y})}}\]
+
+where
+
+ \[k(\mathbf{x}, \mathbf{y}) = \sum_{\pi \in \mathcal{A}(\mathbf{x}, \mathbf{y})} \prod_{i=1}^{ | \pi | } \exp \left( - \frac{ \left\| x_{\pi_1(i)} - y_{\pi_2{j}} \right\|^2}{2 \sigma^2} \right)\]
+
+It is not required that both time series share the same size, but they must be the same dimension. GAK was originally presented in [1]. This is a normalized version that ensures that \(gak(x,x)=1\) for all \(x\) and \(gak(x,y) \in [0, 1]\) for all \(x, y\).
+
+Parameters:
+
+s1array-like, shape=(sz1, d) or (sz1,)
+
+A time series. If shape is (sz1,), the time series is assumed to be univariate.
+
+s2array-like, shape=(sz2, d) or (sz2,)
+
+Another time series. If shape is (sz2,), the time series is assumed to be univariate.
+
+sigmafloat (default 1.)
+
+Bandwidth of the internal gaussian kernel used for GAK.
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+float
+
+Kernel value
+
+See also
+
+cdist_gak
+
+Compute cross-similarity matrix using Global Alignment kernel
+
+References
+
+ [1]
+M. Cuturi, “Fast global alignment kernels,” ICML 2011.
+
+Examples
+
+>>> float(gak([1, 2, 3], [1., 2., 2., 3.], sigma=2.))
+0.839...
+>>> float(gak([1, 2, 3], [1., 2., 2., 3., 4.]))
+0.273...

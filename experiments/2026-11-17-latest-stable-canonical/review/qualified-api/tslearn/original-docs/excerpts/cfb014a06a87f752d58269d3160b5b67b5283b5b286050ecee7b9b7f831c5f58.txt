@@ -1,0 +1,45 @@
+tslearn.utils.from_tsfresh_dataset(X)[source]
+
+Transform a tsfresh-compatible dataset into a tslearn dataset.
+
+Parameters:
+
+X: pandas data-frame
+
+tsfresh-formatted dataset (“flat” data frame, as described there)
+
+Returns:
+
+array, shape=(n_ts, sz, d)
+
+tslearn-formatted dataset. Column order is kept the same as in the original data frame.
+
+Notes
+
+Conversion from/to tsfresh format requires pandas to be installed.
+
+Examples
+
+>>> import pandas as pd
+>>> tsfresh_df = pd.DataFrame(columns=["id", "time", "a", "b"])
+>>> tsfresh_df["id"] = [0, 0, 0]
+>>> tsfresh_df["time"] = [0, 1, 2]
+>>> tsfresh_df["a"] = [-1, 4, 7]
+>>> tsfresh_df["b"] = [8, -3, 2]
+>>> tslearn_arr = from_tsfresh_dataset(tsfresh_df)
+>>> tslearn_arr.shape
+(1, 3, 2)
+>>> tsfresh_df = pd.DataFrame(columns=["id", "time", "a"])
+>>> tsfresh_df["id"] = [0, 0, 0, 1, 1]
+>>> tsfresh_df["time"] = [0, 1, 2, 0, 1]
+>>> tsfresh_df["a"] = [-1, 4, 7, 9, 1]
+>>> tslearn_arr = from_tsfresh_dataset(tsfresh_df)
+>>> tslearn_arr.shape
+(2, 3, 1)
+>>> tsfresh_df = numpy.random.randn(10, 1, 16)
+>>> from_tsfresh_dataset(
+...     tsfresh_df
+... )
+Traceback (most recent call last):
+...
+ValueError: X is not a valid input tsfresh array.

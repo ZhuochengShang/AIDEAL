@@ -77,8 +77,11 @@ def _comprehension_fingerprint_components(
         "doc_check_puzzles.py", "readme_format.py", "readme_evidence.py",
         "readme_catalogue.py", "api_visibility.py", "api_examples.py",
         "scaffold_generation.py", "api_intent.py", "api_overloads.py",
-        "api_signatures.py", "api_discovery.py", "readme_generation.py")]
+        "api_signatures.py", "api_discovery.py", "api_origin.py", "api_registry.py", "api_sql_canonical.py", "api_source_registry.py", "api_canonical_selection.py", "api_public_inventory.py", "api_coverage.py",
+        "readme_generation.py", "readme_recording.py",
+        "readme_validation.py", "readme_replay.py", "original_documentation.py")]
     from .experiment_identity import extra_components
+    from .original_documentation import original_document_paths
     audience = cfg.model_for_role("audience")
     fixer = cfg.model_for_role("fixer")
     return {
@@ -91,15 +94,25 @@ def _comprehension_fingerprint_components(
         "max_fix_rounds": max_fix_rounds,
         "manifest_sha256": manifest_sha256,
         "document_sha256": document_sha256,
+        "original_document_files": _sha256_files(original_document_paths(cfg), cfg.root),
         "models": {
             "audience": f"{audience.provider}:{audience.model}",
             "fixer": f"{fixer.provider}:{fixer.model}",
+            **({"audience_max_output_tokens": audience.max_output_tokens}
+               if audience.max_output_tokens is not None else {}),
+            **({"fixer_max_output_tokens": fixer.max_output_tokens}
+               if fixer.max_output_tokens is not None else {}),
         },
         "class_context": bool(class_context),
+        # Receiver overrides affect audience prompts and must invalidate resume.
+        "owner_overrides": cfg.comprehension.get("owner_overrides", {}),
         "timeout_s": timeout,
         "execute_config": ex,
         "scaffold": _sha256_files([scaffold_file], cfg.root),
         "source": _sha256_files(source_paths, cfg.root),
+        "api_inventory": _sha256_files(
+            [cfg.root / cfg.raw["codebase"]["api_inventory"]]
+            if cfg.raw.get("codebase", {}).get("api_inventory") else [], cfg.root),
         "fixtures": _sha256_files(fixture_paths, cfg.root),
         "engine": _sha256_files(engine_paths, engine_dir),
         "interpreter": {

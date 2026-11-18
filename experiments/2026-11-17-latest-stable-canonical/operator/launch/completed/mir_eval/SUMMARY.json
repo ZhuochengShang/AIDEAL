@@ -1,0 +1,1740 @@
+{
+  "schema": "aideal.completed-bank-evidence/v1",
+  "library": "mir_eval",
+  "version": "0.8.2",
+  "collected_at": "2026-11-18T01:19:15.017306+00:00",
+  "model": "google:gemini-3.1-flash-lite",
+  "selected_ids": [
+    "python:mir_eval.alignment.absolute_error",
+    "python:mir_eval.alignment.evaluate",
+    "python:mir_eval.alignment.karaoke_perceptual_metric",
+    "python:mir_eval.alignment.percentage_correct",
+    "python:mir_eval.alignment.percentage_correct_segments",
+    "python:mir_eval.alignment.validate",
+    "python:mir_eval.beat.cemgil",
+    "python:mir_eval.beat.continuity",
+    "python:mir_eval.beat.evaluate",
+    "python:mir_eval.beat.f_measure",
+    "python:mir_eval.beat.goto",
+    "python:mir_eval.beat.information_gain",
+    "python:mir_eval.beat.p_score",
+    "python:mir_eval.beat.trim_beats",
+    "python:mir_eval.beat.validate",
+    "python:mir_eval.chord.InvalidChordException",
+    "python:mir_eval.chord.directional_hamming_distance",
+    "python:mir_eval.chord.encode",
+    "python:mir_eval.chord.encode_many",
+    "python:mir_eval.chord.evaluate",
+    "python:mir_eval.chord.join",
+    "python:mir_eval.chord.majmin",
+    "python:mir_eval.chord.majmin_inv",
+    "python:mir_eval.chord.merge_chord_intervals",
+    "python:mir_eval.chord.mirex",
+    "python:mir_eval.chord.overseg",
+    "python:mir_eval.chord.pitch_class_to_semitone",
+    "python:mir_eval.chord.quality_to_bitmap",
+    "python:mir_eval.chord.reduce_extended_quality",
+    "python:mir_eval.chord.root",
+    "python:mir_eval.chord.rotate_bitmap_to_root",
+    "python:mir_eval.chord.rotate_bitmaps_to_roots",
+    "python:mir_eval.chord.scale_degree_to_bitmap",
+    "python:mir_eval.chord.scale_degree_to_semitone",
+    "python:mir_eval.chord.seg",
+    "python:mir_eval.chord.sevenths",
+    "python:mir_eval.chord.sevenths_inv",
+    "python:mir_eval.chord.split",
+    "python:mir_eval.chord.tetrads",
+    "python:mir_eval.chord.tetrads_inv",
+    "python:mir_eval.chord.thirds",
+    "python:mir_eval.chord.thirds_inv",
+    "python:mir_eval.chord.triads",
+    "python:mir_eval.chord.triads_inv",
+    "python:mir_eval.chord.underseg",
+    "python:mir_eval.chord.validate",
+    "python:mir_eval.chord.validate_chord_label",
+    "python:mir_eval.chord.weighted_accuracy",
+    "python:mir_eval.display.IntervalFormatter",
+    "python:mir_eval.display.IntervalFormatter.__call__",
+    "python:mir_eval.display.events",
+    "python:mir_eval.display.hierarchy",
+    "python:mir_eval.display.labeled_intervals",
+    "python:mir_eval.display.multipitch",
+    "python:mir_eval.display.piano_roll",
+    "python:mir_eval.display.pitch",
+    "python:mir_eval.display.segments",
+    "python:mir_eval.display.separation",
+    "python:mir_eval.display.ticker_notes",
+    "python:mir_eval.display.ticker_pitch",
+    "python:mir_eval.hierarchy.evaluate",
+    "python:mir_eval.hierarchy.lmeasure",
+    "python:mir_eval.hierarchy.tmeasure",
+    "python:mir_eval.hierarchy.validate_hier_intervals",
+    "python:mir_eval.io.load_delimited",
+    "python:mir_eval.io.load_events",
+    "python:mir_eval.io.load_intervals",
+    "python:mir_eval.io.load_key",
+    "python:mir_eval.io.load_labeled_events",
+    "python:mir_eval.io.load_labeled_intervals",
+    "python:mir_eval.io.load_patterns",
+    "python:mir_eval.io.load_ragged_time_series",
+    "python:mir_eval.io.load_tempo",
+    "python:mir_eval.io.load_time_series",
+    "python:mir_eval.io.load_valued_intervals",
+    "python:mir_eval.io.load_wav",
+    "python:mir_eval.key.evaluate",
+    "python:mir_eval.key.split_key_string",
+    "python:mir_eval.key.validate",
+    "python:mir_eval.key.validate_key",
+    "python:mir_eval.key.weighted_score",
+    "python:mir_eval.melody.constant_hop_timebase",
+    "python:mir_eval.melody.evaluate",
+    "python:mir_eval.melody.freq_to_voicing",
+    "python:mir_eval.melody.hz2cents",
+    "python:mir_eval.melody.overall_accuracy",
+    "python:mir_eval.melody.raw_chroma_accuracy",
+    "python:mir_eval.melody.raw_pitch_accuracy",
+    "python:mir_eval.melody.resample_melody_series",
+    "python:mir_eval.melody.to_cent_voicing",
+    "python:mir_eval.melody.validate",
+    "python:mir_eval.melody.validate_voicing",
+    "python:mir_eval.melody.voicing_false_alarm",
+    "python:mir_eval.melody.voicing_measures",
+    "python:mir_eval.melody.voicing_recall",
+    "python:mir_eval.multipitch.compute_accuracy",
+    "python:mir_eval.multipitch.compute_err_score",
+    "python:mir_eval.multipitch.compute_num_freqs",
+    "python:mir_eval.multipitch.compute_num_true_positives",
+    "python:mir_eval.multipitch.evaluate",
+    "python:mir_eval.multipitch.frequencies_to_midi",
+    "python:mir_eval.multipitch.metrics",
+    "python:mir_eval.multipitch.midi_to_chroma",
+    "python:mir_eval.multipitch.resample_multipitch",
+    "python:mir_eval.multipitch.validate",
+    "python:mir_eval.onset.evaluate",
+    "python:mir_eval.onset.f_measure",
+    "python:mir_eval.onset.validate",
+    "python:mir_eval.pattern.establishment_FPR",
+    "python:mir_eval.pattern.evaluate",
+    "python:mir_eval.pattern.first_n_target_proportion_R",
+    "python:mir_eval.pattern.first_n_three_layer_P",
+    "python:mir_eval.pattern.occurrence_FPR",
+    "python:mir_eval.pattern.standard_FPR",
+    "python:mir_eval.pattern.three_layer_FPR",
+    "python:mir_eval.pattern.validate",
+    "python:mir_eval.segment.ari",
+    "python:mir_eval.segment.detection",
+    "python:mir_eval.segment.deviation",
+    "python:mir_eval.segment.evaluate",
+    "python:mir_eval.segment.mutual_information",
+    "python:mir_eval.segment.nce",
+    "python:mir_eval.segment.pairwise",
+    "python:mir_eval.segment.rand_index",
+    "python:mir_eval.segment.validate_boundary",
+    "python:mir_eval.segment.validate_structure",
+    "python:mir_eval.segment.vmeasure",
+    "python:mir_eval.separation.bss_eval_images",
+    "python:mir_eval.separation.bss_eval_images_framewise",
+    "python:mir_eval.separation.bss_eval_sources",
+    "python:mir_eval.separation.bss_eval_sources_framewise",
+    "python:mir_eval.separation.evaluate",
+    "python:mir_eval.separation.validate",
+    "python:mir_eval.sonify.chords",
+    "python:mir_eval.sonify.chroma",
+    "python:mir_eval.sonify.clicks",
+    "python:mir_eval.sonify.pitch_contour",
+    "python:mir_eval.sonify.time_frequency",
+    "python:mir_eval.tempo.detection",
+    "python:mir_eval.tempo.evaluate",
+    "python:mir_eval.tempo.validate",
+    "python:mir_eval.tempo.validate_tempi",
+    "python:mir_eval.transcription.average_overlap_ratio",
+    "python:mir_eval.transcription.evaluate",
+    "python:mir_eval.transcription.match_note_offsets",
+    "python:mir_eval.transcription.match_note_onsets",
+    "python:mir_eval.transcription.match_notes",
+    "python:mir_eval.transcription.offset_precision_recall_f1",
+    "python:mir_eval.transcription.onset_precision_recall_f1",
+    "python:mir_eval.transcription.precision_recall_f1_overlap",
+    "python:mir_eval.transcription.validate",
+    "python:mir_eval.transcription.validate_intervals",
+    "python:mir_eval.transcription_velocity.evaluate",
+    "python:mir_eval.transcription_velocity.match_notes",
+    "python:mir_eval.transcription_velocity.precision_recall_f1_overlap",
+    "python:mir_eval.transcription_velocity.validate",
+    "python:mir_eval.util.adjust_events",
+    "python:mir_eval.util.adjust_intervals",
+    "python:mir_eval.util.boundaries_to_intervals",
+    "python:mir_eval.util.deprecated",
+    "python:mir_eval.util.f_measure",
+    "python:mir_eval.util.filter_kwargs",
+    "python:mir_eval.util.generate_labels",
+    "python:mir_eval.util.has_kwargs",
+    "python:mir_eval.util.hz_to_midi",
+    "python:mir_eval.util.index_labels",
+    "python:mir_eval.util.interpolate_intervals",
+    "python:mir_eval.util.intersect_files",
+    "python:mir_eval.util.intervals_to_boundaries",
+    "python:mir_eval.util.intervals_to_durations",
+    "python:mir_eval.util.intervals_to_samples",
+    "python:mir_eval.util.match_events",
+    "python:mir_eval.util.merge_labeled_intervals",
+    "python:mir_eval.util.midi_to_hz",
+    "python:mir_eval.util.sort_labeled_intervals",
+    "python:mir_eval.util.validate_events",
+    "python:mir_eval.util.validate_frequencies",
+    "python:mir_eval.util.validate_intervals"
+  ],
+  "coverage": {
+    "expected": 178,
+    "r0_unique_ids": 178,
+    "readme_unique_ids": 178,
+    "author_manifest_unique_ids": 178,
+    "exact_set_equality": true,
+    "duplicates": 0,
+    "missing": [],
+    "extra": []
+  },
+  "r0": {
+    "complete": true,
+    "max_fix_rounds": 0,
+    "trials_per_api": 1,
+    "passed": 128,
+    "failed": 50,
+    "pass_percent": 71.91011235955057,
+    "stored_score": 0.719,
+    "stored_score_with_infra": 0.719,
+    "infra_excluded": 0,
+    "categories": {
+      "runtime": 50
+    },
+    "wall_seconds": 774.5,
+    "attempts_verified": 178,
+    "executions_recorded": 178,
+    "provider_seconds_sum": 332.0751006603241,
+    "execution_seconds_sum": 391.59870648384094,
+    "usage": {
+      "calls": 178,
+      "input_tokens": 400170,
+      "output_tokens": 31869,
+      "missing_usage_calls": 0,
+      "usage_complete": true,
+      "by_model": {
+        "google:gemini-3.1-flash-lite": {
+          "calls": 178,
+          "input_tokens": 400170,
+          "output_tokens": 31869,
+          "missing_usage_calls": 0,
+          "usage_complete": true
+        }
+      }
+    },
+    "score_limit": "Native execution and audience-written assertion/witness checks, not an independent hidden oracle"
+  },
+  "readme": {
+    "status": "authored_not_execution_validated",
+    "entries": 178,
+    "new_calls": 180,
+    "reused_calls": 0,
+    "by_phase": {
+      "entry": {
+        "completed_requests": 178,
+        "reported_calls": 178,
+        "input_tokens": 1075106,
+        "output_tokens": 168892,
+        "missing_usage_calls": 0,
+        "provider_seconds_sum": 706.8248110143468
+      },
+      "distill": {
+        "completed_requests": 2,
+        "reported_calls": 2,
+        "input_tokens": 53862,
+        "output_tokens": 2913,
+        "missing_usage_calls": 0,
+        "provider_seconds_sum": 13.833494551479816
+      }
+    },
+    "total_usage": {
+      "reported_calls": 180,
+      "input_tokens": 1128968,
+      "output_tokens": 171805,
+      "missing_usage_calls": 0
+    },
+    "first_call_started_at": "2026-11-18T01:02:35.898981+00:00",
+    "last_call_finished_at": "2026-11-18T01:15:30.038382+00:00",
+    "observed_call_span_seconds": 774.139401,
+    "provider_seconds_sum": 720.6583055658266,
+    "readme_sha256": "bf100825efe7c88ea4bdd22946d62afb7853dbac219ca4f80ffb51cb70a7c369",
+    "call_evidence_sha256": "1a1cbae53ab829b1cbe4d4662766280001bcf9c14dd06d8b4684613ef5043e97",
+    "call_evidence_hash_verified": true,
+    "runtime_validation_performed": false,
+    "treatment_installation_claimed": false
+  },
+  "source_artifacts": {
+    "manifest": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/api_manifest.python.json",
+      "sha256": "c73ec23e58e0336bdb188de6840e006788cae8c4bd30c88d93fdfac54f993226"
+    },
+    "r0/result.json": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/result.json",
+      "sha256": "0da2bed088fceb76cba348b9559494b5e2f8e489bc5b92fae08956a239f1f6ad"
+    },
+    "r0/REPORT.md": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/REPORT.md",
+      "sha256": "aca006988478762f65ec523d22fdfe5d2adc2559b5fce656befbf85b73ddc8af"
+    },
+    "readme/result.json": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/result.json",
+      "sha256": "121a444c15af92a92db8b4a9b21fa80f03c563d2eba506722aed5f96777de1a7"
+    },
+    "readme/completion.json": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/completion.json",
+      "sha256": "ed6fc4828ca46b065c16abc0d620a7aa5e7008c6e826b8d23f9a37128c5e8dd5"
+    },
+    "readme/docs/LLM_readme.md": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/docs/LLM_readme.md",
+      "sha256": "bf100825efe7c88ea4bdd22946d62afb7853dbac219ca4f80ffb51cb70a7c369"
+    }
+  },
+  "author_request_index": [
+    {
+      "request_sha256": "00991ff19e0916e0e0fc15faff5eb2ba0b59947cc11155bd539610fcccbb6778",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.triads",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/00991ff19e0916e0e0fc15faff5eb2ba0b59947cc11155bd539610fcccbb6778/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/00991ff19e0916e0e0fc15faff5eb2ba0b59947cc11155bd539610fcccbb6778/attempt_0001/provider.json",
+      "response_sha256": "beb7becb13b23dd40be06c164f045794e0787ac4ac2a6f51700fd55b60344169"
+    },
+    {
+      "request_sha256": "00ac20b9a66a670c778f7e39a3550a4ebaee209c5db3291210819eaa3e059d19",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.hz2cents",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/00ac20b9a66a670c778f7e39a3550a4ebaee209c5db3291210819eaa3e059d19/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/00ac20b9a66a670c778f7e39a3550a4ebaee209c5db3291210819eaa3e059d19/attempt_0001/provider.json",
+      "response_sha256": "8a6c524fde44396c43ff540fef23f99fae038a2a4272cbe421acbba63049fe0d"
+    },
+    {
+      "request_sha256": "02d833fa17715a2887440c5af4e528456e7e4d7fa93fd0d4309a86ca133ac2c3",
+      "phase": "entry",
+      "api": "python:mir_eval.alignment.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/02d833fa17715a2887440c5af4e528456e7e4d7fa93fd0d4309a86ca133ac2c3/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/02d833fa17715a2887440c5af4e528456e7e4d7fa93fd0d4309a86ca133ac2c3/attempt_0001/provider.json",
+      "response_sha256": "e4722ee2df16c33609ea08be84466d3de6daadcfafa41d8c8140186a712e67d3"
+    },
+    {
+      "request_sha256": "03113dc21de24e5346d427295fc37beccac709433bb757a5981d107cb10ea259",
+      "phase": "entry",
+      "api": "python:mir_eval.display.piano_roll",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/03113dc21de24e5346d427295fc37beccac709433bb757a5981d107cb10ea259/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/03113dc21de24e5346d427295fc37beccac709433bb757a5981d107cb10ea259/attempt_0001/provider.json",
+      "response_sha256": "dd50216dc3b9f5d8b39d06c3c2ab1f04e1afaa58e6290aaa4a9dfb440e533f08"
+    },
+    {
+      "request_sha256": "0536158789d746875a2847ffb47fbd33e0fcc285bbaf8c0fe0d66e4d682b4986",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.voicing_recall",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0536158789d746875a2847ffb47fbd33e0fcc285bbaf8c0fe0d66e4d682b4986/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0536158789d746875a2847ffb47fbd33e0fcc285bbaf8c0fe0d66e4d682b4986/attempt_0001/provider.json",
+      "response_sha256": "2b0f135db75c5ee4493ff7a78c74d586805eb730a616edd918f0eff59fcb4aac"
+    },
+    {
+      "request_sha256": "0575540f35eab82e94b76fd2d2c782fc74bb43d63f81dbebb6484614f10360c9",
+      "phase": "entry",
+      "api": "python:mir_eval.sonify.clicks",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0575540f35eab82e94b76fd2d2c782fc74bb43d63f81dbebb6484614f10360c9/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0575540f35eab82e94b76fd2d2c782fc74bb43d63f81dbebb6484614f10360c9/attempt_0001/provider.json",
+      "response_sha256": "96e07037f75956ae264528a57c2f96d9d1d6e6d720bc1d3f40d062864504b57e"
+    },
+    {
+      "request_sha256": "0589cabaa352fce2b5214ff04ff418680f41880a0b6417d91bf2fa3321df4c7b",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.sevenths",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0589cabaa352fce2b5214ff04ff418680f41880a0b6417d91bf2fa3321df4c7b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0589cabaa352fce2b5214ff04ff418680f41880a0b6417d91bf2fa3321df4c7b/attempt_0001/provider.json",
+      "response_sha256": "4d03e2291e46c398fb98143e100624ec0305e38b08f160d2c8c3dba12aead70d"
+    },
+    {
+      "request_sha256": "08020460a408b6027b853d7c856e9417715c1dc5647bf4cca76617e360efa393",
+      "phase": "entry",
+      "api": "python:mir_eval.key.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/08020460a408b6027b853d7c856e9417715c1dc5647bf4cca76617e360efa393/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/08020460a408b6027b853d7c856e9417715c1dc5647bf4cca76617e360efa393/attempt_0001/provider.json",
+      "response_sha256": "298a9abb482ad98ecb5bdc79783f2e2416c536e60bcc64a56c70e945cc1b1ef1"
+    },
+    {
+      "request_sha256": "08024a0dd7b9000662ded0fcd9bff5eb75a027b24f670f8e79bc88bd4d5bd851",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.detection",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/08024a0dd7b9000662ded0fcd9bff5eb75a027b24f670f8e79bc88bd4d5bd851/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/08024a0dd7b9000662ded0fcd9bff5eb75a027b24f670f8e79bc88bd4d5bd851/attempt_0001/provider.json",
+      "response_sha256": "dd5e856a313677eb07131ddb2ce20e4700b4902f126f797042364a1c19f87465"
+    },
+    {
+      "request_sha256": "09b82b0a9ad86641806b2048dae4bbc90201f9548390e71dd4620cb001f70f80",
+      "phase": "entry",
+      "api": "python:mir_eval.alignment.percentage_correct_segments",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/09b82b0a9ad86641806b2048dae4bbc90201f9548390e71dd4620cb001f70f80/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/09b82b0a9ad86641806b2048dae4bbc90201f9548390e71dd4620cb001f70f80/attempt_0001/provider.json",
+      "response_sha256": "2f7748469f638cc142f530042f454a078e5a049e263c75185abdfb051e42e60b"
+    },
+    {
+      "request_sha256": "0b172d06b2dd600c429e6e56c788375412fe49ab0405301b6042394124f60abf",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.match_note_onsets",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0b172d06b2dd600c429e6e56c788375412fe49ab0405301b6042394124f60abf/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0b172d06b2dd600c429e6e56c788375412fe49ab0405301b6042394124f60abf/attempt_0001/provider.json",
+      "response_sha256": "676be344953b3fa713fd8ced76c23635f7f975b97c7e264120f7e026c0349e81"
+    },
+    {
+      "request_sha256": "0b2c1d822c70ac7eee9429cc662475fe6c6485ff0ac876295e2a13f40d799644",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.mutual_information",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0b2c1d822c70ac7eee9429cc662475fe6c6485ff0ac876295e2a13f40d799644/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0b2c1d822c70ac7eee9429cc662475fe6c6485ff0ac876295e2a13f40d799644/attempt_0001/provider.json",
+      "response_sha256": "36f716268432f46dc7f73378bbc107836685b99ff177ec1dda2a3aa6557568c4"
+    },
+    {
+      "request_sha256": "0c939eed953754239be68673a0b03acc71d6aaef5e25fd32449059ee71f792cd",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.directional_hamming_distance",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0c939eed953754239be68673a0b03acc71d6aaef5e25fd32449059ee71f792cd/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0c939eed953754239be68673a0b03acc71d6aaef5e25fd32449059ee71f792cd/attempt_0001/provider.json",
+      "response_sha256": "d09d1f93d789e82b3c65fd8846024f886c13b4d4f9a01b6ac590464e416378c9"
+    },
+    {
+      "request_sha256": "0e3eb8b82fdbab502ee5b1390cc1f420d49fb199adfa2899ce29adac7a1f691c",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.majmin",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0e3eb8b82fdbab502ee5b1390cc1f420d49fb199adfa2899ce29adac7a1f691c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0e3eb8b82fdbab502ee5b1390cc1f420d49fb199adfa2899ce29adac7a1f691c/attempt_0001/provider.json",
+      "response_sha256": "33698fecf8789368c8bb20d3e36bd37713cc3a44384bd3f3e1c6992abaafb8de"
+    },
+    {
+      "request_sha256": "0ebf9a2aed80541fe2888b819cf3e766a1f3a16e74d84967e5e5532676c69e3b",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.constant_hop_timebase",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0ebf9a2aed80541fe2888b819cf3e766a1f3a16e74d84967e5e5532676c69e3b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/0ebf9a2aed80541fe2888b819cf3e766a1f3a16e74d84967e5e5532676c69e3b/attempt_0001/provider.json",
+      "response_sha256": "8398129fc3c1aa53e546923bd3a0d188833f32d28e93730ca0581b755058e805"
+    },
+    {
+      "request_sha256": "10c2534b2459dd66cdd49647d342101b721a63dd1f719bc603f1624aa8bae5ff",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.voicing_false_alarm",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/10c2534b2459dd66cdd49647d342101b721a63dd1f719bc603f1624aa8bae5ff/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/10c2534b2459dd66cdd49647d342101b721a63dd1f719bc603f1624aa8bae5ff/attempt_0001/provider.json",
+      "response_sha256": "ba8fc6160bec55e1fb6f2fd394cfbcb05e92dab15f761a253c0cec652294a648"
+    },
+    {
+      "request_sha256": "18c3274b1cb17a09b74d65cf138f5a4959feb74ff2dc04f7864efde0162ce41f",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/18c3274b1cb17a09b74d65cf138f5a4959feb74ff2dc04f7864efde0162ce41f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/18c3274b1cb17a09b74d65cf138f5a4959feb74ff2dc04f7864efde0162ce41f/attempt_0001/provider.json",
+      "response_sha256": "b8375f3baeaa039971bd54205e8d5608fc06ada2590ae360be2c335ef9810493"
+    },
+    {
+      "request_sha256": "19ac914b3d968633180ae27deec4f94c515790d266adecabbcba8f42c6baad03",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.rotate_bitmap_to_root",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/19ac914b3d968633180ae27deec4f94c515790d266adecabbcba8f42c6baad03/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/19ac914b3d968633180ae27deec4f94c515790d266adecabbcba8f42c6baad03/attempt_0001/provider.json",
+      "response_sha256": "62d1c768bbffeed3518ab1d34c6ffee9445ef9aa882a79c86d28ab572fefdfa5"
+    },
+    {
+      "request_sha256": "1be3898034f2bc1859e0c119c5cd8ffc96291827de07620b49d27d38c1fd5c97",
+      "phase": "entry",
+      "api": "python:mir_eval.util.boundaries_to_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1be3898034f2bc1859e0c119c5cd8ffc96291827de07620b49d27d38c1fd5c97/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1be3898034f2bc1859e0c119c5cd8ffc96291827de07620b49d27d38c1fd5c97/attempt_0001/provider.json",
+      "response_sha256": "0b5b94e99419b9c58fb31a33c89bbc5bcc98a8256c1d973d5f7a5e4529f4b416"
+    },
+    {
+      "request_sha256": "1d4432d851630230dd9d5ec9c221d0a64b926a6b49386c06f944bfc7b590f2cb",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.trim_beats",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1d4432d851630230dd9d5ec9c221d0a64b926a6b49386c06f944bfc7b590f2cb/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1d4432d851630230dd9d5ec9c221d0a64b926a6b49386c06f944bfc7b590f2cb/attempt_0001/provider.json",
+      "response_sha256": "6157a3bab85c69dba3489841d1e51bddbb8a713079b18dff0682c701cca3157c"
+    },
+    {
+      "request_sha256": "1d62c0628eac80e47a8104a659a4635333f02ee6ac7d205fb19646d0a10a41ad",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_labeled_events",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1d62c0628eac80e47a8104a659a4635333f02ee6ac7d205fb19646d0a10a41ad/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1d62c0628eac80e47a8104a659a4635333f02ee6ac7d205fb19646d0a10a41ad/attempt_0001/provider.json",
+      "response_sha256": "d3778075de2c214a65d7475e269097189a43e124f2f535531027353047c9d8cd"
+    },
+    {
+      "request_sha256": "1d62d235223e749fa88ccc07ad1d5016248979e3832c7f9eb1472d118b723e4c",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.root",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1d62d235223e749fa88ccc07ad1d5016248979e3832c7f9eb1472d118b723e4c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1d62d235223e749fa88ccc07ad1d5016248979e3832c7f9eb1472d118b723e4c/attempt_0001/provider.json",
+      "response_sha256": "15ea40358558579cbaae995a92dc792e53837166f2d80cd68331e9fb1f9a9f2a"
+    },
+    {
+      "request_sha256": "1f38feecc8577a08c75b3a57759054a448bbaefb17d2c8e3f1893164334b8090",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_events",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1f38feecc8577a08c75b3a57759054a448bbaefb17d2c8e3f1893164334b8090/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/1f38feecc8577a08c75b3a57759054a448bbaefb17d2c8e3f1893164334b8090/attempt_0001/provider.json",
+      "response_sha256": "e5f999780bd2b6618109729c8476b046fb895783c0babfce678e2adfae6f989a"
+    },
+    {
+      "request_sha256": "22a8a75b71e1c4cedfd7f841337f8400a9bdab69a4453b4a683cb78ac0290e99",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_ragged_time_series",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/22a8a75b71e1c4cedfd7f841337f8400a9bdab69a4453b4a683cb78ac0290e99/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/22a8a75b71e1c4cedfd7f841337f8400a9bdab69a4453b4a683cb78ac0290e99/attempt_0001/provider.json",
+      "response_sha256": "01fe3704ac0e32e2c468764ecc9dfe8b7cd77d8042ba8724b0e002b4746d105f"
+    },
+    {
+      "request_sha256": "23286730cb484d1c020ff353e633860648a919a9b40f892d22139a0a6cca4e7e",
+      "phase": "entry",
+      "api": "python:mir_eval.separation.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/23286730cb484d1c020ff353e633860648a919a9b40f892d22139a0a6cca4e7e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/23286730cb484d1c020ff353e633860648a919a9b40f892d22139a0a6cca4e7e/attempt_0001/provider.json",
+      "response_sha256": "80b144b16d4e61af16e962bfcab1b223ed98211f6149343bb9ed64048ab3aa01"
+    },
+    {
+      "request_sha256": "242ca178b70d199cecc48e3a6d125822773035a01bbe848b02a65e78ab41d57d",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/242ca178b70d199cecc48e3a6d125822773035a01bbe848b02a65e78ab41d57d/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/242ca178b70d199cecc48e3a6d125822773035a01bbe848b02a65e78ab41d57d/attempt_0001/provider.json",
+      "response_sha256": "494cc1068341dd85b7c728cbc3d310432f25979643429903ae73aa935995205e"
+    },
+    {
+      "request_sha256": "263542f73065cf4fc43e9b3a9fa066bb0c41a876af85194737e97dff74e68b37",
+      "phase": "entry",
+      "api": "python:mir_eval.alignment.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/263542f73065cf4fc43e9b3a9fa066bb0c41a876af85194737e97dff74e68b37/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/263542f73065cf4fc43e9b3a9fa066bb0c41a876af85194737e97dff74e68b37/attempt_0001/provider.json",
+      "response_sha256": "a91d65261c96e9745d5245dbd8105800c97888a448e2a516480a28702fabe88b"
+    },
+    {
+      "request_sha256": "26b9d992813871fd8bb202848b39d82ff4cba4d49f15b0ccf0cf030cf153e2d8",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_key",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/26b9d992813871fd8bb202848b39d82ff4cba4d49f15b0ccf0cf030cf153e2d8/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/26b9d992813871fd8bb202848b39d82ff4cba4d49f15b0ccf0cf030cf153e2d8/attempt_0001/provider.json",
+      "response_sha256": "eed215e80f0aa759fdb792ea8be32b2d792dfe5c19ccad7f4eb81c5d6dda2434"
+    },
+    {
+      "request_sha256": "27c2171bdfd17f31beef720f45e979b6cadcb2d6d8e6ad29fad90e402e424f8e",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.validate_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/27c2171bdfd17f31beef720f45e979b6cadcb2d6d8e6ad29fad90e402e424f8e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/27c2171bdfd17f31beef720f45e979b6cadcb2d6d8e6ad29fad90e402e424f8e/attempt_0001/provider.json",
+      "response_sha256": "add4cc22ae08168f73247d006987edf4e8777a6baaa20b1d84d7228c36e6e967"
+    },
+    {
+      "request_sha256": "2d201b5c60aaa179b17de01a8d5269ec58ff95e1449619bdee19d7dcb5254896",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.raw_chroma_accuracy",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2d201b5c60aaa179b17de01a8d5269ec58ff95e1449619bdee19d7dcb5254896/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2d201b5c60aaa179b17de01a8d5269ec58ff95e1449619bdee19d7dcb5254896/attempt_0001/provider.json",
+      "response_sha256": "4845d160fbb1c424baf85c02abf92b4044aafa93bf2533c0405d6a8516b23de4"
+    },
+    {
+      "request_sha256": "2da89f40afccd527d5bf1a9172a24d8bc5957527ea335effd31d7ce7ba679a3f",
+      "phase": "entry",
+      "api": "python:mir_eval.util.intersect_files",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2da89f40afccd527d5bf1a9172a24d8bc5957527ea335effd31d7ce7ba679a3f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2da89f40afccd527d5bf1a9172a24d8bc5957527ea335effd31d7ce7ba679a3f/attempt_0001/provider.json",
+      "response_sha256": "5facb5519032df3b38b74566fef8a86b4618736216c617a29121730c6cce34bd"
+    },
+    {
+      "request_sha256": "2e2b90d94412a9ab981a59e7389926b77a69d9b952f99a6989951186f47af06e",
+      "phase": "entry",
+      "api": "python:mir_eval.key.weighted_score",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2e2b90d94412a9ab981a59e7389926b77a69d9b952f99a6989951186f47af06e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2e2b90d94412a9ab981a59e7389926b77a69d9b952f99a6989951186f47af06e/attempt_0001/provider.json",
+      "response_sha256": "176ca76d1982126a151e901a49da7df9d36b8224564ce0f9f62e1b38e0328664"
+    },
+    {
+      "request_sha256": "2f1abf6f5edbc8bc5bc3e97532c79d621445be5d2ad6459ef19049950109e825",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_patterns",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2f1abf6f5edbc8bc5bc3e97532c79d621445be5d2ad6459ef19049950109e825/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/2f1abf6f5edbc8bc5bc3e97532c79d621445be5d2ad6459ef19049950109e825/attempt_0001/provider.json",
+      "response_sha256": "6e2e5301ca3f9d932182ad845d2e84cba56bc5754dae71fe3218db46fd5c8ef8"
+    },
+    {
+      "request_sha256": "309b29084458df135f30244608cb6fc1f6b1a892bf929a4157ee948c27ee8b9f",
+      "phase": "entry",
+      "api": "python:mir_eval.display.separation",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/309b29084458df135f30244608cb6fc1f6b1a892bf929a4157ee948c27ee8b9f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/309b29084458df135f30244608cb6fc1f6b1a892bf929a4157ee948c27ee8b9f/attempt_0001/provider.json",
+      "response_sha256": "670db718268fcf9b14fcc80b14e251d6a09a03d53f09cd09061343c23ece0f69"
+    },
+    {
+      "request_sha256": "30fa136839c350e251c6bf32221e682e72f13776f16c891479c430478085cc1b",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.thirds",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/30fa136839c350e251c6bf32221e682e72f13776f16c891479c430478085cc1b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/30fa136839c350e251c6bf32221e682e72f13776f16c891479c430478085cc1b/attempt_0001/provider.json",
+      "response_sha256": "8806b4394f66f9267506eeb19689981d5cffcbb716388349dad8db38777146f8"
+    },
+    {
+      "request_sha256": "32fe5a1b42ab9b5557e90a3fec459b3254d7b8aa9f664fd4ee52ebbc674a8761",
+      "phase": "entry",
+      "api": "python:mir_eval.display.hierarchy",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/32fe5a1b42ab9b5557e90a3fec459b3254d7b8aa9f664fd4ee52ebbc674a8761/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/32fe5a1b42ab9b5557e90a3fec459b3254d7b8aa9f664fd4ee52ebbc674a8761/attempt_0001/provider.json",
+      "response_sha256": "1b1cfc35f7c31508c499a12355253d9738b0b3c1a1d86f1974196f6e665203ce"
+    },
+    {
+      "request_sha256": "33a1ce24f453ba86a7f8090e5be54206c2c51c3a87ac9ec4255f6dbadb3c0c6d",
+      "phase": "entry",
+      "api": "python:mir_eval.separation.bss_eval_images_framewise",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/33a1ce24f453ba86a7f8090e5be54206c2c51c3a87ac9ec4255f6dbadb3c0c6d/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/33a1ce24f453ba86a7f8090e5be54206c2c51c3a87ac9ec4255f6dbadb3c0c6d/attempt_0001/provider.json",
+      "response_sha256": "adc80cb2a5f2b2cb66ae86d44fda01d574315cc6b0eba73589494123d20b33ba"
+    },
+    {
+      "request_sha256": "360b64e96d94bbb655e244b16bd132bce58a6112f14e6fd762c68c103a90d727",
+      "phase": "entry",
+      "api": "python:mir_eval.separation.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/360b64e96d94bbb655e244b16bd132bce58a6112f14e6fd762c68c103a90d727/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/360b64e96d94bbb655e244b16bd132bce58a6112f14e6fd762c68c103a90d727/attempt_0001/provider.json",
+      "response_sha256": "72d90c7dd765e938edde95805b81fbb82efa589289996ca75e635faedc952ec5"
+    },
+    {
+      "request_sha256": "377c66130fa7beb8e52cfd491022af4845941b8aefc2976d16c5f34fdeb9a326",
+      "phase": "entry",
+      "api": "python:mir_eval.util.interpolate_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/377c66130fa7beb8e52cfd491022af4845941b8aefc2976d16c5f34fdeb9a326/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/377c66130fa7beb8e52cfd491022af4845941b8aefc2976d16c5f34fdeb9a326/attempt_0001/provider.json",
+      "response_sha256": "6b987529694cb207ddf5b6cba736304e11ed67ca34785764cc5d81e671faee32"
+    },
+    {
+      "request_sha256": "3863a8e984e5e3d9a7c7328f3f5a4fd1b7f366e1aec8883a13c4e2a3b6b2b68a",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.resample_multipitch",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3863a8e984e5e3d9a7c7328f3f5a4fd1b7f366e1aec8883a13c4e2a3b6b2b68a/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3863a8e984e5e3d9a7c7328f3f5a4fd1b7f366e1aec8883a13c4e2a3b6b2b68a/attempt_0001/provider.json",
+      "response_sha256": "47ded9e16303da5d55fa59ffb54373726657a86cd41644ff1260c20d4717038a"
+    },
+    {
+      "request_sha256": "399280009ef5c033db78ec8c8fcb05ee2a185db786102cfa6cdf9a370e79f21f",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/399280009ef5c033db78ec8c8fcb05ee2a185db786102cfa6cdf9a370e79f21f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/399280009ef5c033db78ec8c8fcb05ee2a185db786102cfa6cdf9a370e79f21f/attempt_0001/provider.json",
+      "response_sha256": "595f122f3aa6a5418d9373a493ca8866339009329219a053209d920bccf4251d"
+    },
+    {
+      "request_sha256": "3c85b6ea10b5b325207e40de0a30f12520f5efc41aac9207f08f5fb21341e0b5",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.validate_voicing",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3c85b6ea10b5b325207e40de0a30f12520f5efc41aac9207f08f5fb21341e0b5/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3c85b6ea10b5b325207e40de0a30f12520f5efc41aac9207f08f5fb21341e0b5/attempt_0001/provider.json",
+      "response_sha256": "9cb39319439b55992d29fbf43a4fcf668055553aa07dfe00e900fd35e98596d3"
+    },
+    {
+      "request_sha256": "3d39d19096fea696d3e4de8a60eddd2b2a1d287cef6366cd8ac257101d8be6be",
+      "phase": "entry",
+      "api": "python:mir_eval.sonify.pitch_contour",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3d39d19096fea696d3e4de8a60eddd2b2a1d287cef6366cd8ac257101d8be6be/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3d39d19096fea696d3e4de8a60eddd2b2a1d287cef6366cd8ac257101d8be6be/attempt_0001/provider.json",
+      "response_sha256": "bfc2baf9b814760614c7048e14b5eeee0ffc40e8522d9e6a7e44560626dca5e6"
+    },
+    {
+      "request_sha256": "3f1f6ac6c2fd82b95011ab5840da62fbbf01d9d26f5253ad480884827aa32993",
+      "phase": "entry",
+      "api": "python:mir_eval.display.ticker_pitch",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3f1f6ac6c2fd82b95011ab5840da62fbbf01d9d26f5253ad480884827aa32993/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3f1f6ac6c2fd82b95011ab5840da62fbbf01d9d26f5253ad480884827aa32993/attempt_0001/provider.json",
+      "response_sha256": "964c3836502f15adfd8c92b6895563d0087d0d08bb54f2d54ec2363d024affad"
+    },
+    {
+      "request_sha256": "3f412943cb3e6292e26dc5f685e58d20bd22fee29c309d4c68ccfe9af25bdd68",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.seg",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3f412943cb3e6292e26dc5f685e58d20bd22fee29c309d4c68ccfe9af25bdd68/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/3f412943cb3e6292e26dc5f685e58d20bd22fee29c309d4c68ccfe9af25bdd68/attempt_0001/provider.json",
+      "response_sha256": "a0a351cec1633855f92e3773a19b4578e6a26c9b3f7ae4914c9d819ccbaceb9a"
+    },
+    {
+      "request_sha256": "40016a24a2bf17e8085b6419b5be528bad15abb83d57dba7d7e1d4ebb6ed97b6",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.validate_chord_label",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/40016a24a2bf17e8085b6419b5be528bad15abb83d57dba7d7e1d4ebb6ed97b6/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/40016a24a2bf17e8085b6419b5be528bad15abb83d57dba7d7e1d4ebb6ed97b6/attempt_0001/provider.json",
+      "response_sha256": "38a15d1c70132aba86a849d5497c4edba0d55c5e73d94bb726c83628c1a8fe07"
+    },
+    {
+      "request_sha256": "42e892d7c755f24a092480ba7e670d0d62f7a18e6826a711176a73fed953f4c6",
+      "phase": "entry",
+      "api": "python:mir_eval.util.intervals_to_boundaries",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/42e892d7c755f24a092480ba7e670d0d62f7a18e6826a711176a73fed953f4c6/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/42e892d7c755f24a092480ba7e670d0d62f7a18e6826a711176a73fed953f4c6/attempt_0001/provider.json",
+      "response_sha256": "5faaf04ed4eb80c17df2ac7c054d2de269a31620d90609e231c75118b3bf4c11"
+    },
+    {
+      "request_sha256": "4305cfe001bab0d620cd7a43ca81e906d6497a96dd3fa4c0392c9c534777709d",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.compute_accuracy",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4305cfe001bab0d620cd7a43ca81e906d6497a96dd3fa4c0392c9c534777709d/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4305cfe001bab0d620cd7a43ca81e906d6497a96dd3fa4c0392c9c534777709d/attempt_0001/provider.json",
+      "response_sha256": "560e4f71c1124a3fb7b07da3bce50f5e03e062317fd3d8faf0bba58aecdef9ef"
+    },
+    {
+      "request_sha256": "46e8e9f2707e97ab867ccc35dd6de38671132719bb937a8cd0ec9871f59f8e31",
+      "phase": "entry",
+      "api": "python:mir_eval.display.IntervalFormatter",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/46e8e9f2707e97ab867ccc35dd6de38671132719bb937a8cd0ec9871f59f8e31/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/46e8e9f2707e97ab867ccc35dd6de38671132719bb937a8cd0ec9871f59f8e31/attempt_0001/provider.json",
+      "response_sha256": "2f71e2dd195ae71aca84eb9f14cf2a5611dad9ae8506b4631e7ff7129e72e76d"
+    },
+    {
+      "request_sha256": "4804f3e90f65d0f7ee1d62ce02073fb8817892f5893463f717a8de2ffa63dc03",
+      "phase": "entry",
+      "api": "python:mir_eval.sonify.chroma",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4804f3e90f65d0f7ee1d62ce02073fb8817892f5893463f717a8de2ffa63dc03/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4804f3e90f65d0f7ee1d62ce02073fb8817892f5893463f717a8de2ffa63dc03/attempt_0001/provider.json",
+      "response_sha256": "2c05baba190578992cebe5b961f4b80e72ddb8d35d7ec27e30d3c7b95f2bbcbc"
+    },
+    {
+      "request_sha256": "48c36ac44c02ca85c201f4508fa201b523d3f5934a739b7c6e16e37f3677d2bd",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription_velocity.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/48c36ac44c02ca85c201f4508fa201b523d3f5934a739b7c6e16e37f3677d2bd/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/48c36ac44c02ca85c201f4508fa201b523d3f5934a739b7c6e16e37f3677d2bd/attempt_0001/provider.json",
+      "response_sha256": "89bf3c760eda03ada448060a04ccd34964a5ae2fb2dad00e2cb59aa5fa252685"
+    },
+    {
+      "request_sha256": "4b096f606d8cbeab9b69135f5a4b85ab152005743867e79403e738c82fccef8e",
+      "phase": "entry",
+      "api": "python:mir_eval.util.match_events",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4b096f606d8cbeab9b69135f5a4b85ab152005743867e79403e738c82fccef8e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4b096f606d8cbeab9b69135f5a4b85ab152005743867e79403e738c82fccef8e/attempt_0001/provider.json",
+      "response_sha256": "c1ce77991baf6d128a9c237d2945cef8304786d23051693be716eb150c1d28c6"
+    },
+    {
+      "request_sha256": "4c24d92b4b93743f4246de88223e650208e502078bbdc22ca840b98c30b3fa5f",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription_velocity.precision_recall_f1_overlap",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4c24d92b4b93743f4246de88223e650208e502078bbdc22ca840b98c30b3fa5f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4c24d92b4b93743f4246de88223e650208e502078bbdc22ca840b98c30b3fa5f/attempt_0001/provider.json",
+      "response_sha256": "fc9870ef3c8958600775f40ebba046612963bfc70a79ab81382a51d3feae11c4"
+    },
+    {
+      "request_sha256": "4c2d7509961f156fed7980084c008b52e66fce04928473fa702d96a229dd8942",
+      "phase": "distill",
+      "api": null,
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4c2d7509961f156fed7980084c008b52e66fce04928473fa702d96a229dd8942/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4c2d7509961f156fed7980084c008b52e66fce04928473fa702d96a229dd8942/attempt_0001/provider.json",
+      "response_sha256": "f46c3cdc0876b26b392b3b095357fb3cc2755b79de99d1ad7f2f32a87106278e"
+    },
+    {
+      "request_sha256": "4dfbeb2a0f1c98a48d2f1a3e787381b1815d0c417fa03f668e304599221fef84",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.thirds_inv",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4dfbeb2a0f1c98a48d2f1a3e787381b1815d0c417fa03f668e304599221fef84/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4dfbeb2a0f1c98a48d2f1a3e787381b1815d0c417fa03f668e304599221fef84/attempt_0001/provider.json",
+      "response_sha256": "ace4d03bd19f427c985afbccb345945220f9f5502b558f88a76ccccca7b87b7b"
+    },
+    {
+      "request_sha256": "4e5a765b6d6d2b40bf30638d751446bae1534b87ad1c470392d1aea5b240a793",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.vmeasure",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4e5a765b6d6d2b40bf30638d751446bae1534b87ad1c470392d1aea5b240a793/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/4e5a765b6d6d2b40bf30638d751446bae1534b87ad1c470392d1aea5b240a793/attempt_0001/provider.json",
+      "response_sha256": "7d7a85d7fa4fa33df8f6ada21feb495a631c6220b84ee64fd2b06594ee1f3080"
+    },
+    {
+      "request_sha256": "5086da768ea788b9e6de1003fc07cc2add38b40b0461cd98ae09859214083444",
+      "phase": "entry",
+      "api": "python:mir_eval.key.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5086da768ea788b9e6de1003fc07cc2add38b40b0461cd98ae09859214083444/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5086da768ea788b9e6de1003fc07cc2add38b40b0461cd98ae09859214083444/attempt_0001/provider.json",
+      "response_sha256": "5cdb7ccba4a1eaf17fff6e434beead5c6d37278689907ae95e42d91ca5eb9306"
+    },
+    {
+      "request_sha256": "51a258967d30359b3e600acd3d8d99b914652b8818e83597ac5880deb77b6b7a",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/51a258967d30359b3e600acd3d8d99b914652b8818e83597ac5880deb77b6b7a/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/51a258967d30359b3e600acd3d8d99b914652b8818e83597ac5880deb77b6b7a/attempt_0001/provider.json",
+      "response_sha256": "c055dc4b08b4c7abd8d0bb6e0c25d2d026df79d44fd8129323f9635df47b76eb"
+    },
+    {
+      "request_sha256": "521a5b65fd0dec75041aa99d432c840bd991c74aa48c36ebda500643e7207f93",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.standard_FPR",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/521a5b65fd0dec75041aa99d432c840bd991c74aa48c36ebda500643e7207f93/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/521a5b65fd0dec75041aa99d432c840bd991c74aa48c36ebda500643e7207f93/attempt_0001/provider.json",
+      "response_sha256": "d2ae55348a2f41dd6b75a7ffef079a5fd265ab98609e649a3a95c5c5fd9a606e"
+    },
+    {
+      "request_sha256": "521d5bfadd127cfa87186ca609cb28bacd52cafa40a21cd96658a04526a2a23d",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_valued_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/521d5bfadd127cfa87186ca609cb28bacd52cafa40a21cd96658a04526a2a23d/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/521d5bfadd127cfa87186ca609cb28bacd52cafa40a21cd96658a04526a2a23d/attempt_0001/provider.json",
+      "response_sha256": "782909c064f4de705ca0fad3ffc0d2ea9fb8d6569d6e7a70e008da099553295d"
+    },
+    {
+      "request_sha256": "58498b25a6de34fa5b63f0bec3d5a3f5355db6a4f71095abdf94577cf55bf0d0",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.majmin_inv",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/58498b25a6de34fa5b63f0bec3d5a3f5355db6a4f71095abdf94577cf55bf0d0/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/58498b25a6de34fa5b63f0bec3d5a3f5355db6a4f71095abdf94577cf55bf0d0/attempt_0001/provider.json",
+      "response_sha256": "7be5d5ec15ead181a4e588b54917791f8881c2b089e6dcd6848f31dbd6e9b797"
+    },
+    {
+      "request_sha256": "59e7df142bc9d4dee1330091efd90fa544b88d78219a77554cb6fd163ee28e66",
+      "phase": "entry",
+      "api": "python:mir_eval.display.events",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/59e7df142bc9d4dee1330091efd90fa544b88d78219a77554cb6fd163ee28e66/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/59e7df142bc9d4dee1330091efd90fa544b88d78219a77554cb6fd163ee28e66/attempt_0001/provider.json",
+      "response_sha256": "221b08dc047e30d3c25be8eb13edfd74a5c1829c9c216c03c16a40e5bef62f41"
+    },
+    {
+      "request_sha256": "5a10f126b851570537a2e378ec5c63cd33c7ec54dc3a498bceec72ce6ab45989",
+      "phase": "entry",
+      "api": "python:mir_eval.display.IntervalFormatter.__call__",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5a10f126b851570537a2e378ec5c63cd33c7ec54dc3a498bceec72ce6ab45989/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5a10f126b851570537a2e378ec5c63cd33c7ec54dc3a498bceec72ce6ab45989/attempt_0001/provider.json",
+      "response_sha256": "d1503a463491e0c70ee351ddc91098cabb4ab158d69b39e1d13b33f81d3ce964"
+    },
+    {
+      "request_sha256": "5a95c333e3a560fe4067061d347c6c920c4a91b53d5d12201c2b833095f35a03",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.weighted_accuracy",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5a95c333e3a560fe4067061d347c6c920c4a91b53d5d12201c2b833095f35a03/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5a95c333e3a560fe4067061d347c6c920c4a91b53d5d12201c2b833095f35a03/attempt_0001/provider.json",
+      "response_sha256": "0faf08493fb2840b703fe6b7e323a95e653f2afefbd4d6b65ac3d3d9af1b7893"
+    },
+    {
+      "request_sha256": "5c2ed841d5ff52534266b7cf80b0822c4671276cf5378d0fd585e241632e5b39",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.first_n_target_proportion_R",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5c2ed841d5ff52534266b7cf80b0822c4671276cf5378d0fd585e241632e5b39/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/5c2ed841d5ff52534266b7cf80b0822c4671276cf5378d0fd585e241632e5b39/attempt_0001/provider.json",
+      "response_sha256": "5ee8a857cb4d39c8bb5066a8e0538da7c0398486ed2a2bf979d51ee31c8b67ec"
+    },
+    {
+      "request_sha256": "619688a390f8ac5b6a620268ccfbeffbf0ae16a6f4a95657d2dce7edde79e89d",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.validate_boundary",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/619688a390f8ac5b6a620268ccfbeffbf0ae16a6f4a95657d2dce7edde79e89d/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/619688a390f8ac5b6a620268ccfbeffbf0ae16a6f4a95657d2dce7edde79e89d/attempt_0001/provider.json",
+      "response_sha256": "cd69d2d2e471e881db3c228e388ff7b33aad304aa6c3741f22316518158deb88"
+    },
+    {
+      "request_sha256": "620c46304d292be7cf43953d46cccb8ea9d4988464739f80cc5b82add8a9fca1",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.voicing_measures",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/620c46304d292be7cf43953d46cccb8ea9d4988464739f80cc5b82add8a9fca1/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/620c46304d292be7cf43953d46cccb8ea9d4988464739f80cc5b82add8a9fca1/attempt_0001/provider.json",
+      "response_sha256": "26b73e9f3684a30bf7f620b4b982d9aa4354c31da64888a19c1ad10c40e6dc09"
+    },
+    {
+      "request_sha256": "63577a2d0a8f5ff758fda798c2ccdc97ef0fe84ba98d2507b8a689569f241c2e",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.occurrence_FPR",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/63577a2d0a8f5ff758fda798c2ccdc97ef0fe84ba98d2507b8a689569f241c2e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/63577a2d0a8f5ff758fda798c2ccdc97ef0fe84ba98d2507b8a689569f241c2e/attempt_0001/provider.json",
+      "response_sha256": "b36d3c9cad83317f2dbb10dbb1af0ca5195d37fb61fc609815596750a154e2c9"
+    },
+    {
+      "request_sha256": "63e1d179a9f010ce4fda33cb0c279b0baa05852f36e2fad3b87230f6cb9411aa",
+      "phase": "entry",
+      "api": "python:mir_eval.display.ticker_notes",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/63e1d179a9f010ce4fda33cb0c279b0baa05852f36e2fad3b87230f6cb9411aa/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/63e1d179a9f010ce4fda33cb0c279b0baa05852f36e2fad3b87230f6cb9411aa/attempt_0001/provider.json",
+      "response_sha256": "d46bdcfdbcb604118232e78bd3b2a5052c1b13d2dc17ca9895bbcd08f08eb22e"
+    },
+    {
+      "request_sha256": "66bf59e4cead7883db761c889a81a257c917db0349f2b211f7489750e353d08c",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.onset_precision_recall_f1",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/66bf59e4cead7883db761c889a81a257c917db0349f2b211f7489750e353d08c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/66bf59e4cead7883db761c889a81a257c917db0349f2b211f7489750e353d08c/attempt_0001/provider.json",
+      "response_sha256": "f1097bf1dfc52926241c1d220eb53a7a90dd1701c63c89c8be0e9a4768b580f1"
+    },
+    {
+      "request_sha256": "6abd86d502756ce32cb8673e088348891e796fe055aa905bcd6b8b02a1324ee9",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.rand_index",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6abd86d502756ce32cb8673e088348891e796fe055aa905bcd6b8b02a1324ee9/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6abd86d502756ce32cb8673e088348891e796fe055aa905bcd6b8b02a1324ee9/attempt_0001/provider.json",
+      "response_sha256": "15c6263ca2694296ccf13d101c3fc08448f56bc4cd066a0dd20523efe98635f5"
+    },
+    {
+      "request_sha256": "6af2f4da821569dde6bb7c5df770e23e31019ec5344fe81620f76d460db3a37b",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6af2f4da821569dde6bb7c5df770e23e31019ec5344fe81620f76d460db3a37b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6af2f4da821569dde6bb7c5df770e23e31019ec5344fe81620f76d460db3a37b/attempt_0001/provider.json",
+      "response_sha256": "d7528f3c115a2eba4632647fad489707a78017dfc9ab46e3e08002422a31fc94"
+    },
+    {
+      "request_sha256": "6b55ce77623c585f59b5899dab943b32694053f90d06c14325e035f1d6a01f2b",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_tempo",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6b55ce77623c585f59b5899dab943b32694053f90d06c14325e035f1d6a01f2b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6b55ce77623c585f59b5899dab943b32694053f90d06c14325e035f1d6a01f2b/attempt_0001/provider.json",
+      "response_sha256": "a50fb00632b9f637756803fda746b9410c516e7fe71a04f59d1aba66364f3ecd"
+    },
+    {
+      "request_sha256": "6bde01321576db2af40d249e0eae2f33cc2af3b1701cfdb44db19e59a5807ca7",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6bde01321576db2af40d249e0eae2f33cc2af3b1701cfdb44db19e59a5807ca7/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6bde01321576db2af40d249e0eae2f33cc2af3b1701cfdb44db19e59a5807ca7/attempt_0001/provider.json",
+      "response_sha256": "e37c2110fdb33fcca3a6e8d47e1716d7126a586ebb6d30e33e41f6db420ff3ce"
+    },
+    {
+      "request_sha256": "6c6c852498f1611d6d7dd5c77c26138260fb6113c019e88725b5db1684963a00",
+      "phase": "entry",
+      "api": "python:mir_eval.display.labeled_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6c6c852498f1611d6d7dd5c77c26138260fb6113c019e88725b5db1684963a00/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6c6c852498f1611d6d7dd5c77c26138260fb6113c019e88725b5db1684963a00/attempt_0001/provider.json",
+      "response_sha256": "2d00ab7f4f76e6e565514fea6e76294a7e6625f3526ef755ef08f4b713b328d3"
+    },
+    {
+      "request_sha256": "6e9584243c46d2d74f3bedbad4e6dc55050270b30f229c5288d1d42d2ae3fc43",
+      "phase": "entry",
+      "api": "python:mir_eval.onset.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6e9584243c46d2d74f3bedbad4e6dc55050270b30f229c5288d1d42d2ae3fc43/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6e9584243c46d2d74f3bedbad4e6dc55050270b30f229c5288d1d42d2ae3fc43/attempt_0001/provider.json",
+      "response_sha256": "77ea33ffe90b25feca0932e34099df4327ea4c2a135d36efaef5e1c6a2daf341"
+    },
+    {
+      "request_sha256": "6f1ddf8fb5f466f6b32e354492a65eccc32c39795ac9093e330d629e230f2385",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription_velocity.match_notes",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6f1ddf8fb5f466f6b32e354492a65eccc32c39795ac9093e330d629e230f2385/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6f1ddf8fb5f466f6b32e354492a65eccc32c39795ac9093e330d629e230f2385/attempt_0001/provider.json",
+      "response_sha256": "9734e8c05746f1413265787647a742bd4053a3ff94177598c4d2d4e7344f8848"
+    },
+    {
+      "request_sha256": "6fd85a4876161af0293e1a63d66739cc99a3f559282dead0ffe99f61b5775f46",
+      "phase": "entry",
+      "api": "python:mir_eval.util.adjust_events",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6fd85a4876161af0293e1a63d66739cc99a3f559282dead0ffe99f61b5775f46/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/6fd85a4876161af0293e1a63d66739cc99a3f559282dead0ffe99f61b5775f46/attempt_0001/provider.json",
+      "response_sha256": "41dbabf85db21e33070e584669664052776eb8d2282897444f3d528dd806e9b9"
+    },
+    {
+      "request_sha256": "7268642c5a100260ee8a5d9140602d67b9d1d36349df95cd4fe0b0fbaefa4a37",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/7268642c5a100260ee8a5d9140602d67b9d1d36349df95cd4fe0b0fbaefa4a37/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/7268642c5a100260ee8a5d9140602d67b9d1d36349df95cd4fe0b0fbaefa4a37/attempt_0001/provider.json",
+      "response_sha256": "89dd5df475ecd5cde29be92da56e7ee3c933fe088f65777bcbdb2c7194d445ed"
+    },
+    {
+      "request_sha256": "7316867ee785db94c9e58bd9baa3dee0da4668bee4e40c98a905cdc3e4817d43",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/7316867ee785db94c9e58bd9baa3dee0da4668bee4e40c98a905cdc3e4817d43/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/7316867ee785db94c9e58bd9baa3dee0da4668bee4e40c98a905cdc3e4817d43/attempt_0001/provider.json",
+      "response_sha256": "f6260fcdcd93472047705a8a8f161b449a3680ee170455fc8f9399fe2444dd78"
+    },
+    {
+      "request_sha256": "73979dfc481218923b88ff7aa09a06f0f16211c3609b6bcd03105ffe907813cf",
+      "phase": "entry",
+      "api": "python:mir_eval.util.intervals_to_durations",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/73979dfc481218923b88ff7aa09a06f0f16211c3609b6bcd03105ffe907813cf/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/73979dfc481218923b88ff7aa09a06f0f16211c3609b6bcd03105ffe907813cf/attempt_0001/provider.json",
+      "response_sha256": "46f05f6269d0491828e79266e230cb74202acb19b10d480ccc9369b6457f143c"
+    },
+    {
+      "request_sha256": "788c3c7a3fc9865dade1f8661605f55b3e95c527c817fb45d679bbdbe71acd98",
+      "phase": "entry",
+      "api": "python:mir_eval.tempo.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/788c3c7a3fc9865dade1f8661605f55b3e95c527c817fb45d679bbdbe71acd98/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/788c3c7a3fc9865dade1f8661605f55b3e95c527c817fb45d679bbdbe71acd98/attempt_0001/provider.json",
+      "response_sha256": "9ec1c82a8adbca77f5de33be75ab9bb49752783733fb0a05a49425d6f074a4ec"
+    },
+    {
+      "request_sha256": "8016b703d67b96c79ae8a9b893ba4731de4819df0d94c5b902836087aecdb0d4",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.overseg",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8016b703d67b96c79ae8a9b893ba4731de4819df0d94c5b902836087aecdb0d4/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8016b703d67b96c79ae8a9b893ba4731de4819df0d94c5b902836087aecdb0d4/attempt_0001/provider.json",
+      "response_sha256": "e1bc5388cdd8319606468d6c1c4778e2097d34fa655fee4422051ce9af74538e"
+    },
+    {
+      "request_sha256": "80a93cc3339155997cbb2e13fb28bd0a82dc5dcea45ccbcbfe5d0e2c6c075c32",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.resample_melody_series",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/80a93cc3339155997cbb2e13fb28bd0a82dc5dcea45ccbcbfe5d0e2c6c075c32/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/80a93cc3339155997cbb2e13fb28bd0a82dc5dcea45ccbcbfe5d0e2c6c075c32/attempt_0001/provider.json",
+      "response_sha256": "fd03a3cd244ed9f184ce9f1283788a356c7ced27acc1fe0b0939c61eaeb3e590"
+    },
+    {
+      "request_sha256": "8141bc142e5dbb8a502961b13f4ab3dcb0977d26ca6021bed3a1a505198f41a1",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.nce",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8141bc142e5dbb8a502961b13f4ab3dcb0977d26ca6021bed3a1a505198f41a1/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8141bc142e5dbb8a502961b13f4ab3dcb0977d26ca6021bed3a1a505198f41a1/attempt_0001/provider.json",
+      "response_sha256": "2bdae4293855cdfd9f69ff166e6914e25e10a17258f0a51795cd949774174609"
+    },
+    {
+      "request_sha256": "84b79c662b3cf06c6b51faaf95dd710a326d1892b47a6976b407c3908775fb5f",
+      "phase": "entry",
+      "api": "python:mir_eval.util.generate_labels",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/84b79c662b3cf06c6b51faaf95dd710a326d1892b47a6976b407c3908775fb5f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/84b79c662b3cf06c6b51faaf95dd710a326d1892b47a6976b407c3908775fb5f/attempt_0001/provider.json",
+      "response_sha256": "790afc8571e62367411d7249073ed8f6a9281a71058431e96ae96267dbb9e9fd"
+    },
+    {
+      "request_sha256": "85895e2185b2539fa01d5a9c8d089738b30541e54b1c6ccb1619aa1f6e01fa20",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_delimited",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/85895e2185b2539fa01d5a9c8d089738b30541e54b1c6ccb1619aa1f6e01fa20/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/85895e2185b2539fa01d5a9c8d089738b30541e54b1c6ccb1619aa1f6e01fa20/attempt_0001/provider.json",
+      "response_sha256": "92cb565d5c9e8f95b691504a769d53675fc8e4e05e21af8e0c88d82c6bb393a6"
+    },
+    {
+      "request_sha256": "8616ca58e4fa6fce37b1b7224d0416469964a3f19a1e1e87a046f165860c0dfe",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.InvalidChordException",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8616ca58e4fa6fce37b1b7224d0416469964a3f19a1e1e87a046f165860c0dfe/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8616ca58e4fa6fce37b1b7224d0416469964a3f19a1e1e87a046f165860c0dfe/attempt_0001/provider.json",
+      "response_sha256": "294d365ccc72b60031aa79c0e6bdab56925dfb8854fe633b0c34332181bc8f47"
+    },
+    {
+      "request_sha256": "87a136e29492be8c4503e02e9402747c93a9cd2eaf7abd64d57fbef0774a7ae0",
+      "phase": "entry",
+      "api": "python:mir_eval.hierarchy.lmeasure",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/87a136e29492be8c4503e02e9402747c93a9cd2eaf7abd64d57fbef0774a7ae0/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/87a136e29492be8c4503e02e9402747c93a9cd2eaf7abd64d57fbef0774a7ae0/attempt_0001/provider.json",
+      "response_sha256": "9aae9606f3b8ca34f8928d97068c9c4030001596e432d9b32784b08933347db5"
+    },
+    {
+      "request_sha256": "886ed7061319a6d90ce90ea0eeb020f5014009b02999d2f6876c22976012cbb9",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.f_measure",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/886ed7061319a6d90ce90ea0eeb020f5014009b02999d2f6876c22976012cbb9/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/886ed7061319a6d90ce90ea0eeb020f5014009b02999d2f6876c22976012cbb9/attempt_0001/provider.json",
+      "response_sha256": "b6bc64c17793afb8523a8354c8394ac86344d026b8dce1b156ba064857a4de15"
+    },
+    {
+      "request_sha256": "8981aeb56f6ac0a16cc55a64d866eab9f07ce7f780f241b0bb32e244d379d8d2",
+      "phase": "entry",
+      "api": "python:mir_eval.util.merge_labeled_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8981aeb56f6ac0a16cc55a64d866eab9f07ce7f780f241b0bb32e244d379d8d2/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8981aeb56f6ac0a16cc55a64d866eab9f07ce7f780f241b0bb32e244d379d8d2/attempt_0001/provider.json",
+      "response_sha256": "ccbe73879a946b74234f596f3cac3896f2ca158d08c3cd91a79a48f71f476d39"
+    },
+    {
+      "request_sha256": "8c401fbbb840eb71cbec78fde5c67d53360b9532984cb3954b0b4eb4600c813f",
+      "phase": "entry",
+      "api": "python:mir_eval.hierarchy.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8c401fbbb840eb71cbec78fde5c67d53360b9532984cb3954b0b4eb4600c813f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8c401fbbb840eb71cbec78fde5c67d53360b9532984cb3954b0b4eb4600c813f/attempt_0001/provider.json",
+      "response_sha256": "e45f79d1672900ba0543df727d9f979f2245bdeb4636caa062635ab38c74a147"
+    },
+    {
+      "request_sha256": "8d27f98772b71782c640a41bd7cfc8ef16be90541363967f38f0ad2485b9c005",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.join",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8d27f98772b71782c640a41bd7cfc8ef16be90541363967f38f0ad2485b9c005/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8d27f98772b71782c640a41bd7cfc8ef16be90541363967f38f0ad2485b9c005/attempt_0001/provider.json",
+      "response_sha256": "f3011513b1e10de97a4ca866654fa503379ef135fa7d8e36acf347e15e3b3103"
+    },
+    {
+      "request_sha256": "8e9307491b045608edeb775099a4f062f9445c2c3cda57149b84b918bd154f48",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.offset_precision_recall_f1",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8e9307491b045608edeb775099a4f062f9445c2c3cda57149b84b918bd154f48/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8e9307491b045608edeb775099a4f062f9445c2c3cda57149b84b918bd154f48/attempt_0001/provider.json",
+      "response_sha256": "f224fa802c5d405e977d6ea94503c8fca88a46675ff6980638651f0399fb08a8"
+    },
+    {
+      "request_sha256": "8e986ea023d922f7870c3784ce6b664b28b521f68dc288d39f5be3fb3aafe0bd",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.precision_recall_f1_overlap",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8e986ea023d922f7870c3784ce6b664b28b521f68dc288d39f5be3fb3aafe0bd/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8e986ea023d922f7870c3784ce6b664b28b521f68dc288d39f5be3fb3aafe0bd/attempt_0001/provider.json",
+      "response_sha256": "761c4ae7287077c9858e40859da2e8fe319fae0b9eb886e45c451f6af383904d"
+    },
+    {
+      "request_sha256": "8ed1708ac2898c731d473a0ad1982bcc6f077cb7e6a1951dcf9ede955494fba2",
+      "phase": "entry",
+      "api": "python:mir_eval.util.validate_events",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8ed1708ac2898c731d473a0ad1982bcc6f077cb7e6a1951dcf9ede955494fba2/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/8ed1708ac2898c731d473a0ad1982bcc6f077cb7e6a1951dcf9ede955494fba2/attempt_0001/provider.json",
+      "response_sha256": "ff7dbb8e77d65acd8fee9a4dec8e891b37aa5d958b8816777b481a3472077402"
+    },
+    {
+      "request_sha256": "90d6e2329bb30a23ebf24aa42848848a28390871c052a5fb9854eb930bd00c1b",
+      "phase": "entry",
+      "api": "python:mir_eval.hierarchy.validate_hier_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/90d6e2329bb30a23ebf24aa42848848a28390871c052a5fb9854eb930bd00c1b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/90d6e2329bb30a23ebf24aa42848848a28390871c052a5fb9854eb930bd00c1b/attempt_0001/provider.json",
+      "response_sha256": "b56592023abfd940258bae06808f00898a13ce0cc82db7ad5233e3a6ba993532"
+    },
+    {
+      "request_sha256": "91501654cfac32ff08aadc81a7ac113b2f9e7a54b3df6dbd0eaa547d2fd2deb5",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.reduce_extended_quality",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/91501654cfac32ff08aadc81a7ac113b2f9e7a54b3df6dbd0eaa547d2fd2deb5/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/91501654cfac32ff08aadc81a7ac113b2f9e7a54b3df6dbd0eaa547d2fd2deb5/attempt_0001/provider.json",
+      "response_sha256": "90822d49d0f356f54ff09275a708691a3d73e986f3f2e51fbc6e37bad176c0ae"
+    },
+    {
+      "request_sha256": "98eb7aa1cecc72b93b01e77cf6e9d9200cb53f6a1b2804c464c8c522e3cffb0c",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.rotate_bitmaps_to_roots",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/98eb7aa1cecc72b93b01e77cf6e9d9200cb53f6a1b2804c464c8c522e3cffb0c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/98eb7aa1cecc72b93b01e77cf6e9d9200cb53f6a1b2804c464c8c522e3cffb0c/attempt_0001/provider.json",
+      "response_sha256": "3feb6f4fa18447c2066d1a8f013ce02ce888d143bddb9771d7c091d8974ab8a0"
+    },
+    {
+      "request_sha256": "99d283a40a169d834c1febe18a1eead4d5ec3eaf76773b9b7fecbad75a84748f",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.overall_accuracy",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/99d283a40a169d834c1febe18a1eead4d5ec3eaf76773b9b7fecbad75a84748f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/99d283a40a169d834c1febe18a1eead4d5ec3eaf76773b9b7fecbad75a84748f/attempt_0001/provider.json",
+      "response_sha256": "e699029c8a95f04440844cda02b71174acbd20db3cb16cd19ca3654febcaa9e3"
+    },
+    {
+      "request_sha256": "9ab2a08df56b1ecb5da61e3ebe35df8c222c3caa8fecf5d5b4b0d1ebc3c39e8a",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.match_note_offsets",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/9ab2a08df56b1ecb5da61e3ebe35df8c222c3caa8fecf5d5b4b0d1ebc3c39e8a/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/9ab2a08df56b1ecb5da61e3ebe35df8c222c3caa8fecf5d5b4b0d1ebc3c39e8a/attempt_0001/provider.json",
+      "response_sha256": "da2c2180d76e4dc606f511e9dc76a49e5d88da8a99d2fc66c202f97caa79a0e8"
+    },
+    {
+      "request_sha256": "9b1891a6c058a0e2c43a9e7276bbc721f1be2cded00f339d243ff3f3fca5cd70",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.deviation",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/9b1891a6c058a0e2c43a9e7276bbc721f1be2cded00f339d243ff3f3fca5cd70/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/9b1891a6c058a0e2c43a9e7276bbc721f1be2cded00f339d243ff3f3fca5cd70/attempt_0001/provider.json",
+      "response_sha256": "c5bf098504e837272f2de12d60f55d16c4d24e6749dce011a69335a03c8aa413"
+    },
+    {
+      "request_sha256": "9b3e5cfe5345f9659f904bdb314da5dffee2696965f9b480fd129204be7e1136",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.scale_degree_to_bitmap",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/9b3e5cfe5345f9659f904bdb314da5dffee2696965f9b480fd129204be7e1136/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/9b3e5cfe5345f9659f904bdb314da5dffee2696965f9b480fd129204be7e1136/attempt_0001/provider.json",
+      "response_sha256": "c60188354c0bcde01d8f48355543b5aa7d6c7d7456be5a5fb7baec0162168c58"
+    },
+    {
+      "request_sha256": "a15c46e27681c22132e65db049fd4c72970e2431bceb05084639bba67181001b",
+      "phase": "entry",
+      "api": "python:mir_eval.util.filter_kwargs",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a15c46e27681c22132e65db049fd4c72970e2431bceb05084639bba67181001b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a15c46e27681c22132e65db049fd4c72970e2431bceb05084639bba67181001b/attempt_0001/provider.json",
+      "response_sha256": "0c01d99afb110c6b6c72fe8559aed1787d33e2a345493d74acefcf583771b287"
+    },
+    {
+      "request_sha256": "a2e24f4cb80bd3de8c201af6a4a7ad640677e1e8bd90d65e783e664da4c90566",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.sevenths_inv",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a2e24f4cb80bd3de8c201af6a4a7ad640677e1e8bd90d65e783e664da4c90566/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a2e24f4cb80bd3de8c201af6a4a7ad640677e1e8bd90d65e783e664da4c90566/attempt_0001/provider.json",
+      "response_sha256": "b93a9abd2503b82329824df523135fbeed5ed0762042266dd6b14a3d193bf74d"
+    },
+    {
+      "request_sha256": "a39c86879043b0a522704ea4aca92dc75cd7b4f2b8e46b8d09279920357f7cbc",
+      "phase": "entry",
+      "api": "python:mir_eval.separation.bss_eval_sources_framewise",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a39c86879043b0a522704ea4aca92dc75cd7b4f2b8e46b8d09279920357f7cbc/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a39c86879043b0a522704ea4aca92dc75cd7b4f2b8e46b8d09279920357f7cbc/attempt_0001/provider.json",
+      "response_sha256": "34861b7567ed02cd24ea31ec88f97fc9ed0f983610c8deb41c0969660a03f714"
+    },
+    {
+      "request_sha256": "a3d1d83936e6b986b439c32a974d12501c7601e6d5801c9c5dbf317d03f460ee",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.match_notes",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a3d1d83936e6b986b439c32a974d12501c7601e6d5801c9c5dbf317d03f460ee/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a3d1d83936e6b986b439c32a974d12501c7601e6d5801c9c5dbf317d03f460ee/attempt_0001/provider.json",
+      "response_sha256": "0fba9da2048ecb74a8750a1c469a0b32d139a95a7b12efe50e4daf179feab542"
+    },
+    {
+      "request_sha256": "a567ffd4bace164192558029424be22ee313b797a591341db6499e47c6dbb5d5",
+      "phase": "entry",
+      "api": "python:mir_eval.util.sort_labeled_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a567ffd4bace164192558029424be22ee313b797a591341db6499e47c6dbb5d5/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a567ffd4bace164192558029424be22ee313b797a591341db6499e47c6dbb5d5/attempt_0001/provider.json",
+      "response_sha256": "e644c673144fd1ea49b9cc30b74eb574fcaa5f3cebd1011c85cfbb3e40d08c35"
+    },
+    {
+      "request_sha256": "a6776486a06ca7058a20ac0b783d5c3e8b97e7eda8b3c08788b496b69f351ae4",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.pairwise",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a6776486a06ca7058a20ac0b783d5c3e8b97e7eda8b3c08788b496b69f351ae4/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a6776486a06ca7058a20ac0b783d5c3e8b97e7eda8b3c08788b496b69f351ae4/attempt_0001/provider.json",
+      "response_sha256": "073bc530dac6b934847465ba142c76d183b96e800a3f94b4a3773adaa4be0370"
+    },
+    {
+      "request_sha256": "a6d1d67f6417836222a48f7d11ee9b38b80c8f84862e424e263a36ab68afc67f",
+      "phase": "entry",
+      "api": "python:mir_eval.util.deprecated",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a6d1d67f6417836222a48f7d11ee9b38b80c8f84862e424e263a36ab68afc67f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a6d1d67f6417836222a48f7d11ee9b38b80c8f84862e424e263a36ab68afc67f/attempt_0001/provider.json",
+      "response_sha256": "36b98f55e7a54cec2724d31c0a7c6cb157b6e2a5c84396c275ed53aabd46bf08"
+    },
+    {
+      "request_sha256": "a760dfba05cbfc294a840b31069b93f9a4d0f0401a4dcf4367898495376c8579",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.raw_pitch_accuracy",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a760dfba05cbfc294a840b31069b93f9a4d0f0401a4dcf4367898495376c8579/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a760dfba05cbfc294a840b31069b93f9a4d0f0401a4dcf4367898495376c8579/attempt_0001/provider.json",
+      "response_sha256": "9d4251659f7708a77c497777072f1a6b01a95f0144268a2594fd55aa4ca581e4"
+    },
+    {
+      "request_sha256": "a772279b77d40d43bde610fe404ca2da1326601d3702c16f13563e54159e3f55",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.first_n_three_layer_P",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a772279b77d40d43bde610fe404ca2da1326601d3702c16f13563e54159e3f55/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a772279b77d40d43bde610fe404ca2da1326601d3702c16f13563e54159e3f55/attempt_0001/provider.json",
+      "response_sha256": "5cdefa48e06fd7ea759bb5f84a773b75c323879693c75ab1f4ba9a3612ca395c"
+    },
+    {
+      "request_sha256": "a8a668f0a3a7b73fd7a376e439e7d403e80e35575702cb84ecf23b00ca55067d",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.establishment_FPR",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a8a668f0a3a7b73fd7a376e439e7d403e80e35575702cb84ecf23b00ca55067d/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/a8a668f0a3a7b73fd7a376e439e7d403e80e35575702cb84ecf23b00ca55067d/attempt_0001/provider.json",
+      "response_sha256": "dc59ac760997d02cd9c6ffb692619637f0762fe3b5a0c9b6ba4653a8be667025"
+    },
+    {
+      "request_sha256": "aa0ba5b43b1fbdc8686d0f5210dba9ef596fd9140651e952c84f4e52b7af0c6f",
+      "phase": "entry",
+      "api": "python:mir_eval.alignment.absolute_error",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/aa0ba5b43b1fbdc8686d0f5210dba9ef596fd9140651e952c84f4e52b7af0c6f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/aa0ba5b43b1fbdc8686d0f5210dba9ef596fd9140651e952c84f4e52b7af0c6f/attempt_0001/provider.json",
+      "response_sha256": "3f94a3558f1d9f824cfbf9f8724609218f8be7781a1114264651e3f27840e08c"
+    },
+    {
+      "request_sha256": "ad3be469f4e4dff76447907e3d1937441f0e087393ae60222dddca32535ebe69",
+      "phase": "entry",
+      "api": "python:mir_eval.display.multipitch",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ad3be469f4e4dff76447907e3d1937441f0e087393ae60222dddca32535ebe69/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ad3be469f4e4dff76447907e3d1937441f0e087393ae60222dddca32535ebe69/attempt_0001/provider.json",
+      "response_sha256": "5d76913c93ee0d33d9c5c060a28dac48298bb8b392d7050cb74b7818dec49be2"
+    },
+    {
+      "request_sha256": "adb2fd2af29922fb87cb488668dbf6ae1b947a9338c2b9bf745f1bb913b41b21",
+      "phase": "entry",
+      "api": "python:mir_eval.hierarchy.tmeasure",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/adb2fd2af29922fb87cb488668dbf6ae1b947a9338c2b9bf745f1bb913b41b21/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/adb2fd2af29922fb87cb488668dbf6ae1b947a9338c2b9bf745f1bb913b41b21/attempt_0001/provider.json",
+      "response_sha256": "4a1dc0f0bcf6b31c076b6f67b568efc9a27114c1a9d12fecad8f09df260ee85e"
+    },
+    {
+      "request_sha256": "adbf15580b77448660a2b2ffecefce8e393546b26352c6f00adbc6aa503444e9",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.metrics",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/adbf15580b77448660a2b2ffecefce8e393546b26352c6f00adbc6aa503444e9/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/adbf15580b77448660a2b2ffecefce8e393546b26352c6f00adbc6aa503444e9/attempt_0001/provider.json",
+      "response_sha256": "5674b0e9f92a70a2a2c5f91f49223673c7dbd54eebe10fbea5c42d1fc0968b27"
+    },
+    {
+      "request_sha256": "afa7c0f726a850836d9fb614eb8473afaff5cebfa4803506855b1fe74a262311",
+      "phase": "entry",
+      "api": "python:mir_eval.util.hz_to_midi",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/afa7c0f726a850836d9fb614eb8473afaff5cebfa4803506855b1fe74a262311/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/afa7c0f726a850836d9fb614eb8473afaff5cebfa4803506855b1fe74a262311/attempt_0001/provider.json",
+      "response_sha256": "dabe8892019b3117b140c7afd7c5c87d66b2c116ab3404245e8c98e99eceebcb"
+    },
+    {
+      "request_sha256": "b15bc9f74be0a15bc2dc5cf728aac932de5d37a2d8168b5e6e25738468c5cbe7",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.ari",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b15bc9f74be0a15bc2dc5cf728aac932de5d37a2d8168b5e6e25738468c5cbe7/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b15bc9f74be0a15bc2dc5cf728aac932de5d37a2d8168b5e6e25738468c5cbe7/attempt_0001/provider.json",
+      "response_sha256": "8f530b55dffd133a4ad0f5879ba50c1d6a6b263d6b19a670a8168fcdf3f27307"
+    },
+    {
+      "request_sha256": "b45b6c22737b1e9d981630e0b5f18a3d98255a97b19b66db0b1fd533b96b3d5a",
+      "phase": "entry",
+      "api": "python:mir_eval.sonify.time_frequency",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b45b6c22737b1e9d981630e0b5f18a3d98255a97b19b66db0b1fd533b96b3d5a/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b45b6c22737b1e9d981630e0b5f18a3d98255a97b19b66db0b1fd533b96b3d5a/attempt_0001/provider.json",
+      "response_sha256": "f467915f2efcd0d5a8e8ba565fb4657479c32eeec0f69c57e73e43c76c0923b3"
+    },
+    {
+      "request_sha256": "b555a963e603cef343b5895c558aabb1bd3c5def9bf4fb03923c9da4d347b025",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b555a963e603cef343b5895c558aabb1bd3c5def9bf4fb03923c9da4d347b025/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b555a963e603cef343b5895c558aabb1bd3c5def9bf4fb03923c9da4d347b025/attempt_0001/provider.json",
+      "response_sha256": "36d0c0e6c2f7d57923041e682313e6385987e80f8a1393149a1ee46368cdd09a"
+    },
+    {
+      "request_sha256": "b666130cad98f943addae82fb04ebea9a7e1c26795d0740c33171631d3b2ab8c",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.triads_inv",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b666130cad98f943addae82fb04ebea9a7e1c26795d0740c33171631d3b2ab8c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b666130cad98f943addae82fb04ebea9a7e1c26795d0740c33171631d3b2ab8c/attempt_0001/provider.json",
+      "response_sha256": "aff9e74a83069021a42ba8edf195402a66d9f6763eaa710811052fc0efb9b20b"
+    },
+    {
+      "request_sha256": "b7ca718639916b4fffef4b5bcda476c41d3e7b87f0d9ef6d09c86c28950a5787",
+      "phase": "entry",
+      "api": "python:mir_eval.util.validate_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b7ca718639916b4fffef4b5bcda476c41d3e7b87f0d9ef6d09c86c28950a5787/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b7ca718639916b4fffef4b5bcda476c41d3e7b87f0d9ef6d09c86c28950a5787/attempt_0001/provider.json",
+      "response_sha256": "bb4f1f27f70b5c38b323289e59b82ce9bc79d4fb56873a857c7f4d554cf97aef"
+    },
+    {
+      "request_sha256": "b7cf9c4e010f4fb0b6f9c216e90eda070a0338c5b7a71d78f101d98449510679",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.information_gain",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b7cf9c4e010f4fb0b6f9c216e90eda070a0338c5b7a71d78f101d98449510679/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b7cf9c4e010f4fb0b6f9c216e90eda070a0338c5b7a71d78f101d98449510679/attempt_0001/provider.json",
+      "response_sha256": "f3da42cf0564dabcd4192990b3b2a61123705440168788b9d5591ca4b5ecc8f4"
+    },
+    {
+      "request_sha256": "b8f7a5e3682702818faf826a2e5a5d10c6cdc0ecc75504bd4385b5832ea1ba88",
+      "phase": "entry",
+      "api": "python:mir_eval.key.validate_key",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b8f7a5e3682702818faf826a2e5a5d10c6cdc0ecc75504bd4385b5832ea1ba88/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/b8f7a5e3682702818faf826a2e5a5d10c6cdc0ecc75504bd4385b5832ea1ba88/attempt_0001/provider.json",
+      "response_sha256": "83b07ab055a66f27dc253acca11bdfdad7bc07fa74213c1b93ff6cf519f8b585"
+    },
+    {
+      "request_sha256": "bb120ea3f8d16db8a45d76830627b321a463de6d67e7ede67be8f8dba1761d67",
+      "phase": "entry",
+      "api": "python:mir_eval.separation.bss_eval_images",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/bb120ea3f8d16db8a45d76830627b321a463de6d67e7ede67be8f8dba1761d67/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/bb120ea3f8d16db8a45d76830627b321a463de6d67e7ede67be8f8dba1761d67/attempt_0001/provider.json",
+      "response_sha256": "478d87072c2a083fe0e388d2253358a078ecef38667e1dd30d52ba85bc1bc97c"
+    },
+    {
+      "request_sha256": "bbfade2c6093b281e9a9647d660a087998d7dffecafedafa1e1568604cd168b5",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.to_cent_voicing",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/bbfade2c6093b281e9a9647d660a087998d7dffecafedafa1e1568604cd168b5/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/bbfade2c6093b281e9a9647d660a087998d7dffecafedafa1e1568604cd168b5/attempt_0001/provider.json",
+      "response_sha256": "7115af824a02a861912f3b630e49eefbefba940ee98b7b1b680e45936d3d7d89"
+    },
+    {
+      "request_sha256": "beaf4ebccd2401a94956fb91f8423ba957f60989fc361ebcba47b93a47cc4b39",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.three_layer_FPR",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/beaf4ebccd2401a94956fb91f8423ba957f60989fc361ebcba47b93a47cc4b39/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/beaf4ebccd2401a94956fb91f8423ba957f60989fc361ebcba47b93a47cc4b39/attempt_0001/provider.json",
+      "response_sha256": "0bd3941916a0d0666305197721a8898cc03ea33ad42bad7b1dde4c6aa06e4c3a"
+    },
+    {
+      "request_sha256": "c0ba53f5896595df487189e7f811c2d071f2a2cf81a77c5d117e6751aa0c8512",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.pitch_class_to_semitone",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c0ba53f5896595df487189e7f811c2d071f2a2cf81a77c5d117e6751aa0c8512/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c0ba53f5896595df487189e7f811c2d071f2a2cf81a77c5d117e6751aa0c8512/attempt_0001/provider.json",
+      "response_sha256": "3315132116b7f0e96beca35cd89fc66f15e45c1c6b151d03cd100699e313b1ab"
+    },
+    {
+      "request_sha256": "c37283abb623a96b1f870e43a98d6c0188bd94cf66f27b114b64949e921121d8",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.split",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c37283abb623a96b1f870e43a98d6c0188bd94cf66f27b114b64949e921121d8/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c37283abb623a96b1f870e43a98d6c0188bd94cf66f27b114b64949e921121d8/attempt_0001/provider.json",
+      "response_sha256": "be695e18de0ad83b13d3c788ad892b6a9fa9b9ba18979b76cd3f212c8cc54c37"
+    },
+    {
+      "request_sha256": "c532e1bbb2ac6e826ec534d892c99b540db49e4cc20407eda0340ab196eb5fe6",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.underseg",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c532e1bbb2ac6e826ec534d892c99b540db49e4cc20407eda0340ab196eb5fe6/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c532e1bbb2ac6e826ec534d892c99b540db49e4cc20407eda0340ab196eb5fe6/attempt_0001/provider.json",
+      "response_sha256": "b3276e285d0cc3e6bd523a135452ca067fb9c40a1ad178daf76a87a21b4f4902"
+    },
+    {
+      "request_sha256": "c5d7e787425962c6731c8a839c0460cf6205b19452f74d1453716438d9b11c12",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_wav",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c5d7e787425962c6731c8a839c0460cf6205b19452f74d1453716438d9b11c12/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c5d7e787425962c6731c8a839c0460cf6205b19452f74d1453716438d9b11c12/attempt_0001/provider.json",
+      "response_sha256": "b03c4f26b6cd415d086d9d16dc51443ebacd33a424f19d751aa238f5919f6fdb"
+    },
+    {
+      "request_sha256": "c60077d1f4f838610d044411689dd6c4e637b866f353ce43543f952352c6a847",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.scale_degree_to_semitone",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c60077d1f4f838610d044411689dd6c4e637b866f353ce43543f952352c6a847/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c60077d1f4f838610d044411689dd6c4e637b866f353ce43543f952352c6a847/attempt_0001/provider.json",
+      "response_sha256": "51b50381d2d5e2156c33afaa7483e232836abeba531a0573dbfa95ff08dd5726"
+    },
+    {
+      "request_sha256": "c987444fb950a413ea081e705e0f52c8df77607a3fb469c36f1e5319481b6161",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c987444fb950a413ea081e705e0f52c8df77607a3fb469c36f1e5319481b6161/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c987444fb950a413ea081e705e0f52c8df77607a3fb469c36f1e5319481b6161/attempt_0001/provider.json",
+      "response_sha256": "46ecd6e672f79a62856ccd6de2047575ce2458cb019c9fc03c778455351d0a74"
+    },
+    {
+      "request_sha256": "c98783934d9d400eb51c941625ca4c75416d9189fee1346f7ffd45d09df7fce3",
+      "phase": "entry",
+      "api": "python:mir_eval.segment.validate_structure",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c98783934d9d400eb51c941625ca4c75416d9189fee1346f7ffd45d09df7fce3/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/c98783934d9d400eb51c941625ca4c75416d9189fee1346f7ffd45d09df7fce3/attempt_0001/provider.json",
+      "response_sha256": "1b2d2127b753f681d4aecbd3f8ec12aa21d016ec20595f6091b6ff72054806b9"
+    },
+    {
+      "request_sha256": "ca31b9525c127228b1a235e8796e888a7728c1d8bce7836eb6affee5eeb7b496",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.compute_num_true_positives",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ca31b9525c127228b1a235e8796e888a7728c1d8bce7836eb6affee5eeb7b496/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ca31b9525c127228b1a235e8796e888a7728c1d8bce7836eb6affee5eeb7b496/attempt_0001/provider.json",
+      "response_sha256": "0ca202435ee6109d2b98a83a367a475909d5903a0c0e58df0029224c2716998d"
+    },
+    {
+      "request_sha256": "caf35888fb96f8cfe519da0d97f1518fc3ca46b3e19dc184487b878aefa4ab1b",
+      "phase": "entry",
+      "api": "python:mir_eval.alignment.percentage_correct",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/caf35888fb96f8cfe519da0d97f1518fc3ca46b3e19dc184487b878aefa4ab1b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/caf35888fb96f8cfe519da0d97f1518fc3ca46b3e19dc184487b878aefa4ab1b/attempt_0001/provider.json",
+      "response_sha256": "0ab35d5c4cb9a107befe7d25b84e52449e72b935eb275a275f98d5a8aeeed2bf"
+    },
+    {
+      "request_sha256": "cafd9b64f3639fa52e95cf7ff8a384646781e69d84b6ae5569d5ae24e4ce065e",
+      "phase": "entry",
+      "api": "python:mir_eval.onset.f_measure",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cafd9b64f3639fa52e95cf7ff8a384646781e69d84b6ae5569d5ae24e4ce065e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cafd9b64f3639fa52e95cf7ff8a384646781e69d84b6ae5569d5ae24e4ce065e/attempt_0001/provider.json",
+      "response_sha256": "4a1b3457f07817ef3e65d5ccbd4fb03b4476225147add3e91124c57bab9972d4"
+    },
+    {
+      "request_sha256": "cb43954e76d02e1590e890c93c4bfad10c1f4262aa53f83dcd40edf94dcf7e67",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription_velocity.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cb43954e76d02e1590e890c93c4bfad10c1f4262aa53f83dcd40edf94dcf7e67/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cb43954e76d02e1590e890c93c4bfad10c1f4262aa53f83dcd40edf94dcf7e67/attempt_0001/provider.json",
+      "response_sha256": "68261ad3fa064d06fce6d99d737344fb7f1169fe416c90899bcd1fc837932acd"
+    },
+    {
+      "request_sha256": "cc26550539e2883009c1181c83b205149996e631f508a04f1839aaef743dc0bc",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.quality_to_bitmap",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cc26550539e2883009c1181c83b205149996e631f508a04f1839aaef743dc0bc/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cc26550539e2883009c1181c83b205149996e631f508a04f1839aaef743dc0bc/attempt_0001/provider.json",
+      "response_sha256": "4322bcc960f46f5a760975075dd8b21fa07461b23553d5f4a7b0ee7b467ba9c6"
+    },
+    {
+      "request_sha256": "ccc49debdbb7e335266052fa9f5edd37bf0239e5131cd52b4c23cdfcc5bad18b",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.compute_err_score",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ccc49debdbb7e335266052fa9f5edd37bf0239e5131cd52b4c23cdfcc5bad18b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ccc49debdbb7e335266052fa9f5edd37bf0239e5131cd52b4c23cdfcc5bad18b/attempt_0001/provider.json",
+      "response_sha256": "fcf048a15a3305c56a4af4d2f78118a1bab99616dcafece5d23bd8747cda74a3"
+    },
+    {
+      "request_sha256": "cfd460b6ce3502d100f0670a77e188d15bc96544f8cc0d44ff9fd3a42de88e48",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_labeled_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cfd460b6ce3502d100f0670a77e188d15bc96544f8cc0d44ff9fd3a42de88e48/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/cfd460b6ce3502d100f0670a77e188d15bc96544f8cc0d44ff9fd3a42de88e48/attempt_0001/provider.json",
+      "response_sha256": "41455a4c434d06d2c716e0b0b0e93ad3f376707ed832077adb1392c1225f1218"
+    },
+    {
+      "request_sha256": "d057ae5e116b348ff60bf594b541d9a3b77a0974edf7914f3082f2d30d60975c",
+      "phase": "entry",
+      "api": "python:mir_eval.display.pitch",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d057ae5e116b348ff60bf594b541d9a3b77a0974edf7914f3082f2d30d60975c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d057ae5e116b348ff60bf594b541d9a3b77a0974edf7914f3082f2d30d60975c/attempt_0001/provider.json",
+      "response_sha256": "069a4f1e9a4da77f49bc0517db66d53155fd147244488b2793595de5b93bb566"
+    },
+    {
+      "request_sha256": "d30cf120845ce9e2756b0fad286f5e2d7d76d3e6c4403672dd15dd865cc3b7df",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d30cf120845ce9e2756b0fad286f5e2d7d76d3e6c4403672dd15dd865cc3b7df/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d30cf120845ce9e2756b0fad286f5e2d7d76d3e6c4403672dd15dd865cc3b7df/attempt_0001/provider.json",
+      "response_sha256": "b1de7251df52a9a309a9a24868bc2ebe72e7fd20ee5063a952cc5e3d9e9725b2"
+    },
+    {
+      "request_sha256": "d3538320c2180397018aaad8b3b7188cd62a5071cb5948515f27f878c424052e",
+      "phase": "entry",
+      "api": "python:mir_eval.util.f_measure",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d3538320c2180397018aaad8b3b7188cd62a5071cb5948515f27f878c424052e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d3538320c2180397018aaad8b3b7188cd62a5071cb5948515f27f878c424052e/attempt_0001/provider.json",
+      "response_sha256": "238f91f51551e283358dcb4872c053d5b44e0c6d830fb427ee9af392230ce9e0"
+    },
+    {
+      "request_sha256": "d59e624abd4d3e352bf95797d11db66f161cd4035e2896dd9ce2c68faafb6202",
+      "phase": "entry",
+      "api": "python:mir_eval.util.index_labels",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d59e624abd4d3e352bf95797d11db66f161cd4035e2896dd9ce2c68faafb6202/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d59e624abd4d3e352bf95797d11db66f161cd4035e2896dd9ce2c68faafb6202/attempt_0001/provider.json",
+      "response_sha256": "16f251b089973499684022f41ed2b0db8299fd749dcad9da0d47b4bcc66bcfac"
+    },
+    {
+      "request_sha256": "d7e5cfd486d352e49e2d4c57e3c47d6e944fadc6c7a7c23e5d4e585eada39e19",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.average_overlap_ratio",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d7e5cfd486d352e49e2d4c57e3c47d6e944fadc6c7a7c23e5d4e585eada39e19/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d7e5cfd486d352e49e2d4c57e3c47d6e944fadc6c7a7c23e5d4e585eada39e19/attempt_0001/provider.json",
+      "response_sha256": "3edfc73e2c538fe6101ab0ae34984f36b02d3745d9c2f47ee8f7ef6cde44e2e2"
+    },
+    {
+      "request_sha256": "d8b75555e7bcc738530f7426fd0cdf3455abb8b57329ca348600dca1429dc133",
+      "phase": "distill",
+      "api": null,
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d8b75555e7bcc738530f7426fd0cdf3455abb8b57329ca348600dca1429dc133/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d8b75555e7bcc738530f7426fd0cdf3455abb8b57329ca348600dca1429dc133/attempt_0001/provider.json",
+      "response_sha256": "af279b284a320cf5eb375c38e8c858b46b8aefa719b78fb8fb0c29b414a0e2cd"
+    },
+    {
+      "request_sha256": "d8eace9957b10c5573d2c23941d33ccdd996b054222a5cd803dcadf319df87c9",
+      "phase": "entry",
+      "api": "python:mir_eval.io.load_time_series",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d8eace9957b10c5573d2c23941d33ccdd996b054222a5cd803dcadf319df87c9/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/d8eace9957b10c5573d2c23941d33ccdd996b054222a5cd803dcadf319df87c9/attempt_0001/provider.json",
+      "response_sha256": "685e2b2ffa6c47da021f9d9db56d32ca1181417cc6697a21bdf3bb6e331b3b4b"
+    },
+    {
+      "request_sha256": "da95d3444dbe2a9f7a6cae5981965e0f0bbbacc1efbf195115acc26a251d32bf",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.p_score",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/da95d3444dbe2a9f7a6cae5981965e0f0bbbacc1efbf195115acc26a251d32bf/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/da95d3444dbe2a9f7a6cae5981965e0f0bbbacc1efbf195115acc26a251d32bf/attempt_0001/provider.json",
+      "response_sha256": "98d754e5c878ec6acf668144e0928a6ac57413c0beccad56c9bc2d8a5158432e"
+    },
+    {
+      "request_sha256": "dadd49dc6473bb2e9458ed679e47dbf4cfb5e91f99e4430c750d467ec8eb7299",
+      "phase": "entry",
+      "api": "python:mir_eval.transcription.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/dadd49dc6473bb2e9458ed679e47dbf4cfb5e91f99e4430c750d467ec8eb7299/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/dadd49dc6473bb2e9458ed679e47dbf4cfb5e91f99e4430c750d467ec8eb7299/attempt_0001/provider.json",
+      "response_sha256": "75f47ee4c1b5fb59629e57e718d92c5560a9c49f95ee0d72def1044fb3b6a291"
+    },
+    {
+      "request_sha256": "db3c07659be147cd17ea81d7ff2aa679e19d5b3b8160a06e1b3772887966a5b0",
+      "phase": "entry",
+      "api": "python:mir_eval.util.has_kwargs",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/db3c07659be147cd17ea81d7ff2aa679e19d5b3b8160a06e1b3772887966a5b0/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/db3c07659be147cd17ea81d7ff2aa679e19d5b3b8160a06e1b3772887966a5b0/attempt_0001/provider.json",
+      "response_sha256": "9b5899f7d6f0bd9294f036c68a994a65ca248c47ba4fcb9f74bb104fb802d4eb"
+    },
+    {
+      "request_sha256": "db781541d9fd3fc158db4cfd48e86a9e3455614bed53566e08914a4bcace4b8b",
+      "phase": "entry",
+      "api": "python:mir_eval.sonify.chords",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/db781541d9fd3fc158db4cfd48e86a9e3455614bed53566e08914a4bcace4b8b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/db781541d9fd3fc158db4cfd48e86a9e3455614bed53566e08914a4bcace4b8b/attempt_0001/provider.json",
+      "response_sha256": "463bc920e9d5f3effb73a087d1fe05dada25ffa9c966cb83127a8f4528682559"
+    },
+    {
+      "request_sha256": "dbb7bd636b0c1d89f158f7086fccf6926551e5282436051000421288c9fad1ec",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/dbb7bd636b0c1d89f158f7086fccf6926551e5282436051000421288c9fad1ec/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/dbb7bd636b0c1d89f158f7086fccf6926551e5282436051000421288c9fad1ec/attempt_0001/provider.json",
+      "response_sha256": "6a3324894cbcb1e3ff527a20f4842a545ef4c5420715738b21c9ea93d76547d7"
+    },
+    {
+      "request_sha256": "df7c44a0aa678f7dc26402e5c99ec4597341458b76cf8671e546807f3346d392",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.continuity",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/df7c44a0aa678f7dc26402e5c99ec4597341458b76cf8671e546807f3346d392/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/df7c44a0aa678f7dc26402e5c99ec4597341458b76cf8671e546807f3346d392/attempt_0001/provider.json",
+      "response_sha256": "e6aa6e31dd3122f17f223bd39c69d7323e3592a99baeef49fc75d87f716627bb"
+    },
+    {
+      "request_sha256": "e023e7380dd3ea19ae8629f1213f6e5f33ff07c47895405c21724e27845d958c",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.encode",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e023e7380dd3ea19ae8629f1213f6e5f33ff07c47895405c21724e27845d958c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e023e7380dd3ea19ae8629f1213f6e5f33ff07c47895405c21724e27845d958c/attempt_0001/provider.json",
+      "response_sha256": "cad6e90a6e2264212d61a44fe8b07e794a736e7c9211298f437b0dbe50f00939"
+    },
+    {
+      "request_sha256": "e0c535f6d01d7166f60cfb4b845f9fb934664c2bba6075f2ac3a9cd62ed3af63",
+      "phase": "entry",
+      "api": "python:mir_eval.melody.freq_to_voicing",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e0c535f6d01d7166f60cfb4b845f9fb934664c2bba6075f2ac3a9cd62ed3af63/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e0c535f6d01d7166f60cfb4b845f9fb934664c2bba6075f2ac3a9cd62ed3af63/attempt_0001/provider.json",
+      "response_sha256": "6663a68a3b187d280c11c80e1798e31c1db5784606ab4f24995700dcf5775345"
+    },
+    {
+      "request_sha256": "e3002219d0283fb35ab39cdffac35114bd009d0da2dae8b185a1bbc17b34fed1",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.compute_num_freqs",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e3002219d0283fb35ab39cdffac35114bd009d0da2dae8b185a1bbc17b34fed1/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e3002219d0283fb35ab39cdffac35114bd009d0da2dae8b185a1bbc17b34fed1/attempt_0001/provider.json",
+      "response_sha256": "aef8f92ebc88791d86b79b6aca416683a97c5f70d83399f6a2c94569ff147363"
+    },
+    {
+      "request_sha256": "e6127852ee57d01e1a4e3889b4d23c3197c38c9e87f25c9b5780b1015bc3175c",
+      "phase": "entry",
+      "api": "python:mir_eval.tempo.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e6127852ee57d01e1a4e3889b4d23c3197c38c9e87f25c9b5780b1015bc3175c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e6127852ee57d01e1a4e3889b4d23c3197c38c9e87f25c9b5780b1015bc3175c/attempt_0001/provider.json",
+      "response_sha256": "b60a1fd0e9675e82060c00a8966a372552c84de3aa9551c3847f297c54e1e2da"
+    },
+    {
+      "request_sha256": "e80d09b242a06d3ddc6974ab2dee392e2b12c3b96dc7608ff840248674f38020",
+      "phase": "entry",
+      "api": "python:mir_eval.display.segments",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e80d09b242a06d3ddc6974ab2dee392e2b12c3b96dc7608ff840248674f38020/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e80d09b242a06d3ddc6974ab2dee392e2b12c3b96dc7608ff840248674f38020/attempt_0001/provider.json",
+      "response_sha256": "7a8d1c0357e97bfa8e13187d706f191f5616b9d4407fc2d5c85b7b297ba5bdef"
+    },
+    {
+      "request_sha256": "e83917343ab85015a237b5d693692746c1d0de9b2a50a53886dcab28f9206a4f",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.midi_to_chroma",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e83917343ab85015a237b5d693692746c1d0de9b2a50a53886dcab28f9206a4f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e83917343ab85015a237b5d693692746c1d0de9b2a50a53886dcab28f9206a4f/attempt_0001/provider.json",
+      "response_sha256": "6736a2674bb1d2673c19821a80a2373f752cdd32892270d0c12968783c141450"
+    },
+    {
+      "request_sha256": "e88a14f3825d8145022c8b1b477bc1c9e88224c8777f6b812ab73e53751623ac",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.tetrads",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e88a14f3825d8145022c8b1b477bc1c9e88224c8777f6b812ab73e53751623ac/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e88a14f3825d8145022c8b1b477bc1c9e88224c8777f6b812ab73e53751623ac/attempt_0001/provider.json",
+      "response_sha256": "e1cb77c220909ae4d0ad742d8a24de7cf5dccf0c76130f3a2ae45100009cd654"
+    },
+    {
+      "request_sha256": "e91e7f6caa0daee85cd3d6b8f64ad38630401acd46b762cd083c7abe17b53112",
+      "phase": "entry",
+      "api": "python:mir_eval.util.adjust_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e91e7f6caa0daee85cd3d6b8f64ad38630401acd46b762cd083c7abe17b53112/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/e91e7f6caa0daee85cd3d6b8f64ad38630401acd46b762cd083c7abe17b53112/attempt_0001/provider.json",
+      "response_sha256": "b1d9e063955bbe094e71e8b5e54234a73ff1b5c8fa84cb1ec9d8370927a575d5"
+    },
+    {
+      "request_sha256": "eaacd004341d310198a2011a4078386d6a65a315e1f2413e67e2466f770dde2e",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.goto",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eaacd004341d310198a2011a4078386d6a65a315e1f2413e67e2466f770dde2e/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eaacd004341d310198a2011a4078386d6a65a315e1f2413e67e2466f770dde2e/attempt_0001/provider.json",
+      "response_sha256": "39f7adfddce6870a2c16a7b4ce3bd22bec00d6848af525ead722859a67949422"
+    },
+    {
+      "request_sha256": "eb1b1b9c248e0febea9507d9993c9e7daac1231f1936b1f1a4ba15cc09457c94",
+      "phase": "entry",
+      "api": "python:mir_eval.tempo.detection",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eb1b1b9c248e0febea9507d9993c9e7daac1231f1936b1f1a4ba15cc09457c94/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eb1b1b9c248e0febea9507d9993c9e7daac1231f1936b1f1a4ba15cc09457c94/attempt_0001/provider.json",
+      "response_sha256": "ee867c34f932b48e91e5e74f86fc18f433ff86874be18f32fc4b879c7bc17895"
+    },
+    {
+      "request_sha256": "ecf500ed42174a790415c403267f499a757e199301382c979b8ca96a9edd42e5",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.encode_many",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ecf500ed42174a790415c403267f499a757e199301382c979b8ca96a9edd42e5/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ecf500ed42174a790415c403267f499a757e199301382c979b8ca96a9edd42e5/attempt_0001/provider.json",
+      "response_sha256": "a227f9a526912b46d9736acfbad66372738a741720107d4bb652c3a31ff8e273"
+    },
+    {
+      "request_sha256": "eda6ce2b74e1ce07f58351853e21ac738a90d61781b69fab2574dce3d3695b8b",
+      "phase": "entry",
+      "api": "python:mir_eval.util.intervals_to_samples",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eda6ce2b74e1ce07f58351853e21ac738a90d61781b69fab2574dce3d3695b8b/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eda6ce2b74e1ce07f58351853e21ac738a90d61781b69fab2574dce3d3695b8b/attempt_0001/provider.json",
+      "response_sha256": "41dfb88303b16cec4f2cbf58401b8847b8316dc61917ef09f80a2422ba387d6d"
+    },
+    {
+      "request_sha256": "edd0e72f9e45b9619bbe009f26467131ea8389cde28ca5b8a67eb954ad3b5d8a",
+      "phase": "entry",
+      "api": "python:mir_eval.tempo.validate_tempi",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/edd0e72f9e45b9619bbe009f26467131ea8389cde28ca5b8a67eb954ad3b5d8a/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/edd0e72f9e45b9619bbe009f26467131ea8389cde28ca5b8a67eb954ad3b5d8a/attempt_0001/provider.json",
+      "response_sha256": "851037ff5bc49f7bab2007fac26da4ef8420ccd688e0d2776410f99fdaf754a9"
+    },
+    {
+      "request_sha256": "eee9708b3ee5e5d763e9bb091ecfeb9b9abf2fefa494359b4ae1e9c5a509c9fc",
+      "phase": "entry",
+      "api": "python:mir_eval.multipitch.frequencies_to_midi",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eee9708b3ee5e5d763e9bb091ecfeb9b9abf2fefa494359b4ae1e9c5a509c9fc/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/eee9708b3ee5e5d763e9bb091ecfeb9b9abf2fefa494359b4ae1e9c5a509c9fc/attempt_0001/provider.json",
+      "response_sha256": "aaec5fc53fee1c25870dd18ea993f83063f54191f2744dc9b7d19796a6491763"
+    },
+    {
+      "request_sha256": "ef31a0557169ee284fbc36620b503dd7a85d517b7b85f72349280e752424aeff",
+      "phase": "entry",
+      "api": "python:mir_eval.separation.bss_eval_sources",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ef31a0557169ee284fbc36620b503dd7a85d517b7b85f72349280e752424aeff/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/ef31a0557169ee284fbc36620b503dd7a85d517b7b85f72349280e752424aeff/attempt_0001/provider.json",
+      "response_sha256": "f67c08c171dfe5f733296ec2624cabb9f47ac45cc7a8242bd919c1982a60b280"
+    },
+    {
+      "request_sha256": "f1c3015bf0585847c4784d30df35d714969463ec8f6d0ac5c1d1eabaa9411a3f",
+      "phase": "entry",
+      "api": "python:mir_eval.key.split_key_string",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f1c3015bf0585847c4784d30df35d714969463ec8f6d0ac5c1d1eabaa9411a3f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f1c3015bf0585847c4784d30df35d714969463ec8f6d0ac5c1d1eabaa9411a3f/attempt_0001/provider.json",
+      "response_sha256": "501a6c37a8dc4b11b093034d982811f5afc61a726b69342077916c46c6db7d0b"
+    },
+    {
+      "request_sha256": "f234cf979b48a17d51cb5943e7e81f990d0dc261afa24e83b0426fab18dd3c5f",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.merge_chord_intervals",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f234cf979b48a17d51cb5943e7e81f990d0dc261afa24e83b0426fab18dd3c5f/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f234cf979b48a17d51cb5943e7e81f990d0dc261afa24e83b0426fab18dd3c5f/attempt_0001/provider.json",
+      "response_sha256": "6b7f25d20def688a43a5fc7a597cd3b0c81008d6d9f629544ebfadee63a9b1d6"
+    },
+    {
+      "request_sha256": "f4d15b079c26176cc157ec7fbff9a6f0bc45d6f0ff84524f1cc515e090ae27eb",
+      "phase": "entry",
+      "api": "python:mir_eval.pattern.evaluate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f4d15b079c26176cc157ec7fbff9a6f0bc45d6f0ff84524f1cc515e090ae27eb/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f4d15b079c26176cc157ec7fbff9a6f0bc45d6f0ff84524f1cc515e090ae27eb/attempt_0001/provider.json",
+      "response_sha256": "41749c35d3b81c192eb29ac6664728dc4592747cf598de4314a6516a3e5659cd"
+    },
+    {
+      "request_sha256": "f52c5b2cfd862084c732b3ff8811cdaae31f39d00a265f586249aedbfcf347bb",
+      "phase": "entry",
+      "api": "python:mir_eval.alignment.karaoke_perceptual_metric",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f52c5b2cfd862084c732b3ff8811cdaae31f39d00a265f586249aedbfcf347bb/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f52c5b2cfd862084c732b3ff8811cdaae31f39d00a265f586249aedbfcf347bb/attempt_0001/provider.json",
+      "response_sha256": "c35d576bd6e64beaa4f0bb847cd21a5ab25a61f732b02fdc72681bd63c949c63"
+    },
+    {
+      "request_sha256": "f5d20b7ee2b95a744c2c8db44ebc3c140425f5f0ae33fa6a0bb9d4d9a9cf997c",
+      "phase": "entry",
+      "api": "python:mir_eval.util.midi_to_hz",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f5d20b7ee2b95a744c2c8db44ebc3c140425f5f0ae33fa6a0bb9d4d9a9cf997c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f5d20b7ee2b95a744c2c8db44ebc3c140425f5f0ae33fa6a0bb9d4d9a9cf997c/attempt_0001/provider.json",
+      "response_sha256": "b1d9e9ad2e3ac3015aa6657753c490bde2aa8d80b2420f5d0775062f6f1defdf"
+    },
+    {
+      "request_sha256": "f6bb1bcd086a8cee4e0d7a37fd8040b562671ad2f08e413187576d73e2f8b610",
+      "phase": "entry",
+      "api": "python:mir_eval.onset.validate",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f6bb1bcd086a8cee4e0d7a37fd8040b562671ad2f08e413187576d73e2f8b610/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f6bb1bcd086a8cee4e0d7a37fd8040b562671ad2f08e413187576d73e2f8b610/attempt_0001/provider.json",
+      "response_sha256": "90295bc5ed1c44883aa1c19032602108a842e83e941e8fb68271a302e4275cef"
+    },
+    {
+      "request_sha256": "f6d8cd5c86846c0a6960ef16db32b11084818af1e9a27089fca04c296113576c",
+      "phase": "entry",
+      "api": "python:mir_eval.beat.cemgil",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f6d8cd5c86846c0a6960ef16db32b11084818af1e9a27089fca04c296113576c/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f6d8cd5c86846c0a6960ef16db32b11084818af1e9a27089fca04c296113576c/attempt_0001/provider.json",
+      "response_sha256": "a38317eb9126d2de7cb7d388036769d6c3144371ea712efc767e381a73a83d40"
+    },
+    {
+      "request_sha256": "f8ee63fbc9d87837d4403650ea976f76f5c7a06019d1e2cb55742674f2a9a7d4",
+      "phase": "entry",
+      "api": "python:mir_eval.util.validate_frequencies",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f8ee63fbc9d87837d4403650ea976f76f5c7a06019d1e2cb55742674f2a9a7d4/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/f8ee63fbc9d87837d4403650ea976f76f5c7a06019d1e2cb55742674f2a9a7d4/attempt_0001/provider.json",
+      "response_sha256": "12bd56b3cc70be14215f32c800d6166d93493a5dbdd724e6b0b21338611c9fb0"
+    },
+    {
+      "request_sha256": "fbcc99d60a63d766250c156f77d1d6207c69cdf5cf45a8b5e44b6b27d82653d5",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.mirex",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/fbcc99d60a63d766250c156f77d1d6207c69cdf5cf45a8b5e44b6b27d82653d5/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/fbcc99d60a63d766250c156f77d1d6207c69cdf5cf45a8b5e44b6b27d82653d5/attempt_0001/provider.json",
+      "response_sha256": "a8d119dbbe57c8e4618085438f736c5f6d4beacdfb02e582ca164d66d3bbcdec"
+    },
+    {
+      "request_sha256": "fc34f01ac81833c94d246db859782aa1a79239190811f23175628a8eddfbae27",
+      "phase": "entry",
+      "api": "python:mir_eval.chord.tetrads_inv",
+      "request_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/fc34f01ac81833c94d246db859782aa1a79239190811f23175628a8eddfbae27/attempt_0001/request.json",
+      "provider_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/authoring/mir_eval/mir_eval/author_calls/fc34f01ac81833c94d246db859782aa1a79239190811f23175628a8eddfbae27/attempt_0001/provider.json",
+      "response_sha256": "abcff673e9a0f0ff02e2b1327a13899154a0eeeba09a76c2f7f398ab91481987"
+    }
+  ]
+}

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Build a searchable function map without importing or running AIDEAL.
+"""Build a local, searchable function map without importing or running AIDEAL.
 
 Names and explicit imports are resolved statically. Dynamic dispatch remains
-listed as unresolved; the map is a reading aid, not an execution trace. Source
-links can target a local checkout or a supplied GitHub blob URL.
+listed as unresolved; the map is a reading aid, not an execution trace.
 """
 from __future__ import annotations
 
@@ -13,7 +12,6 @@ from collections import defaultdict
 import hashlib
 import json
 from pathlib import Path
-from urllib.parse import quote, urlparse
 
 
 SCOPES = (('workflow', 'workflow'), ('vendor/aideal_engine/src/aideal', 'aideal'),
@@ -24,6 +22,10 @@ def source_files(root):
     """Current Python controller, engine and bundled study adapters only."""
     for directory, package in SCOPES:
         for path in sorted((root / directory).glob('*.py')):
+            # This local credential scratch file is not application source.
+            # Exclude it before reading so offline guides never copy its contents.
+            if directory == 'workflow' and path.name == 'quickrun.py':
+                continue
             module = package if path.stem == '__init__' else package + '.' + path.stem
             yield path, module
 
@@ -272,10 +274,10 @@ def write_markdown(data, output, source_root):
         for row in rows:
             if row['module'] != module['name']:
                 continue
-            # Local mode retains Codex links; publication mode has GitHub URLs.
-            source = row.get('source_url') or (source_root / row['path']).as_posix() + ':' + str(row['line'])
+            # Absolute links are for Codex; the HTML also embeds the exact source.
+            source = (source_root / row['path']).as_posix()
             lines += [f'<a id="{anchors[row["id"]]}"></a>',
-                      f"### [{row['name']}]({source})", '',
+                      f"### [{row['name']}]({source}:{row['line']})", '',
                       row['summary'] or f"{row['kind'].capitalize()} in `{row['module']}`.", '',
                       f"Calls: {links(row['calls'])}", '', f"Called by: {links(row['called_by'])}", '']
             if row['prompts']:
@@ -283,30 +285,10 @@ def write_markdown(data, output, source_root):
     output.write_text('\n'.join(lines), encoding='utf-8')
 
 
-def github_source_base(value):
-    """Accept an explicit GitHub blob/ref URL, never embed credentials or queries."""
-    value = value.rstrip('/')
-    parsed = urlparse(value)
-    parts = parsed.path.strip('/').split('/')
-    if (parsed.scheme != 'https' or parsed.netloc != 'github.com' or parsed.query or parsed.fragment
-            or len(parts) < 4 or parts[2] != 'blob' or not all(parts)
-            or any(character.isspace() for character in value)):
-        raise ValueError('github_url must be https://github.com/OWNER/REPO/blob/REF')
-    return value
-
-
-def generate(root, source_root=None, github_url=None):
-    if source_root is not None and github_url is not None:
-        raise ValueError('Choose local source_root or github_url, not both')
-    github_url = github_source_base(github_url) if github_url is not None else None
+def generate(root, source_root=None):
     root = Path(root).resolve()
     data = build_map(root)
-    if github_url:
-        data['source_base_url'] = github_url
-        for row in data['functions']:
-            row['source_url'] = github_url + '/' + quote(row['path'], safe='/') + '#L' + str(row['line'])
-    else:
-        data['source_root'] = str(Path(source_root or root).resolve())
+    data['source_root'] = str(Path(source_root or root).resolve())
     docs = root / 'docs'
     docs.mkdir(exist_ok=True)
     payload = json.dumps(data, ensure_ascii=False, indent=2)
@@ -318,18 +300,16 @@ def generate(root, source_root=None, github_url=None):
         if marker in template:
             template = template.replace(marker, (root / 'templates' / name).read_text(encoding='utf-8'))
     (docs / 'CODE_MAP.html').write_text(template.replace('__CODE_MAP_DATA__', safe), encoding='utf-8')
-    write_markdown(data, docs / 'FUNCTION_INDEX.md', Path(data['source_root']) if 'source_root' in data else None)
+    write_markdown(data, docs / 'FUNCTION_INDEX.md', Path(data['source_root']))
     return data
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
-    links = parser.add_mutually_exclusive_group()
-    links.add_argument('--source-root', type=Path, help='Local source links destination when generating from a staging copy')
-    links.add_argument('--github-url', help='Portable source link base, e.g. https://github.com/OWNER/REPO/blob/main')
+    parser.add_argument('--source-root', type=Path, help='Source links destination when generating from a staging copy')
     args = parser.parse_args()
-    data = generate(args.root, args.source_root, args.github_url)
+    data = generate(args.root, args.source_root)
     print(f"Indexed {len(data['functions'])} definitions in {len(data['modules'])} modules; no project code executed.")
 
 

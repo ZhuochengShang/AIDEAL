@@ -1,0 +1,47 @@
+12.3. Common functions for auxiliary reading — MDAnalysis.auxiliary.core
+
+ MDAnalysis.auxiliary.core.get_auxreader_for(auxdata=None, format=None)[source]
+
+Return the appropriate auxiliary reader class for auxdata/format.
+
+If format is provided, will attempt to find an AuxReader corresponding to that format. If auxdata is provided, the format will first be guessed.
+
+Parameters:
+
+auxdata – (Optional) The auxiliary data (e.g. filename of file containing auxiliary data).
+
+format – (Optional). Known format of auxdata.
+
+Returns:
+
+AuxReader class corresponding to the supplied/guessed format.
+
+Return type:
+
+AuxReader
+
+Raises:
+
+ValueError – If an AuxReader for the format (provided or guessed from auxdata) cannot be found.
+
+ MDAnalysis.auxiliary.core.auxreader(auxdata, format=None, **kwargs)[source]
+
+Return an auxiliary reader instance for auxdata.
+
+An appropriate reader class is first obtained using get_auxreader_for(), and an auxiliary reader instance for auxdata then created and returned.
+
+Parameters:
+
+auxdata – Auxiliary data (e.g. filename of file containing auxiliary data).
+
+format – (Optional). The format of auxdata, if known.
+
+**kwargs – Additional AuxReader options.
+
+Returns:
+
+Appropriate auxiliary reader instance for auxdata.
+
+Return type:
+
+AuxReader instance

@@ -1,0 +1,31 @@
+tslearn.utils.from_pyts_dataset(X)[source]
+
+Transform a pyts-compatible dataset into a tslearn dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz) or (n_ts, d, sz)
+
+pyts-formatted dataset
+
+Returns:
+
+array, shape=(n_ts, sz, d)
+
+tslearn-formatted dataset
+
+Examples
+
+>>> pyts_arr = numpy.random.randn(10, 16)
+>>> tslearn_arr = from_pyts_dataset(pyts_arr)
+>>> tslearn_arr.shape
+(10, 16, 1)
+>>> pyts_arr = numpy.random.randn(10, 2, 16)
+>>> tslearn_arr = from_pyts_dataset(pyts_arr)
+>>> tslearn_arr.shape
+(10, 16, 2)
+>>> pyts_arr = numpy.random.randn(10)
+>>> from_pyts_dataset(pyts_arr)
+Traceback (most recent call last):
+...
+ValueError: X is not a valid input pyts array.

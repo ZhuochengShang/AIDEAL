@@ -1,0 +1,71 @@
+class MDAnalysis.coordinates.TRZ.TRZReader(trzfilename, n_atoms=None, **kwargs)[source]
+
+Reads an IBIsCO or YASP trajectory file
+
+ ts
+
+Timestep object containing coordinates of current frame
+
+Type:
+
+timestep.Timestep
+
+Note
+
+Binary TRZ trajectories are always assumed to be written in little-endian byte order and are read as such.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based. Extra data (Temperature, Energies, Pressures, etc) now read into ts.data dictionary. Now passes a weakref of self to ts (ts._reader).
+
+Changed in version 1.0.1: Now checks for the correct n_atoms on reading and can raise ValueError.
+
+Changed in version 2.1.0: TRZReader now returns a default dt of 1.0 when it cannot be obtained from the difference between two frames.
+
+Changed in version 2.3.0: _frame attribute moved to ts.data dictionary.
+
+Deprecated since version 2.7.0: The TRZ Reader and Writer are deprecated as of version 2.7.0 and will be removed in version 3.0.0.
+
+Creates a TRZ Reader
+
+Parameters:
+
+trzfilename (str) – name of input file
+
+n_atoms (int) – number of atoms in trajectory, must be taken from topology file!
+
+convert_units (bool (optional)) – converts units to MDAnalysis defaults
+
+Raises:
+
+ValueError – If n_atoms or the number of atoms in the topology file do not match the number of atoms in the trajectory.
+
+ Writer(filename, n_atoms=None)[source]
+
+A trajectory writer with the same properties as this trajectory.
+
+ close()[source]
+
+Close trz file if it was open
+
+ property delta
+
+MD integration timestep
+
+ property n_atoms
+
+Number of atoms in a frame
+
+ property n_frames
+
+Total number of frames in a trajectory
+
+ open_trajectory()[source]
+
+Open the trajectory file
+
+ property skip_timestep
+
+Timesteps between trajectory frames
+
+ units = {'length': 'nm', 'time': 'ps', 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

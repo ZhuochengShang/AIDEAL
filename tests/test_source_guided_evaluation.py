@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import test_condition_evaluation as fixtures
 from workflow.ablation import load
-from workflow.condition_setup import read_condition_config
+from workflow.evaluation_freeze import read_condition_config
 from workflow.condition_evaluation import run_conditions
 from workflow.source_hints import insert_source_hint
 

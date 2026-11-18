@@ -1,0 +1,154 @@
+4.3.7.1.3. Dimensionality reduction
+
+4.3.7.1.3.1. dimensionality reduction frontend — MDAnalysis.analysis.encore.dimensionality_reduction.reduce_dimensionality
+
+The module defines a function serving as front-end for various dimensionality reduction algorithms, wrapping them to allow them to be used interchangably.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ MDAnalysis.analysis.encore.dimensionality_reduction.reduce_dimensionality.reduce_dimensionality(ensembles, method=None, select='name CA', distance_matrix=None, allow_collapsed_result=True, ncores=1, **kwargs)[source]
+
+Reduce dimensions in frames from one or more ensembles, using one or more dimensionality reduction methods. The function optionally takes pre-calculated distances matrices as an argument. Note that not all dimensionality reduction procedure can work directly on distance matrices, so the distance matrices might be ignored for particular choices of method.
+
+Parameters:
+
+ensembles (MDAnalysis.Universe, or list or list of list thereof) – The function takes either a single Universe object, a list of Universe objects or a list of lists of Universe objects. If given a single universe, it simply works on the conformations in the trajectory. If given a list of ensembles, it will merge them and analyse them together, keeping track of the ensemble to which each of the conformations belong. Finally, if passed a list of list of ensembles, the function will just repeat the functionality just described - merging ensembles for each ensemble in the outer loop.
+
+method (MDAnalysis.analysis.encore.dimensionality_reduction.DimensionalityReductionMethod or list) – A single or a list of instances of the DimensionalityReductionMethod classes from the dimensionality_reduction module. A separate analysis will be run for each method. Note that different parameters for the same method can be explored by adding different instances of the same dimensionality reduction class. Options are Stochastic Proximity Embedding or Principal Component Analysis.
+
+select (str, optional) – Atom selection string in the MDAnalysis format (default is “name CA”)
+
+distance_matrix (encore.utils.TriangularMatrix, optional) – Distance matrix for stochastic proximity embedding. If this parameter is not supplied an RMSD distance matrix will be calculated on the fly (default). If several distance matrices are supplied, an analysis will be done for each of them. The number of provided distance matrices should match the number of provided ensembles.
+
+allow_collapsed_result (bool, optional) – Whether a return value of a list of one value should be collapsed into just the value (default = True).
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1).
+
+Returns:
+
+list of coordinate arrays in the reduced dimensions (or potentially a single
+
+coordinate array object if allow_collapsed_result is set to True)
+
+Example
+
+Two ensembles are created as Universe object using a topology file and two trajectories. The topology- and trajectory files used are obtained from the MDAnalysis test suite for two different simulations of the protein AdK. Here, we reduce two ensembles to two dimensions, and plot the result using matplotlib:
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> ens1 = Universe(PSF, DCD)
+>>> ens2 = Universe(PSF, DCD2)
+>>> coordinates, details = encore.reduce_dimensionality([ens1,ens2])
+>>> plt.scatter(coordinates[0], coordinates[1],
+                color=[["red", "blue"][m-1] for m
+                in details["ensemble_membership"]])
+
+Note how we extracted information about which conformation belonged to which ensemble from the details variable.
+
+You can change the parameters of the dimensionality reduction method by explicitly specifying the method
+
+>>> coordinates, details =
+        encore.reduce_dimensionality([ens1,ens2],
+             method=encore.StochasticProximityEmbeddingNative(dimension=3))
+
+Here is an illustration using Principal Component Analysis, instead of the default dimensionality reduction method
+
+>>> coordinates, details =
+        encore.reduce_dimensionality(
+             [ens1,ens2],
+             method=encore.PrincipalComponentAnalysis(dimension=2))
+
+You can also combine multiple methods in one call
+
+>>> coordinates, details =
+        encore.reduce_dimensionality(
+             [ens1,ens2],
+             method=[encore.PrincipalComponentAnalysis(dimension=2),
+                     encore.StochasticProximityEmbeddingNative(dimension=2)])
+
+4.3.7.1.3.2. dimensionality reduction frontend — MDAnalysis.analysis.encore.clustering.DimensionalityReductionMethod
+
+The module defines classes for interfacing to various dimensionality reduction algorithms. One has been implemented natively, and will always be available, while others are available only if scikit-learn is installed
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ class MDAnalysis.analysis.encore.dimensionality_reduction.DimensionalityReductionMethod.DimensionalityReductionMethod[source]
+
+Base class for any Dimensionality Reduction Method
+
+ class MDAnalysis.analysis.encore.dimensionality_reduction.DimensionalityReductionMethod.PrincipalComponentAnalysis(dimension=2, **kwargs)[source]
+
+Interface to the PCA dimensionality reduction method implemented in sklearn.
+
+Parameters:
+
+dimension (int) – Number of dimensions to which the conformational space will be reduced to (default is 3).
+
+ class MDAnalysis.analysis.encore.dimensionality_reduction.DimensionalityReductionMethod.StochasticProximityEmbeddingNative(dimension=2, distance_cutoff=1.5, min_lam=0.1, max_lam=2.0, ncycle=100, nstep=10000)[source]
+
+Interface to the natively implemented Affinity propagation procedure.
+
+Parameters:
+
+dimension (int) – Number of dimensions to which the conformational space will be reduced to (default is 3).
+
+min_lam (float, optional) – Final lambda learning rate (default is 0.1).
+
+max_lam (float, optional) – Starting lambda learning rate parameter (default is 2.0).
+
+ncycle (int, optional) – Number of cycles per run (default is 100). At the end of every cycle, lambda is updated.
+
+nstep (int, optional) – Number of steps per cycle (default is 10000)
+
+4.3.7.1.3.3. Dimensionality reduction algorithms
+
+The following dimensionality reduction algorithms are always natively available:
+
+Cython wrapper for the C implementation of the Stochastic Proximity Embedding dimensionality reduction algorithm.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma
+
+ MDAnalysis.analysis.encore.dimensionality_reduction.stochasticproxembed.StochasticProximityEmbedding(s, double rco, int dim, double maxlam, double minlam, int ncycle, int nstep, int stressfreq)
+
+Stochastic proximity embedding dimensionality reduction algorithm. The algorithm implemented here is described in this paper:
+
+Dmitrii N. Rassokhin, Dimitris K. Agrafiotis A modified update rule for stochastic proximity embedding Journal of Molecular Graphics and Modelling 22 (2003) 133–140
+
+This class is a Cython wrapper for a C implementation (see spe.c)
+
+Parameters:
+
+s (encore.utils.TriangularMatrix object) – Triangular matrix containing the distance values for each pair of elements in the original space.
+
+rco (float) – neighborhood distance cut-off
+
+dim (int) – number of dimensions for the embedded space
+
+minlam (float) – final learning parameter
+
+maxlam (float) – starting learning parameter
+
+ncycle (int) – number of cycles. Each cycle is composed of nstep steps. At the end of each cycle, the lerning parameter lambda is updated.
+
+nstep (int) – number of coordinate update steps for each cycle
+
+Returns:
+
+space ((float, numpy.array)) – float is the final stress obtained; the array are the coordinates of the elements in the embedded space
+
+stressfreq (int) – calculate and report stress value every stressfreq cycle

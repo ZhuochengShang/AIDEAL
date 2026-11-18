@@ -1,0 +1,76 @@
+class MDAnalysis.core.groups.UpdatingAtomGroup(*args, **kwargs)[source]
+
+AtomGroup subclass that dynamically updates its selected atoms.
+
+Accessing any attribute/method of an UpdatingAtomGroup instance triggers a check for the last frame the group was updated. If the last frame matches the current trajectory frame, the attribute is returned normally; otherwise the group is updated (the stored selections are re-applied), and only then is the attribute returned.
+
+Added in version 0.16.0.
+
+Parameters:
+
+base_group (AtomGroup) – group on which selections are to be applied.
+
+selections (a tuple of Selection) – instances selections ready to be applied to base_group.
+
+ property atoms
+
+Get a static AtomGroup identical to the group of currently selected Atoms in the UpdatingAtomGroup.
+
+By returning a static AtomGroup it becomes possible to compare the contents of the group between trajectory frames. See the Example below.
+
+Note
+
+The atoms attribute of an UpdatingAtomGroup behaves differently from AtomGroup.atoms: the latter returns the AtomGroup itself whereas the former returns a AtomGroup and not an UpdatingAtomGroup (for this, use UpdatingAtomGroup.copy()).
+
+Example
+
+The static atoms allows comparison of groups of atoms between frames. For example, track water molecules that move in and out of a solvation shell of a protein
+
+u = mda.Universe(TPR, XTC)
+water_shell = u.select_atoms("name OW and around 3.5 protein",
+                             updating=True)
+water_shell_prev = water_shell.atoms
+
+for ts in u.trajectory:
+    exchanged = water_shell - water_shell_prev
+
+print(ts.time, "waters in shell =", water_shell.n_residues)
+print(ts.time, "waters that exchanged = ", exchanged.n_residues)
+print(ts.time, "waters that remained bound = ",
+      water_shell.n_residues - exchanged.n_residues)
+
+water_shell_prev = water_shell.atoms
+
+By remembering the atoms of the current time step in water_shell_prev, it becomes possible to use the subtraction of AtomGroups to find the water molecules that changed.
+
+See also
+
+copy
+
+return a true copy of the UpdatingAtomGroup
+
+ copy()[source]
+
+Get another UpdatingAtomGroup identical to this one.
+
+Added in version 0.19.0.
+
+ property is_uptodate
+
+Checks whether the selection needs updating based on frame number only.
+
+Modifications to the coordinate data that render selections stale are not caught, and in those cases is_uptodate may return an erroneous value.
+
+Returns:
+
+True if the group’s selection is up-to-date, False otherwise.
+
+Return type:
+
+bool
+
+ update_selection()[source]
+
+Forces the reevaluation and application of the group’s selection(s).
+
+This method is triggered automatically when accessing attributes, if the last update occurred under a different trajectory frame.

@@ -1,0 +1,46 @@
+{
+  "bank": "rdpro_java",
+  "model": "gemini-3.1-flash-lite",
+  "mode": "preview_only_not_sent",
+  "api_count": 411,
+  "original_document_files": [
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/README.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/Home.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/davinci.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/dev-setup.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/development.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/input-output.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/installation.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/partitioning-indexing.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/raptor-join.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/rdpro.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/scala-quickguide.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/spatial-data-generator.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/spatial-join.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/summarization.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/visualization.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/visualization_mvt.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/web-operations.md"
+  ],
+  "sample_data": {
+    "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+    "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+    "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf"
+  },
+  "resolved_input_paths": {
+    "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+    "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+    "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf",
+    "output_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runs/original/rdpro_java/rdpro_java/execution/output"
+  },
+  "available_inputs_sent_to_model": "Pre-loaded and already in scope — use these directly, do NOT re-load:\n- envelope: EnvelopeNDLite\n- geometryFactory: GeometryFactory\n- point: Point\n- metadata: RasterMetadata\n- numbers: JavaRDD<Integer>\n(raw input path strings also in scope if needed: vector_shapefile, raster_tif, hdf_file, output_dir)",
+  "preamble": "EnvelopeNDLite envelope = new EnvelopeNDLite(2, 0.0, 0.0, 2.0, 3.0);\nGeometryFactory geometryFactory = new GeometryFactory();\nPoint point = geometryFactory.createPoint(new Coordinate(1.0, 2.0));\nRasterMetadata metadata = new RasterMetadata(0, 0, 4, 4, 2, 2, 4326, new AffineTransform());\nJavaRDD<Integer> numbers = sc.parallelize(Arrays.asList(1, 2, 3), 1);\nFiles.createDirectories(Paths.get(output_dir));",
+  "execution_command_template": "/home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_java.py --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/classpath.json --work \"{work}\" --java-file \"{test_file}\"",
+  "scaffold_file": "api_test_scaffold.java",
+  "success_marker": "__DONE__",
+  "check_marker": "__CHECK__",
+  "max_fix_rounds_full_baseline": 0,
+  "proposed_pilot_max_fix_rounds": 2,
+  "actual_model_calls": 0,
+  "program_executions": 0
+}

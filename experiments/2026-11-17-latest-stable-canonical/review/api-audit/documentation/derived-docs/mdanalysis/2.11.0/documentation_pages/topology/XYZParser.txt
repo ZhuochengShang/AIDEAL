@@ -1,0 +1,29 @@
+5.24. XYZ Topology Parser
+
+Added in version 0.9.1.
+
+Reads an xyz file and pulls the atom information from it. Because xyz only has atom name information, all information about residues and segments won’t be populated.
+
+5.24.1. Classes
+
+ class MDAnalysis.topology.XYZParser.XYZParser(filename)[source]
+
+Parse a list of atoms from an XYZ file.
+
+Creates the following attributes:
+
+Atomnames
+
+Note
+
+By default, atomtypes and masses will be guessed on Universe creation. This may change in release 3.0. See Guesser modules for more information.
+
+Added in version 0.9.1.
+
+ parse(**kwargs)[source]
+
+Read the file and return the structure.
+
+Return type:
+
+MDAnalysis Topology object

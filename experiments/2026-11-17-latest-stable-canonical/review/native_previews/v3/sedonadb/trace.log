@@ -1,0 +1,545 @@
+
+1. Inputs supplied by the developer
+-----------------------------------
+PREVIEW ONLY. No model request or snippet execution.
+Library: sedonadb; API: ST_Area; maximum repairs: 2.
+Original documentation is supplied, not generated.
+This uses the native loop used by run_original_micro.py.
+Output folder: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb
+
+Original documentation actually selected for the prompt
+-------------------------------------------------------
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+---
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+title: ST_Area
+description: Returns the area of a geometry or geography.
+kernels:
+  - returns: double
+    args: [geometry]
+  - returns: double
+    args: [geography]
+---
+
+## Description
+
+`ST_Area()` Returns the area of a polygon or multi-polygon. For geometry, returns the area in the units of the coordinate reference system (squared); for geography, returns the area in square meters, calculated on a spherical Earth model.
+
+## Examples
+
+```sql
+SELECT ST_Area(ST_GeomFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+```sql
+SELECT ST_Area(ST_GeogFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+## Examples
+
+```sql
+SELECT ST_Area(ST_GeomFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+```sql
+SELECT ST_Area(ST_GeogFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+## Description
+
+`ST_Area()` Returns the area of a polygon or multi-polygon. For geometry, returns the area in the units of the coordinate reference system (squared); for geography, returns the area in square meters, calculated on a spherical Earth model.
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+# under the License.
+
+title: ST_Area
+description: Returns the area of a geometry or geography.
+kernels:
+  - returns: double
+    args: [geometry]
+  - returns: double
+    args: [geography]
+---
+
+Original documentation files considered
+---------------------------------------
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/README.md
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/index.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_asgeotiff.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_asraster.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_bandisnodata.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_bandnodatavalue.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_bandpath.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_bandpixeltype.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_bandtodim.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_clip.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_contains.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_convexhull.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_crs.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_dimnames.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_dimsize.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_dimtoband.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_envelope.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_example.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_fromgdalraster.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_frompath.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_georeference.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_geotransform.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_height.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_intersects.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_isempty.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_makeemptyraster.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_metadata.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_minconvexhull.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_numbands.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_numdimensions.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_pixelascentroid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_pixelaspoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_pixelaspolygon.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_polygonize.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_rastertoworldcoord.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_rastertoworldcoordx.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_rastertoworldcoordy.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_replacebandnodatavalue.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_reprojectmatch.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_resample.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_rotation.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_scalex.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_scaley.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_setbandnodatavalue.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_setcrs.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_setgeoreference.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_setsrid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_setvalue.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_shape.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_skewx.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_skewy.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_slice.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_slicerange.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_srid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_stack.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_summarystats.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_summarystatsall.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_tile.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_upperleftx.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_upperlefty.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_value.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_values.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_width.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_within.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_worldtorastercoord.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_worldtorastercoordx.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_worldtorastercoordy.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_zonalstats.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/rs_zonalstatsall.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/s2_cellidfrompoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/s2_coveringcellids.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/sd_format.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/sd_order.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_affine.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_analyze_agg.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_asbinary.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_asewkb.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_asgeojson.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_astext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_azimuth.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_boundary.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_buffer.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_buildarea.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_centroid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_closestpoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_collect_agg.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_concavehull.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_contains.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_convexhull.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_convexhull_agg.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_coveredby.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_covers.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_crosses.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_crs.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_delaunaytriangles.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_difference.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_dimension.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_disjoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_distance.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_dump.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_dwithin.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_endpoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_envelope.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_envelope_agg.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_equals.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_exteriorring.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_flipcoordinates.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_force2d.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_force3d.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_force3dm.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_force4d.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geogfromwkb.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geogfromwkt.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geogpoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geohash.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geomcollfromtext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geometryn.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geometrytype.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geomfromewkb.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geomfromewkt.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geomfromwkb.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_geomfromwkt.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_hasm.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_hasz.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_hausdorffdistance.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_interiorringn.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_intersection.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_intersection_agg.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_intersects.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_isclosed.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_iscollection.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_isempty.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_isring.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_issimple.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_isvalid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_isvalidreason.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_knn.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_length.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_linefromtext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_lineinterpolatepoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_linelocatepoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_linemerge.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_linestringfromwkb.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_linesubstring.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_m.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_makeenvelope.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_makeline.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_makevalid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_maxdistance.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_minimumclearance.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_minimumclearanceline.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_mlinefromtext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_mmax.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_mmin.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_mpointfromtext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_mpolyfromtext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_normalize.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_npoints.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_nrings.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_numgeometries.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_numinteriorrings.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_numpoints.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_overlaps.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_perimeter.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_point.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_pointfromtext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_pointfromwkb.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_pointm.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_pointn.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_pointonsurface.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_points.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_pointz.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_pointzm.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_polygonfromtext.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_polygonize.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_polygonize_agg.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_reduceprecision.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_relate.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_reverse.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_rotate.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_rotatex.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_rotatey.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_scale.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_segmentize.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_setcrs.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_setsrid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_simplify.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_simplifypreservetopology.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_snap.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_srid.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_startpoint.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_symdifference.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_tessellategeog.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_tessellategeom.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_togeography.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_togeometry.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_touches.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_transform.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_translate.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_unaryunion.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_union.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_union_agg.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_within.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_x.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_xmax.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_xmin.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_y.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_ymax.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_ymin.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_z.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_zmax.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_zmflag.qmd
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_zmin.qmd
+
+2. Configuration and selected API
+---------------------------------
+{
+  "resolved_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb/configs/aideal.yaml",
+  "manifest": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb/inputs/api_manifest.json",
+  "api": "ST_Area",
+  "model": "gemini-3.1-flash-lite",
+  "provider": "google",
+  "google_sdk_attempts": null,
+  "max_fix_rounds": 2,
+  "doc_source": "original",
+  "doc_scope": "relevant",
+  "class_context": false,
+  "test_filename": "ApiTest.py",
+  "execution_timeout_s": 60,
+  "output_folder": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb"
+}
+
+Execution scaffold supplied to AIDEAL
+-------------------------------------
+from pathlib import Path
+import math
+import json
+from sedona_runtime import TrackedContext
+
+
+def main():
+    target_api = Path(__file__).parent.name.removeprefix("run_")
+    sd = TrackedContext(target_api)
+    _tracked_connection = sd
+    # AIDEAL_DATA_BINDINGS
+    # TODO API_TEST_START
+    raise AssertionError("Audience snippet was not inserted")
+    # TODO API_TEST_END
+    _tracked_connection.verify()
+    print("__DONE__")
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+Function call chain and code-review entry points
+------------------------------------------------
+scripts.run_original_micro.prepare -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/scripts/run_original_micro.py:41
+aideal.config.load_config -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/config.py:201
+aideal.doc_check_sources._comprehension_inventory -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_sources.py:215
+aideal.doc_check_comprehension.comprehension_check -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_comprehension.py:15
+aideal.doc_check_execution._comprehension_execute -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_execution.py:97
+aideal.prompts.load -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/prompts.py:38
+aideal.llm.invoke_text -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/llm.py:138
+aideal.doc_check_inputs._fill_scaffold -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_inputs.py:27
+aideal.execution.run_command -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/execution.py:37
+aideal.doc_check_errors._classify_error -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_errors.py:63
+aideal.error_log.ErrorLog.append -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/error_log.py:68
+aideal.error_log.ErrorLog.failures_for -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/error_log.py:113
+
+Selected prompt template
+------------------------
+/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write_exec.md
+
+Actual loop in doc_check_execution.py
+-------------------------------------
+line 473: for attempt in range(1 + max_fix_rounds):
+max_fix_rounds=2 -> at most 3 requests, R0 through R2.
+R0 uses audience. R1/R2 use fixer with previously recorded failures.
+Pass ends the loop immediately. No repair is forced in live mode.
+Interactive view: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb/TRACE.html
+[comprehension] APIs to execute: 1 of 1 (doc_source=original, doc_scope=relevant)
+
+Preview R0 exact system prompt
+------------------------------
+You write Python and SQL code that will be spliced into a runnable test harness.
+Write Python statements only. A SedonaDB connection named sd is already provided. The target is a SQL function, not a Python method: call it inside sd.sql("SELECT ..."). Materialize with .to_arrow_table(), which returns a real pyarrow.Table. Read a scalar with table.column("name")[0].as_py() or rows with table.to_pylist(). Setup SQL may use sd.sql(...).execute(). The adapter requires the target SQL function to be called and materialized. Do not import another database or replace sd. Use Python assert with a falsifiable documented expectation and then print the exact target __CHECK__ witness.
+
+Requested registered SQL operation:
+SQL name: ST_Area
+Documented call patterns: ST_Area(arg1: geometry) -> double | ST_Area(arg1: geography) -> double
+Arity status: user_defined_runtime_signature
+Call this registered SQL operation using a documented call pattern; no finite maximum arity is asserted.
+
+Pick the input variable(s) whose type matches the API's parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: A Python developer using SedonaDB SQL for geospatial computation.
+Project: SedonaDB 0.5.0 registered SQL operations (Python and SQL) - Official SedonaDB 0.5.0 SQL scalar and aggregate operations called through its Python SQL connection. Targets are public SQL names and their documented call patterns; runtime user-defined signatures are not assigned a finite maximum arity.
+Domain: Geospatial vector and raster analysis
+Target users: Python developers using SedonaDB SQL
+Use cases: Run small SQL queries and verify materialized geometry, raster, scalar, and aggregate results.
+Constraints: Use the original SQL API and original documentation only.; Write Python statements using sd.sql(query).to_arrow_table(); assert known documented results and print the __CHECK__ witness.; Use tiny literal inputs or the supplied local raster files. No remote datasets or services.
+
+Preview R0 exact user prompt
+----------------------------
+Documentation:
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+---
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+title: ST_Area
+description: Returns the area of a geometry or geography.
+kernels:
+  - returns: double
+    args: [geometry]
+  - returns: double
+    args: [geography]
+---
+
+## Description
+
+`ST_Area()` Returns the area of a polygon or multi-polygon. For geometry, returns the area in the units of the coordinate reference system (squared); for geography, returns the area in square meters, calculated on a spherical Earth model.
+
+## Examples
+
+```sql
+SELECT ST_Area(ST_GeomFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+```sql
+SELECT ST_Area(ST_GeogFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+## Examples
+
+```sql
+SELECT ST_Area(ST_GeomFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+```sql
+SELECT ST_Area(ST_GeogFromWKT('POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))'));
+```
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+## Description
+
+`ST_Area()` Returns the area of a polygon or multi-polygon. For geometry, returns the area in the units of the coordinate reference system (squared); for geography, returns the area in square meters, calculated on a spherical Earth model.
+
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb/docs/reference/sql/st_area.qmd =====
+# under the License.
+
+title: ST_Area
+description: Returns the area of a geometry or geography.
+kernels:
+  - returns: double
+    args: [geometry]
+  - returns: double
+    args: [geography]
+---
+
+Available input path variables already in scope (choose the matching one(s) by type):
+- raster_cea_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/cea.tif
+- raster_test4_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/test4.tiff
+- output_dir = /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb/execution/output
+
+RECEIVER — call `ST_Area` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `ST_Area` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Python and SQL syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language's normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ ST_Area ` followed by the witness, using the language's normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `ST_Area`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `ST_Area` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `ST_Area` is the writer; keep the
+body focused on `ST_Area` so the run isolates that one call.
+Use individual SQL statements. Paths raster_cea_tif and raster_test4_tif are available local fixture files; output_dir is available for tiny outputs. Use only these paths when a documented operation needs a file. Tiny SQL VALUES and documented constructors are available for in-memory inputs. Do not use remote URLs. This review pilot permits an initial attempt and up to two code-repair attempts; stop immediately when an attempt passes.
+
+Preview complete
+----------------
+{
+  "library": "sedonadb",
+  "api": "ST_Area",
+  "mode": "preview",
+  "status": "preview",
+  "complete": false,
+  "requests": 0,
+  "model_calls": 0,
+  "snippet_executions": 0,
+  "repair_rounds_allowed": 2,
+  "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb/execution/run_ST_Area/attempt_0001/request.json",
+  "stop_reason": "Exact R0 request captured before provider invocation; no response, code, verdict, or repair was produced.",
+  "future_rounds": "R1/R2 prompts depend on actual prior code and execution failures and do not exist in this preview."
+}
+Interactive view: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb/TRACE.html

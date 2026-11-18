@@ -1,0 +1,23 @@
+mir_eval.multipitch.resample_multipitch(times, frequencies, target_times)
+
+Resamples multipitch time series to a new timescale using nearest neighbor interpolation. Values in target_times outside the range of times return no pitch estimate.
+
+Parameters:
+
+timesnp.ndarray
+
+Array of time stamps
+
+frequencieslist of np.ndarray
+
+List of np.ndarrays of frequency values
+
+target_timesnp.ndarray
+
+Array of target time stamps
+
+Returns:
+
+frequencies_resampledlist of numpy arrays
+
+Frequency list of lists resampled to new timebase

@@ -1,0 +1,17 @@
+fit_transform(X, y=None, **fit_params)[source]
+
+Transform a dataset of time series into its Matrix Profile
+
+representation.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset
+
+Returns:
+
+numpy.ndarray of shape (n_ts, output_size, 1)
+
+Matrix-Profile-Transformed dataset. ouput_size is equal to sz - subsequence_length + 1

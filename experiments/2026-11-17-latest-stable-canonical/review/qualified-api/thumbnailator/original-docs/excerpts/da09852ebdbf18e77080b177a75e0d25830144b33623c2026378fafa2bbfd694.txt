@@ -1,0 +1,30 @@
+width
+public
+Thumbnails.Builder
+<
+T
+>
+width
+(int width)
+Sets the width of the thumbnail.
+The thumbnail will have the dimensions constrained by the specified
+width, and the aspect ratio of the original image will be preserved
+by the thumbnail.
+Once this method is called, calling the
+size(int, int)
+or
+the
+scale(double)
+method will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+width
+- The width of the thumbnail.
+Returns:
+Reference to this object.
+Since:
+0.3.5

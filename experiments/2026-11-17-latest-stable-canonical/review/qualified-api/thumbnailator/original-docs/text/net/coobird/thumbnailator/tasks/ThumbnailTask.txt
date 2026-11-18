@@ -1,0 +1,147 @@
+ThumbnailTask (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks
+Class ThumbnailTask<S,D>
+java.lang.Object
+net.coobird.thumbnailator.tasks.ThumbnailTask<S,D>
+Type Parameters:
+S
+- The class from which the image is retrieved or read.
+D
+- The class to which the thumbnail is stored or written.
+Direct Known Subclasses:
+FileThumbnailTask
+,
+SourceSinkThumbnailTask
+,
+StreamThumbnailTask
+public abstract class
+ThumbnailTask<S,D>
+extends
+Object
+This class is used by
+ThumbnailTask
+implementations which is used
+when creating thumbnails from external sources and destinations.
+If the image handled by a
+ThumbnailTask
+contains multiple images,
+only the first image will be read by the
+read()
+method. Any
+subsequent images will be ignored.
+Author:
+coobird
+Method Summary
+abstract
+D
+getDestination
+()
+Returns the destination to which the thumbnail is stored or written.
+ThumbnailParameter
+getParam
+()
+Returns the
+ThumbnailParameter
+for this
+ThumbnailTask
+,
+used when performing a thumbnail generation operation.
+abstract
+S
+getSource
+()
+Returns the source from which the source image is retrieved or read.
+abstract
+BufferedImage
+read
+()
+Reads a source image.
+abstract  void
+write
+(
+BufferedImage
+img)
+Writes the thumbnail to the destination.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+read
+public abstract
+BufferedImage
+read
+()
+throws
+IOException
+Reads a source image.
+Returns:
+The image which was obtained from the source.
+Throws:
+IOException
+- Thrown when an I/O problem occurs when reading
+from the image source.
+write
+public abstract void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Writes the thumbnail to the destination.
+Parameters:
+img
+- The image to write.
+Throws:
+UnsupportedFormatException
+- When an image file which is to be
+read or written is unsupported.
+IOException
+- Thrown when an I/O problem occurs when writing the
+image.
+getParam
+public
+ThumbnailParameter
+getParam
+()
+Returns the
+ThumbnailParameter
+for this
+ThumbnailTask
+,
+used when performing a thumbnail generation operation.
+Returns:
+The parameters to use when generating thumbnails.
+getSource
+public abstract
+S
+getSource
+()
+Returns the source from which the source image is retrieved or read.
+Returns:
+The source.
+getDestination
+public abstract
+D
+getDestination
+()
+Returns the destination to which the thumbnail is stored or written.
+Returns:
+The destination.
+Copyright © 2025. All rights reserved.

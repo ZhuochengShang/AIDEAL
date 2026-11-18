@@ -1,0 +1,431 @@
+
+1. Inputs supplied by the developer
+-----------------------------------
+PREVIEW ONLY. No model request or snippet execution.
+Library: mir_eval; API: f_measure; maximum repairs: 2.
+Original documentation is supplied, not generated.
+This uses the native loop used by run_original_micro.py.
+Output folder: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/mir_eval
+
+Original documentation actually selected for the prompt
+-------------------------------------------------------
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/index.rst =====
+.. mir_eval documentation master file
+
+mir_eval Documentation
+======================
+
+**mir_eval** is a Python library which provides a transparent, standardized, and straightforward way to evaluate Music Information Retrieval systems.
+
+If you use **mir_eval** in a research project, please cite the following paper:
+
+  C. Raffel, B. McFee, E. J. Humphrey, J. Salamon, O. Nieto, D. Liang, and D. P. W. Ellis, `"mir_eval: A Transparent Implementation of Common MIR Metrics" <http://colinraffel.com/publications/ismir2014mir_eval.pdf>`_, Proceedings of the 15th International Conference on Music Information Retrieval, 2014.
+  
+Installation
+============
+
+The simplest way to install **mir_eval** is via ``pip``:
+
+.. code-block:: console
+
+   python -m pip install mir_eval
+
+If you use `conda` packages, **mir_eval** is available on conda-forge:
+
+.. code-block:: console
+
+   conda install -c conda-forge mir_eval
+
+Alternatively, you can install from source:
+
+.. code-block:: console
+
+   python setup.py install
+
+If you don't use Python and want to get started as quickly as possible, you might consider using `Anaconda <https://www.anaconda.com/download>`_ which makes it easy to install a Python environment which can run **mir_eval**.
+
+Using mir_eval
+==============
+
+Once installed, you can import **mir_eval** in your code:
+
+.. code-block:: python
+
+   import mir_eval
+
+For example, to evaluate beat tracking:
+
+.. code-block:: python
+
+   reference_beats = mir_eval.io.load_events('reference_beats.txt')
+   estimated_beats = mir_eval.io.load_events('estimated_beats.txt')
+   scores = mir_eval.beat.evaluate(reference_beats, estimated_beats)
+
+At the end of execution, ``scores`` will be a dict containing scores 
+for all of the metrics implemented in `mir_eval.beat`.  
+The keys are metric names and values are the scores achieved.
+
+You can also load in the data, do some preprocessing, and call specific metric functions from the appropriate submodule like so:
+
+.. code-block:: python
+
+   reference_beats = mir_eval.io.load_events('reference_beats.txt')
+   estimated_beats = mir_eval.io.load_events('estimated_beats.txt')
+   # Crop out beats before 5s, a common preprocessing step
+   reference_beats = mir_eval.beat.trim_beats(reference_beats)
+   estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+   # Compute the F-measure metric and store it in f_measure
+   f_measure = mir_eval.beat.f_measure(reference_beats, estimated_beats)
+
+Alternatively, you can use the evaluator scripts which allow you to run evaluation from the command line, without writing any code.
+These scripts are are available here:
+
+https://github.com/craffel/mir_evaluators
+
+
+API Reference
+=============
+
+The structure of the **mir_eval** Python module is as follows:
+Each MIR task for which evaluation metrics are included in **mir_eval** is given its own submodule, and each metric is defined as a separate function in each submodule.
+Every metric function includes detailed documentation, example usage, input validation, and references to the original paper which defined the metric (see the subsections below).
+The task submodules also all contain a function ``evaluate()``, which takes as input reference and estimated annotations and returns a dictionary of scores for all of the metrics implemented (for casual users, this is the place to start).
+Finally, each task submodule also includes functions for common data pre-processing steps.
+
+**mir_eval** also includes the following additional submodules:
+
+* :mod:`mir_eval.io` which contains convenience functions for loading in task-specific data from common file formats
+* :mod:`mir_eval.util` which includes miscellaneous functionality shared across the submodules
+* :mod:`mir_eval.sonify` which implements some simple methods for synthesizing annotations of various formats for "evaluation by ear".
+* :mod:`mir_eval.display` which provides functions for plotting annotations for various tasks.
+
+Detailed API documentation for each submodule is available in the API Reference section.
+See the :doc:`API Reference <api/index>` for full details.
+
+.. toctree::
+   :caption: mir_eval
+   :maxdepth: 2
+
+   api/index
+   changes
+
+Original documentation files considered
+---------------------------------------
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/README.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/alignment.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/beat.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/chord.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/display.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/hierarchy.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/index.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/io.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/key.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/melody.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/multipitch.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/onset.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/pattern.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/segment.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/separation.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/sonify.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/tempo.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/transcription.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/transcription_velocity.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/api/util.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/changes.rst
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/conf.py
+/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/index.rst
+
+2. Configuration and selected API
+---------------------------------
+{
+  "resolved_config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/mir_eval/configs/aideal.yaml",
+  "manifest": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/mir_eval/inputs/api_manifest.json",
+  "api": "f_measure",
+  "model": "gemini-3.1-flash-lite",
+  "provider": "google",
+  "google_sdk_attempts": null,
+  "max_fix_rounds": 2,
+  "doc_source": "original",
+  "doc_scope": "relevant",
+  "class_context": false,
+  "test_filename": "api_test.py",
+  "execution_timeout_s": 300,
+  "output_folder": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/mir_eval"
+}
+
+Execution scaffold supplied to AIDEAL
+-------------------------------------
+import sys
+import traceback
+
+import numpy as np
+import mir_eval
+from mir_eval import alignment, beat, chord, display, hierarchy, io, key
+from mir_eval import melody, multipitch, onset, pattern, segment, separation
+from mir_eval import sonify, tempo, transcription, transcription_velocity, util
+
+
+def run():
+    # AIDEAL_DATA_BINDINGS
+
+    def api_test():
+        # TODO API_TEST_START
+        # TODO API_TEST_END
+        pass
+
+    api_test()
+
+
+if __name__ == "__main__":
+    try:
+        run()
+        print("__DONE__")
+    except Exception as exc:
+        sys.stderr.write(f"__RUN_ERR__ {type(exc).__name__}: {exc}\n")
+        traceback.print_exc()
+        sys.exit(1)
+
+
+Function call chain and code-review entry points
+------------------------------------------------
+scripts.run_original_micro.prepare -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/scripts/run_original_micro.py:41
+aideal.config.load_config -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/config.py:201
+aideal.doc_check_sources._comprehension_inventory -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_sources.py:215
+aideal.doc_check_comprehension.comprehension_check -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_comprehension.py:15
+aideal.doc_check_execution._comprehension_execute -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_execution.py:97
+aideal.prompts.load -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/prompts.py:38
+aideal.llm.invoke_text -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/llm.py:138
+aideal.doc_check_inputs._fill_scaffold -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_inputs.py:27
+aideal.execution.run_command -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/execution.py:37
+aideal.doc_check_errors._classify_error -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/doc_check_errors.py:63
+aideal.error_log.ErrorLog.append -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/error_log.py:68
+aideal.error_log.ErrorLog.failures_for -> /home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/error_log.py:113
+
+Selected prompt template
+------------------------
+/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32/vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write_exec.md
+
+Actual loop in doc_check_execution.py
+-------------------------------------
+line 473: for attempt in range(1 + max_fix_rounds):
+max_fix_rounds=2 -> at most 3 requests, R0 through R2.
+R0 uses audience. R1/R2 use fixer with previously recorded failures.
+Pass ends the loop immediately. No repair is forced in live mode.
+Interactive view: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/mir_eval/TRACE.html
+[comprehension] APIs to execute: 1 of 1 (doc_source=original, doc_scope=relevant)
+
+Preview R0 exact system prompt
+------------------------------
+You write Python code that will be spliced into a runnable test harness.
+A runnable headless Python harness is already in scope. Write statements only for the marked function body. Reuse the small arrays, labels, and repository fixture paths already defined; import the target from its public mir_eval module, call it, validate a deterministic property with assert, and print a compact witness. Do not download or play audio.
+
+Requested target declaration (frozen canonical selection):
+Qualified name: mir_eval.beat.f_measure
+Owner: 
+Declaration: def f_measure(reference_beats, estimated_beats, f_measure_threshold=0.07)
+Parameters in declaration order (3): reference_beats: ; estimated_beats: ; f_measure_threshold: 
+Write the requested call against this owner and declaration, with its indicated parameter list.
+
+Pick the input variable(s) whose type matches the API's parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: An expert in reproducible music-information-retrieval evaluation and scientific Python API usage.
+Project: mir_eval (Python) - A scientific Python library of evaluation metrics, I/O helpers, displays, and sonification utilities for music and audio information retrieval.
+Domain: Audio and music signal evaluation. This label is query provenance, not a manual classification: the repository was returned by both the saved "audio processing" and "signal processing" GitHub sweeps.
+Target users: music-information-retrieval researchers; audio and signal-processing engineers; coding agents implementing reproducible metric evaluations
+Use cases: Score beats, onsets, melody, multipitch, chords, keys, and tempo.; Evaluate segment, hierarchy, transcription, alignment, and separation outputs.; Load repository-format annotations and produce deterministic summaries.
+Constraints: Use only checked-in test fixtures or deterministic in-memory arrays.; Keep display tests headless and prohibit network/audio-device access.; Use every name in the frozen 125-name canonical manifest without sampling; selection is structural filtering and same-name maximum arity, not a proof of arbitrary semantic equivalence.
+
+Preview R0 exact user prompt
+----------------------------
+Documentation:
+===== /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/docs/index.rst =====
+.. mir_eval documentation master file
+
+mir_eval Documentation
+======================
+
+**mir_eval** is a Python library which provides a transparent, standardized, and straightforward way to evaluate Music Information Retrieval systems.
+
+If you use **mir_eval** in a research project, please cite the following paper:
+
+  C. Raffel, B. McFee, E. J. Humphrey, J. Salamon, O. Nieto, D. Liang, and D. P. W. Ellis, `"mir_eval: A Transparent Implementation of Common MIR Metrics" <http://colinraffel.com/publications/ismir2014mir_eval.pdf>`_, Proceedings of the 15th International Conference on Music Information Retrieval, 2014.
+  
+Installation
+============
+
+The simplest way to install **mir_eval** is via ``pip``:
+
+.. code-block:: console
+
+   python -m pip install mir_eval
+
+If you use `conda` packages, **mir_eval** is available on conda-forge:
+
+.. code-block:: console
+
+   conda install -c conda-forge mir_eval
+
+Alternatively, you can install from source:
+
+.. code-block:: console
+
+   python setup.py install
+
+If you don't use Python and want to get started as quickly as possible, you might consider using `Anaconda <https://www.anaconda.com/download>`_ which makes it easy to install a Python environment which can run **mir_eval**.
+
+Using mir_eval
+==============
+
+Once installed, you can import **mir_eval** in your code:
+
+.. code-block:: python
+
+   import mir_eval
+
+For example, to evaluate beat tracking:
+
+.. code-block:: python
+
+   reference_beats = mir_eval.io.load_events('reference_beats.txt')
+   estimated_beats = mir_eval.io.load_events('estimated_beats.txt')
+   scores = mir_eval.beat.evaluate(reference_beats, estimated_beats)
+
+At the end of execution, ``scores`` will be a dict containing scores 
+for all of the metrics implemented in `mir_eval.beat`.  
+The keys are metric names and values are the scores achieved.
+
+You can also load in the data, do some preprocessing, and call specific metric functions from the appropriate submodule like so:
+
+.. code-block:: python
+
+   reference_beats = mir_eval.io.load_events('reference_beats.txt')
+   estimated_beats = mir_eval.io.load_events('estimated_beats.txt')
+   # Crop out beats before 5s, a common preprocessing step
+   reference_beats = mir_eval.beat.trim_beats(reference_beats)
+   estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+   # Compute the F-measure metric and store it in f_measure
+   f_measure = mir_eval.beat.f_measure(reference_beats, estimated_beats)
+
+Alternatively, you can use the evaluator scripts which allow you to run evaluation from the command line, without writing any code.
+These scripts are are available here:
+
+https://github.com/craffel/mir_evaluators
+
+
+API Reference
+=============
+
+The structure of the **mir_eval** Python module is as follows:
+Each MIR task for which evaluation metrics are included in **mir_eval** is given its own submodule, and each metric is defined as a separate function in each submodule.
+Every metric function includes detailed documentation, example usage, input validation, and references to the original paper which defined the metric (see the subsections below).
+The task submodules also all contain a function ``evaluate()``, which takes as input reference and estimated annotations and returns a dictionary of scores for all of the metrics implemented (for casual users, this is the place to start).
+Finally, each task submodule also includes functions for common data pre-processing steps.
+
+**mir_eval** also includes the following additional submodules:
+
+* :mod:`mir_eval.io` which contains convenience functions for loading in task-specific data from common file formats
+* :mod:`mir_eval.util` which includes miscellaneous functionality shared across the submodules
+* :mod:`mir_eval.sonify` which implements some simple methods for synthesizing annotations of various formats for "evaluation by ear".
+* :mod:`mir_eval.display` which provides functions for plotting annotations for various tasks.
+
+Detailed API documentation for each submodule is available in the API Reference section.
+See the :doc:`API Reference <api/index>` for full details.
+
+.. toctree::
+   :caption: mir_eval
+   :maxdepth: 2
+
+   api/index
+   changes
+
+Available input path variables already in scope (choose the matching one(s) by type):
+Pre-loaded and already in scope — use these directly, do NOT re-load:
+- times: numpy.ndarray event/frame times
+- ref_events: numpy.ndarray reference events
+- est_events: numpy.ndarray estimated events
+- ref_intervals: numpy.ndarray reference intervals
+- est_intervals: numpy.ndarray estimated intervals
+- ref_labels: list[str] reference labels
+- est_labels: list[str] estimated labels
+- ref_freqs: numpy.ndarray reference frequencies
+- est_freqs: numpy.ndarray estimated frequencies
+- ref_sources: numpy.ndarray reference sources
+- est_sources: numpy.ndarray estimated sources
+(raw input path strings also in scope if needed: beat_reference_file, beat_estimate_file, chord_reference_file, melody_reference_file, output_dir)
+
+RECEIVER — call `f_measure` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `f_measure` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Python syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language's normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ f_measure ` followed by the witness, using the language's normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `f_measure`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `f_measure` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `f_measure` is the writer; keep the
+body focused on `f_measure` so the run isolates that one call.
+mir_eval functions generally accept NumPy event times, intervals, labels, frequencies, or source matrices. Keep plotting headless. For I/O functions use only the configured files under source/tests/data. Avoid deprecated aliases when the documented public function is available.
+
+Preview complete
+----------------
+{
+  "library": "mir_eval",
+  "api": "f_measure",
+  "mode": "preview",
+  "status": "preview",
+  "complete": false,
+  "requests": 0,
+  "model_calls": 0,
+  "snippet_executions": 0,
+  "repair_rounds_allowed": 2,
+  "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/mir_eval/execution/run_f_measure/attempt_0001/request.json",
+  "stop_reason": "Exact R0 request captured before provider invocation; no response, code, verdict, or repair was produced.",
+  "future_rounds": "R1/R2 prompts depend on actual prior code and execution failures and do not exist in this preview."
+}
+Interactive view: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v2/mir_eval/TRACE.html

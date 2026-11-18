@@ -1,0 +1,194 @@
+class MDAnalysis.coordinates.PDB.PDBWriter(filename, bonds='conect', n_atoms=None, start=0, step=1, remarks='Created by PDBWriter', convert_units=True, multiframe=None, reindex=True)[source]
+
+PDB writer that implements a subset of the PDB 3.3 standard .
+
+PDB format as used by NAMD/CHARMM: 4-letter resnames and segID are allowed, altLoc is written.
+
+The PDBWriter can be used to either dump a coordinate set to a PDB file (operating as a “single frame writer”, selected with the constructor keyword multiframe = False, the default) or by writing a PDB “movie” (multi frame mode, multiframe = True), consisting of multiple models (using the MODEL and ENDMDL records).
+
+Note
+
+Writing bonds currently only works when writing a whole Universe and if bond information is available in the topology. (For selections smaller than the whole Universe, the atom numbering in the CONECT records would not match the numbering of the atoms in the new PDB file and therefore a NotImplementedError is raised.)
+
+The maximum frame number that can be stored in a PDB file is 9999 and it will wrap around (see MODEL() for further details).
+
+The CRYST1 record specifies the unit cell. This record is set to unitary values (cubic box with sides of 1 Å) if unit cell dimensions are not set (None or np.zeros(6), see Issue #2698).
+
+When the record_types attribute is present (e.g. Universe object was created by loading a PDB file), ATOM and HETATM record type keywords are written out accordingly. Otherwise, the ATOM record type is the default output.
+
+The CONECT record is written out, if required, when the output stream is closed.
+
+See also
+
+This, exception, None
+
+Changed in version 0.7.5: Initial support for multi-frame PDB files.
+
+Changed in version 0.7.6: The multiframe keyword was added to select the writing mode. The writing of bond information (CONECT records) is now disabled by default but can be enabled with the bonds keyword.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 0.14.0: PDB doesn’t save charge information
+
+Changed in version 0.20.0: Strip trajectory header of trailing spaces and newlines
+
+Changed in version 1.0.0: ChainID now comes from the last character of segid, as stated in the documentation. An indexing issue meant it previously used the first charater (Issue #2224)
+
+Changed in version 2.0.0: Add the redindex argument. Setting this keyword to True (the default) preserves the behavior in earlier versions of MDAnalysis. The PDB writer checks for a valid chainID entry instead of using the last character of segid. Should a chainID not be present, or not conform to the PDB standard, the default value of ‘X’ is used.
+
+Changed in version 2.3.0: Do not write unusable conect records when ag index is larger than 100000.
+
+Create a new PDBWriter
+
+Parameters:
+
+filename (str) – name of output file
+
+start (int (optional)) – starting timestep (the first frame will have MODEL number start + 1 because the PDB standard prescribes MODEL numbers starting at 1)
+
+step (int (optional)) – skip between subsequent timesteps
+
+remarks (str (optional)) – comments to annotate pdb file (added to the TITLE record); note that any remarks from the trajectory that serves as input are written to REMARK records with lines longer than remark_max_length (66 characters) being wrapped.
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+bonds ({"conect", "all", None} (optional)) – If set to “conect”, then only write those bonds that were already defined in an input PDB file as PDB CONECT record. If set to “all”, write all bonds (including guessed ones) to the file. None does not write any bonds. The default is “conect”.
+
+multiframe (bool (optional)) – False: write a single frame to the file; True: create a multi frame PDB file in which frames are written as MODEL … ENDMDL records. If None, then the class default is chosen. [None]
+
+reindex (bool (optional)) – If True (default), the atom serial is set to be consecutive numbers starting at 1. Else, use the atom id.
+
+ _check_pdb_coordinates()[source]
+
+Check if the coordinate values fall within the range allowed for PDB files.
+
+Deletes the output file if this is the first frame or if frames have already been written (in multi-frame mode) adds a REMARK instead of the coordinates and closes the file.
+
+Raises:
+
+ValueError – if the coordinates fail the check.
+
+.. versionchanged – 1.0.0: Check if filename is StringIO when attempting to remove a PDB file with invalid coordinates (Issue #2512)
+
+ _write_pdb_bonds()[source]
+
+Writes out all the bond records
+
+ _update_frame(obj)[source]
+
+Method to initialize important attributes in writer from a AtomGroup or Universe obj.
+
+Attributes initialized/updated:
+
+PDBWriter.obj (the entity that provides topology information and coordinates, either a AtomGroup or a whole Universe)
+
+PDBWriter.trajectory (the underlying trajectory Reader)
+
+PDBWriter.timestep (the underlying trajectory Timestep)
+
+Before calling _write_next_frame() this method must be called at least once to enable extracting topology information from the current frame.
+
+ _write_timestep(ts, multiframe=False)[source]
+
+Write a new timestep ts to file
+
+Does unit conversion if necessary.
+
+By setting multiframe = True, MODEL … ENDMDL records are written to represent trajectory frames in a multi-model PDB file. (At the moment we do not write the NUMMDL record.)
+
+The multiframe = False keyword signals that the PDBWriter is in single frame mode and no MODEL records are written.
+
+Changed in version 0.7.6: The multiframe keyword was added, which completely determines if MODEL records are written. (Previously, this was decided based on the underlying trajectory and only if len(traj) > 1 would MODEL records have been written.)
+
+Changed in version 1.0.0: ChainID now comes from the last character of segid, as stated in the documentation. An indexing issue meant it previously used the first charater (Issue #2224)
+
+Changed in version 2.0.0: When only record_types attribute is present, instead of using ATOM for both ATOM and HETATM, HETATM record types are properly written out (Issue #1753). Writing now only uses the contents of the elements attribute instead of guessing by default. If the elements are missing, empty records are written out (Issue #2423). Atoms are now checked for a valid chainID instead of being overwritten by the last letter of the segid (Issue #3144).
+
+ CONECT(conect)[source]
+
+Write CONECT record.
+
+ CRYST1(dimensions, spacegroup='P 1', zvalue=1)[source]
+
+Write CRYST1 record.
+
+ END()[source]
+
+Write END record.
+
+Only a single END record is written. Calling END multiple times has no effect. Because close() also calls this method right before closing the file it is recommended to not call END() explicitly.
+
+ ENDMDL()[source]
+
+Write the ENDMDL record.
+
+ HEADER(trajectory)[source]
+
+Write HEADER record.
+
+Changed in version 0.20.0: Strip trajectory.header since it can be modified by the user and should be sanitized (Issue #2324)
+
+ MODEL(modelnumber)[source]
+
+Write the MODEL record.
+
+Note
+
+The maximum MODEL number is limited to 9999 in the PDB standard (i.e., 4 digits). If frame numbers are larger than 9999, they will wrap around, i.e., 9998, 9999, 0, 1, 2, …
+
+Changed in version 0.19.0: Maximum model number is enforced.
+
+ REMARK(*remarks)[source]
+
+Write generic REMARKS record (without number).
+
+Each string provided in remarks is written as a separate REMARKS record.
+
+ TITLE(*title)[source]
+
+Write TITLE record.
+
+ close()[source]
+
+Close PDB file and write CONECT and END record
+
+Changed in version 2.0.0: CONECT record written just before END record
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)[source]
+
+Write object obj at current trajectory frame to file.
+
+obj can be a selection (i.e. a AtomGroup) or a whole Universe.
+
+The last letter of the segid is used as the PDB chainID (but see ATOM() for details).
+
+Parameters:
+
+obj – The AtomGroup or Universe to write.
+
+ write_all_timesteps(obj)[source]
+
+Write all timesteps associated with obj to the PDB file.
+
+obj can be a AtomGroup or a Universe.
+
+The method writes the frames from the one specified as start until the end, using a step of step (start and step are set in the constructor). Thus, if u is a Universe then
+
+u.trajectory[-2]
+pdb = PDBWriter("out.pdb", u.atoms.n_atoms)
+pdb.write_all_timesteps(u)
+
+will write a PDB trajectory containing the last 2 frames and
+
+pdb = PDBWriter("out.pdb", u.atoms.n_atoms, start=12, step=2)
+pdb.write_all_timesteps(u)
+
+will be writing frames 12, 14, 16, …
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 2.0.0: CONECT record moved to close()

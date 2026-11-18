@@ -1,0 +1,23 @@
+MDAnalysis.auxiliary.core.get_auxreader_for(auxdata=None, format=None)[source]
+
+Return the appropriate auxiliary reader class for auxdata/format.
+
+If format is provided, will attempt to find an AuxReader corresponding to that format. If auxdata is provided, the format will first be guessed.
+
+Parameters:
+
+auxdata – (Optional) The auxiliary data (e.g. filename of file containing auxiliary data).
+
+format – (Optional). Known format of auxdata.
+
+Returns:
+
+AuxReader class corresponding to the supplied/guessed format.
+
+Return type:
+
+AuxReader
+
+Raises:
+
+ValueError – If an AuxReader for the format (provided or guessed from auxdata) cannot be found.

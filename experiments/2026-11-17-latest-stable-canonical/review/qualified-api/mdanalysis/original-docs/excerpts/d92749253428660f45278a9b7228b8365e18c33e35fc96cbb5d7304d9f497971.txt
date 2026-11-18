@@ -1,0 +1,24 @@
+_get_local_frame(k) → Tuple[int, int][source]
+
+Find trajectory index and trajectory frame for chained frame k.
+
+Parameters:
+
+k (int) –
+Frame k in the chained trajectory can be found in the trajectory at index i and frame index f.
+
+Frames are internally treated as 0-based indices into the trajectory.
+
+Returns:
+
+i (int) – trajectory
+
+f (int) – frame in trajectory i
+
+Raises:
+
+IndexError for k<0 or i<0. –
+
+Note
+
+Does not check if k is larger than the maximum number of frames in the chained trajectory.

@@ -1,0 +1,30 @@
+MDAnalysis.lib.util.fixedwidth_bins(delta, xmin, xmax)[source]
+
+Return bins of width delta that cover xmin, xmax (or a larger range).
+
+The bin parameters are computed such that the bin size delta is guaranteed. In order to achieve this, the range [xmin, xmax] can be increased.
+
+Bins can be calculated for 1D data (then all parameters are simple floats) or nD data (then parameters are supplied as arrays, with each entry correpsonding to one dimension).
+
+Parameters:
+
+delta (float or array_like) – desired spacing of the bins
+
+xmin (float or array_like) – lower bound (left boundary of first bin)
+
+xmax (float or array_like) – upper bound (right boundary of last bin)
+
+Returns:
+
+The dict contains ‘Nbins’, ‘delta’, ‘min’, and ‘max’; these are either floats or arrays, depending on the input.
+
+Return type:
+
+dict
+
+Example
+
+Use with numpy.histogram():
+
+B = fixedwidth_bins(delta, xmin, xmax)
+h, e = np.histogram(data, bins=B['Nbins'], range=(B['min'], B['max']))

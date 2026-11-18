@@ -1,0 +1,163 @@
+4.10.1. Diffusion map — MDAnalysis.analysis.diffusionmap
+
+Authors:
+
+Eugen Hruska, John Detlefs
+
+Year:
+
+2016
+
+Copyright:
+
+Lesser GNU Public License v2.1+
+
+This module contains the non-linear dimension reduction method diffusion map. The eigenvectors of a diffusion matrix represent the ‘collective coordinates’ of a molecule; the largest eigenvalues are the more dominant collective coordinates. Assigning physical meaning to the ‘collective coordinates’ is a fundamentally difficult problem. The time complexity of the diffusion map is \(O(N^3)\), where N is the number of frames in the trajectory, and the in-memory storage complexity is \(O(N^2)\). Instead of a single trajectory a sample of protein structures can be used. The sample should be equilibrated, at least locally. The order of the sampled structures in the trajectory is irrelevant.
+
+The Diffusion Map tutorial shows how to use diffusion map for dimension reduction.
+
+More details about diffusion maps are in [1][2][3][4].
+
+4.10.1.1. Diffusion Map tutorial
+
+The example uses files provided as part of the MDAnalysis test suite (in the variables PSF and DCD). This tutorial shows how to use the Diffusion Map class.
+
+First load all modules and test data
+
+import MDAnalysis as mda
+import MDAnalysis.analysis.diffusionmap as diffusionmap
+from MDAnalysis.tests.datafiles import PSF, DCD
+
+Given a universe or atom group, we can create and eigenvalue decompose the Diffusion Matrix from that trajectory using DiffusionMap and get the corresponding eigenvalues and eigenvectors.
+
+u = mda.Universe(PSF,DCD)
+
+We leave determination of the appropriate scale parameter epsilon to the user, [4] uses a complex method involving the k-nearest-neighbors of a trajectory frame, whereas others simple use a trial-and-error approach with a constant epsilon. Currently, the constant epsilon method is implemented by MDAnalysis.
+
+dmap = diffusionmap.DiffusionMap(u, select='backbone', epsilon=2)
+dmap.run()
+
+From here we can perform an embedding onto the k dominant eigenvectors. The non-linearity of the map means there is no explicit relationship between the lower dimensional space and our original trajectory. However, this is an isometry (distance preserving map), which means that points close in the lower dimensional space are close in the higher-dimensional space and vice versa. In order to embed into the most relevant low-dimensional space, there should exist some number of dominant eigenvectors, whose corresponding eigenvalues diminish at a constant rate until falling off, this is referred to as a spectral gap and should be somewhat apparent for a system at equilibrium with a high number of frames.
+
+import matplotlib.pyplot as plt
+f, ax = plt.subplots()
+upper_limit = # some reasonably high number less than the n_eigenvectors
+ax.plot(dmap.eigenvalues[:upper_limit])
+ax.set(xlabel ='eigenvalue index', ylabel='eigenvalue')
+plt.tight_layout()
+
+From here we can transform into the diffusion space
+
+num_eigenvectors = # some number less than the number of frames after
+# inspecting for the spectral gap
+fit = dmap.transform(num_eigenvectors, time=1)
+
+It can be difficult to interpret the data, and is left as a task for the user. The diffusion distance between frames i and j is best approximated by the euclidean distance between rows i and j of self.diffusion_space.
+
+4.10.1.2. Classes
+
+ class MDAnalysis.analysis.diffusionmap.DiffusionMap(u, epsilon=1, **kwargs)[source]
+
+Non-linear dimension reduction method
+
+Dimension reduction with diffusion mapping of selected structures in a trajectory.
+
+ eigenvalues
+
+Eigenvalues of the diffusion map
+
+Type:
+
+array (n_frames,)
+
+ run()[source]
+
+Constructs an anisotropic diffusion kernel and performs eigenvalue decomposition on it.
+
+ transform(n_eigenvectors, time)[source]
+
+Perform an embedding of a frame into the eigenvectors representing the collective coordinates.
+
+Changed in version 2.2.0: DiffusionMap now also accepts AtomGroup.
+
+Parameters:
+
+u (MDAnalysis Universe or AtomGroup or DistanceMatrix object.) – Can be a Universe or AtomGroup, in which case one must supply kwargs for the initialization of a DistanceMatrix. Otherwise, this can be a DistanceMatrix already initialized. Either way, this will be made into a diffusion kernel.
+
+epsilon (Float) – Specifies the method used for the choice of scale parameter in the diffusion map. More information in [2][3][4], Default: 1.
+
+**kwargs – Parameters to be passed for the initialization of a DistanceMatrix.
+
+ class MDAnalysis.analysis.diffusionmap.DistanceMatrix(universe, select='all', metric=<function rmsd>, cutoff=-4.0, weights=None, **kwargs)[source]
+
+Calculate the pairwise distance between each frame in a trajectory using a given metric
+
+A distance matrix can be initialized on its own and used as an initialization argument in DiffusionMap.
+
+Parameters:
+
+universe (~MDAnalysis.core.universe.Universe or ~MDAnalysis.core.groups.AtomGroup) – The MD Trajectory for dimension reduction, remember that computational cost of eigenvalue decomposition scales at O(N^3) where N is the number of frames. Cost can be reduced by increasing step interval or specifying a start and stop value when calling DistanceMatrix.run().
+
+select (str, optional) – Any valid selection string for select_atoms() This selection of atoms is used to calculate the RMSD between different frames. Water should be excluded.
+
+metric (function, optional) – Maps two numpy arrays to a float, is positive definite and symmetric. The API for a metric requires that the arrays must have equal length, and that the function should have weights as an optional argument. Weights give each index value its own weight for the metric calculation over the entire arrays. Default: metric is set to rms.rmsd().
+
+cutoff (float, optional) – Specify a given cutoff for metric values to be considered equal, Default: 1EO-5
+
+weights (array, optional) – Weights to be given to coordinates for metric calculation
+
+verbose (bool, optional) – Show detailed progress of the calculation if set to True; the default is False.
+
+ atoms
+
+Selected atoms in trajectory subject to dimension reduction
+
+Type:
+
+~MDAnalysis.core.groups.AtomGroup
+
+ results.dist_matrix
+
+Array of all possible ij metric distances between frames in trajectory. This matrix is symmetric with zeros on the diagonal.
+
+Added in version 2.0.0.
+
+Type:
+
+numpy.ndarray, (n_frames, n_frames)
+
+ dist_matrix
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.dist_matrix instead.
+
+Type:
+
+numpy.ndarray, (n_frames, n_frames)
+
+Example
+
+Often, a custom distance matrix could be useful for local epsilon determination or other manipulations on the diffusion map method. The DistanceMatrix exists in diffusionmap and can be passed as an initialization argument for DiffusionMap.
+
+import MDAnalysis as mda
+import MDAnalysis.analysis.diffusionmap as diffusionmap
+from MDAnalysis.tests.datafiles import PSF, DCD
+
+Now create the distance matrix and pass it as an argument to DiffusionMap.
+
+u = mda.Universe(PSF,DCD) dist_matrix = diffusionmap.DistanceMatrix(u, select=’all’) dist_matrix.run() dmap = diffusionmap.DiffusionMap(dist_matrix) dmap.run()
+
+Changed in version 1.0.0: save() method has been removed. You can use np.save() on DistanceMatrix.results.dist_matrix instead.
+
+Changed in version 2.0.0: dist_matrix is now stored in a MDAnalysis.analysis.base.Results instance.
+
+Changed in version 2.2.0: DistanceMatrix now also accepts AtomGroup.
+
+Changed in version 2.8.0: DistanceMatrix is now correctly works with frames=… parameter (#4432) by iterating over self._sliced_trajectory
+
+Changed in version 2.11.0: Enabled parallel execution with the multiprocessing and dask backends; use the new method get_supported_backends() to see all supported backends.
+
+References
+
+If you use this Dimension Reduction method in a publication, please cite [2].
+
+If you choose the default metric, this module uses the fast QCP algorithm [5] to calculate the root mean square distance (RMSD) between two coordinate sets (as implemented in MDAnalysis.lib.qcprot.CalcRMSDRotationalMatrix()). When using this module in published work please [5].

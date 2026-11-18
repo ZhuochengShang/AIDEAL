@@ -1,0 +1,17 @@
+7.32. Null output — MDAnalysis.coordinates.null
+
+The NullWriter provides a Writer instance that behaves like any other writer but effectively ignores its input and does not write any output files. This is similar to writing to /dev/null.
+
+This class exists to allow developers writing generic code and tests.
+
+7.32.1. Classes
+
+ class MDAnalysis.coordinates.null.NullWriter(filename, **kwargs)[source]
+
+A trajectory Writer that does not do anything.
+
+The NullWriter is the equivalent to /dev/null: it behaves like a Writer but ignores all input. It can be used in order to suppress output.
+
+ units = {'length': 'Angstrom', 'time': 'ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

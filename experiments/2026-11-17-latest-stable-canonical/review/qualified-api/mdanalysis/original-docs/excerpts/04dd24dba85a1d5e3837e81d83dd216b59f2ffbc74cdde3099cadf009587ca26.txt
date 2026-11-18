@@ -1,0 +1,53 @@
+wrap(compound='atoms', center='com', box=None, inplace=True)
+
+Shift the contents of this group back into the primary unit cell according to periodic boundary conditions.
+
+Specifying a compound will keep the Atoms in each compound together during the process. If compound is different from 'atoms', each compound as a whole will be shifted so that its center lies within the primary unit cell.
+
+Parameters:
+
+compound ({'atoms', 'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional Which type of compound to keep together during wrapping. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'com', 'cog'}) – How to define the center of a given group of atoms. If compound is 'atoms', this parameter is meaningless and therefore ignored.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma]. If None, uses the dimensions of the current time step.
+
+inplace (bool, optional) – If True, coordinates will be changed in place.
+
+Returns:
+
+Array of wrapped atom coordinates of dtype np.float32 and shape (len(self.atoms.n_atoms), 3)
+
+Return type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – If compound is not one of 'atoms', 'group', 'segments', 'residues', 'molecules', or 'fragments'.
+
+NoDataError – If compound is 'molecule' but the topology doesn’t contain molecule information (molnums) or if compound is 'fragments' but the topology doesn’t contain bonds or if center is 'com' but the topology doesn’t contain masses.
+
+Notes
+
+All atoms of the group will be moved so that the centers of its compounds lie within the primary periodic image. For orthorhombic unit cells, the primary periodic image is defined as the half-open interval \([0,L_i)\) between \(0\) and boxlength \(L_i\) in all dimensions \(i\in\{x,y,z\}\), i.e., the origin of the of the simulation box is taken to be at the origin \((0,0,0)\) of the euclidian coordinate system. A compound center residing at position \(x_i\) in dimension \(i\) will be shifted to \(x_i'\) according to
+
+ \[x_i' = x_i - \left\lfloor\frac{x_i}{L_i}\right\rfloor\,.\]
+
+When specifying a compound, the translation is calculated based on each compound. The same translation is applied to all atoms within this compound, meaning it will not be broken by the shift. This might however mean that not all atoms of a compound will be inside the unit cell after wrapping, but rather will be the center of the compound. Be aware of the fact that only atoms belonging to the group will be taken into account!
+
+center allows to define how the center of each group is computed. This can be either 'com' for center of mass, or 'cog' for center of geometry.
+
+box allows a unit cell to be given for the transformation. If not specified, the dimensions information from the current Timestep will be used.
+
+Note
+
+AtomGroup.wrap() is currently faster than ResidueGroup.wrap() or SegmentGroup.wrap().
+
+See also
+
+pack_into_box(), unwrap(), MDAnalysis.lib.distances.apply_PBC()
+
+Added in version 0.9.2.
+
+Changed in version 0.20.0: The method only acts on atoms belonging to the group and returns the wrapped positions as a numpy.ndarray. Added optional argument inplace.

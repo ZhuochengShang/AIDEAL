@@ -1,0 +1,23 @@
+search_tree(centers: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], radius: float) → ndarray[source]
+
+Searches all the pairs within radius between centers and coords
+
+coords are the already initialized coordinates in the tree during set_coords(). centers are wrapped around the primary unit cell if PBC is desired. Minimum image convention (PBC) is activated if the box argument is provided during class initialization
+
+Parameters:
+
+centers (array_like (N,3)) – coordinate array to search for neighbors
+
+radius (float) – maximum distance to search for neighbors.
+
+Returns:
+
+pairs – all the pairs between coords and centers
+
+Return type:
+
+array
+
+Note
+
+This method constructs another tree from the centers and queries the previously built tree (built in set_coords())

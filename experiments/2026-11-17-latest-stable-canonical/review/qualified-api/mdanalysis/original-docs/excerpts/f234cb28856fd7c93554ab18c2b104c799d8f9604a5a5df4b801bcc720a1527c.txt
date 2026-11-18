@@ -1,0 +1,56 @@
+accumulate(attribute, function=<function sum>, compound='group')
+
+Accumulates the attribute associated with (compounds of) the group.
+
+Accumulates the attribute of Atoms in the group. The accumulation per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. By default, the method sums up all attributes per compound, but any function that takes an array and returns an acuumulation over a given axis can be used. For multi-dimensional input arrays, the accumulation is performed along the first axis.
+
+Parameters:
+
+attribute (str or array_like) – Attribute or array of values to accumulate. If a numpy.ndarray (or compatible) is provided, its first dimension must have the same length as the total number of atoms in the group.
+
+function (callable, optional) – The function performing the accumulation. It must take the array of attribute values to accumulate as its only positional argument and accept an (optional) keyword argument axis allowing to specify the axis along which the accumulation is performed.
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'},) – optional If 'group', the accumulation of all attributes associated with atoms in the group will be returned as a single value. Otherwise, the accumulation of the attributes per Segment, Residue, molecule, or fragment will be returned as a 1d array. Note that, in any case, only the Atoms belonging to the group will be taken into account.
+
+Returns:
+
+Acuumulation of the attribute. If compound is set to 'group', the first dimension of the attribute array will be contracted to a single value. If compound is set to 'segments', 'residues', 'molecules', or 'fragments', the length of the first dimension will correspond to the number of compounds. In all cases, the other dimensions of the returned array will be of the original shape (without the first dimension).
+
+Return type:
+
+float or numpy.ndarray
+
+Raises:
+
+ValueError – If the length of a provided attribute array does not correspond to the number of atoms in the group.
+
+ValueError – If compound is not one of 'group', 'segments', 'residues', 'molecules', or 'fragments'.
+
+NoDataError – If compound is 'molecule' but the topology doesn’t contain molecule information (molnums), or if compound is 'fragments' but the topology doesn’t contain bonds.
+
+Examples
+
+To find the total charge of a given AtomGroup:
+
+>>> sel = u.select_atoms('prop mass > 4.0')
+>>> sel.accumulate('charges')
+-251.68500316143036
+
+To find the total mass per residue of all CA Atoms:
+
+ >>> sel = u.select_atoms('name CA')
+ >>> sel.accumulate('masses', compound='residues')
+ array([12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011, 12.011,
+        ...
+
+To find the maximum atomic charge per fragment of a given AtomGroup:
+
+>>> import numpy as np
+>>> sel.accumulate('charges', compound="fragments", function=np.max)
+array([0.20999999])
+
+Added in version 0.20.0.

@@ -1,0 +1,15 @@
+OtherWriter(filename, **kwargs)
+
+Writer creation is not supported for streaming trajectories.
+
+OtherWriter initialization requires frame-based parameters and trajectory indexing information. Streaming readers process data sequentially without meaningful frame indexing, making writer setup impossible.
+
+Parameters:
+
+filename (str) – Output filename (ignored, as method is not supported)
+
+**kwargs – Additional keyword arguments (ignored, as method is not supported)
+
+Raises:
+
+RuntimeError – Always raised, as writer creation is not supported for streaming trajectories

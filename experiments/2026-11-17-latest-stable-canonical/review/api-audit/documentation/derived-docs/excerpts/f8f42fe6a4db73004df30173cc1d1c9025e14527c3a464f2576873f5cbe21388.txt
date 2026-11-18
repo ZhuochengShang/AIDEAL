@@ -1,0 +1,91 @@
+class MDAnalysis.analysis.gnm.GNMAnalysis(universe, select='protein and name CA', cutoff=7.0, ReportVector=None, Bonus_groups=None)[source]
+
+Basic tool for GNM analysis.
+
+Each frame is treated as a novel structure and the GNM calculated. By default, this stores the dominant eigenvector and its associated eigenvalue; either can be used to monitor conformational change in a simulation.
+
+Parameters:
+
+universe (Universe) – Analyze the full trajectory in the universe.
+
+select (str (optional)) – MDAnalysis selection string
+
+cutoff (float (optional)) – Consider selected atoms within the cutoff as neighbors for the Gaussian network model.
+
+ReportVector (str (optional)) – filename to write eigenvectors to, by default no output is written
+
+Bonus_groups (tuple) – This is a tuple of selection strings that identify additional groups (such as ligands). The center of mass of each group will be added as a single point in the ENM (it is a popular way of treating small ligands such as drugs). You need to ensure that none of the atoms in Bonus_groups is contained in selection as this could lead to double counting. No checks are applied.
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvalues
+
+calculated eigenvalues
+
+Type:
+
+numpy.ndarray
+
+ results.eigenvectors
+
+calculated eigenvectors
+
+Type:
+
+numpy.ndarray
+
+See also
+
+closeContactGNMAnalysis
+
+Changed in version 0.16.0: Made generate_output() a private method _generate_output().
+
+Changed in version 1.0.0: Changed selection keyword to select
+
+Changed in version 2.0.0: Use AnalysisBase as parent class and store results as attributes times, eigenvalues and eigenvectors of the results attribute.
+
+Changed in version 2.8.0: Enabled parallel execution with the multiprocessing and dask backends; use the new method get_supported_backends() to see all supported backends.
+
+Changed in version 2.11.0: Fixed incorrect stacking of results from multiprocessing. Previously results.eigenvectors would silently return an array of the wrong shape. It now correctly use np.vstack for reducing the eigenvectors from multiple workers.
+
+ generate_kirchoff()[source]
+
+Generate the Kirchhoff matrix of contacts.
+
+This generates the neighbour matrix by generating a grid of near-neighbours and then calculating which are are within the cutoff.
+
+Returns:
+
+the resulting Kirchhoff matrix
+
+Return type:
+
+array
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.

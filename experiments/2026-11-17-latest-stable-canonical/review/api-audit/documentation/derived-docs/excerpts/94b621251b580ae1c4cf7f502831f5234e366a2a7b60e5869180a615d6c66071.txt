@@ -1,0 +1,53 @@
+mir_eval.display.labeled_intervals(intervals, labels, label_set=None, base=None, height=None, extend_labels=True, ax=None, tick=True, prop_cycle=None, **kwargs)
+
+Plot labeled intervals with each label on its own row.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+labelslist, shape=(n,)
+
+reference segment labels, in the format returned by mir_eval.io.load_labeled_intervals().
+
+label_setlist
+
+An (ordered) list of labels to determine the plotting order. If not provided, the labels will be inferred from ax.get_yticklabels(). If no yticklabels exist, then the sorted set of unique values in labels is taken as the label set.
+
+basenp.ndarray, shape=(n,), optional
+
+Vertical positions of each label. By default, labels are positioned at integers np.arange(len(labels)).
+
+heightscalar or np.ndarray, shape=(n,), optional
+
+Height for each label. If scalar, the same value is applied to all labels. By default, each label has height=1.
+
+extend_labelsbool
+
+If False, only values of labels that also exist in label_set will be shown.
+
+If True, all labels are shown, with those in labels but not in label_set appended to the top of the plot. A horizontal line is drawn to indicate the separation between values in or out of label_set.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the intervals. If none is provided, a new set of axes is created.
+
+tickbool
+
+If True, sets tick positions and labels on the y-axis.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to pass to matplotlib.collection.PolyCollection.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes

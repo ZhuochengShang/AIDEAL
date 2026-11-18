@@ -1,0 +1,45 @@
+class MDAnalysis.guesser.base.GuesserBase(universe=None, **kwargs)[source]
+
+Base class for context-specific guessers to inherit from
+
+Parameters:
+
+universe (Universe, optional) – Supply a Universe to the Guesser. This then becomes the source of atom attributes to be used in guessing processes. (this is relevant to how the universe’s guess_TopologyAttrs API works. See guess_TopologyAttrs()).
+
+**kwargs (dict, optional) –
+
+To pass additional data to the guesser that can be used with
+
+different methods.
+
+Added in version 2.8.0.
+
+ copy()[source]
+
+Return a copy of this Guesser
+
+ guess_attr(attr_to_guess, force_guess=False)[source]
+
+map the attribute to be guessed with the apporpiate guessing method
+
+Parameters:
+
+attr_to_guess (str) – an atrribute to be guessed then to be added to the universe
+
+force_guess (bool) – To indicate wether to only partialy guess the empty values of the attribute or to overwrite all existing values by guessed one
+
+Return type:
+
+NDArray of guessed values
+
+ is_guessable(attr_to_guess)[source]
+
+check if the passed atrribute can be guessed by the guesser class
+
+Parameters:
+
+guess (str) – Attribute to be guessed then added to the Universe
+
+Return type:
+
+bool

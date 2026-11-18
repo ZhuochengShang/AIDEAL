@@ -1,0 +1,105 @@
+class MDAnalysis.lib.pkdtree.PeriodicKDTree(box: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str] | None = None, leafsize: int = 10)[source]
+
+Wrapper around scipy.spatial.cKDTree
+
+Creates an object which can handle periodic as well as non periodic boundary condtions depending on the parameters provided while constructing the tree.
+
+To enable periodic boundary conditions, box dimensions must be provided. Periodic Boundary conditions are implemented by creating duplicates of the particles which are within the specified cutoff distance from the boundary. These duplicates along with the original particle coordinates are used with the cKDTree without any special treatment due to PBC beyond this point. The final results after any operation with duplicate particle indices can be traced back to the original particle using the MDAnalysis.lib.distances.undo_augment() function.
+
+Parameters:
+
+box (array-like or None, optional, default None) – Simulation cell dimensions in the form of MDAnalysis.trajectory.timestep.Timestep.dimensions when periodic boundary conditions should be taken into account for the calculation of contacts.
+
+leafsize (int (optional)) – Number of entries in leafs of the KDTree. If you suffer poor performance you can play around with this number. Increasing the leafsize will speed up the construction of the KDTree but slow down the search.
+
+ get_indices() → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Return the neighbors from the last query.
+
+Returns:
+
+indices – neighbors for the last query points and search radius
+
+Return type:
+
+NDArray
+
+ property pbc
+
+Flag to indicate the presence of periodic boundaries.
+
+True if PBC are taken into account
+
+False if no unitcell dimension is available.
+
+This is a managed attribute and can only be read.
+
+ search(centers: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], radius: float) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Search all points within radius from centers and their periodic images.
+
+All the centers coordinates are wrapped around the central cell to enable distance evaluations from points in the tree and their images.
+
+Parameters:
+
+centers (array_like (N,3)) – coordinate array to search for neighbors
+
+radius (float) – maximum distance to search for neighbors.
+
+ search_pairs(radius: float) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Search all the pairs within a specified radius
+
+Parameters:
+
+radius (float) – Maximum distance between pairs of coordinates
+
+Returns:
+
+pairs – Indices of all the pairs which are within the specified radius
+
+Return type:
+
+array
+
+ search_tree(centers: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], radius: float) → ndarray[source]
+
+Searches all the pairs within radius between centers and coords
+
+coords are the already initialized coordinates in the tree during set_coords(). centers are wrapped around the primary unit cell if PBC is desired. Minimum image convention (PBC) is activated if the box argument is provided during class initialization
+
+Parameters:
+
+centers (array_like (N,3)) – coordinate array to search for neighbors
+
+radius (float) – maximum distance to search for neighbors.
+
+Returns:
+
+pairs – all the pairs between coords and centers
+
+Return type:
+
+array
+
+Note
+
+This method constructs another tree from the centers and queries the previously built tree (built in set_coords())
+
+ set_coords(coords: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str], cutoff: float | None = None) → None[source]
+
+Constructs KDTree from the coordinates
+
+Wrapping of coordinates to the primary unit cell is enforced before any distance evaluations. If periodic boundary conditions are enabled, then duplicate particles are generated in the vicinity of the box. An additional array mapping is also generated which can be later used to trace the origin of duplicate particle coordinates.
+
+For non-periodic calculations, cutoff should not be provided the parameter is only required for periodic calculations.
+
+Parameters:
+
+coords (array_like) – Coordinate array of shape (N, 3) for N atoms.
+
+cutoff (float) – Specified cutoff distance to create duplicate images Typically equivalent to the desired search radius or the maximum of the desired cutoff radius. Relevant images corresponding to every atom which lies within cutoff distance from either of the box boundary will be generated.
+
+See also
+
+MDAnalysis.lib.distances.augment_coordinates

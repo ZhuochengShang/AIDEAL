@@ -1,0 +1,67 @@
+MDAnalysis.analysis.encore.similarity.ces(ensembles, select='name CA', clustering_method=None, distance_matrix=None, estimate_error=False, bootstrapping_samples=10, ncores=1, calc_diagonal=False, allow_collapsed_result=True)[source]
+
+Calculates the Clustering Ensemble Similarity (CES) between ensembles using the Jensen-Shannon divergence as described in [2].
+
+Parameters:
+
+ensembles (list) – List of ensemble objects for similarity measurements
+
+select (str, optional) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+clustering_method – A single or a list of instances of the MDAnalysis.analysis.encore.clustering.ClusteringMethod classes from the clustering module. Different parameters for the same clustering method can be explored by adding different instances of the same clustering class. Clustering methods options are the Affinity Propagation (default), the DBSCAN and the KMeans. The latter two methods need the sklearn python module installed.
+
+distance_matrix (encore.utils.TriangularMatrix) – Distance matrix clustering methods. If this parameter is not supplied the matrix will be calculated on the fly.
+
+estimate_error (bool, optional) – Whether to perform error estimation (default is False). Only bootstrapping mode is supported.
+
+bootstrapping_samples (int, optional) – number of samples to be used for estimating error.
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1).
+
+calc_diagonal (bool, optional) – Whether to calculate the diagonal of the similarity scores (i.e. the similarities of every ensemble against itself). If this is False (default), 0.0 will be used instead.
+
+allow_collapsed_result (bool, optional) – Whether a return value of a list of one value should be collapsed into just the value.
+
+Returns:
+
+ces, details – ces contains the similarity values, arranged in a numpy.array. If only one clustering_method is provided the output will be a 2-dimensional square symmetrical numpy.array. The order of the matrix elements depends on the order of the input ensembles: for instance, if
+
+ensemble = [ens1, ens2, ens3]
+
+the matrix elements [0,2] and [2,0] will both contain the similarity value between ensembles ens1 and ens3. Elaborating on the previous example, if n ensembles are given and m clustering_methods are provided the output will be a list of m arrays ordered by the input sequence of methods, each with a n*x*n symmetrical similarity matrix.
+
+details contains information on the clustering: the individual size of each cluster, the centroids and the frames associated with each cluster.
+
+Return type:
+
+numpy.array, numpy.array
+
+Notes
+
+In the Jensen-Shannon divergence the upper bound of ln(2) signifies no similarity between the two ensembles, the lower bound, 0.0, signifies identical ensembles.
+
+To calculate the CES, the affinity propagation method (or others, if specified) is used to partition the whole space of conformations. The population of each ensemble in each cluster is then taken as a probability density function. Different probability density functions from each ensemble are finally compared using the Jensen-Shannon divergence measure.
+
+Examples
+
+To calculate the Clustering Ensemble similarity, two ensembles are created as Universe object using a topology file and two trajectories. The topology- and trajectory files used are obtained from the MDAnalysis test suite for two different simulations of the protein AdK. To use a different clustering method, set the parameter clustering_method (Note that the sklearn module must be installed). Likewise, different parameters for the same clustering method can be explored by adding different instances of the same clustering class. Here the simplest case of just two instances of Universe is illustrated:
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> ens1 = Universe(PSF, DCD)
+>>> ens2 = Universe(PSF, DCD2)
+>>> CES, details = encore.ces([ens1,ens2])
+>>> print(CES)
+[[0.         0.68070702]
+ [0.68070702 0.        ]]
+>>> CES, details = encore.ces([ens1,ens2],
+...                           clustering_method = [encore.DBSCAN(eps=0.45),
+...                                                encore.DBSCAN(eps=0.50)])
+>>> print("eps=0.45: ", CES[0])
+eps=0.45:  [[0.         0.20447236]
+ [0.20447236 0.        ]]
+
+>>> print("eps=0.5: ", CES[1])
+eps=0.5:  [[0.         0.25331629]
+ [0.25331629 0.        ]]

@@ -1,0 +1,9 @@
+copy()[source]
+
+Return independent copy of this Reader.
+
+New Reader will have its own file handle and can seek/iterate independently of the original.
+
+Will also copy the current state of the Timestep held in the original Reader.
+
+Changed in version 2.2.0: Arguments used to construct the reader are correctly captured and passed to the creation of the new class. Previously the only n_atoms was passed to class copies, leading to a class created with default parameters which may differ from the original class.

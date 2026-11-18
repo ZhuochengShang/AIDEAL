@@ -1,0 +1,17 @@
+write(selection, frame=None)[source]
+
+Write selection at current trajectory frame to file.
+
+The sections for Atoms, Masses, Velocities, Bonds, Angles, Dihedrals, and Impropers (if these are defined) are written. The Atoms section is written in the “full” sub-style if charges are available or “molecular” sub-style if they are not. Molecule id in atoms section is set to to 0.
+
+No other sections are written to the DATA file. As of this writing, other sections are not parsed into the topology by the DATAReader.
+
+Note
+
+If the selection includes a partial fragment, then only the bonds, angles, etc. whose atoms are contained within the selection will be included.
+
+Parameters:
+
+selection (AtomGroup or Universe) – MDAnalysis AtomGroup (selection or Universe.atoms) or also Universe
+
+frame (int (optional)) – optionally move to frame number frame

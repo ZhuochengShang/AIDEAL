@@ -1,0 +1,85 @@
+# Adapter: Scala + Spark codebases.
+#
+# Pulled in from a project's aideal.yaml with:  extends: ["scala-spark"]
+# Merged between framework defaults and the project config. Holds language- and
+# Spark-execution conventions reusable across Scala/Spark libraries (RDPro,
+# Sedona, ...). A project normally only supplies its `jars`, `packages`, and
+# (optionally) `repositories`; imports auto-derive and sample data auto-discovers
+# from a fixtures/ folder, so the heavy execute block is no longer hand-written.
+
+project:
+  language: Scala
+
+codebase:
+  public_def_regex: "def\\s+([a-zA-Z][A-Za-z0-9_]*)"
+  # `this` = Scala auxiliary constructors (`def this(...)`) — syntax, not an
+  # API name; the regex sweeps them in as a phantom API called "this"
+  # (RDPro: 17 sites, scored 7 and selected before this exclude).
+  exclude_names: ["main", "apply", "unapply", "toString", "equals", "hashCode", "this"]
+  dedup:
+    # Canonical-signature election (aideal dedup / readme generation): defs in
+    # files matching these patterns lose election ties. Scala-Spark convention:
+    # `Java*.scala` facade wrappers duplicate the Scala API with Java-typed
+    # returns (JavaRasterRDD/JavaSpatialRDD) — documenting those as canonical
+    # made generated snippets invent nonexistent .toRDD adapters. Override or
+    # extend per project under codebase.dedup.deprioritize_paths.
+    deprioritize_paths: ["(^|/)Java[A-Z][^/]*\\.scala$"]
+
+docfix:
+  allowed_member_categories: [language_core, spark]
+  member_categories:
+    spark: [builder, appName, master, config, getOrCreate, sparkContext,
+      createDataFrame, load, save, mode, option, options, select, where,
+      withColumn, as, show, registerTempTable, toDF, toDS, rdd, schema,
+      printSchema, parallelize, textFile, wholeTextFiles, broadcast,
+      longAccumulator, doubleAccumulator, setLogLevel, getNumPartitions,
+      partitions, partitioner, saveAsTextFile]
+
+comprehension:
+  execute:
+    execution_context: >-
+      A SparkContext `sc`, SparkSession `spark`, `output_dir`, and any
+      configured typed input variables are already in scope. The scaffold
+      already imports the project common classes and operation-object members.
+      Do not create a SparkSession/SparkContext, do not redeclare provided
+      variables, and do not write imports/object/main unless the task explicitly
+      requests them.
+
+    # Self-healing imports: KEEP the model's imports (they land as LOCAL imports
+    # inside run(), so no global collision). The scaffold's global block covers the
+    # common ones; if it misses a package the model needs, the model adds it and the
+    # compile-fix loop resolves the straggler — coverage gaps become recoverable,
+    # not fatal. (Set true only if a codebase's local imports cause trouble.)
+    strip_snippet_imports: false
+
+    # Framework-specific execution guidance, injected into the generic
+    # comprehension_write_exec prompt at {exec_hints}. Keeps Spark specifics out
+    # of the codebase-agnostic prompt.
+    exec_hints: >-
+      Spark specifics: transformations are lazy, so if the result is an
+      RDD / RasterRDD / DataFrame you MUST force it with an action —
+      .count(), .first(), or .take(1) — and print that. For an in-memory
+      Array/value, print its size. If the API is a writer, call .coalesce(1)
+      before writing to output_dir to avoid the distributed-write merge error.
+      I/O: read inputs with the high-level library readers on the pre-loaded
+      typed vars (rasterRDD / featuresRDD, or sc.geoTiff / sc.shapefile) — do
+      NOT open raw Hadoop FileSystem streams (FileSystem.get(conf) causes
+      'Wrong FS'; if unavoidable use path.getFileSystem(sc.hadoopConfiguration)),
+      and never prepend an extra 'file://' to a path that already has a scheme.
+
+    # Sample inputs: drop files in this folder and they are auto-typed by
+    # extension (.tif->raster_tif, .geojson->vector_geojson, .csv->table_csv,
+    # .shp->vector_shapefile, ...). Override by setting `sample_data:` explicitly.
+    fixtures_dir: fixtures
+    output_dir: /tmp/aideal_apitest_out
+
+    # Generic compile -> run command. {classpath}/{jars} come from the project's
+    # jars; {packages}/{repositories} expand from the project's `packages:` /
+    # `repositories:` lists (empty -> the flag disappears). A project normally
+    # only sets those lists, not this command. Override only for a custom build.
+    command: >-
+      mkdir -p {work}/classes
+      && scalac -classpath "{classpath}" -d {work}/classes {scala_file}
+      && ( cd {work}/classes && jar cf ../app.jar . )
+      && spark-submit --master local[*] --class GeoJobMain
+      {repositories} {packages} --jars {jars} {work}/app.jar

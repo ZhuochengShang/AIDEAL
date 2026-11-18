@@ -1,0 +1,23 @@
+next_nonempty_frame(ts)[source]
+
+Find the next trajectory frame for which a representative auxiliary value can be calculated.
+
+That is, the next trajectory frame to which one or more auxiliary steps are assigned and fall within the cutoff.
+
+Starts looking from the current step time. If the end of the auxiliary data is reached before a trajectory frame is found, None is returned.
+
+Parameters:
+
+ts (Timestep object) – Any timestep from the trajectory for which the next ‘non-empty’ frame is to be found.
+
+Returns:
+
+Index of the next auxiliary-containing frame in the trajectory.
+
+Return type:
+
+int
+
+Note
+
+The returned index may be out of range for the trajectory.

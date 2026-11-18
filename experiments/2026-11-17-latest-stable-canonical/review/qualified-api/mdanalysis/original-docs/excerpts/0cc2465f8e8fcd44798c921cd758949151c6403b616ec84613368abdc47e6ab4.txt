@@ -1,0 +1,16 @@
+align_principal_axis(axis, vector)[source]
+
+Align principal axis with index axis with vector.
+
+Parameters:
+
+axis ({0, 1, 2}) – Index of the principal axis (0, 1, or 2), as produced by principal_axes().
+
+vector (array_like) – Vector to align principal axis with.
+
+Notes
+
+To align the long axis of a channel (the first principal axis, i.e. axis = 0) with the z-axis:
+
+u.atoms.align_principal_axis(0, [0,0,1])
+u.atoms.write("aligned.pdb")

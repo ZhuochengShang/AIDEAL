@@ -1,0 +1,267 @@
+IfdType (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.util.exif
+Enum IfdType
+java.lang.Object
+java.lang.Enum
+<
+IfdType
+>
+net.coobird.thumbnailator.util.exif.IfdType
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+IfdType
+>
+public enum
+IfdType
+extends
+Enum
+<
+IfdType
+>
+This enum corresponds to the types of data present in an IFD,
+as defined in Section 4.6.2 of the Exif Specification version 2.3.
+Author:
+coobird
+Enum Constant Summary
+ASCII
+An 8-bit value containing a single 7-bit ASCII character.
+BYTE
+An 8-bit unsigned integer value.
+LONG
+A 32-bit unsigned integer value.
+RATIONAL
+Two
+LONG
+values, where the first
+LONG
+is the
+numerator, while the second
+LONG
+is the denominator.
+SHORT
+A 16-bit unsigned integer value.
+SLONG
+A 32-bit signed integer value using 2's complement.
+SRATIONAL
+Two
+SLONG
+values, where the first
+SLONG
+is the
+numerator, while the second
+SLONG
+is the denominator.
+UNDEFINED
+An 8-bit value which can be value as defined elsewhere.
+Method Summary
+int
+size
+()
+Returns the size in bytes for this IFD type.
+String
+toString
+()
+Returns a textual
+String
+reprensentation of this enum.
+static
+IfdType
+typeOf
+(int value)
+Returns the
+IfdType
+corresponding to the given IFD type value.
+int
+value
+()
+Returns the IFD type as a type value.
+static
+IfdType
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+IfdType
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+BYTE
+public static final
+IfdType
+BYTE
+An 8-bit unsigned integer value.
+ASCII
+public static final
+IfdType
+ASCII
+An 8-bit value containing a single 7-bit ASCII character.
+The final byte is NULL-terminated.
+SHORT
+public static final
+IfdType
+SHORT
+A 16-bit unsigned integer value.
+LONG
+public static final
+IfdType
+LONG
+A 32-bit unsigned integer value.
+RATIONAL
+public static final
+IfdType
+RATIONAL
+Two
+LONG
+values, where the first
+LONG
+is the
+numerator, while the second
+LONG
+is the denominator.
+UNDEFINED
+public static final
+IfdType
+UNDEFINED
+An 8-bit value which can be value as defined elsewhere.
+SLONG
+public static final
+IfdType
+SLONG
+A 32-bit signed integer value using 2's complement.
+SRATIONAL
+public static final
+IfdType
+SRATIONAL
+Two
+SLONG
+values, where the first
+SLONG
+is the
+numerator, while the second
+SLONG
+is the denominator.
+Method Detail
+values
+public static final
+IfdType
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(IfdType c : IfdType.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+IfdType
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+size
+public int
+size
+()
+Returns the size in bytes for this IFD type.
+Returns:
+Size in bytes for this IFD type.
+value
+public int
+value
+()
+Returns the IFD type as a type value.
+Returns:
+IFD type as a type value.
+typeOf
+public static
+IfdType
+typeOf
+(int value)
+Returns the
+IfdType
+corresponding to the given IFD type value.
+Parameters:
+value
+- The IFD type value.
+Returns:
+IfdType
+corresponding to the IDF type value.
+Return
+null
+if the given value does not
+correspond to a valid
+IfdType
+.
+toString
+public
+String
+toString
+()
+Returns a textual
+String
+reprensentation of this enum.
+Overrides:
+toString
+in class
+Enum
+<
+IfdType
+>
+Returns:
+A textual representation of this enum.
+Copyright © 2025. All rights reserved.

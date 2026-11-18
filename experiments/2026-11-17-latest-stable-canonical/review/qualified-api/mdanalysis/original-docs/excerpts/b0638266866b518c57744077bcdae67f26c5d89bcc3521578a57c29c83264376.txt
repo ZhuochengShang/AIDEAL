@@ -1,0 +1,139 @@
+class MDAnalysis.analysis.align.AverageStructure(mobile, reference=None, select='all', filename=None, weights=None, tol_mass=0.1, match_atoms=True, strict=False, force=True, in_memory=False, ref_frame=0, **kwargs)[source]
+
+RMS-align trajectory to a reference structure using a selection, and calculate the average coordinates of the trajectory.
+
+Both the reference reference and the trajectory mobile must be MDAnalysis.Universe instances. If they contain a trajectory, then it is used. You can also use the same universe if you want to fit to the current frame.
+
+The output file format is determined by the file extension of filename.
+
+Example
+
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import PSF, DCD
+from MDAnalysis.analysis import align
+
+u = mda.Universe(PSF, DCD)
+
+# align to the third frame and average structure
+av = align.AverageStructure(u, ref_frame=3).run()
+averaged_universe = av.results.universe
+
+Parameters:
+
+mobile (Universe) – Universe containing trajectory to be fitted to reference
+
+reference (Universe (optional)) – Universe containing trajectory frame to be used as reference
+
+select (str (optional)) – Set as default to all, is used for Universe.select_atoms to choose subdomain to be fitted against
+
+filename (str (optional)) – Provide a filename for results to be written to
+
+weights ({“mass”, None} or array_like (optional)) – choose weights. With "mass" uses masses of reference as weights; with None weigh each atom equally. If a float array of the same length as the selection is provided, use each element of the array_like as a weight for the corresponding atom in the selection.
+
+tol_mass (float (optional)) – Tolerance given to get_matching_atoms to find appropriate atoms
+
+match_atoms (bool (optional)) – Whether to match the mobile and reference atom-by-atom. Default True.
+
+strict (bool (optional)) – Force get_matching_atoms to fail if atoms can’t be found using exact methods
+
+force (bool (optional)) – Force overwrite of filename for rmsd-fitting
+
+in_memory (bool (optional)) – Permanently switch mobile to an in-memory trajectory so that alignment can be done in-place, which can improve performance substantially in some cases. In this case, no file is written out (filename and prefix are ignored) and only the coordinates of mobile are changed in memory.
+
+ref_frame (int (optional)) – frame index to select frame from reference
+
+verbose (bool (optional)) – Set logger to show more information and show detailed progress of the calculation if set to True; the default is False.
+
+ reference_atoms
+
+Atoms of the reference structure to be aligned against
+
+Type:
+
+AtomGroup
+
+ mobile_atoms
+
+Atoms inside each trajectory frame to be rmsd_aligned
+
+Type:
+
+AtomGroup
+
+ results.universe
+
+New Universe with average positions
+
+Added in version 2.0.0.
+
+Type:
+
+MDAnalysis.Universe
+
+ universe
+
+Alias to the results.universe attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.universe instead.
+
+Type:
+
+MDAnalysis.Universe
+
+ results.positions
+
+Average positions
+
+Added in version 2.0.0.
+
+Type:
+
+np.ndarray(dtype=float)
+
+ positions
+
+Alias to the results.positions attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.positions instead.
+
+Type:
+
+np.ndarray(dtype=float)
+
+ results.rmsd
+
+Average RMSD per frame
+
+Added in version 2.0.0.
+
+Type:
+
+float
+
+ rmsd
+
+Alias to the results.rmsd attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.rmsd instead.
+
+Type:
+
+float
+
+ filename
+
+String reflecting the filename of the file where the average structure is written
+
+Type:
+
+str
+
+Notes
+
+If set to verbose=False, it is recommended to wrap the statement in a try ... finally to guarantee restoring of the log level in the case of an exception.
+
+The in_memory option changes the mobile universe to an in-memory representation (see MDAnalysis.coordinates.memory) for the remainder of the Python session. If mobile.trajectory is already a MemoryReader then it is always treated as if in_memory had been set to True.
+
+Added in version 1.0.0.
+
+Changed in version 2.0.0: universe, positions, and rmsd are now stored in a MDAnalysis.analysis.base.Results instance.

@@ -1,0 +1,89 @@
+MDAnalysis.analysis.align.alignto(mobile, reference, select=None, weights=None, subselection=None, tol_mass=0.1, strict=False, match_atoms=True)[source]
+
+Perform a spatial superposition by minimizing the RMSD.
+
+Spatially align the group of atoms mobile to reference by doing a RMSD fit on select atoms.
+
+The superposition is done in the following way:
+
+A rotation matrix is computed that minimizes the RMSD between the coordinates of mobile.select_atoms(sel1) and reference.select_atoms(sel2); before the rotation, mobile is translated so that its center of geometry (or center of mass) coincides with the one of reference. (See below for explanation of how sel1 and sel2 are derived from select.)
+
+All atoms in Universe that contain mobile are shifted and rotated. (See below for how to change this behavior through the subselection keyword.)
+
+The mobile and reference atom groups can be constructed so that they already match atom by atom. In this case, select should be set to “all” (or None) so that no further selections are applied to mobile and reference, therefore preserving the exact atom ordering (see Ordered selections).
+
+Warning
+
+The atom order for mobile and reference is only preserved when select is either “all” or None. In any other case, a new selection will be made that will sort the resulting AtomGroup by index and therefore destroy the correspondence between the two groups. It is safest not to mix ordered AtomGroups with selection strings.
+
+Parameters:
+
+mobile (Universe or AtomGroup) – structure to be aligned, a AtomGroup or a whole Universe
+
+reference (Universe or AtomGroup) – reference structure, a AtomGroup or a whole Universe
+
+select (str or dict or tuple (optional)) –
+The selection to operate on; can be one of:
+
+any valid selection string for select_atoms() that produces identical selections in mobile and reference; or
+
+a dictionary {'mobile': sel1, 'reference': sel2} where sel1 and sel2 are valid selection strings that are applied to mobile and reference respectively (the MDAnalysis.analysis.align.fasta2select() function returns such a dictionary based on a ClustalW or STAMP sequence alignment); or
+
+a tuple (sel1, sel2)
+
+When using 2. or 3. with sel1 and sel2 then these selection strings are applied to atomgroup and reference respectively and should generate groups of equivalent atoms. sel1 and sel2 can each also be a list of selection strings to generate a AtomGroup with defined atom order as described under Ordered selections).
+
+match_atoms (bool (optional)) – Whether to match the mobile and reference atom-by-atom. Default True.
+
+weights ({“mass”, None} or array_like (optional)) – choose weights. With "mass" uses masses as weights; with None weigh each atom equally. If a float array of the same length as mobile is provided, use each element of the array_like as a weight for the corresponding atom in mobile.
+
+tol_mass (float (optional)) – Reject match if the atomic masses for matched atoms differ by more than tol_mass, default [0.1]
+
+strict (bool (optional)) –
+
+True
+
+Will raise SelectionError if a single atom does not match between the two selections.
+
+False [default]
+
+Will try to prepare a matching selection by dropping residues with non-matching atoms. See get_matching_atoms() for details.
+
+subselection (str or AtomGroup or None (optional)) –
+Apply the transformation only to this selection.
+
+None [default]
+
+Apply to mobile.universe.atoms (i.e., all atoms in the context of the selection from mobile such as the rest of a protein, ligands and the surrounding water)
+
+selection-string
+
+Apply to mobile.select_atoms(selection-string)
+
+AtomGroup
+
+Apply to the arbitrary group of atoms
+
+Returns:
+
+old_rmsd (float) – RMSD before spatial alignment
+
+new_rmsd (float) – RMSD after spatial alignment
+
+See also
+
+AlignTraj
+
+More efficient method for RMSD-fitting trajectories.
+
+Changed in version 1.0.0: Added match_atoms keyword to toggle atom matching.
+
+Changed in version 0.8: Added check that the two groups describe the same atoms including the new tol_mass keyword.
+
+Changed in version 0.10.0: Uses get_matching_atoms() to work with incomplete selections and new strict keyword. The new default is to be lenient whereas the old behavior was the equivalent of strict = True.
+
+Changed in version 0.16.0: new general ‘weights’ kwarg replace mass_weighted, deprecated mass_weighted
+
+Deprecated since version 0.16.0: Instead of mass_weighted=True use new weights='mass'
+
+Changed in version 0.17.0: Deprecated keyword mass_weighted was removed.

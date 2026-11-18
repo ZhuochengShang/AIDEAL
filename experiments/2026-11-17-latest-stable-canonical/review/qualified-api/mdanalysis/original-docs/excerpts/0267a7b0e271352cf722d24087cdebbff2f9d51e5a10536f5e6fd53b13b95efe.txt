@@ -1,0 +1,41 @@
+class MDAnalysis.coordinates.GMS.GMSReader(outfilename, **kwargs)[source]
+
+Reads from an GAMESS output file
+
+Data:
+
+ts
+
+Timestep object containing coordinates of current frame
+
+Methods:
+
+len(out)
+
+return number of frames in out
+
+for ts in out:
+
+iterate through trajectory
+
+Note
+
+GMSReader can read both uncompressed (foo.out) and compressed (foo.out.bz2 or foo.out.gz) files; decompression is handled on the fly
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based. Added dt and time_offset keywords (passed to Timestep).
+
+ close()[source]
+
+Close out trajectory file if it was open.
+
+ property n_atoms
+
+number of atoms in a frame
+
+ property runtyp
+
+RUNTYP property of the GAMESS run
+
+ units = {'length': 'Angstrom', 'time': 'ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

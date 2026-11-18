@@ -1,0 +1,61 @@
+class MDAnalysis.core.topologyobjects.Angle(ix, universe, type=None, guessed=False, order=None)[source]
+
+An angle between three Atom instances. Atom 2 is the apex of the angle
+
+Added in version 0.8.
+
+Changed in version 0.9.0: Now a subclass of TopologyObject; now uses __slots__ and stores atoms in atoms attribute
+
+Create a topology object
+
+Parameters:
+
+ix (numpy array) – indices of the Atoms
+
+universe (MDAnalysis.Universe)
+
+type (optional) – Type of the bond
+
+guessed (optional) – If the Bond is guessed
+
+ angle(pbc=True)[source]
+
+Returns the angle in degrees of this Angle.
+
+Angle between atoms 0 and 2 with apex at 1:
+
+   2
+  /
+ /
+1------0
+
+Note
+
+The numerical precision is typically not better than 4 decimals (and is only tested to 3 decimals).
+
+Added in version 0.9.0.
+
+Changed in version 0.17.0: Fixed angles close to 180 giving NaN
+
+Changed in version 0.19.0: Added pbc keyword, default True
+
+ value(pbc=True)
+
+Returns the angle in degrees of this Angle.
+
+Angle between atoms 0 and 2 with apex at 1:
+
+   2
+  /
+ /
+1------0
+
+Note
+
+The numerical precision is typically not better than 4 decimals (and is only tested to 3 decimals).
+
+Added in version 0.9.0.
+
+Changed in version 0.17.0: Fixed angles close to 180 giving NaN
+
+Changed in version 0.19.0: Added pbc keyword, default True

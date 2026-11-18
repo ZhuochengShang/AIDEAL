@@ -1,0 +1,19 @@
+MDAnalysis.analysis.encore.similarity.cumulative_clustering_ensemble_similarity(cc, ens1_id, ens2_id, ens1_id_min=1, ens2_id_min=1)[source]
+
+Calculate clustering ensemble similarity between joined ensembles. This means that, after clustering has been performed, some ensembles are merged and the dJS is calculated between the probability distributions of the two clusters groups. In particular, the two ensemble groups are defined by their ensembles id: one of the two joined ensembles will comprise all the ensembles with id [ens1_id_min, ens1_id], and the other ensembles will comprise all the ensembles with id [ens2_id_min, ens2_id].
+
+Parameters:
+
+cc (encore.ClustersCollection) – Collection from cluster calculated by a clustering algorithm (e.g. Affinity propagation)
+
+ens1_id (int) – First ensemble id as detailed in the ClustersCollection metadata
+
+ens2_id (int) – Second ensemble id as detailed in the ClustersCollection metadata
+
+Returns:
+
+djs – Jensen-Shannon divergence between the two ensembles, as calculated by the clustering ensemble similarity method
+
+Return type:
+
+float

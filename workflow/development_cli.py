@@ -1,18 +1,25 @@
-"""CLI routes for development proposals, versioning and source refactor reports."""
+"""Current development routes: batched aliases and native exception guidance."""
 import json
 from pathlib import Path
 
+from .compatibility_cli import (COMPATIBILITY_COMMANDS, add_compatibility_commands,
+                                run_compatibility_command)
+
 
 def add_development_commands(sub):
+    # Define the arguments for each current development command and mark it for the
+    # development dispatcher.
     for command, help_text, options in (
-        ('preview-source-hints', 'Harvest pinned Original development R0 failures; no model call',
+        ('preview-native-hints', 'Collect pinned Original R0 development failures for native exception guidance',
          ('manifest', 'output')),
-        ('propose-source-hints', 'Ask the development model for source-grounded error guidance',
+        ('propose-native-hints', 'Propose native runtime guidance from an Original R0 preview',
          ('preview', 'model-config', 'output')),
-        ('validate-source-hints', 'Replay misuse, correction, valid and unrelated-error controls',
+        ('validate-native-hints', 'Execute four paired controls against baseline and native-message sources',
          ('proposal', 'validation-plan', 'output')),
-        ('install-source-hints', 'Commit validated annotations into new Error Hints and Combined branches',
-         ('validation', 'targets', 'output')),
+        ('install-native-hints', 'Apply validated native messages to an explicit separate clean checkout',
+         ('validation', 'target')),
+        ('prepare-native-hints', 'Prepare existing exception-message edits; no model call or source installation',
+         ('source-root', 'spec', 'output')),
     ):
         p = sub.add_parser(command, help=help_text)
         for option in options:
@@ -38,6 +45,8 @@ def add_development_commands(sub):
     p.set_defaults(development_handler=True)
     p = sub.add_parser('bundle-proposals', help='Combine all selected batches into a complete multi-file treatment version')
     p.add_argument('--proposal', required=True, action='append', dest='proposals')
+    p.add_argument('--include-legacy-hints', action='store_true',
+                   help='Explicitly include JSON hints for schema 1 compatibility; native studies omit them')
     p.add_argument('--readme')
     p.add_argument('--output', required=True)
     p.set_defaults(development_handler=True)
@@ -47,21 +56,6 @@ def add_development_commands(sub):
     p.set_defaults(development_handler=True)
     p = sub.add_parser('versions', help='Show source branches, treatment versions and navigation paths for one study')
     p.add_argument('--study', required=True)
-    p.set_defaults(development_handler=True)
-    p = sub.add_parser('preview-improvements', help='Save bounded source/API/development-error inputs; no model call')
-    p.add_argument('--study', required=True)
-    p.add_argument('--output', required=True)
-    p.add_argument('--alias-path', help='New source-module path relative to the library checkout')
-    p.add_argument('--api', action='append', dest='apis', help='API name, qualified name or exact file:line:name ID; repeatable')
-    p.add_argument('--development-errors', help='Explicit development error JSONL; never held-out evaluation failures')
-    p.add_argument('--max-apis', type=int, default=12)
-    p.add_argument('--max-context-characters', type=int, default=60000)
-    p.set_defaults(development_handler=True)
-    p = sub.add_parser('propose-improvements', help='Call the configured development model once; save alias/hint proposals')
-    p.add_argument('--preview', required=True)
-    p.add_argument('--model-config', required=True)
-    p.add_argument('--output', required=True)
-    p.add_argument('--readme', help='Already generated README to include in the complete treatment bundle')
     p.set_defaults(development_handler=True)
     p = sub.add_parser('install-treatments', help='Commit a complete proposal bundle into the isolated treatment branches')
     p.add_argument('--study', required=True)
@@ -77,27 +71,30 @@ def add_development_commands(sub):
     p.add_argument('--after', required=True)
     p.add_argument('--output', required=True)
     p.set_defaults(development_handler=True)
-    p = sub.add_parser('show-fix-hints', help='Retrieve saved hints for one function and a matching error; no model call')
-    p.add_argument('--hints', required=True)
-    p.add_argument('--function', required=True)
-    p.add_argument('--error-file', required=True)
-    p.set_defaults(development_handler=True)
+    # Earlier commands retain their original arguments and artifact semantics.
+    add_compatibility_commands(sub)
 
 
 def run_development_command(args):
+    # Pass parsed arguments to the matching workflow and return its report. Duplicate
+    # scans and comparisons save their report here.
     from .ablation import load
-    if args.command == 'preview-source-hints':
+    # The old and current preview names share one evidence intake.
+    if args.command in ('preview-native-hints', 'preview-source-hints'):
         from .source_hint_development import build_development_preview
         return build_development_preview(args.manifest, args.output)
-    if args.command == 'propose-source-hints':
-        from .source_hint_development import propose_source_hints
-        return propose_source_hints(args.preview, args.model_config, args.output)
-    if args.command == 'validate-source-hints':
-        from .source_hint_development import validate_source_hint_development
-        return validate_source_hint_development(args.proposal, args.validation_plan, args.output)
-    if args.command == 'install-source-hints':
-        from .source_hint_installation import install_source_hints
-        return install_source_hints(args.validation, args.targets, args.output)
+    if args.command in COMPATIBILITY_COMMANDS:
+        return run_compatibility_command(args)
+    if args.command in ('prepare-native-hints', 'propose-native-hints', 'validate-native-hints', 'install-native-hints'):
+        from .native_hints import (prepare_native_hints, propose_native_hints,
+                                   validate_native_hints, install_native_hints)
+        if args.command == 'prepare-native-hints':
+            return prepare_native_hints(args.source_root, args.spec, args.output)
+        if args.command == 'propose-native-hints':
+            return propose_native_hints(args.preview, args.model_config, args.output)
+        if args.command == 'validate-native-hints':
+            return validate_native_hints(args.proposal, args.validation_plan, args.output)
+        return install_native_hints(args.validation, args.target)
     if args.command == 'preview-library':
         from .improvement_batches import preview_library_improvements
         return preview_library_improvements(args.study, args.output,
@@ -111,26 +108,15 @@ def run_development_command(args):
                                             max_batches=args.max_batches)
     if args.command == 'bundle-proposals':
         from .treatment_bundles import bundle_proposals
-        return bundle_proposals(args.proposals, args.output, readme=args.readme)
+        return bundle_proposals(args.proposals, args.output, readme=args.readme,
+                                include_legacy_hints=args.include_legacy_hints)
     if args.command in ('install-refactor', 'versions'):
         from .source_refactors import install_refactor, study_versions
         return (install_refactor(args.study, args.proposal) if args.command == 'install-refactor'
                 else study_versions(args.study))
-    if args.command == 'preview-improvements':
-        from .improvement_context import preview_improvements
-        return preview_improvements(args.study, args.output, alias_path=args.alias_path,
-            apis=args.apis, development_errors=args.development_errors, max_apis=args.max_apis,
-            max_context_characters=args.max_context_characters)
-    if args.command == 'propose-improvements':
-        from .improvement_suggestions import propose_improvements
-        return propose_improvements(args.preview, args.model_config, args.output, readme=args.readme)
     if args.command == 'install-treatments':
         from .treatment_versions import apply_treatments
         return apply_treatments(args.study, args.proposal)
-    if args.command == 'show-fix-hints':
-        from .improvement_suggestions import matching_fix_hints
-        return {'status': 'unverified', 'hints': matching_fix_hints(
-            load(args.hints), args.function, Path(args.error_file).read_text())}
     from .source_duplicates import scan_duplicates, compare_duplicate_reports
     if args.command == 'scan-duplicates':
         result = scan_duplicates(args.repo, source_globs=args.source_globs)

@@ -16,7 +16,13 @@ except ImportError as exc:  # pragma: no cover
 class ModelSpec:
     provider: str
     model: str
-    bridge: dict | None = None
+    max_output_tokens: int | None = None
+
+    def __post_init__(self):
+        if self.max_output_tokens is not None and (
+            type(self.max_output_tokens) is not int or self.max_output_tokens <= 0
+        ):
+            raise ValueError("max_output_tokens must be a positive integer or null")
 
 
 @dataclass
@@ -55,6 +61,13 @@ class AidealConfig:
     def original_readme_text(self, limit: int | None = None) -> str:
         """Concatenate all baseline docs (README + extra docs/dirs) with file
         headers. `limit` caps the total characters."""
+        from .original_documentation import original_documents
+        bundle = original_documents(self)
+        if bundle is not None:
+            text = bundle["text"]
+            if limit and len(text) > limit:
+                raise ValueError(f"Reviewed original documentation exceeds budget: {len(text)} > {limit}")
+            return text
         parts: list[str] = []
         for p in self.original_readme_files:
             try:
@@ -108,7 +121,7 @@ class AidealConfig:
 #: Markdown keeps its image REFERENCES;
 #: the bytes stay out.
 _TEXT_DOC_EXTS = {
-    ".md", ".markdown", ".mdx", ".txt", ".rst", ".adoc", ".html",
+    ".md", ".markdown", ".mdx", ".qmd", ".txt", ".rst", ".adoc", ".html",
     # Documentation galleries commonly store executable source rendered
     # alongside prose (Sphinx-Gallery Python, Java/Scala example galleries).
     ".py", ".java", ".scala",
@@ -220,7 +233,8 @@ def load_config(config_path: str | Path | None = None) -> AidealConfig:
     checks = raw.get("checks", {})
 
     registry = {
-        name: ModelSpec(provider=m["provider"], model=m["model"], bridge=m.get("bridge"))
+        name: ModelSpec(provider=m["provider"], model=m["model"],
+                        max_output_tokens=m.get("max_output_tokens"))
         for name, m in models.get("registry", {}).items()
     }
 
@@ -232,6 +246,10 @@ def load_config(config_path: str | Path | None = None) -> AidealConfig:
     _orig_sources = ([_orig_raw] if isinstance(_orig_raw, str)
                      else list(_orig_raw) if _orig_raw else [])
     _orig_files = _resolve_readme_sources(root, _orig_sources)
+    from .original_documentation import load_original_documents
+    _bundle = load_original_documents(root, files)
+    if _bundle is not None:
+        _orig_files = _bundle["documents"]
 
     return AidealConfig(
         root=root,

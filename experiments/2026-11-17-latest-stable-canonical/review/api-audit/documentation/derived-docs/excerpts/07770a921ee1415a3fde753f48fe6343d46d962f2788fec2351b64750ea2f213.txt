@@ -1,0 +1,17 @@
+class MDAnalysis.core.selection.ProteinSelection(parser, tokens)[source]
+
+Consists of all residues with recognized residue names.
+
+Recognized residue names in ProteinSelection.prot_res.
+
+from the CHARMM force field::
+
+awk ‘/RESI/ {printf “’”’”%s”’”’,”,$2 }’ top_all27_prot_lipid.rtf
+
+manually added special CHARMM, OPLS/AA and Amber residue names.
+
+See also
+
+MDAnalysis.lib.util.convert_aa_code()
+
+Changed in version 1.0.1: prot_res changed to set (from numpy array) performance improved by ~100x on larger systems

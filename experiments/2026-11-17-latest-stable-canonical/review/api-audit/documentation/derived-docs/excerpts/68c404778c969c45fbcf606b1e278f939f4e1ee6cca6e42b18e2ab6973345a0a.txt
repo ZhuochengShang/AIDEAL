@@ -1,0 +1,609 @@
+class tslearn.early_classification.NonMyopicEarlyClassifier(n_clusters=2, base_classifier=None, min_t=1, lamb=1.0, cost_time_parameter=1.0, random_state=None)[source]
+
+Early Classification modelling for time series using the model presented in [1].
+
+Parameters:
+
+n_clustersint
+
+Number of clusters to form.
+
+base_classifierEstimator or None
+
+Estimator (instance) to be cloned and used for classifications. If None, the chosen classifier is a 1NN with Euclidean metric.
+
+min_tint
+
+Earliest time at which a classification can be performed on a time series
+
+lambfloat
+
+Value of the hyper parameter lambda used during the computation of the cost function to evaluate the probability that a time series belongs to a cluster given the time series.
+
+cost_time_parameterfloat
+
+Parameter of the cost function of time. This function is of the form : f(time) = time * cost_time_parameter
+
+random_state: int
+
+Random state of the base estimator
+
+Attributes:
+
+classifiers_list
+
+A list containing all the classifiers trained for the model, that is, (maximum_time_stamp - min_t) elements.
+
+pyhatyck_array like of shape (maximum_time_stamp - min_t, n_cluster, __n_classes, __n_classes)
+
+Contains the probabilities of being classified as class y_hat given class y and cluster ck for a trained classifier. The penultimate dimension of the array is associated to the true class of the series and the last dimension to the predicted class.
+
+pyck_array like of shape (__n_classes, n_cluster)
+
+Contains the probabilities of being of true class y given a cluster ck
+
+X_fit_dimstuple of the same shape as the training dataset
+
+References
+
+ [1]
+A. Dachraoui, A. Bondu & A. Cornuejols. Early classification of time series as a non myopic sequential decision making problem. ECML/PKDD 2015
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [3, 2, 1, 1, 2, 3],
+...                                   [3, 2, 1, 1, 2, 3]])
+>>> y = [0, 0, 0, 1, 1, 1, 0, 0]
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=1000.,
+...                                  cost_time_parameter=.1,
+...                                  random_state=0)
+>>> model.fit(dataset, y)
+NonMyopicEarlyClassifier(...)
+>>> print(type(model.classifiers_))
+<class 'dict'>
+>>> print(model.pyck_)
+[[0. 1. 1.]
+ [1. 0. 0.]]
+>>> preds, pred_times = model.predict_class_and_earliness(dataset)
+>>> preds
+array([0, 0, 0, 1, 1, 1, 0, 0])
+>>> pred_times
+array([4, 4, 4, 4, 4, 4, 1, 1])
+>>> pred_probas, pred_times = model.predict_proba_and_earliness(dataset)
+>>> pred_probas
+array([[1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.]])
+>>> pred_times
+array([4, 4, 4, 4, 4, 4, 1, 1])
+
+Methods
+
+early_classification_cost(X, y)
+ |
+Compute early classification score.
+ |
+
+early_predict(X)
+ |
+Provides predicted classes as well as estimated delays before prediction timestamps for a dataset of incomplete time series.
+ |
+
+early_predict_proba(X)
+ |
+Provides probability estimates as well as estimated delays before prediction timestamps for a dataset of incomplete time series.
+ |
+
+fit(X, y)
+ |
+Fit early classifier.
+ |
+
+get_cluster_probas(Xi)
+ |
+Compute cluster probability \(P(c_k | Xi)\).
+ |
+
+get_early_predict_generator([n_ts])
+ |
+Allows streaming incoming timestamps of a time series and retrieving current predicted class as well as estimated delay before prediction timestamps.
+ |
+
+get_early_predict_proba_generator([n_ts])
+ |
+Allows streaming incoming timestamps of a time series and retrieving current probability estimates as well as estimated delay before prediction timestamps.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+predict(X)
+ |
+Provide predicted class.
+ |
+
+predict_class_and_earliness(X)
+ |
+Provide predicted class as well as prediction timestamps.
+ |
+
+predict_proba(X)
+ |
+Probability estimates.
+ |
+
+predict_proba_and_earliness(X)
+ |
+Provide probability estimates as well as prediction timestamps.
+ |
+
+score(X, y[, sample_weight])
+ |
+Return accuracy on provided data and labels.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+set_score_request(*[, sample_weight])
+ |
+Configure whether metadata should be requested to be passed to the score method.
+ |
+
+ early_classification_cost(X, y)[source]
+
+Compute early classification score.
+
+The score is computed as:
+
+ \[1 - acc + \alpha \frac{1}{n} \sum_i t_i\]
+
+where \(\alpha\) is the trade-off parameter (self.cost_time_parameter) and \(t_i\) are prediction timestamps.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Vector to be scored, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+yarray-like, shape = (n_samples) or (n_samples, n_outputs)
+
+True labels for X.
+
+Returns:
+
+float
+
+Early classification cost (a positive number, the lower the better)
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [3, 2, 1, 1, 2, 3],
+...                                   [3, 2, 1, 1, 2, 3]])
+>>> y = [0, 0, 0, 1, 1, 1, 0, 0]
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=1000.,
+...                                  cost_time_parameter=.1,
+...                                  random_state=0)
+>>> model.fit(dataset, y)
+NonMyopicEarlyClassifier(...)
+>>> preds, pred_times = model.predict_class_and_earliness(dataset)
+>>> preds
+array([0, 0, 0, 1, 1, 1, 0, 0])
+>>> pred_times
+array([4, 4, 4, 4, 4, 4, 1, 1])
+>>> float(model.early_classification_cost(dataset, y))
+0.325
+
+ early_predict(X)[source]
+
+Provides predicted classes as well as estimated delays before prediction timestamps for a dataset of incomplete time series.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+Xarray-like of shape (n_series, t, n_features)
+
+A dataset of incomplete time series observed up to time t
+
+Returns:
+
+array-like, shape (n_series,)
+
+Predicted classes.
+
+array-like, shape (n_series,)
+
+Estimated delays before prediction timestamps.
+
+ early_predict_proba(X)[source]
+
+Provides probability estimates as well as estimated delays before prediction timestamps for a dataset of incomplete time series.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+Xarray-like of shape (n_series, t, n_features)
+
+A dataset of incomplete time series observed up to time t
+
+Returns:
+
+array-like, shape (n_series, n_classes)
+
+Probabilities for each class in the model, where classes are ordered as they are in self.classes_.
+
+array-like of shape (n_series,)
+
+Estimated delays before prediction timestamps.
+
+ fit(X, y)[source]
+
+Fit early classifier.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Training data, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+yarray-like of shape (n_samples,)
+
+Target values. Will be cast to X’s dtype if necessary
+
+Returns:
+
+selfreturns an instance of self.
+
+ get_cluster_probas(Xi)[source]
+
+Compute cluster probability \(P(c_k | Xi)\).
+
+This quantity is computed using the following formula:
+
+ \[P(c_k | Xi) = \frac{s_k(Xi)}{\sum_j s_j(Xi)}\]
+
+where
+
+ \[s_k(Xi) = \frac{1}{1 + \exp{-\lambda \Delta_k(Xi)}}\]
+
+with
+
+ \[\Delta_k(Xi) = \frac{\bar{D} - d(Xi, c_k)}{\bar{D}}\]
+
+and \(\bar{D}\) is the average of the distances between Xi and the cluster centers.
+
+Parameters:
+
+Xi: numpy array, shape (t, d)
+
+A time series observed up to time t
+
+Returns:
+
+probasnumpy array, shape (n_clusters, )
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [3, 2, 1, 1, 2, 3],
+...                                   [3, 2, 1, 1, 2, 3]])
+>>> y = [0, 0, 0, 1, 1, 1, 0, 0]
+>>> ts0 = to_time_series([1, 2])
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=0.,
+...                                  random_state=0)
+>>> probas = model.fit(dataset, y).get_cluster_probas(ts0)
+>>> probas.shape
+(3,)
+>>> probas
+array([0.33..., 0.33..., 0.33...])
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=10000.,
+...                                  random_state=0)
+>>> probas = model.fit(dataset, y).get_cluster_probas(ts0)
+>>> probas.shape
+(3,)
+>>> probas
+array([0.5, 0.5, 0. ])
+>>> ts1 = to_time_series([3, 2])
+>>> model.get_cluster_probas(ts1)
+array([0., 0., 1.])
+
+ get_early_predict_generator(n_ts=1)[source]
+
+Allows streaming incoming timestamps of a time series and retrieving current predicted class as well as estimated delay before prediction timestamps.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+n_ts: int (default 1)
+
+The number of time series that will be predicted by the generator
+
+Returns:
+
+generator
+
+Use the send method of the generator to stream timestamps as they become available and retrieve associated predictions and delays. This method takes an array-like, shape (n_ts, n_timestamps, n_features), representing freshly aquired data for all timeseries as input. This new data is concatenated with previously sent data, if any, to output the predicted classes and estimated delays before optimal prediction timestamps for all timeseries based all on available data (same output as early_predict()). Use n_timestamps = 1 for step by step feeding.
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [3, 2, 1, 1, 2, 3],
+...                                   [3, 2, 1, 1, 2, 3]])
+>>> y = [0, 0, 0, 1, 1, 1, 0, 0]
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=1000.,
+...                                  cost_time_parameter=.1,
+...                                  random_state=0).fit(dataset, y)
+>>> incoming_timestamps = np.array([1, 2, 3, 3, 1, 2]).reshape(6, 1, 1, 1)
+>>> gen = model.get_early_predict_generator()
+>>> for x in incoming_timestamps:
+...     print(gen.send(x))
+(array([0]), array([3]))
+(array([0]), array([2]))
+(array([0]), array([1]))
+(array([1]), array([0]))
+(array([1]), array([0]))
+(array([1]), array([0]))
+
+ get_early_predict_proba_generator(n_ts=1)[source]
+
+Allows streaming incoming timestamps of a time series and retrieving current probability estimates as well as estimated delay before prediction timestamps.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+n_ts: int (default 1)
+
+The number of time series that will be predicted by the generator
+
+Returns:
+
+generator
+
+Use the send method of the generator to stream timestamps as they become available and retrieve associated prediction probalities and delays. This method takes an array-like, shape (n_ts, n_timestamps, n_features), representing freshly aquired data for all timeseries as input. This new data is concatenated with previously sent data, if any, to output the predicted probability estimates and estimated delays before optimal prediction timestamps for all timeseries based all on available data (same output as early_predict_proba()). Use n_timestamps = 1 for step by step feeding.
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 4, 5, 6],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [1, 2, 3, 3, 2, 1],
+...                                   [3, 2, 1, 1, 2, 3],
+...                                   [3, 2, 1, 1, 2, 3]])
+>>> y = [0, 0, 0, 1, 1, 1, 0, 0]
+>>> model = NonMyopicEarlyClassifier(n_clusters=3, lamb=1000.,
+...                                  cost_time_parameter=.1,
+...                                  random_state=0).fit(dataset, y)
+>>> incoming_timestamps = np.array([1, 2, 3, 3, 1, 2]).reshape(6, 1, 1, 1)
+>>> gen = model.get_early_predict_proba_generator()
+>>> for x in incoming_timestamps:
+...     print(gen.send(x))
+(array([[1., 0.]]), array([3]))
+(array([[1., 0.]]), array([2]))
+(array([[1., 0.]]), array([1]))
+(array([[0., 1.]]), array([0]))
+(array([[0., 1.]]), array([0]))
+(array([[0., 1.]]), array([0]))
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ predict(X)[source]
+
+Provide predicted class.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Vector to be scored, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+Returns:
+
+array, shape (n_series,)
+
+Predicted classes.
+
+ predict_class_and_earliness(X)[source]
+
+Provide predicted class as well as prediction timestamps.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Vector to be scored, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+Returns:
+
+array, shape (n_series,)
+
+Predicted classes.
+
+array-like of shape (n_series, )
+
+Prediction timestamps.
+
+ predict_proba(X)[source]
+
+Probability estimates.
+
+The returned estimates for all classes are ordered by the label of classes.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Vector to be scored, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+Returns:
+
+array-like of shape (n_series, n_classes)
+
+Probability of the sample for each class in the model, where classes are ordered as they are in self.classes_.
+
+ predict_proba_and_earliness(X)[source]
+
+Provide probability estimates as well as prediction timestamps.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting. The returned estimates for all classes are ordered by the label of classes.
+
+Parameters:
+
+Xarray-like of shape (n_series, n_timestamps, n_features)
+
+Vector to be scored, where n_series is the number of time series, n_timestamps is the number of timestamps in the series and n_features is the number of features recorded at each timestamp.
+
+Returns:
+
+array-like of shape (n_series, n_classes)
+
+Probability of the sample for each class in the model, where classes are ordered as they are in self.classes_.
+
+array-like of shape (n_series, )
+
+Prediction timestamps.
+
+ score(X, y, sample_weight=None)
+
+Return accuracy on provided data and labels.
+
+In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
+
+Parameters:
+
+Xarray-like of shape (n_samples, n_features)
+
+Test samples.
+
+yarray-like of shape (n_samples,) or (n_samples, n_outputs)
+
+True labels for X.
+
+sample_weightarray-like of shape (n_samples,), default=None
+
+Sample weights.
+
+Returns:
+
+scorefloat
+
+Mean accuracy of self.predict(X) w.r.t. y.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_score_request(*, sample_weight: bool | None | str = '$UNCHANGED$') → NonMyopicEarlyClassifier
+
+Configure whether metadata should be requested to be passed to the score method.
+
+Note that this method is only relevant when this estimator is used as a sub-estimator within a meta-estimator and metadata routing is enabled with enable_metadata_routing=True (see sklearn.set_config()). Please check the User Guide on how the routing mechanism works.
+
+The options for each parameter are:
+
+True: metadata is requested, and passed to score if provided. The request is ignored if metadata is not provided.
+
+False: metadata is not requested and the meta-estimator will not pass it to score.
+
+None: metadata is not requested, and the meta-estimator will raise an error if the user provides it.
+
+str: metadata should be passed to the meta-estimator with this given alias instead of the original name.
+
+The default (sklearn.utils.metadata_routing.UNCHANGED) retains the existing request. This allows you to change the request for some parameters and not others.
+
+Added in version 1.3.
+
+Parameters:
+
+sample_weightstr, True, False, or None, default=sklearn.utils.metadata_routing.UNCHANGED
+
+Metadata routing for sample_weight parameter in score.
+
+Returns:
+
+selfobject
+
+The updated object.

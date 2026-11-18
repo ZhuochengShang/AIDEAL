@@ -1,0 +1,31 @@
+chi1_selections(n_name='N', ca_name='CA', cb_name='CB', cg_name='CG CG1 OG OG1 SG')
+
+Select list of AtomGroups corresponding to the chi1 sidechain dihedral
+
+N-CA-CB-CG.
+
+c_name: str (optional)
+
+name for the backbone C atom
+
+ca_name: str (optional)
+
+name for the alpha-carbon atom
+
+cb_name: str (optional)
+
+name for the beta-carbon atom
+
+cg_name: str (optional)
+
+name for the gamma-carbon atom
+
+List of AtomGroups
+
+4-atom selections in the correct order. If no CB and/or CG is found then the corresponding item in the list is None.
+
+Added in version 1.0.0.
+
+Note
+
+This requires the underlying topology to have names. Otherwise, a NoDataError is raised.

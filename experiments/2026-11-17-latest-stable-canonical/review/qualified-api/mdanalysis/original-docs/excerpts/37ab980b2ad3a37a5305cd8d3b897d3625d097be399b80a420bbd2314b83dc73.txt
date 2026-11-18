@@ -1,0 +1,296 @@
+class MDAnalysis.auxiliary.base.AuxReader(represent_ts_as='closest', auxname=None, cutoff=None, **kwargs)[source]
+
+Base class for auxiliary readers.
+
+Allows iteration over a set of data from a trajectory, additional (‘auxiliary’) to the regular positions/velocities/etc. This auxiliary data may be stored in e.g. an array or a separate file.
+
+See the Auxiliary API for more on use.
+
+Changed in version 2.4.0: Behaviour of cutoff changed, default parameter which specifies not cutoff is set is now None, not -1.
+
+Changed in version 2.4.0: AuxReader instances now have a copy() method which creates a deep copy of the instance.
+
+Parameters:
+
+auxname (str, optional) – Name for auxiliary data. When added to a trajectory, the representative auxiliary value(s) for the timestep may be accessed as ts.aux.auxname or ts.aux['auxname'].
+
+represent_ts_as (str) – Method to use to calculate representative value of auxiliary data for a trajectory timestep. See calc_representative() for valid options.
+
+cutoff (float, optional) – Auxiliary steps further from the trajectory timestep than cutoff (in ps) will be ignored when calculating representative values. If None (default), all auxiliary steps assigned to that timestep will be used.
+
+**kwargs – Options to be passed to AuxStep
+
+ auxstep
+
+AuxStep object containing data for current step.
+
+ frame_data
+
+Dictionary containing data from each auxiliary step assigned to the current trajectory timestep, indexed by the difference in time between the step and trajectory timestep (i.e. auxstep.time - ts.time; in ps)
+
+Type:
+
+dict
+
+ frame_rep
+
+Representative value(s) of auxiliary data for current trajectory timestep.
+
+Type:
+
+ndarray
+
+Note
+
+Auxiliary data are assumed to be time ordered and contain no duplicates.
+
+ attach_auxiliary(coord_parent, aux_spec: str | Dict[str, str] | None = None, format: str | None = None, **kwargs) → None[source]
+
+Attaches the data specified in aux_spec to the coord_parent
+
+This method is called from within MDAnalysis.coordinates.base.ReaderBase.add_auxiliary(). add_auxiliary should be agnostic to the type of AuxReader, so the method call leads here instead. First, some checks are done on the arguments to make sure the input is treated properly. Then, the AuxReader(s) with appropriate data_selector are associated with the coord_parent from which add_auxiliary was called.
+
+Parameters:
+
+coord_parent (MDAnalysis.coordinates.base.ReaderBase) – Reader object to which to attach the auxiliary data.
+
+aux_spec (str, Dict[str, str], None) – Specifies which data to add to coord_parent. String types are for MDAnalysis.auxiliary.XVG.XVGReader only. Dictionaries are the standard way of providing aux_spec information (see also: MDAnalysis.auxiliary.EDR). Passing None causes all data to be added.
+
+Return type:
+
+None
+
+Raises:
+
+ValueError – If trying to add data under an aux_spec key that is already assigned.
+
+ calc_representative()[source]
+
+Calculate representative auxiliary value(s) from the data in frame_data.
+
+Currently implemented options for calculating representative value are:
+
+closest: default; the value(s) from the step closest to in time to the trajectory timestep
+
+average: average of the value(s) from steps ‘assigned’ to the trajectory timestep.
+
+Additionally, if cutoff is specified, only steps within this time of the trajectory timestep are considered in calculating the representative.
+
+If no auxiliary steps were assigned to the timestep, or none fall within the cutoff, representative values are set to np.nan.
+
+Returns:
+
+Array of auxiliary value(s) ‘representative’ for the timestep.
+
+Return type:
+
+ndarray
+
+ property constant_dt
+
+True if dt is constant throughout the auxiliary (as stored in auxstep)
+
+ copy()[source]
+
+Returns a deep copy of the AuxReader
+
+ property data_selector
+
+Key(s) to select auxiliary data values of interest from the full set of data read for each step (as stored in auxstep).
+
+Type differs between auxiliary formats, depending how the data for each step is read in and stored - e.g. data from .xvg files is read in as a list and data_selector must be a list of valid indicies. If data selection is not enabled by the reader, data_selector will default to None.
+
+See each individual auxiliary reader.
+
+ property dt
+
+Change in time between auxiliary steps (as stored in auxstep; in ps)
+
+ get_description()[source]
+
+Get the values of the parameters necessary for replicating the AuxReader.
+
+An AuxReader can be duplicated using auxreader():
+
+description = original_aux.get_description()
+new_aux = MDAnalysis.auxiliary.auxreader(**description)
+
+The resulting dictionary may also be passed directly to add_auxiliary() to reload an auxiliary into a trajectory:
+
+trajectory.add_auxiliary(**description)
+
+Returns:
+
+Key-word arguments and values that can be used to replicate the AuxReader.
+
+Return type:
+
+dict
+
+ property initial_time
+
+Time of first auxiliary step (as stored in auxstep; in ps)
+
+ move_to_ts(ts)[source]
+
+Position auxiliary reader just before trajectory timestep ts.
+
+Calling next() should read the first auxiliary step ‘assigned’ to the trajectory timestep ts or, if no auxiliary steps are assigned to that timestep (as in the case of less frequent auxiliary data), the first auxiliary step after ts.
+
+Parameters:
+
+ts (Timestep object) – The trajectory timestep before which the auxiliary reader is to be positioned.
+
+ property n_steps
+
+Total number of steps in the auxiliary data.
+
+ next()[source]
+
+Move to next step of auxiliary data.
+
+ next_nonempty_frame(ts)[source]
+
+Find the next trajectory frame for which a representative auxiliary value can be calculated.
+
+That is, the next trajectory frame to which one or more auxiliary steps are assigned and fall within the cutoff.
+
+Starts looking from the current step time. If the end of the auxiliary data is reached before a trajectory frame is found, None is returned.
+
+Parameters:
+
+ts (Timestep object) – Any timestep from the trajectory for which the next ‘non-empty’ frame is to be found.
+
+Returns:
+
+Index of the next auxiliary-containing frame in the trajectory.
+
+Return type:
+
+int
+
+Note
+
+The returned index may be out of range for the trajectory.
+
+ read_ts(ts)[source]
+
+Read auxiliary steps corresponding to the trajectory timestep ts.
+
+Read the auxiliary steps ‘assigned’ to ts (the steps that are within ts.dt/2 of of the trajectory timestep/frame - ie. closer to ts than either the preceding or following frame). Then calculate a ‘representative value’ for the timestep from the data in each of these auxiliary steps.
+
+To update ts with the representative value, use update_ts instead.
+
+Parameters:
+
+ts (Timestep object) – The trajectory timestep for which corresponding auxiliary data is to be read.
+
+See also
+
+update_ts()
+
+Note
+
+The auxiliary reader will end up positioned at the last step assigned to the trajectory frame or, if the frame includes no auxiliary steps, (as when auxiliary data are less frequent), the most recent auxiliary step before the frame.
+
+ property represent_ts_as
+
+Method by which ‘representative’ timestep values of auxiliary data will be calculated.
+
+ rewind()[source]
+
+Return to and read first step.
+
+ property step
+
+Number of the current auxiliary step (as stored in auxstep; 0-based).
+
+ step_to_frame(step, ts, return_time_diff=False)[source]
+
+Calculate closest trajectory frame for auxiliary step step.
+
+Calculated given dt, time and frame from ts:
+
+time_frame_0 = ts.time - ts.frame*ts.dt   # time at frame 0
+
+frame = floor((step_to_time(step) - time_frame_0 + ts.dt/2)/ts.dt))
+
+The difference in time between the step and the calculated frame can also optionally be returned with return_time_diff.
+
+Parameters:
+
+step (int) – Number of the auxiliary step to calculate closest trajectory frame for.
+
+ts (Timestep object) – (Any) timestep from the trajectory the calculated frame number is to correspond to.
+
+return_time_diff (bool, optional) – (Default: False) Additionally return the time difference between step and returned frame.
+
+Returns:
+
+frame_index (int or None) – Number of the trajectory frame closest (in time) to the given auxiliary step. If the step index is out of range for the auxiliary data, None is returned instead.
+
+time_diff (float (optional)) – Difference in time between step and frame_index.
+
+Note
+
+Assumes trajectory dt is consant. The returned frame number may be out of range for the trajectory.
+
+ step_to_time(i)[source]
+
+Return time of auxiliary step i.
+
+Calculated using dt and initial_time if constant_dt is True; otherwise from the list of times as read from the auxiliary data for each step.
+
+Parameters:
+
+i (int) – Index (0-based) of step to return time for
+
+Returns:
+
+time – Time (in ps) of step i
+
+Return type:
+
+float
+
+Raises:
+
+ValueError – When i not in valid range
+
+ property time
+
+Time of current auxiliary step (as stored in auxstep; in ps)
+
+ property time_selector
+
+Key to select ‘time’ value from the full set of data read for each step. As stored in austep.
+
+Type differs between auxiliary formats, depending how the data for each step is read in and stored; e.g. data from .xvg files is read in as a list and time_selector must be a valid index. If time selection is not enabled by the reader, time_selector will default to None.
+
+See each individual auxiliary reader.
+
+ update_ts(ts)[source]
+
+Read auxiliary steps corresponding to and update the trajectory timestep ts.
+
+Calls read_ts(), then updates ts with the representative value. auxname must be set; the representative value will be accessible in ts as ts.aux.auxname or ts.aux['auxname'].
+
+Parameters:
+
+ts (Timestep object) – The trajectory timestep for which corresponding auxiliary data is to be read and updated.
+
+Returns:
+
+ts with the representative auxiliary value in ts.aux be updated appropriately.
+
+Return type:
+
+Timestep
+
+Raises:
+
+ValueError – If auxname is not set.
+
+See also
+
+read_ts()

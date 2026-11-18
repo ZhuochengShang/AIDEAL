@@ -1,0 +1,167 @@
+4.3.3. Distance analysis — MDAnalysis.analysis.distances
+
+This module provides functions to rapidly compute distances between atoms or groups of atoms.
+
+dist() and between() can take atom groups that do not even have to be from the same Universe.
+
+See also
+
+MDAnalysis.lib.distances
+
+ MDAnalysis.analysis.distances.between(group, A, B, distance)[source]
+
+Return sub group of group that is within distance of both A and B
+
+This function is not aware of periodic boundary conditions.
+
+Can be used to find bridging waters or molecules in an interface.
+
+Similar to “group and (AROUND A distance and AROUND B distance)”.
+
+Parameters:
+
+group (AtomGroup) – Find members of group that are between A and B
+
+A (AtomGroup)
+
+B (AtomGroup) – A and B are the groups of atoms between which atoms in group are searched for. The function works is more efficient if group is bigger than either A or B.
+
+distance (float) – maximum distance for an atom to be counted as in the vicinity of A or B
+
+Returns:
+
+AtomGroup of atoms that fulfill the criterion
+
+Return type:
+
+AtomGroup
+
+ MDAnalysis.analysis.distances.contact_matrix(coord, cutoff=15.0, returntype='numpy', box=None)[source]
+
+Calculates a matrix of contacts.
+
+There is a fast, high-memory-usage version for small systems (returntype = ‘numpy’), and a slower, low-memory-usage version for larger systems (returntype = ‘sparse’).
+
+If box dimensions are passed then periodic boundary conditions are applied.
+
+Parameters:
+
+coord (array) – Array of coordinates of shape (N, 3) and dtype float32.
+
+cutoff (float, optional, default 15) – Particles within cutoff are considered to form a contact.
+
+returntype (string, optional, default "numpy") – Select how the contact matrix is returned. * "numpy": return as an (N. N) numpy.ndarray * "sparse": return as a scipy.sparse.lil_matrix
+
+box (array-like or None, optional, default None) – Simulation cell dimensions in the form of MDAnalysis.trajectory.timestep.Timestep.dimensions when periodic boundary conditions should be taken into account for the calculation of contacts.
+
+Returns:
+
+The contact matrix is returned in a format determined by the returntype keyword.
+
+Return type:
+
+array or sparse matrix
+
+See also
+
+MDAnalysis.analysis.contacts
+
+Changed in version 0.11.0: Keyword suppress_progmet and progress_meter_freq were removed.
+
+ MDAnalysis.analysis.distances.dist(A, B, offset=0, box=None)[source]
+
+Return distance between atoms in two atom groups.
+
+The distance is calculated atom-wise. The residue ids are also returned because a typical use case is to look at CA distances before and after an alignment. Using the offset keyword one can also add a constant offset to the resids which facilitates comparison with PDB numbering.
+
+Parameters:
+
+A (AtomGroup) – AtomGroup with the same number of atoms
+
+B (AtomGroup) – AtomGroup with the same number of atoms
+
+offset (integer or tuple, optional, default 0) –
+An integer offset is added to resids_A and resids_B (see below) in order to produce PDB numbers.
+
+If offset is tuple then offset[0] is added to resids_A and offset[1] to resids_B. Note that one can actually supply numpy arrays of the same length as the atom group so that an individual offset is added to each resid.
+
+Returns:
+
+resids_A (array) – residue ids of the A group (possibly changed with offset)
+
+resids_B (array) – residue ids of the B group (possibly changed with offset)
+
+distances (array) – distances between the atoms
+
+ MDAnalysis.analysis.distances.distance_array(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, configuration: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculate all possible distances between a reference set and another configuration.
+
+If there are n positions in reference and m positions in configuration, a distance array of shape (n, m) will be computed.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a 2D numpy array of dtype numpy.float64 with the shape (n, m) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array of shape (3,) or (n, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+configuration (numpy.ndarray or AtomGroup) – Configuration coordinate array of shape (3,) or (m, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array which must have the shape (n, m) and dtype numpy.float64. Avoids creating the array which saves time when the function is called repeatedly.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+d – Array containing the distances d[i,j] between reference coordinates i and configuration coordinates j.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n, m))
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.9.0: Added support for the distopia backend.
+
+ MDAnalysis.analysis.distances.self_distance_array(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculate all possible distances within a configuration reference.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a 1D numpy array of dtype numpy.float64 with the shape (n*(n-1)/2,) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array of shape (3,) or (n, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array which must have the shape (n*(n-1)/2,) and dtype numpy.float64. Avoids creating the array which saves time when the function is called repeatedly.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+d (numpy.ndarray (dtype=numpy.float64, shape=(n*(n-1)/2,))) – Array containing the distances dist[i,j] between reference coordinates i and j at position d[k]. Loop through d:
+
+for i in range(n):
+    for j in range(i + 1, n):
+        dist[i, j] = dist[j, i] = d[k]
+        k += 1
+
+.. versionchanged:: 0.13.0 – Added backend keyword.
+
+.. versionchanged:: 0.19.0 – Internal dtype conversion of input coordinates to numpy.float32.
+
+.. versionchanged:: 2.3.0 – Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+.. versionchanged:: 2.9.0 – Added support for the distopia backend.

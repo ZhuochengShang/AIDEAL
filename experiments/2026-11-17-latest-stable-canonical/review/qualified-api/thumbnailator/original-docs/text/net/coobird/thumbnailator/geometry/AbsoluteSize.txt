@@ -1,0 +1,132 @@
+AbsoluteSize (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.geometry
+Class AbsoluteSize
+java.lang.Object
+net.coobird.thumbnailator.geometry.AbsoluteSize
+All Implemented Interfaces:
+Size
+public class
+AbsoluteSize
+extends
+Object
+implements
+Size
+A
+Size
+object which indicates that the size of the enclosed object
+should be the specified absolute size.
+Since:
+0.3.4
+Author:
+coobird
+Constructor Summary
+AbsoluteSize
+(
+Dimension
+size)
+Instantiates an object which indicates size of an object.
+AbsoluteSize
+(int width,
+int height)
+Instantiates an object which indicates size of an object.
+Method Summary
+Dimension
+calculate
+(int width,
+int height)
+Calculates the size of the object.
+String
+toString
+()
+Returns a
+String
+representation of this object.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+AbsoluteSize
+public
+AbsoluteSize
+(
+Dimension
+size)
+Instantiates an object which indicates size of an object.
+Parameters:
+size
+- Size of the enclosed object.
+Throws:
+NullPointerException
+- If the size is
+null
+.
+AbsoluteSize
+public
+AbsoluteSize
+(int width,
+int height)
+Instantiates an object which indicates size of an object.
+Parameters:
+width
+- Width of the enclosed object.
+height
+- Height of the enclosed object.
+Throws:
+IllegalArgumentException
+- If the width and/or height is less
+than or equal to
+0
+.
+Method Detail
+calculate
+public
+Dimension
+calculate
+(int width,
+int height)
+Description copied from interface:
+Size
+Calculates the size of the object.
+Specified by:
+calculate
+in interface
+Size
+Parameters:
+width
+- Width of the object which encloses the object
+for which the size should be determined.
+height
+- Height of the object which encloses the object
+for which the size should be determined.
+Returns:
+Calculated size of the object.
+toString
+public
+String
+toString
+()
+Returns a
+String
+representation of this object.
+Overrides:
+toString
+in class
+Object
+Returns:
+String
+representation of this object.
+Copyright © 2025. All rights reserved.

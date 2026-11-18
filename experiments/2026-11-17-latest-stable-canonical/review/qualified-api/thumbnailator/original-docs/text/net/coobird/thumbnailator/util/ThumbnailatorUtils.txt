@@ -1,0 +1,148 @@
+ThumbnailatorUtils (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.util
+Class ThumbnailatorUtils
+java.lang.Object
+net.coobird.thumbnailator.util.ThumbnailatorUtils
+public final class
+ThumbnailatorUtils
+extends
+Object
+A utility class for Thumbnailator.
+Author:
+coobird
+Method Summary
+static
+List
+<
+String
+>
+getSupportedOutputFormats
+()
+Returns a
+List
+of supported output formats.
+static
+List
+<
+String
+>
+getSupportedOutputFormatTypes
+(
+String
+format)
+Returns a
+List
+of supported output formats types for a specified
+output format.
+static boolean
+isSupportedOutputFormat
+(
+String
+format)
+Returns whether a specified format is supported for output.
+static boolean
+isSupportedOutputFormatType
+(
+String
+format,
+String
+type)
+Returns whether a specified format type is supported for a specified
+output format.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+getSupportedOutputFormats
+public static
+List
+<
+String
+>
+getSupportedOutputFormats
+()
+Returns a
+List
+of supported output formats.
+Returns:
+A
+List
+of supported output formats. If no formats
+are supported, an empty list is returned.
+isSupportedOutputFormat
+public static boolean
+isSupportedOutputFormat
+(
+String
+format)
+Returns whether a specified format is supported for output.
+Parameters:
+format
+- The format to check whether it is supported or not.
+Returns:
+true
+if the format is supported,
+false
+otherwise.
+getSupportedOutputFormatTypes
+public static
+List
+<
+String
+>
+getSupportedOutputFormatTypes
+(
+String
+format)
+Returns a
+List
+of supported output formats types for a specified
+output format.
+Parameters:
+format
+- The output format.
+Returns:
+A
+List
+of supported output formats types. If no
+formats types are supported, or if compression is not
+supported for the specified format, then an empty list
+is returned.
+isSupportedOutputFormatType
+public static boolean
+isSupportedOutputFormatType
+(
+String
+format,
+String
+type)
+Returns whether a specified format type is supported for a specified
+output format.
+Parameters:
+format
+- The format to check whether it is supported or not.
+type
+- The format type to check whether it is supported or not.
+Returns:
+true
+if the format type is supported by the
+specified supported format,
+false
+otherwise.
+Copyright © 2025. All rights reserved.

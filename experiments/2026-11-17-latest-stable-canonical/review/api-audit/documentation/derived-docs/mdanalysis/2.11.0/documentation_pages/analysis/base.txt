@@ -1,0 +1,694 @@
+4.2.1. Analysis building blocks — MDAnalysis.analysis.base
+
+MDAnalysis provides building blocks for creating analysis classes. One can think of each analysis class as a “tool” that performs a specific analysis over the trajectory frames and stores the results in the tool.
+
+Analysis classes are derived from AnalysisBase by subclassing. This inheritance provides a common workflow and API for users and makes many additional features automatically available (such as frame selections and a verbose progressbar). The important points for analysis classes are:
+
+Analysis tools are Python classes derived from AnalysisBase.
+
+When instantiating an analysis, the Universe or AtomGroup that the analysis operates on is provided together with any other parameters that are kept fixed for the specific analysis.
+
+The analysis is performed with run() method. It has a common set of arguments such as being able to select the frames the analysis is performed on. The verbose keyword argument enables additional output. A progressbar is shown by default that also shows an estimate for the remaining time until the end of the analysis.
+
+Results are always stored in the attribute AnalysisBase.results, which is an instance of Results, a kind of dictionary that allows allows item access via attributes. Each analysis class decides what and how to store in Results and needs to document it. For time series, the AnalysisBase.times contains the time stamps of the analyzed frames.
+
+4.2.1.1. Example of using a standard analysis tool
+
+For example, the MDAnalysis.analysis.rms.RMSD performs a root-mean-square distance analysis in the following way:
+
+import MDAnalysis as mda
+from MDAnalysisTests.datafiles import TPR, XTC
+
+from MDAnalysis.analysis import rms
+
+u = mda.Universe(TPR, XTC)
+
+# (2) instantiate analysis
+rmsd = rms.RMSD(u, select='name CA')
+
+# (3) the run() method can select frames in different ways
+# run on all frames (with progressbar)
+rmsd.run(verbose=True)
+
+# or start, stop, and step can be used
+rmsd.run(start=2, stop=8, step=2)
+
+# a list of frames to run the analysis on can be passed
+rmsd.run(frames=[0,2,3,6,9])
+
+# a list of booleans the same length of the trajectory can be used
+rmsd.run(frames=[True, False, True, True, False, False, True, False,
+                 False, True])
+
+# (4) analyze the results, e.g., plot
+t = rmsd.times
+y = rmsd.results.rmsd[:, 2]   # RMSD at column index 2, see docs
+
+import matplotlib.pyplot as plt
+plt.plot(t, y)
+plt.xlabel("time (ps)")
+plt.ylabel("RMSD (Å)")
+
+4.2.1.2. Writing new analysis tools
+
+In order to write new analysis tools, derive a class from AnalysisBase and define at least the _single_frame() method, as described in AnalysisBase.
+
+See also
+
+The chapter Writing your own trajectory analysis in the User Guide contains a step-by-step example for writing analysis tools with AnalysisBase.
+
+If your analysis is operating independently on each frame, you might consider making it parallelizable via adding a get_supported_backends() method, and appropriate aggregation function for each of its results. For example, if you have your _single_frame() method storing important values under self.results.timeseries, you will write:
+
+class MyAnalysis(AnalysisBase):
+    _analysis_algorithm_is_parallelizable = True
+
+    @classmethod
+    def get_supported_backends(cls):
+        return ('serial', 'multiprocessing', 'dask',)
+
+    def _get_aggregator(self):
+      return ResultsGroup(lookup={'timeseries': ResultsGroup.ndarray_vstack})
+
+See MDAnalysis.analysis.results for more on aggregating results.
+
+See also
+
+Parallel analysis
+
+4.2.1.3. Classes
+
+The MDAnalysis.results.Results and AnalysisBase classes are the essential building blocks for almost all MDAnalysis tools in the MDAnalysis.analysis module. They aim to be easily useable and extendable.
+
+AnalysisFromFunction and the analysis_class() functions are simple wrappers that make it even easier to create fully-featured analysis tools if only the single-frame analysis function needs to be written.
+
+ class MDAnalysis.analysis.base.AnalysisBase(trajectory, verbose=False, **kwargs)[source]
+
+Base class for defining multi-frame analysis
+
+The class is designed as a template for creating multi-frame analyses. This class will automatically take care of setting up the trajectory reader for iterating, and it offers to show a progress meter. Computed results are stored inside the results attribute.
+
+To define a new Analysis, AnalysisBase needs to be subclassed and _single_frame() must be defined. It is also possible to define _prepare() and _conclude() for pre- and post-processing. All results should be stored as attributes of the MDAnalysis.analysis.results.Results container.
+
+Note
+
+The instance attributes are created during and on conclusion of calling the AnalysisBase.run() method. Accessing an attribute before it has been created will raise an AttributeError.
+
+Parameters:
+
+trajectory (MDAnalysis.coordinates.base.ReaderBase) – A trajectory Reader
+
+verbose (bool, optional) – Turn on more logging and debugging
+
+ times
+
+Array of times of the Timesteps that were analyzed. Only exists after calling AnalysisBase.run().
+
+Type:
+
+numpy.ndarray
+
+ frames
+
+Array of frame indices that were analyzed. Only exists after calling AnalysisBase.run().
+
+Type:
+
+numpy.ndarray
+
+ results
+
+Results of calculation are stored here, after call to AnalysisBase.run().
+
+Type:
+
+Results
+
+ n_frames
+
+number of analyzed frames, i.e., after taking into account the start, stop, and step values from AnalysisBase.run(). Only exists after calling AnalysisBase.run().
+
+Type:
+
+int
+
+ start
+
+Frame index of the first trajectory frame that was analyzed. Only exists after calling AnalysisBase.run().
+
+Type:
+
+int
+
+ stop
+
+Frame index of the last trajectory frame that was analyzed. Only exists after calling AnalysisBase.run().
+
+Type:
+
+int
+
+ step
+
+Every step frame was analyzed, as trajectory[start:stop:step]. Only exists after calling AnalysisBase.run().
+
+Type:
+
+int
+
+Example
+
+from MDAnalysis.analysis.base import AnalysisBase
+
+class NewAnalysis(AnalysisBase):
+    def __init__(self, atomgroup, parameter, **kwargs):
+        super(NewAnalysis, self).__init__(atomgroup.universe.trajectory,
+                                          **kwargs)
+        self._parameter = parameter
+        self._ag = atomgroup
+
+    def _prepare(self):
+        # OPTIONAL
+        # Called before iteration on the trajectory has begun.
+        # Data structures can be set up at this time
+        self.results.example_result = []
+
+    def _single_frame(self):
+        # REQUIRED
+        # Called after the trajectory is moved onto each new frame.
+        # store an example_result of `some_function` for a single frame
+        self.results.example_result.append(some_function(self._ag,
+                                                         self._parameter))
+
+    def _conclude(self):
+        # OPTIONAL
+        # Called once iteration on the trajectory is finished.
+        # Apply normalisation and averaging to results here.
+        self.results.example_result = np.asarray(self.example_result)
+        self.results.example_result /=  np.sum(self.result)
+
+Afterwards the new analysis can be run like this
+
+import MDAnalysis as mda
+from MDAnalysisTests.datafiles import PSF, DCD
+
+u = mda.Universe(PSF, DCD)
+
+na = NewAnalysis(u.select_atoms('name CA'), 35)
+na.run(start=10, stop=20)
+print(na.results.example_result)
+# results can also be accessed by key
+print(na.results["example_result"])
+
+Changed in version 1.0.0: Support for setting start, stop, and step has been removed. These should now be directly passed to AnalysisBase.run().
+
+Changed in version 2.0.0: Added results
+
+Changed in version 2.8.0: Added ability to run analysis in parallel using either a built-in backend (multiprocessing or dask) or a custom backends.BackendBase instance with an implemented apply method that is used to run the computations.
+
+ _compute(indexed_frames: ndarray, verbose: bool = None, *, progressbar_kwargs=None) → AnalysisBase[source]
+
+Perform the calculation on a balanced slice of frames that have been setup prior to that using _setup_computation_groups()
+
+Parameters:
+
+indexed_frames (np.ndarray) – np.ndarray of (n, 2) shape, where first column is frame iteration indices and second is frame numbers
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list.
+
+Added in version 2.8.0.
+
+ _conclude()[source]
+
+Finalize the results you’ve gathered.
+
+Called at the end of the run() method to finish everything up.
+
+Notes
+
+Aggregation of results from individual workers happens in self.run(), so here you have to implement everything as if you had a non-parallel run. If you want to enable proper aggregation for parallel runs for you analysis class, implement self._get_aggregator and check MDAnalysis.analysis.results for how to use it.
+
+ _configure_backend(backend: str | BackendBase, n_workers: int, unsupported_backend: bool = False) → BackendBase[source]
+
+Matches a passed backend string value with class attributes parallelizable and get_supported_backends() to check if downstream calculations can be performed.
+
+Parameters:
+
+backend (Union[str, BackendBase]) –
+
+backend to be used:
+
+str is matched to a builtin backend (one of “serial”, “multiprocessing” and “dask”)
+
+BackendBase subclass is checked for the presence of an apply() method
+
+n_workers (int) – positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+unsupported_backend (bool, optional) – if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Returns:
+
+instance of a BackendBase class that will be used for computations
+
+Return type:
+
+BackendBase
+
+Raises:
+
+ValueError – if parallelizable is set to False but backend is not serial
+
+ValueError – if parallelizable is True and custom backend instance is used without specifying unsupported_backend=True
+
+ValueError – if your trajectory has associated parallelizable transformations but backend is not serial
+
+ValueError – if n_workers was specified twice – in the run() method and durin __init__ of a custom backend
+
+ValueError – if your backend object instance doesn’t have an apply method
+
+Added in version 2.8.0.
+
+ _define_run_frames(trajectory, start=None, stop=None, step=None, frames=None) → slice | ndarray[source]
+
+Defines limits for the whole run, as passed by self.run() arguments
+
+Parameters:
+
+trajectory (mda.Reader) – a trajectory Reader
+
+start (int, optional) – start frame of analysis, by default None
+
+stop (int, optional) – stop frame of analysis, by default None
+
+step (int, optional) – number of frames to skip between each analysed frame, by default None
+
+frames (array_like, optional) – array of integers or booleans to slice trajectory; cannot be combined with start, stop, step; by default None
+
+Returns:
+
+Appropriate slicer for the trajectory that would give correct iteraction order via trajectory[slicer]
+
+Return type:
+
+Union[slice, np.ndarray]
+
+Raises:
+
+ValueError – if both frames and at least one of start, stop, or step is provided (i.e. set to not None value).
+
+Added in version 2.8.0.
+
+ _get_aggregator() → ResultsGroup[source]
+
+Returns a default aggregator that takes entire results if there is a single object, and raises ValueError otherwise
+
+Returns:
+
+aggregating object
+
+Return type:
+
+ResultsGroup
+
+Added in version 2.8.0.
+
+ _prepare()[source]
+
+Set things up before the analysis loop begins.
+
+Notes
+
+self.results is initialized already in self.__init__() with an empty instance of MDAnalysis.analysis.results.Results object. You can still call your attributes as if they were usual ones, Results just keeps track of that to be able to run a proper aggregation after a parallel run, if necessary.
+
+ _prepare_sliced_trajectory(slicer: slice | ndarray)[source]
+
+Prepares sliced trajectory for use in subsequent parallel computations: namely, assigns self._sliced_trajectory and its appropriate attributes, self.n_frames, self.frames and self.times.
+
+Parameters:
+
+slicer (Union[slice, np.ndarray]) – appropriate slicer for the trajectory
+
+Added in version 2.8.0.
+
+ _setup_computation_groups(n_parts: int, start: int = None, stop: int = None, step: int = None, frames: slice | ndarray = None) → list[ndarray][source]
+
+Splits the trajectory frames, defined by start/stop/step or frames, into n_parts even groups, preserving their indices.
+
+Parameters:
+
+n_parts (int) – number of parts to split the workload into
+
+start (int, optional) – start frame
+
+stop (int, optional) – stop frame
+
+step (int, optional) – step size for analysis (1 means to read every frame)
+
+frames (array_like, optional) – array of integers or booleans to slice trajectory; frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Raises:
+
+ValueError – if both frames and at least one of start, stop, or frames is provided (i.e., set to another value than None)
+
+Returns:
+
+computation_groups – list of (n, 2) shaped np.ndarrays with frame indices and numbers
+
+Return type:
+
+list[np.ndarray]
+
+Added in version 2.8.0.
+
+ _setup_frames(trajectory, start=None, stop=None, step=None, frames=None)[source]
+
+Pass a Reader object and define the desired iteration pattern through the trajectory
+
+Parameters:
+
+trajectory (mda.Reader) – A trajectory Reader
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory; cannot be combined with start, stop, step
+
+Added in version 2.2.0.
+
+Raises:
+
+ValueError – if both frames and at least one of start, stop, or frames is provided (i.e., set to another value than None)
+
+Changed in version 1.0.0: Added .frames and .times arrays as attributes
+
+Changed in version 2.2.0: Added ability to iterate through trajectory by passing a list of frame indices in the frames keyword argument
+
+Changed in version 2.8.0: Split function into two: _define_run_frames() and _prepare_sliced_trajectory(): first one defines the limits for the whole run and is executed once during run() in _setup_frames(), second one prepares sliced trajectory for each of the workers and gets executed twice: one time in _setup_frames() for the whole trajectory, second time in _compute() for each of the computation groups.
+
+ _single_frame()[source]
+
+Calculate data from a single frame of trajectory
+
+Don’t worry about normalising, just deal with a single frame. Attributes accessible during your calculations:
+
+self._frame_index: index of the frame in results array
+
+self._ts – Timestep instance
+
+self._sliced_trajectory – trajectory that you’re iterating over
+
+self.results – MDAnalysis.analysis.results.Results instance holding run results initialized in _prepare().
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)[source]
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.
+
+ class MDAnalysis.analysis.base.AnalysisFromFunction(function, trajectory=None, *args, **kwargs)[source]
+
+Create an AnalysisBase from a function working on AtomGroups
+
+Parameters:
+
+function (callable) – function to evaluate at each frame
+
+trajectory (MDAnalysis.coordinates.Reader, optional) – trajectory to iterate over. If None the first AtomGroup found in args and kwargs is used as a source for the trajectory.
+
+*args (list) – arguments for function
+
+**kwargs (dict) – arguments for function and AnalysisBase
+
+ results.frames
+
+simulation frames used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.timeseries
+
+Results for each frame of the wrapped function, stored after call to AnalysisFromFunction.run().
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – if function has the same kwargs as AnalysisBase
+
+Example
+
+def rotation_matrix(mobile, ref):
+    return mda.analysis.align.rotation_matrix(mobile, ref)[0]
+
+rot = AnalysisFromFunction(rotation_matrix, trajectory,
+                            mobile, ref).run()
+print(rot.results.timeseries)
+
+Changed in version 1.0.0: Support for directly passing the start, stop, and step arguments has been removed. These should instead be passed to AnalysisFromFunction.run().
+
+Changed in version 2.0.0: Former results are now stored as results.timeseries
+
+Changed in version 2.8.0: Added get_supported_backends(), introducing ‘serial’, ‘multiprocessing’ and ‘dask’ backends.
+
+ _conclude()[source]
+
+Finalize the results you’ve gathered.
+
+Called at the end of the run() method to finish everything up.
+
+Notes
+
+Aggregation of results from individual workers happens in self.run(), so here you have to implement everything as if you had a non-parallel run. If you want to enable proper aggregation for parallel runs for you analysis class, implement self._get_aggregator and check MDAnalysis.analysis.results for how to use it.
+
+ _get_aggregator()[source]
+
+Returns a default aggregator that takes entire results if there is a single object, and raises ValueError otherwise
+
+Returns:
+
+aggregating object
+
+Return type:
+
+ResultsGroup
+
+Added in version 2.8.0.
+
+ _prepare()[source]
+
+Set things up before the analysis loop begins.
+
+Notes
+
+self.results is initialized already in self.__init__() with an empty instance of MDAnalysis.analysis.results.Results object. You can still call your attributes as if they were usual ones, Results just keeps track of that to be able to run a proper aggregation after a parallel run, if necessary.
+
+ _single_frame()[source]
+
+Calculate data from a single frame of trajectory
+
+Don’t worry about normalising, just deal with a single frame. Attributes accessible during your calculations:
+
+self._frame_index: index of the frame in results array
+
+self._ts – Timestep instance
+
+self._sliced_trajectory – trajectory that you’re iterating over
+
+self.results – MDAnalysis.analysis.results.Results instance holding run results initialized in _prepare().
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ MDAnalysis.analysis.base._filter_baseanalysis_kwargs(function, kwargs)[source]
+
+Create two dictionaries with kwargs separated for function and AnalysisBase
+
+Parameters:
+
+function (callable) – function to be called
+
+kwargs (dict) – keyword argument dictionary
+
+Returns:
+
+base_args (dict) – dictionary of AnalysisBase kwargs
+
+kwargs (dict) – kwargs without AnalysisBase kwargs
+
+Raises:
+
+ValueError – if function has the same kwargs as AnalysisBase
+
+ MDAnalysis.analysis.base.analysis_class(function)[source]
+
+Transform a function operating on a single frame to an AnalysisBase class.
+
+Parameters:
+
+function (callable) – function to evaluate at each frame
+
+ results.frames
+
+simulation frames used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.timeseries
+
+Results for each frame of the wrapped function, stored after call to AnalysisFromFunction.run().
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – if function has the same kwargs as AnalysisBase
+
+Examples
+
+For use in a library, we recommend the following style
+
+def rotation_matrix(mobile, ref):
+    return mda.analysis.align.rotation_matrix(mobile, ref)[0]
+RotationMatrix = analysis_class(rotation_matrix)
+
+It can also be used as a decorator
+
+@analysis_class
+def RotationMatrix(mobile, ref):
+    return mda.analysis.align.rotation_matrix(mobile, ref)[0]
+
+rot = RotationMatrix(u.trajectory, mobile, ref).run(step=2)
+print(rot.results.timeseries)
+
+Changed in version 2.0.0: Former results are now stored as results.timeseries

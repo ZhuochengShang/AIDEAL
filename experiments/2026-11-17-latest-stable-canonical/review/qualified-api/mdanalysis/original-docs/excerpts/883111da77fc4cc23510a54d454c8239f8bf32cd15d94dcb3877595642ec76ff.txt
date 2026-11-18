@@ -1,0 +1,25 @@
+MDAnalysis.lib.util.atoi(s: str) → int[source]
+
+Convert the leading number part of a string to an integer.
+
+Parameters:
+
+s (str) – The string to convert to an integer.
+
+Returns:
+
+number – The first numeric part of the string converted to an integer. If the string does not start with a number, 0 is returned.
+
+Return type:
+
+int
+
+Examples
+
+>>> from MDAnalysis.lib.util import atoi
+>>> atoi('34f4')
+34
+>>> atoi('foo')
+0
+
+Added in version 2.8.0.

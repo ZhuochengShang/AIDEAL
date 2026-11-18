@@ -1,0 +1,41 @@
+static select_strand_atoms(strand1: ResidueGroup, strand2: ResidueGroup, a1_name: str, a2_name: str, g_name: str = 'G', a_name: str = 'A', u_name: str = 'U', t_name: str = 'T', c_name: str = 'C') → Tuple[List[AtomGroup], List[AtomGroup]][source]
+
+A helper method for nucleic acid pair distance analyses. Used for selecting specific atoms from two strands of nucleic acids.
+
+Parameters:
+
+strand1 (List[Residue]) – The first nucleic acid strand
+
+strand2 (List[Residue]) – The second nucleic acid strand
+
+a1_name (str) – The selection for the purine base of the strand pair
+
+a2_name (str) – the selection for the pyrimidine base of the strand pair
+
+g_name (str (optional)) – Name of Guanine in topology, by default assigned to G
+
+a_name (str (optional)) – Name of Adenine in topology, by default assigned to A
+
+u_name (str (optional)) – Name of Uracil in topology, by default assigned to U
+
+t_name (str (optional)) – Name of Thymine in topology, by default assigned to T
+
+c_name (str (optional)) – Name of Cytosine in topology, by default assigned to C
+
+Returns:
+
+returns a tuple containing two lists of AtomGroups corresponding to the provided selections from each strand.
+
+Return type:
+
+Tuple[List[AtomGroup], List[AtomGroup]]
+
+Raises:
+
+ValueError: – An AtomGroup in one of the strands not a valid nucleic acid
+
+ValueError: – An Residue returns an empty AtomGroup with the provided selection
+
+Added in version 2.7.0.
+
+Changed in version 2.11.0: Residue names are now matched exactly against the full resname rather than only its first character. Users with multi-character residue names (e.g. CHARMM "GUA", "DG") must pass the appropriate names via the keyword arguments.

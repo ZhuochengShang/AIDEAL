@@ -1,0 +1,13 @@
+MDAnalysis.analysis.gnm.generate_grid(positions, cutoff)[source]
+
+Simple grid search.
+
+An alternative to searching the entire list of each atom; divide the structure into cutoff sized boxes This way, for each particle you only need to search the neighbouring boxes to find the particles within the cutoff.
+
+Observed a 6x speed up for a smallish protein with ~300 residues; this should get better with bigger systems.
+
+Parameters:
+
+positions (array) – coordinates of the atoms
+
+cutoff (float) – find particles with distance less than cutoff from each other; the grid will consist of boxes with sides of at least length cutoff

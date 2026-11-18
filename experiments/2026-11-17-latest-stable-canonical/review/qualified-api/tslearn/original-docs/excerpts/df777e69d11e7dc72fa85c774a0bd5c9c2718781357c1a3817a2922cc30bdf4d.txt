@@ -1,0 +1,27 @@
+tslearn.utils.load_time_series_txt(fname)[source]
+
+Loads a time series dataset from disk.
+
+Parameters:
+
+fnamestring
+
+Path to the file from which time series should be read.
+
+Returns:
+
+numpy.ndarray or array of numpy.ndarray
+
+The dataset of time series.
+
+See also
+
+save_time_series_txt
+
+Save time series to disk
+
+Examples
+
+>>> dataset = to_time_series_dataset([[1, 2, 3, 4], [1, 2, 3]])
+>>> save_time_series_txt("tmp-tslearn-test.txt", dataset)
+>>> reloaded_dataset = load_time_series_txt("tmp-tslearn-test.txt")

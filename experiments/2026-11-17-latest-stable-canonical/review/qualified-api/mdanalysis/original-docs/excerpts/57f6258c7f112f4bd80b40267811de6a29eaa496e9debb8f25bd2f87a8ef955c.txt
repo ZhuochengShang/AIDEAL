@@ -1,0 +1,29 @@
+cumulative_overlap(other, i=0, n_components=None)[source]
+
+Compute the cumulative overlap of a vector in a subspace.
+
+This is not symmetric. The cumulative overlap measures the overlap of the chosen vector in this instance, in the other subspace.
+
+Please cite [Yang2008] if you use this function.
+
+Parameters:
+
+other (PCA) – Another PCA class. This must have already been run.
+
+i (int, optional) – The index of eigenvector to be analysed.
+
+n_components (int, optional) – number of components in other to compute for the cumulative overlap. None computes all of them.
+
+Returns:
+
+Cumulative overlap of the chosen vector in this instance to the other subspace. 0 indicates that they are mutually orthogonal, whereas 1 indicates that they are identical.
+
+Return type:
+
+float
+
+See also
+
+cumulative_overlap()
+
+Added in version 1.0.0.

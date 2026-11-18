@@ -1,0 +1,19 @@
+list_datasets()[source]
+
+List datasets (both univariate and multivariate) available in the UCR/UEA archive.
+
+Returns:
+
+list of str:
+
+A list of names of all (univariate and multivariate) dataset names.
+
+Examples
+
+>>> l = UCR_UEA_datasets().list_datasets()
+>>> "PenDigits" in l
+True
+>>> "BeetleFly" in l
+True
+>>> "DatasetThatDoesNotExist" in l
+False

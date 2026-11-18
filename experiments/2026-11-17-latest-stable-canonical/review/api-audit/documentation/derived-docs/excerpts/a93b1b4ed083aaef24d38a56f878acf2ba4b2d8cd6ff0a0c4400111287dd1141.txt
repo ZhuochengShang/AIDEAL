@@ -1,0 +1,23 @@
+get_aux_descriptions(auxnames=None)
+
+Get descriptions to allow reloading the specified auxiliaries.
+
+If no auxnames are provided, defaults to the full list of added auxiliaries.
+
+Passing the resultant description to add_auxiliary() will allow recreation of the auxiliary. e.g., to duplicate all auxiliaries into a second trajectory:
+
+descriptions = trajectory_1.get_aux_descriptions()
+for aux in descriptions:
+    trajectory_2.add_auxiliary(**aux)
+
+Returns:
+
+List of dictionaries of the args/kwargs describing each auxiliary.
+
+Return type:
+
+list
+
+See also
+
+MDAnalysis.auxiliary.base.AuxReader.get_description()

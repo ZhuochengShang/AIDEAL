@@ -1,0 +1,57 @@
+tslearn.metrics.lb_envelope(ts, radius=1, be=None)[source]
+
+Compute time series envelope as required by LB_Keogh.
+
+LB_Keogh was originally presented in [1].
+
+Parameters:
+
+tsarray-like, shape=(sz, d) or (sz,)
+
+Time series for which the envelope should be computed. If shape is (sz,), the time series is assumed to be univariate.
+
+radiusint (default: 1)
+
+Radius to be used for the envelope generation (the envelope at time index i will be generated based on all observations from the time series at indices comprised between i-radius and i+radius).
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+envelope_downarray-like, shape=(sz, d)
+
+Lower-side of the envelope.
+
+envelope_uparray-like, shape=(sz, d)
+
+Upper-side of the envelope.
+
+See also
+
+lb_keogh
+
+Compute LB_Keogh similarity
+
+References
+
+ [1]
+Keogh, E. Exact indexing of dynamic time warping. In International Conference on Very Large Data Bases, 2002. pp 406-417.
+
+Examples
+
+>>> ts1 = [1, 2, 3, 2, 1]
+>>> env_low, env_up = lb_envelope(ts1, radius=1)
+>>> env_low
+array([[1.],
+       [1.],
+       [2.],
+       [1.],
+       [1.]])
+>>> env_up
+array([[2.],
+       [3.],
+       [3.],
+       [3.],
+       [2.]])

@@ -1,0 +1,33 @@
+class MDAnalysis.core.topologyobjects.ImproperDihedral(ix, universe, type=None, guessed=False, order=None)[source]
+
+Improper Dihedral (improper dihedral angle) between four Atom instances.
+
+MDAnalysis treats the improper dihedral angle as the angle between the planes formed by Atoms (1, 2, 3) and (2, 3, 4).
+
+Warning
+
+Definitions of Atom ordering in improper dihedrals can change. Check the definitions here against your software.
+
+Added in version 0.9.0.
+
+Changed in version 0.11.0: Renamed to ImproperDihedral (was Improper_Torsion)
+
+Create a topology object
+
+Parameters:
+
+ix (numpy array) – indices of the Atoms
+
+universe (MDAnalysis.Universe)
+
+type (optional) – Type of the bond
+
+guessed (optional) – If the Bond is guessed
+
+ improper()[source]
+
+Improper dihedral angle in degrees.
+
+Note
+
+The numerical precision is typically not better than 4 decimals (and is only tested to 3 decimals).

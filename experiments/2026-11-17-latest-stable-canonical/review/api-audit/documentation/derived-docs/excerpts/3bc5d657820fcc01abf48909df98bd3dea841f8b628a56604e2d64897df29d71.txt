@@ -1,0 +1,23 @@
+parse_elements(num_per_record, numlines)[source]
+
+Extracts the atomic numbers of each atom and converts to element type
+
+Parameters:
+
+num_per_record (int) – The number of entries for each record in section(unused input)
+
+numlines (int) – The number of lines to be pasred in current section
+
+Returns:
+
+attr – A Elements instance containing the element of each atom as defined in the parm7 file
+
+Return type:
+
+Elements
+
+Note
+
+If the record contains unknown atomic numbers (e.g. <= 0), these will be treated as unknown elements and assigned an empty string value. See issues #2306 and #2651 for more details.
+
+Changed in version 2.0.0: Unrecognised elements will now return a empty string. The parser will no longer attempt to guess the element by default.

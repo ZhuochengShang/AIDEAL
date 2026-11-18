@@ -1,0 +1,521 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-11-17T22:19:49.088811+00:00",
+  "scope": "Read-only fresh official release metadata plus existing runtime receipts; no subject execution, imports, package changes, source/config changes, or cleanup.",
+  "model_calls": 0,
+  "subject_program_runs": 0,
+  "all_six_latest_stable": true,
+  "all_six_stable_commits_match_pins": true,
+  "all_six_recorded_runtime_versions_match_pins": true,
+  "stale_subject_libraries": [],
+  "current_aideal_branch_reported_by_parent": "b9f31cd",
+  "aideal_branch_verified_in_this_subtask": false,
+  "latest_stable_policy": "Official non-prerelease releases and package-index stable releases; default/development branches are not release upgrades.",
+  "libraries": [
+    {
+      "library": "rdpro",
+      "name": "Beast / RDPro",
+      "pinned_version": "0.10.1",
+      "pinned_tag": "beast-0.10.1",
+      "pinned_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+      "pinned_tree": "757142fe21ba53b1388880d6abc7423aff844295",
+      "source_repository": "https://bitbucket.org/bdlabucr/beast.git",
+      "source_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro",
+      "source_lock_recorded_at": "2026-11-17T19:27:20.473841+00:00",
+      "latest_stable_version": "0.10.1",
+      "latest_stable_tag": "beast-0.10.1",
+      "latest_stable_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+      "release_published_at": null,
+      "latest_stable_url": "https://repo.maven.apache.org/maven2/edu/ucr/cs/bdlab/beast/maven-metadata.xml",
+      "version_current": true,
+      "stable_commit_matches_pin": true,
+      "fresh_evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/edu/ucr/cs/bdlab/beast/maven-metadata.xml",
+          "retrieved_at": "2026-11-17T22:17:15.126277+00:00",
+          "sha256": "dc6a685b8e05b297738fad09020a6322b8342ca4e78b4087859b7b0db58bc23d",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/beast_maven.xml"
+        },
+        {
+          "url": "https://api.bitbucket.org/2.0/repositories/bdlabucr/beast/refs/tags?pagelen=100&sort=-target.date",
+          "retrieved_at": "2026-11-17T22:17:15.142438+00:00",
+          "sha256": "c7c927d8f940a9b26f69d252aa8129af40a1df9a8e8a1434b333e320ecafc210",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/beast_tags.json"
+        }
+      ],
+      "recorded_runtime": {
+        "version": "0.10.1",
+        "identity_basis": "Fresh production build from locked stable source; not cached historical Maven module jars.",
+        "source_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+        "artifact": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/rdpro-stable-source-build/artifacts/beast-stable-production-0.10.1.jar",
+          "sha256": "862c98c70924194e4feb7fb72f1b028aea03bd63009fff16ebe4f0f77fbf0625",
+          "bytes": 2872761,
+          "entries": 900
+        },
+        "build_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/rdpro-stable-source-build/build_receipt.json",
+          "sha256": "a840bdc6164f2a971832534c997ade0b9db925bda41f00d4cb08046d219af289",
+          "bytes": 162284
+        },
+        "observed_at": "2026-11-17T20:13:43.079562+00:00",
+        "receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/RUNTIME_READY.json",
+          "bytes": 8759,
+          "sha256": "cf313d10b97940e3e756685428e203380d7aa23689bef88f0b59bce719793fb3"
+        },
+        "native_receipts": [
+          {
+            "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/native-scala-c7a8--summary.json",
+            "bytes": 5045,
+            "sha256": "7300af99e40b0e936ec9fa325b45a1809dbbcaa2f0647d4355e43edeafcb4eab"
+          },
+          {
+            "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/native-java-c7a8--summary.json",
+            "bytes": 2363,
+            "sha256": "ac2b3db90062c644b18d679de67b9392dfd492c6cfa8500f38da515c4c339a58"
+          },
+          {
+            "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/native-java-a6-control-v2--summary.json",
+            "bytes": 3724,
+            "sha256": "e4f8179cdf269dda213f6a6cebf82e3b249e8b0a1dd04bac22db82f596e549b1"
+          }
+        ],
+        "control_note": "Scala controls verified; Java positive in c7a8, corrected negatives in a6 v2. Earlier Java fixture compile failure remains preserved. Old selected-count totals are historical and do not describe the revised Entire Beast surface."
+      },
+      "recorded_runtime_version_matches_pin": true
+    },
+    {
+      "library": "mdanalysis",
+      "name": "MDAnalysis",
+      "pinned_version": "2.11.0",
+      "pinned_tag": "package-2.11.0",
+      "pinned_commit": "ace84dde1363e32aa94cd3f29a42c2f590bd0575",
+      "pinned_tree": "79fa3ad6639df0b58986752f28a7b89908593e35",
+      "source_repository": "https://github.com/MDAnalysis/mdanalysis.git",
+      "source_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis",
+      "source_lock_recorded_at": "2026-11-17T19:28:05.483642+00:00",
+      "latest_stable_version": "2.11.0",
+      "latest_stable_tag": "package-2.11.0",
+      "latest_stable_commit": "ace84dde1363e32aa94cd3f29a42c2f590bd0575",
+      "release_published_at": "2026-10-21T12:48:43Z",
+      "latest_stable_url": "https://github.com/MDAnalysis/mdanalysis/releases/tag/package-2.11.0",
+      "version_current": true,
+      "stable_commit_matches_pin": true,
+      "fresh_evidence": [
+        {
+          "url": "https://api.github.com/repos/MDAnalysis/mdanalysis/releases/latest",
+          "retrieved_at": "2026-11-17T22:17:14.857295+00:00",
+          "sha256": "cca865f102552783da017e77c914b5e89af2b47e104cfbe88a55232f33587f86",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/mdanalysis_github_latest.json"
+        },
+        {
+          "url": "https://pypi.org/pypi/MDAnalysis/json",
+          "retrieved_at": "2026-11-17T22:17:15.281003+00:00",
+          "sha256": "e6cf6f916c42f479913d7c5c7c73bfe66816db500e3512a0752c3df797dacde1",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/mdanalysis_pypi.json"
+        },
+        {
+          "url": "https://api.github.com/repos/MDAnalysis/mdanalysis/commits/package-2.11.0",
+          "retrieved_at": "2026-11-17T22:17:46.662053+00:00",
+          "sha256": "c76c856b30b341b79a009b60f8a3eab2eab0b840d571d79ade6273ea246428ac",
+          "saved_path": "/tmp/aideal-followup-health-2026-11-17/upstream-evidence/mdanalysis_stable_commit.json"
+        }
+      ],
+      "recorded_runtime": {
+        "version": "2.11.0",
+        "module_version": "2.11.0",
+        "import_path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/__init__.py",
+        "python": "3.12.15 (main, Oct  7 2026, 04:52:47) [GCC 8.5.0 20210514 (Red Hat 8.5.0-29)]",
+        "observed_at": "2026-11-17T20:09:47.771039+00:00",
+        "receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/final_wheel_preflight.json",
+          "bytes": 6438,
+          "sha256": "9c444932b912fd8331c046e5dbef819aff38ee1ae7d55819275a7a25df549832"
+        },
+        "provenance_receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/source_wheel_provenance.json",
+          "bytes": 10478,
+          "sha256": "9a03b5fd6723083be555f9fe8627d9e41b7e171ec651e08b93e00ee9cabad532"
+        },
+        "artifact_sha256": [
+          "a5268a6e0215380406af3b579b0814d6cb265fab69819f57517e4ab9b49efdb4"
+        ],
+        "installed_record_sha256": "73628e57d5125e0d7b85b1dfc117ae3b44df4225fb8d6d6b7731bc2c7a9c5099",
+        "source_file_comparison": {
+          "source_files": 195,
+          "installed_files": 196,
+          "matching_files": 195,
+          "changed_files": [],
+          "missing_installed": [],
+          "extra_installed": [
+            "authors.py"
+          ]
+        },
+        "native_control_executed_release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504",
+        "native_control_passed": true
+      },
+      "recorded_runtime_version_matches_pin": true
+    },
+    {
+      "library": "tslearn",
+      "name": "tslearn",
+      "pinned_version": "0.10.0",
+      "pinned_tag": "v0.10.0",
+      "pinned_commit": "f6072f237313d610413359ecc899cdb9038f4b7e",
+      "pinned_tree": "cb5169bbd4ef3d0dc061743e71291eb4298c74a2",
+      "source_repository": "https://github.com/tslearn-team/tslearn.git",
+      "source_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn",
+      "source_lock_recorded_at": "2026-11-17T19:25:26.304200+00:00",
+      "latest_stable_version": "0.10.0",
+      "latest_stable_tag": "v0.10.0",
+      "latest_stable_commit": "f6072f237313d610413359ecc899cdb9038f4b7e",
+      "release_published_at": "2026-10-21T15:13:12Z",
+      "latest_stable_url": "https://github.com/tslearn-team/tslearn/releases/tag/v0.10.0",
+      "version_current": true,
+      "stable_commit_matches_pin": true,
+      "fresh_evidence": [
+        {
+          "url": "https://api.github.com/repos/tslearn-team/tslearn/releases/latest",
+          "retrieved_at": "2026-11-17T22:17:14.857885+00:00",
+          "sha256": "fc6b4ad166f041954f7c5f653c31a8de9c66169b11c386eb06e25dd801099a0e",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/tslearn_github_latest.json"
+        },
+        {
+          "url": "https://pypi.org/pypi/tslearn/json",
+          "retrieved_at": "2026-11-17T22:17:15.381377+00:00",
+          "sha256": "af9910e6924e0f26d7b657b1ac2f5ab421b7a6f442f554bd8c8ff372c848082d",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/tslearn_pypi.json"
+        },
+        {
+          "url": "https://api.github.com/repos/tslearn-team/tslearn/commits/v0.10.0",
+          "retrieved_at": "2026-11-17T22:17:46.662524+00:00",
+          "sha256": "fa49a5b30d182d197de5eace225f2be1287aa9b0a942ca258f519c558f520848",
+          "saved_path": "/tmp/aideal-followup-health-2026-11-17/upstream-evidence/tslearn_stable_commit.json"
+        }
+      ],
+      "recorded_runtime": {
+        "version": "0.10.0",
+        "module_version": "0.10.0",
+        "import_path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/tslearn/__init__.py",
+        "python": "3.12.15 (main, Oct  7 2026, 04:52:47) [GCC 8.5.0 20210514 (Red Hat 8.5.0-29)]",
+        "observed_at": "2026-11-17T20:09:47.771039+00:00",
+        "receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/final_wheel_preflight.json",
+          "bytes": 6438,
+          "sha256": "9c444932b912fd8331c046e5dbef819aff38ee1ae7d55819275a7a25df549832"
+        },
+        "provenance_receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/source_wheel_provenance.json",
+          "bytes": 10478,
+          "sha256": "9a03b5fd6723083be555f9fe8627d9e41b7e171ec651e08b93e00ee9cabad532"
+        },
+        "artifact_sha256": [
+          "793ebbb13ba68cb3fb67b8f6c9a3d7eb2a0ff21a8879f22f47f32b359d6abbbc"
+        ],
+        "installed_record_sha256": "455796026cbfd25a2b36daf25a3b5adf87d71fa9f9b0a20f90285e301daec020",
+        "source_file_comparison": {
+          "source_files": 67,
+          "installed_files": 67,
+          "matching_files": 67,
+          "changed_files": [],
+          "missing_installed": [],
+          "extra_installed": []
+        },
+        "native_control_executed_release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504",
+        "native_control_passed": true
+      },
+      "recorded_runtime_version_matches_pin": true
+    },
+    {
+      "library": "mir_eval",
+      "name": "mir_eval",
+      "pinned_version": "0.8.2",
+      "pinned_tag": "0.8.2",
+      "pinned_commit": "8db0b3812e2032544c1fc00d02d4256cab043f3d",
+      "pinned_tree": "7f9f80392ab86bff2e0e688ed4890a523f07dc6e",
+      "source_repository": "https://github.com/mir-evaluation/mir_eval.git",
+      "source_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval",
+      "source_lock_recorded_at": "2026-11-17T19:26:54.783295+00:00",
+      "latest_stable_version": "0.8.2",
+      "latest_stable_tag": "0.8.2",
+      "latest_stable_commit": "8db0b3812e2032544c1fc00d02d4256cab043f3d",
+      "release_published_at": "2025-02-25T18:09:21Z",
+      "latest_stable_url": "https://github.com/mir-evaluation/mir_eval/releases/tag/0.8.2",
+      "version_current": true,
+      "stable_commit_matches_pin": true,
+      "fresh_evidence": [
+        {
+          "url": "https://api.github.com/repos/mir-evaluation/mir_eval/releases/latest",
+          "retrieved_at": "2026-11-17T22:17:14.858048+00:00",
+          "sha256": "8dc39a925e497c83d0cd85fcb07aa835258fa779da58aeff2da5e16a7c30188f",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/mir_eval_github_latest.json"
+        },
+        {
+          "url": "https://pypi.org/pypi/mir_eval/json",
+          "retrieved_at": "2026-11-17T22:17:15.396334+00:00",
+          "sha256": "fe39ce84191a13b429157ed1bde08bcf61d5f49a8691e9982f1117afa6e25196",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/mir_eval_pypi.json"
+        },
+        {
+          "url": "https://api.github.com/repos/mir-evaluation/mir_eval/commits/0.8.2",
+          "retrieved_at": "2026-11-17T22:17:46.662657+00:00",
+          "sha256": "d6a3c3414304d6bf0509f54e774f6ccda405f43e055730d3252224ebcd2374e4",
+          "saved_path": "/tmp/aideal-followup-health-2026-11-17/upstream-evidence/mir_eval_stable_commit.json"
+        }
+      ],
+      "recorded_runtime": {
+        "version": "0.8.2",
+        "module_version": "0.8.2",
+        "import_path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/mir_eval/__init__.py",
+        "python": "3.12.15 (main, Oct  7 2026, 04:52:47) [GCC 8.5.0 20210514 (Red Hat 8.5.0-29)]",
+        "observed_at": "2026-11-17T20:09:47.771039+00:00",
+        "receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/final_wheel_preflight.json",
+          "bytes": 6438,
+          "sha256": "9c444932b912fd8331c046e5dbef819aff38ee1ae7d55819275a7a25df549832"
+        },
+        "provenance_receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/source_wheel_provenance.json",
+          "bytes": 10478,
+          "sha256": "9a03b5fd6723083be555f9fe8627d9e41b7e171ec651e08b93e00ee9cabad532"
+        },
+        "artifact_sha256": [
+          "114cda33d8e17408c170598e0b36ed0d71ff4a2fee8eaf9e165b58ecf1c87170"
+        ],
+        "installed_record_sha256": "dda1083d9e4c651fcb584e6c2ceafac636dc187facf3746d1c6da2b9c7b67dbb",
+        "source_file_comparison": {
+          "source_files": 19,
+          "installed_files": 19,
+          "matching_files": 19,
+          "changed_files": [],
+          "missing_installed": [],
+          "extra_installed": []
+        },
+        "native_control_executed_release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504",
+        "native_control_passed": true
+      },
+      "recorded_runtime_version_matches_pin": true
+    },
+    {
+      "library": "thumbnailator",
+      "name": "Thumbnailator",
+      "pinned_version": "0.4.21",
+      "pinned_tag": "0.4.21",
+      "pinned_commit": "c9d99613878bbbf1f4d9369585b4cb5352c3b474",
+      "pinned_tree": "bea09a3170bf507338dc89214598e7ac45cdc107",
+      "source_repository": "https://github.com/coobird/thumbnailator.git",
+      "source_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator",
+      "source_lock_recorded_at": "2026-11-17T19:27:36.292934+00:00",
+      "latest_stable_version": "0.4.21",
+      "latest_stable_tag": "0.4.21",
+      "latest_stable_commit": "c9d99613878bbbf1f4d9369585b4cb5352c3b474",
+      "release_published_at": null,
+      "latest_stable_url": "https://repo.maven.apache.org/maven2/net/coobird/thumbnailator/maven-metadata.xml",
+      "version_current": true,
+      "stable_commit_matches_pin": true,
+      "fresh_evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/net/coobird/thumbnailator/maven-metadata.xml",
+          "retrieved_at": "2026-11-17T22:17:15.126558+00:00",
+          "sha256": "c432de7a732a7b7a455faf54ab2e5071d63961add4c14441a438b3296901bc0c",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/thumbnailator_maven.xml"
+        },
+        {
+          "url": "https://api.github.com/repos/coobird/thumbnailator/commits/0.4.21",
+          "retrieved_at": "2026-11-17T22:17:46.662782+00:00",
+          "sha256": "25043a429222e3b50d3217c8184be48827784c13f51f69c8cb6c2e60d78d3f70",
+          "saved_path": "/tmp/aideal-followup-health-2026-11-17/upstream-evidence/thumbnailator_stable_commit.json"
+        }
+      ],
+      "recorded_runtime": {
+        "version": "0.4.21",
+        "artifact": {
+          "bytes": 119152,
+          "old_jar_identical": false,
+          "old_jar_sha256": "f056c5ccd3560f48d65fc622883c0186dd11e93cd8440b1be788708cffc71f33",
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar",
+          "sha256": "9ba7b5a55731932f2aec94e138b0f15166158e5881497dfb555db30836b7d607",
+          "url": "https://repo.maven.apache.org/maven2/net/coobird/thumbnailator/0.4.21/thumbnailator-0.4.21.jar"
+        },
+        "observed_at": "2026-11-17T20:07:03.612160+00:00",
+        "receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/CONFIG_AND_NATIVE_VALIDATION.json",
+          "bytes": 10271,
+          "sha256": "769714c11caa714618a7f923a4f7158e28ff0f6a968b3fb95753324c1c9e696c"
+        },
+        "artifact_receipt": {
+          "path": "/private/tmp/aideal-followup-health-2026-11-17/runtime-receipts/thumbnailator-official-artifacts.json",
+          "bytes": 25932,
+          "sha256": "3f2fc330960764161014acf4abf73a2d817254398226be01e1545b200e85d514"
+        },
+        "native_control_executed_release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504",
+        "native_control_passed": true,
+        "java": "JDK17 runtime; javac --release 8; headless execution"
+      },
+      "recorded_runtime_version_matches_pin": true
+    },
+    {
+      "library": "sedonadb",
+      "name": "SedonaDB",
+      "pinned_version": "0.5.0",
+      "pinned_tag": "apache-sedona-db-0.5.0",
+      "pinned_commit": "751453f04cd6e09842adf3073b2b3dac7d1777bc",
+      "pinned_tree": "6df26bb6d03c599737addb7002b41d37806c1889",
+      "source_repository": "https://github.com/apache/sedona-db.git",
+      "source_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/sedonadb",
+      "source_lock_recorded_at": "2026-11-17T19:31:13.384720+00:00",
+      "latest_stable_version": "0.5.0",
+      "latest_stable_tag": "apache-sedona-db-0.5.0",
+      "latest_stable_commit": "751453f04cd6e09842adf3073b2b3dac7d1777bc",
+      "release_published_at": "2026-10-02T14:49:50Z",
+      "latest_stable_url": "https://github.com/apache/sedona-db/releases/tag/apache-sedona-db-0.5.0",
+      "version_current": true,
+      "stable_commit_matches_pin": true,
+      "fresh_evidence": [
+        {
+          "url": "https://api.github.com/repos/apache/sedona-db/releases/latest",
+          "retrieved_at": "2026-11-17T22:17:15.126048+00:00",
+          "sha256": "0bfd95907d6de2b848d39b181102c6a2cf85d9a3faa6442f53e27ece3226de9f",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/sedonadb_github_latest.json"
+        },
+        {
+          "url": "https://pypi.org/pypi/sedonadb/json",
+          "retrieved_at": "2026-11-17T22:17:15.492664+00:00",
+          "sha256": "5bba132701fcb7bed0ac84c15db8be35298664cb0cdeb848a07e0acd476893ec",
+          "saved_path": "/private/tmp/aideal-followup-health-2026-11-17/upstream-evidence/sedonadb_pypi.json"
+        },
+        {
+          "url": "https://api.github.com/repos/apache/sedona-db/commits/apache-sedona-db-0.5.0",
+          "retrieved_at": "2026-11-17T22:17:47.016694+00:00",
+          "sha256": "ab4275cea8e2713ed0182b321429075cbaf5eb98127d44ffd013610197a7233c",
+          "saved_path": "/tmp/aideal-followup-health-2026-11-17/upstream-evidence/sedonadb_stable_commit.json"
+        }
+      ],
+      "recorded_runtime": {
+        "version": "0.5.0",
+        "module_version": "0.5.0",
+        "python": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+        "launcher_python": "/home/zshan011/anaconda3/bin/python3.10",
+        "extension": {
+          "path": "/home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/lib/python3.10/site-packages/sedonadb/_lib.cpython-310-x86_64-linux-gnu.so",
+          "sha256": "bcf326b353a7882f65127e7a0578afa2bae7183d9b8b1599ad494900c16215ea"
+        },
+        "environment_prefix": "/home/zshan011/apps/aideal/envs/2026-11-16-sedonadb",
+        "official_wheel_sha256": "581bdd1cc8a95c57f3f56aef78d47290b62c6f71768336726ded539dbd42253d",
+        "official_wheel_members_match": true,
+        "runtime_receipt": {
+          "path": "/private/tmp/aideal-followup-health-2026-11-17/runtime-receipts/runtime_identity.json",
+          "bytes": 8620,
+          "sha256": "ad378270ae9069bcb185eb73cca9c420c4f617ab3cba1e55bc40a6a453ee48d3"
+        },
+        "wheel_receipt": {
+          "path": "/private/tmp/aideal-followup-health-2026-11-17/runtime-receipts/official-wheel-identity.json",
+          "bytes": 7040,
+          "sha256": "a9c201b0dc0c8495e67522371876351ccb93dd87940dcaa6671ad0ef5378e7eb"
+        },
+        "native_control_receipt": {
+          "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/sedonadb-CONTROL_RECEIPT.json",
+          "bytes": 5623,
+          "sha256": "1bf7aa072f98b9d7294147bcabd3ae32276e467ec47747ea454913a552d9b96e"
+        },
+        "native_control_passed": true,
+        "control_timestamp": "Receipt has no internal timestamp; included in 2026-11-17 PRELAUNCH_CHECKS snapshot.",
+        "identity_basis": "Official wheel payload identity; no claim this binary was built locally from pinned source."
+      },
+      "recorded_runtime_version_matches_pin": true
+    }
+  ],
+  "source_lock_receipt": {
+    "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/operator/cluster/source-provenance/STABLE_SOURCE_MATERIALIZATION.json",
+    "bytes": 12937,
+    "sha256": "24358b7be035c46a2bffdeac83e3d97c45bbc6a0f6057b012196570a45744d66"
+  },
+  "current_status": {
+    "status": "requires_api_surface_revision",
+    "new_study_model_calls": 0,
+    "launch_authorized": false,
+    "instruction": "User requires review before any new run; do not create approval file or start supervisor.",
+    "inventory_review": {
+      "scope": "Entire Beast repository, reported by module; all six libraries",
+      "name_policy": "Keep distinct owners; largest-parameter overload only within the same API",
+      "issues": [
+        "Unresolved source classification was incorrectly treated as sufficient reason to remove APIs",
+        "Python extension/re-export/inherited surface is not complete",
+        "Source Sphinx stubs and tslearn dataset pollution understate or obscure original documentation",
+        "External dependency APIs require defining-source provenance filtering"
+      ],
+      "generation_allowed": false,
+      "evaluation_allowed": false
+    }
+  },
+  "current_status_receipt": {
+    "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/operator/cluster/REVIEW_STATUS.json",
+    "bytes": 864,
+    "sha256": "a1fc7837fefefacd42d2a44ac6efe69ed3f1f3831cb2da2b0b09de5dbcbcd716"
+  },
+  "historical_readiness_receipt": {
+    "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/audit/latest-readiness/REVIEW_STATUS.json",
+    "status": "READY_FOR_USER_REVIEW",
+    "selected_total": 1695,
+    "interpretation": "Historical snapshot superseded for launch/API-surface status by operator/cluster/REVIEW_STATUS.json; 1695 is not a current approved final API count."
+  },
+  "runtime_receipt_mirror_notes": [
+    {
+      "name": "source_wheel_provenance.json",
+      "local_sha256": "9a03b5fd6723083be555f9fe8627d9e41b7e171ec651e08b93e00ee9cabad532",
+      "recorded_cluster_sha256": "a7c0212a18b94ed5844a5dfc27a2dd1266804ba030bd0fb5783458355bab6c55",
+      "byte_identical": false,
+      "exact_except_one_added_final_newline": true
+    },
+    {
+      "name": "final_wheel_preflight.json",
+      "local_sha256": "9c444932b912fd8331c046e5dbef819aff38ee1ae7d55819275a7a25df549832",
+      "recorded_cluster_sha256": "a30dedb94e5ea8a7375a00f6bbfddc741cd0cc15c3f6aeabc2562ee028780c70",
+      "byte_identical": false,
+      "exact_except_one_added_final_newline": true
+    },
+    {
+      "name": "selected_api_dependencies.json",
+      "local_sha256": "e28afc6e3323edbb0384f25dfe68ad3b37e6e3aac4578adec86868029f32dbe4",
+      "recorded_cluster_sha256": "1234ba2ef1b0505ece1a47b824fd10399712b1e7ec43833d8b5bb4a539f1448f",
+      "byte_identical": false,
+      "exact_except_one_added_final_newline": true
+    }
+  ],
+  "runtime_environment_freeze": {
+    "path": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/final-pip-freeze.txt",
+    "sha256": "04db499dd2e8fa8125c9c5d0206d34d3948a9dc2e269917c526e1dbaacd62679",
+    "bytes": 1393
+  },
+  "optional_dependencies_not_installed_at_preflight": [
+    "tensorflow",
+    "stumpy",
+    "gemmi",
+    "netCDF4",
+    "chemfiles",
+    "parmed",
+    "pytng",
+    "imdclient",
+    "waterdynamics",
+    "pathsimanalysis",
+    "mdahole2",
+    "mdaencore"
+  ],
+  "unknowns_and_limits": [
+    "Runtime evidence is historical, observed on 2026-11-17. Actual installed bytes were not rehashed or executed now; receipt review cannot guarantee the live environment has not changed.",
+    "Scientific and Thumbnailator native controls executed c7a8f0af0504; saved native-code equivalence supports a6e8bb84fe32 only. No inference of executed runtime checks on current b9f31cd.",
+    "Beast old selected 708 and old all-library 1695 counts are withdrawn as final API-surface counts. Origin, owner, extension/re-export/inherited surface and document-context revisions remain gating work.",
+    "Optional dependency and format availability is limited to recorded controls. No network-dependent MDAnalysis from_PDB control was performed. Dependency latest-version auditing is outside this six-subject-library scope.",
+    "Thumbnailator has no GitHub latest release object (HTTP404); current stable is independently established by official Maven release metadata and exact source tag.",
+    "SedonaDB source lock retains four gitlinks without initialized submodules; official wheel identity is separate from source materialization.",
+    "Current generation and evaluation remain prohibited by the review hold. No approvals or runs were created."
+  ],
+  "network_failures": [
+    {
+      "name": "thumbnailator_github_latest",
+      "url": "https://api.github.com/repos/coobird/thumbnailator/releases/latest",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    }
+  ]
+}

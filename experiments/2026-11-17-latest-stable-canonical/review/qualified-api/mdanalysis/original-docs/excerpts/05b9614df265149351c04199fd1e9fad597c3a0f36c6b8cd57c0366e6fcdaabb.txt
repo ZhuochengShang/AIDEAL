@@ -1,0 +1,196 @@
+class MDAnalysis.analysis.rms.RMSF(atomgroup, **kwargs)[source]
+
+Calculate RMSF of given atoms across a trajectory.
+
+Note
+
+No RMSD-superposition is performed; it is assumed that the user is providing a trajectory where the protein of interest has been structurally aligned to a reference structure (see the Examples section below). The protein also has be whole because periodic boundaries are not taken into account.
+
+Run the analysis with RMSF.run(), which stores the results in the array RMSF.results.rmsf.
+
+Parameters:
+
+atomgroup (AtomGroup) – Atoms for which RMSF is calculated
+
+verbose (bool (optional)) – Show detailed progress of the calculation if set to True; the default is False.
+
+Raises:
+
+ValueError – raised if negative values are calculated, which indicates that a numerical overflow or underflow occured
+
+Notes
+
+The root mean square fluctuation of an atom \(i\) is computed as the time average
+
+ \[\rho_i = \sqrt{\left\langle (\mathbf{x}_i - \langle\mathbf{x}_i\rangle)^2 \right\rangle}\]
+
+No mass weighting is performed.
+
+This method implements an algorithm for computing sums of squares while avoiding overflows and underflows [1].
+
+Examples
+
+In this example we calculate the residue RMSF fluctuations by analyzing the \(\text{C}_\alpha\) atoms. First we need to fit the trajectory to the average structure as a reference. That requires calculating the average structure first. Because we need to analyze and manipulate the same trajectory multiple times, we are going to load it into memory using the MemoryReader. (If your trajectory does not fit into memory, you will need to write out intermediate trajectories to disk or generate an in-memory universe that only contains, say, the protein):
+
+import MDAnalysis as mda
+from MDAnalysis.analysis import align
+
+from MDAnalysis.tests.datafiles import TPR, XTC
+
+u = mda.Universe(TPR, XTC, in_memory=True)
+protein = u.select_atoms("protein")
+
+# 1) the current trajectory contains a protein split across
+#    periodic boundaries, so we first make the protein whole and
+#    center it in the box using on-the-fly transformations
+import MDAnalysis.transformations as trans
+
+not_protein = u.select_atoms('not protein')
+transforms = [trans.unwrap(protein),
+              trans.center_in_box(protein, wrap=True),
+              trans.wrap(not_protein)]
+u.trajectory.add_transformations(*transforms)
+
+# 2) fit to the initial frame to get a better average structure
+#    (the trajectory is changed in memory)
+prealigner = align.AlignTraj(u, u, select="protein and name CA",
+                             in_memory=True).run()
+
+# 3) reference = average structure
+ref_coordinates = u.trajectory.timeseries(asel=protein).mean(axis=1)
+# make a reference structure (need to reshape into a 1-frame
+# "trajectory")
+reference = mda.Merge(protein).load_new(ref_coordinates[:, None, :],
+                                        order="afc")
+
+We created a new universe reference that contains a single frame with the averaged coordinates of the protein. Now we need to fit the whole trajectory to the reference by minimizing the RMSD. We use MDAnalysis.analysis.align.AlignTraj:
+
+aligner = align.AlignTraj(u, reference,
+                          select="protein and name CA",
+                          in_memory=True).run()
+
+The trajectory is now fitted to the reference (the RMSD is stored as aligner.results.rmsd for further inspection). Now we can calculate the RMSF:
+
+from MDAnalysis.analysis.rms import RMSF
+
+calphas = protein.select_atoms("name CA")
+rmsfer = RMSF(calphas, verbose=True).run()
+
+and plot:
+
+import matplotlib.pyplot as plt
+
+plt.plot(calphas.resnums, rmsfer.results.rmsf)
+
+References
+
+Added in version 0.11.0.
+
+Changed in version 0.16.0: refactored to fit with AnalysisBase API
+
+Deprecated since version 0.16.0: the keyword argument quiet is deprecated in favor of verbose.
+
+Changed in version 0.17.0: removed unused keyword weights
+
+Changed in version 1.0.0: Support for the start, stop, and step keywords has been removed. These should instead be passed to RMSF.run().
+
+ results.rmsf
+
+Results are stored in this N-length numpy.ndarray array, giving RMSFs for each of the given atoms.
+
+Added in version 2.0.0.
+
+ rmsf
+
+Alias to the results.rmsf attribute.
+
+Deprecated since version 2.0.0: Will be removed in MDAnalysis 3.0.0. Please use results.rmsf instead.
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.
+
+ property parallelizable
+
+Boolean mark showing that a given class can be parallelizable with split-apply-combine procedure. Namely, if we can safely distribute _single_frame() to multiple workers and then combine them with a proper _conclude() call. If set to False, no backends except for serial are supported.
+
+Note
+
+If you want to check parallelizability of the whole class, without explicitly creating an instance of the class, see _analysis_algorithm_is_parallelizable. Note that you setting it to other value will break things if the algorithm behind the analysis is not trivially parallelizable.
+
+Returns:
+
+if a given AnalysisBase subclass instance is parallelizable with split-apply-combine, or not
+
+Return type:
+
+bool
+
+Added in version 2.8.0.
+
+ run(start: int = None, stop: int = None, step: int = None, frames: Iterable = None, verbose: bool = None, n_workers: int = None, n_parts: int = None, backend: str | BackendBase = None, *, unsupported_backend: bool = False, progressbar_kwargs=None)
+
+Perform the calculation
+
+Parameters:
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory. Boolean arrays, including NumPy arrays, can be used as masks for fancy indexing. frames can only be used instead of start, stop, and step. Setting both frames and at least one of start, stop, step to a non-default value will raise a ValueError.
+
+Added in version 2.2.0.
+
+verbose (bool, optional) – Turn on verbosity
+
+progressbar_kwargs (dict, optional) – ProgressBar keywords with custom parameters regarding progress bar position, etc; see MDAnalysis.lib.log.ProgressBar for full list. Available only for backend='serial'
+
+backend (Union[str, BackendBase], optional) –
+By default, performs calculations in a serial fashion. Otherwise, user can choose a backend: str is matched to a builtin backend (one of serial, multiprocessing and dask), or a MDAnalysis.analysis.results.BackendBase subclass.
+
+Added in version 2.8.0.
+
+n_workers (int) –
+positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+Added in version 2.8.0.
+
+n_parts (int, optional) –
+number of parts to split computations across. Can be more than number of workers.
+
+Added in version 2.8.0.
+
+unsupported_backend (bool, optional) –
+if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Added in version 2.8.0.
+
+Changed in version 2.2.0: Added ability to analyze arbitrary frames by passing a list of frame indices in the frames keyword argument.
+
+Changed in version 2.5.0: Add progressbar_kwargs parameter, allowing to modify description, position etc of tqdm progressbars
+
+Changed in version 2.8.0: Introduced backend, n_workers, n_parts and unsupported_backend keywords, and refactored the method logic to support parallelizable execution.
+
+Changed in version 2.11.0: NumPy boolean arrays passed to frames are now interpreted as boolean masks.

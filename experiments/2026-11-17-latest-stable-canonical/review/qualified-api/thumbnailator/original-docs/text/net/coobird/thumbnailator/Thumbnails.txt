@@ -1,0 +1,527 @@
+Thumbnails (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator
+Class Thumbnails
+java.lang.Object
+net.coobird.thumbnailator.Thumbnails
+public final class
+Thumbnails
+extends
+Object
+Provides a fluent interface to create thumbnails.
+This is the main entry point for creating thumbnails with Thumbnailator.
+By using the Thumbnailator's fluent interface, it is possible to write
+thumbnail generation code which resembles written English.
+Usage:
+The following example code demonstrates how to use the fluent interface
+to create a thumbnail from multiple files from a directory, resizing them to
+a maximum of 200 pixels by 200 pixels while preserving the aspect ratio of
+the original, then saving the resulting thumbnails as JPEG images with file
+names having
+thumbnail.
+appended to the beginning of the file name.
+Thumbnails.of(directory.listFiles())
+.size(200, 200)
+.outputFormat("jpeg")
+.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+// English: "Make thumbnails of files in the directory, with a size of 200x200,
+with output format of JPEG, and save them as files while renaming
+the files to be prefixed with a 'thumbnail.'."
+For more examples, please visit the
+Thumbnailator
+project page.
+Important Implementation Notes
+Upon calling one of the
+Thumbnails.of(...)
+methods,
+in the
+current implementation
+, an instance of an inner class of this class is
+returned. In most cases, the returned instance should not be used by
+storing it in a local variable, as changes in the internal implementation
+could break code in the future.
+As a rule of thumb,
+always method chain from the
+Thumbnails.of
+all the way until the output method (e.g.
+toFile
+,
+asBufferedImage
+,
+etc.) is called without breaking them down into single statements.
+See the "Usage" section above for the intended use of the Thumbnailator's
+fluent interface.
+Unintended Use:
+// Unintended use - not recommended!
+Builder<File> instance = Thumbnails.of("path/to/image");
+instance.size(200, 200);
+instance.asFiles("path/to/thumbnail");
+Author:
+coobird
+Nested Class Summary
+static class
+Thumbnails.Builder
+<
+T
+>
+The builder interface for Thumbnailator to set up the thumbnail
+generation task.
+Method Summary
+static
+Thumbnails.Builder
+<
+File
+>
+fromFilenames
+(
+Iterable
+<
+String
+> files)
+Indicate to make thumbnails for images with the specified filenames.
+static
+Thumbnails.Builder
+<
+File
+>
+fromFiles
+(
+Iterable
+<
+File
+> files)
+Indicate to make thumbnails from the specified
+File
+s.
+static
+Thumbnails.Builder
+<
+BufferedImage
+>
+fromImages
+(
+Iterable
+<
+BufferedImage
+> images)
+Indicate to make thumbnails from the specified
+BufferedImage
+s.
+static
+Thumbnails.Builder
+<
+InputStream
+>
+fromInputStreams
+(
+Iterable
+<? extends
+InputStream
+> inputStreams)
+Indicate to make thumbnails for images obtained from the specified
+InputStream
+s.
+static
+Thumbnails.Builder
+<
+URL
+>
+fromURLs
+(
+Iterable
+<
+URL
+> urls)
+Indicate to make thumbnails for images with the specified
+URL
+s.
+static
+Thumbnails.Builder
+<
+BufferedImage
+>
+of
+(
+BufferedImage
+... images)
+Indicate to make thumbnails from the specified
+BufferedImage
+s.
+static
+Thumbnails.Builder
+<
+File
+>
+of
+(
+File
+... files)
+Indicate to make thumbnails from the specified
+File
+s.
+static
+Thumbnails.Builder
+<? extends
+InputStream
+>
+of
+(
+InputStream
+... inputStreams)
+Indicate to make thumbnails from the specified
+InputStream
+s.
+static
+Thumbnails.Builder
+<
+File
+>
+of
+(
+String
+... files)
+Indicate to make thumbnails for images with the specified filenames.
+static
+Thumbnails.Builder
+<
+URL
+>
+of
+(
+URL
+... urls)
+Indicate to make thumbnails from the specified
+URL
+s.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+of
+public static
+Thumbnails.Builder
+<
+File
+>
+of
+(
+String
+... files)
+Indicate to make thumbnails for images with the specified filenames.
+Parameters:
+files
+- File names of image files for which thumbnails
+are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty array.
+of
+public static
+Thumbnails.Builder
+<
+File
+>
+of
+(
+File
+... files)
+Indicate to make thumbnails from the specified
+File
+s.
+Parameters:
+files
+-
+File
+objects of image files for which thumbnails
+are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty array.
+of
+public static
+Thumbnails.Builder
+<
+URL
+>
+of
+(
+URL
+... urls)
+Indicate to make thumbnails from the specified
+URL
+s.
+Parameters:
+urls
+-
+URL
+objects of image files for which thumbnails
+are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty array.
+of
+public static
+Thumbnails.Builder
+<? extends
+InputStream
+>
+of
+(
+InputStream
+... inputStreams)
+Indicate to make thumbnails from the specified
+InputStream
+s.
+Note that the
+InputStream.close()
+method will not be called
+upon reading the source image from the
+InputStream
+.
+Parameters:
+inputStreams
+-
+InputStream
+s which provide the images
+for which thumbnails are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty array.
+of
+public static
+Thumbnails.Builder
+<
+BufferedImage
+>
+of
+(
+BufferedImage
+... images)
+Indicate to make thumbnails from the specified
+BufferedImage
+s.
+Parameters:
+images
+-
+BufferedImage
+s for which thumbnails
+are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty array.
+fromFilenames
+public static
+Thumbnails.Builder
+<
+File
+>
+fromFilenames
+(
+Iterable
+<
+String
+> files)
+Indicate to make thumbnails for images with the specified filenames.
+Parameters:
+files
+- File names of image files for which thumbnails
+are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty collection.
+Since:
+0.3.1
+fromFiles
+public static
+Thumbnails.Builder
+<
+File
+>
+fromFiles
+(
+Iterable
+<
+File
+> files)
+Indicate to make thumbnails from the specified
+File
+s.
+Parameters:
+files
+-
+File
+objects of image files for which thumbnails
+are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty collection.
+Since:
+0.3.1
+fromURLs
+public static
+Thumbnails.Builder
+<
+URL
+>
+fromURLs
+(
+Iterable
+<
+URL
+> urls)
+Indicate to make thumbnails for images with the specified
+URL
+s.
+Parameters:
+urls
+- URLs of the images for which thumbnails
+are to be produced.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty collection.
+Since:
+0.3.1
+fromInputStreams
+public static
+Thumbnails.Builder
+<
+InputStream
+>
+fromInputStreams
+(
+Iterable
+<? extends
+InputStream
+> inputStreams)
+Indicate to make thumbnails for images obtained from the specified
+InputStream
+s.
+Note that the
+InputStream.close()
+method will not be called
+upon reading the source image from the
+InputStream
+.
+Parameters:
+inputStreams
+-
+InputStream
+s which provide images for
+which thumbnails are to be produced.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty collection.
+Since:
+0.3.1
+fromImages
+public static
+Thumbnails.Builder
+<
+BufferedImage
+>
+fromImages
+(
+Iterable
+<
+BufferedImage
+> images)
+Indicate to make thumbnails from the specified
+BufferedImage
+s.
+Parameters:
+images
+-
+BufferedImage
+s for which thumbnails
+are to be produced for.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty collection.
+Since:
+0.3.1
+Copyright © 2025. All rights reserved.

@@ -1,0 +1,25 @@
+translate(t)
+
+Apply translation vector t to the selection’s coordinates.
+
+Atom coordinates are translated in-place.
+
+Parameters:
+
+t (array_like) – vector to translate coordinates with
+
+Return type:
+
+self
+
+See also
+
+MDAnalysis.lib.transformations
+
+module of all coordinate transforms
+
+Notes
+
+The method applies a translation to the AtomGroup from current coordinates \(\mathbf{x}\) to new coordinates \(\mathbf{x}'\):
+
+ \[\mathbf{x}' = \mathbf{x} + \mathbf{t}\]

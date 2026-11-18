@@ -1,0 +1,218 @@
+class tslearn.preprocessing.TimeSeriesImputer(method: str | Callable = 'mean', value: float | None = nan, keep_trailing_nans: bool = True)[source]
+
+Missing value imputer for time series.
+
+Missing values (nans) are replaced according to the chosen imputation method. There might be cases where the computation of missing values is impossible, in which case they are left unchanged (ex: mean of all nans, ffill for the first value… ).
+
+The imputer can be configured so that trailing ‘empty’ samples (nans for all features) are unprocessed by setting the keep_trailing_nans parameter to True. This might be handy when dealing with variable length time series datasets formatted with to_time_series_dataset, where time series are padded with ‘empty’ samples to match the length of the longest time serie. This option aims at preserving the variable length nature of the input dataset.
+
+Time series are processed sequentially by the transform() and fit_transform() methods, and gathered using to_time_series_dataset, effectively padding if needed.
+
+Parameters:
+
+method{‘mean’, ‘median’, ‘ffill’, ‘bfill’, ‘linear’, ‘constant’, Callable}(default: ‘mean’)
+
+The method used to compute missing values.
+
+When using linear imputation, starting nans will be replaced with first non-null value and ending nans will be replaced with last non-null value ( except for ‘empty’ samples when keep_trailing_nans set to True).
+
+When using a Callable, the function should take an array-like representing a timeseries with missing values as input parameter and should return the transformed timeseries.
+
+value: float (default: nan)
+
+The value to replace missing values with. Only used when method is constant.
+
+keep_trailing_nans: bool (default: True)
+
+Whether trailing samples with nans on all dimensions should be considered padding for variable length time series and kept unprocessed. When set to False , trailing ‘empty’ samples will be imputed.
+
+Notes
+
+This method allows datasets of variable lenght time series. While most missing values should be replaced, there might still be nan values in the resulting dataset representing padding when used with variable length time series, or uncomputable data.
+
+Examples
+
+>>> TimeSeriesImputer().fit_transform([[0, numpy.nan, 6]])
+array([[[0.],
+        [3.],
+        [6.]]])
+>>> # Dealing with variable length dataset
+>>> TimeSeriesImputer().fit_transform([[numpy.nan, 3, 6], [numpy.nan, 3]])
+array([[[4.5],
+        [3. ],
+        [6. ]],
+
+       [[3. ],
+        [3. ],
+        [nan]]])
+>>> # Process trailing empty samples
+>>> TimeSeriesImputer('ffill', keep_trailing_nans=False).fit_transform(
+... [[[1, 2], [2, numpy.nan]], [[3, 4], [numpy.nan, numpy.nan]]]
+... )
+array([[[1., 2.],
+        [2., 2.]],
+
+       [[3., 4.],
+        [3., 4.]]])
+>>> # Uncomputable values are left unchanged
+>>> TimeSeriesImputer('ffill').fit_transform([[numpy.nan, 3, 6]])
+array([[[nan],
+        [ 3.],
+        [ 6.]]])
+
+Methods
+
+fit(X[, y])
+ |
+A dummy method such that it complies to the sklearn requirements.
+ |
+
+fit_transform(X[, y])
+ |
+Fit to data, then transform it.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+set_output(*[, transform])
+ |
+Set output container.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+transform(X[, y])
+ |
+Fit to data, then transform it.
+ |
+
+ fit(X, y=None, **kwargs)[source]
+
+A dummy method such that it complies to the sklearn requirements. Since this method is completely stateless, it just returns itself.
+
+Parameters:
+
+X
+
+Ignored
+
+Returns:
+
+self
+
+ fit_transform(X, y=None, **kwargs)[source]
+
+Fit to data, then transform it.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be imputed.
+
+Returns:
+
+numpy.ndarray
+
+Imputed time series dataset.
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ transform(X, y=None, **kwargs)[source]
+
+Fit to data, then transform it.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be imputed
+
+Returns:
+
+numpy.ndarray
+
+Imputed time series dataset

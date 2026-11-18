@@ -1,0 +1,27 @@
+class MDAnalysis.core.topologyattrs.Resindices[source]
+
+Globally unique resindices for each residue in the group.
+
+If the group is an AtomGroup, then this gives the resindex for each atom in the group. This unambiguously determines each atom’s residue membership. Resetting these values changes the residue membership of the atoms.
+
+If the group is a ResidueGroup or SegmentGroup, then this gives the resindices of each residue represented in the group in a 1-D array, in the order of the elements in that group.
+
+ dtype
+
+alias of int
+
+ get_atoms(ag)[source]
+
+Get atom attributes for a given AtomGroup
+
+ get_residues(rg)[source]
+
+Get residue attributes for a given ResidueGroup
+
+ get_segments(sg)[source]
+
+Get segment attributes for a given SegmentGroup
+
+ set_residues(rg, values)[source]
+
+Set residue attributes for a given ResidueGroup

@@ -1,0 +1,31 @@
+intersection(other)
+
+Group of elements which are in both this Group and another
+
+This method removes duplicate elements and sorts the result. It is synomymous to the & operator.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the common elements of self and other, without duplicate elements
+
+Return type:
+
+Group
+
+Example
+
+Intersections can be used when the select atoms string would become too complicated. For example to find the water atoms which are within 4.0A of two segments:
+
+>>> shell1 = u.select_atoms('resname SOL and around 4.0 segid 1')
+>>> shell2 = u.select_atoms('resname SOL and around 4.0 segid 2')
+>>> common = shell1 & shell2  # or shell1.intersection(shell2)
+
+See also
+
+union
+
+Added in version 0.16.

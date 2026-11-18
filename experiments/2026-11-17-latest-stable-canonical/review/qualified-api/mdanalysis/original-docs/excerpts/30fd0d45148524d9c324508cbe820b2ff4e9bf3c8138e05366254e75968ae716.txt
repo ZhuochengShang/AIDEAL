@@ -1,0 +1,99 @@
+class MDAnalysis.coordinates.TRJ.NCDFReader(filename, n_atoms=None, mmap=None, **kwargs)[source]
+
+Reader for AMBER NETCDF format (version 1.0).
+
+AMBER binary trajectories are automatically recognised by the file extension “.ncdf”.
+
+The number of atoms (n_atoms) does not have to be provided as it can be read from the trajectory. The trajectory reader can randomly access frames and therefore supports direct indexing (with 0-based frame indices) and full-feature trajectory iteration, including slicing.
+
+Velocities are autodetected and read into the Timestep._velocities attribute.
+
+Forces are autodetected and read into the Timestep._forces attribute.
+
+Periodic unit cell information is detected and used to populate the Timestep.dimensions attribute. (If no unit cell is available in the trajectory, then Timestep.dimensions will return [0,0,0,0,0,0]).
+
+Current limitations:
+
+only trajectories with time in ps and lengths in Angstroem are processed
+
+The NCDF reader uses scipy.io.netcdf and therefore scipy must be installed. It supports the mmap keyword argument (when reading): mmap=True is memory efficient and directly maps the trajectory on disk to memory (using the mmap); mmap=False may consume large amounts of memory because it loads the whole trajectory into memory but it might be faster. The default is mmap=None and then default behavior of scipy.io.netcdf_file prevails, i.e. True when filename is a file name, False when filename is a file-like object.
+
+See also
+
+NCDFWriter
+
+Changed in version 0.10.0: Added ability to read Forces
+
+Changed in version 0.11.0: Frame labels now 0-based instead of 1-based. kwarg delta renamed to dt, for uniformity with other Readers.
+
+Changed in version 0.17.0: Uses scipy.io.netcdf and supports the mmap kwarg.
+
+Changed in version 0.20.0: Now reads scale_factors for all expected AMBER convention variables. Timestep variables now adhere standard MDAnalysis units, with lengths of angstrom, time of ps, velocity of angstrom/ps and force of kJ/(mol*Angstrom). It is noted that with 0.19.2 and earlier versions, velocities would have often been reported in values of angstrom/AKMA time units instead (Issue #2323).
+
+Changed in version 1.0.0: Support for reading degrees units for cell_angles has now been removed (Issue #2327)
+
+Changed in version 2.0.0: Now use a picklable scipy.io.netcdf_file– NCDFPicklable. Reading of dt now defaults to 1.0 ps if dt cannot be extracted from the first two frames of the trajectory. Writer() now also sets convert_units, velocities, forces and scale_factor information for the NCDFWriter.
+
+ Writer(filename, **kwargs)[source]
+
+Returns a NCDFWriter for filename with the same parameters as this NCDF.
+
+All values can be changed through keyword arguments.
+
+Parameters:
+
+filename (str) – filename of the output NCDF trajectory
+
+n_atoms (int (optional)) – number of atoms
+
+remarks (str (optional)) – string that is stored in the title field
+
+convert_units (bool (optional)) – True: units are converted to the AMBER base format
+
+velocities (bool (optional)) – Write velocities into the trajectory
+
+forces (bool (optional)) – Write forces into the trajectory
+
+scale_time (float (optional)) – Scale factor for time units
+
+scale_cell_lengths (float (optional)) – Scale factor for cell lengths
+
+scale_cell_angles (float (optional)) – Scale factor for cell angles
+
+scale_coordinates (float (optional)) – Scale factor for coordinates
+
+scale_velocities (float (optional)) – Scale factor for velocities
+
+scale_forces (float (optional)) – Scale factor for forces
+
+Return type:
+
+NCDFWriter
+
+ close()[source]
+
+Close trajectory; any further access will raise an IOError.
+
+Note
+
+The underlying scipy.io.netcdf module may open netcdf files with mmap if mmap=True was set. Hence any reference to an array must be removed before the file can be closed.
+
+ static parse_n_atoms(filename, **kwargs)[source]
+
+Read the coordinate file and deduce the number of atoms
+
+Returns:
+
+n_atoms – the number of atoms in the coordinate file
+
+Return type:
+
+int
+
+Raises:
+
+NotImplementedError – when the number of atoms can’t be deduced
+
+ units = {'force': 'kcal/(mol*Angstrom)', 'length': 'Angstrom', 'time': 'ps', 'velocity': 'Angstrom/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

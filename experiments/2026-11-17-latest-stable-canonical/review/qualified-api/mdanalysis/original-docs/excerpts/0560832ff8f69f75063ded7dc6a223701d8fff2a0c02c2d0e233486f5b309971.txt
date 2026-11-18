@@ -1,0 +1,21 @@
+MDAnalysis.lib.util.group_same_or_consecutive_integers(arr)[source]
+
+Split an array of integers into a list of same or consecutive sequences.
+
+Parameters:
+
+arr (numpy.ndarray)
+
+Returns:
+
+list of numpy.ndarray
+
+Examples
+
+>>> import numpy as np
+
+>>> arr = np.array([ 2, 3, 4, 7, 8, 9, 10, 11, 15, 16])
+
+>>> group_same_or_consecutive_integers(arr)
+
+[array([2, 3, 4]), array([ 7, 8, 9, 10, 11]), array([15, 16])]

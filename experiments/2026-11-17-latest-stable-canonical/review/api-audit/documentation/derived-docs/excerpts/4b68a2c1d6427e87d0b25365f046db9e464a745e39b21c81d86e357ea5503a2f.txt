@@ -1,0 +1,172 @@
+class MDAnalysis.analysis.lineardensity.LinearDensity(select, grouping='atoms', binsize=0.25, **kwargs)[source]
+
+Linear density profile
+
+Parameters:
+
+select (AtomGroup) – any atomgroup
+
+grouping (str {'atoms', 'residues', 'segments', 'fragments'}) – Density profiles will be computed either on the atom positions (in the case of ‘atoms’) or on the center of mass of the specified grouping unit (‘residues’, ‘segments’, or ‘fragments’).
+
+binsize (float) – Bin width in Angstrom used to build linear density histograms. Defines the resolution of the resulting density profile (smaller –> higher resolution)
+
+verbose (bool, optional) – Show detailed progress of the calculation if set to True
+
+ results.x.dim
+
+index of the [xyz] axes
+
+Type:
+
+int
+
+ results.x.mass_density
+
+mass density in \(g \cdot cm^{-3}\) in [xyz] direction
+
+Type:
+
+numpy.ndarray
+
+ results.x.mass_density_stddev
+
+standard deviation of the mass density in [xyz] direction
+
+Type:
+
+numpy.ndarray
+
+ results.x.charge_density
+
+charge density in \(\mathrm{e} \cdot mol \cdot cm^{-3}\) in [xyz] direction
+
+Type:
+
+numpy.ndarray
+
+ results.x.charge_density_stddev
+
+standard deviation of the charge density in [xyz] direction
+
+Type:
+
+numpy.ndarray
+
+ results.x.pos
+
+Alias to the results.x.mass_density attribute.
+
+Deprecated since version 2.2.0: Will be removed in MDAnalysis 3.0.0. Please use results.x.mass_density instead.
+
+Type:
+
+numpy.ndarray
+
+ results.x.pos_std
+
+Alias to the results.x.mass_density_stddev attribute.
+
+Deprecated since version 2.2.0: Will be removed in MDAnalysis 3.0.0. Please use results.x.mass_density_stddev instead.
+
+Type:
+
+numpy.ndarray
+
+ results.x.char
+
+Alias to the results.x.charge_density attribute.
+
+Deprecated since version 2.2.0: Will be removed in MDAnalysis 3.0.0. Please use results.x.charge_density instead.
+
+Type:
+
+numpy.ndarray
+
+ results.x.char_std
+
+Alias to the results.x.charge_density_stddev attribute.
+
+Deprecated since version 2.2.0: Will be removed in MDAnalysis 3.0.0. Please use results.x.charge_density_stddev instead.
+
+Type:
+
+numpy.ndarray
+
+ results.x.slice_volume
+
+volume of bin in [xyz] direction
+
+Type:
+
+float
+
+ results.x.hist_bin_edges
+
+edges of histogram bins for mass/charge densities, useful for, e.g., plotting of histogram data.
+
+Type:
+
+numpy.ndarray
+
+ Note
+
+Type:
+
+These density units are likely to be changed in the future.
+
+Example
+
+First create a LinearDensity object by supplying a selection, then use the run() method. Finally access the results stored in results, i.e. the mass density in the x direction.
+
+ldens = LinearDensity(selection)
+ldens.run()
+print(ldens.results.x.mass_density)
+
+Alternatively, other types of grouping can be selected using the grouping keyword. For example to calculate the density based on a grouping of the ResidueGroup of the input AtomGroup.
+
+ldens = LinearDensity(selection, grouping='residues', binsize=1.0)
+ldens.run()
+
+Added in version 0.14.0.
+
+Changed in version 1.0.0: Support for the start, stop, and step keywords has been removed. These should instead be passed to LinearDensity.run(). The save() method was also removed, you can use np.savetxt() or np.save() on the LinearDensity.results dictionary contents instead.
+
+Changed in version 1.0.0: Changed selection keyword to select
+
+Changed in version 2.0.0: Results are now instances of Results allowing access via key and attribute.
+
+Changed in version 2.2.0:
+
+Fixed a bug that caused LinearDensity to fail if grouping=”residues” or grouping=”segments” were set.
+
+Residues, segments, and fragments will be analysed based on their centre of mass, not centre of geometry as previously stated.
+
+LinearDensity now works with updating atom groups.
+
+Added new result container results.x.hist_bin_edges. It contains the bin edges of the histrogram bins for calculated densities and can be used for easier plotting of histogram data.
+
+Changed in version 2.10.0: * Introduced get_supported_backends() allowing for parallel execution on multiprocessing and dask backends. * Removed undocumented and unused attribute totalmass.
+
+Deprecated since version 2.2.0: The results dictionary has been changed and the attributes results.x.pos, results.x.pos_std, results.x.char and results.x.char_std are now deprecated. They will be removed in 3.0.0. Please use results.x.mass_density, results.x.mass_density_stddev, results.x.charge_density, and results.x.charge_density_stddev instead.
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.

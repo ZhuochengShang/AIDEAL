@@ -1,0 +1,21 @@
+fit_predict(X, y=None, n=1)[source]
+
+Selects the best Vector Autoregressive Moving Average (VARIMA) model and forecasts n timestamps for the given data.
+
+Parameters:
+
+X: array-like, shape (n_ts, sz, d)
+
+Time-series dataset.
+
+yIgnored
+
+nint (default: 1)
+
+The number of timestamps to forecast, a.k.a. the horizon.
+
+Returns:
+
+array, shape = (n_ts, n, d)
+
+Array of forecasted timestamps

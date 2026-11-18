@@ -1,0 +1,22 @@
+class MDAnalysis.lib.picklable_file_io.TextIOPicklable(raw)[source]
+
+Character and line based picklable file-like object.
+
+This class provides a file-like io.TextIOWrapper object that can be pickled. Note that this only works in read mode.
+
+Parameters:
+
+raw (FileIO object)
+
+Example
+
+file = FileIOPicklable('filename')
+text_wrapped = TextIOPicklable(file)
+
+See also
+
+FileIOPicklable, BufferIOPicklable
+
+Added in version 2.0.0.
+
+Changed in version 2.8.0: The raw class instance instead of the class name that is wrapped inside will be serialized. After deserialization, the current position is no longer reset so universe.trajectory[i] is not needed to seek to the original position.

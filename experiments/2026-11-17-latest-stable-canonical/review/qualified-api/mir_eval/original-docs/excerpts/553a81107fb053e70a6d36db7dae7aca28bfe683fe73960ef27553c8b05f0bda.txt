@@ -1,0 +1,23 @@
+mir_eval.util.index_labels(labels, case_sensitive=False)
+
+Convert a list of string identifiers into numerical indices.
+
+Parameters:
+
+labelslist of strings, shape=(n,)
+
+A list of annotations, e.g., segment or chord labels from an annotation file.
+
+case_sensitivebool
+
+Set to True to enable case-sensitive label indexing (Default value = False)
+
+Returns:
+
+indiceslist, shape=(n,)
+
+Numerical representation of labels
+
+index_to_labeldict
+
+Mapping to convert numerical indices back to labels. labels[i] == index_to_label[indices[i]]

@@ -1,0 +1,33 @@
+center_of_charge(wrap=False, unwrap=False, compound='group')
+
+Center of (absolute) charge of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i \vert q_i \vert \boldsymbol r_i} {\sum_i \vert q_i \vert}\]
+
+where \(q_i\) is the charge and \(\boldsymbol r_i\) the position of atom \(i\) in the given MDAnalysis.core.groups.AtomGroup. Centers of charge per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the charges of a compound sum up to zero, the center of mass coordinates of that compound will be nan (not a number).
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', the center of mass of all atoms in the group will be returned as a single position vector. Otherwise, the centers of mass of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+centernumpy.ndarray
+
+Position vector(s) of the center(s) of charge of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d coordinate array of shape (n, 3) where n is the number of compounds.
+
+This method can only be accessed if the underlying topology has information about atomic charges.
+
+Added in version 2.2.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.

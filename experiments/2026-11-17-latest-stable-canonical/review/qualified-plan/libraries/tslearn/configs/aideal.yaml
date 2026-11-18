@@ -1,0 +1,313 @@
+codebase:
+  intent:
+    weights:
+      llm_common: 4
+      many_impls: -10
+    manual_include: []
+    manual_exclude: []
+    exclude_name_patterns: []
+    use_llm: false
+    refresh_llm: false
+    threshold: 5
+    many_impls_threshold: 4
+  intended_api:
+    require_llm: false
+    refresh: false
+    selection_limit: 0
+  public_def_regex: ^\s*(?:def|class)\s+([A-Za-z][A-Za-z0-9_]*)
+  exclude_names: []
+  source_globs:
+  - source/tslearn/**/*.py
+  test_globs:
+  - source/tslearn/tests/**/*.py
+  - source/tests/**/*.py
+  surface_filter: all
+  api_inventory: inputs/api_inventory.json
+  api_inventory_sha256: d6f2f64eaa4343b963a166f2e2f13878a64d232734df4d27b0f9ee78f941a525
+  path: source
+  identity_mode: qualified
+  api_origin:
+    source_roots:
+    - source/tslearn
+    library_namespaces:
+    - tslearn
+    external_namespaces:
+    - builtins
+    - math
+    - numpy
+    - scipy
+    - sklearn
+    - java
+    - javax
+    - org.apache.spark
+files:
+  project_profile: configs/project_profile.yaml
+  prompts_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/tslearn/prompts
+  llm_readme: docs/LLM_readme.md
+  notes_to_self: docs/notes_to_self.md
+  error_log: logs/error_log.jsonl
+  original_readme: []
+  original_doc_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/manifest.json
+  original_doc_manifest_sha256: 29eedff49476bfc96c99e2951a72eba34d06596a66be25fb29a73be399ec94da
+models:
+  registry:
+    selected:
+      provider: google
+      model: gemini-3.1-flash-lite
+      max_output_tokens: 8192
+  roles:
+    author: selected
+    audience: selected
+    fixer: selected
+runtime:
+  target: local
+  local: {}
+checks:
+  required_sections:
+  - Signature
+  - Goal
+  - Parameters
+  - Input
+  - Output
+  - Valid Call Patterns|Valid Access Patterns
+  - LLM Instruction Prompt
+  - Prompt Snippet
+  - Common Failure Modes
+  - Fix Code Hint
+  comprehension_apis_sampled: 5
+docfix:
+  allow_repo_called_members: true
+  allowed_member_categories:
+  - language_core
+  - python_core
+  member_categories:
+    language_core:
+    - println
+    - print
+    - require
+    - assert
+    - format
+    - mkString
+    - toString
+    - map
+    - flatMap
+    - filter
+    - foreach
+    - collect
+    - count
+    - take
+    - first
+    - reduce
+    - fold
+    - foldLeft
+    - sum
+    - min
+    - max
+    - size
+    - length
+    - nonEmpty
+    - isEmpty
+    - head
+    - headOption
+    - last
+    - getOrElse
+    - get
+    - exists
+    - forall
+    - contains
+    - indexOf
+    - sortBy
+    - sorted
+    - zip
+    - zipWithIndex
+    - toArray
+    - toList
+    - toSeq
+    - toSet
+    - toMap
+    - distinct
+    - sliding
+    - grouped
+    - apply
+    - update
+    - close
+    - cache
+    - persist
+    - coalesce
+    - repartition
+    - keys
+    - values
+    - trim
+    - split
+    - replace
+    - startsWith
+    - endsWith
+    - toDouble
+    - toInt
+    - toLong
+    - toFloat
+    - abs
+    - floor
+    - ceil
+    - round
+    - find
+    - getPath
+    - getName
+    - getClass
+    - asInstanceOf
+    - isInstanceOf
+    - mkdirs
+    - listFiles
+    - delete
+    - getConstructor
+    - newInstance
+    - getFileSystem
+    - resolve
+    - isNaN
+    - isInfinite
+    - isFinite
+    - toRadians
+    - toDegrees
+    - sqrt
+    - pow
+    - sin
+    - cos
+    - tan
+    - atan2
+    - fill
+    - range
+    - empty
+    - ofDim
+    python_core:
+    - fit
+    - predict
+    - transform
+    - fit_transform
+    - fit_predict
+    - score
+    - ravel
+    - reshape
+    - astype
+    - tolist
+    - copy
+    - mean
+    - sum
+    - std
+    - var
+    - argmin
+    - argmax
+    - cumsum
+    - squeeze
+    - flatten
+    - array
+    - asarray
+    - zeros
+    - ones
+    - arange
+    - linspace
+    - allclose
+    - isclose
+    - seed
+    - rand
+    - randn
+    - randint
+    - normal
+    - shuffle
+    - append
+    - extend
+    - join
+    - format
+    - items
+    - keys
+    - values
+    - get
+    - strip
+    - lower
+    - upper
+    - round
+    - set_params
+    - get_params
+  allowed_members: []
+comprehension:
+  execute:
+    execution_context: A headless Python harness, balanced eight-series training data,
+      a second series set, one-dimensional signals, labels, a small numeric matrix,
+      repository fixture paths, and a pre-created condition-specific output directory
+      are already in scope. Import the target explicitly.
+    region:
+    - '# TODO API_TEST_START'
+    - '# TODO API_TEST_END'
+    strip_snippet_imports: false
+    output_tail_chars: 4000
+    success_marker: __DONE__
+    error_marker: __RUN_ERR__
+    work_dir: execution
+    timeout_seconds: 300
+    max_fix_rounds: 0
+    auto_report: false
+    test_filename: api_test.py
+    command: env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 NUMBA_THREADING_LAYER=workqueue
+      KERAS_BACKEND=torch CUDA_VISIBLE_DEVICES='' /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+      "{test_file}"
+    exec_hints: Use small deterministic parameters. For file-writing APIs, write only
+      below output_dir. Optional-dependency failures must remain explicit infrastructure
+      outcomes. End with a meaningful assertion and print a compact __CHECK__ witness.
+    scaffold: inputs/api_test_scaffold.py
+    preamble: 'Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+      _trace = np.load(trace_npz)
+
+      _balanced = np.array([0, 4, 1, 17, 3, 13, 2, 5], dtype=int)
+
+      X = _trace["X_train"][_balanced, :40, :]  # type: balanced time-series dataset
+      ndarray (8, 40, 1)
+
+      X2 = _trace["X_test"][:4, :32, :]  # type: second dataset ndarray (4, 32, 1)
+
+      s1 = X[0].ravel()  # type: 1-D series ndarray (40,)
+
+      s2 = X[1].ravel()  # type: 1-D series ndarray (40,)
+
+      y = _trace["y_train"][_balanced]  # type: four balanced labels, two examples
+      per class
+
+      tiny_matrix = np.arange(12.0).reshape(3, 4)  # type: deterministic numeric matrix
+
+      '
+    sample_data:
+      trace_npz: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/.cached_datasets/Trace.npz
+    require_correctness: true
+    io_hints: ''
+    local_uris: false
+    output_dir: execution/output
+    stop_on_provider_error: true
+    build: ''
+    probe_on_missing: false
+  class_context: false
+  relevant_doc_chars: 35155
+project:
+  language: Python
+  name: tslearn
+provenance:
+  source_revision: f6072f237313d610413359ecc899cdb9038f4b7e
+  source_tree: cb5169bbd4ef3d0dc061743e71291eb4298c74a2
+  source_version: 0.10.0
+  source_tag: v0.10.0
+  source_provenance_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/source-provenance/tslearn.json
+  runtime_validation: PENDING final runtime controls and loaded-config registry verification
+  selection_scope:
+    selected_api_names: 116
+    public_declaration_sites: 348
+    public_bare_names: 237
+    selection_policy: Frozen structural body audit; quarantine unknown/wrappers; globally
+      retain highest arity per bare name with deterministic ties.
+    semantic_equivalence_guarantee: false
+    sampling: none within the frozen selected set
+    manifest_path: inputs/api_manifest.json
+    canonical_selection_receipt: canonical-selection.json
+    manifest_file_sha256: d154c450d3bd98f90c564cfce9db494cd2e80d32e8bf36964dba184249f1ec1e
+    ordered_names_sha256: dc12d4e3fd423262c30d1732f3f647aae26d920e9924bc7e36e401b12f0355db
+  paid_calls_started: false
+readme_generation:
+  distill_chunk_chars: 150000

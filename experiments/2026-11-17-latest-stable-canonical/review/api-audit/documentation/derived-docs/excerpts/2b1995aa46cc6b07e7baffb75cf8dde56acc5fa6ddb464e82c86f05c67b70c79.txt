@@ -1,0 +1,33 @@
+baseline_accuracy(list_datasets=None, list_methods=None)[source]
+
+Report baseline performances as provided by UEA/UCR website (for univariate datasets only).
+
+Parameters:
+
+list_datasets: list or None (default: None)
+
+A list of strings indicating for which datasets performance should be reported. If None, performance is reported for all datasets.
+
+list_methods: list or None (default: None)
+
+A list of baselines methods for which performance should be reported. If None, performance for all baseline methods is reported.
+
+Returns:
+
+dict
+
+A dictionary in which keys are dataset names and associated values are themselves dictionaries that provide accuracy scores for the requested methods.
+
+Examples
+
+>>> uea_ucr = UCR_UEA_datasets()
+>>> dict_acc = uea_ucr.baseline_accuracy(
+...         list_datasets=["Adiac", "ChlorineConcentration"],
+...         list_methods=["C45"])
+>>> len(dict_acc)
+2
+>>> dict_acc["Adiac"]
+{'C45': 0.542199...}
+>>> all_dict_acc = uea_ucr.baseline_accuracy()
+>>> len(all_dict_acc)
+85

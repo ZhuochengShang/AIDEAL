@@ -1,0 +1,61 @@
+ImageFilter (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Interface ImageFilter
+All Known Implementing Classes:
+Canvas
+,
+Caption
+,
+Colorize
+,
+Pipeline
+,
+Rotation.Rotator
+,
+SwapDimensions
+,
+Transparency
+,
+Watermark
+public interface
+ImageFilter
+This interface is to be implemented by classes which performs an image
+filtering operation on a
+BufferedImage
+.
+The general contract for classes implementing
+ImageFilter
+is that
+they should not change the contents of the
+BufferedImage
+which is
+given as the argument for the
+apply(BufferedImage)
+method.
+The filter should make a copy of the given
+BufferedImage
+, and
+perform the filtering operations on the copy, then return the copy.
+Author:
+coobird
+Method Summary
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+Method Detail
+apply
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+Parameters:
+img
+- The image to apply the filtering on.
+Returns:
+The resulting image after applying this filter.
+Copyright © 2025. All rights reserved.

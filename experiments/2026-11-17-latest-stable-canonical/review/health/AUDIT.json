@@ -1,0 +1,146 @@
+{
+  "status": "REVIEW_PACKAGE_FIXES_STAGED_STUDY_STILL_BLOCKED",
+  "base_bundle_sha256": "2cc03878ab81e013d8337fd2fe6f93f76a199ccb63cd5b9838e427ecb0f052a9",
+  "base_review_commit_reported_by_parent": "b9f31cd",
+  "base_payload_files": 2919,
+  "read_only_scope": "Canonical local guide/tracker/hold snapshots, source/doc audit metadata, authored page links and JS syntax; remote/Git/process/cleanup verification belongs to parent.",
+  "passed": {
+    "guide_scope": "Entire Beast by module; keep distinct defining owners; overloadmax within one API; finalcountpending.",
+    "source_candidate_rows": 5478,
+    "documentation_pages": 265,
+    "document_api_anchors": 2867,
+    "tracker_condition_rows": 30,
+    "recorded_new_model_requests": 0,
+    "recorded_new_author_entries": 0,
+    "hold_generation_allowed": false,
+    "hold_evaluation_allowed": false,
+    "javascript_syntax_errors": 0
+  },
+  "static_validation": "STATIC_VALIDATION.json",
+  "proposed_validation": "docs_patch/PROPOSED_VALIDATION.json",
+  "issues": [
+    {
+      "id": "current_pages_stale",
+      "severity": "material",
+      "status": "TEXT_FIX_STAGED",
+      "files": [
+        "review/REVIEW_HOME.html",
+        "review/API_SELECTION.html",
+        "review/CURRENT_BANK.html",
+        "review/DOC_COVERAGE.html",
+        "review/PILOT_REVIEW.html",
+        "review/READINESS.html",
+        "review/HISTORICAL_BANKS.html",
+        "review/SOURCE_INVENTORY.html",
+        "review/BANK_REVIEW.html"
+      ],
+      "finding": "Correction banners coexist with old claims including Preparation is complete, frozen/current1695 targets, ready-for-review selection, current477coverage and continued unresolved exclusions.",
+      "fix": "Label the preserved counts, inputs, decisions and controls as prior evidence; keep the replacement count/plan pending."
+    },
+    {
+      "id": "figures_contradict_hold",
+      "severity": "material",
+      "status": "TEXT_FIX_STAGED",
+      "files": [
+        "review/figures/04_branch_separation.svg",
+        "review/figures/07_stable_api_selection.svg",
+        "review/figures/08_latest_original_document_coverage.svg",
+        "review/figures/09_latest_source_name_histograms.svg"
+      ],
+      "finding": "Figures embedded in the corrected guide retain frozen1695/READY labels or imply current selected SQL/source totals.",
+      "fix": "Retain plotted observations but label old selections/coverage as superseded; branch diagram states replacement count pending."
+    },
+    {
+      "id": "runbook_old_live_commands",
+      "severity": "material",
+      "status": "TEXT_FIX_STAGED",
+      "files": [
+        "RUNBOOK.md"
+      ],
+      "finding": "After an initial hold notice, inner instructions still recommend approving/restarting the old14-job plan and running old pilot/README commands. The direct helper/README commands do not share the full-queue shell hold.",
+      "fix": "Current runbook contains read-only checks and replacement prerequisites. Old commands are retained separately in explicitly historical PRIOR_RUNBOOK.md, not offered as current later-approval recipes."
+    },
+    {
+      "id": "tracker_preparation_metadata",
+      "severity": "material",
+      "status": "TEXT_FIX_STAGED",
+      "files": [
+        "review/EXPERIMENT_TRACKER.json",
+        "review/EXPERIMENT_TRACKER.html"
+      ],
+      "finding": "Top-level selected totals/jobs are correctly pending/zero, but seven old distillation requests are still labelled prepared and the HTML says1695 entries are prepared. Correction stages are not explicit.",
+      "fix": "Preserve prior distillation counts separately, set replacement preparation to0, add explicit blocking revision steps, fix label lookup and old708-reference wording."
+    },
+    {
+      "id": "archived_guide_links",
+      "severity": "navigation",
+      "status": "TEXT_FIX_STAGED",
+      "files": [
+        "review/api-audit/PRIOR_EXPERIMENT_GUIDE.md",
+        "RUNBOOK.md"
+      ],
+      "finding": "51 relative link instances in the relocated old guide resolve from the wrong directory; current runbook refers to removed section10 in the new guide.",
+      "fix": "Rebase archive links without altering historical scientific facts; replace the current runbook and point historical debug link at the archived guide."
+    },
+    {
+      "id": "manifest_timestamp",
+      "severity": "provenance",
+      "status": "ROOT_TO_REGENERATE_AT_NEXT_FREEZE",
+      "files": [
+        "SYNC_MANIFEST.json"
+      ],
+      "finding": "freeze_time_utc20:39:58 predates included official inventory audit observed_at21:37:58 on the same date. It appears inherited from a prior snapshot.",
+      "fix": "Retain prior timestamp under a prior-snapshot field if useful; record the actual next snapshot freeze time when publishing, rather than rewriting history."
+    },
+    {
+      "id": "full_public_inventory",
+      "severity": "run_blocker",
+      "status": "OPEN",
+      "finding": "The5478-row ledger retains saved candidates, not complete public runtime exposure. MDAnalysis.pyx/reexports/inheritance and unresolved declarations still require reconciliation.",
+      "fix": "Resolve full public candidates and exposure-to-defining-source mappings; keep unknowns visible instead of excluding them as wrappers."
+    },
+    {
+      "id": "qualified_pipeline",
+      "severity": "run_blocker",
+      "status": "OPEN",
+      "finding": "The frozen evaluator still elects by bare name and README iteration/completion remain name-oriented. The origin filter does not migrate this identity pipeline.",
+      "fix": "Carry qualified owner/API identities through within-owner overload reduction, README/task keys, verification and installation in a new reviewed revision."
+    },
+    {
+      "id": "docs_protocol_and_approval",
+      "severity": "run_blocker",
+      "status": "OPEN",
+      "finding": "265 official pages/2867 anchors are staged evidence. Qualified mapping, retrieval budgets, final exposure policy and corrected denominator are not yet frozen. Six live pilots, new authoring, matched five-condition and puzzle outcomes remain absent.",
+      "fix": "Freeze corrected source/doc/task identities and revised costs; complete the requested pre-run review before model/subject execution. Keep later puzzle/oracle/treatment protocols separately pending."
+    },
+    {
+      "id": "runtime_scope",
+      "severity": "limitation",
+      "status": "UNCHANGED",
+      "finding": "25 setup-control expected outcomes and104 frozen evaluator tests remain historical readiness evidence, not proof every replacement target is supported. Native Mac scientific execution remains unvalidated.",
+      "fix": "Reuse compatible verified Linux controls, then revalidate changed integration/fixture paths after the replacement bank is concrete."
+    }
+  ],
+  "text_edits": {
+    "status": "FINAL_STAGED_NOT_APPLIED",
+    "files": 20,
+    "path": "docs_patch/TEXT_EDITS.json",
+    "sha256": "4e395a846b7d72e8e626c0c9a3dc257afe86d1925eae9bc6570c8630345fe182",
+    "new_large_guard_modules": 0,
+    "scientific_records_changed": false,
+    "prior_api_record_array_unchanged": true
+  },
+  "parent_reported_checks_not_reexecuted_by_this_audit": {
+    "source_fingerprint_fix": "Installed;56focusedtests passed;171broadtests were pre-fix.",
+    "cleanup": "4936byte-identicalfiles removed;85172087bytes;7frozenreleases verified unchanged."
+  },
+  "limitations": [
+    "No real browser visual/interaction check; no file:// workaround.",
+    "Raw saved upstream HTML is source evidence, not a fully mirrored offline website; its external/static links were not crawled.",
+    "No source-library or model execution; no real approval receipt created.",
+    "Current metadata and old evidence may be preserved as history, but cannot establish a ready replacement experiment."
+  ],
+  "canonical_mutations": 0,
+  "model_calls": 0,
+  "subject_programs_executed": 0
+}

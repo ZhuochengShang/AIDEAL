@@ -1,0 +1,46 @@
+mir_eval.pattern.occurrence_FPR(reference_patterns, estimated_patterns, thres=0.75, similarity_metric='cardinality_score')
+
+Compute the occurrence F1 Score, Precision and Recall.
+
+Parameters:
+
+reference_patternslist
+
+The reference patterns in the format returned by mir_eval.io.load_patterns()
+
+estimated_patternslist
+
+The estimated patterns in the same format
+
+thresfloat
+
+How similar two occurrences must be in order to be considered equal (Default value = .75)
+
+similarity_metricstr
+
+A string representing the metric to be used when computing the similarity matrix. Accepted values:
+
+“cardinality_score”: Count of the intersection between occurrences.
+
+(Default value = “cardinality_score”)
+
+Returns:
+
+f_measurefloat
+
+The occurrence F1 Score
+
+precisionfloat
+
+The occurrence Precision
+
+recallfloat
+
+The occurrence Recall
+
+Examples
+
+>>> ref_patterns = mir_eval.io.load_patterns("ref_pattern.txt")
+>>> est_patterns = mir_eval.io.load_patterns("est_pattern.txt")
+>>> F, P, R = mir_eval.pattern.occurrence_FPR(ref_patterns,
+...                                           est_patterns)

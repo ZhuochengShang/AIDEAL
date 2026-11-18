@@ -1,0 +1,37 @@
+tslearn.metrics.itakura_mask(sz1, sz2, max_slope=2.0, be=None)[source]
+
+Compute the Itakura mask.
+
+Parameters:
+
+sz1int
+
+The size of the first time series
+
+sz2int
+
+The size of the second time series.
+
+max_slopefloat (default = 2)
+
+The maximum slope of the parallelogram.
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+maskarray-like, shape=(sz1, sz2)
+
+Itakura mask.
+
+Examples
+
+>>> itakura_mask(6, 6, max_slope=3)
+array([[ True, False, False, False, False, False],
+       [False,  True,  True,  True, False, False],
+       [False,  True,  True,  True,  True, False],
+       [False,  True,  True,  True,  True, False],
+       [False, False,  True,  True,  True, False],
+       [False, False, False, False, False,  True]])

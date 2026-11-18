@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "experiment_fingerprint": "277a31c2998d8d3b729e22604b0d30963330d2900411b5a296833184ff5d8ea4",
+  "fingerprint_components": {
+    "schema": 4,
+    "prompt_contract": {
+      "templates": {
+        "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+      },
+      "profile_sha256": "8e66bac7c3b39290163c6839f9cf83532706a23bad447010ef369a1f6605bf93"
+    },
+    "transport_contract": {
+      "temperature": 0.0,
+      "google_request_timeout_s": 300.0,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630.0,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "project": "RDPro",
+    "language": "Scala",
+    "doc_source": "original",
+    "doc_scope": "relevant",
+    "max_fix_rounds": 2,
+    "manifest_sha256": "01f4cf67d2e97fc1c74eb017663fcb15b330750b6e8539725afae72640612a96",
+    "document_sha256": "53bd0106dcb26306c65ef67a91c4657e455ab84b04f72028210d87b8c11680ee",
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite"
+    },
+    "class_context": false,
+    "owner_overrides": {},
+    "timeout_s": 600,
+    "execute_config": {
+      "execution_context": "Scala2.12 with Spark3.5.1 and Java17. The full historical scaffold provides sc and sparkContext. The explicit preamble binds rasterRDD: RasterRDD[Array[Float]] (11Float32bands,737x628pixels) and featuresRDD: RDD[IFeature] (2polygonfeatures). Use the supplied local fixtures or tiny in-memory values. Assertions must precede the __CHECK__ witness. HDF4 fixture layer is LST_Day_1km. Temporary writes belong in output_dir.",
+      "region": [
+        "// TODO API_TEST_START",
+        "// TODO API_TEST_END"
+      ],
+      "strip_snippet_imports": false,
+      "output_tail_chars": 2000,
+      "success_marker": "__DONE__",
+      "error_marker": "__RUN_ERR__",
+      "work_dir": "execution",
+      "timeout_seconds": 600,
+      "max_fix_rounds": 2,
+      "auto_report": false,
+      "exec_hints": "Spark specifics: transformations are lazy, so if the result is an RDD / RasterRDD / DataFrame you MUST force it with an action \u2014 .count(), .first(), or .take(1) \u2014 and print that. For an in-memory Array/value, print its size. If the API is a writer, call .coalesce(1) before writing to output_dir to avoid the distributed-write merge error. I/O: read inputs with the high-level library readers on the pre-loaded typed vars (rasterRDD / featuresRDD, or sc.geoTiff / sc.shapefile) \u2014 do NOT open raw Hadoop FileSystem streams (FileSystem.get(conf) causes 'Wrong FS'; if unavoidable use path.getFileSystem(sc.hadoopConfiguration)), and never prepend an extra 'file://' to a path that already has a scheme.",
+      "fixtures_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/fixtures",
+      "output_dir": "execution/output",
+      "command": "/home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_scala.py --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/classpath.json --work \"{work}\" --scala-file \"{scala_file}\"",
+      "scaffold": "inputs/api_test_scaffold.scala",
+      "preamble": "// Fixed input contract shared by all conditions: the supplied GeoTIFF has11Float32bands.\nval rasterRDD: RasterRDD[Array[Float]] = sc.geoTiff[Array[Float]](raster_tif)\nval featuresRDD: RDD[IFeature] = sc.shapefile(vector_shapefile)\n",
+      "sample_data": {
+        "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+        "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+        "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf"
+      },
+      "require_correctness": true,
+      "io_hints": "",
+      "jars": "",
+      "uberjar": "",
+      "build_cwd": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro",
+      "repositories": [],
+      "packages": [],
+      "imports": "from-tests",
+      "extra_imports": [
+        "import edu.ucr.cs.bdlab.raptor._"
+      ],
+      "build": "",
+      "spark_jars": "",
+      "check_marker": "__CHECK__",
+      "stop_on_provider_error": true
+    },
+    "scaffold": {
+      "sha256": "8bd8ce751fa13cdab3051ffe1b6f1b3ffc5fe2a77e5d82a845a94e9fc4265c00",
+      "file_count": 1
+    },
+    "source": {
+      "sha256": "8eb6a3e3a95aec792e469a274b786a8c8a659ce9e8bead19cfed6630f738a2be",
+      "file_count": 241
+    },
+    "api_inventory": {
+      "sha256": "b2cdf8ccde2c8231862c823ebee6c5794d88c7498d36ec71e55e5aa7108c55ce",
+      "file_count": 1
+    },
+    "fixtures": {
+      "sha256": "7c866aa11c80b1107650c7677b8d475c36e1e996671ea5a20a0fe37423a1f614",
+      "file_count": 3
+    },
+    "engine": {
+      "sha256": "2c20721b0350b243155edab18ffe16149572cffd89a785eab7f1b471bae46a09",
+      "file_count": 35
+    },
+    "interpreter": {
+      "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+      "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+      "environment_sha256": ""
+    },
+    "canonical_requested_targets": {
+      "protocol_version": 1,
+      "targets_sha256": "9bd083dd4818f3cd24434036d5777868938ecd1a7d968267ab973d9ba37bbbc1",
+      "targets_count": 297
+    }
+  }
+}

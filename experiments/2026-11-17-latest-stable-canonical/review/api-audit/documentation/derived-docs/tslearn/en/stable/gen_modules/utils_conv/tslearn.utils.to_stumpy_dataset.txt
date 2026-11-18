@@ -1,0 +1,32 @@
+to_stumpy_dataset
+
+ tslearn.utils.to_stumpy_dataset(X)[source]
+
+Transform a tslearn-compatible dataset into a stumpy dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz, d)
+
+tslearn-formatted dataset to be cast to stumpy format
+
+Returns:
+
+list of arrays of shape=(d, sz_i) if d > 1 or (sz_i, ) otherwise
+
+stumpy-formatted dataset.
+
+Examples
+
+>>> tslearn_arr = numpy.random.randn(10, 16, 1)
+>>> stumpy_arr = to_stumpy_dataset(tslearn_arr)
+>>> len(stumpy_arr)
+10
+>>> stumpy_arr[0].shape
+(16,)
+>>> tslearn_arr = numpy.random.randn(10, 16, 2)
+>>> stumpy_arr = to_stumpy_dataset(tslearn_arr)
+>>> len(stumpy_arr)
+10
+>>> stumpy_arr[0].shape
+(2, 16)

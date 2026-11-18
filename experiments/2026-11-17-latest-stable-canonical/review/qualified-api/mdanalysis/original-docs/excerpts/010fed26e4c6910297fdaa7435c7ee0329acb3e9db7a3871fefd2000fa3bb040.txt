@@ -1,0 +1,24 @@
+class MDAnalysis.coordinates.chemfiles.ChemfilesWriter(filename, n_atoms=0, mode='w', chemfiles_format='', topology=None, **kwargs)[source]
+
+Coordinate writer using chemfiles.
+
+The file format to used is guessed based on the file extension. If no matching format is found, a ChemfilesError is raised. It is also possible to manually specify the format to use for a given file.
+
+Chemfiles support writting to files with varying number of atoms if the underlying format support it. This is the case of most of text-based formats.
+
+Added in version 1.0.0.
+
+Parameters:
+
+filename (str) – filename of trajectory file.
+
+n_atoms (int) – number of atoms in the trajectory to write. This value is not used and can vary during trajectory, if the underlying format support it
+
+mode (str (optional)) – file opening mode: use ‘a’ to append to an existing file or ‘w’ to create a new file
+
+chemfiles_format (str (optional)) –
+use the given format name instead of guessing from the extension. The list of supported formats and the associated names is available in chemfiles documentation.
+
+topology (Universe or AtomGroup (optional)) – use the topology from this AtomGroup or Universe to write all the timesteps to the file
+
+**kwargs (dict) – General writer arguments.

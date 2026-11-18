@@ -1,0 +1,45 @@
+moment_of_inertia(wrap=False, unwrap=False, compound='group')
+
+Moment of inertia tensor relative to center of mass.
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers and tensor of inertia.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’, ‘fragments’},
+
+optional
+
+compound determines the behavior of wrap. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+moment_of_inertianumpy.ndarray
+
+Moment of inertia tensor as a 3 x 3 numpy array.
+
+The moment of inertia tensor \(\mathsf{I}\) is calculated for a group of \(N\) atoms with coordinates \(\mathbf{r}_i,\ 1 \le i \le N\) relative to its center of mass from the relative coordinates
+
+ \[\mathbf{r}'_i = \mathbf{r}_i - \frac{1}{\sum_{i=1}^{N} m_i} \sum_{i=1}^{N} m_i \mathbf{r}_i\]
+
+as
+
+ \[\mathsf{I} = \sum_{i=1}^{N} m_i \Big[(\mathbf{r}'_i\cdot\mathbf{r}'_i) \sum_{\alpha=1}^{3} \hat{\mathbf{e}}_\alpha \otimes \hat{\mathbf{e}}_\alpha - \mathbf{r}'_i \otimes \mathbf{r}'_i\Big]\]
+
+where \(\hat{\mathbf{e}}_\alpha\) are Cartesian unit vectors, or in Cartesian coordinates
+
+ \[I_{\alpha,\beta} = \sum_{k=1}^{N} m_k \Big(\big(\sum_{\gamma=1}^3 (x'^{(k)}_{\gamma})^2 \big)\delta_{\alpha,\beta} - x'^{(k)}_{\alpha} x'^{(k)}_{\beta} \Big).\]
+
+where \(x'^{(k)}_{\alpha}\) are the Cartesian coordinates of the relative coordinates \(\mathbf{r}'_k\).
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 0.20.0: Added unwrap parameter
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.
+
+Note
+
+This requires the underlying topology to have masses. Otherwise, a NoDataError is raised.

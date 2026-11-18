@@ -1,0 +1,13 @@
+property shapelets_as_time_series_[source]
+
+Set of time-series shapelets formatted as a tslearn time series dataset.
+
+Examples
+
+>>> from tslearn.generators import random_walk_blobs
+>>> X, y = random_walk_blobs(n_ts_per_blob=10, sz=256, d=1, n_blobs=3)
+>>> model = LearningShapelets(n_shapelets_per_size={3: 2, 4: 1},
+...                       max_iter=1)
+>>> _ = model.fit(X, y)
+>>> model.shapelets_as_time_series_.shape
+(3, 4, 1)

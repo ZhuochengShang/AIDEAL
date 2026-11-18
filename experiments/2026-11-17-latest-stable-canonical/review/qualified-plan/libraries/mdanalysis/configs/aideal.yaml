@@ -1,0 +1,318 @@
+codebase:
+  intent:
+    weights:
+      llm_common: 4
+    manual_include: []
+    manual_exclude: []
+    exclude_name_patterns: []
+    use_llm: false
+    refresh_llm: false
+    threshold: 5
+  intended_api:
+    require_llm: false
+    refresh: false
+    selection_limit: 0
+  public_def_regex: ^\s*(?:def|class)\s+([A-Za-z][A-Za-z0-9_]*)
+  exclude_names: []
+  source_globs:
+  - source/package/MDAnalysis/**/*.py
+  - source/package/MDAnalysis/**/*.pyx
+  test_globs:
+  - source/testsuite/MDAnalysisTests/**/*.py
+  surface_filter: all
+  api_inventory: inputs/api_inventory.json
+  api_inventory_sha256: c5433ea70ea1c7585c11931fe9ce9311f7ec95fdf0d32db994234ac239973ee8
+  path: source
+  identity_mode: qualified
+  api_origin:
+    source_roots:
+    - source/package/MDAnalysis
+    library_namespaces:
+    - MDAnalysis
+    external_namespaces:
+    - builtins
+    - math
+    - numpy
+    - scipy
+    - sklearn
+    - java
+    - javax
+    - org.apache.spark
+files:
+  project_profile: configs/project_profile.yaml
+  prompts_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/prompts
+  llm_readme: docs/LLM_readme.md
+  notes_to_self: docs/notes_to_self.md
+  error_log: logs/error_log.jsonl
+  original_readme: []
+  original_doc_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/manifest.json
+  original_doc_manifest_sha256: 73591399303b377384939068a978a18ea414f158cdd2a2207d714a5a5e6e51ff
+models:
+  registry:
+    selected:
+      provider: google
+      model: gemini-3.1-flash-lite
+      max_output_tokens: 8192
+  roles:
+    author: selected
+    audience: selected
+    fixer: selected
+runtime:
+  target: local
+  local: {}
+checks:
+  required_sections:
+  - Signature
+  - Goal
+  - Parameters
+  - Input
+  - Output
+  - Valid Call Patterns|Valid Access Patterns
+  - LLM Instruction Prompt
+  - Prompt Snippet
+  - Common Failure Modes
+  - Fix Code Hint
+  comprehension_apis_sampled: 5
+docfix:
+  allow_repo_called_members: true
+  allowed_member_categories:
+  - language_core
+  - python_core
+  member_categories:
+    language_core:
+    - println
+    - print
+    - require
+    - assert
+    - format
+    - mkString
+    - toString
+    - map
+    - flatMap
+    - filter
+    - foreach
+    - collect
+    - count
+    - take
+    - first
+    - reduce
+    - fold
+    - foldLeft
+    - sum
+    - min
+    - max
+    - size
+    - length
+    - nonEmpty
+    - isEmpty
+    - head
+    - headOption
+    - last
+    - getOrElse
+    - get
+    - exists
+    - forall
+    - contains
+    - indexOf
+    - sortBy
+    - sorted
+    - zip
+    - zipWithIndex
+    - toArray
+    - toList
+    - toSeq
+    - toSet
+    - toMap
+    - distinct
+    - sliding
+    - grouped
+    - apply
+    - update
+    - close
+    - cache
+    - persist
+    - coalesce
+    - repartition
+    - keys
+    - values
+    - trim
+    - split
+    - replace
+    - startsWith
+    - endsWith
+    - toDouble
+    - toInt
+    - toLong
+    - toFloat
+    - abs
+    - floor
+    - ceil
+    - round
+    - find
+    - getPath
+    - getName
+    - getClass
+    - asInstanceOf
+    - isInstanceOf
+    - mkdirs
+    - listFiles
+    - delete
+    - getConstructor
+    - newInstance
+    - getFileSystem
+    - resolve
+    - isNaN
+    - isInfinite
+    - isFinite
+    - toRadians
+    - toDegrees
+    - sqrt
+    - pow
+    - sin
+    - cos
+    - tan
+    - atan2
+    - fill
+    - range
+    - empty
+    - ofDim
+    python_core:
+    - fit
+    - predict
+    - transform
+    - fit_transform
+    - fit_predict
+    - score
+    - ravel
+    - reshape
+    - astype
+    - tolist
+    - copy
+    - mean
+    - sum
+    - std
+    - var
+    - argmin
+    - argmax
+    - cumsum
+    - squeeze
+    - flatten
+    - array
+    - asarray
+    - zeros
+    - ones
+    - arange
+    - linspace
+    - allclose
+    - isclose
+    - seed
+    - rand
+    - randn
+    - randint
+    - normal
+    - shuffle
+    - append
+    - extend
+    - join
+    - format
+    - items
+    - keys
+    - values
+    - get
+    - strip
+    - lower
+    - upper
+    - round
+    - set_params
+    - get_params
+  allowed_members: []
+comprehension:
+  execute:
+    execution_context: A runnable headless Python test harness is already in scope.
+      The snippet is inserted inside a function and the preamble variables listed
+      under available inputs are already defined. Write executable statements only.
+      Import MDAnalysis submodules or optional dependencies only when the documented
+      public call requires them. Do not define another function or process entry point.
+      Assert a deterministic property and print a compact correctness witness containing
+      a shape, scalar, or length.
+    region:
+    - '# TODO API_TEST_START'
+    - '# TODO API_TEST_END'
+    strip_snippet_imports: false
+    output_tail_chars: 2000
+    success_marker: __DONE__
+    error_marker: __RUN_ERR__
+    work_dir: execution
+    timeout_seconds: 300
+    max_fix_rounds: 0
+    auto_report: false
+    test_filename: api_test.py
+    command: env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python
+      "{test_file}"
+    exec_hints: Use the preloaded Universe, AtomGroups, trajectory, and the pinned
+      molecular fixture paths. Keep atom selections and frame ranges small. For analysis
+      classes construct the documented class, call run() when required, and validate
+      a stable scalar, shape, or length. The PSF/DCD pair has no periodic box; use
+      a matching configured periodic fixture only when the target contract requires
+      it. Write any small output only under output_dir; do not modify source fixtures,
+      download data, or open a GUI.
+    scaffold: inputs/api_test_scaffold.py
+    local_uris: false
+    output_dir: execution/output
+    preamble: 'MDAnalysis = mda  # type: module
+
+      numpy = np  # type: module
+
+      universe = mda.Universe(psf_path, dcd_path)  # type: MDAnalysis.Universe
+
+      atoms = universe.atoms  # type: MDAnalysis.core.groups.AtomGroup
+
+      protein = universe.select_atoms("protein")  # type: MDAnalysis.core.groups.AtomGroup
+
+      backbone = universe.select_atoms("protein and backbone")  # type: MDAnalysis.core.groups.AtomGroup
+
+      trajectory = universe.trajectory  # type: MDAnalysis.coordinates.base.ReaderBase
+
+      timestep = trajectory[0]  # type: MDAnalysis.coordinates.base.Timestep
+
+      '
+    sample_data:
+      psf_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk.psf
+      dcd_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_dims.dcd
+      pdb_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_open.pdb
+      gro_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.gro
+      xtc_path: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.xtc
+      mdanalysis_fixture_dir: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures
+    require_correctness: true
+    io_hints: ''
+    stop_on_provider_error: true
+    build: ''
+    probe_on_missing: false
+  class_context: false
+  relevant_doc_chars: 92612
+project:
+  language: Python
+  name: MDAnalysis
+provenance:
+  source_revision: ace84dde1363e32aa94cd3f29a42c2f590bd0575
+  source_tree: 79fa3ad6639df0b58986752f28a7b89908593e35
+  source_version: 2.11.0
+  source_tag: package-2.11.0
+  source_provenance_manifest: /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/source-provenance/mdanalysis.json
+  runtime_validation: PENDING final runtime controls and loaded-config registry verification
+  selection_scope:
+    selected_api_names: 435
+    public_declaration_sites: 1435
+    public_bare_names: 1053
+    selection_policy: Frozen structural body audit; quarantine unknown/wrappers; globally
+      retain highest arity per bare name with deterministic ties.
+    semantic_equivalence_guarantee: false
+    sampling: none within the frozen selected set
+    manifest_path: inputs/api_manifest.json
+    canonical_selection_receipt: canonical-selection.json
+    manifest_file_sha256: f247ed2ba64570403e11eeab8afae74efbdfc2989f5166d75d967a5176fabffa
+    ordered_names_sha256: 421763359354fee7a014cd763c981567335fe554f8acd8dcdfe4086b320f3b34
+  paid_calls_started: false
+readme_generation:
+  distill_chunk_chars: 150000

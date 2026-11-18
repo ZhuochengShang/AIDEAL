@@ -1,0 +1,263 @@
+8.1. ParmEd topology parser — MDAnalysis.converters.ParmEdParser
+
+Converts a ParmEd parmed.structure.Structure into a MDAnalysis.core.Topology.
+
+Example
+
+If you want to use an MDAnalysis-written ParmEd structure for simulation in ParmEd, you need to first read your files with ParmEd to include the necessary topology parameters.
+
+>>> import parmed as pmd
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PRM7_ala2, RST7_ala2
+>>> prm = pmd.load_file(PRM7_ala2, RST7_ala2)
+>>> prm
+<AmberParm 3026 atoms; 1003 residues; 3025 bonds; PBC (orthogonal); parametrized>
+
+We can then convert this to an MDAnalysis structure, select only the protein atoms, and then convert it back to ParmEd.
+
+>>> u = mda.Universe(prm)
+>>> u
+<Universe with 3026 atoms>
+>>> prot = u.select_atoms('protein')
+>>> prm_prot = prot.convert_to('PARMED')
+>>> prm_prot
+<Structure 23 atoms; 2 residues; 22 bonds; PBC (orthogonal); parametrized>
+
+From here you can create an OpenMM simulation system and minimize the energy.
+
+>>> import openmm as mm
+>>> import openmm.app as app
+>>> from parmed import unit as u
+>>> system = prm_prot.createSystem(nonbondedMethod=app.NoCutoff,
+...                                constraints=app.HBonds,
+...                                implicitSolvent=app.GBn2)
+>>> integrator = mm.LangevinIntegrator(
+...                         300*u.kelvin,       # Temperature of heat bath
+...                         1.0/u.picoseconds,  # Friction coefficient
+...                         2.0*u.femtoseconds, # Time step
+... )
+>>> sim = app.Simulation(prm_prot.topology, system, integrator)
+>>> sim.context.setPositions(prm_prot.positions)
+>>> sim.minimizeEnergy(maxIterations=500)
+
+Now you can continue on and run a simulation, if you wish.
+
+8.1.1. Classes
+
+ class MDAnalysis.converters.ParmEdParser.ParmEdParser(filename)[source]
+
+For ParmEd structures
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ parse(**kwargs)[source]
+
+Parse PARMED into Topology
+
+Return type:
+
+MDAnalysis Topology object
+
+Changed in version 2.0.0: Elements are no longer guessed, if the elements present in the parmed object are not recoginsed (usually given an atomic mass of 0) then they will be assigned an empty string.
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+Changed in version 2.0.0: The ParmEdParser class was moved from topology to converters
+
+8.2. ParmEd structure I/O — MDAnalysis.converters.ParmEd
+
+Read coordinates data from a ParmEd parmed.structure.Structure with ParmEdReader into a MDAnalysis Universe. Convert it back to a parmed.structure.Structure with ParmEdConverter.
+
+Example
+
+ParmEd has some neat functions. One such is HMassRepartition. This function changes the mass of the hydrogens in your system to your desired value. It then adjusts the mass of the atom to which it is bonded by the same amount, so that the total mass is unchanged.
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PRM
+>>> u = mda.Universe(PRM)
+>>> u.atoms.masses[:10]
+array([14.01 ,  1.008,  1.008,  1.008, 12.01 ,  1.008, 12.01 ,  1.008,
+    1.008,  1.008])
+
+We can convert our universe to a ParmEd structure to change our hydrogen masses.
+
+>>> import parmed.tools as pmt
+>>> parm = u.atoms.convert_to('PARMED')
+>>> hmass = pmt.HMassRepartition(parm, 5)  # convert to 5 daltons
+>>> hmass.execute()
+
+We can then convert it back to an MDAnalysis Universe for further analysis.
+
+>>> u2 = mda.Universe(parm)
+>>> u2.atoms.masses[:10]
+array([2.03399992, 5.        , 5.        , 5.        , 8.01799965,
+   5.        , 0.034     , 5.        , 5.        , 5.        ])
+
+8.2.1. Classes
+
+ class MDAnalysis.converters.ParmEd.ParmEdReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Coordinate reader for ParmEd.
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ class MDAnalysis.converters.ParmEd.ParmEdConverter[source]
+
+Convert MDAnalysis AtomGroup or Universe to ParmEd Structure.
+
+Example
+
+import parmed as pmd
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import GRO
+pgro = pmd.load_file(GRO)
+mgro = mda.Universe(pgro)
+parmed_subset = mgro.select_atoms('resname SOL').convert_to('PARMED')
+
+ convert(obj)[source]
+
+Write selection at current trajectory frame to Structure.
+
+Parameters:
+
+obj (AtomGroup or Universe or Timestep)
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+Changed in version 2.0.0: The ParmEdReader and ParmEdConverter classes were moved from coordinates to converters

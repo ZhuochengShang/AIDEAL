@@ -1,0 +1,32 @@
+class MDAnalysis.analysis.results.Results(*args, **kwargs)[source]
+
+Container object for storing results.
+
+Results are dictionaries that provide two ways by which values can be accessed: by dictionary key results["value_key"] or by object attribute, results.value_key. Results stores all results obtained from an analysis after calling run().
+
+The implementation is similar to the sklearn.utils.Bunch class in scikit-learn.
+
+Raises:
+
+AttributeError – If an assigned attribute has the same name as a default attribute.
+
+ValueError – If a key is not of type str and therefore is not able to be accessed by attribute.
+
+Examples
+
+>>> from MDAnalysis.analysis.base import Results
+>>> results = Results(a=1, b=2)
+>>> results['b']
+2
+>>> results.b
+2
+>>> results.a = 3
+>>> results['a']
+3
+>>> results.c = [1, 2, 3, 4]
+>>> results['c']
+[1, 2, 3, 4]
+
+Added in version 2.0.0.
+
+Changed in version 2.8.0: Moved Results to MDAnalysis.analysis.results

@@ -1,0 +1,44 @@
+createThumbnail
+public static void
+createThumbnail
+(
+InputStream
+is,
+OutputStream
+os,
+String
+format,
+int width,
+int height)
+throws
+IOException
+Creates a thumbnail from image data streamed from an
+InputStream
+and streams the data out to an
+OutputStream
+, with the specified
+format for the output data.
+Parameters:
+is
+- The
+InputStream
+from which to obtain
+image data.
+os
+- The
+OutputStream
+to send thumbnail data to.
+format
+- The image format to use to store the thumbnail data.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Throws:
+IOException
+- Thrown when a problem occurs when reading from
+File
+representing an image file.
+IllegalArgumentException
+- If the specified output format is
+not supported.

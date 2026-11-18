@@ -12,6 +12,8 @@ comparable across models. CLI: `aideal deep-dive --api X [--role fixer=...]`.
 
 from __future__ import annotations
 
+from .readme_format import api_storage_key
+
 import glob as _glob
 import json
 import re
@@ -24,6 +26,8 @@ from .config import AidealConfig
 def _call_sites(cfg: AidealConfig, name: str, limit: int = 6, ctx: int = 3) -> str:
     """Real usages of `name` across the repo (main + tests), with a few lines
     of context — how the codebase ITSELF calls this API."""
+    if ":" in name:
+        return "(Qualified call-site resolution unavailable; bare-name matches are not attributed to this API.)"
     pat = re.compile(rf"\.{re.escape(name)}\s*\(|\b{re.escape(name)}\s*\(")
     defpat = re.compile(rf"\bdef\s+{re.escape(name)}\b")
     hits: list[str] = []
@@ -60,6 +64,10 @@ def _failure_history(cfg: AidealConfig, name: str, limit: int = 5) -> str:
 
 def deep_dive_run(cfg: AidealConfig, api: str, out_dir: str = "docs/deepdive",
                   context_only: bool = False, return_text: bool = False) -> dict:
+    # Gather one API's source window, related types, call sites and failure history.
+    # Ask the fixer model for a diagnosis and save its report, usage and time.
+    # context_only inspects the prepared context without calling the model.
+    # This function diagnoses the API; it does not rewrite the README.
     from .docfix import _source_window, _type_context
     from .readme_agent import parse_readme
 
@@ -84,11 +92,11 @@ def deep_dive_run(cfg: AidealConfig, api: str, out_dir: str = "docs/deepdive",
         cfg, "aideal/deep_dive",
         api_name=api, source_window=window[:14000], other_sites=others,
         type_context=types[:10000], call_sites=calls[:6000],
-        entry_body=entry[:5000], failure_history=history[:4000]))
+        entry_body=entry if ":" in api else entry[:5000], failure_history=history[:4000]))
     u = usage_delta(u0)
     out = Path(cfg.root) / out_dir
     out.mkdir(parents=True, exist_ok=True)
-    dest = out / f"{api}.md"
+    dest = out / f"{api_storage_key(api)}.md"
     header = (f"# Deep-dive: `{api}`\n\nmodel: {spec.provider}:{spec.model} · "
               f"tokens in={u['input_tokens']:,} out={u['output_tokens']:,} · "
               f"wall {time.time()-t0:.0f}s · {time.strftime('%Y-%m-%d %H:%M')}\n\n---\n\n")

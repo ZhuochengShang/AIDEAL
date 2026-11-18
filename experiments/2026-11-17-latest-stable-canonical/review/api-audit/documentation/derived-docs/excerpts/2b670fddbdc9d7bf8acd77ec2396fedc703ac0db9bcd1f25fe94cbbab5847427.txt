@@ -1,0 +1,21 @@
+fit_predict(X, y=None)[source]
+
+Fit kernel k-means clustering using X and then predict the closest cluster each time series in X belongs to.
+
+It is more efficient to use this method than to sequentially call fit and predict.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset to predict.
+
+y
+
+Ignored
+
+Returns:
+
+labelsarray of shape=(n_ts, )
+
+Index of the cluster each sample belongs to.

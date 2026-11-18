@@ -1,0 +1,27 @@
+MDAnalysis.lib.util.parse_residue(residue)[source]
+
+Process residue string.
+
+Parameters:
+
+residue (str) – The residue must contain a 1-letter or 3-letter or 4-letter residue string, a number (the resid) and optionally an atom identifier, which must be separate from the residue with a colon (“:”). White space is allowed in between.
+
+Returns:
+
+(3-letter aa string, resid, atomname); known 1-letter aa codes are converted to 3-letter codes
+
+Return type:
+
+tuple
+
+Examples
+
+“LYS300:HZ1” –> (“LYS”, 300, “HZ1”)
+
+“K300:HZ1” –> (“LYS”, 300, “HZ1”)
+
+“K300” –> (“LYS”, 300, None)
+
+“4GB300:H6O” –> (“4GB”, 300, “H6O”)
+
+“4GB300” –> (“4GB”, 300, None)

@@ -1,0 +1,33 @@
+class MDAnalysis.analysis.encore.utils.TriangularMatrix(size, metadata=None, loadfile=None)[source]
+
+Triangular matrix class. This class is designed to provide a memory-efficient representation of a triangular matrix that still behaves as a square symmetric one. The class wraps a numpy.array object, in which data are memorized in row-major order. It also has few additional facilities to conveniently load/write a matrix from/to file. It can be accessed using the [] and () operators, similarly to a normal numpy array.
+
+Class constructor.
+
+Parameters:
+
+size (int / array_like) – Size of the matrix (number of rows or columns). If an array is provided instead, the size of the triangular matrix will be calculated and the array copied as the matrix elements. Otherwise, the matrix is just initialized to zero.
+
+metadata (dict or None) – Metadata dictionary. Used to generate the metadata attribute.
+
+loadfile (str or None) – Load the matrix from this file. All the attributes and data will be determined by the matrix file itself (i.e. metadata will be ignored); size has to be provided though.
+
+ as_array()[source]
+
+Return standard numpy array equivalent
+
+ loadz(fname)[source]
+
+Load matrix from the npz compressed numpy format.
+
+Parameters:
+
+fname (str) – Name of the file to be loaded.
+
+ savez(fname)[source]
+
+Save matrix in the npz compressed numpy format. Save metadata and data as well.
+
+Parameters:
+
+fname (str) – Name of the file to be saved.

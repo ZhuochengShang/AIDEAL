@@ -1,0 +1,121 @@
+--- a/docs/API_ORIGIN.md
++++ b/docs/API_ORIGIN.md
+@@ -22,7 +22,7 @@
+ codebase:
+   api_origin:
+     source_roots: [source]
+-    library_namespaces: [edu.ucr.cs.bdlab]
++    library_namespaces: [edu.ucr.cs.bdlab, org.apache.spark.beast]
+     external_namespaces:
+       - java
+       - javax
+@@ -44,6 +44,23 @@
+ be nonempty. Namespace matching respects qualified-name boundaries: `ownlib`
+ does not match `ownlibrary`. External namespaces are project configuration,
+ not hard-coded library-specific exclusions.
++
++The most specific matching qualified namespace wins. For example, the custom
++`org.apache.spark.beast` and `org.apache.spark.beast.sql` definitions use the
++library rule above even though `org.apache.spark` is an external rule. Unrelated
++Spark definitions remain external. A more specific external rule likewise
++overrides a broader library rule. If the same most-specific prefix occurs on
++both sides, ownership stays unresolved (`conflicting_namespace_rules`). A winning
++library namespace still requires an owned source file and valid applicable hashes.
++The policy version is `source_file_and_declaring_namespace_v2`, so ownership
++receipts distinguish this rule from the earlier overlap-conflict policy.
++
++The pinned Beast 0.10.1 source has four production files under this custom
++Spark namespace: `cg/src/main/scala/org/apache/spark/beast/CRSServer.scala`,
++`SparkSQLRegistration.scala`, `sql/EnvelopeDataType.scala`, and
++`sql/GeometryDataType.scala`. Two additional matching files are tests, not
++additional production APIs. Keep the production/test source-scope rules separate
++from this ownership rule.
+ 
+ ## Discovery and audit
+ 
+@@ -118,6 +135,6 @@
+ proves an external `map` declaration cannot supply documentation-selection
+ evidence to a custom `map` declaration.
+ 
+-The staged validation includes 20 origin tests and 22 existing offline
++The staged validation includes 24 origin tests and 22 existing offline
+ discovery/compiler-registry contracts, all passing. No provider, compiler,
+ subject-library execution or measured experiment is required by these tests.
+--- a/tests/test_api_origin.py
++++ b/tests/test_api_origin.py
+@@ -60,6 +60,39 @@
+         self.assertEqual({"library_defined":2},result["counts"])
+         self.assertEqual({"mapPixels","toString"},{r["name"]for r in result["included"]})
+ 
++    def test_beast_namespace_overrides_broad_spark_external_rule(self):
++        policy=self.cfg.raw["codebase"]["api_origin"]
++        policy["library_namespaces"]=["edu.ucr.cs.bdlab","org.apache.spark.beast"]
++        rows=[self.row(qualified_name="org.apache.spark.beast.CustomRDD.map",owner="org.apache.spark.beast.CustomRDD",is_override=True),
++              self.row(qualified_name="org.apache.spark.beast.sql.CustomSQL.map",owner="org.apache.spark.beast.sql.CustomSQL",is_override=True),
++              self.row(qualified_name="org.apache.spark.RDD.map",owner="org.apache.spark.RDD")]
++        audit=audit_api_origins(self.cfg,rows)
++        self.assertEqual({"library_defined":2,"external_defined":1},audit["counts"])
++        self.assertEqual(["org.apache.spark.beast"],audit["decisions"][0]["most_specific_namespace_matches"])
++
++    def test_narrow_library_namespace_still_requires_owned_source_file(self):
++        self.cfg.raw["codebase"]["api_origin"]["library_namespaces"]=["org.apache.spark.beast"]
++        outside=self.root/"outside.scala";outside.write_text("package org.apache.spark.beast")
++        row=self.row(qualified_name="org.apache.spark.beast.CustomRDD.map",file="outside.scala",file_sha256=sha(outside))
++        decision=audit_api_origins(self.cfg,[row])["decisions"][0]
++        self.assertEqual("unresolved",decision["status"])
++        self.assertEqual("defining_file_outside_source_roots",decision["reason"])
++
++    def test_more_specific_external_namespace_beats_broad_library_rule(self):
++        self.cfg.raw["codebase"]["api_origin"]["external_namespaces"].append("ownlib.vendor")
++        row=self.row(qualified_name="ownlib.vendor.Dependency.map",owner="ownlib.vendor.Dependency")
++        decision=audit_api_origins(self.cfg,[row])["decisions"][0]
++        self.assertEqual("external_defined",decision["status"])
++        self.assertEqual(["ownlib.vendor"],decision["most_specific_namespace_matches"])
++
++    def test_identical_specific_namespace_on_both_sides_remains_conflict(self):
++        policy=self.cfg.raw["codebase"]["api_origin"]
++        policy["library_namespaces"]=["org.apache.spark.beast"]
++        policy["external_namespaces"].append("org.apache.spark.beast")
++        decision=audit_api_origins(self.cfg,[self.row(qualified_name="org.apache.spark.beast.CustomRDD.map")])["decisions"][0]
++        self.assertEqual("unresolved",decision["status"])
++        self.assertEqual("conflicting_namespace_rules",decision["reason"])
++
+     def test_external_defining_owner_beats_local_exposure_and_same_bare_name(self):
+         rows=[self.row(),self.row(qualified_name="ownlib.Tools.map",inherited=True,
+                                 defining_owner="org.apache.spark.rdd.RDD",site_id="spark-map"),
+--- a/vendor/aideal_engine/src/aideal/api_origin.py
++++ b/vendor/aideal_engine/src/aideal/api_origin.py
+@@ -6,7 +6,7 @@
+ import json
+ from pathlib import Path
+ 
+-POLICY_VERSION = "source_file_and_declaring_namespace_v1"
++POLICY_VERSION = "source_file_and_declaring_namespace_v2"
+ 
+ 
+ def _hash(value):
+@@ -98,7 +98,11 @@
+                     "policy_sha256": policy_hash, "status": "unresolved", "reason": "missing_defining_evidence"}
+         own = [p for p in policy["library_namespaces"] if _namespace_match(namespace, p)]
+         external = [p for p in policy["external_namespaces"] if _namespace_match(namespace, p)]
+-        decision.update(library_namespace_matches=own, external_namespace_matches=external)
++        own_specificity = max(map(len, own), default=-1)
++        external_specificity = max(map(len, external), default=-1)
++        specificity = max(own_specificity, external_specificity)
++        decision.update(library_namespace_matches=own, external_namespace_matches=external,
++                        most_specific_namespace_matches=sorted({p for p in own + external if len(p) == specificity}))
+         exposure_only = bool(row.get("inherited") or row.get("import_only") or row.get("is_inherited"))
+         module_claim = owner_claims.get("defining_module")
+         owner_conflict = (len(set(normalized_owners)) > 1 or
+@@ -106,9 +110,9 @@
+                            not all(_namespace_match(value, module_claim) for value in normalized_owners)))
+         if owner_conflict:
+             decision["reason"] = "conflicting_defining_owner_evidence"
+-        elif own and external:
++        elif own and external and own_specificity == external_specificity:
+             decision["reason"] = "conflicting_namespace_rules"
+-        elif external:
++        elif external_specificity > own_specificity:
+             decision.update(status="external_defined", reason="external_declaring_namespace")
+         elif row.get("definition_kind") == "registered_sql" and not (explicit_owner and row.get("defining_file")):
+             decision["reason"] = "registered_sql_requires_defining_source_binding"

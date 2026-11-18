@@ -1,0 +1,48 @@
+outputFormat
+public
+Thumbnails.Builder
+<
+T
+>
+outputFormat
+(
+String
+format)
+Sets the compression format to use when writing the thumbnail.
+For example, to set the output format to JPEG, the following code
+can be used:
+Thumbnails.of(image)
+.size(640, 480)
+.outputFormat("JPEG")
+.toFile(thumbnail);
+or, alternatively:
+Thumbnails.of(image)
+.size(640, 480)
+.outputFormat("jpg")
+.toFile(thumbnail);
+Currently, whether or not the compression format string is valid
+dependents on whether the Java Image I/O API recognizes the string
+as a format that it supports for output. (Valid format names can
+be obtained by calling the
+ImageIO.getWriterFormatNames()
+method.)
+Calling this method to set this parameter is optional.
+Calling this method in conjunction with
+asBufferedImage()
+or
+asBufferedImages()
+will not result in any changes to the
+final result.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+format
+- The compression format to use when writing
+the thumbnail.
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If an unsupported format is
+specified.

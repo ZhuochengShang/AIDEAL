@@ -1,0 +1,17 @@
+class MDAnalysis.core.selection.NucleicSelection(parser, tokens)[source]
+
+All atoms in nucleic acid residues with recognized residue names.
+
+Recognized residue names:
+
+from the CHARMM force field ::
+
+awk ‘/RESI/ {printf “’”’”%s”’”’,”,$2 }’ top_all27_prot_na.rtf
+
+recognized: ‘ADE’, ‘URA’, ‘CYT’, ‘GUA’, ‘THY’
+
+recognized (CHARMM in Gromacs): ‘DA’, ‘DU’, ‘DC’, ‘DG’, ‘DT’
+
+Changed in version 0.8: additional Gromacs selections
+
+Changed in version 1.0.1: nucl_res changed to set (from numpy array) performance improved by ~100x on larger systems

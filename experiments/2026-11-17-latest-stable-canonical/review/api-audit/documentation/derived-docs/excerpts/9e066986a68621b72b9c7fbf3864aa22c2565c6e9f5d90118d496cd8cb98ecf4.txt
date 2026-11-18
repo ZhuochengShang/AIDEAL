@@ -1,0 +1,21 @@
+calc_representative()[source]
+
+Calculate representative auxiliary value(s) from the data in frame_data.
+
+Currently implemented options for calculating representative value are:
+
+closest: default; the value(s) from the step closest to in time to the trajectory timestep
+
+average: average of the value(s) from steps ‘assigned’ to the trajectory timestep.
+
+Additionally, if cutoff is specified, only steps within this time of the trajectory timestep are considered in calculating the representative.
+
+If no auxiliary steps were assigned to the timestep, or none fall within the cutoff, representative values are set to np.nan.
+
+Returns:
+
+Array of auxiliary value(s) ‘representative’ for the timestep.
+
+Return type:
+
+ndarray

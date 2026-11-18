@@ -1,0 +1,38 @@
+asunique(sorted=False)[source]
+
+Return a AtomGroup containing unique Atoms only, with optional sorting.
+
+If the AtomGroup is unique, this is the group itself.
+
+Parameters:
+
+sorted (bool (optional)) – Whether or not the returned AtomGroup should be sorted by index.
+
+Returns:
+
+Unique AtomGroup
+
+Return type:
+
+AtomGroup
+
+Examples
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> u = mda.Universe(PSF, DCD)
+>>> ag = u.atoms[[2, 1, 0]]
+>>> ag2 = ag.asunique(sorted=False)
+>>> ag2 is ag
+True
+>>> ag2.ix
+array([2, 1, 0])
+>>> ag3 = ag.asunique(sorted=True)
+>>> ag3 is ag
+False
+>>> ag3.ix
+array([0, 1, 2])
+>>> u.atoms[[2, 1, 1, 0, 1]].asunique(sorted=False).ix
+array([2, 1, 0])
+
+Added in version 2.0.0.

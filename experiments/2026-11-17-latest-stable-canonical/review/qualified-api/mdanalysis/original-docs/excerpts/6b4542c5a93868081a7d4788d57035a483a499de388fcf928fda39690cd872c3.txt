@@ -1,0 +1,50 @@
+MDAnalysis.core.selection.gen_selection_class(singular, attrname, dtype, per_object)[source]
+
+Selection class factory for arbitrary TopologyAttrs.
+
+Normally this should not be used except within the codebase or by developers; it is called by the metaclass MDAnalysis.core.topologyattrs._TopologyAttrMeta to auto-generate suitable selection classes by creating a token with the topology attribute (singular) name. The function uses the provided dtype to choose which Selection class to subclass:
+
+BoolSelection for booleans
+
+RangeSelection for integers
+
+FloatRangeSelection for floats
+
+_ProtoStringSelection for strings
+
+Other value types are not yet supported and will raise a ValueError. The classes are created in the _selectors module to avoid namespace clashes.
+
+Parameters:
+
+singular (str) – singular name of TopologyAttr
+
+attrname (str) – attribute name of TopologyAttr
+
+dtype (type) – type of TopologyAttr
+
+per_object (str) – level of TopologyAttr
+
+Returns:
+
+selection
+
+Return type:
+
+subclass of Selection
+
+Raises:
+
+ValueError – If dtype is not one of the supported types
+
+Example
+
+The function creates a class inside _selectors and returns it. Normally it should not need to be manually called, as it is created for each TopologyAttr:
+
+>>> gen_selection_class("resname", "resnames", object, "residue")
+<class 'MDAnalysis.core.selection._selectors.ResnameSelection'>
+
+Simply generating this selector is sufficient for the keyword to be accessible by select_atoms(), as that is automatically handled by _Selectionmeta.
+
+See also
+
+MDAnalysis.core.topologyattrs._TopologyAttrMeta,

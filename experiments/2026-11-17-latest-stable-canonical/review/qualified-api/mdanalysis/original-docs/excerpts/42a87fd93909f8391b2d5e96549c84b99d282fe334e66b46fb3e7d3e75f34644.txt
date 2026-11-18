@@ -1,0 +1,50 @@
+MDAnalysis.lib.distances.capped_distance(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, configuration: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, max_cutoff: float, min_cutoff: float | None = None, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, method: str | None = None, return_distances: bool | None = True, backend: str | None = 'serial')[source]
+
+Calculates pairs of indices corresponding to entries in the reference and configuration arrays which are separated by a distance lying within the specified cutoff(s). Optionally, these distances can be returned as well.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+An automatic guessing of the optimal method to calculate the distances is included in the function. An optional keyword for the method is also provided. Users can enforce a particular method with this functionality. Currently brute force, grid search, and periodic KDtree methods are implemented.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array with shape (3,) or (n, 3). Also accepts an AtomGroup.
+
+configuration (numpy.ndarray or AtomGroup) – Configuration coordinate array with shape (3,) or (m, 3). Also accepts an AtomGroup.
+
+max_cutoff (float) – Maximum cutoff distance between the reference and configuration.
+
+min_cutoff (float, optional) – Minimum cutoff distance between reference and configuration.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+method ({'bruteforce', 'nsgrid', 'pkdtree'}, optional) – Keyword to override the automatic guessing of the employed search method.
+
+return_distances (bool, optional) – If set to True, distances will also be returned.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+pairs (numpy.ndarray (dtype=numpy.int64, shape=(n_pairs, 2))) – Pairs of indices, corresponding to coordinates in the reference and configuration arrays such that the distance between them lies within the interval (min_cutoff, max_cutoff]. Each row in pairs is an index pair [i, j] corresponding to the i-th coordinate in reference and the j-th coordinate in configuration.
+
+distances (numpy.ndarray (dtype=numpy.float64, shape=(n_pairs,)), optional) – Distances corresponding to each pair of indices. Only returned if return_distances is True. distances[k] corresponds to the k-th pair returned in pairs and gives the distance between the coordinates reference[pairs[k, 0]] and configuration[pairs[k, 1]].
+
+pairs, distances = capped_distances(reference, configuration,
+                                    max_cutoff, return_distances=True)
+for k, [i, j] in enumerate(pairs):
+    coord1 = reference[i]
+    coord2 = configuration[j]
+    distance = distances[k]
+
+See also
+
+distance_array, MDAnalysis.lib.pkdtree.PeriodicKDTree.search, MDAnalysis.lib.nsgrid.FastNS.search
+
+Changed in version 1.0.1: nsgrid was temporarily removed and replaced with pkdtree due to issues relating to its reliability and accuracy (Issues #2919, #2229, #2345, #2670, #2930)
+
+Changed in version 1.0.2: nsgrid enabled again
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.10.0: Added the “backend” argument to select the type of acceleration of the distance calculations.

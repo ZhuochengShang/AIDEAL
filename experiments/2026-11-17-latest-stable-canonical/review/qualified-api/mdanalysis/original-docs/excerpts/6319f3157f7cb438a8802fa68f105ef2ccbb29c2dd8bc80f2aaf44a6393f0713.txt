@@ -1,0 +1,31 @@
+MDAnalysis.analysis.contacts.soft_cut_q(r, r0, beta=5.0, lambda_constant=1.8)[source]
+
+Calculate fraction of native contacts Q for a soft cut off
+
+The native contact function is defined as [2]
+
+ \[Q(r, r_0) = \frac{1}{1 + e^{\beta (r - \lambda r_0)}}\]
+
+Reasonable values for different simulation types are
+
+All Atom: lambda_constant = 1.8 (unitless)
+
+Coarse Grained: lambda_constant = 1.5 (unitless)
+
+Parameters:
+
+r (array) – Contact distances at time t
+
+r0 (array) – Contact distances at time t=0, reference distances
+
+beta (float (default 5.0 Angstrom)) – Softness of the switching function
+
+lambda_constant (float (default 1.8, unitless)) – Reference distance tolerance
+
+Returns:
+
+Q – fraction of native contacts
+
+Return type:
+
+float

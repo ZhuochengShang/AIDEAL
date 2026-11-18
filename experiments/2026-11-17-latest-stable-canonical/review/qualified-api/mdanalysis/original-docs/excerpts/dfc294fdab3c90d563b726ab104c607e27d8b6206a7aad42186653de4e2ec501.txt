@@ -1,0 +1,23 @@
+guess_masses(atom_types=None, indices_to_guess=None)[source]
+
+Guess the mass of many atoms based upon their type. For guessing masses through guess_TopologyAttrs():
+
+First try to guess masses from atom elements, if not available, try to guess masses from types and if not available, try to guess types.
+
+Parameters:
+
+atom_types (Optional[np.ndarray]) – Atom types/elements to guess masses from
+
+indices_to_guess (Optional[np.ndarray]) – Mask array for partially guess masses for certain atoms
+
+Returns:
+
+atom_masses
+
+Return type:
+
+np.ndarray dtype float64
+
+Raises:
+
+ValueError – If there are no atom types or elements to guess mass from.

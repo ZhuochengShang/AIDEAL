@@ -1,0 +1,51 @@
+net.coobird.thumbnailator.resizers (Thumbnailator API Documentation (Version 0.4.21))
+Package net.coobird.thumbnailator.resizers
+This package provides classes which perform image resizing operations which
+is used to create thumbnails with Thumbnailator.
+See:
+Description
+Interface Summary
+Resizer
+This interface is implemented by classes which perform resizing operations.
+ResizerFactory
+This interface is implemented by all classes which will return a
+Resizer
+that should be used when creating a thumbnail.
+Class Summary
+AbstractResizer
+A class which performs a resize operation on a source image and outputs the
+result to a destination image.
+BicubicResizer
+Image resizer class using bicubic interpolation for the resizing operation.
+BilinearResizer
+Image resizer class using bilinear interpolation for the resizing operation.
+DefaultResizerFactory
+This class provides factory methods which provides suitable
+Resizer
+s
+for a given situation.
+FixedResizerFactory
+A
+ResizerFactory
+that returns a specific
+Resizer
+unconditionally.
+NullResizer
+A
+Resizer
+which does not actually resize the image.
+ProgressiveBilinearResizer
+A
+Resizer
+which performs resizing operations by using
+progressive bilinear scaling.
+Enum Summary
+Resizers
+This enum can be used to select a specific
+Resizer
+in order
+to perform a resizing operation.
+Package net.coobird.thumbnailator.resizers Description
+This package provides classes which perform image resizing operations which
+is used to create thumbnails with Thumbnailator.
+Copyright © 2025. All rights reserved.

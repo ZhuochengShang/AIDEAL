@@ -1,0 +1,81 @@
+iterableBufferedImages
+public
+Iterable
+<
+BufferedImage
+>
+iterableBufferedImages
+()
+Create the thumbnails and return as a
+Iterable
+of
+BufferedImage
+s.
+Thumbnail for a given input is lazily evaluated as the
+Iterator.next()
+method is called on the iterator.
+For situations where multiple thumbnails are being generated, this
+method is preferred over the
+asBufferedImages()
+method,
+as (1) the processing does not have to complete before the method
+returns and (2) the thumbnails can be retrieved one at a time,
+potentially reducing the number of thumbnails which need to be
+retained in the heap memory, potentially reducing the chance of
+OutOfMemoryError
+s from occurring.
+If an
+IOException
+occurs during the processing of the
+thumbnail, the
+Iterable
+will return a
+null
+for that
+element.
+Notes on image types
+The image type of the
+BufferedImage
+depends on the type
+of the input image. (Specifically, the type emitted by the
+ImageReader
+associated for the file type.)
+Thumbnailator will attempt to use the same image type as the
+input if it is not specified through
+imageType(int)
+.
+This has implications when writing
+BufferedImage
+to files
+using the default JPEG writer bundled with Java. There are issues
+with the JPEG writer
+outputting wrong colors
+or
+throwing exceptions
+when writing a image containing an alpha channel.
+If outputting to a file, consider using one of the
+toFiles(Iterable)
+,
+toFiles(Rename)
+,
+toFiles(File, Rename)
+asFiles(Iterable)
+,
+asFiles(Rename)
+or
+asFiles(File, Rename)
+methods instead, as it contains workarounds to prevent issues
+mentioned in the previous paragraph.
+For more information on
+BufferedImage
+types, refer to
+BufferedImage.getType()
+.
+Returns:
+An
+Iterable
+which will provide an
+Iterator
+which returns thumbnails as
+BufferedImage
+s.

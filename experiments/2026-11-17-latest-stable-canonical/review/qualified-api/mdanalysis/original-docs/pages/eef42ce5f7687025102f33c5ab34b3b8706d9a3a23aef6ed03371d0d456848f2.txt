@@ -1,0 +1,351 @@
+13.4.1. Atom selection Hierarchy — MDAnalysis.core.selection
+
+This module contains objects that represent selections. They are constructed and then applied to the group.
+
+In general, Parser.parse() creates a Selection object from a selection string. This Selection object is then passed an AtomGroup through its apply() method to apply the Selection to the AtomGroup.
+
+This is all invisible to the user through the select_atoms() method of an AtomGroup.
+
+ class MDAnalysis.core.selection.AromaticSelection(parser, tokens)[source]
+
+Select aromatic atoms.
+
+Aromaticity is available in the aromaticities attribute and is made available through RDKit
+
+ class MDAnalysis.core.selection.BackboneSelection(parser, tokens)[source]
+
+A BackboneSelection contains all atoms with name ‘N’, ‘CA’, ‘C’, ‘O’.
+
+This excludes OT* on C-termini (which are included by, eg VMD’s backbone selection).
+
+Changed in version 1.0.1: bb_atoms changed to set (from numpy array) performance improved by ~100x on larger systems
+
+ class MDAnalysis.core.selection.BaseSelection(parser, tokens)[source]
+
+Selection of atoms in nucleobases.
+
+Recognized atom names (from CHARMM):
+
+‘N9’, ‘N7’, ‘C8’, ‘C5’, ‘C4’, ‘N3’, ‘C2’, ‘N1’, ‘C6’, ‘O6’,’N2’,’N6’, ‘O2’,’N4’,’O4’,’C5M’
+
+Changed in version 1.0.1: base_atoms changed to set (from numpy array) performance improved by ~100x on larger systems
+
+ class MDAnalysis.core.selection.BoolSelection(parser, tokens)[source]
+
+Selection for boolean values
+
+ class MDAnalysis.core.selection.ByNumSelection(parser, tokens)[source]
+
+ class MDAnalysis.core.selection.ByResSelection(parser, tokens)[source]
+
+Selects all atoms that are in the same segment and residue as selection
+
+Changed in version 1.0.0: Use "resindices" instead of "resids" (see #2669 and #2672)
+
+ MDAnalysis.core.selection.FLOAT_PATTERN = '-?\\d*\\.?\\d*(?:e[-+]?\\d+)?'
+
+Regular expression for recognizing a floating point number in a selection. Numbers such as 1.2, 1.2e-01, -1.2 are all parsed as Python floats.
+
+ class MDAnalysis.core.selection.FloatRangeSelection(parser, tokens)[source]
+
+Range selection for float values
+
+ dtype
+
+alias of float
+
+ MDAnalysis.core.selection.INT_PATTERN = '-?\\d+'
+
+Regular expression for recognizing un/signed integers in a selection.
+
+ class MDAnalysis.core.selection.NucleicBackboneSelection(parser, tokens)[source]
+
+Contains all atoms with name “P”, “C5’”, C3’”, “O3’”, “O5’”.
+
+These atoms are only recognized if they are in a residue matched by the NucleicSelection.
+
+Changed in version 1.0.1: bb_atoms changed to set (from numpy array) performance improved by ~100x on larger systems
+
+ class MDAnalysis.core.selection.NucleicSelection(parser, tokens)[source]
+
+All atoms in nucleic acid residues with recognized residue names.
+
+Recognized residue names:
+
+from the CHARMM force field ::
+
+awk ‘/RESI/ {printf “’”’”%s”’”’,”,$2 }’ top_all27_prot_na.rtf
+
+recognized: ‘ADE’, ‘URA’, ‘CYT’, ‘GUA’, ‘THY’
+
+recognized (CHARMM in Gromacs): ‘DA’, ‘DU’, ‘DC’, ‘DG’, ‘DT’
+
+Changed in version 0.8: additional Gromacs selections
+
+Changed in version 1.0.1: nucl_res changed to set (from numpy array) performance improved by ~100x on larger systems
+
+ class MDAnalysis.core.selection.NucleicSugarSelection(parser, tokens)[source]
+
+Contains all atoms with name C1’, C2’, C3’, C4’, O2’, O4’, O3’.
+
+Changed in version 1.0.1: sug_atoms changed to set (from numpy array) performance improved by ~100x on larger systems
+
+ class MDAnalysis.core.selection.PropertySelection(parser, tokens)[source]
+
+Some of the possible properties: x, y, z, radius, mass,
+
+Changed in version 2.0.0: changed == operator to use np.isclose instead of np.equals. Added atol and rtol keywords to control np.isclose tolerance.
+
+Possible splitting around operator:
+
+prop x < 5 prop x< 5 prop x <5 prop x<5
+
+ class MDAnalysis.core.selection.ProteinSelection(parser, tokens)[source]
+
+Consists of all residues with recognized residue names.
+
+Recognized residue names in ProteinSelection.prot_res.
+
+from the CHARMM force field::
+
+awk ‘/RESI/ {printf “’”’”%s”’”’,”,$2 }’ top_all27_prot_lipid.rtf
+
+manually added special CHARMM, OPLS/AA and Amber residue names.
+
+See also
+
+MDAnalysis.lib.util.convert_aa_code()
+
+Changed in version 1.0.1: prot_res changed to set (from numpy array) performance improved by ~100x on larger systems
+
+ MDAnalysis.core.selection.RANGE_PATTERN = '\\s*(?:[:-]| to )\\s*'
+
+Regular expression for recognising a range separator. Delimiters include “:”, “-”, “to” and can have arbitrary whitespace.
+
+ class MDAnalysis.core.selection.RangeSelection(parser, tokens)[source]
+
+Range selection for int values
+
+ dtype
+
+alias of int
+
+ class MDAnalysis.core.selection.ResidSelection(parser, tokens)[source]
+
+Select atoms based on numerical fields
+
+Allows the use of ‘:’, ‘-’ and ‘to’ to specify a range of values For example
+
+resid 1:10
+
+ class MDAnalysis.core.selection.SameSelection(parser, tokens)[source]
+
+Selects all atoms that have the same subkeyword value as any atom in selection
+
+Changed in version 1.0.0: Map "residue" to "resindices" and "segment" to "segindices" (see #2669 and #2672)
+
+ class MDAnalysis.core.selection.SelectionParser(*p, **k)[source]
+
+A small parser for selection expressions. Demonstration of recursive descent parsing using Precedence climbing (see http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm). Transforms expressions into nested Selection tree.
+
+For reference, the grammar that we parse is
+
+E(xpression)--> Exp(0)
+Exp(p) -->      P {B Exp(q)}
+P -->           U Exp(q) | "(" E ")" | v
+B(inary) -->    "and" | "or"
+U(nary) -->     "not"
+T(erms) -->     segid [value]
+                | resname [value]
+                | resid [value]
+                | name [value]
+                | type [value]
+
+ expect(token)[source]
+
+Anticipate and remove a given token
+
+ parse(selectstr, selgroups, periodic=None, atol=1e-08, rtol=1e-05, sorted=True, rdkit_kwargs=None, smarts_kwargs=None)[source]
+
+Create a Selection object from a string.
+
+Parameters:
+
+selectstr (str) – The string that describes the selection
+
+selgroups (AtomGroups) – AtomGroups to be used in group selections
+
+periodic (bool, optional) – for distance based selections, whether to consider periodic boundary conditions
+
+atol (float, optional) – The absolute tolerance parameter for float comparisons. Passed to numpy.isclose().
+
+rtol (float, optional) – The relative tolerance parameter for float comparisons. Passed to numpy.isclose().
+
+sorted (bool, optional) – Whether to sorted the output AtomGroup.
+
+rdkit_kwargs (dict, optional) – Arguments passed to the RDKitConverter when using selection based on SMARTS queries
+
+smarts_kwargs (dict, optional) – Arguments passed internally to RDKit’s GetSubstructMatches.
+
+Returns:
+
+The appropriate Selection object. Use the .apply method on
+
+this to perform the selection.
+
+Raises:
+
+SelectionError – If anything goes wrong in creating the Selection object.
+
+Changed in version 2.0.0: Added atol and rtol keywords to select float values. Added rdkit_kwargs to pass arguments to the RDKitConverter
+
+Changed in version 2.2.0: Added smarts_kwargs argument, allowing users to pass a a dictionary of arguments to RDKit’s GetSubstructMatches.
+
+ class MDAnalysis.core.selection.SingleCharSelection(parser, tokens)[source]
+
+for when an attribute is just a single character, eg RSChirality
+
+Added in version 2.1.0.
+
+ class MDAnalysis.core.selection.SmartsSelection(parser, tokens)[source]
+
+Select atoms based on SMARTS queries.
+
+Uses RDKit to run the query and converts the result to MDAnalysis. Supports chirality.
+
+Changed in version 2.2.0: rdkit_wargs and smarts_kwargs can now be passed to control the behaviour of the RDKit converter and RDKit’s GetSubstructMatches respectively. The default maxMatches value passed to GetSubstructMatches has been changed from 1000 to max(1000, n_atoms * 10) in order to limit cases where too few matches were generated. A warning is now also thrown if maxMatches has been reached.
+
+ class MDAnalysis.core.selection.WaterSelection(parser, tokens)[source]
+
+All atoms in water residues with recognized water residue names.
+
+Recognized residue names:
+
+recognized 3 Letter resnames: ‘H2O’, ‘HOH’, ‘OH2’, ‘HHO’, ‘OHH’
+
+‘TIP’, ‘T3P’, ‘T4P’, ‘T5P’, ‘SOL’, ‘WAT’
+
+recognized 4 Letter resnames: ‘TIP2’, ‘TIP3’, ‘TIP4’
+
+Added in version 2.9.0.
+
+ MDAnalysis.core.selection.gen_selection_class(singular, attrname, dtype, per_object)[source]
+
+Selection class factory for arbitrary TopologyAttrs.
+
+Normally this should not be used except within the codebase or by developers; it is called by the metaclass MDAnalysis.core.topologyattrs._TopologyAttrMeta to auto-generate suitable selection classes by creating a token with the topology attribute (singular) name. The function uses the provided dtype to choose which Selection class to subclass:
+
+BoolSelection for booleans
+
+RangeSelection for integers
+
+FloatRangeSelection for floats
+
+_ProtoStringSelection for strings
+
+Other value types are not yet supported and will raise a ValueError. The classes are created in the _selectors module to avoid namespace clashes.
+
+Parameters:
+
+singular (str) – singular name of TopologyAttr
+
+attrname (str) – attribute name of TopologyAttr
+
+dtype (type) – type of TopologyAttr
+
+per_object (str) – level of TopologyAttr
+
+Returns:
+
+selection
+
+Return type:
+
+subclass of Selection
+
+Raises:
+
+ValueError – If dtype is not one of the supported types
+
+Example
+
+The function creates a class inside _selectors and returns it. Normally it should not need to be manually called, as it is created for each TopologyAttr:
+
+>>> gen_selection_class("resname", "resnames", object, "residue")
+<class 'MDAnalysis.core.selection._selectors.ResnameSelection'>
+
+Simply generating this selector is sufficient for the keyword to be accessible by select_atoms(), as that is automatically handled by _Selectionmeta.
+
+See also
+
+MDAnalysis.core.topologyattrs._TopologyAttrMeta,
+
+ MDAnalysis.core.selection.grab_not_keywords(tokens)[source]
+
+Pop tokens from the left until you hit a keyword
+
+Keywords can be escaped with a backslash to allow their use as names, e.g. ‘protein’
+
+Parameters:
+
+tokens (collections.deque) – deque of strings, some tokens some not
+
+Returns:
+
+values – All non keywords found until a keyword was hit
+
+Return type:
+
+list of strings
+
+Note
+
+This function pops the values from the deque
+
+Examples
+
+grab_not_keywords([‘H’, ‘and’,’resname’, ‘MET’]) >>> [‘H’]
+
+grab_not_keywords([‘H’, ‘Ca’, ‘N’, ‘and’,’resname’, ‘MET’]) >>> [‘H’, ‘Ca’ ,’N’]
+
+grab_not_keywords([‘and’,’resname’, ‘MET’]) >>> []
+
+ MDAnalysis.core.selection.is_keyword(val)[source]
+
+Is val a selection keyword?
+
+Returns False on any of the following strings:
+
+keys in SELECTIONDICT (tokens from Selection objects)
+
+keys in OPERATIONS (tokens from LogicOperations)
+
+(Parentheses)
+
+The value None (used as EOF in selection strings)
+
+ MDAnalysis.core.selection.join_separated_values(values)[source]
+
+Join range values that are separated by whitespace
+
+Parameters:
+
+values (list) – list of value strings
+
+Returns:
+
+values
+
+Return type:
+
+list of strings
+
+Examples
+
+join_separated_values([‘37’, ‘to’, ‘22’]) >>> [‘37 to 22’]
+
+Added in version 2.0.0.
+
+ MDAnalysis.core.selection.return_empty_on_apply(func)[source]
+
+Decorator to return empty AtomGroups from the apply() function without evaluating it

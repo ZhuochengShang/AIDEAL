@@ -1,0 +1,60 @@
+outputQuality
+public
+Thumbnails.Builder
+<
+T
+>
+outputQuality
+(double quality)
+Sets the output quality of the compression algorithm used to
+compress the thumbnail when it is written to an external destination
+such as a file or output stream.
+The value is a
+double
+between
+0.0d
+and
+1.0d
+where
+0.0d
+indicates the minimum quality and
+1.0d
+indicates the maximum quality settings should be used for by the
+compression codec.
+This method is a convenience method for
+outputQuality(float)
+where the
+double
+argument type is accepted instead of a
+float
+.
+Calling this method to set this parameter is optional.
+Calling this method in conjunction with
+asBufferedImage()
+or
+asBufferedImages()
+will not result in any changes to the
+final result.
+Calling this method multiple times, or the
+outputQuality(float)
+in conjunction with this method will
+result in an
+IllegalStateException
+to be thrown.
+Implementation note:
+Compression quality settings are ignored when the underlying
+image writer does not support compression. This behavior is subject
+to change in the future.
+Parameters:
+quality
+- The compression quality to use when writing
+the thumbnail.
+Returns:
+Reference to this object.
+Throws:
+IllegalArgumentException
+- If the argument is less than
+0.0d
+or is greater than
+1.0d
+.

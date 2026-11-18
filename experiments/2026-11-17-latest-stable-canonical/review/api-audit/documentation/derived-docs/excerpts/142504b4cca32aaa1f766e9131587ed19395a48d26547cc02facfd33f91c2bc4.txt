@@ -1,0 +1,27 @@
+solve(p_guess=None)[source]
+
+Fit results to an multi exponential decay and integrate to find characteristic time
+
+Parameters:
+
+p_guess (tuple of floats, optional) – Initial guess for the leastsq fit, must match the shape of the expected coefficients
+
+Continuous defition results are fitted to a double exponential with scipy.optimize.leastsq(), intermittent definition are fit to a triple exponential.
+
+The results of this fitting procedure are saved into the fit, tau and estimate keys in the solution dict.
+
+fit contains the coefficients, (A1, tau1, tau2) or (A1, A2, tau1, tau2, tau3)
+
+tau contains the calculated lifetime in ps for the hydrogen bonding
+
+estimate contains the estimate provided by the fit of the time
+
+autocorrelation function
+
+In addition, the output of the scipy.optimize.leastsq() function is saved into the solution dict
+
+infodict
+
+mesg
+
+ier

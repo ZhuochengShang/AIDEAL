@@ -1,0 +1,42 @@
+tslearn.utils.from_pyflux_dataset(X)[source]
+
+Transform a pyflux-compatible dataset into a tslearn dataset.
+
+Parameters:
+
+X: pandas data-frame
+
+pyflux-formatted dataset
+
+Returns:
+
+array, shape=(n_ts, sz, d), where n_ts=1
+
+tslearn-formatted dataset. Column order is kept the same as in the original data frame.
+
+Notes
+
+Conversion from/to pyflux format requires pandas to be installed.
+
+Examples
+
+>>> import pandas as pd
+>>> pyflux_df = pd.DataFrame()
+>>> pyflux_df["dim_0"] = numpy.random.rand(10)
+>>> tslearn_arr = from_pyflux_dataset(pyflux_df)
+>>> tslearn_arr.shape
+(1, 10, 1)
+>>> pyflux_df = pd.DataFrame()
+>>> pyflux_df["dim_0"] = numpy.random.rand(10)
+>>> pyflux_df["dim_1"] = numpy.random.rand(10)
+>>> pyflux_df["dim_2"] = numpy.random.rand(10)
+>>> tslearn_arr = from_pyflux_dataset(pyflux_df)
+>>> tslearn_arr.shape
+(1, 10, 3)
+>>> pyflux_arr = numpy.random.randn(10, 1, 16)
+>>> from_pyflux_dataset(
+...     pyflux_arr
+... )
+Traceback (most recent call last):
+...
+ValueError: X is not a valid input pyflux array.

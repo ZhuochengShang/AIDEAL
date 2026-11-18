@@ -1,0 +1,153 @@
+4.3.7.1.7. Utility functions for ENCORE
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ class MDAnalysis.analysis.encore.utils.ParallelCalculation(n_jobs, function, args=None, kwargs=None)[source]
+
+Generic parallel calculation class. Can use arbitrary functions, arguments to functions and kwargs to functions.
+
+ n_jobs
+
+Number of cores to be used for parallel calculation. If -1 use all available cores.
+
+Type:
+
+int
+
+ function
+
+Function to be run in parallel.
+
+Type:
+
+callable object
+
+ args
+
+Each tuple contains the arguments that will be passed to function(). This means that a call to function() is performed for each tuple. function is called as function(*args, **kwargs). Runs are distributed on the requested numbers of cores.
+
+Type:
+
+list of tuples
+
+ kwargs
+
+Each tuple contains the named arguments that will be passed to function, similarly as described for the args attribute.
+
+Type:
+
+list of dicts
+
+ nruns
+
+Number of runs to be performed. Must be equal to len(args) and len(kwargs).
+
+Type:
+
+int
+
+Parameters:
+
+n_jobs (int) – Number of cores to be used for parallel calculation. If -1 use all available cores.
+
+function (object that supports __call__, as functions) – function to be run in parallel.
+
+args (list of tuples) – Arguments for function; see the ParallelCalculation class description.
+
+kwargs (list of dicts or None) – kwargs for function; see the ParallelCalculation class description.
+
+ run()[source]
+
+Run parallel calculation.
+
+Returns:
+
+results – int is the number of the calculation corresponding to a certain argument in the args list, and object is the result of corresponding calculation. For instance, in (3, output), output is the return of function(*args[3], **kwargs[3]).
+
+Return type:
+
+tuple of ordered tuples (int, object)
+
+ worker(q, results)[source]
+
+Generic worker. Will run function with the prescribed args and kwargs.
+
+Parameters:
+
+q (multiprocessing.Manager.Queue object) – work queue, from which the worker fetches arguments and messages
+
+results (multiprocessing.Manager.Queue object) – results queue, where results are put after each calculation is finished
+
+ class MDAnalysis.analysis.encore.utils.TriangularMatrix(size, metadata=None, loadfile=None)[source]
+
+Triangular matrix class. This class is designed to provide a memory-efficient representation of a triangular matrix that still behaves as a square symmetric one. The class wraps a numpy.array object, in which data are memorized in row-major order. It also has few additional facilities to conveniently load/write a matrix from/to file. It can be accessed using the [] and () operators, similarly to a normal numpy array.
+
+Class constructor.
+
+Parameters:
+
+size (int / array_like) – Size of the matrix (number of rows or columns). If an array is provided instead, the size of the triangular matrix will be calculated and the array copied as the matrix elements. Otherwise, the matrix is just initialized to zero.
+
+metadata (dict or None) – Metadata dictionary. Used to generate the metadata attribute.
+
+loadfile (str or None) – Load the matrix from this file. All the attributes and data will be determined by the matrix file itself (i.e. metadata will be ignored); size has to be provided though.
+
+ as_array()[source]
+
+Return standard numpy array equivalent
+
+ loadz(fname)[source]
+
+Load matrix from the npz compressed numpy format.
+
+Parameters:
+
+fname (str) – Name of the file to be loaded.
+
+ savez(fname)[source]
+
+Save matrix in the npz compressed numpy format. Save metadata and data as well.
+
+Parameters:
+
+fname (str) – Name of the file to be saved.
+
+ MDAnalysis.analysis.encore.utils.merge_universes(universes)[source]
+
+Merge list of universes into one
+
+Parameters:
+
+universes (list of Universe objects)
+
+Return type:
+
+Universe object
+
+ MDAnalysis.analysis.encore.utils.trm_indices(a, b)[source]
+
+Generate (i,j) indeces of a triangular matrix, between elements a and b. The matrix size is automatically determined from the number of elements. For instance: trm_indices((0,0),(2,1)) yields (0,0) (1,0) (1,1) (2,0) (2,1).
+
+Parameters:
+
+a ((int i, int j) tuple) – starting matrix element.
+
+b ((int i, int j) tuple) – final matrix element.
+
+ MDAnalysis.analysis.encore.utils.trm_indices_diag(n)[source]
+
+generate (i,j) indeces of a triangular matrix of n rows (or columns), with diagonal
+
+Parameters:
+
+n (int) – Matrix size
+
+ MDAnalysis.analysis.encore.utils.trm_indices_nodiag(n)[source]
+
+generate (i,j) indeces of a triangular matrix of n rows (or columns), without diagonal (e.g. no elements (0,0),(1,1),…,(n,n))
+
+Parameters:
+
+n (int) – Matrix size
+
+ MDAnalysis.analysis.encore.cutils.PureRMSD(coordsi, coordsj, atomsn, masses, summasses)

@@ -1,0 +1,31 @@
+mir_eval.display.hierarchy(intervals_hier, labels_hier, levels=None, ax=None, **kwargs)
+
+Plot a hierarchical segmentation
+
+Parameters:
+
+intervals_hierlist of np.ndarray
+
+A list of segmentation intervals. Each element should be an n-by-2 array of segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals(). Segmentations should be ordered by increasing specificity.
+
+labels_hierlist of list-like
+
+A list of segmentation labels. Each element should be a list of labels for the corresponding element in intervals_hier.
+
+levelslist of string
+
+Each element levels[i] is a label for the `i th segmentation. This is used in the legend to denote the levels in a segment hierarchy.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the intervals. If none is provided, a new set of axes is created.
+
+**kwargs
+
+Additional keyword arguments to labeled_intervals.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes

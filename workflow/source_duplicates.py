@@ -35,12 +35,18 @@ LIMITATIONS = [
 
 
 def _digest(value):
+    # Hash literal bytes directly. For a structured value, sort its JSON keys before
+    # hashing so key order has no effect.
     payload = value if isinstance(value, bytes) else json.dumps(value, sort_keys=True).encode()
     return hashlib.sha256(payload).hexdigest()
 
 
 def _matches(path, patterns):
+    # Match repository paths segment by segment. An empty list of patterns leaves the
+    # path unrestricted.
     def match(parts, pattern):
+        # A double-star segment can match zero or more path parts. Ordinary glob
+        # segments consume one part at a time.
         if not pattern:
             return not parts
         if pattern[0] == '**':
@@ -50,9 +56,13 @@ def _matches(path, patterns):
 
 
 def _files(root, patterns):
+    # Collect paths, exclusions, and the discovery mode. Use the index for the tracked
+    # path list, then scan the working copies of those files.
     env = {**os.environ, 'GIT_OPTIONAL_LOCKS': '0'}
     skipped = []
     def git(*args):
+        # Run the discovery command with optional Git locks disabled and a timeout.
+        # The caller checks its return code.
         return subprocess.run(['git', '-C', str(root), *args], capture_output=True,
                               timeout=15, env=env)
     try:
@@ -76,6 +86,8 @@ def _files(root, patterns):
             raise ValueError('Cannot read the Git repository; refusing a filesystem fallback')
         paths = []
         def fail_discovery(error):
+            # Turn a filesystem walk error into a failed discovery so an unreadable
+            # directory cannot silently lower the scan counts.
             raise ValueError('Unable to enumerate source scope: ' + str(error))
         for base, dirs, files in os.walk(root, followlinks=False, onerror=fail_discovery):
             skipped.extend({'path': (Path(base) / d).relative_to(root).as_posix(),
@@ -98,9 +110,13 @@ def _files(root, patterns):
 
 
 def _python_functions(raw, path):
+    # Parse the source without importing it. Return the eligible declarations and the
+    # number excluded by the scan rules.
     tree = ast.parse(raw, filename=path, type_comments=True)
     result, excluded = [], 0
     def visit(body, prefix=''):
+        # Visit direct module and class declarations. Carry the class prefix in names
+        # and count skipped declarations in the enclosing scan.
         nonlocal excluded
         for node in body:
             if isinstance(node, ast.ClassDef):
@@ -131,6 +147,8 @@ def _python_functions(raw, path):
 
 def _tokens(text, language):
     """Keep literal bytes/identifiers; discard comments without treating their braces as code."""
+    # Return each token with its starting line and character offset. Keep Scala
+    # newlines for later signature and body parsing.
     tokens, i, line = [], 0, 1
     while i < len(text):
         start, start_line, char = i, line, text[i]
@@ -194,11 +212,15 @@ def _tokens(text, language):
 
 
 def _lexical_functions(raw, path, language):
+    # Use tokens to identify named functions with braced bodies. Return structural
+    # fingerprints and the number of trivial bodies skipped.
     text = raw.decode('utf-8')
     if language == 'java' and re.search(r'\\u+[0-9a-fA-F]{4}', text):
         raise ValueError('Java Unicode preprocessing requires a compiler parser')
     tokens = _tokens(text, language)
     values = [t[0] for t in tokens]
+    # Pair delimiters first so extraction can skip complete parameter lists and
+    # function bodies.
     pairs, stack = {}, []
     for i, value in enumerate(values):
         if value in ('(', '[', '{'):
@@ -272,6 +294,8 @@ def _lexical_functions(raw, path, language):
 
 def scan_duplicates(repository, *, source_globs=None):
     """Return JSON-compatible evidence and suggestions; never change library files."""
+    # Read the selected source files and group functions by language and structural
+    # fingerprint. Keep coverage and parse errors with the results.
     root = Path(repository).expanduser().resolve(strict=True)
     if not root.is_dir():
         raise ValueError('Repository must be a directory')
@@ -321,6 +345,8 @@ def scan_duplicates(repository, *, source_globs=None):
                 groups_by_key[(language, key)].append(entry)
         except (OSError, SyntaxError, UnicodeError, ValueError, RecursionError) as exc:
             errors.append({'path': name, 'language': language, 'type': type(exc).__name__, 'message': str(exc)})
+    # A repeated fingerprint identifies candidates to review. Check API behavior
+    # before extracting any shared implementation.
     groups = []
     for (language, key), members in sorted(groups_by_key.items()):
         if len(members) < 2:
@@ -346,6 +372,8 @@ def scan_duplicates(repository, *, source_globs=None):
 
 def compare_duplicate_reports(before, after):
     """Compare observed candidates, refusing to claim reduction after coverage failures."""
+    # Check that both scans used compatible settings and completed their selected
+    # scope before calculating changes in candidate counts.
     reasons = []
     for field in ('schema_version', 'analyzer', 'settings', 'scope'):
         if field not in before or field not in after or before[field] != after[field]:

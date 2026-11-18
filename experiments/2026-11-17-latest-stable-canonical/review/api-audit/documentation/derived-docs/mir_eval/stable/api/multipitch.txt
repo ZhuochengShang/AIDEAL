@@ -1,0 +1,345 @@
+mir_eval.multipitch
+
+The goal of multiple f0 (multipitch) estimation and tracking is to identify all of the active fundamental frequencies in each time frame in a complex music signal.
+
+Conventions
+
+Multipitch estimates are represented by a timebase and a corresponding list of arrays of frequency estimates. Frequency estimates may have any number of frequency values, including 0 (represented by an empty array). Time values are in units of seconds and frequency estimates are in units of Hz.
+
+The timebase of the estimate time series should ideally match the timebase of the reference time series, but if this is not the case, the estimate time series is resampled using a nearest neighbor interpolation to match the estimate. Time values in the estimate time series that are outside of the range of the reference time series are given null (empty array) frequencies.
+
+By default, a frequency is “correct” if it is within 0.5 semitones of a reference frequency. Frequency values are compared by first mapping them to log-2 semitone space, where the distance between semitones is constant. Chroma-wrapped frequency values are computed by taking the log-2 frequency values modulo 12 to map them down to a single octave. A chroma-wrapped frequency estimate is correct if it’s single-octave value is within 0.5 semitones of the single-octave reference frequency.
+
+The metrics are based on those described in [1] and [2].
+
+Metrics
+
+mir_eval.multipitch.metrics(): Precision, Recall, Accuracy, Substitution, Miss, False Alarm, and Total Error scores based both on raw frequency values and values mapped to a single octave (chroma).
+
+References
+
+ mir_eval.multipitch.validate(ref_time, ref_freqs, est_time, est_freqs)
+
+Check that the time and frequency inputs are well-formed.
+
+Parameters:
+
+ref_timenp.ndarray
+
+reference time stamps in seconds
+
+ref_freqslist of np.ndarray
+
+reference frequencies in Hz
+
+est_timenp.ndarray
+
+estimate time stamps in seconds
+
+est_freqslist of np.ndarray
+
+estimated frequencies in Hz
+
+ mir_eval.multipitch.resample_multipitch(times, frequencies, target_times)
+
+Resamples multipitch time series to a new timescale using nearest neighbor interpolation. Values in target_times outside the range of times return no pitch estimate.
+
+Parameters:
+
+timesnp.ndarray
+
+Array of time stamps
+
+frequencieslist of np.ndarray
+
+List of np.ndarrays of frequency values
+
+target_timesnp.ndarray
+
+Array of target time stamps
+
+Returns:
+
+frequencies_resampledlist of numpy arrays
+
+Frequency list of lists resampled to new timebase
+
+ mir_eval.multipitch.frequencies_to_midi(frequencies, ref_frequency=440.0)
+
+Convert frequencies to continuous MIDI values.
+
+Parameters:
+
+frequencieslist of np.ndarray
+
+Original frequency values
+
+ref_frequencyfloat
+
+reference frequency in Hz.
+
+Returns:
+
+frequencies_midilist of np.ndarray
+
+Continuous MIDI frequency values.
+
+ mir_eval.multipitch.midi_to_chroma(frequencies_midi)
+
+Wrap MIDI frequencies to a single octave (chroma).
+
+Parameters:
+
+frequencies_midilist of np.ndarray
+
+Continuous MIDI note frequency values.
+
+Returns:
+
+frequencies_chromalist of np.ndarray
+
+Midi values wrapped to one octave.
+
+ mir_eval.multipitch.compute_num_freqs(frequencies)
+
+Compute the number of frequencies for each time point.
+
+Parameters:
+
+frequencieslist of np.ndarray
+
+Frequency values
+
+Returns:
+
+num_freqsnp.ndarray
+
+Number of frequencies at each time point.
+
+ mir_eval.multipitch.compute_num_true_positives(ref_freqs, est_freqs, window=0.5, chroma=False)
+
+Compute the number of true positives in an estimate given a reference. A frequency is correct if it is within a quartertone of the correct frequency.
+
+Parameters:
+
+ref_freqslist of np.ndarray
+
+reference frequencies (MIDI)
+
+est_freqslist of np.ndarray
+
+estimated frequencies (MIDI)
+
+windowfloat
+
+Window size, in semitones
+
+chromabool
+
+If True, computes distances modulo n. If True, ref_freqs and est_freqs should be wrapped modulo n.
+
+Returns:
+
+true_positivesnp.ndarray
+
+Array the same length as ref_freqs containing the number of true positives.
+
+ mir_eval.multipitch.compute_accuracy(true_positives, n_ref, n_est)
+
+Compute accuracy metrics.
+
+Parameters:
+
+true_positivesnp.ndarray
+
+Array containing the number of true positives at each time point.
+
+n_refnp.ndarray
+
+Array containing the number of reference frequencies at each time point.
+
+n_estnp.ndarray
+
+Array containing the number of estimate frequencies at each time point.
+
+Returns:
+
+precisionfloat
+
+sum(true_positives)/sum(n_est)
+
+recallfloat
+
+sum(true_positives)/sum(n_ref)
+
+accfloat
+
+sum(true_positives)/sum(n_est + n_ref - true_positives)
+
+ mir_eval.multipitch.compute_err_score(true_positives, n_ref, n_est)
+
+Compute error score metrics.
+
+Parameters:
+
+true_positivesnp.ndarray
+
+Array containing the number of true positives at each time point.
+
+n_refnp.ndarray
+
+Array containing the number of reference frequencies at each time point.
+
+n_estnp.ndarray
+
+Array containing the number of estimate frequencies at each time point.
+
+Returns:
+
+e_subfloat
+
+Substitution error
+
+e_missfloat
+
+Miss error
+
+e_fafloat
+
+False alarm error
+
+e_totfloat
+
+Total error
+
+ mir_eval.multipitch.metrics(ref_time, ref_freqs, est_time, est_freqs, **kwargs)
+
+Compute multipitch metrics. All metrics are computed at the ‘macro’ level such that the frame true positive/false positive/false negative rates are summed across time and the metrics are computed on the combined values.
+
+Parameters:
+
+ref_timenp.ndarray
+
+Time of each reference frequency value
+
+ref_freqslist of np.ndarray
+
+List of np.ndarrays of reference frequency values
+
+est_timenp.ndarray
+
+Time of each estimated frequency value
+
+est_freqslist of np.ndarray
+
+List of np.ndarrays of estimate frequency values
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+precisionfloat
+
+Precision (TP/(TP + FP))
+
+recallfloat
+
+Recall (TP/(TP + FN))
+
+accuracyfloat
+
+Accuracy (TP/(TP + FP + FN))
+
+e_subfloat
+
+Substitution error
+
+e_missfloat
+
+Miss error
+
+e_fafloat
+
+False alarm error
+
+e_totfloat
+
+Total error
+
+precision_chromafloat
+
+Chroma precision
+
+recall_chromafloat
+
+Chroma recall
+
+accuracy_chromafloat
+
+Chroma accuracy
+
+e_sub_chromafloat
+
+Chroma substitution error
+
+e_miss_chromafloat
+
+Chroma miss error
+
+e_fa_chromafloat
+
+Chroma false alarm error
+
+e_tot_chromafloat
+
+Chroma total error
+
+Examples
+
+>>> ref_time, ref_freqs = mir_eval.io.load_ragged_time_series(
+...     'reference.txt')
+>>> est_time, est_freqs = mir_eval.io.load_ragged_time_series(
+...     'estimated.txt')
+>>> metris_tuple = mir_eval.multipitch.metrics(
+...     ref_time, ref_freqs, est_time, est_freqs)
+
+ mir_eval.multipitch.evaluate(ref_time, ref_freqs, est_time, est_freqs, **kwargs)
+
+Evaluate two multipitch (multi-f0) transcriptions, where the first is treated as the reference (ground truth) and the second as the estimate to be evaluated (prediction).
+
+Parameters:
+
+ref_timenp.ndarray
+
+Time of each reference frequency value
+
+ref_freqslist of np.ndarray
+
+List of np.ndarrays of reference frequency values
+
+est_timenp.ndarray
+
+Time of each estimated frequency value
+
+est_freqslist of np.ndarray
+
+List of np.ndarrays of estimate frequency values
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_ragged_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_ragged_time_series('est.txt')
+>>> scores = mir_eval.multipitch.evaluate(ref_time, ref_freq,
+...                                       est_time, est_freq)

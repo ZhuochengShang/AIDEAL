@@ -1,0 +1,28 @@
+bbox(wrap=False)
+
+Return the bounding box of the selection.
+
+The lengths A,B,C of the orthorhombic enclosing box are
+
+L = AtomGroup.bbox()
+A,B,C = L[1] - L[0]
+
+Parameters:
+
+wrap (bool, optional) – If True, move all Atoms to the primary unit cell before calculation. [False]
+
+Returns:
+
+corners – 2x3 array giving corners of bounding box as [[xmin, ymin, zmin], [xmax, ymax, zmax]].
+
+Return type:
+
+numpy.ndarray
+
+Added in version 0.7.2.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 1.0.0: Removed flags affecting default behaviour
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.

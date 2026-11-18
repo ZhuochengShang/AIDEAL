@@ -1,0 +1,65 @@
+MDAnalysis.analysis.align.sequence_alignment(*args, **kwds)
+
+sequence_alignment is deprecated!
+
+Generate a global sequence alignment between two residue groups.
+
+The residues in reference and mobile will be globally aligned. The global alignment uses the Needleman-Wunsch algorithm as implemented in Bio.Align.PairwiseAligner. The parameters of the dynamic programming algorithm can be tuned with the keywords. The defaults should be suitable for two similar sequences. For sequences with low sequence identity, more specialized tools such as clustalw, muscle, tcoffee, or similar should be used.
+
+Parameters:
+
+mobile (AtomGroup) – Atom group to be aligned
+
+reference (AtomGroup) – Atom group to be aligned against
+
+match_score (float (optional), default 2) – score for matching residues, default 2
+
+mismatch_penalty (float (optional), default -1) – penalty for residues that do not match , default : -1
+
+gap_penalty (float (optional), default -2) – penalty for opening a gap; the high default value creates compact alignments for highly identical sequences but might not be suitable for sequences with low identity, default : -2
+
+gapextension_penalty (float (optional), default -0.1) – penalty for extending a gap, default: -0.1
+
+Returns:
+
+alignment – Tuple of top sequence matching output (‘Sequence A’, ‘Sequence B’, score, begin, end)
+
+Return type:
+
+tuple
+
+Raises:
+
+ImportError – If optional dependency Biopython is not available.
+
+Notes
+
+If you prefer to work directly with Bio.Align objects then you can run your alignment with Bio.Alig.PairwiseAligner as
+
+import Bio.Align.PairwiseAligner
+
+aligner = Bio.Align.PairwiseAligner(
+   mode="global",
+   match_score=match_score,
+   mismatch_score=mismatch_penalty,
+   open_gap_score=gap_penalty,
+   extend_gap_score=gapextension_penalty)
+aln = aligner.align(reference.residues.sequence(format="Seq"),
+                    mobile.residues.sequence(format="Seq"))
+
+# choose top alignment with highest score
+topalignment = aln[0]
+
+The topalignment is a Bio.Align.PairwiseAlignment instance that can be used in your bioinformatics workflows.
+
+See also
+
+BioPython documentation for PairwiseAligner. Alternatively, use fasta2select() with clustalw2 and the option is_aligned=False.
+
+Added in version 0.10.0.
+
+Changed in version 2.4.0: Replace use of deprecated Bio.pairwise2.align.globalms() with Bio.Align.PairwiseAligner.
+
+Changed in version 2.7.0: Biopython is now an optional dependency which this method requires.
+
+Deprecated since version 2.4.0: See the documentation under Notes on how to directly useBio.Align.PairwiseAligner with ResidueGroups. sequence_alignment will be removed in release 3.0.

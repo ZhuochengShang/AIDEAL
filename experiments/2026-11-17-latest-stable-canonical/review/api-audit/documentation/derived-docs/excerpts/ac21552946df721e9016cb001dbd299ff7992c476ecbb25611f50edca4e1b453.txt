@@ -1,0 +1,33 @@
+class MDAnalysis.coordinates.PDB.MultiPDBWriter(filename, bonds='conect', n_atoms=None, start=0, step=1, remarks='Created by PDBWriter', convert_units=True, multiframe=None, reindex=True)[source]
+
+PDB writer that implements a subset of the PDB 3.3 standard .
+
+PDB format as used by NAMD/CHARMM: 4-letter resnames and segID, altLoc is written.
+
+By default, MultiPDBWriter writes a PDB “movie” (multi frame mode, multiframe = True), consisting of multiple models (using the MODEL and ENDMDL records).
+
+See also
+
+This, exception, single
+
+Added in version 0.7.6.
+
+Create a new PDBWriter
+
+Parameters:
+
+filename (str) – name of output file
+
+start (int (optional)) – starting timestep (the first frame will have MODEL number start + 1 because the PDB standard prescribes MODEL numbers starting at 1)
+
+step (int (optional)) – skip between subsequent timesteps
+
+remarks (str (optional)) – comments to annotate pdb file (added to the TITLE record); note that any remarks from the trajectory that serves as input are written to REMARK records with lines longer than remark_max_length (66 characters) being wrapped.
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+bonds ({"conect", "all", None} (optional)) – If set to “conect”, then only write those bonds that were already defined in an input PDB file as PDB CONECT record. If set to “all”, write all bonds (including guessed ones) to the file. None does not write any bonds. The default is “conect”.
+
+multiframe (bool (optional)) – False: write a single frame to the file; True: create a multi frame PDB file in which frames are written as MODEL … ENDMDL records. If None, then the class default is chosen. [None]
+
+reindex (bool (optional)) – If True (default), the atom serial is set to be consecutive numbers starting at 1. Else, use the atom id.

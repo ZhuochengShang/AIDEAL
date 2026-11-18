@@ -1,0 +1,65 @@
+4.3.7.1.6. bootstrap procedures — MDAnalysis.analysis.ensemble.bootstrap
+
+The module contains functions for bootstrapping either ensembles (Universe objects) or distance matrices, by resampling with replacement.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ MDAnalysis.analysis.encore.bootstrap.bootstrapped_matrix(matrix, ensemble_assignment)[source]
+
+Bootstrap an input square matrix. The resulting matrix will have the same shape as the original one, but the order of its elements will be drawn (with repetition). Separately bootstraps each ensemble.
+
+Parameters:
+
+matrix (encore.utils.TriangularMatrix) – similarity/dissimilarity matrix
+
+ensemble_assignment (numpy.array) – array of ensemble assignments. This array must be matrix.size long.
+
+Returns:
+
+this_m – bootstrapped similarity/dissimilarity matrix
+
+Return type:
+
+encore.utils.TriangularMatrix
+
+ MDAnalysis.analysis.encore.bootstrap.get_distance_matrix_bootstrap_samples(distance_matrix, ensemble_assignment, samples=100, ncores=1)[source]
+
+Calculates distance matrices corresponding to bootstrapped ensembles, by resampling with replacement.
+
+Parameters:
+
+distance_matrix (encore.utils.TriangularMatrix) – Conformational distance matrix
+
+ensemble_assignment (str) – Mapping from frames to which ensemble they are from (necessary because ensembles are bootstrapped independently)
+
+samples (int, optional) – How many bootstrap samples to create.
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1)
+
+Returns:
+
+confdistmatrix
+
+Return type:
+
+list of encore.utils.TriangularMatrix
+
+ MDAnalysis.analysis.encore.bootstrap.get_ensemble_bootstrap_samples(ensemble, samples=100)[source]
+
+Generates a bootstrapped ensemble by resampling with replacement.
+
+Parameters:
+
+ensemble (MDAnalysis.Universe) – Conformational distance matrix
+
+samples (int, optional) – How many bootstrap samples to create.
+
+Return type:
+
+list of MDAnalysis.Universe objects

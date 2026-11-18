@@ -1,0 +1,275 @@
+TimeSeriesScalerMinMax
+
+ class tslearn.preprocessing.TimeSeriesScalerMinMax(value_range=(0.0, 1.0), per_timeseries=True, per_feature=True)[source]
+
+Scaler for time series datasets.
+
+Parameters:
+
+value_rangetuple (default: (0., 1.))
+
+The minimum and maximum value for the output time series.
+
+per_timeseriesbool (default: True)
+
+Wether the scaling should be performed per time series. When per_timeseries is False, scales features based on computation led on the fitted data, so that their span in given dimensions is between min and max where value_range=(min, max). The transformation is stateless otherwise, dealing with each timeseries individually.
+
+per_featurebool (default: True)
+
+Wether the scaling should be performed per feature. Meaningless for univariate timeseries.
+
+Attributes:
+
+min_array-like of shape=(1, 1, d or 1)
+
+The miminum value(s) seen in data and used for normalization. Only available when per_timeseries is False. The shape depends on the per_feature parameters.
+
+max_array-like of shape=(1, 1, d or 1)
+
+The maximum value(s) seen in data and used for normalization. Only available when per_timeseries is False. The shape depends on the per_feature parameters.
+
+Notes
+
+NaNs within a time series are ignored when calculating min and max. A constant fitted feature uses a unit range for scaling and inverse scaling, so values in later datasets can still round-trip.
+
+Examples
+
+>>> TimeSeriesScalerMinMax(value_range=(1., 2.)).fit_transform([[0, 3, 6]])
+array([[[1. ],
+        [1.5],
+        [2. ]]])
+>>> TimeSeriesScalerMinMax(value_range=(1., 2.)).fit_transform(
+...     [[numpy.nan, 3, 6]]
+... )
+array([[[nan],
+        [ 1.],
+        [ 2.]]])
+>>> TimeSeriesScalerMinMax(value_range=(1., 2.), per_timeseries=False, per_feature=False).fit_transform(
+...    [[[1, 2], [2, 3]],
+...    [[3, 4], [4, 5]]]
+... )
+array([[[1.  , 1.25],
+        [1.25, 1.5 ]],
+
+       [[1.5 , 1.75],
+        [1.75, 2.  ]]])
+>>> scaler = TimeSeriesScalerMinMax(per_timeseries=False).fit([[3., 3.]])
+>>> scaler.inverse_transform(scaler.transform([[4., 1.]]))
+array([[[4.],
+        [1.]]])
+
+Methods
+
+fit(X[, y])
+ |
+Computes the min and max to be used for later scaling if per_timeseries is False.
+ |
+
+fit_transform(X[, y])
+ |
+Fit to data, then transform it.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+inverse_transform(X)
+ |
+Undo the scaling of X based on fitted data.
+ |
+
+set_output(*[, transform])
+ |
+Set output container.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+transform(X[, y])
+ |
+Normalizes (min-max) the dataset.
+ |
+
+ fit(X, y=None, **kwargs)[source]
+
+Computes the min and max to be used for later scaling if per_timeseries is False. Just performs dimension checks otherwise.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset reference.
+
+Returns:
+
+self
+
+ fit_transform(X, y=None, **kwargs)[source]
+
+Fit to data, then transform it.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be rescaled.
+
+Returns:
+
+numpy.ndarray
+
+Resampled time series dataset.
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ inverse_transform(X)[source]
+
+Undo the scaling of X based on fitted data. Only available when per_timeseries is False, raises RuntimeError otherwise.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Input dataset.
+
+Returns:
+
+array-like of shape (n_ts, sz, d)
+
+Transformed dataset.
+
+ set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ transform(X, y=None, **kwargs)[source]
+
+Normalizes (min-max) the dataset. If per_timeseries is True, this transformation is completely stateless, and is applied to each of the timeseries individually. Otherwise, normalization is performed based on the fitted data.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset to be rescaled.
+
+Returns:
+
+array-like of shape (n_ts, sz, d)
+
+Rescaled time series dataset.
+
+Examples using tslearn.preprocessing.TimeSeriesScalerMinMax
+
+Hyper-parameter tuning of a pipeline with KNeighbors time series classifier
+
+Hyper-parameter tuning of a pipeline with KNeighbors time series classifier
+
+Nearest neighbors
+
+Nearest neighbors
+
+DBSCAN
+
+DBSCAN
+
+Soft-DTW weighted barycenters
+
+Soft-DTW weighted barycenters
+
+Learning Shapelets: decision boundaries in 2D distance space
+
+Learning Shapelets: decision boundaries in 2D distance space
+
+Aligning discovered shapelets with timeseries
+
+Aligning discovered shapelets with timeseries
+
+Learning Shapelets
+
+Learning Shapelets
+
+SVM and GAK
+
+SVM and GAK
+
+Preprocessing
+
+Preprocessing

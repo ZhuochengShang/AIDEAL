@@ -1,0 +1,120 @@
+BufferedImageSource (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class BufferedImageSource
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.AbstractImageSource
+<
+BufferedImage
+>
+net.coobird.thumbnailator.tasks.io.BufferedImageSource
+All Implemented Interfaces:
+ImageSource
+<
+BufferedImage
+>
+public class
+BufferedImageSource
+extends
+AbstractImageSource
+<
+BufferedImage
+>
+An
+ImageSource
+which uses a
+BufferedImage
+as the source
+image.
+Author:
+coobird
+Constructor Summary
+BufferedImageSource
+(
+BufferedImage
+img)
+Instantiates a
+BufferedImageSource
+object with the
+BufferedImage
+that should be used as the source image for making
+thumbnails.
+Method Summary
+BufferedImage
+getSource
+()
+Returns the source from which the image is read or retrieved.
+BufferedImage
+read
+()
+Retrieves the image from the source.
+Methods inherited from class net.coobird.thumbnailator.tasks.io.
+AbstractImageSource
+getInputFormatName
+,
+setThumbnailParameter
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+BufferedImageSource
+public
+BufferedImageSource
+(
+BufferedImage
+img)
+Instantiates a
+BufferedImageSource
+object with the
+BufferedImage
+that should be used as the source image for making
+thumbnails.
+Parameters:
+img
+- The source image.
+Throws:
+NullPointerException
+- If the image is null.
+Method Detail
+read
+public
+BufferedImage
+read
+()
+throws
+IOException
+Description copied from interface:
+ImageSource
+Retrieves the image from the source.
+Returns:
+The image.
+Throws:
+IOException
+- When a problem occurs while reading or obtaining
+the image.
+getSource
+public
+BufferedImage
+getSource
+()
+Description copied from interface:
+ImageSource
+Returns the source from which the image is read or retrieved.
+Returns:
+The source of the image.
+Copyright © 2025. All rights reserved.

@@ -1,0 +1,13 @@
+property is_uptodate
+
+Checks whether the selection needs updating based on frame number only.
+
+Modifications to the coordinate data that render selections stale are not caught, and in those cases is_uptodate may return an erroneous value.
+
+Returns:
+
+True if the group’s selection is up-to-date, False otherwise.
+
+Return type:
+
+bool

@@ -1,0 +1,2053 @@
+<!doctype html><meta charset="utf-8"><title>Six exact R0 prompt previews</title><style>body{font:16px/1.55 system-ui;margin:30px auto;max-width:1180px;padding:0 24px;color:#18344b}a{color:#1765a6}details{border:1px solid #ccd7e2;border-radius:8px;padding:16px;margin:18px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f6fa;padding:18px;font-size:13px}summary{cursor:pointer;font-weight:bold}aside{padding:16px;background:#fff2d8}</style><a href="../../EXPERIMENT_GUIDE.html">Experiment guide</a> · <a href="../qualified-bank/INDEX.html">Full API bank</a><h1>Six exact Original R0 previews</h1><aside>These requests have not been sent. No model program, result, repair or usage receipt exists yet. The micro task asks the audience to write a test and assertions; those assertions are not an independent oracle.</aside><details><summary>mdanalysis — python:MDAnalysis.lib.distances.calc_bonds</summary><p><a href="mdanalysis.json">Complete request, context, input paths and scaffold</a></p><h3>System prompt</h3><pre>You write Python code that will be spliced into a runnable test harness.
+A runnable headless Python test harness is already in scope. The snippet is inserted inside a function and the preamble variables listed under available inputs are already defined. Write executable statements only. Import MDAnalysis submodules or optional dependencies only when the documented public call requires them. Do not define another function or process entry point. Assert a deterministic property and print a compact correctness witness containing a shape, scalar, or length.
+
+Requested target declaration (frozen canonical selection):
+Qualified name: MDAnalysis.lib.distances.calc_bonds
+Owner: 
+Declaration: def calc_bonds(coords1: Union[npt.NDArray, &#x27;AtomGroup&#x27;], coords2: Union[npt.NDArray, &#x27;AtomGroup&#x27;], box: Optional[npt.NDArray]=None, result: Optional[npt.NDArray]=None, backend: str=&#x27;serial&#x27;)
+Parameters in declaration order (5): coords1: Union[npt.NDArray, &#x27;AtomGroup&#x27;]; coords2: Union[npt.NDArray, &#x27;AtomGroup&#x27;]; box: Optional[npt.NDArray]; result: Optional[npt.NDArray]; backend: str
+Write the requested call against this owner and declaration, with its indicated parameter list.
+Verified public access paths for the same defining API: MDAnalysis.analysis.atomicdistances.calc_bonds, MDAnalysis.analysis.bat.calc_bonds, MDAnalysis.analysis.distances.calc_bonds, MDAnalysis.analysis.dssp.pydssp_numpy.calc_bonds, MDAnalysis.analysis.hydrogenbonds.hbond_autocorrel.calc_bonds, MDAnalysis.analysis.nucleicacids.calc_bonds, MDAnalysis.analysis.polymer.calc_bonds, MDAnalysis.lib.distances.calc_bonds. Use a public access path when the defining namespace is internal.
+
+Pick the input variable(s) whose type matches the API&#x27;s parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: an expert molecular-simulation researcher and scientific Python engineer using MDAnalysis for reproducible trajectory and structure analysis.
+Project: MDAnalysis (Python) - MDAnalysis 2.11.0, an object-oriented scientific Python library for reading molecular structures and trajectories, selecting atoms, transforming coordinates, and running molecular-dynamics analyses.
+Domain: Molecular-dynamics trajectory and structural analysis in Python, including topology/coordinate I/O, atom selections, geometric measurements, trajectory transformations, and reusable analysis algorithms.
+Target users: computational chemists and molecular-simulation researchers; scientific Python developers analyzing proteins and materials
+Use cases: Load a topology and trajectory into a Universe and select atoms.; Compute structural properties such as centers of mass and radii of gyration.; Iterate over trajectory frames and analyze changing coordinates.; Run RMSD, distance, contact, and other MDAnalysis.analysis workflows.
+Constraints: A Universe owns topology and trajectory state.; AtomGroup methods operate on selected atoms at the current trajectory frame.; Analysis classes generally require construction followed by run().; Use only the five read-only fixture copies byte-verified against pinned MDAnalysisTests 2.11.0: PSF, DCD, PDB, GRO, and XTC; never substitute downloaded data.; The PSF/DCD pair is preloaded for general trajectory analysis; format-specific APIs may use the matching PDB, GRO, or XTC in mdanalysis_fixture_dir. That directory contains exactly these five approved fixtures.; Some readers and converters require optional dependencies; a missing optional package is an infrastructure outcome, not evidence that the documentation is wrong.; The adk_dims.dcd trajectory has no periodic box dimensions; use a checked-in periodic fixture when an API requires periodic boundaries.; Do not download data, invoke a GUI, or write large trajectories.; Use every name in the frozen 435-name canonical manifest without sampling; selection is structural filtering and same-name maximum arity, not a proof of arbitrary semantic equivalence.; Treat the shared fixture directory as read-only. Create any temporary or output files only in output_dir. Source-checkout fixture paths are not execution inputs.</pre><h3>Full user prompt</h3><pre>Documentation:
+===== Shared original document: pinned-root-readme:README.rst =====
+================================
+  MDAnalysis Repository README
+================================
+
+|numfocus| 
+
+|build| |cron| |cirruscron| |linters| |cov|
+
+|docs| |devdocs| |discussions|
+
+|pypi| |anaconda| |asv|
+
+MDAnalysis_ is a Python library for the analysis of computer simulations of many-body systems at the molecular scale, spanning use cases from interactions of drugs with proteins to novel materials. It is widely used in the scientific community and is written by scientists for scientists. 
+
+It works with a wide range of popular simulation packages including GROMACS, Amber, NAMD, CHARMM, DL_POLY, HOOMD, LAMMPS and many others — see the lists of supported `trajectory formats`_ and `topology formats`_.
+MDAnalysis also includes widely used analysis algorithms in the `MDAnalysis.analysis`_ module.
+
+.. _numfocus-fiscal-sponsor-attribution:
+
+The MDAnalysis project uses an `open governance model`_ and is fiscally sponsored by `NumFOCUS`_. Consider making 
+a `tax-deductible donation`_ to help the project pay for developer time, professional services, travel, workshops, and a variety of other needs.
+
+.. image:: https://www.mdanalysis.org/public/images/numfocus-sponsored-small.png
+   :alt: NumFOCUS (Fiscally Sponsored Project)
+   :target: https://numfocus.org/project/mdanalysis
+   :align: center
+
+This project is bound by a `Code of Conduct`_.
+
+|powered_by_MDA|
+
+If you use MDAnalysis_ in your project consider letting your users and the world know about it by displaying the MDAnalysis_ badge! `Embedding code`_ is available for different markups.
+
+Example analysis script
+=======================
+
+.. code:: python
+
+   import MDAnalysis as mda
+
+   # Load simulation results with a single line
+   u = mda.Universe(&#x27;topol.tpr&#x27;,&#x27;traj.trr&#x27;)
+
+   # Select atoms
+   ag = u.select_atoms(&#x27;name OH&#x27;)
+
+   # Atom data made available as Numpy arrays
+   ag.positions
+   ag.velocities
+   ag.forces
+
+   # Iterate through trajectories
+   for ts in u.trajectory:
+       print(ag.center_of_mass())
+
+
+Documentation
+=============
+
+**New users** should read the `Quickstart Guide`_ and might want to
+look at our videos_, in which core developers explain various aspects
+of MDAnalysis.
+
+**All users** should read the `User Guide`_.
+
+**Developers** may also want to refer to the `MDAnalysis API docs`_.
+
+A growing number of `tutorials`_ are available that explain how to
+conduct RMSD calculations, structural alignment, distance and contact
+analysis, and many more.
+
+
+Installation and availability
+=============================
+
+The latest release can be **installed via pip or conda** as
+described in the `Installation Quick Start`_.
+
+**Source code** is hosted in a git repository at
+https://github.com/MDAnalysis/mdanalysis and is packaged under the
+GNU Lesser General Public License, version 3 or any later version (LGPLv3+).
+Individual source code components are provided under the
+GNU Lesser General Public License, version 2.1 or any later version (LGPLv2.1+).
+Please see the file LICENSE_ for more information.
+
+
+Contributing
+============
+
+Please report **bugs** or **enhancement requests** through the `Issue
+Tracker`_. Questions can also be asked on `GitHub Discussions`_.
+
+If you are a **new developer** who would like to start contributing to
+MDAnalysis get in touch on `GitHub Discussions`_. To set up a
+development environment and run the test suite read the `developer
+guide`_.
+
+
+Citation
+========
+
+When using MDAnalysis in published work, please cite the following
+two papers:
+
+*   R\. J. Gowers, M. Linke, J. Barnoud, T. J. E. Reddy,
+    M\. N. Melo, S. L. Seyler, D. L. Dotson, J. Domanski,
+    S\. Buchoux, I. M. Kenney, and O. Beckstein. MDAnalysis:
+    A Python package for the rapid analysis of molecular
+    dynamics simulations. In S. Benthall and S. Rostrup,
+    editors, Proceedings of the 15th Python in Science
+    Conference, pages 102-109, Austin, TX, 2016. SciPy.
+    doi: `10.25080/Majora-629e541a-00e`_    
+*   N. Michaud-Agrawal, E. J. Denning, T. B. Woolf,
+    and O. Beckstein. MDAnalysis: A Toolkit for the Analysis of Molecular
+    Dynamics Simulations. *J. Comput. Chem.* **32** (2011), 2319--2327.
+    doi: `10.1002/jcc.21787`_
+
+For citations of included algorithms and sub-modules please see the references_.
+
+
+.. _NumFOCUS: https://numfocus.org/
+.. _open governance model: https://www.mdanalysis.org/pages/governance/
+.. _tax-deductible donation: https://numfocus.org/donate-to-mdanalysis
+.. _`Code of Conduct`: https://www.mdanalysis.org/conduct/
+.. _trajectory formats: https://docs.mdanalysis.org/documentation_pages/coordinates/init.html#id1
+.. _topology formats: https://docs.mdanalysis.org/documentation_pages/topology/init.html#supported-topology-formats
+.. _MDAnalysis: https://www.mdanalysis.org
+.. _LICENSE:
+   https://github.com/MDAnalysis/mdanalysis/blob/develop/LICENSE
+.. _`Installation Quick Start`:
+   https://www.mdanalysis.org/pages/installation_quick_start/
+.. _`MDAnalysis.analysis`: https://docs.mdanalysis.org/documentation_pages/analysis_modules.html
+.. _`tutorials`: https://userguide.mdanalysis.org/examples/README.html
+.. _`videos`: https://www.mdanalysis.org/pages/learning_MDAnalysis/#videos
+.. _`Quickstart Guide`:
+   https://userguide.mdanalysis.org/examples/quickstart.html
+.. _`User Guide`: https://userguide.mdanalysis.org
+.. _`MDAnalysis API docs`:
+   https://docs.mdanalysis.org
+.. _`Issue Tracker`: https://github.com/mdanalysis/mdanalysis/issues
+.. _`GitHub Discussions`:
+   https://github.com/MDAnalysis/mdanalysis/discussions
+.. _`developer guide`:
+   https://userguide.mdanalysis.org/contributing.html
+.. _`10.1002/jcc.21787`: https://dx.doi.org/10.1002/jcc.21787
+.. _`10.25080/Majora-629e541a-00e`: https://doi.org/10.25080/Majora-629e541a-00e
+.. _references: https://docs.mdanalysis.org/documentation_pages/references.html
+.. _Embedding code: https://www.mdanalysis.org/pages/citations/#powered-by-mdanalysis
+
+.. |docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
+   :alt: Documentation (latest release)
+   :target: https://docs.mdanalysis.org
+
+.. |devdocs| image:: https://img.shields.io/badge/docs-development-yellow.svg
+   :alt: Documentation (development version)
+   :target: https://docs.mdanalysis.org/dev
+
+.. |numfocus| image:: https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&amp;colorA=E1523D&amp;colorB=007D8A
+   :alt: Powered by NumFOCUS
+   :target: https://www.numfocus.org/
+
+.. |build| image:: https://github.com/MDAnalysis/mdanalysis/actions/workflows/gh-ci.yaml/badge.svg
+   :alt: Github Actions Build Status
+   :target: https://github.com/MDAnalysis/mdanalysis/actions/workflows/gh-ci.yaml
+
+.. |cron| image:: https://github.com/MDAnalysis/mdanalysis/actions/workflows/gh-ci-cron.yaml/badge.svg
+   :alt: Github Actions Cron Job Status
+   :target: https://github.com/MDAnalysis/mdanalysis/actions/workflows/gh-ci-cron.yaml
+
+.. |cirruscron| image:: https://img.shields.io/cirrus/github/MDAnalysis/mdanalysis/develop
+   :alt: Cirrus CI - Cron job status
+   :target: https://cirrus-ci.com/github/MDAnalysis/mdanalysis/develop
+
+.. |linters| image:: https://github.com/MDAnalysis/mdanalysis/actions/workflows/linters.yaml/badge.svg
+   :alt: Github Actions Linters Status
+   :target: https://github.com/MDAnalysis/mdanalysis/actions/workflows/linters.yaml
+
+.. |cov|   image:: https://codecov.io/gh/MDAnalysis/mdanalysis/branch/develop/graph/badge.svg
+   :alt: Coverage Status
+   :target: https://codecov.io/gh/MDAnalysis/mdanalysis
+
+.. |pypi| image:: https://img.shields.io/pypi/v/MDAnalysis
+   :alt: PyPI Version
+   :target: https://pypi.org/project/MDAnalysis/
+
+.. |anaconda| image:: https://anaconda.org/conda-forge/mdanalysis/badges/version.svg
+   :alt: Anaconda
+   :target: https://anaconda.org/conda-forge/mdanalysis
+   
+.. |asv| image:: https://img.shields.io/badge/benchmarked%20by-asv-blue.svg
+   :alt: ASV Benchmarks
+   :target:  https://www.mdanalysis.org/benchmarks/
+
+.. |powered_by_MDA| image:: https://img.shields.io/badge/Powered%20by-MDAnalysis-orange.svg?logoWidth=15&amp;logo=data:image/x-icon;base64,AAABAAEAEBAAAAEAIAAoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJD+XwCY/fEAkf3uAJf97wGT/a+HfHaoiIWE7n9/f+6Hh4fvgICAjwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACT/yYAlP//AJ///wCg//8JjvOchXly1oaGhv+Ghob/j4+P/39/f3IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJH8aQCY/8wAkv2kfY+elJ6al/yVlZX7iIiI8H9/f7h/f38UAAAAAAAAAAAAAAAAAAAAAAAAAAB/f38egYF/noqAebF8gYaagnx3oFpUUtZpaWr/WFhY8zo6OmT///8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgICAn46Ojv+Hh4b/jouJ/4iGhfcAAADnAAAA/wAAAP8AAADIAAAAAwCj/zIAnf2VAJD/PAAAAAAAAAAAAAAAAICAgNGHh4f/gICA/4SEhP+Xl5f/AwMD/wAAAP8AAAD/AAAA/wAAAB8Aov9/ALr//wCS/Z0AAAAAAAAAAAAAAACBgYGOjo6O/4mJif+Pj4//iYmJ/wAAAOAAAAD+AAAA/wAAAP8AAABhAP7+FgCi/38Axf4fAAAAAAAAAAAAAAAAiIiID4GBgYKCgoKogoB+fYSEgZhgYGDZXl5e/m9vb/9ISEjpEBAQxw8AAFQAAAAAAAAANQAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjo6Mb5iYmP+cnJz/jY2N95CQkO4pKSn/AAAA7gAAAP0AAAD7AAAAhgAAAAEAAAAAAAAAAACL/gsAkv2uAJX/QQAAAAB9fX3egoKC/4CAgP+NjY3/c3Nz+wAAAP8AAAD/AAAA/wAAAPUAAAAcAAAAAAAAAAAAnP4NAJL9rgCR/0YAAAAAfX19w4ODg/98fHz/i4uL/4qKivwAAAD/AAAA/wAAAP8AAAD1AAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALGxsVyqqqr/mpqa/6mpqf9KSUn/AAAA5QAAAPkAAAD5AAAAhQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkUFBSuZ2dn/3V1df8uLi7bAAAATgBGfyQAAAA2AAAAMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAADoAAAA/wAAAP8AAAD/AAAAWgC3/2AAnv3eAJ/+dgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9AAAA/wAAAP8AAAD/AAAA/wAKDzEAnP3WAKn//wCS/OgAf/8MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAANwAAADtAAAA7QAAAMAAABUMAJn9gwCe/e0Aj/2LAP//AQAAAAAAAAAA
+   :alt: Powered by MDAnalysis
+   :target: https://www.mdanalysis.org
+
+.. |discussions| image:: https://img.shields.io/github/discussions/MDAnalysis/MDAnalysis
+   :alt: GitHub Discussions
+   :target: https://github.com/MDAnalysis/mdanalysis/discussions
+
+
+===== https://docs.mdanalysis.org/2.11.0/documentation_pages/lib/distances.html#MDAnalysis.lib.distances.calc_bonds =====
+MDAnalysis.lib.distances.calc_bonds(coords1: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, coords2: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = &#x27;serial&#x27;) → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculates the bond lengths between pairs of atom positions from the two coordinate arrays coords1 and coords2, which must contain the same number of coordinates. coords1[i] and coords2[i] represent the positions of atoms connected by the i-th bond. If single coordinates are supplied, a single distance will be returned.
+
+In comparison to distance_array() and self_distance_array(), which calculate distances between all possible combinations of coordinates, calc_bonds() only calculates distances between pairs of coordinates, similar to:
+
+numpy.linalg.norm(a - b) for a, b in zip(coords1, coords2)
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a numpy array of dtype numpy.float64 with shape (n,) (for n coordinate pairs) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+coords1 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) for one half of a single or n bonds, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+coords2 (numpy.ndarray or AtomGroup) – Coordinate array of shape (3,) or (n, 3) for the other half of a single or n bonds, respectively (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (numpy.ndarray, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array of dtype numpy.float64 and shape (n,) (for n coordinate pairs). Avoids recreating the array in repeated function calls.
+
+backend ({&#x27;serial&#x27;, &#x27;OpenMP&#x27;, &#x27;distopia&#x27;}, optional) – Keyword selecting the type of acceleration. Defaults to ‘serial’.
+
+Returns:
+
+bondlengths – numpy.float64 Array containing the bond lengths between each pair of coordinates. If two single coordinates were supplied, their distance is returned as a single number instead of an array.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n,)) or
+
+Added in version 0.8.
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.5.0: Can now optionally use the fast distance functions from distopia
+
+
+Available input path variables already in scope (choose the matching one(s) by type):
+Pre-loaded and already in scope — use these directly, do NOT re-load:
+- MDAnalysis: module
+- numpy: module
+- universe: MDAnalysis.Universe
+- atoms: MDAnalysis.core.groups.AtomGroup
+- protein: MDAnalysis.core.groups.AtomGroup
+- backbone: MDAnalysis.core.groups.AtomGroup
+- trajectory: MDAnalysis.coordinates.base.ReaderBase
+- timestep: MDAnalysis.coordinates.base.Timestep
+(raw input path strings also in scope if needed: psf_path, dcd_path, pdb_path, gro_path, xtc_path, mdanalysis_fixture_dir, output_dir)
+
+RECEIVER — call `python:MDAnalysis.lib.distances.calc_bonds` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `python:MDAnalysis.lib.distances.calc_bonds` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Python syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language&#x27;s normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ python:MDAnalysis.lib.distances.calc_bonds ` followed by the witness, using the language&#x27;s normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `python:MDAnalysis.lib.distances.calc_bonds`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `python:MDAnalysis.lib.distances.calc_bonds` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `python:MDAnalysis.lib.distances.calc_bonds` is the writer; keep the
+body focused on `python:MDAnalysis.lib.distances.calc_bonds` so the run isolates that one call.
+Use the preloaded Universe, AtomGroups, trajectory, and the pinned molecular fixture paths. Keep atom selections and frame ranges small. For analysis classes construct the documented class, call run() when required, and validate a stable scalar, shape, or length. The PSF/DCD pair has no periodic box; use a matching configured periodic fixture only when the target contract requires it. Write any small output only under output_dir; do not modify source fixtures, download data, or open a GUI.</pre><h3>Available input data</h3><pre>Pre-loaded and already in scope — use these directly, do NOT re-load:
+- MDAnalysis: module
+- numpy: module
+- universe: MDAnalysis.Universe
+- atoms: MDAnalysis.core.groups.AtomGroup
+- protein: MDAnalysis.core.groups.AtomGroup
+- backbone: MDAnalysis.core.groups.AtomGroup
+- trajectory: MDAnalysis.coordinates.base.ReaderBase
+- timestep: MDAnalysis.coordinates.base.Timestep
+(raw input path strings also in scope if needed: psf_path, dcd_path, pdb_path, gro_path, xtc_path, mdanalysis_fixture_dir, output_dir)</pre><h3>Preloaded inputs</h3><pre>MDAnalysis = mda  # type: module
+numpy = np  # type: module
+universe = mda.Universe(psf_path, dcd_path)  # type: MDAnalysis.Universe
+atoms = universe.atoms  # type: MDAnalysis.core.groups.AtomGroup
+protein = universe.select_atoms(&quot;protein&quot;)  # type: MDAnalysis.core.groups.AtomGroup
+backbone = universe.select_atoms(&quot;protein and backbone&quot;)  # type: MDAnalysis.core.groups.AtomGroup
+trajectory = universe.trajectory  # type: MDAnalysis.coordinates.base.ReaderBase
+timestep = trajectory[0]  # type: MDAnalysis.coordinates.base.Timestep</pre><h3>Input/output instructions</h3><pre></pre><h3>Execution scaffold</h3><pre>import sys
+import traceback
+
+def run():
+    # Imports are local so snippets may use either conventional aliases or full
+    # package names without Python&#x27;s local-name analysis breaking the preamble.
+    import MDAnalysis as mda
+    import numpy as np
+    import os as _aideal_os
+
+    MDAnalysis = mda
+    numpy = np
+    output_dir = &quot;/tmp/aideal_mdanalysis_default_out&quot;
+    # AIDEAL_DATA_BINDINGS
+    _aideal_os.makedirs(output_dir, exist_ok=True)
+
+    # TODO API_TEST_START
+    # TODO API_TEST_END
+    pass
+
+
+if __name__ == &quot;__main__&quot;:
+    try:
+        run()
+        print(&quot;__DONE__&quot;)
+    except Exception as exc:
+        sys.stderr.write(f&quot;__RUN_ERR__ {type(exc).__name__}: {exc}\n&quot;)
+        traceback.print_exc()
+        sys.exit(1)
+</pre></details><details><summary>mir_eval — python:mir_eval.util.intervals_to_durations</summary><p><a href="mir_eval.json">Complete request, context, input paths and scaffold</a></p><h3>System prompt</h3><pre>You write Python code that will be spliced into a runnable test harness.
+A runnable headless Python harness is already in scope. Write statements only for the marked function body. Reuse the small arrays, labels, and repository fixture paths already defined; import the target from its public mir_eval module, call it, validate a deterministic property with assert, and print a compact witness. Do not download or play audio.
+
+Requested target declaration (frozen canonical selection):
+Qualified name: mir_eval.util.intervals_to_durations
+Owner: 
+Declaration: def intervals_to_durations(intervals)
+Parameters in declaration order (1): intervals: 
+Write the requested call against this owner and declaration, with its indicated parameter list.
+Verified public access paths for the same defining API: mir_eval.util.intervals_to_durations. Use a public access path when the defining namespace is internal.
+
+Pick the input variable(s) whose type matches the API&#x27;s parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: An expert in reproducible music-information-retrieval evaluation and scientific Python API usage.
+Project: mir_eval (Python) - A scientific Python library of evaluation metrics, I/O helpers, displays, and sonification utilities for music and audio information retrieval.
+Domain: Audio and music signal evaluation. This label is query provenance, not a manual classification: the repository was returned by both the saved &quot;audio processing&quot; and &quot;signal processing&quot; GitHub sweeps.
+Target users: music-information-retrieval researchers; audio and signal-processing engineers; coding agents implementing reproducible metric evaluations
+Use cases: Score beats, onsets, melody, multipitch, chords, keys, and tempo.; Evaluate segment, hierarchy, transcription, alignment, and separation outputs.; Load repository-format annotations and produce deterministic summaries.
+Constraints: Use only checked-in test fixtures or deterministic in-memory arrays.; Keep display tests headless and prohibit network/audio-device access.; Use every name in the frozen 125-name canonical manifest without sampling; selection is structural filtering and same-name maximum arity, not a proof of arbitrary semantic equivalence.</pre><h3>Full user prompt</h3><pre>Documentation:
+===== Shared original document: pinned-root-readme:README.rst =====
+.. image:: https://anaconda.org/conda-forge/mir_eval/badges/version.svg 
+    :target: https://anaconda.org/conda-forge/mir_eval
+
+.. image:: https://img.shields.io/pypi/v/mir_eval.svg
+    :target: https://pypi.python.org/pypi/mir_eval
+
+.. image:: https://github.com/mir-evaluation/mir_eval/actions/workflows/test.yml/badge.svg
+    :target: https://github.com/mir-evaluation/mir_eval/actions/workflows/test.yml
+
+.. image:: https://codecov.io/gh/mir-evaluation/mir_eval/graph/badge.svg?token=OzRL3aW7TX 
+    :target: https://codecov.io/gh/mir-evaluation/mir_eval
+
+.. image:: https://img.shields.io/pypi/l/mir_eval.svg
+    :target: https://github.com/mir-evaluation/mir_eval/blob/main/LICENSE.txt
+
+
+mir_eval
+========
+
+Python library for computing common heuristic accuracy scores for various music/audio information retrieval/signal processing tasks.
+
+Documentation, including installation and usage information: https://mir-evaluation.github.io/mir_eval/
+
+Dependencies:
+
+* `Scipy/Numpy &lt;http://www.scipy.org/&gt;`_
+* `decorator &lt;https://github.com/micheles/decorator&gt;`_
+
+If you use mir_eval in a research project, please cite the following paper:
+
+Colin Raffel, Brian McFee, Eric J. Humphrey, Justin Salamon, Oriol Nieto, Dawen Liang, and Daniel P. W. Ellis, &quot;`mir_eval: A Transparent Implementation of Common MIR Metrics &lt;http://colinraffel.com/publications/ismir2014mir_eval.pdf&gt;`_&quot;, Proceedings of the 15th International Conference on Music Information Retrieval, 2014.
+
+
+
+
+===== https://mir-eval.readthedocs.io/stable/api/util.html#mir_eval.util.intervals_to_durations =====
+mir_eval.util.intervals_to_durations(intervals)
+
+Convert an array of n intervals to their n durations.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+An array of time intervals, as returned by mir_eval.io.load_intervals(). The i th interval spans time intervals[i, 0] to intervals[i, 1].
+
+Returns:
+
+durationsnp.ndarray, shape=(n,)
+
+Array of the duration of each interval.
+
+
+Available input path variables already in scope (choose the matching one(s) by type):
+Pre-loaded and already in scope — use these directly, do NOT re-load:
+- times: numpy.ndarray event/frame times
+- ref_events: numpy.ndarray reference events
+- est_events: numpy.ndarray estimated events
+- ref_intervals: numpy.ndarray reference intervals
+- est_intervals: numpy.ndarray estimated intervals
+- ref_labels: list[str] reference labels
+- est_labels: list[str] estimated labels
+- ref_freqs: numpy.ndarray reference frequencies
+- est_freqs: numpy.ndarray estimated frequencies
+- ref_sources: numpy.ndarray reference sources
+- est_sources: numpy.ndarray estimated sources
+(raw input path strings also in scope if needed: beat_reference_file, beat_estimate_file, chord_reference_file, melody_reference_file, output_dir)
+
+RECEIVER — call `python:mir_eval.util.intervals_to_durations` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `python:mir_eval.util.intervals_to_durations` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Python syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language&#x27;s normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ python:mir_eval.util.intervals_to_durations ` followed by the witness, using the language&#x27;s normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `python:mir_eval.util.intervals_to_durations`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `python:mir_eval.util.intervals_to_durations` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `python:mir_eval.util.intervals_to_durations` is the writer; keep the
+body focused on `python:mir_eval.util.intervals_to_durations` so the run isolates that one call.
+mir_eval functions generally accept NumPy event times, intervals, labels, frequencies, or source matrices. Keep plotting headless. For I/O functions use only the configured files under source/tests/data. Avoid deprecated aliases when the documented public function is available.</pre><h3>Available input data</h3><pre>Pre-loaded and already in scope — use these directly, do NOT re-load:
+- times: numpy.ndarray event/frame times
+- ref_events: numpy.ndarray reference events
+- est_events: numpy.ndarray estimated events
+- ref_intervals: numpy.ndarray reference intervals
+- est_intervals: numpy.ndarray estimated intervals
+- ref_labels: list[str] reference labels
+- est_labels: list[str] estimated labels
+- ref_freqs: numpy.ndarray reference frequencies
+- est_freqs: numpy.ndarray estimated frequencies
+- ref_sources: numpy.ndarray reference sources
+- est_sources: numpy.ndarray estimated sources
+(raw input path strings also in scope if needed: beat_reference_file, beat_estimate_file, chord_reference_file, melody_reference_file, output_dir)</pre><h3>Preloaded inputs</h3><pre>times = np.array([0.0, 0.5, 1.0, 1.5, 2.0])  # type: numpy.ndarray event/frame times
+ref_events = np.array([0.0, 0.5, 1.0, 1.5])  # type: numpy.ndarray reference events
+est_events = np.array([0.02, 0.48, 1.03, 1.52])  # type: numpy.ndarray estimated events
+ref_intervals = np.array([[0.0, 0.5], [0.5, 1.0], [1.0, 1.5], [1.5, 2.0]])  # type: numpy.ndarray reference intervals
+est_intervals = np.array([[0.0, 0.48], [0.48, 1.02], [1.02, 1.48], [1.48, 2.0]])  # type: numpy.ndarray estimated intervals
+ref_labels = [&quot;C:maj&quot;, &quot;G:maj&quot;, &quot;A:min&quot;, &quot;F:maj&quot;]  # type: list[str] reference labels
+est_labels = [&quot;C:maj&quot;, &quot;G:maj&quot;, &quot;A:min&quot;, &quot;F:maj&quot;]  # type: list[str] estimated labels
+ref_freqs = np.array([440.0, 440.0, 0.0, 523.25, 523.25])  # type: numpy.ndarray reference frequencies
+est_freqs = np.array([442.0, 438.0, 0.0, 525.0, 520.0])  # type: numpy.ndarray estimated frequencies
+ref_sources = np.vstack([np.sin(2*np.pi*3*times), np.cos(2*np.pi*2*times)])  # type: numpy.ndarray reference sources
+est_sources = ref_sources + 0.001  # type: numpy.ndarray estimated sources</pre><h3>Input/output instructions</h3><pre></pre><h3>Execution scaffold</h3><pre>import sys
+import traceback
+
+import numpy as np
+import mir_eval
+from mir_eval import alignment, beat, chord, display, hierarchy, io, key
+from mir_eval import melody, multipitch, onset, pattern, segment, separation
+from mir_eval import sonify, tempo, transcription, transcription_velocity, util
+
+
+def run():
+    # AIDEAL_DATA_BINDINGS
+
+    def api_test():
+        # TODO API_TEST_START
+        # TODO API_TEST_END
+        pass
+
+    api_test()
+
+
+if __name__ == &quot;__main__&quot;:
+    try:
+        run()
+        print(&quot;__DONE__&quot;)
+    except Exception as exc:
+        sys.stderr.write(f&quot;__RUN_ERR__ {type(exc).__name__}: {exc}\n&quot;)
+        traceback.print_exc()
+        sys.exit(1)
+</pre></details><details><summary>rdpro_scala — scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType</summary><p><a href="rdpro_scala.json">Complete request, context, input paths and scaffold</a></p><h3>System prompt</h3><pre>You write Scala code that will be spliced into a runnable test harness.
+Scala2.12 with Spark3.5.1 and Java17. The full historical scaffold provides sc and sparkContext. The explicit preamble binds rasterRDD: RasterRDD[Array[Float]] (11Float32bands,737x628pixels) and featuresRDD: RDD[IFeature] (2polygonfeatures). Use the supplied local fixtures or tiny in-memory values. Assertions must precede the __CHECK__ witness. HDF4 fixture layer is LST_Day_1km. Temporary writes belong in output_dir.
+
+Requested target declaration (frozen canonical selection):
+Qualified name: edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType
+Owner: edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper
+Declaration: [](value:Any):DataType
+Parameters in declaration order (1): value: Any
+Write the requested call against this owner and declaration, with its indicated parameter list.
+Verified public access paths for the same defining API: edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType. Use a public access path when the defining namespace is internal.
+
+Pick the input variable(s) whose type matches the API&#x27;s parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: An expert Scala developer using public Beast/RDPro raster, vector and Spark APIs.
+Project: RDPro (Scala) - Pinned official Beast0.10.1 production source
+Domain: Geospatial computing
+Target users: Scala geospatial developers
+Use cases: Raster processing and zonal statistics; Vector spatial operations and indexed files; Local Spark transformations
+Constraints: Use original APIs only.; Use provided local raster, shapefile, and HDF4 fixtures or tiny in-memory values.; Write temporary outputs only under the run output directory.; Do not contact services or change repository files.</pre><h3>Full user prompt</h3><pre>Documentation:
+===== Shared original document: README.md =====
+# ![Beast](doc/images/beast-logo.svg)
+Beast is a system for Big Exploratory Analytics on Spatio-Temporal data. It supports both vector and raster data with
+multidimensional data types and index structures. Here is a short list of the most important components of Beast.
+
+![Beast Splash Screen](doc/images/splash.svg)
+
+- **Multidimensional data**: Beast can work with arbitrarily multidimensional data.
+- **Input/Output formats**: Beast supports many standard formats including Esri Shapefile, CSV, JSON+WKT, GeoJSON, KML, KMZ, and GPX.
+- **Scalable visualization**: Visualize terabytes of data on an interactive map. Beast powers [UCR-Star](https://star.cs.ucr.edu) the home of terabytes of public geospatial data.
+- **Raptor = Raster + Vector**: Beast hosts a novel component for processing raster and vector data concurrently. It is orders of magnitude faster than competitive systems.
+- **Data Generator**: [Spider](https://spider.cs.ucr.edu) is an award-winning scalable data generator for benchmarking and testing.
+
+## Documentation
+- [Getting Started](doc/Home.md)
+- [Installation](doc/installation.md)
+- [Development Setup](doc/dev-setup.md)
+- [Input/Output Formats](doc/input-output.md)
+- [UCR-Star](https://star.cs.ucr.edu) powered by Beast
+- [Spider Web](https://spider.cs.ucr.edu)
+- [SatEx Satellite Data Extractor](satex/README.md)
+
+## Questions
+
+If you have any questions about any of the packages or modules of beast,
+please ask your question on [StackOverflow](https://stackoverflow.com/)
+and tag your questions with `#ucrbeast` and `#beast`. Beast team members
+follow these tags and will respond to those questions as soon as possible.
+
+## Issues
+
+If you found any bugs or have any recommended features to add, please
+[open a ticket](https://bitbucket.org/bdlabucr/beast/issues/new)
+on the project homepage.
+
+No documented original API excerpt for `scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType` in the reviewed corpus. Disposition: undocumented. No exact defining or statically resolved public exposure identity in the reviewed original document index; bare-name mentions are not coverage
+
+Available input path variables already in scope (choose the matching one(s) by type):
+Pre-loaded and already in scope — use these directly, do NOT re-load:
+- rasterRDD: RasterRDD[Array[Float]]
+- featuresRDD: RDD[IFeature]
+(raw input path strings also in scope if needed: vector_shapefile, raster_tif, hdf_file, output_dir)
+
+RECEIVER — call `scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+`scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType` is a STATIC method on object `edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper` — call it as `edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType(...)`.
+
+(none yet)
+
+Write minimal body statements that use `scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Scala syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language&#x27;s normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType ` followed by the witness, using the language&#x27;s normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType` is the writer; keep the
+body focused on `scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.detectType` so the run isolates that one call.
+Spark specifics: transformations are lazy, so if the result is an RDD / RasterRDD / DataFrame you MUST force it with an action — .count(), .first(), or .take(1) — and print that. For an in-memory Array/value, print its size. If the API is a writer, call .coalesce(1) before writing to output_dir to avoid the distributed-write merge error. I/O: read inputs with the high-level library readers on the pre-loaded typed vars (rasterRDD / featuresRDD, or sc.geoTiff / sc.shapefile) — do NOT open raw Hadoop FileSystem streams (FileSystem.get(conf) causes &#x27;Wrong FS&#x27;; if unavoidable use path.getFileSystem(sc.hadoopConfiguration)), and never prepend an extra &#x27;file://&#x27; to a path that already has a scheme.</pre><h3>Available input data</h3><pre>Pre-loaded and already in scope — use these directly, do NOT re-load:
+- rasterRDD: RasterRDD[Array[Float]]
+- featuresRDD: RDD[IFeature]
+(raw input path strings also in scope if needed: vector_shapefile, raster_tif, hdf_file, output_dir)</pre><h3>Preloaded inputs</h3><pre>// Fixed input contract shared by all conditions: the supplied GeoTIFF has11Float32bands.
+val rasterRDD: RasterRDD[Array[Float]] = sc.geoTiff[Array[Float]](raster_tif)
+val featuresRDD: RDD[IFeature] = sc.shapefile(vector_shapefile)</pre><h3>Input/output instructions</h3><pre></pre><h3>Execution scaffold</h3><pre>// AIDEAL API-test scaffold — AUTO-GENERATED from the API surface.
+// Run via: spark-shell --jars &lt;uberjar&gt; -i &lt;thisfile&gt;
+// spark-shell provides `sc` (SparkContext) and `spark` (SparkSession).
+// The generated snippet is spliced between API_TEST_START / END and may use
+// the in-scope bindings: sc, inputA, inputB, output.
+
+import org.apache.spark.SparkContext
+import org.apache.spark.sql.{SparkSession, DataFrame, Row}
+import org.apache.spark.rdd.RDD
+import edu.ucr.cs.bdlab.raptor._
+import edu.ucr.cs.bdlab.beast.JavaSpatialRDDHelper
+import edu.ucr.cs.bdlab.beast.JavaSpatialSparkContext
+import edu.ucr.cs.bdlab.beast.SpatialOperationsMixin
+import edu.ucr.cs.bdlab.beast.cg.CGOperationsMixin
+import edu.ucr.cs.bdlab.beast.cg.GeometryQuadSplitter
+import edu.ucr.cs.bdlab.beast.cg.PlaneSweepSelfJoinIterator
+import edu.ucr.cs.bdlab.beast.cg.PlaneSweepSpatialJoinIterator
+import edu.ucr.cs.bdlab.beast.cg.Reprojector
+import edu.ucr.cs.bdlab.beast.cg.SnapTransform
+import edu.ucr.cs.bdlab.beast.cg.SpatialDataTypes
+import edu.ucr.cs.bdlab.beast.cg.SpatialJoinHelper
+import edu.ucr.cs.bdlab.beast.cg.SpatialPartition
+import edu.ucr.cs.bdlab.beast.common.BeastOptions
+import edu.ucr.cs.bdlab.beast.common.BlockCartesianRDD
+import edu.ucr.cs.bdlab.beast.common.CLIOperation
+import edu.ucr.cs.bdlab.beast.common.JCLIOperation
+import edu.ucr.cs.bdlab.beast.dataExplorer.DataExplorerServer
+import edu.ucr.cs.bdlab.beast.dataExplorer.DatasetProcessor
+import edu.ucr.cs.bdlab.beast.dataExplorer.SQLQueryHelper
+import edu.ucr.cs.bdlab.beast.dataExplorer.WorkspaceProcessor
+import edu.ucr.cs.bdlab.beast.generator.BitGenerator
+import edu.ucr.cs.bdlab.beast.generator.DiagonalGenerator
+import edu.ucr.cs.bdlab.beast.generator.DistributionType
+import edu.ucr.cs.bdlab.beast.generator.GaussianGenerator
+import edu.ucr.cs.bdlab.beast.generator.JavaSpatialGeneratorBuilder
+import edu.ucr.cs.bdlab.beast.generator.ParcelGenerator
+import edu.ucr.cs.bdlab.beast.generator.PointBasedGenerator
+import edu.ucr.cs.bdlab.beast.generator.RandomSpatialRDD
+import edu.ucr.cs.bdlab.beast.generator.SierpinskiGenerator
+import edu.ucr.cs.bdlab.beast.generator.SpatialGenerator
+import edu.ucr.cs.bdlab.beast.generator.SpatialGeneratorBuilder
+import edu.ucr.cs.bdlab.beast.generator.UniformGenerator
+import edu.ucr.cs.bdlab.beast.geolite.DefaultReadOnlyTile
+import edu.ucr.cs.bdlab.beast.geolite.Feature
+import edu.ucr.cs.bdlab.beast.geolite.IFeature
+import edu.ucr.cs.bdlab.beast.geolite.ITile
+import edu.ucr.cs.bdlab.beast.geolite.ITileSerializer
+import edu.ucr.cs.bdlab.beast.geolite.RasterFeature
+import edu.ucr.cs.bdlab.beast.geolite.RasterFeatureSerializer
+import edu.ucr.cs.bdlab.beast.geolite.RasterMetadata
+import edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer
+import edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper
+import edu.ucr.cs.bdlab.beast.indexing.IndexHelper
+import edu.ucr.cs.bdlab.beast.indexing.IndexMixin
+import edu.ucr.cs.bdlab.beast.io.CSVHelper
+import edu.ucr.cs.bdlab.beast.io.CSVReaderLite
+import edu.ucr.cs.bdlab.beast.io.Cat
+import edu.ucr.cs.bdlab.beast.io.GPXReader
+import edu.ucr.cs.bdlab.beast.io.JSONWKTSource
+import edu.ucr.cs.bdlab.beast.io.JsonWKTWriter
+import edu.ucr.cs.bdlab.beast.io.RTreeSource
+import edu.ucr.cs.bdlab.beast.io.ReadWriteMixin
+import edu.ucr.cs.bdlab.beast.io.SpatialCSVSource
+import edu.ucr.cs.bdlab.beast.io.SpatialFilePartition2
+import edu.ucr.cs.bdlab.beast.io.SpatialFilePartitioner
+import edu.ucr.cs.bdlab.beast.io.SpatialFileRDD
+import edu.ucr.cs.bdlab.beast.io.SpatialFileSource
+import edu.ucr.cs.bdlab.beast.io.SpatialParquetSource
+import edu.ucr.cs.bdlab.beast.io.SpatialReader
+import edu.ucr.cs.bdlab.beast.io.SpatialWriteMessage
+import edu.ucr.cs.bdlab.beast.io.SpatialWriter
+import edu.ucr.cs.bdlab.beast.io.SupportsSpatialFilterPushDown
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONFormat
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONPartitionReaderFactory
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONReader
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONScan
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONScanBuilder
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONSourcev2
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONTable
+import edu.ucr.cs.bdlab.beast.io.geojsonv2.GeoJSONWriter
+import edu.ucr.cs.bdlab.beast.io.gpxv2.GPXPartitionReaderFactory
+import edu.ucr.cs.bdlab.beast.io.gpxv2.GPXReader2
+import edu.ucr.cs.bdlab.beast.io.gpxv2.GPXScan
+import edu.ucr.cs.bdlab.beast.io.gpxv2.GPXScanBuilder
+import edu.ucr.cs.bdlab.beast.io.gpxv2.GPXSource
+import edu.ucr.cs.bdlab.beast.io.gpxv2.GPXTable
+import edu.ucr.cs.bdlab.beast.io.kmlv2.KMLFormat
+import edu.ucr.cs.bdlab.beast.io.kmlv2.KMLSourcev2
+import edu.ucr.cs.bdlab.beast.io.kmlv2.KMLWriter
+import edu.ucr.cs.bdlab.beast.io.kmlv2.KMZFormat
+import edu.ucr.cs.bdlab.beast.io.kmlv2.KMZSourcev2
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.AbstractShapefileReader
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.CompressedShapefileReader
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.DBFHeader
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.DBFHelper
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.DBFReader
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.DBFWriter
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileDataSourcev2
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileFormat
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileGeometryReader
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileGeometryWriter
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileHeader
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileHelper
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefilePartitionReaderFactory
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileReader
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileScan
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileScanBuilder
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileTable
+import edu.ucr.cs.bdlab.beast.io.shapefilev2.ShapefileWriter
+import edu.ucr.cs.bdlab.beast.operations.FeatureWriterSize
+import edu.ucr.cs.bdlab.beast.operations.GeometricSummary
+import edu.ucr.cs.bdlab.beast.operations.GriddedSummary
+import edu.ucr.cs.bdlab.beast.operations.Histogram
+import edu.ucr.cs.bdlab.beast.operations.Index
+import edu.ucr.cs.bdlab.beast.operations.RasterThumbnail
+import edu.ucr.cs.bdlab.beast.operations.SpatialIntersectionRDD
+import edu.ucr.cs.bdlab.beast.operations.SpatialJoin
+import edu.ucr.cs.bdlab.beast.satex.ImageExtractor
+import edu.ucr.cs.bdlab.beast.satex.ImageIterator
+import edu.ucr.cs.bdlab.beast.sql.CreationFunctions
+import edu.ucr.cs.bdlab.beast.sql.RasterMetadataType
+import edu.ucr.cs.bdlab.beast.sql.ST_BreakLine
+import edu.ucr.cs.bdlab.beast.sql.ST_Connect
+import edu.ucr.cs.bdlab.beast.sql.ST_CreateLinePolygon
+import edu.ucr.cs.bdlab.beast.sql.ST_FromSpatialParquet
+import edu.ucr.cs.bdlab.beast.sql.ST_ToSpatialParquet
+import edu.ucr.cs.bdlab.beast.sql.SpatialParquetHelper
+import edu.ucr.cs.bdlab.beast.sql.SpatialPredicates
+import edu.ucr.cs.bdlab.beast.synopses.BoxCounting
+import edu.ucr.cs.bdlab.beast.synopses.GeometryToPoints
+import edu.ucr.cs.bdlab.beast.synopses.HistogramOP
+import edu.ucr.cs.bdlab.beast.synopses.PointSampleAccumulator
+import edu.ucr.cs.bdlab.beast.synopses.PointSampler
+import edu.ucr.cs.bdlab.beast.synopses.Summary
+import edu.ucr.cs.bdlab.beast.synopses.SummaryAccumulator
+import edu.ucr.cs.bdlab.beast.synopses.Synopsis
+import edu.ucr.cs.bdlab.beast.util.BufferedFSDataInputStream
+import edu.ucr.cs.bdlab.beast.util.FileListRDD
+import edu.ucr.cs.bdlab.beast.util.KryoInputToObjectInput
+import edu.ucr.cs.bdlab.beast.util.KryoOutputToObjectOutput
+import edu.ucr.cs.bdlab.beast.util.LRUCache
+import edu.ucr.cs.bdlab.beast.util.OperationHelper
+import edu.ucr.cs.bdlab.beast.util.Parallel2
+import edu.ucr.cs.bdlab.beast.util.StaticFileWebHandler
+import edu.ucr.cs.bdlab.beast.util.WebUtil
+import edu.ucr.cs.bdlab.beast.util.ZipUtil
+import edu.ucr.cs.bdlab.davinci.DiskTileHashtable
+import edu.ucr.cs.bdlab.davinci.IntermediateVectorTile
+import edu.ucr.cs.bdlab.davinci.IntermediateVectorTileSerializer
+import edu.ucr.cs.bdlab.davinci.LiteGeometry
+import edu.ucr.cs.bdlab.davinci.LiteList
+import edu.ucr.cs.bdlab.davinci.LitePolygon
+import edu.ucr.cs.bdlab.davinci.MVTDataVisualizer
+import edu.ucr.cs.bdlab.davinci.MultilevelPlot
+import edu.ucr.cs.bdlab.davinci.SVGPlotter
+import edu.ucr.cs.bdlab.davinci.SingleLevelPlot
+import edu.ucr.cs.bdlab.davinci.TileCreatorFlatPartiotioning
+import edu.ucr.cs.bdlab.davinci.TileCreatorPyramidPartitioning
+import edu.ucr.cs.bdlab.davinci.VectorCanvas
+import edu.ucr.cs.bdlab.davinci.VectorLayerBuilder
+import edu.ucr.cs.bdlab.davinci.VectorTileCreatorFlatPartitioning
+import edu.ucr.cs.bdlab.davinci.VisualizationHelper
+import edu.ucr.cs.bdlab.davinci.VisualizationMixin
+import edu.ucr.cs.bdlab.raptor.AbstractConvolutionTile
+import edu.ucr.cs.bdlab.raptor.AbstractGeoTiffTile
+import edu.ucr.cs.bdlab.raptor.CompactIntersectionsIterator
+import edu.ucr.cs.bdlab.raptor.CompactIntersectionsTileBreaker
+import edu.ucr.cs.bdlab.raptor.ConvolutionTileSerializer
+import edu.ucr.cs.bdlab.raptor.EmptyTile
+import edu.ucr.cs.bdlab.raptor.ExplodedTile
+import edu.ucr.cs.bdlab.raptor.FilterTile
+import edu.ucr.cs.bdlab.raptor.GeoTiffConstants
+import edu.ucr.cs.bdlab.raptor.GeoTiffReader
+import edu.ucr.cs.bdlab.raptor.GeoTiffTileDouble
+import edu.ucr.cs.bdlab.raptor.GeoTiffTileDoubleArray
+import edu.ucr.cs.bdlab.raptor.GeoTiffTileFloat
+import edu.ucr.cs.bdlab.raptor.GeoTiffTileFloatArray
+import edu.ucr.cs.bdlab.raptor.GeoTiffTileInt
+import edu.ucr.cs.bdlab.raptor.GeoTiffTileIntArray
+import edu.ucr.cs.bdlab.raptor.GeoTiffTileSerializer
+import edu.ucr.cs.bdlab.raptor.GeoTiffWriter
+import edu.ucr.cs.bdlab.raptor.HDF4Reader
+import edu.ucr.cs.bdlab.raptor.HDFTile
+import edu.ucr.cs.bdlab.raptor.IRasterReader
+import edu.ucr.cs.bdlab.raptor.IntersectionsIterator
+import edu.ucr.cs.bdlab.raptor.IntersectionsIterator1
+import edu.ucr.cs.bdlab.raptor.MapPixelsTile
+import edu.ucr.cs.bdlab.raptor.MaskTile
+import edu.ucr.cs.bdlab.raptor.MaskTileSerializer
+import edu.ucr.cs.bdlab.raptor.MemoryTile
+import edu.ucr.cs.bdlab.raptor.MemoryTile2
+import edu.ucr.cs.bdlab.raptor.MemoryTileSerializer
+import edu.ucr.cs.bdlab.raptor.MemoryTileWindow
+import edu.ucr.cs.bdlab.raptor.MemoryTileWindowSerializer
+import edu.ucr.cs.bdlab.raptor.PixelIterator
+import edu.ucr.cs.bdlab.raptor.PixelIterator3
+import edu.ucr.cs.bdlab.raptor.PixelRange
+import edu.ucr.cs.bdlab.raptor.PixelsInside
+import edu.ucr.cs.bdlab.raptor.RaptorJoin
+import edu.ucr.cs.bdlab.raptor.RaptorJoinFeature
+import edu.ucr.cs.bdlab.raptor.RaptorJoinResult
+import edu.ucr.cs.bdlab.raptor.RaptorJoinResultTile
+import edu.ucr.cs.bdlab.raptor.RaptorMixin
+import edu.ucr.cs.bdlab.raptor.RasterFileRDD
+import edu.ucr.cs.bdlab.raptor.RasterOperationsFocal
+import edu.ucr.cs.bdlab.raptor.RasterOperationsGlobal
+import edu.ucr.cs.bdlab.raptor.RasterOperationsLocal
+import edu.ucr.cs.bdlab.raptor.RasterPartitioner
+import edu.ucr.cs.bdlab.raptor.ReshapeTile
+import edu.ucr.cs.bdlab.raptor.SlidingWindowTile
+import edu.ucr.cs.bdlab.raptor.StackedTile
+import edu.ucr.cs.bdlab.raptor.TileIterator
+import edu.ucr.cs.bdlab.raptor.ZonalStatistics
+import org.apache.spark.beast.CRSServer
+import org.apache.spark.beast.SparkSQLRegistration
+import org.apache.spark.beast.sql.EnvelopeDataType
+import org.apache.spark.beast.sql.GeometryDataType
+import edu.ucr.cs.bdlab.beast._
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.KryoDataOutput
+import com.esotericsoftware.kryo.io.Output
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.node.ArrayNode
+import com.fasterxml.jackson.databind.node.IntNode
+import com.fasterxml.jackson.databind.node.NumericNode
+import com.fasterxml.jackson.databind.node.TextNode
+import edu.ucr.cs.bdlab.beast.cg.CGOperationsMixin._
+import edu.ucr.cs.bdlab.beast.cg.Reprojector.TransformationInfo
+import edu.ucr.cs.bdlab.beast.cg.SpatialDataTypes.JavaPartitionedSpatialRDD
+import edu.ucr.cs.bdlab.beast.cg.SpatialDataTypes.RasterRDD
+import edu.ucr.cs.bdlab.beast.cg.SpatialDataTypes.SpatialRDD
+import edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.ESJDistributedAlgorithm
+import edu.ucr.cs.bdlab.beast.cg.SpatialJoinAlgorithms.ESJPredicate
+import edu.ucr.cs.bdlab.beast.cg.SpatialPartitioner
+import edu.ucr.cs.bdlab.beast.generator.UniformDistribution
+import edu.ucr.cs.bdlab.beast.generator._
+import edu.ucr.cs.bdlab.beast.geolite.EmptyGeometry
+import edu.ucr.cs.bdlab.beast.geolite.EnvelopeND
+import edu.ucr.cs.bdlab.beast.geolite.EnvelopeNDLite
+import edu.ucr.cs.bdlab.beast.geolite.GeometryHelper
+import edu.ucr.cs.bdlab.beast.geolite.GeometryReader
+import edu.ucr.cs.bdlab.beast.geolite.GeometryType
+import edu.ucr.cs.bdlab.beast.geolite.PointND
+import edu.ucr.cs.bdlab.beast.indexing.CellPartitioner
+import edu.ucr.cs.bdlab.beast.indexing.GridPartitioner
+import edu.ucr.cs.bdlab.beast.indexing.IndexHelper.NumPartitions
+import edu.ucr.cs.bdlab.beast.io.FeatureReader
+import edu.ucr.cs.bdlab.beast.io.GeoJSONFeatureWriter
+import edu.ucr.cs.bdlab.beast.io.PushDownSpatialFilter
+import edu.ucr.cs.bdlab.beast.io.SpatialFileRDD.FilePartition
+import edu.ucr.cs.bdlab.beast.io.shapefile.DBFConstants
+import edu.ucr.cs.bdlab.beast.io.shapefile.ShapefileFeatureReader
+import edu.ucr.cs.bdlab.beast.io.shapefile.ShapefileGeometryWriter
+import edu.ucr.cs.bdlab.beast.io.tiff.AbstractTiffTile
+import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants
+import edu.ucr.cs.bdlab.beast.synopses.UniformHistogram
+import edu.ucr.cs.bdlab.beast.util.CompactLongArray
+import edu.ucr.cs.bdlab.davinci.VectorTile.Tile
+import edu.ucr.cs.bdlab.raptor.RaptorMixin.RasterReadMixinFunctions
+import org.apache.commons.compress.archivers.zip.Zip64Mode
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.FileSystem
+import org.apache.hadoop.fs.Path
+import org.apache.hadoop.io.IOUtils.NullOutputStream
+import org.apache.hadoop.mapreduce.InputSplit
+import org.apache.hadoop.mapreduce.TaskAttemptContext
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat
+import org.apache.hadoop.mapreduce.lib.input.FileSplit
+import org.apache.hadoop.shaded.org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream
+import org.apache.http.HttpEntity
+import org.apache.http.client.HttpClient
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.entity.ByteArrayEntity
+import org.apache.http.impl.client.HttpClients
+import org.apache.spark.SparkConf
+import org.apache.spark.api.java.JavaRDD
+import org.apache.spark.sql.Row
+import org.apache.spark.sql.Row.empty.schema
+import org.apache.spark.sql.SaveMode
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.catalyst.InternalRow
+import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
+import org.apache.spark.sql.types.BooleanType
+import org.apache.spark.sql.types.DoubleType
+import org.apache.spark.sql.types.FloatType
+import org.apache.spark.sql.types.IntegerType
+import org.apache.spark.sql.types.StructField
+import org.apache.spark.sql.types.StructType
+import org.apache.spark.sql.types._
+import org.geotools.referencing.CRS
+import org.geotools.referencing.crs.DefaultGeographicCRS
+import org.geotools.referencing.crs.DefaultProjectedCRS
+import org.geotools.referencing.cs.DefaultCartesianCS
+import org.geotools.referencing.cs.DefaultEllipsoidalCS
+import org.geotools.referencing.datum.DefaultEllipsoid
+import org.geotools.referencing.datum.DefaultGeodeticDatum
+import org.geotools.referencing.datum.DefaultPrimeMeridian
+import org.geotools.referencing.factory.OrderedAxisAuthorityFactory
+import org.geotools.referencing.operation.DefaultMathTransformFactory
+import org.geotools.util.factory.Hints
+import org.locationtech.jts.geom.Coordinate
+import org.locationtech.jts.geom.CoordinateSequence
+import org.locationtech.jts.geom.CoordinateSequenceFactory
+import org.locationtech.jts.geom.CoordinateXY
+import org.locationtech.jts.geom.Envelope
+import org.locationtech.jts.geom.Geometry
+import org.locationtech.jts.geom.GeometryFactory
+import org.locationtech.jts.geom.LineString
+import org.locationtech.jts.geom.LinearRing
+import org.locationtech.jts.geom.Polygon
+import org.locationtech.jts.geom.PrecisionModel
+import org.locationtech.jts.geom._
+import org.locationtech.jts.io.WKTReader
+import org.opengis.parameter.GeneralParameterValue
+import org.opengis.referencing.crs.CoordinateReferenceSystem
+import org.opengis.referencing.cs.AxisDirection
+import org.opengis.referencing.operation.MathTransform
+import scala.collection.JavaConverters._
+import scala.collection.JavaConverters.enumerationAsScalaIteratorConverter
+import scala.collection.immutable.Range
+import scala.collection.mutable
+
+// Compiled form (scalac + spark-submit --class GeoJobMain). This is the proven
+// path: an implicit class like RaptorMixin&#x27;s sc.geoTiff resolves when compiled
+// inside an object, but NOT in the spark-shell -i REPL.
+object GeoJob {
+  def run(sc: SparkContext): Unit = {
+    // Alias: LLM-authored snippets frequently reach for `sparkContext` (the
+    // SparkSession accessor name) rather than the harness binding `sc`. Expose
+    // both so a correct call doesn&#x27;t fail on the binding name alone.
+    val sparkContext = sc
+    val spark = SparkSession.builder().getOrCreate()
+    // Typed sample inputs (from comprehension.execute.sample_data). Use the
+    // one(s) whose type matches the API&#x27;s parameters.
+    // AIDEAL_DATA_BINDINGS
+
+    // TODO API_TEST_START
+    // (generated snippet inserted here)
+    // TODO API_TEST_END
+  }
+}
+
+object GeoJobMain {
+  def main(args: Array[String]): Unit = {
+    val spark = SparkSession.builder().appName(&quot;ApiTest&quot;).master(&quot;local[2]&quot;).getOrCreate()
+    try {
+      GeoJob.run(spark.sparkContext)
+      println(&quot;__DONE__ object=GeoJob&quot;)
+    } catch {
+      case t: Throwable =&gt;
+        Console.err.println(&quot;__RUN_ERR__ &quot; + t.getClass.getName + &quot;: &quot; + t.getMessage)
+        t.printStackTrace()
+        throw t
+    } finally {
+      spark.stop()
+    }
+  }
+}
+</pre></details><details><summary>sedonadb — sql:ST_Point</summary><p><a href="sedonadb.json">Complete request, context, input paths and scaffold</a></p><h3>System prompt</h3><pre>You write Python and SQL code that will be spliced into a runnable test harness.
+Write Python statements only. A SedonaDB connection named sd is already provided. The target is a SQL function, not a Python method: call it inside sd.sql(&quot;SELECT ...&quot;). Materialize with .to_arrow_table(), which returns a real pyarrow.Table. Read a scalar with table.column(&quot;name&quot;)[0].as_py() or rows with table.to_pylist(). Setup SQL may use sd.sql(...).execute(). The adapter requires the target SQL function to be called and materialized. Do not import another database or replace sd. Use Python assert with a falsifiable documented expectation and then print the exact target __CHECK__ witness.
+
+Requested registered SQL operation:
+SQL name: ST_Point
+Documented call patterns: ST_Point(x: double, y: double, srid: crs) -&gt; geometry
+Arity status: user_defined_runtime_signature
+Call this registered SQL operation using a documented call pattern; no finite maximum arity is asserted.
+
+Pick the input variable(s) whose type matches the API&#x27;s parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: A Python developer using SedonaDB SQL for geospatial computation.
+Project: SedonaDB 0.5.0 registered SQL operations (Python and SQL) - Official SedonaDB 0.5.0 SQL scalar and aggregate operations called through its Python SQL connection. Targets are public SQL names and their documented call patterns; runtime user-defined signatures are not assigned a finite maximum arity.
+Domain: Geospatial vector and raster analysis
+Target users: Python developers using SedonaDB SQL
+Use cases: Run small SQL queries and verify materialized geometry, raster, scalar, and aggregate results.
+Constraints: Use the original SQL API and original documentation only.; Write Python statements using sd.sql(query).to_arrow_table(); assert known documented results and print the __CHECK__ witness.; Use tiny literal inputs or the supplied local raster files. No remote datasets or services.</pre><h3>Full user prompt</h3><pre>Documentation:
+===== Shared original document: README.md =====
+&lt;!---
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  &quot;License&quot;); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+--&gt;
+
+# SedonaDB
+
+[![PyPI Version](https://img.shields.io/pypi/v/sedonadb)](https://pypi.org/project/sedonadb/) [![PyPI Downloads](https://static.pepy.tech/personalized-badge/sedonadb?period=monthly&amp;units=NONE&amp;left_color=BLACK&amp;right_color=GREEN&amp;left_text=downloads%2Fmonth)](https://pepy.tech/projects/sedonadb) [![Downloads](https://static.pepy.tech/personalized-badge/sedonadb?period=total&amp;units=international_system&amp;left_color=black&amp;right_color=brightgreen&amp;left_text=total%20downloads)](https://pepy.tech/project/sedonadb)
+[![Anaconda Version](
+https://anaconda.org/conda-forge/sedonadb/badges/version.svg)](https://anaconda.org/conda-forge/sedonadb) [![Conda Downloads](https://anaconda.org/conda-forge/sedonadb/badges/downloads.svg)](https://anaconda.org/channels/conda-forge/packages/sedonadb/overview)
+[![R-multiverse
+status](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcommunity.r-multiverse.org%2Fapi%2Fpackages%2Fsedonadb&amp;query=%24.Version&amp;label=r-multiverse)](https://community.r-multiverse.org/sedonadb)
+
+SedonaDB is an open-source single-node analytical database engine with **geospatial as a first-class citizen**. It aims to deliver the fastest spatial analytics query speed and the most comprehensive function coverage available.
+
+SedonaDB is perfect for processing smaller to medium datasets on local machines or cloud instances. For distributed workloads, you can leverage the power of SedonaSpark, SedonaFlink, or SedonaSnow.
+
+## Architecture
+
+![SedonaDB Architecture](https://raw.githubusercontent.com/apache/sedona-db/refs/heads/main/docs/image/sedonadb-architecture.svg)
+
+* **Columnar in-memory datasets**
+    * Spatial indexing
+    * Spatial statistics
+    * CRS tracking
+    * Arrow format and zero serialization overhead
+
+* **Spatial query optimization**
+    * Spatial-aware heuristic based optimization
+    * Spatial-aware cost based optimization
+    * Automatic disk spilling for large-scale spatial joins
+
+* **Spatial query processing**
+    * Spatial range query, KNN query, spatial join query, KNN join query
+    * Map algebra, NDVI, mask, zonal statistics
+
+Raster functions are coming soon. We expect SedonaDB Raster will match all raster functions provided in [SedonaSpark](https://sedona.apache.org/latest/api/sql/Raster-operators/).
+
+## Features of SedonaDB
+
+SedonaDB has several advantages:
+
+* **High Performance:** Built in Rust for exceptional speed and memory efficiency
+* **Comprehensive Spatial Toolkit:** Supports both vector and raster functions in a single library
+* **CRS Propagation:** Always maintains coordinate reference system information
+* **Format Flexibility:** Supports legacy and modern file formats including GeoParquet, Shapefile, GeoJSON
+* **Dual APIs:** Python and SQL interfaces for seamless workflow integration
+* **Extensible:** Easily customizable and extensible architecture
+* **Ecosystem Integration:** Interoperable with PyArrow-compatible libraries like GeoPandas, DuckDB, and Polars
+* **Active Community:** Great maintainers and contributors who encourage external contributions
+
+## Performance Benchmarks
+
+This is a performance benchmark comparing SedonaDB 0.1.0, DuckDB 1.4.0, and GeoPandas 1.1.1 using SpatialBench Queries 1-12 at Scale Factors 1 and 10. Details can be found at [Apache Sedona SpatialBench](https://sedona.apache.org/spatialbench/single-node-benchmarks/).
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;img src=&quot;https://raw.githubusercontent.com/apache/sedona-db/refs/heads/main/docs/image/sf1-09242025.png&quot; alt=&quot;SF1 Benchmark Results&quot; width=&quot;45%&quot; /&gt;
+  &lt;img src=&quot;https://raw.githubusercontent.com/apache/sedona-db/refs/heads/main/docs/image/sf10-09242025.png&quot; alt=&quot;SF10 Benchmark Results&quot; width=&quot;45%&quot; /&gt;
+&lt;/div&gt;
+
+## Install
+
+You can install Python SedonaDB with [PyPI](https://packaging.python.org/en/latest/tutorials/installing-packages/):
+
+```sh
+pip install &quot;apache-sedona[db]&quot;
+```
+
+Or with [conda](https://www.anaconda.com/docs/getting-started/main):
+
+```sh
+conda install sedonadb
+```
+
+## Quick Start
+
+Get started with SedonaDB in just a few lines:
+
+```python
+import sedona.db
+
+# Connect to SedonaDB
+sd = sedona.db.connect()
+
+# Run a simple spatial query
+result = sd.sql(&quot;SELECT ST_Point(0, 1) as geom&quot;)
+result.show()
+```
+
+### Supported File Formats
+
+SedonaDB supports a wide range of geospatial file formats:
+
+- **Vector:** GeoParquet, WKT, WKB, all formats supported by GeoPandas
+- **Raster:** Coming soon with full SedonaSpark compatibility
+
+## Overture buildings example
+
+This section shows how to query the Overture buildings data.
+
+Start by establishing a connection:
+
+```python
+import sedona.db
+
+sd = sedona.db.connect()
+```
+
+Read the dataset into a Python SedonaDB `DataFrame`. This is lazy: even though the Overture buildings table contains millions of rows, SedonaDB will only fetch the data required for the query.
+
+```python
+df = sd.read_parquet(
+    &quot;s3://overturemaps-us-west-2/release/2026-02-18.0/theme=buildings/type=building/&quot;,
+    options={&quot;aws.skip_signature&quot;: True, &quot;aws.region&quot;: &quot;us-west-2&quot;},
+)
+df.to_view(&quot;buildings&quot;)
+```
+
+Now run a query to compute the centroids of tall buildings (above 20 meters) in New York City:
+
+```python
+nyc_bbox_wkt = (
+    &quot;POLYGON((-74.2591 40.4774, -74.2591 40.9176, -73.7004 40.9176, -73.7004 40.4774, -74.2591 40.4774))&quot;
+)
+
+sd.sql(f&quot;&quot;&quot;
+SELECT
+    id,
+    height,
+    num_floors,
+    roof_shape,
+    ST_Centroid(geometry) as centroid
+FROM
+    buildings
+WHERE
+    is_underground = FALSE
+    AND height IS NOT NULL
+    AND height &gt; 20
+    AND ST_Intersects(geometry, ST_GeomFromText(&#x27;{nyc_bbox_wkt}&#x27;, 4326))
+LIMIT 5;
+&quot;&quot;&quot;).show()
+```
+
+Here&#x27;s the query output:
+
+```
+┌─────────────────────────┬────────────────────┬────────────┬────────────┬─────────────────────────┐
+│            id           ┆       height       ┆ num_floors ┆ roof_shape ┆         centroid        │
+│           utf8          ┆       float64      ┆    int32   ┆    utf8    ┆         geometry        │
+╞═════════════════════════╪════════════════════╪════════════╪════════════╪═════════════════════════╡
+│ 1b9040c2-2e79-4f56-aba… ┆               22.4 ┆            ┆            ┆ POINT(-74.230407502993… │
+├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+│ 1b5e1cd2-d697-489e-892… ┆               21.5 ┆            ┆            ┆ POINT(-74.231451103592… │
+├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+│ c1afdf78-bf84-4b8f-ae1… ┆               20.9 ┆            ┆            ┆ POINT(-74.232593032240… │
+├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+│ 88f36399-b09f-491b-bb6… ┆               24.5 ┆            ┆            ┆ POINT(-74.231878209597… │
+├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+│ df37a283-f5bd-4822-a05… ┆ 24.154542922973633 ┆            ┆            ┆ POINT(-74.241910239840… │
+└─────────────────────────┴────────────────────┴────────────┴────────────┴─────────────────────────┘
+```
+
+## Community &amp; Support
+
+### Get Help
+
+- **Discord:** Join our [Discord community](https://discord.com/invite/9A3k5dEBsY) for real-time chat and support
+- **GitHub Discussions:** Start a [GitHub Discussion](https://github.com/apache/sedona/discussions) with questions or ideas
+- **Documentation:** Check out our [comprehensive docs](https://sedona.apache.org/sedonadb)
+
+### Contributing
+
+We welcome contributions! Here&#x27;s how you can get involved:
+
+* **Report Issues:** Found a bug? Open an issue on GitHub
+* **Suggest Features:** Have an idea? Start a GitHub Discussion
+* **Fix Issues:** Comment &quot;take&quot; on any open issue to claim it
+* **Submit PRs:** Brainstorm features with contributors and submit pull requests
+* **Join Meetings:** Monthly contributor meetings - we&#x27;d love to have you!
+
+### About SedonaDB
+
+SedonaDB is a subproject of **Apache Sedona**, an Apache Software Foundation project. The project is governed by the Apache Software Foundation and subject to all the rules and oversight requirements. SedonaDB is built on top of **Apache Arrow** and **Apache DataFusion** for fast query processing.
+
+### Related Projects
+
+- **[Apache Sedona](https://sedona.apache.org/)** - The main Apache Sedona project for distributed spatial analytics
+- **[Sedona SpatialBench](https://sedona.apache.org/spatialbench)** - Comprehensive benchmarking suite for spatial analytics performance testing
+
+
+===== https://github.com/apache/sedona-db/blob/751453f04cd6e09842adf3073b2b3dac7d1777bc/docs/reference/sql/st_point.qmd =====
+---
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# &quot;License&quot;); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+title: ST_Point
+description: Constructs a Point Geometry from X and Y.
+kernels:
+  - returns: geometry
+    args:
+    - name: x
+      type: double
+    - name: &quot;y&quot;
+      type: double
+    - name: srid
+      type: crs
+---
+
+## Description
+
+Constructs a Point geometry from X and Y coordinates. An optional SRID or CRS can be provided as a third argument.
+
+## Examples
+
+```sql
+SELECT ST_AsText(ST_Point(-74.0060, 40.7128));
+```
+
+With an SRID:
+
+```sql
+SELECT ST_Point(-74.0060, 40.7128, 4326);
+```
+
+With a CRS:
+
+```sql
+SELECT ST_Point(-74.0060, 40.7128, &#x27;EPSG:3857&#x27;);
+```
+
+
+Available input path variables already in scope (choose the matching one(s) by type):
+- raster_cea_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/cea.tif
+- raster_test4_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/test4.tiff
+- output_dir = /home/zshan011/apps/aideal/checks/2026-11-17-qualified-inputs/prepared/preflight-final/sedonadb/original-prepared/execution/output
+
+RECEIVER — call `sql:ST_Point` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `sql:ST_Point` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Python and SQL syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language&#x27;s normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ sql:ST_Point ` followed by the witness, using the language&#x27;s normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `sql:ST_Point`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `sql:ST_Point` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `sql:ST_Point` is the writer; keep the
+body focused on `sql:ST_Point` so the run isolates that one call.
+Use individual SQL statements. Paths raster_cea_tif and raster_test4_tif are available local fixture files; output_dir is available for tiny outputs. Use only these paths when a documented operation needs a file. Tiny SQL VALUES and documented constructors are available for in-memory inputs. Do not use remote URLs. No repairs are permitted in this R0 run.</pre><h3>Available input data</h3><pre>- raster_cea_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/cea.tif
+- raster_test4_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/test4.tiff
+- output_dir = /home/zshan011/apps/aideal/checks/2026-11-17-qualified-inputs/prepared/preflight-final/sedonadb/original-prepared/execution/output</pre><h3>Preloaded inputs</h3><pre></pre><h3>Input/output instructions</h3><pre></pre><h3>Execution scaffold</h3><pre>from pathlib import Path
+import math
+import json
+from sedona_runtime import TrackedContext, requested_sql_target
+
+
+def main():
+    _, target_api = requested_sql_target(__file__)
+    sd = TrackedContext(target_api)
+    _tracked_connection = sd
+    # AIDEAL_DATA_BINDINGS
+    # TODO API_TEST_START
+    raise AssertionError(&quot;Audience snippet was not inserted&quot;)
+    # TODO API_TEST_END
+    _tracked_connection.verify()
+    print(&quot;__DONE__&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+</pre></details><details><summary>thumbnailator — java:net.coobird.thumbnailator.Thumbnails.Builder.size</summary><p><a href="thumbnailator.json">Complete request, context, input paths and scaffold</a></p><h3>System prompt</h3><pre>You write Java code that will be spliced into a runnable test harness.
+A Java headless harness compiled for Java 8 compatibility and run on JDK 17 is already in scope. Write statements only for the marked region. Reuse the in-memory images, output stream/path, and checked-in image paths. Exercise the target public API, assert a stable dimension/pixel/byte/file property, and print a compact witness.
+
+Requested target declaration (frozen canonical selection):
+Qualified name: net.coobird.thumbnailator.Thumbnails.Builder.size
+Owner: net.coobird.thumbnailator.Thumbnails.Builder
+Declaration: (int width,int height):Builder&lt;T&gt;
+Parameters in declaration order (2): width: int; height: int
+Write the requested call against this owner and declaration, with its indicated parameter list.
+Verified public access paths for the same defining API: net.coobird.thumbnailator.Thumbnails.Builder.size. Use a public access path when the defining namespace is internal.
+
+Pick the input variable(s) whose type matches the API&#x27;s parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: An expert in deterministic Java image processing, image I/O, and safe headless test harnesses.
+Project: Thumbnailator (Java) - A small Java image-processing library for producing thumbnails from files, streams, URLs, and in-memory images.
+Domain: Deterministic Java image processing; selected for this latest-stable study.
+Target users: Java imaging and media developers; scientific software users needing deterministic image transformations; coding agents composing type-safe thumbnail pipelines
+Use cases: Resize, crop, rotate, watermark, and transform BufferedImages.; Read and write thumbnails through files and streams.; Exercise filters, geometry, resizers, naming, and task abstractions.
+Constraints: Use only in-memory images and 95 checked-in test files.; Run headless and prohibit network, cameras, and desktop UI.; Compile snippets with JDK 17 javac --release 8; execute headlessly on JDK 17 with the official Maven 0.4.21 binary.; Use every name in the frozen 94-name canonical manifest without sampling; selection is structural filtering and same-name maximum arity, not a proof of arbitrary semantic equivalence.</pre><h3>Full user prompt</h3><pre>Documentation:
+===== Shared original document: README.md =====
+_*October 1, 2025: Thumbnailator 0.4.21 has been released!
+See [Changes](https://github.com/coobird/thumbnailator/wiki/Changes) for details.*_
+
+_*Thumbnailator is now available through
+[Maven](https://github.com/coobird/thumbnailator/wiki/Maven)!*_
+
+# What is Thumbnailator?
+
+![](https://raw.githubusercontent.com/wiki/coobird/thumbnailator/img/home/home-image.png)
+
+_Thumbnailator_ is a thumbnail generation library for Java.
+
+# Why Thumbnailator?
+Making high-quality thumbnails in Java can be a fairly difficult task.
+
+Learning how to use the Image I/O API, Java 2D API, image processing,
+image scaling techniques, ... but fear not! _Thumbnailator_ will take care
+of all those things for you!
+
+Thumbnailator is a single JAR file with no dependencies to external libraries,
+making development and deployment simple and easy. It is also available on
+the Maven Central Repository for easy inclusion in Maven projects.
+
+# How simple is Thumbnailator?
+
+_Thumbnailator_&#x27;s fluent interface can be used to perform fairly complicated
+thumbnail processing task in one simple step.
+
+For example, creating JPEG thumbnails of image files in a directory, all
+resized to a maximum dimension of 640 pixels by 480 pixels while preserving
+the aspect ratio of the original image can be performed by the following:
+
+```
+Thumbnails.of(new File(&quot;path/to/directory&quot;).listFiles())
+    .size(640, 480)
+    .outputFormat(&quot;jpg&quot;)
+    .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+```
+
+The fluent interface provided by the _Thumbnailator_ simplifies the task of
+making thumbnails into a single method call!
+
+No need to access the Image I/O API and manually manipulate `BufferedImage`s
+through `Graphics2D` objects. _Thumbnailator_ does all of that for you.
+
+# What can Thumbnailator do?
+
+The following pages have more information on what _Thumbnailator_ can do:
+
+* [Features](https://github.com/coobird/thumbnailator/wiki/Features)
+* [Examples](https://github.com/coobird/thumbnailator/wiki/Examples)
+* [Thumbnailator API Documentation](https://coobird.github.io/thumbnailator/javadoc/0.4.21/)
+* [Frequently Asked Questions](https://github.com/coobird/thumbnailator/wiki/FAQ)
+
+# Disclaimer
+*Thumbnailator is still early in its development, and the APIs are subject to
+change at any time.*
+
+# License
+Thumbnailtor is released under the MIT License.
+
+
+===== https://javadoc.io/static/net.coobird/thumbnailator/0.4.21/net/coobird/thumbnailator/Thumbnails.Builder.html#size(int, int) =====
+size
+public
+Thumbnails.Builder
+&lt;
+T
+&gt;
+size
+(int width,
+int height)
+Sets the size of the thumbnail.
+For example, to create thumbnails which should fit within a
+bounding rectangle of 640 x 480, the following code can be used:
+Thumbnails.of(image)
+.size(640, 480)
+.toFile(thumbnail);
+In the above code, the thumbnail will preserve the aspect ratio
+of the original image. If the thumbnail should be forced to the
+specified size, the
+forceSize(int, int)
+method can
+be used instead of this method.
+Once this method is called, calling the
+scale(double)
+method
+will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+Reference to this object.
+
+
+Available input path variables already in scope (choose the matching one(s) by type):
+Pre-loaded and already in scope — use these directly, do NOT re-load:
+- sourceImage: BufferedImage
+- graphics: Graphics2D
+- destinationImage: BufferedImage
+- imageBytes: ByteArrayOutputStream
+- outputPath: Path
+(raw input path strings also in scope if needed: grid_png, grid_jpeg, exif_jpeg, output_dir)
+
+RECEIVER — call `java:net.coobird.thumbnailator.Thumbnails.Builder.size` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `java:net.coobird.thumbnailator.Thumbnails.Builder.size` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Java syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language&#x27;s normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.size ` followed by the witness, using the language&#x27;s normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `java:net.coobird.thumbnailator.Thumbnails.Builder.size`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `java:net.coobird.thumbnailator.Thumbnails.Builder.size` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `java:net.coobird.thumbnailator.Thumbnails.Builder.size` is the writer; keep the
+body focused on `java:net.coobird.thumbnailator.Thumbnails.Builder.size` so the run isolates that one call.
+Use Java 8 syntax. Prefer BufferedImage and the provided tiny PNG/JPEG fixtures. Do not open windows, URLs, cameras, or network resources. Close streams you create and avoid overwriting repository fixtures.</pre><h3>Available input data</h3><pre>Pre-loaded and already in scope — use these directly, do NOT re-load:
+- sourceImage: BufferedImage
+- graphics: Graphics2D
+- destinationImage: BufferedImage
+- imageBytes: ByteArrayOutputStream
+- outputPath: Path
+(raw input path strings also in scope if needed: grid_png, grid_jpeg, exif_jpeg, output_dir)</pre><h3>Preloaded inputs</h3><pre>BufferedImage sourceImage = new BufferedImage(32, 24, BufferedImage.TYPE_INT_RGB);
+Graphics2D graphics = sourceImage.createGraphics();
+graphics.setColor(Color.BLUE);
+graphics.fillRect(0, 0, 32, 24);
+graphics.setColor(Color.YELLOW);
+graphics.fillRect(8, 6, 16, 12);
+graphics.dispose();
+BufferedImage destinationImage = new BufferedImage(16, 12, BufferedImage.TYPE_INT_RGB);
+ByteArrayOutputStream imageBytes = new ByteArrayOutputStream();
+Path outputPath = Paths.get(output_dir, &quot;thumbnail.png&quot;);
+Files.createDirectories(outputPath.getParent());</pre><h3>Input/output instructions</h3><pre></pre><h3>Execution scaffold</h3><pre>import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
+import javax.imageio.ImageIO;
+
+import net.coobird.thumbnailator.*;
+import net.coobird.thumbnailator.builders.*;
+import net.coobird.thumbnailator.filters.*;
+import net.coobird.thumbnailator.geometry.*;
+import net.coobird.thumbnailator.makers.*;
+import net.coobird.thumbnailator.name.*;
+import net.coobird.thumbnailator.resizers.*;
+import net.coobird.thumbnailator.resizers.configurations.*;
+import net.coobird.thumbnailator.tasks.*;
+import net.coobird.thumbnailator.tasks.io.*;
+import net.coobird.thumbnailator.util.*;
+import net.coobird.thumbnailator.util.exif.*;
+
+public final class ApiTest {
+    private ApiTest() {}
+
+    public static void main(String[] args) {
+        try {
+            // AIDEAL_DATA_BINDINGS
+
+            // TODO API_TEST_START
+            // TODO API_TEST_END
+            System.out.println(&quot;__DONE__&quot;);
+        } catch (Throwable exc) {
+            System.err.println(&quot;__RUN_ERR__ &quot; + exc.getClass().getSimpleName()
+                    + &quot;: &quot; + exc.getMessage());
+            exc.printStackTrace(System.err);
+            System.exit(1);
+        }
+    }
+}
+</pre></details><details><summary>tslearn — python:tslearn.metrics._dtw.dtw</summary><p><a href="tslearn.json">Complete request, context, input paths and scaffold</a></p><h3>System prompt</h3><pre>You write Python code that will be spliced into a runnable test harness.
+A headless Python harness, balanced eight-series training data, a second series set, one-dimensional signals, labels, a small numeric matrix, repository fixture paths, and a pre-created condition-specific output directory are already in scope. Import the target explicitly.
+
+Requested target declaration (frozen canonical selection):
+Qualified name: tslearn.metrics._dtw.dtw
+Owner: 
+Declaration: def dtw(s1, s2, global_constraint=None, sakoe_chiba_radius=None, itakura_max_slope=None, be=None)
+Parameters in declaration order (6): s1: ; s2: ; global_constraint: ; sakoe_chiba_radius: ; itakura_max_slope: ; be: 
+Write the requested call against this owner and declaration, with its indicated parameter list.
+Verified public access paths for the same defining API: tslearn.metrics._dtw.dtw, tslearn.metrics.dtw, tslearn.metrics.softdtw_variants.dtw. Use a public access path when the defining namespace is internal.
+
+Pick the input variable(s) whose type matches the API&#x27;s parameters. Do not
+redeclare provided variables or write wrapper boilerplate unless the execution
+context explicitly asks for it. Output ONLY the body statements that exercise the
+API. Use ONLY the documentation provided. Output only code, no markdown fences.
+
+Role: An expert Python time-series machine-learning engineer using tslearn and scikit-learn conventions. Write small deterministic executable checks for every frozen selected public API identity, including low-level backend helpers.
+Project: tslearn (Python) - A scientific machine-learning toolkit for time-series data, including distance and alignment metrics, clustering, classification, forecasting, barycenters, preprocessing, shapelets, serialization, and backend helpers.
+Domain: time-series machine learning
+Target users: time-series researchers and data scientists; ML engineers familiar with NumPy and scikit-learn; coding agents generating executable time-series workflows
+Use cases: Compute time-series distances, similarities, alignments, and barycenters.; Train compact clustering, classification, and forecasting estimators.; Convert, normalize, resample, serialize, and inspect time-series datasets.; Exercise public NumPy and PyTorch backend helpers with small arrays.
+Constraints: Use only the checked-in Trace fixture and deterministic in-memory derivatives.; Do not download datasets, plot interactively, or access the network.; Keep estimator sizes, iteration counts, and thread counts small.; Import the target explicitly; the shared scaffold does not pre-import tested APIs.; Assert a falsifiable property and print the configured correctness witness.; Use every name in the frozen 116-name canonical manifest without sampling; selection is structural filtering and same-name maximum arity, not a proof of arbitrary semantic equivalence.</pre><h3>Full user prompt</h3><pre>Documentation:
+===== Shared original document: pinned-root-readme:README.md =====
+&lt;!-- Our logo and description --&gt;
+&lt;div align=&quot;center&quot;&gt;
+  &lt;p&gt;&lt;a href=&quot;https://tslearn.readthedocs.io&quot;&gt;&lt;image src=&quot;https://raw.githubusercontent.com/tslearn-team/tslearn/main/docs/_static/tslearn_logo_white_background.png?cache-control=no-cache&quot; width=&quot;20%&quot; alt=&quot;tslearn logo&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;h1&gt;The machine learning toolkit for time series analysis in Python&lt;/h1&gt;
+&lt;/div&gt;
+
+&lt;!-- The badges --&gt;
+&lt;p align=&quot;center&quot;&gt;
+    &lt;a href=&quot;https://badge.fury.io/py/tslearn&quot;&gt;
+        &lt;img alt=&quot;PyPI&quot; src=&quot;https://badge.fury.io/py/tslearn.svg?cache-control=no-cache&quot;&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;https://www.python.org/downloads/&quot;&gt;
+        &lt;img alt=&quot;Python 3.10+&quot; src=&quot;https://img.shields.io/badge/python-3.10+-blue.svg&quot;&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;http://tslearn.readthedocs.io/en/stable/?badge=stable&quot;&gt;
+        &lt;img alt=&quot;Documentation&quot; src=&quot;https://app.readthedocs.org/projects/tslearn/badge/?version=stable&quot;&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;https://dev.azure.com/romaintavenard/tslearn/_build&quot;&gt;
+        &lt;img alt=&quot;Build (Azure Pipelines)&quot; src=&quot;https://dev.azure.com/romaintavenard/tslearn/_apis/build/status/tslearn-team.tslearn?branchName=main&quot;&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;https://codecov.io/gh/tslearn-team/tslearn&quot;&gt;
+        &lt;img alt=&quot;Codecov&quot; src=&quot;https://codecov.io/gh/tslearn-team/tslearn/branch/main/graph/badge.svg&quot;&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;https://pepy.tech/project/tslearn&quot;&gt;
+        &lt;img alt=&quot;Downloads&quot; src=&quot;https://pepy.tech/badge/tslearn&quot;&gt;
+    &lt;/a&gt;
+&lt;/p&gt;
+
+&lt;!-- Draw horizontal rule --&gt;
+&lt;hr&gt;
+
+&lt;!-- Table of content --&gt;
+
+| Section | Description |
+|-|-|
+| [Installation](#installation) | Installing the dependencies and tslearn |
+| [Getting started](#getting-started) | A quick introduction on how to use tslearn |
+| [Available features](#available-features) | An extensive overview of tslearn&#x27;s functionalities |
+| [Documentation](#documentation) | A link to our API reference and a gallery of examples |
+| [Contributing](#contributing) | A guide for heroes willing to contribute |
+| [Citation](#referencing-tslearn) | A citation for tslearn for scholarly articles |
+
+## Installation&lt;a id=&quot;installation&quot;&gt;&lt;/a&gt;
+There are different alternatives to install tslearn:
+* PyPi: `python -m pip install tslearn`
+* Conda: `conda install -c conda-forge tslearn`
+* Git: `python -m pip install https://github.com/tslearn-team/tslearn/archive/main.zip`
+
+In order for the installation to be successful, the required dependencies must be installed. For a more detailed guide on how to install tslearn, please see the [Documentation](https://tslearn.readthedocs.io/en/stable/?badge=stable#installation).
+
+## Getting started&lt;a id=&quot;getting-started&quot;&gt;&lt;/a&gt;
+
+### 1. Getting the data in the right format
+tslearn expects a time series dataset to be formatted as a 3D `numpy` array. The three dimensions correspond to the number of time series, the number of measurements per time series and the number of dimensions respectively (`n_ts, max_sz, d`). In order to get the data in the right format, different solutions exist:
+* [You can use the utility functions such as `to_time_series_dataset`.](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.utils.html#module-tslearn.utils)
+* [You can convert from other popular time series toolkits in Python.](https://tslearn.readthedocs.io/en/stable/integration_other_software.html)
+* [You can load any of the UCR datasets in the required format.](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.datasets.html#module-tslearn.datasets)
+* [You can generate synthetic data using the `generators` module.](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.generators.html#module-tslearn.generators)
+
+It should further be noted that tslearn [supports variable-length timeseries](https://tslearn.readthedocs.io/en/stable/variablelength.html).
+
+```python3
+&gt;&gt;&gt; from tslearn.utils import to_time_series_dataset
+&gt;&gt;&gt; my_first_time_series = [1, 3, 4, 2]
+&gt;&gt;&gt; my_second_time_series = [1, 2, 4, 2]
+&gt;&gt;&gt; my_third_time_series = [1, 2, 4, 2, 2]
+&gt;&gt;&gt; X = to_time_series_dataset([my_first_time_series,
+                                my_second_time_series,
+                                my_third_time_series])
+&gt;&gt;&gt; y = [0, 1, 1]
+```
+
+### 2. Data preprocessing and transformations
+Optionally, tslearn has several utilities to preprocess the data. In order to facilitate the convergence of different algorithms, you can [scale time series](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.preprocessing.html#module-tslearn.preprocessing). Alternatively, in order to speed up training times, one can [resample](https://tslearn.readthedocs.io/en/stable/gen_modules/preprocessing/tslearn.preprocessing.TimeSeriesResampler.html#tslearn.preprocessing.TimeSeriesResampler) the data or apply a [piece-wise transformation](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.piecewise.html#module-tslearn.piecewise).
+
+```python3
+&gt;&gt;&gt; from tslearn.preprocessing import TimeSeriesScalerMinMax
+&gt;&gt;&gt; X_scaled = TimeSeriesScalerMinMax().fit_transform(X)
+&gt;&gt;&gt; print(X_scaled)
+[[[0.] [0.667] [1.] [0.333] [nan]]
+ [[0.] [0.333] [1.] [0.333] [nan]]
+ [[0.] [0.333] [1.] [0.333] [0.333]]]
+```
+
+### 3. Training a model
+
+After getting the data in the right format, a model can be trained. Depending on the use case, tslearn supports different tasks: classification, clustering and regression. For an extensive overview of possibilities, check out our [gallery of examples](https://tslearn.readthedocs.io/en/stable/auto_examples/index.html).
+
+```python3
+&gt;&gt;&gt; from tslearn.neighbors import KNeighborsTimeSeriesClassifier
+&gt;&gt;&gt; knn = KNeighborsTimeSeriesClassifier(n_neighbors=1)
+&gt;&gt;&gt; knn.fit(X_scaled, y)
+&gt;&gt;&gt; print(knn.predict(X_scaled))
+[0 1 1]
+```
+
+As can be seen, the models in tslearn follow the same API as those of the well-known scikit-learn. Moreover, they are fully compatible with it, allowing to use different scikit-learn utilities such as [hyper-parameter tuning and pipelines](https://tslearn.readthedocs.io/en/stable/auto_examples/neighbors/plot_knnts_sklearn.html).
+
+### 4. More analyses
+
+tslearn further allows to perform all different types of analysis. Examples include [calculating barycenters](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.barycenters.html#module-tslearn.barycenters) of a group of time series or calculate the distances between time series using a [variety of distance metrics](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.metrics.html#module-tslearn.metrics).
+
+## Available features&lt;a id=&quot;available-features&quot;&gt;&lt;/a&gt;
+
+| data                                                                                                                                                                                         | processing                                                                                                              | clustering                                                                                                                                                       | classification                                                                                                                                                                          | regression                                                                                                                                                                           | metrics                                                                                                                              |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| [UCR Datasets](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.datasets.html#module-tslearn.datasets)                                                                           | [Scaling](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.preprocessing.html#module-tslearn.preprocessing) | [TimeSeriesKMeans](https://tslearn.readthedocs.io/en/stable/gen_modules/clustering/tslearn.clustering.TimeSeriesKMeans.html#tslearn.clustering.TimeSeriesKMeans) | [KNN Classifier](https://tslearn.readthedocs.io/en/stable/gen_modules/neighbors/tslearn.neighbors.KNeighborsTimeSeriesClassifier.html#tslearn.neighbors.KNeighborsTimeSeriesClassifier) | [KNN Regressor](https://tslearn.readthedocs.io/en/stable/gen_modules/neighbors/tslearn.neighbors.KNeighborsTimeSeriesRegressor.html#tslearn.neighbors.KNeighborsTimeSeriesRegressor) | [Dynamic Time Warping](https://tslearn.readthedocs.io/en/stable/gen_modules/metrics/tslearn.metrics.dtw.html#tslearn.metrics.dtw)    |
+| [Generators](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.generators.html#module-tslearn.generators)                                                                         | [Piecewise](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.piecewise.html#module-tslearn.piecewise)       | [KShape](https://tslearn.readthedocs.io/en/stable/gen_modules/clustering/tslearn.clustering.KShape.html#tslearn.clustering.KShape)                               | [TimeSeriesSVC](https://tslearn.readthedocs.io/en/stable/gen_modules/svm/tslearn.svm.TimeSeriesSVC.html#tslearn.svm.TimeSeriesSVC)                                                      | [TimeSeriesSVR](https://tslearn.readthedocs.io/en/stable/gen_modules/svm/tslearn.svm.TimeSeriesSVR.html#tslearn.svm.TimeSeriesSVR)                                                   | [Global Alignment Kernel](https://tslearn.readthedocs.io/en/stable/gen_modules/metrics/tslearn.metrics.gak.html#tslearn.metrics.gak) |
+| Conversion([1](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.utils.html#module-tslearn.utils), [2](https://tslearn.readthedocs.io/en/stable/integration_other_software.html)) |                                                                                                                         | [KernelKmeans](https://tslearn.readthedocs.io/en/stable/gen_modules/clustering/tslearn.clustering.KernelKMeans.html#tslearn.clustering.KernelKMeans)             | [LearningShapelets](https://tslearn.readthedocs.io/en/stable/gen_modules/shapelets/tslearn.shapelets.LearningShapelets.html)                                    | [MLP](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.neural_network.html#module-tslearn.neural_network)                                                                | [Barycenters](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.barycenters.html#module-tslearn.barycenters)              |
+|                                                                                                                                                                                              |                                                                                                                         |                                                                                                                                                                  | [Early Classification](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.early_classification.html#module-tslearn.early_classification)                                      |                                                                                                                                                                                      | [Matrix Profile](https://tslearn.readthedocs.io/en/stable/gen_modules/tslearn.matrix_profile.html#module-tslearn.matrix_profile)     |
+
+
+## Documentation&lt;a id=&quot;documentation&quot;&gt;&lt;/a&gt;
+
+The documentation is hosted at [readthedocs](http://tslearn.readthedocs.io/en/stable/index.html). It includes an [API](https://tslearn.readthedocs.io/en/stable/reference.html), [gallery of examples](https://tslearn.readthedocs.io/en/stable/auto_examples/index.html) and a [user guide](https://tslearn.readthedocs.io/en/stable/user_guide/userguide.html).
+
+## Contributing&lt;a id=&quot;contributing&quot;&gt;&lt;/a&gt;
+
+If you would like to contribute to `tslearn`, please have a look at [our contribution guidelines](https://github.com/tslearn-team/tslearn/blob/main/CONTRIBUTING.rst). A list of interesting TODO&#x27;s can be found [here](https://github.com/tslearn-team/tslearn/issues?utf8=✓&amp;q=is%3Aissue%20is%3Aopen%20label%3A%22new%20feature%22%20). **If you want other ML methods for time series to be added to this TODO list, do not hesitate to [open an issue](https://github.com/tslearn-team/tslearn/issues/new/choose)!**
+
+## Referencing tslearn&lt;a id=&quot;referencing-tslearn&quot;&gt;&lt;/a&gt;
+
+If you use `tslearn` in a scientific publication, we would appreciate citations:
+
+```bibtex
+@article{JMLR:v21:20-091,
+  author  = {Romain Tavenard and Johann Faouzi and Gilles Vandewiele and 
+             Felix Divo and Guillaume Androz and Chester Holtz and 
+             Marie Payne and Roman Yurchak and Marc Ru{\ss}wurm and 
+             Kushal Kolar and Eli Woods},
+  title   = {Tslearn, A Machine Learning Toolkit for Time Series Data},
+  journal = {Journal of Machine Learning Research},
+  year    = {2020},
+  volume  = {21},
+  number  = {118},
+  pages   = {1-6},
+  url     = {https://www.jmlr.org/papers/v21/20-091.html}
+}
+```
+
+#### Acknowledgments
+Authors would like to thank Mathieu Blondel for providing code for [Kernel k-means](https://gist.github.com/mblondel/6230787) and [Soft-DTW](https://github.com/mblondel/soft-dtw), and to Mehran Maghoumi for his [`torch`-compatible implementation of SoftDTW](https://github.com/Maghoumi/pytorch-softdtw-cuda).
+
+
+===== https://tslearn.readthedocs.io/en/stable/gen_modules/metrics/tslearn.metrics.dtw.html#tslearn.metrics.dtw =====
+tslearn.metrics.dtw(s1, s2, global_constraint=None, sakoe_chiba_radius=None, itakura_max_slope=None, be=None)[source]
+
+Compute Dynamic Time Warping (DTW) similarity measure between (possibly multidimensional) time series and return it.
+
+DTW is computed as the Euclidean distance between aligned time series, i.e., if \(\pi\) is the optimal alignment path:
+
+ \[DTW(X, Y) = \sqrt{\sum_{(i, j) \in \pi} \|X_{i} - Y_{j}\|^2}\]
+
+Note that this formula is still valid for the multivariate case.
+
+It is not required that both time series share the same size, but they must be the same dimension. DTW was originally presented in [1] and is discussed in more details in our dedicated user-guide page.
+
+Parameters:
+
+s1array-like, shape=(sz1, d) or (sz1,)
+
+A time series. If shape is (sz1,), the time series is assumed to be univariate.
+
+s2array-like, shape=(sz2, d) or (sz2,)
+
+Another time series. If shape is (sz2,), the time series is assumed to be univariate.
+
+global_constraint{“itakura”, “sakoe_chiba”} or None (default: None)
+
+Global constraint to restrict admissible paths for DTW.
+
+sakoe_chiba_radiusint or None (default: None)
+
+Radius to be used for Sakoe-Chiba band global constraint. The Sakoe-Chiba radius corresponds to the parameter \(\delta\) mentioned in [1], it controls how far in time we can go in order to match a given point from one time series to a point in another time series. If None and global_constraint is set to “sakoe_chiba”, a radius of 1 is used. If both sakoe_chiba_radius and itakura_max_slope are set, global_constraint is used to infer which constraint to use among the two. In this case, if global_constraint corresponds to no global constraint, a RuntimeWarning is raised and no global constraint is used.
+
+itakura_max_slopefloat or None (default: None)
+
+Maximum slope for the Itakura parallelogram constraint. If None and global_constraint is set to “itakura”, a maximum slope of 2. is used. If both sakoe_chiba_radius and itakura_max_slope are set, global_constraint is used to infer which constraint to use among the two. In this case, if global_constraint corresponds to no global constraint, a RuntimeWarning is raised and no global constraint is used.
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+float
+
+Similarity score
+
+See also
+
+dtw_path
+
+Get both the matching path and the similarity score for DTW
+
+cdist_dtw
+
+Cross similarity matrix between time series datasets
+
+References
+
+ [1] (1,2)
+H. Sakoe, S. Chiba, “Dynamic programming algorithm optimization for spoken word recognition,” IEEE Transactions on Acoustics, Speech and Signal Processing, vol. 26(1), pp. 43–49, 1978.
+
+Examples
+
+&gt;&gt;&gt; dtw([1, 2, 3], [1., 2., 2., 3.])
+0.0
+&gt;&gt;&gt; dtw([1, 2, 3], [1., 2., 2., 3., 4.])
+1.0
+
+The PyTorch backend can be used to compute gradients:
+
+&gt;&gt;&gt; import torch
+&gt;&gt;&gt; s1 = torch.tensor([[1.0], [2.0], [3.0]], requires_grad=True)
+&gt;&gt;&gt; s2 = torch.tensor([[3.0], [4.0], [-3.0]])
+&gt;&gt;&gt; sim = dtw(s1, s2, be=&quot;pytorch&quot;)
+&gt;&gt;&gt; print(sim)
+tensor(6.4807, dtype=torch.float64, grad_fn=&lt;SqrtBackward0&gt;)
+&gt;&gt;&gt; sim.backward()
+&gt;&gt;&gt; print(s1.grad)
+tensor([[-0.3086],
+        [-0.1543],
+        [ 0.7715]])
+
+&gt;&gt;&gt; s1_2d = torch.tensor([[1.0, 1.0], [2.0, 2.0], [3.0, 3.0]], requires_grad=True)
+&gt;&gt;&gt; s2_2d = torch.tensor([[3.0, 3.0], [4.0, 4.0], [-3.0, -3.0]])
+&gt;&gt;&gt; sim = dtw(s1_2d, s2_2d, be=&quot;pytorch&quot;)
+&gt;&gt;&gt; print(sim)
+tensor(9.1652, dtype=torch.float64, grad_fn=&lt;SqrtBackward0&gt;)
+&gt;&gt;&gt; sim.backward()
+&gt;&gt;&gt; print(s1_2d.grad)
+tensor([[-0.2182, -0.2182],
+        [-0.1091, -0.1091],
+        [ 0.5455,  0.5455]])
+
+
+Available input path variables already in scope (choose the matching one(s) by type):
+Pre-loaded and already in scope — use these directly, do NOT re-load:
+- _trace: (see preamble)
+- _balanced: (see preamble)
+- X: balanced time-series dataset ndarray (8, 40, 1)
+- X2: second dataset ndarray (4, 32, 1)
+- s1: 1-D series ndarray (40,)
+- s2: 1-D series ndarray (40,)
+- y: four balanced labels, two examples per class
+- tiny_matrix: deterministic numeric matrix
+(raw input path strings also in scope if needed: trace_npz, output_dir)
+
+RECEIVER — call `python:tslearn.metrics._dtw.dtw` on the RIGHT type (calling it on the wrong receiver is
+the #1 failure; if it is an instance method, first obtain a value of the owner type,
+do NOT call it on an unrelated preloaded input):
+(receiver type not resolved)
+
+(none yet)
+
+Write minimal body statements that use `python:tslearn.metrics._dtw.dtw` correctly per the docs,
+reading from the appropriate input variable(s) above.
+
+The snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just
+that it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted
+data can produce plausible output without throwing). End with a CORRECTNESS CHECK
+written in valid Python syntax:
+- force the result to materialize and compute a small witness of it — a count, a
+  size, or a sampled element;
+- use the language&#x27;s normal assertion mechanism with a FALSIFIABLE condition tied
+  to the documented contract or to values chosen earlier in the snippet;
+- print a STRUCTURED line whose literal prefix is exactly
+  `__CHECK__ python:tslearn.metrics._dtw.dtw ` followed by the witness, using the language&#x27;s normal
+  output function and formatting syntax.
+
+The assertion must be capable of rejecting a plausible but incorrect result.
+The following are TAUTOLOGIES and MUST NOT be the only correctness check:
+- a Boolean value is either true or false;
+- a count, size, offset, or index is merely non-negative;
+- a value has the type already guaranteed by the language;
+- an object is non-null when construction itself guarantees that;
+- the operation completed without throwing.
+
+Choose the strongest lightweight oracle supported by the documentation and the
+available inputs:
+- for setters/configuration APIs, read the value back and compare it with the exact
+  value set;
+- for generators, filters, joins, aggregations, and collections, compare a count,
+  key, membership relation, or aggregate with a known expectation derived from a
+  deliberately small input or an independently computed input property;
+- for readers, validate representative content plus relevant size/shape/schema or
+  metadata, rather than checking only that some output exists;
+- for transformations, check deterministic sampled output values or a documented
+  input/output invariant;
+- for writers, read the output back and compare representative content or a known
+  aggregate with the input.
+
+If the documentation does not support any non-tautological oracle, still call and
+materialize `python:tslearn.metrics._dtw.dtw`, but deliberately fail the assertion with a short message
+stating that the documented contract is insufficient to verify the result. This is
+a documentation-comprehension test: an unverifiable contract must not earn a pass.
+If `python:tslearn.metrics._dtw.dtw` is itself a writer/output API, use an output binding only when one
+is listed among the available inputs or execution context; then read back a small
+part of the output, assert a known content/aggregate relation when the documented
+contract permits it, and print the same structured line.
+Do not call other heavyweight operations unless `python:tslearn.metrics._dtw.dtw` is the writer; keep the
+body focused on `python:tslearn.metrics._dtw.dtw` so the run isolates that one call.
+Use small deterministic parameters. For file-writing APIs, write only below output_dir. Optional-dependency failures must remain explicit infrastructure outcomes. End with a meaningful assertion and print a compact __CHECK__ witness.</pre><h3>Available input data</h3><pre>Pre-loaded and already in scope — use these directly, do NOT re-load:
+- _trace: (see preamble)
+- _balanced: (see preamble)
+- X: balanced time-series dataset ndarray (8, 40, 1)
+- X2: second dataset ndarray (4, 32, 1)
+- s1: 1-D series ndarray (40,)
+- s2: 1-D series ndarray (40,)
+- y: four balanced labels, two examples per class
+- tiny_matrix: deterministic numeric matrix
+(raw input path strings also in scope if needed: trace_npz, output_dir)</pre><h3>Preloaded inputs</h3><pre>Path(output_dir).mkdir(parents=True, exist_ok=True)
+_trace = np.load(trace_npz)
+_balanced = np.array([0, 4, 1, 17, 3, 13, 2, 5], dtype=int)
+X = _trace[&quot;X_train&quot;][_balanced, :40, :]  # type: balanced time-series dataset ndarray (8, 40, 1)
+X2 = _trace[&quot;X_test&quot;][:4, :32, :]  # type: second dataset ndarray (4, 32, 1)
+s1 = X[0].ravel()  # type: 1-D series ndarray (40,)
+s2 = X[1].ravel()  # type: 1-D series ndarray (40,)
+y = _trace[&quot;y_train&quot;][_balanced]  # type: four balanced labels, two examples per class
+tiny_matrix = np.arange(12.0).reshape(3, 4)  # type: deterministic numeric matrix</pre><h3>Input/output instructions</h3><pre></pre><h3>Execution scaffold</h3><pre>&quot;&quot;&quot;Shared infrastructure-only scaffold for tslearn&#x27;s frozen canonical API study.
+
+This exact infrastructure file is shared by all study conditions. It intentionally imports no
+tested tslearn API because discovering the public import is part of the
+audience task in every cell.
+&quot;&quot;&quot;
+
+from pathlib import Path
+import sys
+import traceback
+
+import numpy as np
+
+
+def run():
+    # Typed repository fixture path and condition-specific output directory:
+    # AIDEAL_DATA_BINDINGS
+
+    # Keep audience imports local so they cannot shadow fixture construction.
+    def api_test():
+        # TODO API_TEST_START
+        # TODO API_TEST_END
+        pass
+
+    api_test()
+
+
+if __name__ == &quot;__main__&quot;:
+    try:
+        run()
+        print(&quot;__DONE__&quot;)
+    except Exception as exc:  # noqa: BLE001 - execution boundary
+        sys.stderr.write(&quot;__RUN_ERR__ &quot; + type(exc).__name__ + &quot;: &quot; + str(exc) + &quot;\n&quot;)
+        traceback.print_exc()
+        raise SystemExit(1)
+</pre></details>

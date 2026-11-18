@@ -1,0 +1,134 @@
+Transparency (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Class Transparency
+java.lang.Object
+net.coobird.thumbnailator.filters.Transparency
+All Implemented Interfaces:
+ImageFilter
+public class
+Transparency
+extends
+Object
+implements
+ImageFilter
+An image filter which will make an image transparent.
+The resulting image will always have an image type of
+BufferedImage.TYPE_INT_ARGB
+.
+Author:
+coobird
+Constructor Summary
+Transparency
+(double alpha)
+Instantiates a
+Transparency
+filter with the specified opacity.
+Transparency
+(float alpha)
+Instantiates a
+Transparency
+filter with the specified opacity.
+Method Summary
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+float
+getAlpha
+()
+Returns the opacity of this filter.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+Transparency
+public
+Transparency
+(float alpha)
+Instantiates a
+Transparency
+filter with the specified opacity.
+Parameters:
+alpha
+- The opacity of the resulting image. The value should be
+between
+0.0f
+(transparent) to
+1.0f
+(opaque), inclusive.
+Throws:
+IllegalArgumentException
+- If the specified opacity is outside of
+the range specified above.
+Transparency
+public
+Transparency
+(double alpha)
+Instantiates a
+Transparency
+filter with the specified opacity.
+This is a convenience constructor for the
+Transparency(float)
+constructor.
+Parameters:
+alpha
+- The opacity of the resulting image. The value should be
+between
+0.0f
+(transparent) to
+1.0f
+(opaque), inclusive.
+Throws:
+IllegalArgumentException
+- If the specified opacity is outside of
+the range specified above.
+Method Detail
+apply
+public
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Description copied from interface:
+ImageFilter
+Applies a image filtering operation on an image.
+Specified by:
+apply
+in interface
+ImageFilter
+Parameters:
+img
+- The image to apply the filtering on.
+Returns:
+The resulting image after applying this filter.
+getAlpha
+public float
+getAlpha
+()
+Returns the opacity of this filter.
+Returns:
+The opacity in the range of
+0.0f
+(transparent) to
+1.0f
+(opaque).
+Copyright © 2025. All rights reserved.

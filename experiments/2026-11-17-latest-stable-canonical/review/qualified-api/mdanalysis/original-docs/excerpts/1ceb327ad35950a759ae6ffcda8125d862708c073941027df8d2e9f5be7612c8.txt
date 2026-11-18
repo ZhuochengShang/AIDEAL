@@ -1,0 +1,46 @@
+class MDAnalysis.core.accessors.ConverterWrapper(ag)[source]
+
+Convert AtomGroup to a structure from another Python package.
+
+The converters are accessible to any AtomGroup through the convert_to property. ag.convert_to will return this ConverterWrapper, which can be called directly with the name of the destination package as a string (similarly to the old API), or through custom methods named after the package (in lowercase) that are automatically constructed thanks to metaclass magic.
+
+Example
+
+The code below converts a Universe to a parmed.structure.Structure
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import GRO
+>>> u = mda.Universe(GRO)
+>>> parmed_structure = u.atoms.convert_to('PARMED')
+>>> parmed_structure
+<Structure 47681 atoms; 11302 residues; 0 bonds; PBC (triclinic); NOT parametrized>
+
+You can also directly use u.atoms.convert_to.parmed()
+
+Parameters:
+
+package (str) – The name of the package to convert to, e.g. "PARMED"
+
+*args – Positional arguments passed to the converter
+
+**kwargs – Keyword arguments passed to the converter
+
+Returns:
+
+An instance of the structure type from another package.
+
+Return type:
+
+output
+
+Raises:
+
+ValueError: – No converter was found for the required package
+
+Added in version 1.0.0.
+
+Changed in version 2.0.0: Moved the convert_to method to its own class. The old API is still available and is now case-insensitive to package names, it also accepts positional and keyword arguments. Each converter function can also be accessed as a method with the name of the package in lowercase, i.e. convert_to.parmed()
+
+Parameters:
+
+ag (AtomGroup) – The AtomGroup to convert

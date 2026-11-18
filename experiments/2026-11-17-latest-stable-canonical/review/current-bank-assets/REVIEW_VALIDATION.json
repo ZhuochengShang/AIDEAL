@@ -1,0 +1,132 @@
+{
+  "status": "PASS",
+  "scope": "Static metadata, JavaScript syntax, source excerpt bytes, and local links; no model calls or subject executions.",
+  "model_calls": 0,
+  "subject_executions": 0,
+  "targets": 1695,
+  "doc_mentions": 477,
+  "banks": [
+    {
+      "bank": "rdpro_scala",
+      "targets": 297,
+      "doc_mentions": 34
+    },
+    {
+      "bank": "rdpro_java",
+      "targets": 411,
+      "doc_mentions": 21
+    },
+    {
+      "bank": "mdanalysis",
+      "targets": 435,
+      "doc_mentions": 38
+    },
+    {
+      "bank": "tslearn",
+      "targets": 116,
+      "doc_mentions": 56
+    },
+    {
+      "bank": "mir_eval",
+      "targets": 125,
+      "doc_mentions": 22
+    },
+    {
+      "bank": "thumbnailator",
+      "targets": 94,
+      "doc_mentions": 94
+    },
+    {
+      "bank": "sedonadb",
+      "targets": 217,
+      "doc_mentions": 212
+    }
+  ],
+  "pilot_count": 6,
+  "prompt_pair_hashes_verified": 1695,
+  "source_checks": [
+    {
+      "bank": "rdpro_scala",
+      "path": "pilot_sources/rdpro_scala/RasterMetadata.scala",
+      "sha256": "540a1b85feebe9c4f0d61a2d4888e84bdbbfe570b31a5fc66f0fa84c86aa33cd",
+      "line_count": 1
+    },
+    {
+      "bank": "mdanalysis",
+      "path": "pilot_sources/mdanalysis/rms.py",
+      "sha256": "163ef52b79b0c524827ae7b19d26eb08ec91307858f785fecb0e7071b31df635",
+      "line_count": 105
+    },
+    {
+      "bank": "tslearn",
+      "path": "pilot_sources/tslearn/_dtw.py",
+      "sha256": "6d2cfa2660f1d72c6f57fcc003b93f93f9fab82fbf5960700f7041692481001a",
+      "line_count": 134
+    },
+    {
+      "bank": "mir_eval",
+      "path": "pilot_sources/mir_eval/beat.py",
+      "sha256": "959b9b99abc11dbf51c726868aa3a1da518550d99a1106b630e7c00911965e2a",
+      "line_count": 39
+    },
+    {
+      "bank": "thumbnailator",
+      "path": "pilot_sources/thumbnailator/ProgressiveBilinearResizer.java",
+      "sha256": "a6b58b4aa50d9ed99e542d07329457c8bddd218bc9ec22b4e8453e766bad8a62",
+      "line_count": 85
+    },
+    {
+      "bank": "sedonadb",
+      "path": "pilot_sources/sedonadb/st_area.qmd",
+      "sha256": "01339f771fa6964dfc799c4b23cf4fa208a294874be5009f62278466880bb049",
+      "line_count": 40
+    },
+    {
+      "bank": "sedonadb",
+      "path": "pilot_sources/sedonadb/register.rs",
+      "sha256": "d90a2fbf366242bae9e8d75a54cf210a0464898a12706909c4dfcc02c569981b",
+      "line_count": 14
+    },
+    {
+      "bank": "sedonadb",
+      "path": "pilot_sources/sedonadb/st_area.rs",
+      "sha256": "b6d50cf214c3e106dfeb795ae68c06c6b8525884832f99796faca848d40c7e1a",
+      "line_count": 44
+    }
+  ],
+  "native_preview_cases": 6,
+  "native_exact_user_pairs": 5,
+  "native_output_path_only_pairs": 1,
+  "sedonadb_v3_pilot": "Verified separate policy-and-output-path variant; baseline bank and v2 retained",
+  "pilot_catalog_sha256": "4eb493199e81f2fd7e2d7ae0b06116bb4cbcf5220cb07fb4546efc977cb6db66",
+  "local_jsonl_duplicates": 0,
+  "syntax_checks": [
+    "native_previews/v2/rdpro_scala/TRACE.html#inline-0",
+    "native_previews/v2/thumbnailator/TRACE.html#inline-0",
+    "native_previews/v2/mir_eval/TRACE.html#inline-0",
+    "native_previews/v2/mdanalysis/TRACE.html#inline-0",
+    "native_previews/v2/tslearn/TRACE.html#inline-0",
+    "native_previews/v2/sedonadb/TRACE.html#inline-0",
+    "native_previews/v3/sedonadb/TRACE.html#inline-0",
+    "current-bank-assets/review.js",
+    "current-bank-assets/PILOT_DETAILS.js",
+    "current-bank-assets/NATIVE_PREVIEWS.js",
+    "current-bank-assets/BANK_DATA.js",
+    "banks/rdpro_scala/TASK_BANK.js",
+    "banks/thumbnailator/TASK_BANK.js",
+    "banks/mir_eval/TASK_BANK.js",
+    "banks/mdanalysis/TASK_BANK.js",
+    "banks/rdpro_java/TASK_BANK.js",
+    "banks/tslearn/TASK_BANK.js",
+    "banks/sedonadb/TASK_BANK.js"
+  ],
+  "local_links_checked": 30,
+  "external_links_not_requested": [],
+  "limitations": "Browser visual/interaction QA is separate. No new model response, program, execution or verdict was created.",
+  "browser_visual_check": {
+    "status": "NOT_PERFORMED",
+    "reported_by": "final_browser_audit",
+    "reason": "Direct file:// preview was rejected by browser URL policy; no workaround attempted. New CURRENT_BANK and PILOT_REVIEW pages were checked through static validation and an in-memory DOM, not a visual browser session.",
+    "offline_design": "Local script data loading avoids fetch/CORS requirements; actual file:// browser loading remains unverified."
+  }
+}

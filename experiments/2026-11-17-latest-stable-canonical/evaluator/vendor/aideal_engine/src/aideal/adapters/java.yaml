@@ -1,0 +1,40 @@
+# Adapter: plain Java library codebases built with Maven or Gradle.
+#
+# This layer currently supports the static AIDEAL stages and generated README
+# production. A project must still provide its own execute command/scaffold to
+# run comprehension snippets end to end.
+
+project:
+  language: Java
+
+codebase:
+  # Public/protected filtering is handled by Java's deny visibility model.
+  # Match ordinary methods (including generic/static/default methods) while
+  # avoiding calls, fields, and control-flow statements.
+  # The opening parenthesis is a lookahead so the shared signature reader
+  # starts immediately after the captured method/constructor name.
+  public_def_regex: "^\\s*(?:(?:(?:public|protected|private|static|final|abstract|synchronized|native|strictfp|default)\\s+)+(?:<[^>{};]+>\\s+)?(?:[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^>{};]+>)?(?:\\[\\])*\\s+)?|(?!(?:if|for|while|switch|return|throw|new|assert)\\b)(?:<[^>{};]+>\\s+)?[A-Za-z_$][A-Za-z0-9_$.?]*(?:<[^>{};]+>)?(?:\\[\\])*\\s+)([A-Za-z_$][A-Za-z0-9_$]*)\\s*(?=\\()"
+  exclude_names: [main, toString, equals, hashCode, clone, finalize]
+
+docfix:
+  allowed_member_categories: [language_core, java_core]
+  member_categories:
+    java_core: [of, valueOf, parse, builder, build, create, add, addAll, remove,
+      clear, put, putAll, get, set, contains, containsKey, containsValue,
+      iterator, stream, collect, map, filter, forEach, size, length, isEmpty,
+      toArray, toList, toSet, toMap, orElse, orElseGet, getAsInt, getAsLong,
+      getAsDouble, close, flush, read, write]
+
+comprehension:
+  execute:
+    test_filename: ApiTest.java
+    region: ["// TODO API_TEST_START", "// TODO API_TEST_END"]
+    execution_context: >-
+      A runnable Java test harness is already in scope. Write statements for
+      the marked region only; do not declare a package or another top-level
+      class. Reuse the configured objects and fixtures and print a small
+      deterministic witness of the result.
+    exec_hints: >-
+      Prefer small in-memory inputs and public factory/builder APIs. Avoid GUI,
+      network, external databases, and large files. The project must provide a
+      Maven/Gradle classpath command before --execute is enabled.

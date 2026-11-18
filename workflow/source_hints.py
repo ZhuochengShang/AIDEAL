@@ -4,6 +4,7 @@ AIDEAL-HINT-BEGIN / END blocks contain only whole-line ``#`` or ``//``
 comments immediately before a declaration. This deliberately bounded format is
 not a language AST or an automatic claim that the guidance fixes the program.
 """
+import ast
 import hashlib
 from pathlib import Path
 import re
@@ -13,23 +14,14 @@ REQUIRED = ('function_id', 'requirement_id', 'requirement', 'diagnostic', 'actio
 MAX_SOURCE_BYTES, MAX_BLOCK_CHARACTERS = 2_000_000, 12_000
 
 
-def _reject_unicode_escapes(values):
-    """Java expands Unicode escapes before recognizing line comments.
-
-    Reject all such spellings conservatively in slash-comment guidance, including
-    repeated ``u`` characters and doubled backslashes. The raw-text stripper must
-    never certify an annotation that a compiler can reinterpret as executable code.
-    """
-    if any(re.search(r'\\u+[0-9a-fA-F]{4}', value) for value in values):
-        raise ValueError('Unicode escape sequences are not allowed in // source hints')
-
-
 def _comment_lines(text):
     """Identify genuine whole-line comments, excluding strings/block comments.
 
     Handles Python triple strings and C/Scala/Java strings, plus Rust raw strings.
     Unknown/unterminated quoting fails conservatively by hiding later markers.
     """
+    # Return a map from source line indices to their whole-line comment prefixes and text.
+    # Track quoted strings and block comments so markers inside them stay ordinary source.
     comments, quote, block, raw_end = {}, None, 0, None
     for number, line in enumerate(text.splitlines(keepends=True)):
         i = 0
@@ -86,6 +78,8 @@ def _comment_lines(text):
 
 
 def _blocks(text):
+    # Pair marker lines and return each block span with its field text.
+    # Require every line inside the span to use the same comment style.
     lines, comments = text.splitlines(keepends=True), _comment_lines(text)
     active, blocks = None, []
     for number, (_, content) in comments.items():
@@ -101,8 +95,6 @@ def _blocks(text):
             prefixes = {comments[i][0] for i in range(active, number + 1)}
             if len(prefixes) != 1:
                 raise ValueError('Source hint comment prefixes differ')
-            if prefixes == {'//'}:
-                _reject_unicode_escapes(lines[active:number + 1])
             if sum(len(lines[i]) for i in range(active, number + 1)) > MAX_BLOCK_CHARACTERS:
                 raise ValueError('Source hint exceeds bounded annotation size')
             blocks.append((active, number, [comments[i][1] for i in range(active + 1, number)]))
@@ -114,6 +106,7 @@ def _blocks(text):
 
 def strip_source_hints(text):
     """Remove only recognized comment blocks, retaining every other exact byte."""
+    # Remove blocks from the bottom up so earlier line indices remain usable.
     lines = text.splitlines(keepends=True)
     for start, end, _ in reversed(_blocks(text)):
         del lines[start:end + 1]
@@ -121,6 +114,7 @@ def strip_source_hints(text):
 
 
 def _fields(lines):
+    # Turn field lines into a dictionary after checking their names and required values.
     result = {}
     for line in lines:
         key, separator, value = line.partition(':')
@@ -144,6 +138,7 @@ def _fields(lines):
 
 
 def _identity(function_id):
+    # Return a relative path, a one-based line number, and the function name from the ID.
     match = re.fullmatch(r'(.+):(\d+):([^:/]+)', function_id)
     if not match or int(match[2]) < 1:
         raise ValueError('Canonical function ID must be path:line:name')
@@ -153,9 +148,58 @@ def _identity(function_id):
     return match[1], int(match[2]), match[3]
 
 
-def _declaration(lines, start, name):
+def _python_function(lines, start, name, source_path):
+    """Bind a bare or qualified identity to its exact importable declaration.
+
+    Qualified IDs include a module and all lexical class owners. Module names
+    must follow the source path; source-layout prefixes such as ``src`` need
+    not be importable packages. Historical bare IDs still use the exact line.
+    """
+    # Use the parsed syntax tree to match the declaration line, then verify the name
+    # and any supplied module and class owners.
+    matches = []
+
+    def visit(node, owners=()):
+        # Walk the tree with its enclosing class names so the matched function can be qualified.
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            if node.lineno == start + 1:
+                matches.append((node, owners))
+            return  # Definitions local to functions are not importable APIs.
+        if isinstance(node, ast.ClassDef):
+            owners = (*owners, node.name)
+        for child in ast.iter_child_nodes(node):
+            visit(child, owners)
+
+    visit(ast.parse(''.join(lines)))
+    if len(matches) != 1:
+        raise ValueError('Function identity does not match Python source declaration')
+    node, owners = matches[0]
+    if '.' not in name:
+        if node.name != name:
+            raise ValueError('Function identity does not match Python source declaration')
+        return node
+    qualified = tuple(name.split('.'))
+    suffix = (*owners, node.name)
+    module = qualified[:-len(suffix)]
+    parts = Path(source_path).with_suffix('').parts
+    module_paths = [parts]
+    if parts and parts[-1] == '__init__':
+        module_paths.append(parts[:-1])
+    if (qualified[-len(suffix):] != suffix or not module
+            or not all(part.isidentifier() for part in qualified)
+            or not any(len(module) <= len(path) and path[-len(module):] == module
+                       for path in module_paths)):
+        raise ValueError('Qualified Python function identity differs from its source module or owner')
+    return node
+
+
+def _declaration(lines, start, name, source_path=None):
+    # Find the declaration near the expected line and return its zero-based position and signature.
+    # Use the Python syntax tree when available to check the declaration identity.
     while start < len(lines) and not lines[start].strip():
         start += 1
+    if source_path is not None and Path(source_path).suffix == '.py':
+        name = _python_function(lines, start, name, source_path).name
     prefix = ''.join(lines[start:start + 12])
     # Only declaration syntax, never an arbitrary reference or call expression.
     patterns = (r'\b(?:async\s+)?def\s+' + re.escape(name) + r'\b',
@@ -190,6 +234,8 @@ def _declaration(lines, start, name):
 
 def index_source_hints(worktree, artifacts, api_function_ids):
     """Index explicit source files and report missing API coverage before a run."""
+    # Read the requested files inside the worktree and attach each valid annotation
+    # to its mapped API. Report covered and uncovered functions.
     root = Path(worktree).resolve(strict=True)
     reverse = {identity: api for api, identity in api_function_ids.items()}
     if len(reverse) != len(api_function_ids):
@@ -221,7 +267,8 @@ def index_source_hints(worktree, artifacts, api_function_ids):
             after = end + 1
             while after < len(lines) and (after in removed or not lines[after].strip()):
                 after += 1
-            declaration_line, signature = _declaration(lines, after, name)
+            declaration_line, signature = _declaration(lines, after, name, relative)
+            # Convert the annotated declaration line back to its line in the baseline source.
             original_line = declaration_line + 1 - sum(i < declaration_line for i in removed)
             if baseline_line != original_line:
                 raise ValueError('Canonical baseline line does not identify the annotated declaration')
@@ -249,13 +296,12 @@ def index_source_hints(worktree, artifacts, api_function_ids):
 
 def render_source_hint(fields, comment_prefix='//'):
     """Render a reviewed proposal as ordinary source comments, never code."""
+    # Validate the fields, then put them between marker lines using the given comment prefix.
     if comment_prefix not in ('//', '#'):
         raise ValueError('Use a supported whole-line comment prefix')
     if any(not isinstance(value, str) or '\n' in value or '\r' in value
            for value in fields.values()):
         raise ValueError('Source hint values must be single-line text')
-    if comment_prefix == '//':
-        _reject_unicode_escapes(fields.values())
     checked = _fields([key + ': ' + value for key, value in fields.items()])
     return '\n'.join(comment_prefix + ' ' + line for line in
                      [BEGIN, *(key + ': ' + checked[key] for key in REQUIRED + ('status',)), END]) + '\n'
@@ -263,6 +309,8 @@ def render_source_hint(fields, comment_prefix='//'):
 
 def insert_source_hint(source, function_id, fields, *, source_path=None):
     """Return annotation-only edited source; caller owns saving and committing."""
+    # Locate the baseline declaration after accounting for existing annotations.
+    # Insert a block at the declaration indentation and return the new text.
     path, baseline_line, name = _identity(function_id)
     if source_path is not None and Path(source_path).as_posix() != path:
         raise ValueError('Source insertion path differs from canonical identity')
@@ -277,7 +325,7 @@ def insert_source_hint(source, function_id, fields, *, source_path=None):
     if baseline_line > len(positions):
         raise ValueError('Canonical declaration line is outside source')
     at = positions[baseline_line - 1]
-    actual, _ = _declaration(lines, at, name)
+    actual, _ = _declaration(lines, at, name, path)
     if actual != at:
         raise ValueError('Canonical line does not identify exact declaration')
     values = {**fields, 'function_id': function_id}
@@ -293,6 +341,8 @@ def insert_source_hint(source, function_id, fields, *, source_path=None):
 
 def select_source_hints(index, previous):
     """Select guidance only after function and requirement evidence agree."""
+    # Use the prior public failure to identify a function, then match the diagnostic
+    # and any explicit requirement ID against its indexed hints.
     from .failure_diagnosis import diagnose_failure
     diagnosis = diagnose_failure(index, previous)
     if diagnosis['status'] != 'identified':

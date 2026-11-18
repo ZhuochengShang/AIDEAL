@@ -1,0 +1,19 @@
+predict(X=None, n=1)[source]
+
+Forecast with the model selected at fitting time.
+
+Parameters:
+
+Xarray-like, shape (n_ts, sz, d), optional
+
+Time-series dataset to forecast. If None, the fitted data is forecasted otherwise the fitted model is applied to the given data.
+
+nint (default: 1)
+
+The number of timestamps to forecast, a.k.a. the horizon.
+
+Returns:
+
+array, shape = (n_ts, n, d)
+
+Array of forecasted timestamps

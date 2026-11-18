@@ -1,0 +1,287 @@
+class MDAnalysis.coordinates.H5MD.H5MDWriter(filename, n_atoms, n_frames=None, driver=None, convert_units=True, chunks=None, compression=None, compression_opts=None, positions=True, velocities=True, forces=True, timeunit=None, lengthunit=None, velocityunit=None, forceunit=None, author='N/A', author_email=None, creator='MDAnalysis', creator_version='2.11.0', **kwargs)[source]
+
+Writer for H5MD format (version 1.1).
+
+H5MD trajectories are automatically recognised by the file extension “.h5md”.
+
+All data from the input Timestep is written by default. For detailed information on how H5MDWriter handles units, compression, and chunking, see the Notes section below.
+
+Note
+
+Parellel writing with the use of a MPI communicator and the 'mpio' HDF5 driver is currently not supported.
+
+Note
+
+NoDataError is raised if no positions, velocities, or forces are found in the input trajectory. While the H5MD standard allows for this case, H5MDReader cannot currently read files without at least one of these three groups.
+
+Note
+
+Writing H5MD files with fancy trajectory slicing where the Timestep does not increase monotonically such as u.trajectory[[2,1,0]] or u.trajectory[[0,1,2,0,1,2]] raises a ValueError as this violates the rules of the step dataset in the H5MD standard.
+
+Parameters:
+
+filename (str or h5py.File) – trajectory filename or open h5py file
+
+n_atoms (int) – number of atoms in trajectory
+
+n_frames (int (optional)) – number of frames to be written in trajectory
+
+driver (str (optional)) – H5PY file driver used to open H5MD file. See H5PY drivers for list of available drivers.
+
+convert_units (bool (optional)) – Convert units from MDAnalysis to desired units
+
+chunks (tuple (optional)) – Custom chunk layout to be applied to the position, velocity, and force datasets. By default, these datasets are chunked in (1, n_atoms, 3) blocks
+
+compression (str or int (optional)) – HDF5 dataset compression setting to be applied to position, velocity, and force datasets. Allowed settings are ‘gzip’, ‘szip’, ‘lzf’. If an integer in range(10), this indicates gzip compression level. Otherwise, an integer indicates the number of a dynamically loaded compression filter.
+
+compression_opts (int or tup (optional)) – Compression settings. This is an integer for gzip, 2-tuple for szip, etc. If specifying a dynamically loaded compression filter number, this must be a tuple of values. For gzip, 1 indicates the lowest level of compression and 9 indicates maximum compression.
+
+positions (bool (optional)) – Write positions into the trajectory [True]
+
+velocities (bool (optional)) – Write velocities into the trajectory [True]
+
+forces (bool (optional)) – Write forces into the trajectory [True]
+
+timeunit (str (optional)) – Option to convert values in the ‘time’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+lengthunit (str (optional)) – Option to convert values in the ‘position/value’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+velocityunit (str (optional)) – Option to convert values in the ‘velocity/value’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+forceunit (str (optional)) – Option to convert values in the ‘force/value’ dataset to a custom unit, must be recognizable by MDAnalysis
+
+author (str (optional)) – Name of the author of the file
+
+author_email (str (optional)) – Email of the author of the file
+
+creator (str (optional)) – Software that wrote the file [MDAnalysis]
+
+creator_version (str (optional)) – Version of software that wrote the file [MDAnalysis.__version__]
+
+Raises:
+
+RuntimeError – when H5PY is not installed
+
+ValueError – when n_atoms is 0
+
+ValueError – when chunks=False but the user did not specify n_frames
+
+ValueError – when positions, velocities, and forces are all set to False
+
+TypeError – when the input object is not a Universe or AtomGroup
+
+IOError – when n_atoms of the Universe or AtomGroup being written does not match n_atoms passed as an argument to the writer
+
+ValueError – when any of the optional timeunit, lengthunit, velocityunit, or forceunit keyword arguments are not recognized by MDAnalysis
+
+Notes
+
+By default, the writer will write all available data (positions, velocities, and forces) if detected in the input Timestep. In addition, the settings for compression and compression_opts will be read from the first available group of positions, velocities, or forces and used as the default value. To write a file without any one of these datsets, set positions, velocities, or forces to False.
+
+Units
+
+The H5MD format is very flexible with regards to units, as there is no standard defined unit for the format. For this reason, H5MDWriter does not enforce any units. The units of the written trajectory can be set explicitly with the keyword arguments lengthunit, velocityunit, and forceunit. If units are not explicitly specified, they are set to the native units of the trajectory that is the source of the coordinates. For example, if one converts a DCD trajectory, then positions are written in ångstrom and time in AKMA units. A GROMACS XTC will be written in nm and ps. The units are stored in the metadata of the H5MD file so when MDAnalysis loads the H5MD trajectory, the units will be automatically set correctly.
+
+Compression
+
+HDF5 natively supports various compression modes. To write the trajectory with compressed datasets, set compression='gzip', compression='lzf' , etc. See H5PY compression options for all supported modes of compression. An additional argument, compression_opts, can be used to fine tune the level of compression. For example, for GZIP compression, compression_opts can be set to 1 for minimum compression and 9 for maximum compression.
+
+HDF5 Chunking
+
+HDF5 datasets can be chunked, meaning the dataset can be split into equal sized pieces and stored in different, noncontiguous places on disk. If HDF5 tries to read an element from a chunked dataset, the entire dataset must be read, therefore an ill-thought-out chunking scheme can drastically effect file I/O performance. In the case of all MDAnalysis writers, in general, the number of frames being written is not known apriori by the writer, therefore the HDF5 must be extendable. However, the allocation of diskspace is defined when the dataset is created, therefore extendable HDF5 datasets must be chunked so as to allow dynamic storage on disk of any incoming data to the writer. In such cases where chunking isn’t explicity defined by the user, H5PY automatically selects a chunk shape via an algorithm that attempts to make mostly square chunks between 1 KiB - 1 MiB, however this can lead to suboptimal I/O performance. H5MDWriter uses a default chunk shape of (1, n_atoms, 3) so as to mimic the typical access pattern of a trajectory by MDAnalysis. In our tests ([Jakupovic2021]), this chunk shape led to a speedup on the order of 10x versus H5PY’s auto-chunked shape. Users can set a custom chunk shape with the chunks argument. Additionaly, the datasets in a file can be written with a contiguous layout by setting chunks=False, however this must be accompanied by setting n_frames equal to the number of frames being written, as HDF5 must know how much space to allocate on disk when creating the dataset.
+
+Added in version 2.0.0.
+
+ H5MD_VERSION = (1, 1)
+
+currently written version of the file format
+
+ close()
+
+Close the trajectory file.
+
+ convert_dimensions_to_unitcell(ts, inplace=True)
+
+Read dimensions from timestep ts and return appropriate unitcell.
+
+The default is to return [A,B,C,alpha,beta,gamma]; if this is not appropriate then this method has to be overriden.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ data_blacklist = ['step', 'time', 'dt']
+
+These variables are not written from Timestep.data dictionary to the observables group in the H5MD file
+
+ property has_forces
+
+True if writer is writing forces from Timestep.
+
+ property has_positions
+
+True if writer is writing positions from Timestep.
+
+ has_valid_coordinates(criteria, x)
+
+Returns True if all values are within limit values of their formats.
+
+Due to rounding, the test is asymmetric (and min is supposed to be negative):
+
+min < x <= max
+
+Parameters:
+
+criteria (dict) – dictionary containing the max and min values in native units
+
+x (numpy.ndarray) – (x, y, z) coordinates of atoms selected to be written out
+
+Return type:
+
+bool
+
+ property has_velocities
+
+True if writer is writing velocities from Timestep.
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(obj)
+
+Write current timestep, using the supplied obj.
+
+Parameters:
+
+obj (AtomGroup or Universe) – write coordinate information associate with obj
+
+Note
+
+The size of the obj must be the same as the number of atoms provided when setting up the trajectory.
+
+Changed in version 2.0.0: Deprecated support for Timestep argument to write has now been removed. Use AtomGroup or Universe as an input instead.

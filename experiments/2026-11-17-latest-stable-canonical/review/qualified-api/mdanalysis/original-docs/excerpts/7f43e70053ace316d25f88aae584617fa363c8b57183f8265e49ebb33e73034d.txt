@@ -1,0 +1,11 @@
+property forces
+
+Forces on each Atom in the AtomGroup.
+
+A numpy.ndarray with shape=(n_atoms, 3) and dtype=numpy.float32.
+
+The forces can be changed by assigning an array of the appropriate shape, i.e. either (n_atoms, 3) to assign individual forces or (3,) to assign the same force to all Atoms (e.g. ag.forces = array([0,0,0]) will give all Atoms a zero force).
+
+Raises:
+
+NoDataError – If the Timestep does not contain forces.

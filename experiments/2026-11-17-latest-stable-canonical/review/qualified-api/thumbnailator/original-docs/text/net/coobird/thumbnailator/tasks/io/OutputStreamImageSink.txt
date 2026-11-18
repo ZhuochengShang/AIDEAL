@@ -1,0 +1,162 @@
+OutputStreamImageSink (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class OutputStreamImageSink
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.AbstractImageSink
+<
+OutputStream
+>
+net.coobird.thumbnailator.tasks.io.OutputStreamImageSink
+All Implemented Interfaces:
+ImageSink
+<
+OutputStream
+>
+public class
+OutputStreamImageSink
+extends
+AbstractImageSink
+<
+OutputStream
+>
+An
+ImageSink
+which specifies an
+OutputStream
+to which the
+thumbnail image should be written to.
+Author:
+coobird
+Constructor Summary
+OutputStreamImageSink
+(
+OutputStream
+os)
+Instantiates an
+OutputStreamImageSink
+with the
+OutputStream
+to which the thumbnail should be written to.
+Method Summary
+OutputStream
+getSink
+()
+Returns the destination to which the thumbnail will be stored or
+written.
+void
+write
+(
+BufferedImage
+img)
+Writes the resulting image to the
+OutputStream
+.
+Methods inherited from class net.coobird.thumbnailator.tasks.io.
+AbstractImageSink
+preferredOutputFormatName
+,
+setOutputFormatName
+,
+setThumbnailParameter
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+OutputStreamImageSink
+public
+OutputStreamImageSink
+(
+OutputStream
+os)
+Instantiates an
+OutputStreamImageSink
+with the
+OutputStream
+to which the thumbnail should be written to.
+Parameters:
+os
+- The
+OutputStream
+to write the thumbnail to.
+Throws:
+NullPointerException
+- If the
+OutputStream
+is
+null
+.
+Method Detail
+write
+public void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Writes the resulting image to the
+OutputStream
+.
+Specified by:
+write
+in interface
+ImageSink
+<
+OutputStream
+>
+Overrides:
+write
+in class
+AbstractImageSink
+<
+OutputStream
+>
+Parameters:
+img
+- The image to write.
+Throws:
+UnsupportedFormatException
+- When an unsupported format has been
+specified by the
+AbstractImageSink.setOutputFormatName(String)
+method.
+IOException
+- When a problem occurs while writing
+the image.
+NullPointerException
+- If the image is
+null
+.
+IllegalStateException
+- If the output format has not been set
+by calling the
+AbstractImageSink.setOutputFormatName(String)
+method.
+getSink
+public
+OutputStream
+getSink
+()
+Description copied from interface:
+ImageSink
+Returns the destination to which the thumbnail will be stored or
+written.
+Returns:
+The destination for the thumbnail image.
+Copyright © 2025. All rights reserved.

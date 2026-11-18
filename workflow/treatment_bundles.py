@@ -8,12 +8,16 @@ from .execution import atomic_json
 from .treatment_versions import _artifact_role, _read_proposal
 
 
-def bundle_proposals(proposals, output, *, readme=None):
+def bundle_proposals(proposals, output, *, readme=None, include_legacy_hints=False):
     """Produce a complete multi-file version; installation remains a separate step.
 
     Inputs are exact per-batch proposal paths. Earlier library versions are not
     implicitly included: provide every batch to retain in this complete bundle.
+    README/aliases are installable by default. Legacy JSON hint candidates remain
+    recorded but require explicit opt-in; native hints use separate validation.
     """
+    # Check that the selected batches refer to one baseline. Write separate alias
+    # source files, their combined interface, and any selected README or legacy hints.
     if not proposals:
         raise ValueError('Supply at least one per-batch proposal')
     output = Path(output).expanduser().resolve()
@@ -42,7 +46,9 @@ def bundle_proposals(proposals, output, *, readme=None):
             checked.append(_read_proposal(path, baseline))
     source_refs = [bind(p) for p in sources]
     aliases, hints, interfaces, contents, targets, names = [], [], [], {}, set(), set()
-    readmes = []
+    readmes, legacy_hint_sources = [], []
+    # Collect the selected outputs in batch order and reject collisions before
+    # creating the bundle directory.
     for number, (proposal, data) in enumerate(checked, 1):
         for row in proposal.get('aliases', []):
             name = row.get('name')
@@ -64,6 +70,7 @@ def bundle_proposals(proposals, output, *, readme=None):
             elif role == 'readme':
                 readmes.append(data[key])
             elif role == 'error_hints':
+                legacy_hint_sources.append(binding)
                 payload = json.loads(data[key])
                 if not isinstance(payload.get('hints'), list):
                     raise ValueError('Error-hint artifact must contain a hints list')
@@ -79,8 +86,9 @@ def bundle_proposals(proposals, output, *, readme=None):
         source_refs.append(bind(readme))
     if readmes and any(text != readmes[0] for text in readmes):
         raise ValueError('Conflicting improved README versions; select identical bytes')
-    if not contents and not hints and not readmes:
-        raise ValueError('No installable treatments; keep the separate refactor review candidates')
+    if not contents and not (hints and include_legacy_hints) and not readmes:
+        raise ValueError('No installable README or alias treatments; keep review candidates separate. '
+                         'Legacy JSON hints require explicit include_legacy_hints=True.')
     output.mkdir(parents=True, exist_ok=False)
     artifacts = {}
     for key, (target, content) in contents.items():
@@ -91,7 +99,7 @@ def bundle_proposals(proposals, output, *, readme=None):
         path = output / 'ALIASES.md'
         path.write_text('# Alias interfaces\n\n' + '\n\n'.join(interfaces))
         artifacts['alias_interface'] = bind(path)
-    if hints:
+    if hints and include_legacy_hints:
         path = output / 'error_hints.json'
         atomic_json(path, {'schema_version': 1, 'status': 'unverified',
                           'source': 'development evidence only', 'hints': hints})
@@ -110,13 +118,27 @@ def bundle_proposals(proposals, output, *, readme=None):
         path = output / f'refactor_review_{index:04d}.json'
         shutil.copyfile(ref['path'], path)
         review_bindings.append(bind(path))
+    # This receipt is evidence only; the installer reads only `artifacts` above.
+    selection = output / 'legacy_hint_selection.json'
+    installed_hints = len(hints) if include_legacy_hints else 0
+    atomic_json(selection, {
+        'include_legacy_hints': include_legacy_hints,
+        'candidate_count': len(hints), 'installed_count': installed_hints,
+        'omitted_count': len(hints) - installed_hints,
+        'source_artifacts': legacy_hint_sources, 'candidates': hints,
+        'note': ('Legacy JSON hints explicitly included for their original evaluation protocol.'
+                 if include_legacy_hints else
+                 'Legacy JSON candidates are retained as evidence, not installed. '
+                 'Native exception guidance requires separate proposal, validation and installation.'),
+    })
     result = {'schema_version': 2, 'baseline_revision': baseline,
               'status': 'proposed_unvalidated', 'artifacts': artifacts,
               'aliases': aliases, 'source_proposals': source_refs,
-              'refactor_reviews': review_bindings,
+              'refactor_reviews': review_bindings, 'legacy_hint_selection': bind(selection),
               'source_proposals_sha256': digest(source_refs), 'requires_validation': True,
               'bundle_semantics': 'complete_replace_owned', 'llm_calls': 0}
     atomic_json(output / 'proposal.json', result)
     return {'proposal': str(output / 'proposal.json'), 'status': result['status'],
             'alias_source_files': len(contents), 'aliases': len(aliases),
-            'hints': len(hints), 'llm_calls': 0}
+            'hints': installed_hints, 'omitted_legacy_hints': len(hints) - installed_hints,
+            'legacy_hint_selection': str(selection), 'llm_calls': 0}

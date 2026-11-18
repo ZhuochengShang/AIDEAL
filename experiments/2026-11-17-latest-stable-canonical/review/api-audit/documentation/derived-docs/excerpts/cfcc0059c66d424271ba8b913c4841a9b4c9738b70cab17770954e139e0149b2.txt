@@ -1,0 +1,15 @@
+_write_timestep(ts, multiframe=False)[source]
+
+Write a new timestep ts to file
+
+Does unit conversion if necessary.
+
+By setting multiframe = True, MODEL … ENDMDL records are written to represent trajectory frames in a multi-model PDB file. (At the moment we do not write the NUMMDL record.)
+
+The multiframe = False keyword signals that the PDBWriter is in single frame mode and no MODEL records are written.
+
+Changed in version 0.7.6: The multiframe keyword was added, which completely determines if MODEL records are written. (Previously, this was decided based on the underlying trajectory and only if len(traj) > 1 would MODEL records have been written.)
+
+Changed in version 1.0.0: ChainID now comes from the last character of segid, as stated in the documentation. An indexing issue meant it previously used the first charater (Issue #2224)
+
+Changed in version 2.0.0: When only record_types attribute is present, instead of using ATOM for both ATOM and HETATM, HETATM record types are properly written out (Issue #1753). Writing now only uses the contents of the elements attribute instead of guessing by default. If the elements are missing, empty records are written out (Issue #2423). Atoms are now checked for a valid chainID instead of being overwritten by the last letter of the segid (Issue #3144).

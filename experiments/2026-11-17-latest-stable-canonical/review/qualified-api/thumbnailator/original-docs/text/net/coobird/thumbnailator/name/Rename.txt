@@ -1,0 +1,294 @@
+Rename (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.name
+Class Rename
+java.lang.Object
+net.coobird.thumbnailator.name.Rename
+public abstract class
+Rename
+extends
+Object
+This class is used to rename file names.
+Author:
+coobird
+Field Summary
+static
+Rename
+NO_CHANGE
+A
+Rename
+which does not alter the given file name.
+static
+Rename
+PREFIX_DOT_THUMBNAIL
+Appends
+thumbnail.
+to the beginning of the file name.
+static
+Rename
+PREFIX_HYPHEN_THUMBNAIL
+Appends
+thumbnail-
+to the beginning of the file name.
+static
+Rename
+PREFIX_HYPTHEN_THUMBNAIL
+Deprecated.
+Please use the correctly spelled
+PREFIX_HYPHEN_THUMBNAIL
+. This constant
+will be removed in Thumbnailator 0.5.0.
+static
+Rename
+SUFFIX_DOT_THUMBNAIL
+Appends
+.thumbnail
+to the file name prior to the extension of
+the file.
+static
+Rename
+SUFFIX_HYPHEN_THUMBNAIL
+Appends
+-thumbnail
+to the file name prior to the extension of
+the file.
+static
+Rename
+SUFFIX_HYPTHEN_THUMBNAIL
+Deprecated.
+Please use the correctly spelled
+SUFFIX_HYPHEN_THUMBNAIL
+. This constant
+will be removed in Thumbnailator 0.5.0.
+Method Summary
+abstract
+String
+apply
+(
+String
+name,
+ThumbnailParameter
+param)
+Applies the function performed by this
+Rename
+on the
+specified name and thumbnail creation parameters.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Field Detail
+NO_CHANGE
+public static final
+Rename
+NO_CHANGE
+A
+Rename
+which does not alter the given file name.
+For example, given
+picture.jpg
+, result is
+picture.jpg
+.
+Note: The
+apply(String, ThumbnailParameter)
+method does not use
+the
+param
+parameter. A value of
+null
+for
+param
+is
+permitted.
+PREFIX_DOT_THUMBNAIL
+public static final
+Rename
+PREFIX_DOT_THUMBNAIL
+Appends
+thumbnail.
+to the beginning of the file name.
+For example, given
+picture.jpg
+, result is
+thumbnail.picture.jpg
+.
+Note: The
+apply(String, ThumbnailParameter)
+method does not use
+the
+param
+parameter. A value of
+null
+for
+param
+is
+permitted.
+PREFIX_HYPTHEN_THUMBNAIL
+@Deprecated
+public static final
+Rename
+PREFIX_HYPTHEN_THUMBNAIL
+Deprecated.
+Please use the correctly spelled
+PREFIX_HYPHEN_THUMBNAIL
+. This constant
+will be removed in Thumbnailator 0.5.0.
+Appends
+thumbnail-
+to the beginning of the file name.
+For example, given
+picture.jpg
+, result is
+thumbnail-picture.jpg
+.
+Note: The
+apply(String, ThumbnailParameter)
+method does not use
+the
+param
+parameter. A value of
+null
+for
+param
+is
+permitted.
+PREFIX_HYPHEN_THUMBNAIL
+public static final
+Rename
+PREFIX_HYPHEN_THUMBNAIL
+Appends
+thumbnail-
+to the beginning of the file name.
+For example, given
+picture.jpg
+, result is
+thumbnail-picture.jpg
+.
+Note: The
+apply(String, ThumbnailParameter)
+method does not use
+the
+param
+parameter. A value of
+null
+for
+param
+is
+permitted.
+SUFFIX_DOT_THUMBNAIL
+public static final
+Rename
+SUFFIX_DOT_THUMBNAIL
+Appends
+.thumbnail
+to the file name prior to the extension of
+the file.
+For example, given
+picture.jpg
+, result is
+picture.thumbnail.jpg
+.
+Note: The
+apply(String, ThumbnailParameter)
+method does not use
+the
+param
+parameter. A value of
+null
+for
+param
+is
+permitted.
+SUFFIX_HYPTHEN_THUMBNAIL
+@Deprecated
+public static final
+Rename
+SUFFIX_HYPTHEN_THUMBNAIL
+Deprecated.
+Please use the correctly spelled
+SUFFIX_HYPHEN_THUMBNAIL
+. This constant
+will be removed in Thumbnailator 0.5.0.
+Appends
+-thumbnail
+to the file name prior to the extension of
+the file.
+For example, given
+picture.jpg
+, result is
+picture-thumbnail.jpg
+.
+Note: The
+apply(String, ThumbnailParameter)
+method does not use
+the
+param
+parameter. A value of
+null
+for
+param
+is
+permitted.
+SUFFIX_HYPHEN_THUMBNAIL
+public static final
+Rename
+SUFFIX_HYPHEN_THUMBNAIL
+Appends
+-thumbnail
+to the file name prior to the extension of
+the file.
+For example, given
+picture.jpg
+, result is
+picture-thumbnail.jpg
+.
+Note: The
+apply(String, ThumbnailParameter)
+method does not use
+the
+param
+parameter. A value of
+null
+for
+param
+is
+permitted.
+Method Detail
+apply
+public abstract
+String
+apply
+(
+String
+name,
+ThumbnailParameter
+param)
+Applies the function performed by this
+Rename
+on the
+specified name and thumbnail creation parameters.
+Parameters:
+name
+- Name to apply the function on.
+The file name should not include the directory
+in which the file resides in.
+param
+- Parameters used to create the thumbnail.
+Returns:
+The name after the function has been applied.
+Copyright © 2025. All rights reserved.

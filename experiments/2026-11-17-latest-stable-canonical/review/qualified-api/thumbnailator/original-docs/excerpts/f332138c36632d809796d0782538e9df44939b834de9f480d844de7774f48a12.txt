@@ -1,0 +1,79 @@
+asBufferedImages
+public
+List
+<
+BufferedImage
+>
+asBufferedImages
+()
+throws
+IOException
+Create the thumbnails and return as a
+List
+of
+BufferedImage
+s.
+If you intend to write these
+BufferedImage
+s to files,
+you're strongly encouraged to use one of the
+toFiles(...)
+or
+asFiles(...)
+methods instead. See "Notes on image types"
+for details.
+Notes on image types
+The image type of the
+BufferedImage
+depends on the type
+of the input image. (Specifically, the type emitted by the
+ImageReader
+associated for the file type.)
+Thumbnailator will attempt to use the same image type as the
+input if it is not specified through
+imageType(int)
+.
+This has implications when writing
+BufferedImage
+to files
+using the default JPEG writer bundled with Java. There are issues
+with the JPEG writer
+outputting wrong colors
+or
+throwing exceptions
+when writing a image containing an alpha channel.
+If outputting to a file, consider using one of the
+toFiles(Iterable)
+,
+toFiles(Rename)
+,
+toFiles(File, Rename)
+asFiles(Iterable)
+,
+asFiles(Rename)
+or
+asFiles(File, Rename)
+methods instead, as it contains workarounds to prevent issues
+mentioned in the previous paragraph.
+For more information on
+BufferedImage
+types, refer to
+BufferedImage.getType()
+.
+Note about performance
+This method will process all inputs and create the corresponding
+thumbnails at once before returning them as in a list.
+Therefore, if many thumbnails are generated at once, it is possible
+that the Java virtual machine's heap space will run out and an
+OutOfMemoryError
+could be thrown.
+If many thumbnails are being processed at once, then using the
+iterableBufferedImages()
+method would be preferable.
+Returns:
+A list of thumbnails.
+Throws:
+IOException
+- If a problem occurred during
+the reading of the original
+images.

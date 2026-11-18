@@ -1,0 +1,17 @@
+phi_selection(c_name='C', n_name='N', ca_name='CA')[source]
+
+Select AtomGroup corresponding to the phi protein backbone dihedral C’-N-CA-C.
+
+Parameters:
+
+c_name (str (optional)) – name for the backbone C atom
+
+n_name (str (optional)) – name for the backbone N atom
+
+ca_name (str (optional)) – name for the alpha-carbon atom
+
+Returns:
+
+AtomGroup – 4-atom selection in the correct order. If no C’ found in the previous residue (by resid) then this method returns None.
+
+.. versionchanged:: 1.0.0 – Added arguments for flexible atom names and refactored code for faster atom matching with boolean arrays.

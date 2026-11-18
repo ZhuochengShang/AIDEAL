@@ -1,0 +1,27 @@
+delete_bonds(values)[source]
+
+Delete Bonds from this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Bonds; or TopologyGroup) – An iterable of: tuples of 2 atom indices, or AtomGroups with 2 atoms, or Bonds. If AtomGroups, Bonds, or a TopologyGroup are passed, they must be from the same Universe.
+
+Example
+
+Deleting bonds from a Universe:
+
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import PSF
+u = mda.Universe(PSF)
+
+#  delete first 5 bonds
+u.delete_bonds(u.bonds[:5])
+
+If you are deleting bonds in the form of AtomGroups, Bonds, or a TopologyGroup, they must come from the same Universe. If you want to delete bonds from another Universe, convert them to indices first.
+
+from MDAnalysis.tests.datafiles import PDB
+u2 = mda.Universe(PDB)
+
+u.delete_bonds(u2.bonds.to_indices())
+
+Added in version 1.0.0.

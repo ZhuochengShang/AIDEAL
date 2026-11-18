@@ -1,0 +1,34 @@
+class MDAnalysis.analysis.backends.BackendMultiprocessing(n_workers: int)[source]
+
+A built-in backend that executes a given function using the multiprocessing.Pool.map method.
+
+Parameters:
+
+n_workers (int) – number of processes in multiprocessing.Pool to distribute the workload between. Must be a positive integer.
+
+Examples
+
+from MDAnalysis.analysis.backends import BackendMultiprocessing
+import multiprocessing as mp
+
+backend_obj = BackendMultiprocessing(n_workers=mp.cpu_count())
+
+Added in version 2.8.0.
+
+ apply(func: Callable, computations: list) → list[source]
+
+Applies func to each object in computations using multiprocessing’s Pool.map.
+
+Parameters:
+
+func (Callable) – function to be called on each of the tasks in computations list
+
+computations (list) – computation tasks to apply function to
+
+Returns:
+
+list of results of the function
+
+Return type:
+
+list

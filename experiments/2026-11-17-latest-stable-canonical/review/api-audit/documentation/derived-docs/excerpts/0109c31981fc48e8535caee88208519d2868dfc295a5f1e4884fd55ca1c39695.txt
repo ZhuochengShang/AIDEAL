@@ -1,0 +1,23 @@
+MDAnalysis.lib.qcprot.CalcRMSDRotationalMatrix(ref, conf, N, rot, weights)
+
+Calculate the RMSD & rotational matrix.
+
+Parameters:
+
+ref (ndarray) – reference structure coordinates, shape (N, 3)
+
+conf (ndarray) – condidate structure coordinates, shape (N, 3)
+
+N (int) – size of the system
+
+rot (ndarray or None) – array to store rotation matrix. If given must be flat and shape (9,)
+
+weights (ndarray or None) – weights for each component
+
+Returns:
+
+rmsd (float) – RMSD value
+
+.. versionchanged:: 0.16.0 – Array size changed from 3xN to Nx3.
+
+.. versionchanged:: 2.7.0 – Changed arguments to floating type, can accept either float32 or float64 inputs

@@ -1,0 +1,333 @@
+LinearProbeForecaster
+
+ class tslearn.foundation.LinearProbeForecaster(model, probe=None, context_length=128, horizon=1, stride=1, layer=None, layers_path=None, pooling='mean', tokens=None, token_index=0, input_layout='univariate', input_name=None, model_kwargs=None, batch_size=32, device=None, verbose=0)[source]
+
+Forecast by fitting a head on a frozen pre-trained model.
+
+Linear probing keeps the pre-trained model entirely frozen and only fits a linear map from its representations to the quantity of interest. Compared to zero-shot use, it adapts the model to the data at hand at a very small computational cost, and compared to fine-tuning, it leaves the pre-trained weights untouched, which makes it much cheaper.
+
+Training pairs are cut out of the provided series with a sliding window: the context_length timestamps preceding a cut point are embedded, and the horizon timestamps following it are used as the target.
+
+Parameters:
+
+modeltorch.nn.Module
+
+A pre-trained model used as a frozen feature extractor.
+
+probesklearn estimator or None (default: None)
+
+The head fitted on top of the frozen representations. When None, a sklearn.linear_model.RidgeCV is used, which selects its regularization strength by cross-validation and admits a closed-form solution. Any multi-output capable regressor can be passed instead. Frozen representations sometimes have a very small variance, in which case prepending a sklearn.preprocessing.StandardScaler to the head might help.
+
+context_lengthint (default: 128)
+
+Number of timestamps fed to the pre-trained model.
+
+horizonint (default: 1)
+
+Number of timestamps forecasted at once. This cannot be changed after fit time, as one linear head is fitted for the whole horizon.
+
+strideint (default: 1)
+
+Step between two consecutive training windows. Larger values yield fewer, less redundant training pairs and a faster fit.
+
+layerint or None (default: None)
+
+Layer to probe, see TimeSeriesFoundationEmbedder.
+
+layers_pathstr or None (default: None)
+
+Dotted path to the stack of layers, see TimeSeriesFoundationEmbedder.
+
+pooling{“mean”, “max”, “token”, “last”, “flatten”} (default: “mean”)
+
+How token representations are aggregated, see TimeSeriesFoundationEmbedder and note that pooling=None is not accepted here.
+
+tokensslice, (start, stop) pair or None (default: None)
+
+Which tokens to keep before pooling, see TimeSeriesFoundationEmbedder. Restricting the average to the tokens that actually represent the context, e.g. tokens=(0, -2) for Chronos-2, avoids diluting it with class or forecast tokens.
+
+token_indexint (default: 0)
+
+Index of the token selected when pooling="token", see TimeSeriesFoundationEmbedder.
+
+input_layout{“univariate”, “channels_last”, “channels_first”} (default: “univariate”)
+
+How the context is laid out when handed over to the model. "univariate" forecasts every channel of every series independently. The other two layouts feed a (n_ts, sz, d) or (n_ts, d, sz) array respectively, for models that are natively multivariate.
+
+input_namestr or None (default: None)
+
+Name of the forward argument receiving the context values.
+
+model_kwargsdict or None (default: None)
+
+Extra keyword arguments passed to every forward call.
+
+batch_sizeint (default: 32)
+
+Number of series embedded at once, see TimeSeriesFoundationEmbedder.
+
+devicestr or None (default: None)
+
+Device on which inference is run, see TimeSeriesFoundationEmbedder.
+
+verboseint (default: 0)
+
+When positive, prints progress information.
+
+Attributes:
+
+embedder_TimeSeriesFoundationEmbedder
+
+The frozen feature extractor.
+
+probe_sklearn estimator
+
+The fitted head.
+
+n_features_in_int
+
+Number of features (channels) of the series seen during fit.
+
+n_windows_int
+
+Number of training windows cut out of the fit data.
+
+See also
+
+ZeroShotForecaster
+
+Use a pre-trained model without any training.
+
+TimeSeriesFoundationEmbedder
+
+The underlying feature extractor, which can be composed with a classifier through a sklearn.pipeline.Pipeline to build a linear probe model for classification, if needed.
+
+References
+
+ [1]
+G. Alain and Y. Bengio. Understanding intermediate layers using linear classifier probes. ICLR Workshop, 2017.
+
+Examples
+
+>>> from chronos import Chronos2Pipeline
+>>> pipeline = Chronos2Pipeline.from_pretrained("amazon/chronos-2")
+>>> model = LinearProbeForecaster(pipeline.model, horizon=24)
+>>> model.fit(X_train)
+...
+>>> model.predict(X_test).shape
+(10, 24, 1)
+>>> model.predict(X_test, n=12).shape
+(10, 12, 1)
+>>> model.predict(X_test, n=36)
+Traceback (most recent call last):
+...
+ValueError: This estimator was fitted for a horizon of 24, so `n` must lie in [1, 24], got 36.
+Refit with a larger `horizon` to forecast further ahead.
+
+Methods
+
+fit(X[, y])
+ |
+Fit the probe on top of the frozen pre-trained model.
+ |
+
+fit_predict(X[, y, n])
+ |
+Fit the estimator and forecast n timestamps for the given data.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+predict(X[, n])
+ |
+Forecast horizon (or n, if set) timestamps ahead of the given series.
+ |
+
+score(X[, y])
+ |
+Return the coefficient of determination of the forecast.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+set_predict_request(*[, n])
+ |
+Configure whether metadata should be requested to be passed to the predict method.
+ |
+
+ fit(X, y=None)[source]
+
+Fit the probe on top of the frozen pre-trained model.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset, with sz >= context_length + horizon.
+
+yIgnored
+
+Returns:
+
+self
+
+The fitted estimator
+
+ fit_predict(X, y=None, n=1)[source]
+
+Fit the estimator and forecast n timestamps for the given data.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+yIgnored
+
+nint (default: 1)
+
+The number of timestamps to forecast, a.k.a. the horizon.
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ predict(X, n=None)[source]
+
+Forecast horizon (or n, if set) timestamps ahead of the given series.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset to forecast, with sz >= context_length.
+
+nint or None (default: None)
+
+The number of timestamps to forecast. A single head is fitted for the whole horizon, so n may not exceed the horizon value used at fit time. When None, horizon is used.
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps
+
+ score(X, y=None)[source]
+
+Return the coefficient of determination of the forecast.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset, with sz >= context_length + horizon.
+
+yIgnored
+
+Returns:
+
+float
+
+\(R^2\) of the forecast over all windows cut out of X.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_predict_request(*, n: bool | None | str = '$UNCHANGED$') → LinearProbeForecaster
+
+Configure whether metadata should be requested to be passed to the predict method.
+
+Note that this method is only relevant when this estimator is used as a sub-estimator within a meta-estimator and metadata routing is enabled with enable_metadata_routing=True (see sklearn.set_config()). Please check the User Guide on how the routing mechanism works.
+
+The options for each parameter are:
+
+True: metadata is requested, and passed to predict if provided. The request is ignored if metadata is not provided.
+
+False: metadata is not requested and the meta-estimator will not pass it to predict.
+
+None: metadata is not requested, and the meta-estimator will raise an error if the user provides it.
+
+str: metadata should be passed to the meta-estimator with this given alias instead of the original name.
+
+The default (sklearn.utils.metadata_routing.UNCHANGED) retains the existing request. This allows you to change the request for some parameters and not others.
+
+Added in version 1.3.
+
+Parameters:
+
+nstr, True, False, or None, default=sklearn.utils.metadata_routing.UNCHANGED
+
+Metadata routing for n parameter in predict.
+
+Returns:
+
+selfobject
+
+The updated object.
+
+Examples using tslearn.foundation.LinearProbeForecaster
+
+Forecasting with a pre-trained model
+
+Forecasting with a pre-trained model
+
+A tour of the pre-trained forecasting model zoo
+
+A tour of the pre-trained forecasting model zoo

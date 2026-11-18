@@ -4,12 +4,11 @@ Historical branches are never advanced. Guidance lives beside declarations;
 the small treatment receipt records provenance, not prompt-delivered JSON hints.
 """
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import re
 
-from .ablation import bind, load, verify_artifact
+from .ablation import bind, bytes_sha256, load, verify_artifact
 from .execution import atomic_json, ownership
 from .source_hints import index_source_hints, strip_source_hints
 from .treatment_versions import _run, _safe_path, _trees, _blob, _install, _check_worktree
@@ -18,22 +17,18 @@ LEGACY_HINTS = '.aideal/treatments/error_hints.json'
 RECEIPT = '.aideal/treatments/source_hints_validation.json'
 
 
-def _validated(path):
-    from .source_hint_development import verify_development_validation
-    value = verify_development_validation(path)
-    if value.get('status') != 'validated' or not value.get('installable_sources'):
-        raise ValueError('Only replay-verified development guidance can be installed')
-    return value
-
-
-def _sha(data):
-    return hashlib.sha256(data).hexdigest()
-
-
 def install_source_hints(validation_path, targets_path, output):
     """Create new branches and commit identical, annotation-only hint sources."""
+    # Use the validated files and target plan to prepare the same annotations for both arms.
+    # A saved application record can be reused after checking its branches and file contents.
     validation_path, targets_path = Path(validation_path).resolve(), Path(targets_path).resolve()
-    validation, plan = _validated(validation_path), load(targets_path)
+    # Replay the validation before reading the target plan. At least one checked
+    # source file must be available for installation.
+    from .source_hint_development import verify_development_validation
+    validation = verify_development_validation(validation_path)
+    if not validation.get('installable_sources'):
+        raise ValueError('Only replay-verified development guidance can be installed')
+    plan = load(targets_path)
     if set(plan) != {'schema_version', 'repository', 'targets'} or plan['schema_version'] != 1:
         raise ValueError('Expected installation plan schema_version 1')
     if set(plan['targets']) != {'error_hints_only', 'combined'}:
@@ -54,6 +49,7 @@ def install_source_hints(validation_path, targets_path, output):
     if _run(source_root, 'rev-parse', 'HEAD') != baseline:
         raise ValueError('Development source revision changed')
 
+    # Build the expected file contents before opening or creating any target worktree.
     data, paths = {}, set()
     for item in validation['installable_sources']:
         relative, artifact = item['path'], item['artifact']
@@ -62,7 +58,7 @@ def install_source_hints(validation_path, targets_path, output):
         paths.add(relative)
         original = _safe_path(source_root, relative).read_bytes()
         edited = Path(artifact['path']).read_bytes()
-        if _sha(original) != item['baseline_sha256']:
+        if bytes_sha256(original) != item['baseline_sha256']:
             raise ValueError('Baseline source hash changed: ' + relative)
         if strip_source_hints(edited.decode()) != original.decode():
             raise ValueError('Guidance changes executable source: ' + relative)
@@ -70,7 +66,7 @@ def install_source_hints(validation_path, targets_path, output):
     receipt = {'schema_version': 1, 'status': 'validated_development',
                'delivery': 'function-local source comments',
                'baseline_revision': baseline, 'validation_sha256': bind(validation_path)['sha256'],
-               'sources': {name: _sha(value) for name, value in sorted(data.items())},
+               'sources': {name: bytes_sha256(value) for name, value in sorted(data.items())},
                'scope': 'Development replay controls; not a held-out audience result.'}
     data[RECEIPT] = (json.dumps(receipt, indent=2, sort_keys=True) + '\n').encode()
     identity = {'validation': bind(validation_path), 'targets': bind(targets_path)}
@@ -116,6 +112,7 @@ def install_source_hints(validation_path, targets_path, output):
     if output.exists() and any(output.iterdir()):
         raise ValueError('Unfinished installation exists; inspect its journal before retrying')
 
+    # Check all requested branches, parents, and paths before creating any worktree.
     targets, branches, destinations = {}, set(), set()
     refs = set(_run(repo, 'for-each-ref', '--format=%(refname)', 'refs/heads').splitlines())
     for arm, item in plan['targets'].items():
@@ -146,6 +143,7 @@ def install_source_hints(validation_path, targets_path, output):
         branches.add(branch)
         destinations.add(destination)
 
+    # Record installation progress so an interrupted worktree creation can be inspected.
     with ownership(output):
         journal = {'identity': identity, 'status': 'installing', 'targets': {}}
         atomic_json(output / 'journal.json', journal)
@@ -181,6 +179,8 @@ def install_source_hints(validation_path, targets_path, output):
 
 
 def main(argv=None):
+    # Read the validation, target plan, and output paths from command line arguments.
+    # Print the resulting installation record as JSON.
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--validation', required=True)
     parser.add_argument('--targets', required=True)

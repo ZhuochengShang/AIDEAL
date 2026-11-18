@@ -1,0 +1,32 @@
+mir_eval.pattern.first_n_three_layer_P(reference_patterns, estimated_patterns, n=5)
+
+First n three-layer precision.
+
+This metric is basically the same as the three-layer FPR but it is only applied to the first n estimated patterns, and it only returns the precision. In MIREX and typically, n = 5.
+
+Parameters:
+
+reference_patternslist
+
+The reference patterns in the format returned by mir_eval.io.load_patterns()
+
+estimated_patternslist
+
+The estimated patterns in the same format
+
+nint
+
+Number of patterns to consider from the estimated results, in the order they appear in the matrix (Default value = 5)
+
+Returns:
+
+precisionfloat
+
+The first n three-layer Precision
+
+Examples
+
+>>> ref_patterns = mir_eval.io.load_patterns("ref_pattern.txt")
+>>> est_patterns = mir_eval.io.load_patterns("est_pattern.txt")
+>>> P = mir_eval.pattern.first_n_three_layer_P(ref_patterns,
+...                                            est_patterns, n=5)

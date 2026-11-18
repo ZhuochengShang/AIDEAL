@@ -1,0 +1,21 @@
+MDAnalysis.analysis.encore.bootstrap.get_distance_matrix_bootstrap_samples(distance_matrix, ensemble_assignment, samples=100, ncores=1)[source]
+
+Calculates distance matrices corresponding to bootstrapped ensembles, by resampling with replacement.
+
+Parameters:
+
+distance_matrix (encore.utils.TriangularMatrix) – Conformational distance matrix
+
+ensemble_assignment (str) – Mapping from frames to which ensemble they are from (necessary because ensembles are bootstrapped independently)
+
+samples (int, optional) – How many bootstrap samples to create.
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1)
+
+Returns:
+
+confdistmatrix
+
+Return type:
+
+list of encore.utils.TriangularMatrix

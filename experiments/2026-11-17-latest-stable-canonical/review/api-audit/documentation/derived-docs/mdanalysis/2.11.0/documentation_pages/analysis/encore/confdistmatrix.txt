@@ -1,0 +1,104 @@
+4.3.7.1.4. Distance Matrix calculation — MDAnalysis.analysis.ensemble.confdistmatrix
+
+The module contains a base class to easily compute, using parallelization and shared memory, matrices of conformational distance between the structures stored as frames in a Universe. A class to compute an RMSD matrix in such a way is also available.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ MDAnalysis.analysis.encore.confdistmatrix.conformational_distance_matrix(ensemble, conf_dist_function, select='', superimposition_select='', n_jobs=1, pairwise_align=True, weights='mass', metadata=True, verbose=False, max_nbytes=None)[source]
+
+Run the conformational distance matrix calculation. args and kwargs are passed to conf_dist_function.
+
+Parameters:
+
+ensemble (Universe object) – Universe object for which the conformational distance matrix will be computed.
+
+conf_dist_function (function object) – Function that fills the matrix with conformational distance values. See set_rmsd_matrix_elements for an example.
+
+select (str, optional) – use this selection for the calculation of conformational distance
+
+superimposition_select (str, optional) – use atoms from this selection for fitting instead of those of select
+
+pairwise_align (bool, optional) – Whether to perform pairwise alignment between conformations. Default is True (do the superimposition)
+
+weights (str/array_like, optional) – weights to be used for fit. Can be either ‘mass’ or an array_like
+
+metadata (bool, optional) – Whether to build a metadata dataset for the calculated matrix. Default is True.
+
+n_jobs (int, optional) – Number of cores to be used for parallel calculation Default is 1. -1 uses all available cores
+
+max_nbytes (str, optional) – Threshold on the size of arrays passed to the workers that triggers automated memory mapping in temp_folder (default is None). See https://joblib.readthedocs.io/en/latest/generated/joblib.Parallel.html for detailed documentation.
+
+verbose (bool, optional) – enable verbose output
+
+Returns:
+
+conf_dist_matrix – Conformational distance matrix in triangular representation.
+
+Return type:
+
+encore.utils.TriangularMatrix object
+
+ MDAnalysis.analysis.encore.confdistmatrix.get_distance_matrix(ensemble, select='name CA', load_matrix=None, save_matrix=None, superimpose=True, superimposition_subset='name CA', weights='mass', n_jobs=1, max_nbytes=None, verbose=False, *conf_dist_args, **conf_dist_kwargs)[source]
+
+Retrieves or calculates the conformational distance (RMSD) matrix. The distance matrix is calculated between all the frames of all the Universe objects given as input. The order of the matrix elements depends on the order of the coordinates of the ensembles and on the order of the input ensembles themselves, therefore the order of the input list is significant.
+
+The distance matrix can either be calculated from input ensembles or loaded from an input numpy binary file.
+
+Please notice that the .npz file does not contain a bi-dimensional array, but a flattened representation that is meant to represent the elements of an encore.utils.TriangularMatrix object.
+
+Parameters:
+
+ensemble (Universe)
+
+select (str) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+load_matrix (str, optional) – Load similarity/dissimilarity matrix from numpy binary file instead of calculating it (default is None). A filename is required.
+
+save_matrix (bool, optional) – Save calculated matrix as numpy binary file (default is None). A filename is required.
+
+superimpose (bool, optional) – Whether to superimpose structures before calculating distance (default is True).
+
+superimposition_subset (str, optional) – Group for superimposition using MDAnalysis selection syntax (default is CA atoms: “name CA”)
+
+weights (str/array_like, optional) – weights to be used for fit. Can be either ‘mass’ or an array_like
+
+n_jobs (int, optional) – Maximum number of cores to be used (default is 1). If -1 use all cores.
+
+max_nbytes (str, optional) – Threshold on the size of arrays passed to the workers that triggers automated memory mapping in temp_folder (default is None). See https://joblib.readthedocs.io/en/latest/generated/joblib.Parallel.html for detailed documentation.
+
+verbose (bool, optional) – print progress
+
+Returns:
+
+confdistmatrix – Conformational distance matrix. .
+
+Return type:
+
+encore.utils.TriangularMatrix
+
+ MDAnalysis.analysis.encore.confdistmatrix.set_rmsd_matrix_elements(tasks, coords, rmsdmat, weights, fit_coords=None, fit_weights=None, *args, **kwargs)[source]
+
+RMSD Matrix calculator
+
+Parameters:
+
+tasks (iterator of int of length 2) –
+Given a triangular matrix, this function will calculate RMSD values from element tasks[0] to tasks[1]. Since the matrix is triangular, the trm_indices matrix automatically calculates the corrisponding i,j matrix indices. The matrix is written as an array in a row-major order (see the TriangularMatrix class for details).
+
+If fit_coords and fit_weights are specified, the structures will be superimposed before calculating RMSD, and fit_coords and fit_weights will be used to place both structures at their center of mass and compute the rotation matrix. In this case, both fit_coords and fit_weights must be specified.
+
+coords (numpy.array) – Array of the ensemble coordinates
+
+weights (numpy.array) – Array of atomic weights, having the same order as the coordinates array
+
+rmsdmat (encore.utils.TriangularMatrix) – Memory-shared triangular matrix object
+
+fit_coords (numpy.array or None, optional) – Array of the coordinates used for fitting
+
+fit_weights (numpy.array. optional) – Array of atomic weights, having the same order as the fit_coords array

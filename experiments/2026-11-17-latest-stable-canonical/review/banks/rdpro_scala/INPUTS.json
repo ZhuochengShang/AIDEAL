@@ -1,0 +1,46 @@
+{
+  "bank": "rdpro_scala",
+  "model": "gemini-3.1-flash-lite",
+  "mode": "preview_only_not_sent",
+  "api_count": 297,
+  "original_document_files": [
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/README.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/Home.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/davinci.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/dev-setup.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/development.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/input-output.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/installation.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/partitioning-indexing.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/raptor-join.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/rdpro.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/scala-quickguide.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/spatial-data-generator.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/spatial-join.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/summarization.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/visualization.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/visualization_mvt.md",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/doc/web-operations.md"
+  ],
+  "sample_data": {
+    "raster_tif": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+    "vector_shapefile": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+    "hdf_file": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf"
+  },
+  "resolved_input_paths": {
+    "vector_shapefile": "file:///home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+    "raster_tif": "file:///home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+    "hdf_file": "file:///home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf",
+    "output_dir": "file:///home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runs/original/rdpro_scala/rdpro_scala/execution/output"
+  },
+  "available_inputs_sent_to_model": "Pre-loaded and already in scope — use these directly, do NOT re-load:\n- rasterRDD: RasterRDD[Array[Float]]\n- featuresRDD: RDD[IFeature]\n(raw input path strings also in scope if needed: vector_shapefile, raster_tif, hdf_file, output_dir)",
+  "preamble": "// Fixed input contract shared by all conditions: the supplied GeoTIFF has11Float32bands.\nval rasterRDD: RasterRDD[Array[Float]] = sc.geoTiff[Array[Float]](raster_tif)\nval featuresRDD: RDD[IFeature] = sc.shapefile(vector_shapefile)",
+  "execution_command_template": "/home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/scripts/run_spark_scala.py --java /home/zshan011/apps/aideal/runtimes/jdk17/bin/java --classpath-file /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/rdpro/inputs/classpath.json --work \"{work}\" --scala-file \"{scala_file}\"",
+  "scaffold_file": "api_test_scaffold.scala",
+  "success_marker": "__DONE__",
+  "check_marker": "__CHECK__",
+  "max_fix_rounds_full_baseline": 0,
+  "proposed_pilot_max_fix_rounds": 2,
+  "actual_model_calls": 0,
+  "program_executions": 0
+}

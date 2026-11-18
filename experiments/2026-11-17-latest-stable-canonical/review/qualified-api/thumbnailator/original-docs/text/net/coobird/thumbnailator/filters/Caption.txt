@@ -1,0 +1,156 @@
+Caption (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Class Caption
+java.lang.Object
+net.coobird.thumbnailator.filters.Caption
+All Implemented Interfaces:
+ImageFilter
+public class
+Caption
+extends
+Object
+implements
+ImageFilter
+An
+ImageFilter
+which will overlay a text caption to an image.
+Author:
+coobird
+Constructor Summary
+Caption
+(
+String
+caption,
+Font
+font,
+Color
+c,
+float alpha,
+Position
+position,
+int insets)
+Instantiates a filter which adds a text caption to an image.
+Caption
+(
+String
+caption,
+Font
+font,
+Color
+c,
+Position
+position,
+int insets)
+Instantiates a filter which adds a text caption to an image.
+Method Summary
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+Caption
+public
+Caption
+(
+String
+caption,
+Font
+font,
+Color
+c,
+float alpha,
+Position
+position,
+int insets)
+Instantiates a filter which adds a text caption to an image.
+Parameters:
+caption
+- The text of the caption.
+font
+- The font of the caption.
+c
+- The color of the caption.
+alpha
+- The opacity level of caption.
+The value should be between
+0.0f
+and
+1.0f
+, where
+0.0f
+is completely
+transparent, and
+1.0f
+is completely opaque.
+position
+- The position of the caption.
+insets
+- The inset size around the caption. Cannot be negative.
+Caption
+public
+Caption
+(
+String
+caption,
+Font
+font,
+Color
+c,
+Position
+position,
+int insets)
+Instantiates a filter which adds a text caption to an image.
+The opacity of the caption will be 100% opaque.
+Parameters:
+caption
+- The text of the caption.
+font
+- The font of the caption.
+c
+- The color of the caption.
+position
+- The position of the caption.
+insets
+- The inset size around the caption. Cannot be negative.
+Method Detail
+apply
+public
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Description copied from interface:
+ImageFilter
+Applies a image filtering operation on an image.
+Specified by:
+apply
+in interface
+ImageFilter
+Parameters:
+img
+- The image to apply the filtering on.
+Returns:
+The resulting image after applying this filter.
+Copyright © 2025. All rights reserved.

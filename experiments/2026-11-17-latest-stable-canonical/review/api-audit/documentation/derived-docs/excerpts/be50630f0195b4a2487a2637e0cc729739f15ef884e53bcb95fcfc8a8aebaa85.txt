@@ -1,0 +1,68 @@
+class MDAnalysis.lib.transformations.Arcball(initial=None)[source]
+
+Virtual Trackball Control.
+
+>>> from MDAnalysis.lib.transformations import Arcball
+>>> import numpy as np
+>>> ball = Arcball()
+>>> ball = Arcball(initial=np.identity(4))
+>>> ball.place([320, 320], 320)
+>>> ball.down([500, 250])
+>>> ball.drag([475, 275])
+>>> R = ball.matrix()
+>>> np.allclose(np.sum(R), 3.90583455)
+True
+>>> ball = Arcball(initial=[1, 0, 0, 0])
+>>> ball.place([320, 320], 320)
+>>> ball.setaxes([1,1,0], [-1, 1, 0])
+>>> ball.setconstrain(True)
+>>> ball.down([400, 200])
+>>> ball.drag([200, 400])
+>>> R = ball.matrix()
+>>> np.allclose(np.sum(R), 0.2055924)
+True
+>>> ball.next()
+
+Initialize virtual trackball control.
+
+initial : quaternion or rotation matrix
+
+ down(point)[source]
+
+Set initial cursor window coordinates and pick constrain-axis.
+
+ drag(point)[source]
+
+Update current cursor window coordinates.
+
+ getconstrain()[source]
+
+Return state of constrain to axis mode.
+
+ matrix()[source]
+
+Return homogeneous rotation matrix.
+
+ next(acceleration=0.0)[source]
+
+Continue rotation in direction of last drag.
+
+ place(center, radius)[source]
+
+Place Arcball, e.g. when window size changes.
+
+centersequence[2]
+
+Window coordinates of trackball center.
+
+radiusfloat
+
+Radius of trackball in window coordinates.
+
+ setaxes(*axes)[source]
+
+Set axes to constrain rotations.
+
+ setconstrain(constrain)[source]
+
+Set state of constrain to axis mode.

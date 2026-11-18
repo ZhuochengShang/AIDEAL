@@ -1,0 +1,23 @@
+__init__()
+
+Create a Timestep, representing a frame of a trajectory
+
+Parameters:
+
+n_atoms (uint64) – The total number of atoms this Timestep describes
+
+positions (bool, optional) – Whether this Timestep has position information [True]
+
+velocities (bool (optional)) – Whether this Timestep has velocity information [False]
+
+forces (bool (optional)) – Whether this Timestep has force information [False]
+
+reader (Reader (optional)) – A weak reference to the owning Reader. Used for when attributes require trajectory manipulation (e.g. dt)
+
+dt (float (optional)) – The time difference between frames (ps). If time is set, then dt will be ignored.
+
+time_offset (float (optional)) – The starting time from which to calculate time (in ps)
+
+Changed in version 0.11.0: Added keywords for positions, velocities and forces. Can add and remove position/velocity/force information by using the has_* attribute.
+
+Changed in version 2.3.0: Added the dtype attribute hardcoded to float32.

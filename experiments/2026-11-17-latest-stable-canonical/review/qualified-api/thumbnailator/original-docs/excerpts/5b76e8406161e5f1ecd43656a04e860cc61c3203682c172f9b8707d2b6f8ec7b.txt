@@ -1,0 +1,74 @@
+asFiles
+public
+List
+<
+File
+>
+asFiles
+(
+File
+destinationDir,
+Rename
+rename)
+throws
+IOException
+Creates thumbnails and stores them to files in the directory
+specified by the given
+File
+object, and using the
+Rename
+function to determine the filenames. The thubnail
+files are returned as a
+List
+.
+When the destination file exists, and overwriting files has been
+disabled by calling the
+allowOverwrite(boolean)
+method
+with
+false
+, then the thumbnail with the destination file
+already existing will not be written and the corresponding
+File
+object will not be included in the
+List
+returned
+by this method.
+Extra caution should be taken when using this method, as there are
+no protections in place to prevent file name collisions resulting
+from creating thumbnails from files in separate directories but
+having the same name. In such a case, the behavior will be depend
+on the behavior of the
+allowOverwrite(boolean)
+as
+described in the previous paragraph.
+To call this method, the thumbnails must have been creates from
+files by calling the
+Thumbnails.of(File...)
+method.
+Parameters:
+destinationDir
+- The destination directory to which the
+thumbnails should be written to.
+rename
+- The rename function which is used to
+determine the filenames of the thumbnail
+files to write.
+Returns:
+A list of
+File
+s of the thumbnails
+which were created.
+Throws:
+IOException
+- If a problem occurs while reading the
+original images or writing the thumbnails
+to files.
+IllegalStateException
+- If the original images are not
+from files.
+IllegalArgumentException
+- If the destination directory
+is not a directory.
+Since:
+0.4.7

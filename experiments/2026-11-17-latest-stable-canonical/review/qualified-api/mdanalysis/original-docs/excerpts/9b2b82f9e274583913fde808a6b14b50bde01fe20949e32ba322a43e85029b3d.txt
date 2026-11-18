@@ -1,0 +1,86 @@
+_standardize_patterns(mol: Mol, max_iter: int | None = None) → Mol[source]
+
+Standardizes functional groups
+
+Uses _rebuild_conjugated_bonds() to standardize conjugated systems, and SMARTS reactions for other functional groups. Due to the way reactions work, we first have to split the molecule by fragments. Then, for each fragment, we apply the standardization reactions. Finally, the fragments are recombined.
+
+Parameters:
+
+mol (rdkit.Chem.rdchem.RWMol) – The molecule to standardize
+
+max_iter (Optional[int]) –
+Maximum number of iterations to standardize conjugated systems.
+
+Deprecated since version 2.10.0: Will be removed in 3.0, use inferrer=MDAnalysisInferrer(max_iter=...) instead.
+
+Returns:
+
+mol – The standardized molecule
+
+Return type:
+
+rdkit.Chem.rdchem.Mol
+
+Notes
+
+The following functional groups are transformed in this order:
+
+Name
+ |
+Reaction
+ |
+
+conjugated
+ |
+[*-:1]-[*:2]=[*:3]-[*-:4]>>[*+0:1]=[*:2]-[*:3]=[*+0:4]
+ |
+
+conjugated N+
+ |
+[N;X3;v3:1]-[*:2]=[*:3]-[*-:4]>>[N+:1]=[*:2]-[*:3]=[*+0:4]
+ |
+
+conjugated O-
+ |
+[O:1]=[#6+0,#7+:2]-[*:3]=[*:4]-[*-:5]>>[O-:1]-[*:2]=[*:3]-[*:4]=[*+0:5]
+ |
+
+conjug. S=O
+ |
+[O-:1]-[S;D4;v4:2]-[*:3]=[*:4]-[*-:5]>>[O+0:1]=[*:2]=[*:3]-[*:4]=[*+0:5]
+ |
+
+Cterm
+ |
+[C-;X2;H0:1]=[O:2]>>[C+0:1]=[O:2]
+ |
+
+Nterm
+ |
+[N-;X2;H1;$(N-[*^3]):1]>>[N+0:1]
+ |
+
+keto-enolate
+ |
+[#6-:1]-[#6:2]=[O:3]>>[#6+0:1]=[#6:2]-[O-:3]
+ |
+
+arginine
+ |
+[C-;v3:1]-[#7+0;v3;H2:2]>>[#6+0:1]=[#7+:2]
+ |
+
+histidine
+ |
+[#6+0;H0:1]=[#6+0:2]-[#7;X3:3]-[#6-;X3:4]>>[#6:1]=[#6:2]-[#7+:3]=[#6+0:4]
+ |
+
+sulfone
+ |
+[S;D4;!v6:1]-[*-:2]>>[S;v6:1]=[*+0:2]
+ |
+
+charged N
+ |
+[#7+0;X3:1]-[*-:2]>>[#7+:1]=[*+0:2]
+ |

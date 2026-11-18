@@ -1,0 +1,31 @@
+tslearn.utils.to_pyts_dataset(X)[source]
+
+Transform a tslearn-compatible dataset into a pyts dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz, d)
+
+tslearn-formatted dataset to be cast to pyts format
+
+Returns:
+
+array, shape=(n_ts, sz) if d=1, (n_ts, d, sz) otherwise
+
+pyts-formatted dataset
+
+Examples
+
+>>> tslearn_arr = numpy.random.randn(10, 16, 1)
+>>> pyts_arr = to_pyts_dataset(tslearn_arr)
+>>> pyts_arr.shape
+(10, 16)
+>>> tslearn_arr = numpy.random.randn(10, 16, 2)
+>>> pyts_arr = to_pyts_dataset(tslearn_arr)
+>>> pyts_arr.shape
+(10, 2, 16)
+>>> tslearn_arr = [numpy.random.randn(16, 1), numpy.random.randn(10, 1)]
+>>> to_pyts_dataset(tslearn_arr)
+Traceback (most recent call last):
+...
+ValueError: All the time series in the array should be of equal lengths

@@ -1,0 +1,21 @@
+step_to_time(i)[source]
+
+Return time of auxiliary step i.
+
+Calculated using dt and initial_time if constant_dt is True; otherwise from the list of times as read from the auxiliary data for each step.
+
+Parameters:
+
+i (int) – Index (0-based) of step to return time for
+
+Returns:
+
+time – Time (in ps) of step i
+
+Return type:
+
+float
+
+Raises:
+
+ValueError – When i not in valid range

@@ -1,0 +1,27 @@
+principal_axes(wrap=False)[source]
+
+Calculate the principal axes from the moment of inertia.
+
+e1,e2,e3 = AtomGroup.principal_axes()
+
+The eigenvectors are sorted by eigenvalue, i.e. the first one corresponds to the highest eigenvalue and is thus the first principal axes.
+
+The eigenvectors form a right-handed coordinate system.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms within the primary unit cell before calculation. [False]
+
+Returns:
+
+axis_vectors – 3 x 3 array with v[0] as first, v[1] as second, and v[2] as third eigenvector.
+
+Return type:
+
+array
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 1.0.0: Always return principal axes in right-hand convention.
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.

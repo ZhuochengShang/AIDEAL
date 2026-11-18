@@ -1,0 +1,93 @@
+{
+  "status": "PASS",
+  "mode": "static discovery of synthetic fixture, no fixture import or execution",
+  "fixture_text": "from math import sqrt\nfrom pyspark import RDD\ndef mapPixels(x):\n    return sqrt(x)\nclass LocalRDD(RDD):\n    def map(self, f):\n        return super().map(f)\n",
+  "fixture_sha256": "fb6a9fa790064a7ba71fac4c2e1ad735c35c2821a4b547a4fb7804ff592a019b",
+  "discovered_names": [
+    "LocalRDD",
+    "map",
+    "mapPixels"
+  ],
+  "pyspark_imported": false,
+  "fixture_module_imported": false,
+  "model_calls": 0,
+  "subject_executions": 0,
+  "origin_counts": {
+    "library_defined": 3
+  },
+  "decisions": [
+    {
+      "name": "mapPixels",
+      "qualified_name": "ownlib.tools.mapPixels",
+      "site_id": null,
+      "file": "source/ownlib/tools.py",
+      "line": 3,
+      "signature": "def mapPixels(x)",
+      "definition_kind": "function",
+      "defining_owner_claims": {},
+      "defining_namespace": "ownlib.tools.mapPixels",
+      "defining_file": "source/ownlib/tools.py",
+      "policy_sha256": "41cef557431b973344c33ab8c05017b976a34774283ab5ce015095fba403fb54",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "ownlib"
+      ],
+      "external_namespace_matches": [],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/tmpkimum23v/source/ownlib/tools.py",
+      "file_sha256": "fb6a9fa790064a7ba71fac4c2e1ad735c35c2821a4b547a4fb7804ff592a019b",
+      "declared_file_sha256": null,
+      "declared_hashes": {},
+      "ownership_sha256": "512c86fb757359c82e0fbc5cd205a0a09320dcfb7120384b5c3bfeeb1c1438af"
+    },
+    {
+      "name": "LocalRDD",
+      "qualified_name": "ownlib.tools.LocalRDD",
+      "site_id": null,
+      "file": "source/ownlib/tools.py",
+      "line": 5,
+      "signature": "class LocalRDD(RDD)",
+      "definition_kind": "class",
+      "defining_owner_claims": {},
+      "defining_namespace": "ownlib.tools.LocalRDD",
+      "defining_file": "source/ownlib/tools.py",
+      "policy_sha256": "41cef557431b973344c33ab8c05017b976a34774283ab5ce015095fba403fb54",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "ownlib"
+      ],
+      "external_namespace_matches": [],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/tmpkimum23v/source/ownlib/tools.py",
+      "file_sha256": "fb6a9fa790064a7ba71fac4c2e1ad735c35c2821a4b547a4fb7804ff592a019b",
+      "declared_file_sha256": null,
+      "declared_hashes": {},
+      "ownership_sha256": "7510015ae7754f717868c422970bc85d0c0fe691eb20dacb368cf6d10f83336d"
+    },
+    {
+      "name": "map",
+      "qualified_name": "ownlib.tools.LocalRDD.map",
+      "site_id": null,
+      "file": "source/ownlib/tools.py",
+      "line": 6,
+      "signature": "def map(self, f)",
+      "definition_kind": "method",
+      "defining_owner_claims": {},
+      "defining_namespace": "ownlib.tools.LocalRDD.map",
+      "defining_file": "source/ownlib/tools.py",
+      "policy_sha256": "41cef557431b973344c33ab8c05017b976a34774283ab5ce015095fba403fb54",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "ownlib"
+      ],
+      "external_namespace_matches": [],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/tmpkimum23v/source/ownlib/tools.py",
+      "file_sha256": "fb6a9fa790064a7ba71fac4c2e1ad735c35c2821a4b547a4fb7804ff592a019b",
+      "declared_file_sha256": null,
+      "declared_hashes": {},
+      "ownership_sha256": "4ffef9c4333fc2054b486d5668d68e8c268afe9c14f331b38f2375fbbc28bfa8"
+    }
+  ],
+  "api_origin_sha256": "21281e77fff003f33b7e6b95ef7786c1b58f91adc0c7b6b5c50a311487a480b6"
+}

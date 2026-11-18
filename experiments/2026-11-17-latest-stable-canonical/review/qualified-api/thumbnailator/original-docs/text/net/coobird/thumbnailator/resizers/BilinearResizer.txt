@@ -1,0 +1,126 @@
+BilinearResizer (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers
+Class BilinearResizer
+java.lang.Object
+net.coobird.thumbnailator.resizers.AbstractResizer
+net.coobird.thumbnailator.resizers.BilinearResizer
+All Implemented Interfaces:
+Resizer
+public class
+BilinearResizer
+extends
+AbstractResizer
+Image resizer class using bilinear interpolation for the resizing operation.
+Author:
+coobird
+Constructor Summary
+BilinearResizer
+()
+Instantiates a
+BilinearResizer
+with default rendering hints.
+BilinearResizer
+(
+Map
+<
+RenderingHints.Key
+,
+Object
+> hints)
+Instantiates a
+BilinearResizer
+with the specified rendering
+hints.
+Method Summary
+void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+Resizes an image using bilinear interpolation.
+Methods inherited from class net.coobird.thumbnailator.resizers.
+AbstractResizer
+getRenderingHints
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+BilinearResizer
+public
+BilinearResizer
+()
+Instantiates a
+BilinearResizer
+with default rendering hints.
+BilinearResizer
+public
+BilinearResizer
+(
+Map
+<
+RenderingHints.Key
+,
+Object
+> hints)
+Instantiates a
+BilinearResizer
+with the specified rendering
+hints.
+Parameters:
+hints
+- Additional rendering hints to apply.
+Method Detail
+resize
+public void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+throws
+NullPointerException
+Resizes an image using bilinear interpolation.
+If the source and/or destination image is
+null
+, then a
+NullPointerException
+will be thrown.
+Specified by:
+resize
+in interface
+Resizer
+Overrides:
+resize
+in class
+AbstractResizer
+Parameters:
+srcImage
+- The source image.
+destImage
+- The destination image.
+Throws:
+NullPointerException
+- When the source and/or the destination
+image is
+null
+.
+Copyright © 2025. All rights reserved.

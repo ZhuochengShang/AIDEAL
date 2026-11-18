@@ -1,0 +1,526 @@
+mir_eval.melody
+
+Melody extraction algorithms aim to produce a sequence of frequency values corresponding to the pitch of the dominant melody from a musical recording. For evaluation, an estimated pitch series is evaluated against a reference based on whether the voicing (melody present or not) and the pitch is correct (within some tolerance).
+
+For a detailed explanation of the measures please refer to:
+
+J. Salamon, E. Gomez, D. P. W. Ellis and G. Richard, “Melody Extraction from Polyphonic Music Signals: Approaches, Applications and Challenges”, IEEE Signal Processing Magazine, 31(2):118-134, Mar. 2014.
+
+and:
+
+G. E. Poliner, D. P. W. Ellis, A. F. Ehmann, E. Gomez, S. Streich, and B. Ong. “Melody transcription from music audio: Approaches and evaluation”, IEEE Transactions on Audio, Speech, and Language Processing, 15(4):1247-1256, 2007.
+
+For an explanation of the generalized measures (using non-binary voicings), please refer to:
+
+R. Bittner and J. Bosch, “Generalized Metrics for Single-F0 Estimation Evaluation”, International Society for Music Information Retrieval Conference (ISMIR), 2019.
+
+Conventions
+
+Melody annotations are assumed to be given in the format of a 1d array of frequency values which are accompanied by a 1d array of times denoting when each frequency value occurs. In a reference melody time series, a frequency value of 0 denotes “unvoiced”. In a estimated melody time series, unvoiced frames can be indicated either by 0 Hz or by a negative Hz value - negative values represent the algorithm’s pitch estimate for frames it has determined as unvoiced, in case they are in fact voiced.
+
+Metrics are computed using a sequence of reference and estimated pitches in cents and voicing arrays, both of which are sampled to the same timebase. The function mir_eval.melody.to_cent_voicing() can be used to convert a sequence of estimated and reference times and frequency values in Hz to voicing arrays and frequency arrays in the format required by the metric functions. By default, the convention is to resample the estimated melody time series to the reference melody time series’ timebase.
+
+Metrics
+
+mir_eval.melody.voicing_measures(): Voicing measures, including the recall rate (proportion of frames labeled as melody frames in the reference that are estimated as melody frames) and the false alarm rate (proportion of frames labeled as non-melody in the reference that are mistakenly estimated as melody frames)
+
+mir_eval.melody.raw_pitch_accuracy(): Raw Pitch Accuracy, which computes the proportion of melody frames in the reference for which the frequency is considered correct (i.e. within half a semitone of the reference frequency)
+
+mir_eval.melody.raw_chroma_accuracy(): Raw Chroma Accuracy, where the estimated and reference frequency sequences are mapped onto a single octave before computing the raw pitch accuracy
+
+mir_eval.melody.overall_accuracy(): Overall Accuracy, which computes the proportion of all frames correctly estimated by the algorithm, including whether non-melody frames where labeled by the algorithm as non-melody
+
+ mir_eval.melody.validate_voicing(ref_voicing, est_voicing)
+
+Check that voicing inputs to a metric are in the correct format.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference voicing array
+
+est_voicingnp.ndarray
+
+Estimated voicing array
+
+ mir_eval.melody.validate(ref_voicing, ref_cent, est_voicing, est_cent)
+
+Check that voicing and frequency arrays are well-formed. To be used in conjunction with mir_eval.melody.validate_voicing()
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference voicing array
+
+ref_centnp.ndarray
+
+Reference pitch sequence in cents
+
+est_voicingnp.ndarray
+
+Estimated voicing array
+
+est_centnp.ndarray
+
+Estimate pitch sequence in cents
+
+ mir_eval.melody.hz2cents(freq_hz, base_frequency=10.0)
+
+Convert an array of frequency values in Hz to cents. 0 values are left in place.
+
+Parameters:
+
+freq_hznp.ndarray
+
+Array of frequencies in Hz.
+
+base_frequencyfloat
+
+Base frequency for conversion. (Default value = 10.0)
+
+ mir_eval.melody.freq_to_voicing(frequencies, voicing=None)
+
+Convert from an array of frequency values to frequency array + voice/unvoiced array
+
+Parameters:
+
+frequenciesnp.ndarray
+
+Array of frequencies. A frequency <= 0 indicates “unvoiced”.
+
+voicingnp.ndarray
+
+Array of voicing values. (Default value = None) Default None, which means the voicing is inferred from frequencies:
+
+frames with frequency <= 0.0 are considered “unvoiced”
+
+frames with frequency > 0.0 are considered “voiced”
+
+If specified, voicing is used as the voicing array, but frequencies with value 0 are forced to have 0 voicing.
+
+Voicing inferred by negative frequency values is ignored.
+
+Returns:
+
+frequenciesnp.ndarray
+
+Array of frequencies, all >= 0.
+
+voicednp.ndarray
+
+Array of voicings between 0 and 1, same length as frequencies, which indicates voiced or unvoiced
+
+ mir_eval.melody.constant_hop_timebase(hop, end_time)
+
+Generate a time series from 0 to end_time with times spaced hop apart
+
+Parameters:
+
+hopfloat
+
+Spacing of samples in the time series
+
+end_timefloat
+
+Time series will span [0, end_time]
+
+Returns:
+
+timesnp.ndarray
+
+Generated timebase
+
+ mir_eval.melody.resample_melody_series(times, frequencies, voicing, times_new, kind='linear')
+
+Resamples frequency and voicing time series to a new timescale. Maintains any zero (“unvoiced”) values in frequencies.
+
+If times and times_new are equivalent, no resampling will be performed.
+
+Parameters:
+
+timesnp.ndarray
+
+Times of each frequency value
+
+frequenciesnp.ndarray
+
+Array of frequency values, >= 0
+
+voicingnp.ndarray
+
+Array which indicates voiced or unvoiced. This array may be binary or have continuous values between 0 and 1.
+
+times_newnp.ndarray
+
+Times to resample frequency and voicing sequences to
+
+kindstr
+
+kind parameter to pass to scipy.interpolate.interp1d. (Default value = ‘linear’)
+
+Returns:
+
+frequencies_resamplednp.ndarray
+
+Frequency array resampled to new timebase
+
+voicing_resamplednp.ndarray
+
+Voicing array resampled to new timebase
+
+ mir_eval.melody.to_cent_voicing(ref_time, ref_freq, est_time, est_freq, est_voicing=None, ref_reward=None, base_frequency=10.0, hop=None, kind='linear')
+
+Convert reference and estimated time/frequency (Hz) annotations to sampled frequency (cent)/voicing arrays.
+
+A zero frequency indicates “unvoiced”.
+
+If est_voicing is not provided, a negative frequency indicates:
+
+“Predicted as unvoiced, but if it’s voiced, this is the frequency estimate”.
+
+If it is provided, negative frequency values are ignored, and the voicing from est_voicing is directly used.
+
+Parameters:
+
+ref_timenp.ndarray
+
+Time of each reference frequency value
+
+ref_freqnp.ndarray
+
+Array of reference frequency values
+
+est_timenp.ndarray
+
+Time of each estimated frequency value
+
+est_freqnp.ndarray
+
+Array of estimated frequency values
+
+est_voicingnp.ndarray
+
+Estimate voicing confidence. Default None, which means the voicing is inferred from est_freq:
+
+frames with frequency <= 0.0 are considered “unvoiced”
+
+frames with frequency > 0.0 are considered “voiced”
+
+ref_rewardnp.ndarray
+
+Reference voicing reward. Default None, which means all frames are weighted equally.
+
+base_frequencyfloat
+
+Base frequency in Hz for conversion to cents (Default value = 10.)
+
+hopfloat
+
+Hop size, in seconds, to resample, default None which means use ref_time
+
+kindstr
+
+kind parameter to pass to scipy.interpolate.interp1d. (Default value = ‘linear’)
+
+Returns:
+
+ref_voicingnp.ndarray
+
+Resampled reference voicing array
+
+ref_centnp.ndarray
+
+Resampled reference frequency (cent) array
+
+est_voicingnp.ndarray
+
+Resampled estimated voicing array
+
+est_centnp.ndarray
+
+Resampled estimated frequency (cent) array
+
+ mir_eval.melody.voicing_recall(ref_voicing, est_voicing)
+
+Compute the voicing recall given two voicing indicator sequences, one as reference (truth) and the other as the estimate (prediction). The sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference boolean voicing array
+
+est_voicingnp.ndarray
+
+Estimated boolean voicing array
+
+Returns:
+
+vx_recallfloat
+
+Voicing recall rate, the fraction of voiced frames in ref indicated as voiced in est
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> recall = mir_eval.melody.voicing_recall(ref_v, est_v)
+
+ mir_eval.melody.voicing_false_alarm(ref_voicing, est_voicing)
+
+Compute the voicing false alarm rates given two voicing indicator sequences, one as reference (truth) and the other as the estimate (prediction). The sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference boolean voicing array
+
+est_voicingnp.ndarray
+
+Estimated boolean voicing array
+
+Returns:
+
+vx_false_alarmfloat
+
+Voicing false alarm rate, the fraction of unvoiced frames in ref indicated as voiced in est
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> false_alarm = mir_eval.melody.voicing_false_alarm(ref_v, est_v)
+
+ mir_eval.melody.voicing_measures(ref_voicing, est_voicing)
+
+Compute the voicing recall and false alarm rates given two voicing indicator sequences, one as reference (truth) and the other as the estimate (prediction). The sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference boolean voicing array
+
+est_voicingnp.ndarray
+
+Estimated boolean voicing array
+
+Returns:
+
+vx_recallfloat
+
+Voicing recall rate, the fraction of voiced frames in ref indicated as voiced in est
+
+vx_false_alarmfloat
+
+Voicing false alarm rate, the fraction of unvoiced frames in ref indicated as voiced in est
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> recall, false_alarm = mir_eval.melody.voicing_measures(ref_v,
+...                                                        est_v)
+
+ mir_eval.melody.raw_pitch_accuracy(ref_voicing, ref_cent, est_voicing, est_cent, cent_tolerance=50)
+
+Compute the raw pitch accuracy given two pitch (frequency) sequences in cents and matching voicing indicator sequences. The first pitch and voicing arrays are treated as the reference (truth), and the second two as the estimate (prediction). All 4 sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference voicing array. When this array is non-binary, it is treated as a ‘reference reward’, as in (Bittner & Bosch, 2019)
+
+ref_centnp.ndarray
+
+Reference pitch sequence in cents
+
+est_voicingnp.ndarray
+
+Estimated voicing array
+
+est_centnp.ndarray
+
+Estimate pitch sequence in cents
+
+cent_tolerancefloat
+
+Maximum absolute deviation in cents for a frequency value to be considered correct (Default value = 50)
+
+Returns:
+
+raw_pitchfloat
+
+Raw pitch accuracy, the fraction of voiced frames in ref_cent for which est_cent provides a correct frequency values (within cent_tolerance cents).
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> raw_pitch = mir_eval.melody.raw_pitch_accuracy(ref_v, ref_c,
+...                                                est_v, est_c)
+
+ mir_eval.melody.raw_chroma_accuracy(ref_voicing, ref_cent, est_voicing, est_cent, cent_tolerance=50)
+
+Compute the raw chroma accuracy given two pitch (frequency) sequences in cents and matching voicing indicator sequences. The first pitch and voicing arrays are treated as the reference (truth), and the second two as the estimate (prediction). All 4 sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference voicing array. When this array is non-binary, it is treated as a ‘reference reward’, as in (Bittner & Bosch, 2019)
+
+ref_centnp.ndarray
+
+Reference pitch sequence in cents
+
+est_voicingnp.ndarray
+
+Estimated voicing array
+
+est_centnp.ndarray
+
+Estimate pitch sequence in cents
+
+cent_tolerancefloat
+
+Maximum absolute deviation in cents for a frequency value to be considered correct (Default value = 50)
+
+Returns:
+
+raw_chromafloat
+
+Raw chroma accuracy, the fraction of voiced frames in ref_cent for which est_cent provides a correct frequency values (within cent_tolerance cents), ignoring octave errors
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> raw_chroma = mir_eval.melody.raw_chroma_accuracy(ref_v, ref_c,
+...                                                  est_v, est_c)
+
+ mir_eval.melody.overall_accuracy(ref_voicing, ref_cent, est_voicing, est_cent, cent_tolerance=50)
+
+Compute the overall accuracy given two pitch (frequency) sequences in cents and matching voicing indicator sequences. The first pitch and voicing arrays are treated as the reference (truth), and the second two as the estimate (prediction). All 4 sequences must be of the same length.
+
+Parameters:
+
+ref_voicingnp.ndarray
+
+Reference voicing array. When this array is non-binary, it is treated as a ‘reference reward’, as in (Bittner & Bosch, 2019)
+
+ref_centnp.ndarray
+
+Reference pitch sequence in cents
+
+est_voicingnp.ndarray
+
+Estimated voicing array
+
+est_centnp.ndarray
+
+Estimate pitch sequence in cents
+
+cent_tolerancefloat
+
+Maximum absolute deviation in cents for a frequency value to be considered correct (Default value = 50)
+
+Returns:
+
+overall_accuracyfloat
+
+Overall accuracy, the total fraction of correctly estimates frames, where provides a correct frequency values (within cent_tolerance).
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> (ref_v, ref_c,
+...  est_v, est_c) = mir_eval.melody.to_cent_voicing(ref_time,
+...                                                  ref_freq,
+...                                                  est_time,
+...                                                  est_freq)
+>>> overall_accuracy = mir_eval.melody.overall_accuracy(ref_v, ref_c,
+...                                                     est_v, est_c)
+
+ mir_eval.melody.evaluate(ref_time, ref_freq, est_time, est_freq, est_voicing=None, ref_reward=None, **kwargs)
+
+Evaluate two melody (predominant f0) transcriptions, where the first is treated as the reference (ground truth) and the second as the estimate to be evaluated (prediction).
+
+Parameters:
+
+ref_timenp.ndarray
+
+Time of each reference frequency value
+
+ref_freqnp.ndarray
+
+Array of reference frequency values
+
+est_timenp.ndarray
+
+Time of each estimated frequency value
+
+est_freqnp.ndarray
+
+Array of estimated frequency values
+
+est_voicingnp.ndarray
+
+Estimate voicing confidence. Default None, which means the voicing is inferred from est_freq:
+
+frames with frequency <= 0.0 are considered “unvoiced”
+
+frames with frequency > 0.0 are considered “voiced”
+
+ref_rewardnp.ndarray
+
+Reference pitch estimation reward. Default None, which means all frames are weighted equally.
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+References
+
+Examples
+
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> scores = mir_eval.melody.evaluate(ref_time, ref_freq,
+...                                   est_time, est_freq)

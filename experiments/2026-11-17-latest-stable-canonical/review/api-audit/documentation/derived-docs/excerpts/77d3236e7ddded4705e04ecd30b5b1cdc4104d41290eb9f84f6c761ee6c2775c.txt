@@ -1,0 +1,37 @@
+mir_eval.chord.triads_inv(reference_labels, estimated_labels)
+
+Score chords along triad (root, quality to #5, & bass) relationships.
+
+Parameters:
+
+reference_labelslist, len=n
+
+Reference chord labels to score against.
+
+estimated_labelslist, len=n
+
+Estimated chord labels to score against.
+
+Returns:
+
+scoresnp.ndarray, shape=(n,), dtype=float
+
+Comparison scores, in [0.0, 1.0]
+
+Examples
+
+>>> (ref_intervals,
+...  ref_labels) = mir_eval.io.load_labeled_intervals('ref.lab')
+>>> (est_intervals,
+...  est_labels) = mir_eval.io.load_labeled_intervals('est.lab')
+>>> est_intervals, est_labels = mir_eval.util.adjust_intervals(
+...     est_intervals, est_labels, ref_intervals.min(),
+...     ref_intervals.max(), mir_eval.chord.NO_CHORD,
+...     mir_eval.chord.NO_CHORD)
+>>> (intervals,
+...  ref_labels,
+...  est_labels) = mir_eval.util.merge_labeled_intervals(
+...      ref_intervals, ref_labels, est_intervals, est_labels)
+>>> durations = mir_eval.util.intervals_to_durations(intervals)
+>>> comparisons = mir_eval.chord.triads_inv(ref_labels, est_labels)
+>>> score = mir_eval.chord.weighted_accuracy(comparisons, durations)

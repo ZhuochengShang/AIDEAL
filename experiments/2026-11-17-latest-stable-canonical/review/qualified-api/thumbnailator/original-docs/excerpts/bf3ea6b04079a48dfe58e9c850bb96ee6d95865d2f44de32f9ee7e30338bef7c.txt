@@ -1,0 +1,29 @@
+createThumbnail
+public static
+BufferedImage
+createThumbnail
+(
+BufferedImage
+img,
+int width,
+int height)
+Creates a thumbnail.
+The resulting thumbnail uses the default image type.
+When the image is resized, the aspect ratio will be preserved.
+When the specified dimensions does not have the same aspect ratio as the
+source image, the specified dimensions will be used as the absolute
+boundary of the thumbnail.
+For example, if the source image of 100 pixels by 100 pixels, and the
+desired thumbnail size is 50 pixels by 100 pixels, then the resulting
+thumbnail will be 50 pixels by 50 pixels, as the constraint will be
+50 pixels for the width, and therefore, by preserving the aspect ratio,
+the height will be required to be 50 pixels.
+Parameters:
+img
+- The source image.
+width
+- The width of the thumbnail.
+height
+- The height of the thumbnail.
+Returns:
+Resulting thumbnail.

@@ -1,0 +1,29 @@
+step_to_frame(step, ts, return_time_diff=False)[source]
+
+Calculate closest trajectory frame for auxiliary step step.
+
+Calculated given dt, time and frame from ts:
+
+time_frame_0 = ts.time - ts.frame*ts.dt   # time at frame 0
+
+frame = floor((step_to_time(step) - time_frame_0 + ts.dt/2)/ts.dt))
+
+The difference in time between the step and the calculated frame can also optionally be returned with return_time_diff.
+
+Parameters:
+
+step (int) – Number of the auxiliary step to calculate closest trajectory frame for.
+
+ts (Timestep object) – (Any) timestep from the trajectory the calculated frame number is to correspond to.
+
+return_time_diff (bool, optional) – (Default: False) Additionally return the time difference between step and returned frame.
+
+Returns:
+
+frame_index (int or None) – Number of the trajectory frame closest (in time) to the given auxiliary step. If the step index is out of range for the auxiliary data, None is returned instead.
+
+time_diff (float (optional)) – Difference in time between step and frame_index.
+
+Note
+
+Assumes trajectory dt is consant. The returned frame number may be out of range for the trajectory.

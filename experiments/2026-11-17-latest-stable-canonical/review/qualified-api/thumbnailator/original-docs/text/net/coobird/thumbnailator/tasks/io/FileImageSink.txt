@@ -1,0 +1,363 @@
+FileImageSink (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Class FileImageSink
+java.lang.Object
+net.coobird.thumbnailator.tasks.io.FileImageSink
+All Implemented Interfaces:
+ImageSink
+<
+File
+>
+public class
+FileImageSink
+extends
+Object
+implements
+ImageSink
+<
+File
+>
+An
+ImageSink
+which writes the resulting thumbnail to a file.
+Under certain circumstances, the destination file can change in the course
+of processing.
+This can occur in cases where the file extension does not
+match the output format set by the
+setOutputFormatName(String)
+method. In this case, the file name will have a file extension corresponding
+to the output format set in the above method to be appended to the file
+name originally provided when instantiating the
+FileImageSink
+object.
+Author:
+coobird
+Constructor Summary
+FileImageSink
+(
+File
+destinationFile)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+FileImageSink
+(
+File
+destinationFile,
+boolean allowOverwrite)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+FileImageSink
+(
+String
+destinationFilePath)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+FileImageSink
+(
+String
+destinationFilePath,
+boolean allowOverwrite)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+Method Summary
+File
+getSink
+()
+Returns the destination file of the thumbnail image.
+String
+preferredOutputFormatName
+()
+Returns the output format to use from information provided for the
+output image.
+void
+setOutputFormatName
+(
+String
+format)
+Sets the output format of the resulting image.
+void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when storing the image.
+void
+write
+(
+BufferedImage
+img)
+Writes the resulting image to a file.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+FileImageSink
+public
+FileImageSink
+(
+File
+destinationFile)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+The output format to use will be determined from the file extension.
+If another format should be used, then the
+setOutputFormatName(String)
+should be called with the desired
+output format name.
+When the destination file exists, then this
+FileImageSink
+will
+overwrite the existing file.
+Parameters:
+destinationFile
+- The destination file.
+Throws:
+NullPointerException
+- If the specified file is
+null
+.
+FileImageSink
+public
+FileImageSink
+(
+File
+destinationFile,
+boolean allowOverwrite)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+The output format to use will be determined from the file extension.
+If another format should be used, then the
+setOutputFormatName(String)
+should be called with the desired
+output format name.
+Parameters:
+destinationFile
+- The destination file.
+allowOverwrite
+- Whether or not the
+FileImageSink
+should overwrite the destination file if
+it already exists.
+Throws:
+NullPointerException
+- If the specified file is
+null
+.
+FileImageSink
+public
+FileImageSink
+(
+String
+destinationFilePath)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+The output format to use will be determined from the file extension.
+If another format should be used, then the
+setOutputFormatName(String)
+should be called with the desired
+output format name.
+When the destination file exists, then this
+FileImageSink
+will
+overwrite the existing file.
+Parameters:
+destinationFilePath
+- The destination file path.
+Throws:
+NullPointerException
+- If the specified file path is
+null
+.
+FileImageSink
+public
+FileImageSink
+(
+String
+destinationFilePath,
+boolean allowOverwrite)
+Instantiates a
+FileImageSink
+with the file to which the thumbnail
+should be written to.
+The output format to use will be determined from the file extension.
+If another format should be used, then the
+setOutputFormatName(String)
+should be called with the desired
+output format name.
+Parameters:
+destinationFilePath
+- The destination file path.
+allowOverwrite
+- Whether or not the
+FileImageSink
+should overwrite the destination file if
+it already exists.
+Throws:
+NullPointerException
+- If the specified file path is
+null
+.
+Method Detail
+preferredOutputFormatName
+public
+String
+preferredOutputFormatName
+()
+Description copied from interface:
+ImageSink
+Returns the output format to use from information provided for the
+output image.
+If the output format cannot be determined, then
+ThumbnailParameter.ORIGINAL_FORMAT
+should be returned.
+Specified by:
+preferredOutputFormatName
+in interface
+ImageSink
+<
+File
+>
+Returns:
+Name of the preferred output format.
+write
+public void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Writes the resulting image to a file.
+Specified by:
+write
+in interface
+ImageSink
+<
+File
+>
+Parameters:
+img
+- The image to write.
+Throws:
+UnsupportedFormatException
+- When an unsupported format has been
+specified by the
+setOutputFormatName(String)
+method, or if the output format
+has not been set and cannot be
+determined from the file name.
+IOException
+- When a problem occurs while writing
+the image.
+NullPointerException
+- If the image is
+null
+.
+IllegalArgumentException
+- If this
+FileImageSink
+does
+not permit overwriting the
+destination file and the destination
+file already exists.
+getSink
+public
+File
+getSink
+()
+Returns the destination file of the thumbnail image.
+If the final destination of the thumbnail changes in the course of
+writing the thumbnail. (For example, if the file extension for the given
+destination did not match the destination file format, then the correct
+file extension could be appended.)
+Specified by:
+getSink
+in interface
+ImageSink
+<
+File
+>
+Returns:
+the destinationFile
+setOutputFormatName
+public void
+setOutputFormatName
+(
+String
+format)
+Description copied from interface:
+ImageSink
+Sets the output format of the resulting image.
+For
+ImageSink
+s which stores raw images, the format name specified
+by this method may be ignored.
+Specified by:
+setOutputFormatName
+in interface
+ImageSink
+<
+File
+>
+Parameters:
+format
+- File format with which to store the image.
+setThumbnailParameter
+public void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Description copied from interface:
+ImageSink
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when storing the image.
+Specified by:
+setThumbnailParameter
+in interface
+ImageSink
+<
+File
+>
+Parameters:
+param
+- The
+ThumbnailParameter
+with image
+writing parameters.
+Copyright © 2025. All rights reserved.

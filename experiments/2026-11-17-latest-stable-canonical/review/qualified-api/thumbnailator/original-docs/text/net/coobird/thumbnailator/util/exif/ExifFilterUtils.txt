@@ -1,0 +1,68 @@
+ExifFilterUtils (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.util.exif
+Class ExifFilterUtils
+java.lang.Object
+net.coobird.thumbnailator.util.exif.ExifFilterUtils
+public final class
+ExifFilterUtils
+extends
+Object
+An utility class which returns a suitable
+ImageFilter
+to perform
+the transformations necessary to properly orient an image according to the
+Exif metadata.
+Author:
+coobird
+Method Summary
+static
+ImageFilter
+getFilterForOrientation
+(
+Orientation
+orientation)
+Returns a
+ImageFilter
+which will perform the transformations
+required to properly orient the thumbnail according to the Exif
+orientation.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+getFilterForOrientation
+public static
+ImageFilter
+getFilterForOrientation
+(
+Orientation
+orientation)
+Returns a
+ImageFilter
+which will perform the transformations
+required to properly orient the thumbnail according to the Exif
+orientation.
+Parameters:
+orientation
+- The Exif orientation
+Returns:
+ImageFilter
+s required to properly
+orient the image.
+Copyright © 2025. All rights reserved.

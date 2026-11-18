@@ -1,0 +1,26 @@
+add_TopologyAttr(topologyattr, values=None)[source]
+
+Add a new topology attribute to the Universe
+
+Adding a TopologyAttribute to the Universe makes it available to all AtomGroups etc throughout the Universe.
+
+Parameters:
+
+topologyattr (TopologyAttr or string) – Either a MDAnalysis TopologyAttr object or the name of a possible topology attribute.
+
+values (np.ndarray, optional) – If initiating an attribute from a string, the initial values to use. If not supplied, the new TopologyAttribute will have empty or zero values.
+
+Example
+
+For example to add bfactors to a Universe:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> u = mda.Universe(PSF, DCD)
+>>> u.add_TopologyAttr('tempfactors')
+>>> u.atoms.tempfactors
+array([0., 0., 0., ..., 0., 0., 0.])
+
+Changed in version 0.17.0: Can now also add TopologyAttrs with a string of the name of the attribute to add (eg ‘charges’), can also supply initial values using values keyword.
+
+Changed in version 1.1.0: Now warns when adding bfactors to a Universe with existing tempfactors, or adding tempfactors to a Universe with existing bfactors. In version 2.0, MDAnalysis will stop treating tempfactors and bfactors as separate attributes. Instead, they will be aliases of the same attribute.

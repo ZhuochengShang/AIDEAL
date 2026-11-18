@@ -1,0 +1,24 @@
+class MDAnalysis.converters.ParmEd.ParmEdConverter[source]
+
+Convert MDAnalysis AtomGroup or Universe to ParmEd Structure.
+
+Example
+
+import parmed as pmd
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import GRO
+pgro = pmd.load_file(GRO)
+mgro = mda.Universe(pgro)
+parmed_subset = mgro.select_atoms('resname SOL').convert_to('PARMED')
+
+ convert(obj)[source]
+
+Write selection at current trajectory frame to Structure.
+
+Parameters:
+
+obj (AtomGroup or Universe or Timestep)
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

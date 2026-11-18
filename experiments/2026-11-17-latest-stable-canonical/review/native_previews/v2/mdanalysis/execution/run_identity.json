@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "experiment_fingerprint": "cc66f7ecb4ab153848bdcb66dd558af177d1327c95d914dd94a8fb44b28e8ede",
+  "fingerprint_components": {
+    "schema": 4,
+    "prompt_contract": {
+      "templates": {
+        "comprehension_write_exec": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501"
+      },
+      "profile_sha256": "600685b1b29c5b65a2a67717817a119141b3b579b9f78c15cac1990614e7fce6"
+    },
+    "transport_contract": {
+      "temperature": 0.0,
+      "google_request_timeout_s": 300.0,
+      "google_sdk_attempts": 2,
+      "google_outer_deadline_s": 630.0,
+      "adapter_sha256": null,
+      "policy_sha256": null,
+      "setup_policy_sha256": null
+    },
+    "project": "MDAnalysis",
+    "language": "Python",
+    "doc_source": "original",
+    "doc_scope": "relevant",
+    "max_fix_rounds": 2,
+    "manifest_sha256": "4bf6e19d79ff4072ea3a639390478f98e52cd93312caacd343cbec2a80970c57",
+    "document_sha256": "c31e45700b89754b2d1d23afe1ef71986de541095d9fb7ff97d7463ebb48f99d",
+    "models": {
+      "audience": "google:gemini-3.1-flash-lite",
+      "fixer": "google:gemini-3.1-flash-lite"
+    },
+    "class_context": false,
+    "owner_overrides": {},
+    "timeout_s": 300,
+    "execute_config": {
+      "execution_context": "A runnable headless Python test harness is already in scope. The snippet is inserted inside a function and the preamble variables listed under available inputs are already defined. Write executable statements only. Import MDAnalysis submodules or optional dependencies only when the documented public call requires them. Do not define another function or process entry point. Assert a deterministic property and print a compact correctness witness containing a shape, scalar, or length.",
+      "region": [
+        "# TODO API_TEST_START",
+        "# TODO API_TEST_END"
+      ],
+      "strip_snippet_imports": false,
+      "output_tail_chars": 2000,
+      "success_marker": "__DONE__",
+      "error_marker": "__RUN_ERR__",
+      "work_dir": "execution",
+      "timeout_seconds": 300,
+      "max_fix_rounds": 2,
+      "auto_report": false,
+      "test_filename": "api_test.py",
+      "command": "env -u PYTHONPATH -u PYTHONHOME MPLBACKEND=Agg OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONHASHSEED=0 /home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python \"{test_file}\"",
+      "exec_hints": "Use the preloaded Universe, AtomGroups, trajectory, and the pinned molecular fixture paths. Keep atom selections and frame ranges small. For analysis classes construct the documented class, call run() when required, and validate a stable scalar, shape, or length. The PSF/DCD pair has no periodic box; use a matching configured periodic fixture only when the target contract requires it. Write any small output only under output_dir; do not modify source fixtures, download data, or open a GUI.",
+      "scaffold": "inputs/api_test_scaffold.py",
+      "local_uris": false,
+      "output_dir": "execution/output",
+      "preamble": "MDAnalysis = mda  # type: module\nnumpy = np  # type: module\nuniverse = mda.Universe(psf_path, dcd_path)  # type: MDAnalysis.Universe\natoms = universe.atoms  # type: MDAnalysis.core.groups.AtomGroup\nprotein = universe.select_atoms(\"protein\")  # type: MDAnalysis.core.groups.AtomGroup\nbackbone = universe.select_atoms(\"protein and backbone\")  # type: MDAnalysis.core.groups.AtomGroup\ntrajectory = universe.trajectory  # type: MDAnalysis.coordinates.base.ReaderBase\ntimestep = trajectory[0]  # type: MDAnalysis.coordinates.base.Timestep\n",
+      "sample_data": {
+        "psf_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk.psf",
+        "dcd_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_dims.dcd",
+        "pdb_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_open.pdb",
+        "gro_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.gro",
+        "xtc_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.xtc",
+        "mdanalysis_fixture_dir": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures"
+      },
+      "require_correctness": true,
+      "io_hints": "",
+      "stop_on_provider_error": true,
+      "build": ""
+    },
+    "scaffold": {
+      "sha256": "f4822b471fc27624f9e3da07bdd74bd0a61f7cd9385f2791328b3d0d9b62589f",
+      "file_count": 1
+    },
+    "source": {
+      "sha256": "c88faba5af92106846c5f736ca0830737339030e9186120aae5467d0f4dfdc32",
+      "file_count": 195
+    },
+    "api_inventory": {
+      "sha256": "26667d73852844186738f26ac17dd35dfecf95bd5c818f2ecea69a440990cafd",
+      "file_count": 1
+    },
+    "fixtures": {
+      "sha256": "cbdcbf3db542a84163288b5e75902a7ccf71e40fb285d9e821e05984e0984ed3",
+      "file_count": 5
+    },
+    "engine": {
+      "sha256": "2c20721b0350b243155edab18ffe16149572cffd89a785eab7f1b471bae46a09",
+      "file_count": 35
+    },
+    "interpreter": {
+      "executable": "/home/zshan011/apps/aideal/venv/bin/python",
+      "version": "3.10.15 (main, Oct  3 2024, 07:27:34) [GCC 11.2.0]",
+      "environment_sha256": ""
+    },
+    "canonical_requested_targets": {
+      "protocol_version": 1,
+      "targets_sha256": "4d1c8623d419d6f84e075169f208e8b7e81447d1b7fa6a321a03735ccf5e1373",
+      "targets_count": 435
+    }
+  }
+}

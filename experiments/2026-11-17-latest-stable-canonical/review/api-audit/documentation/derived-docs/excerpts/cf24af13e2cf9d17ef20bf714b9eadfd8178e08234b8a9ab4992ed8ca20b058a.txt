@@ -1,0 +1,25 @@
+MDAnalysis.analysis.encore.similarity.cumulative_gen_kde_pdfs(embedded_space, ensemble_assignment, nensembles, nsamples, ens_id_min=1, ens_id_max=None)[source]
+
+Generate Kernel Density Estimates (KDE) from embedded spaces and elaborate the coordinates for later use. However, consider more than one ensemble as the space on which the KDE will be generated. In particular, will use ensembles with ID [ens_id_min, ens_id_max].
+
+Parameters:
+
+embedded_space (numpy.array) – Array containing the coordinates of the embedded space
+
+ensemble_assignment (numpy.array) – array containing one int per ensemble conformation. These allow to distinguish, in the complete embedded space, which conformations belong to each ensemble. For instance if ensemble_assignment is [1,1,1,1,2,2], it means that the first four conformations belong to ensemble 1 and the last two to ensemble 2
+
+nensembles (int) – Number of ensembles
+
+nsamples (int) – Samples to be drawn from the ensembles. Will be required in a later stage in order to calculate dJS.
+
+ens_id_min (int) – Minimum ID of the ensemble to be considered; see description
+
+ens_id_max (int) – Maximum ID of the ensemble to be considered; see description. If None, it will be set to the maximum possible value given the number of ensembles.
+
+Returns:
+
+kdes (scipy.stats.gaussian_kde) – KDEs calculated from ensembles
+
+resamples (list of numpy.array) – For each KDE, draw samples according to the probability distribution of the kde mixture model
+
+embedded_ensembles (list of numpy.array) – List of numpy.array containing, each one, the elements of the embedded space belonging to a certain ensemble

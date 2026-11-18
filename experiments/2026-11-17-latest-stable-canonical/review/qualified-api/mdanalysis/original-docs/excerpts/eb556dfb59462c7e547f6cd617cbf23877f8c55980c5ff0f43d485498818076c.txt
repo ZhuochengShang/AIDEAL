@@ -1,0 +1,31 @@
+MDAnalysis.analysis.distances.contact_matrix(coord, cutoff=15.0, returntype='numpy', box=None)[source]
+
+Calculates a matrix of contacts.
+
+There is a fast, high-memory-usage version for small systems (returntype = ‘numpy’), and a slower, low-memory-usage version for larger systems (returntype = ‘sparse’).
+
+If box dimensions are passed then periodic boundary conditions are applied.
+
+Parameters:
+
+coord (array) – Array of coordinates of shape (N, 3) and dtype float32.
+
+cutoff (float, optional, default 15) – Particles within cutoff are considered to form a contact.
+
+returntype (string, optional, default "numpy") – Select how the contact matrix is returned. * "numpy": return as an (N. N) numpy.ndarray * "sparse": return as a scipy.sparse.lil_matrix
+
+box (array-like or None, optional, default None) – Simulation cell dimensions in the form of MDAnalysis.trajectory.timestep.Timestep.dimensions when periodic boundary conditions should be taken into account for the calculation of contacts.
+
+Returns:
+
+The contact matrix is returned in a format determined by the returntype keyword.
+
+Return type:
+
+array or sparse matrix
+
+See also
+
+MDAnalysis.analysis.contacts
+
+Changed in version 0.11.0: Keyword suppress_progmet and progress_meter_freq were removed.

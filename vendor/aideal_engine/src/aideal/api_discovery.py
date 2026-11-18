@@ -5,6 +5,8 @@ import glob as globmod
 import re
 from pathlib import Path
 from .config import AidealConfig
+from .api_registry import configured_api_details, target_key, with_api_identity
+from .api_origin import audit_api_origins, filter_api_origins, origin_enabled
 from .api_signatures import (
     _doc_at,
     _java_param_record,
@@ -32,14 +34,32 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
       non_override              - not an `override` (excludes inherited/interface impls)
       documented_non_override   - both (tightest intended-API set)
     Default `all` (back-compat)."""
+    registered = configured_api_details(cfg, override_filter)
+    if registered is not None:
+        return {target_key(row) for row in filter_api_origins(cfg, registered)}
+    if (cfg.raw.get("codebase", {}) or {}).get("identity_mode") == "qualified":
+        # Name-only intent scores cannot distinguish distinct owners. A new
+        # study supplies its reviewed selection through a bound inventory.
+        if (override_filter or cfg.surface_filter or "all").lower() != "all":
+            raise ValueError("Qualified discovery requires surface_filter=all or a frozen inventory")
+        return {target_key(row) for row in public_api_details(cfg)
+                if row["visibility"] == "public" or row.get("public_exposure_established") is True}
+    owned_sites = None
+    owned_names = None
+    if origin_enabled(cfg):
+        owned = public_api_details(cfg)
+        owned_sites = {(row["file"], row["line"], row["name"]) for row in owned}
+        owned_names = {row["name"] for row in owned}
     model = visibility_model(cfg)
     flt = (override_filter or cfg.surface_filter or "all").lower()
     if flt in ("intent_score", "intent"):
         from .api_intent import intent_scores
-        return {n for n, info in intent_scores(cfg).items() if info["selected"]}
+        names = {n for n, info in intent_scores(cfg).items() if info["selected"]}
+        return names if owned_names is None else names & owned_names
     if flt in ("intended_llm", "intent_llm"):
         from .api_intent import intended_api_llm
-        return intended_api_llm(cfg)[0]
+        names = intended_api_llm(cfg)[0]
+        return names if owned_names is None else names & owned_names
     file_cache: dict[str, list[str]] = {}
     all_names: set[str] = set()
     documented: set[str] = set()
@@ -48,6 +68,10 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
     for name, prefix, path, i, _line in _iter_defs(cfg):
         if name in cfg.exclude_names or not _is_public(name, prefix, model):
             continue
+        if owned_sites is not None:
+            rel = str(Path(path).relative_to(cfg.root))
+            if (rel, i + 1, name) not in owned_sites:
+                continue
         if py_identities is not None:
             rel = str(Path(path).relative_to(cfg.root)).replace("\\", "/")
             if (rel, i + 1, name) not in py_identities:
@@ -90,10 +114,16 @@ def public_api_surface(cfg: AidealConfig, override_filter: str | None = None) ->
     return all_names
 
 
-def public_api_details(cfg: AidealConfig) -> list[dict]:
+def _unfiltered_api_details(cfg: AidealConfig) -> list[dict]:
+    # Scan the configured source files and describe each matching definition.
+    # Return signatures, comments, visibility and exact source locations.
+    # Keep definition sites distinct; callers choose the intended public surface.
     """Per-definition records for the surface: name, signature, params, return,
     description, visibility, file, line. One record per definition site (not
     collapsed), so overloads across classes stay distinct."""
+    registered = configured_api_details(cfg)
+    if registered is not None:
+        return registered
     model = visibility_model(cfg)
     py_identities = _python_qualified_identities(cfg) if cfg.language.lower() == "python" else {}
     file_cache: dict[str, list[str]] = {}
@@ -140,14 +170,24 @@ def public_api_details(cfg: AidealConfig) -> list[dict]:
     return out
 
 
+def public_api_details(cfg: AidealConfig) -> list[dict]:
+    """Definition facts, with optional source-origin policy applied per site."""
+    return with_api_identity(cfg, filter_api_origins(cfg, _unfiltered_api_details(cfg)))
+
+
+def api_origin_audit(cfg: AidealConfig) -> dict:
+    """Ownership decisions, including excluded/unresolved sites, without calls."""
+    return audit_api_origins(cfg, _unfiltered_api_details(cfg))
+
+
 def render_api_surface(cfg: AidealConfig, include_nonpublic: bool = False) -> str:
     """Plain-text dump of the discovered API surface (Step 1 of the test plan)."""
     details = public_api_details(cfg)
-    pub = [d for d in details if d["visibility"] == "public"]
+    pub = [d for d in details if d["visibility"] == "public" or d.get("public_exposure_established") is True]
     shown = details if include_nonpublic else pub
     by_name: dict[str, list[dict]] = {}
     for d in shown:
-        by_name.setdefault(d["name"], []).append(d)
+        by_name.setdefault(target_key(d), []).append(d)
     lines = [
         f"API SURFACE — {cfg.project_name} ({cfg.language})",
         f"globs: {', '.join(cfg.source_globs)}",
@@ -172,6 +212,15 @@ def render_api_surface(cfg: AidealConfig, include_nonpublic: bool = False) -> st
             lines.append(f"    returns: {d['returns'] or '(unspecified)'}")
             if d["description"]:
                 lines.append(f"    doc    : {d['description'][:200]}")
+    if origin_enabled(cfg):
+        audit = api_origin_audit(cfg)
+        lines.extend(["", "SOURCE ORIGIN — " + audit["policy"]["version"],
+                      "policy SHA256: " + audit["policy_sha256"],
+                      "origin counts: " + ", ".join(f"{key}={value}" for key, value in sorted(audit["counts"].items()))])
+        for decision in audit["decisions"]:
+            if decision["status"] != "library_defined":
+                lines.append(f"  {decision['status']}: {decision.get('qualified_name') or decision['name']} "
+                             f"@ {decision.get('file')}:{decision.get('line')} — {decision['reason']}")
     return "\n".join(lines)
 
 
@@ -191,7 +240,7 @@ def surface_audit(cfg: AidealConfig) -> dict:
     det = public_api_details(cfg)
     by_name: dict[str, list[dict]] = {}
     for d in det:
-        by_name.setdefault(d["name"], []).append(d)
+        by_name.setdefault(target_key(d), []).append(d)
     # modifier evidence per non-public site (via the same prefix _is_public saw)
     mods_of: dict[str, list[str]] = {}
     for name, prefix, path, i, _line in _iter_defs(cfg):
@@ -209,7 +258,7 @@ def surface_audit(cfg: AidealConfig) -> dict:
             verdicts[n] = {"status": "not-on-surface",
                            "why": "no definition matched (path-excluded via "
                                   "exclude_path_patterns, moved, or renamed)"}
-        elif all(r["visibility"] != "public" for r in recs):
+        elif all(r["visibility"] != "public" and r.get("public_exposure_established") is not True for r in recs):
             verdicts[n] = {"status": "non-public",
                            "why": "; ".join(mods_of.get(n, [])[:3]) or
                                   "private/protected (incl. enclosing container)",
@@ -225,8 +274,8 @@ def surface_audit(cfg: AidealConfig) -> dict:
     prune = sorted(n for n, v in verdicts.items() if v["status"] != "ok")
     return {"check": "surface-audit",
             "catalog_entries": len(entries),
-            "public_names_on_surface": len({d["name"] for d in det
-                                            if d["visibility"] == "public"}),
+            "public_names_on_surface": len({target_key(d) for d in det
+                                            if d["visibility"] == "public" or d.get("public_exposure_established") is True}),
             "counts": counts,
             "prune_candidates": prune,
             "verdicts": {n: v for n, v in verdicts.items() if v["status"] != "ok"}}
@@ -237,28 +286,48 @@ def surface_audit(cfg: AidealConfig) -> dict:
 def api_coverage(cfg: AidealConfig) -> dict:
     """Compare original/generated documentation coverage over a shared API scope:
 
-      S = frozen runnable public surface (visibility-correct + intent filter)
+      S = configured source API-name set (discovery + configured filters)
       O = APIs documented in the ORIGINAL bundle (evidence-based: code block /
           backticks / call-form via _doc_code_mentions — bare prose words do
           not count), resolved against S
       G = APIs with a generated LLM_readme entry, resolved against S
-      T = S ∩ O ∩ G — the SHARED manifest every pass-rate cell must consume
+      T = S ∩ O ∩ G — optional subset documented under both conditions
 
-    Coverage (|S∩O|/|S| vs |S∩G|/|S|) is a first-class result on its own;
-    pass rates are only causally comparable on T."""
+    Freeze the same S for a full-scope resource comparison, retaining APIs with
+    no original documentation. Report O and S-O separately to distinguish
+    documentation coverage from performance on already documented APIs. T
+    supports an additional conditional analysis; it is not the only fair
+    denominator. Name-level discovery and mentions do not certify runnability
+    or signature/owner-level documentation coverage."""
     from .api_intent import _doc_code_mentions
 
     S = set(public_api_surface(cfg))
-    docs_text = cfg.original_readme_text(limit=None) if cfg.original_readme_files else ""
-    coverage_cfg = ((cfg.raw or {}).get("coverage") or {})
-    call_patterns = coverage_cfg.get("documentation_call_patterns")
-    O = _doc_code_mentions(docs_text, S, call_patterns=call_patterns)
+    qualified = (cfg.raw.get("codebase", {}) or {}).get("identity_mode") == "qualified"
+    unresolved = set()
+    if qualified:
+        # A word such as ``run`` cannot prove which owner's API a document
+        # describes. Use the reviewed, hash-bound original-document mapping.
+        from .original_documentation import original_documents
+        bundle = original_documents(cfg)
+        if bundle is None:
+            raise ValueError("Qualified coverage requires files.original_doc_manifest")
+        targets = bundle["manifest"]["targets"]
+        O = {api for api in S if targets.get(api, {}).get("status") == "documented"}
+        unresolved = {api for api in S if targets.get(api, {}).get("status") not in ("documented", "undocumented")}
+        docs_text = bundle["text"]
+        original_files = bundle["documents"]
+    else:
+        docs_text = cfg.original_readme_text(limit=None) if cfg.original_readme_files else ""
+        coverage_cfg = ((cfg.raw or {}).get("coverage") or {})
+        call_patterns = coverage_cfg.get("documentation_call_patterns")
+        O = _doc_code_mentions(docs_text, S, call_patterns=call_patterns)
+        original_files = cfg.original_readme_files
     G = ({e.name for e in parse_readme(cfg.llm_readme)} & S
          if cfg.llm_readme.exists() else set())
     T = S & O & G
     def pct(x):
         return round(100.0 * len(x) / len(S), 1) if S else 0.0
-    return {
+    result = {
         "surface_S": sorted(S), "n_surface": len(S),
         "original_documented_O": sorted(O),
         "generated_documented_G": sorted(G),
@@ -266,9 +335,15 @@ def api_coverage(cfg: AidealConfig) -> dict:
         "coverage": {"original_pct_of_S": pct(O),
                      "generated_pct_of_S": pct(G),
                      "shared_pct_of_S": pct(T)},
-        "undocumented_in_original": sorted(S - O),
+        "undocumented_in_original": sorted(S - O - unresolved),
         "undocumented_in_generated": sorted(S - G),
-        "original_doc_files": [str(x.relative_to(cfg.root))
-                               for x in cfg.original_readme_files],
+        "original_doc_files": [str(x.relative_to(cfg.root)) if x.is_relative_to(cfg.root) else str(x)
+                               for x in original_files],
         "original_doc_chars": len(docs_text),
     }
+    if qualified:
+        result.update(identity_version="language_qualified_api_v1",
+                      original_coverage_evidence="verified_original_document_manifest",
+                      original_documentation_unresolved=sorted(unresolved),
+                      original_coverage_resolved=not unresolved)
+    return result

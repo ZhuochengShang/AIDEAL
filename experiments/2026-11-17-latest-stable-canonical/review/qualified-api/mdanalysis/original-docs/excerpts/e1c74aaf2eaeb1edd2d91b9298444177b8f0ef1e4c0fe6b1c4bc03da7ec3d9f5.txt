@@ -1,0 +1,9 @@
+make_density()[source]
+
+Convert the grid (a histogram, counts in a cell) to a density (counts/volume).
+
+This method changes the grid irrevocably.
+
+For a probability density, manually divide by grid.sum().
+
+If this is already a density, then a warning is issued and nothing is done, so calling make_density multiple times does not do any harm.

@@ -1,0 +1,17 @@
+Cartesian(bat_frame)[source]
+
+Conversion of a single frame from BAT to Cartesian coordinates
+
+One application of this function is to determine the new Cartesian coordinates after modifying a specific torsion angle.
+
+Parameters:
+
+bat_frame (numpy.ndarray) – an array with dimensions (3N,) with external then internal degrees of freedom based on the root atoms, followed by the bond, angle, and (proper and improper) torsion coordinates.
+
+Returns:
+
+XYZ – an array with dimensions (N,3) with Cartesian coordinates. The first dimension has the same ordering as the AtomGroup used to initialize the class. The molecule will be whole opposed to wrapped around a periodic boundary.
+
+Return type:
+
+numpy.ndarray

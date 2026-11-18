@@ -1,0 +1,31 @@
+write(filename=None, file_format=None, filenamefmt='{trjname}_{frame}', frames=None, **kwargs)[source]
+
+Write AtomGroup to a file.
+
+The output can either be a coordinate file or a selection, depending on the format.
+
+Examples
+
+>>> ag = u.atoms
+>>> ag.write('selection.ndx')  # Write a gromacs index file
+>>> ag.write('coordinates.pdb')  # Write the current frame as PDB
+>>> # Write the trajectory in XTC format
+>>> ag.write('trajectory.xtc', frames='all')
+>>> # Write every other frame of the trajectory in PBD format
+>>> ag.write('trajectory.pdb', frames=u.trajectory[::2])
+
+Parameters:
+
+filename (str, optional) – None: create TRJNAME_FRAME.FORMAT from filenamefmt [None]
+
+file_format (str, optional) – The name or extension of a coordinate, trajectory, or selection file format such as PDB, CRD, GRO, VMD (tcl), PyMol (pml), Gromacs (ndx) CHARMM (str) or Jmol (spt); case-insensitive [PDB]
+
+filenamefmt (str, optional) – format string for default filename; use substitution tokens ‘trjname’ and ‘frame’ [“%(trjname)s_%(frame)d”]
+
+bonds (str, optional) – how to handle bond information, especially relevant for PDBs. "conect": write only the CONECT records defined in the original file. "all": write out all bonds, both the original defined and those guessed by MDAnalysis. None: do not write out bonds. Default is "conect".
+
+frames (array-like or slice or FrameIteratorBase or str, optional) – An ensemble of frames to write. The ensemble can be an list or array of frame indices, a mask of booleans, an instance of slice, or the value returned when a trajectory is indexed. By default, frames is set to None and only the current frame is written. If frames is set to “all”, then all the frame from trajectory are written.
+
+Changed in version 0.9.0: Merged with write_selection. This method can now write both selections out.
+
+Changed in version 0.19.0: Can write multiframe trajectories with the ‘frames’ argument.

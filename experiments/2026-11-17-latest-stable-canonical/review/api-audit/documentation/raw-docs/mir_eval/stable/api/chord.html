@@ -1,0 +1,1551 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="readthedocs-addons-api-version" content="1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mir_eval.chord &mdash; mir_eval 0.8.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=dbee5847"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mir_eval.melody" href="melody.html" />
+    <link rel="prev" title="mir_eval.beat" href="beat.html" /> 
+<script async type="text/javascript" src="/_/static/javascript/readthedocs-addons.js"></script><meta name="readthedocs-project-slug" content="mir-eval" /><meta name="readthedocs-version-slug" content="stable" /><meta name="readthedocs-resolver-filename" content="/api/chord.html" /><meta name="readthedocs-http-status" content="200" /></head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mir_eval
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">mir_eval</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="alignment.html">mir_eval.alignment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.absolute_error"><code class="docutils literal notranslate"><span class="pre">absolute_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.percentage_correct"><code class="docutils literal notranslate"><span class="pre">percentage_correct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.percentage_correct_segments"><code class="docutils literal notranslate"><span class="pre">percentage_correct_segments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.karaoke_perceptual_metric"><code class="docutils literal notranslate"><span class="pre">karaoke_perceptual_metric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="alignment.html#mir_eval.alignment.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="beat.html">mir_eval.beat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.trim_beats"><code class="docutils literal notranslate"><span class="pre">trim_beats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.f_measure"><code class="docutils literal notranslate"><span class="pre">f_measure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.cemgil"><code class="docutils literal notranslate"><span class="pre">cemgil()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.goto"><code class="docutils literal notranslate"><span class="pre">goto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.p_score"><code class="docutils literal notranslate"><span class="pre">p_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.continuity"><code class="docutils literal notranslate"><span class="pre">continuity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.information_gain"><code class="docutils literal notranslate"><span class="pre">information_gain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="beat.html#mir_eval.beat.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mir_eval.chord</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.InvalidChordException"><code class="docutils literal notranslate"><span class="pre">InvalidChordException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.pitch_class_to_semitone"><code class="docutils literal notranslate"><span class="pre">pitch_class_to_semitone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.scale_degree_to_semitone"><code class="docutils literal notranslate"><span class="pre">scale_degree_to_semitone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.scale_degree_to_bitmap"><code class="docutils literal notranslate"><span class="pre">scale_degree_to_bitmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.quality_to_bitmap"><code class="docutils literal notranslate"><span class="pre">quality_to_bitmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.reduce_extended_quality"><code class="docutils literal notranslate"><span class="pre">reduce_extended_quality()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.validate_chord_label"><code class="docutils literal notranslate"><span class="pre">validate_chord_label()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.split"><code class="docutils literal notranslate"><span class="pre">split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.join"><code class="docutils literal notranslate"><span class="pre">join()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.encode"><code class="docutils literal notranslate"><span class="pre">encode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.encode_many"><code class="docutils literal notranslate"><span class="pre">encode_many()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.rotate_bitmap_to_root"><code class="docutils literal notranslate"><span class="pre">rotate_bitmap_to_root()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.rotate_bitmaps_to_roots"><code class="docutils literal notranslate"><span class="pre">rotate_bitmaps_to_roots()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.weighted_accuracy"><code class="docutils literal notranslate"><span class="pre">weighted_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.thirds"><code class="docutils literal notranslate"><span class="pre">thirds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.thirds_inv"><code class="docutils literal notranslate"><span class="pre">thirds_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.triads"><code class="docutils literal notranslate"><span class="pre">triads()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.triads_inv"><code class="docutils literal notranslate"><span class="pre">triads_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.tetrads"><code class="docutils literal notranslate"><span class="pre">tetrads()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.tetrads_inv"><code class="docutils literal notranslate"><span class="pre">tetrads_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.root"><code class="docutils literal notranslate"><span class="pre">root()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.mirex"><code class="docutils literal notranslate"><span class="pre">mirex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.majmin"><code class="docutils literal notranslate"><span class="pre">majmin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.majmin_inv"><code class="docutils literal notranslate"><span class="pre">majmin_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.sevenths"><code class="docutils literal notranslate"><span class="pre">sevenths()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.sevenths_inv"><code class="docutils literal notranslate"><span class="pre">sevenths_inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.directional_hamming_distance"><code class="docutils literal notranslate"><span class="pre">directional_hamming_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.overseg"><code class="docutils literal notranslate"><span class="pre">overseg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.underseg"><code class="docutils literal notranslate"><span class="pre">underseg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.seg"><code class="docutils literal notranslate"><span class="pre">seg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.merge_chord_intervals"><code class="docutils literal notranslate"><span class="pre">merge_chord_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mir_eval.chord.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="melody.html">mir_eval.melody</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.validate_voicing"><code class="docutils literal notranslate"><span class="pre">validate_voicing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.hz2cents"><code class="docutils literal notranslate"><span class="pre">hz2cents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.freq_to_voicing"><code class="docutils literal notranslate"><span class="pre">freq_to_voicing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.constant_hop_timebase"><code class="docutils literal notranslate"><span class="pre">constant_hop_timebase()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.resample_melody_series"><code class="docutils literal notranslate"><span class="pre">resample_melody_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.to_cent_voicing"><code class="docutils literal notranslate"><span class="pre">to_cent_voicing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.voicing_recall"><code class="docutils literal notranslate"><span class="pre">voicing_recall()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.voicing_false_alarm"><code class="docutils literal notranslate"><span class="pre">voicing_false_alarm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.voicing_measures"><code class="docutils literal notranslate"><span class="pre">voicing_measures()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.raw_pitch_accuracy"><code class="docutils literal notranslate"><span class="pre">raw_pitch_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.raw_chroma_accuracy"><code class="docutils literal notranslate"><span class="pre">raw_chroma_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.overall_accuracy"><code class="docutils literal notranslate"><span class="pre">overall_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="melody.html#mir_eval.melody.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multipitch.html">mir_eval.multipitch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.resample_multipitch"><code class="docutils literal notranslate"><span class="pre">resample_multipitch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.frequencies_to_midi"><code class="docutils literal notranslate"><span class="pre">frequencies_to_midi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.midi_to_chroma"><code class="docutils literal notranslate"><span class="pre">midi_to_chroma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.compute_num_freqs"><code class="docutils literal notranslate"><span class="pre">compute_num_freqs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.compute_num_true_positives"><code class="docutils literal notranslate"><span class="pre">compute_num_true_positives()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.compute_accuracy"><code class="docutils literal notranslate"><span class="pre">compute_accuracy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.compute_err_score"><code class="docutils literal notranslate"><span class="pre">compute_err_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.metrics"><code class="docutils literal notranslate"><span class="pre">metrics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipitch.html#mir_eval.multipitch.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="onset.html">mir_eval.onset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#mir_eval.onset.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#mir_eval.onset.f_measure"><code class="docutils literal notranslate"><span class="pre">f_measure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="onset.html#mir_eval.onset.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pattern.html">mir_eval.pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.standard_FPR"><code class="docutils literal notranslate"><span class="pre">standard_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.establishment_FPR"><code class="docutils literal notranslate"><span class="pre">establishment_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.occurrence_FPR"><code class="docutils literal notranslate"><span class="pre">occurrence_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.three_layer_FPR"><code class="docutils literal notranslate"><span class="pre">three_layer_FPR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.first_n_three_layer_P"><code class="docutils literal notranslate"><span class="pre">first_n_three_layer_P()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.first_n_target_proportion_R"><code class="docutils literal notranslate"><span class="pre">first_n_target_proportion_R()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pattern.html#mir_eval.pattern.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="segment.html">mir_eval.segment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.validate_boundary"><code class="docutils literal notranslate"><span class="pre">validate_boundary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.validate_structure"><code class="docutils literal notranslate"><span class="pre">validate_structure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.detection"><code class="docutils literal notranslate"><span class="pre">detection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.deviation"><code class="docutils literal notranslate"><span class="pre">deviation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.pairwise"><code class="docutils literal notranslate"><span class="pre">pairwise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.rand_index"><code class="docutils literal notranslate"><span class="pre">rand_index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.ari"><code class="docutils literal notranslate"><span class="pre">ari()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.mutual_information"><code class="docutils literal notranslate"><span class="pre">mutual_information()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.nce"><code class="docutils literal notranslate"><span class="pre">nce()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.vmeasure"><code class="docutils literal notranslate"><span class="pre">vmeasure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="segment.html#mir_eval.segment.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hierarchy.html">mir_eval.hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.validate_hier_intervals"><code class="docutils literal notranslate"><span class="pre">validate_hier_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.tmeasure"><code class="docutils literal notranslate"><span class="pre">tmeasure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.lmeasure"><code class="docutils literal notranslate"><span class="pre">lmeasure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html#mir_eval.hierarchy.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="separation.html">mir_eval.separation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_sources"><code class="docutils literal notranslate"><span class="pre">bss_eval_sources()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_sources_framewise"><code class="docutils literal notranslate"><span class="pre">bss_eval_sources_framewise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_images"><code class="docutils literal notranslate"><span class="pre">bss_eval_images()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.bss_eval_images_framewise"><code class="docutils literal notranslate"><span class="pre">bss_eval_images_framewise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="separation.html#mir_eval.separation.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tempo.html">mir_eval.tempo</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.validate_tempi"><code class="docutils literal notranslate"><span class="pre">validate_tempi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.detection"><code class="docutils literal notranslate"><span class="pre">detection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempo.html#mir_eval.tempo.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transcription.html">mir_eval.transcription</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.validate_intervals"><code class="docutils literal notranslate"><span class="pre">validate_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.match_note_offsets"><code class="docutils literal notranslate"><span class="pre">match_note_offsets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.match_note_onsets"><code class="docutils literal notranslate"><span class="pre">match_note_onsets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.match_notes"><code class="docutils literal notranslate"><span class="pre">match_notes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.precision_recall_f1_overlap"><code class="docutils literal notranslate"><span class="pre">precision_recall_f1_overlap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.average_overlap_ratio"><code class="docutils literal notranslate"><span class="pre">average_overlap_ratio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.onset_precision_recall_f1"><code class="docutils literal notranslate"><span class="pre">onset_precision_recall_f1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.offset_precision_recall_f1"><code class="docutils literal notranslate"><span class="pre">offset_precision_recall_f1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription.html#mir_eval.transcription.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transcription_velocity.html">mir_eval.transcription_velocity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.match_notes"><code class="docutils literal notranslate"><span class="pre">match_notes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.precision_recall_f1_overlap"><code class="docutils literal notranslate"><span class="pre">precision_recall_f1_overlap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcription_velocity.html#mir_eval.transcription_velocity.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="key.html">mir_eval.key</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="key.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.validate_key"><code class="docutils literal notranslate"><span class="pre">validate_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.split_key_string"><code class="docutils literal notranslate"><span class="pre">split_key_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.weighted_score"><code class="docutils literal notranslate"><span class="pre">weighted_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="key.html#mir_eval.key.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">mir_eval.util</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.index_labels"><code class="docutils literal notranslate"><span class="pre">index_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.generate_labels"><code class="docutils literal notranslate"><span class="pre">generate_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intervals_to_samples"><code class="docutils literal notranslate"><span class="pre">intervals_to_samples()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.interpolate_intervals"><code class="docutils literal notranslate"><span class="pre">interpolate_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.sort_labeled_intervals"><code class="docutils literal notranslate"><span class="pre">sort_labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.f_measure"><code class="docutils literal notranslate"><span class="pre">f_measure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intervals_to_boundaries"><code class="docutils literal notranslate"><span class="pre">intervals_to_boundaries()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.boundaries_to_intervals"><code class="docutils literal notranslate"><span class="pre">boundaries_to_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.adjust_intervals"><code class="docutils literal notranslate"><span class="pre">adjust_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.adjust_events"><code class="docutils literal notranslate"><span class="pre">adjust_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intersect_files"><code class="docutils literal notranslate"><span class="pre">intersect_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.merge_labeled_intervals"><code class="docutils literal notranslate"><span class="pre">merge_labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.match_events"><code class="docutils literal notranslate"><span class="pre">match_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.validate_intervals"><code class="docutils literal notranslate"><span class="pre">validate_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.validate_events"><code class="docutils literal notranslate"><span class="pre">validate_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.validate_frequencies"><code class="docutils literal notranslate"><span class="pre">validate_frequencies()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.has_kwargs"><code class="docutils literal notranslate"><span class="pre">has_kwargs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.filter_kwargs"><code class="docutils literal notranslate"><span class="pre">filter_kwargs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.intervals_to_durations"><code class="docutils literal notranslate"><span class="pre">intervals_to_durations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.hz_to_midi"><code class="docutils literal notranslate"><span class="pre">hz_to_midi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.midi_to_hz"><code class="docutils literal notranslate"><span class="pre">midi_to_hz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="util.html#mir_eval.util.deprecated"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">mir_eval.io</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_delimited"><code class="docutils literal notranslate"><span class="pre">load_delimited()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_events"><code class="docutils literal notranslate"><span class="pre">load_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_labeled_events"><code class="docutils literal notranslate"><span class="pre">load_labeled_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_intervals"><code class="docutils literal notranslate"><span class="pre">load_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals"><code class="docutils literal notranslate"><span class="pre">load_labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_time_series"><code class="docutils literal notranslate"><span class="pre">load_time_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_patterns"><code class="docutils literal notranslate"><span class="pre">load_patterns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_wav"><code class="docutils literal notranslate"><span class="pre">load_wav()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_valued_intervals"><code class="docutils literal notranslate"><span class="pre">load_valued_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_key"><code class="docutils literal notranslate"><span class="pre">load_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_tempo"><code class="docutils literal notranslate"><span class="pre">load_tempo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#mir_eval.io.load_ragged_time_series"><code class="docutils literal notranslate"><span class="pre">load_ragged_time_series()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sonify.html">mir_eval.sonify</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.clicks"><code class="docutils literal notranslate"><span class="pre">clicks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.time_frequency"><code class="docutils literal notranslate"><span class="pre">time_frequency()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.pitch_contour"><code class="docutils literal notranslate"><span class="pre">pitch_contour()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.chroma"><code class="docutils literal notranslate"><span class="pre">chroma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sonify.html#mir_eval.sonify.chords"><code class="docutils literal notranslate"><span class="pre">chords()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="display.html">mir_eval.display</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.segments"><code class="docutils literal notranslate"><span class="pre">segments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.labeled_intervals"><code class="docutils literal notranslate"><span class="pre">labeled_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.IntervalFormatter"><code class="docutils literal notranslate"><span class="pre">IntervalFormatter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.hierarchy"><code class="docutils literal notranslate"><span class="pre">hierarchy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.events"><code class="docutils literal notranslate"><span class="pre">events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.pitch"><code class="docutils literal notranslate"><span class="pre">pitch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.multipitch"><code class="docutils literal notranslate"><span class="pre">multipitch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.piano_roll"><code class="docutils literal notranslate"><span class="pre">piano_roll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.separation"><code class="docutils literal notranslate"><span class="pre">separation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.ticker_notes"><code class="docutils literal notranslate"><span class="pre">ticker_notes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html#mir_eval.display.ticker_pitch"><code class="docutils literal notranslate"><span class="pre">ticker_pitch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changes.html">Changes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-8">v0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-7">v0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-6">v0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-5">v0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-4">v0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-3">v0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-2">v0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changes.html#v0-1">v0.1</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mir_eval</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">mir_eval.chord</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/chord.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mir_eval.chord">
+<span id="mir-eval-chord"></span><h1>mir_eval.chord<a class="headerlink" href="#module-mir_eval.chord" title="Link to this heading"></a></h1>
+<p>Chord estimation algorithms produce a list of intervals and labels which denote
+the chord being played over each timespan.  They are evaluated by comparing the
+estimated chord labels to some reference, usually using a mapping to a chord
+subalphabet (e.g. minor and major chords only, all triads, etc.).  There is no
+single ‘right’ way to compare two sequences of chord labels.  Embracing this
+reality, every conventional comparison rule is provided.  Comparisons are made
+over the different components of each chord (e.g. G:maj(6)/5): the root (G),
+the root-invariant active semitones as determined by the quality
+shorthand (maj) and scale degrees (6), and the bass interval (5).
+This submodule provides functions both for comparing a sequences of chord
+labels according to some chord subalphabet mapping and for using these
+comparisons to score a sequence of estimated chords against a reference.</p>
+<section id="conventions">
+<h2>Conventions<a class="headerlink" href="#conventions" title="Link to this heading"></a></h2>
+<p>A sequence of chord labels is represented as a list of strings, where each
+label is the chord name based on the syntax of <a class="footnote-reference brackets" href="#harte2010towards" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.  Reference
+and estimated chord label sequences should be of the same length for comparison
+functions.  When converting the chord string into its constituent parts,</p>
+<ul class="simple">
+<li><p>Pitch class counting starts at C, e.g. C:0, D:2, E:4, F:5, etc.</p></li>
+<li><p>Scale degree is represented as a string of the diatonic interval, relative to
+the root note, e.g. ‘b6’, ‘#5’, or ‘7’</p></li>
+<li><p>Bass intervals are represented as strings</p></li>
+<li><p>Chord bitmaps are positional binary vectors indicating active pitch classes
+and may be absolute or relative depending on context in the code.</p></li>
+</ul>
+<p>If no chord is present at a given point in time, it should have the label ‘N’,
+which is defined in the variable <code class="docutils literal notranslate"><span class="pre">mir_eval.chord.NO_CHORD</span></code>.</p>
+</section>
+<section id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mir_eval.chord.root" title="mir_eval.chord.root"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.root()</span></code></a>: Only compares the root of the chords.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.majmin" title="mir_eval.chord.majmin"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.majmin()</span></code></a>: Only compares major, minor, and “no chord”
+labels.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.majmin_inv" title="mir_eval.chord.majmin_inv"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.majmin_inv()</span></code></a>: Compares major/minor chords, with
+inversions.  The bass note must exist in the triad.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.mirex" title="mir_eval.chord.mirex"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.mirex()</span></code></a>: A estimated chord is considered correct if it
+shares <em>at least</em> three pitch classes in common.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.thirds" title="mir_eval.chord.thirds"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.thirds()</span></code></a>: Chords are compared at the level of major or
+minor thirds (root and third), For example, both (‘A:7’, ‘A:maj’) and
+(‘A:min’, ‘A:dim’) are equivalent, as the third is major and minor in
+quality, respectively.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.thirds_inv" title="mir_eval.chord.thirds_inv"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.thirds_inv()</span></code></a>: Same as above, with inversions (bass
+relationships).</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.triads" title="mir_eval.chord.triads"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.triads()</span></code></a>: Chords are considered at the level of triads
+(major, minor, augmented, diminished, suspended), meaning that, in addition
+to the root, the quality is only considered through #5th scale degree (for
+augmented chords). For example, (‘A:7’, ‘A:maj’) are equivalent, while
+(‘A:min’, ‘A:dim’) and (‘A:aug’, ‘A:maj’) are not.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.triads_inv" title="mir_eval.chord.triads_inv"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.triads_inv()</span></code></a>: Same as above, with inversions (bass
+relationships).</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.tetrads" title="mir_eval.chord.tetrads"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.tetrads()</span></code></a>: Chords are considered at the level of the
+entire quality in closed voicing, i.e. spanning only a single octave;
+extended chords (9’s, 11’s and 13’s) are rolled into a single octave with any
+upper voices included as extensions. For example, (‘A:7’, ‘A:9’) are
+equivalent but (‘A:7’, ‘A:maj7’) are not.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.tetrads_inv" title="mir_eval.chord.tetrads_inv"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.tetrads_inv()</span></code></a>: Same as above, with inversions (bass
+relationships).</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.sevenths" title="mir_eval.chord.sevenths"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.sevenths()</span></code></a>: Compares according to MIREX “sevenths”
+rules; that is, only major, major seventh, seventh, minor, minor seventh and
+no chord labels are compared.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.sevenths_inv" title="mir_eval.chord.sevenths_inv"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.sevenths_inv()</span></code></a>: Same as above, with inversions (bass
+relationships).</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.overseg" title="mir_eval.chord.overseg"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.overseg()</span></code></a>: Computes the level of over-segmentation
+between estimated and reference intervals.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.underseg" title="mir_eval.chord.underseg"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.underseg()</span></code></a>: Computes the level of under-segmentation
+between estimated and reference intervals.</p></li>
+<li><p><a class="reference internal" href="#mir_eval.chord.seg" title="mir_eval.chord.seg"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.chord.seg()</span></code></a>: Computes the minimum of over- and
+under-segmentation between estimated and reference intervals.</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<blockquote>
+<div><aside class="footnote-list brackets">
+<aside class="footnote brackets" id="harte2010towards" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
+<p>C. Harte. Towards Automatic Extraction of Harmony
+Information from Music Signals. PhD thesis, Queen Mary University of
+London, August 2010.</p>
+</aside>
+</aside>
+</div></blockquote>
+</section>
+<dl class="py exception">
+<dt class="sig sig-object py" id="mir_eval.chord.InvalidChordException">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">InvalidChordException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chord_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.InvalidChordException" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception class for suspect / invalid chord labels</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.pitch_class_to_semitone">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">pitch_class_to_semitone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitch_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.pitch_class_to_semitone" title="Link to this definition"></a></dt>
+<dd><p>Convert a pitch class to semitone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pitch_class</strong><span class="classifier">str</span></dt><dd><p>Spelling of a given pitch class, e.g. ‘C#’, ‘Gbb’</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>semitone</strong><span class="classifier">int</span></dt><dd><p>Semitone value of the pitch class.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.scale_degree_to_semitone">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">scale_degree_to_semitone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_degree</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.scale_degree_to_semitone" title="Link to this definition"></a></dt>
+<dd><p>Convert a scale degree to semitone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>scale_degree</strong><span class="classifier">str</span></dt><dd><p>Spelling of a relative scale degree, e.g. ‘b3’, ‘7’, ‘#5’</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>semitone</strong><span class="classifier">int</span></dt><dd><p>Relative semitone of the scale degree, wrapped to a single octave</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>InvalidChordException if <cite>scale_degree</cite> is invalid.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.scale_degree_to_bitmap">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">scale_degree_to_bitmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.scale_degree_to_bitmap" title="Link to this definition"></a></dt>
+<dd><p>Create a bitmap representation of a scale degree.</p>
+<p>Note that values in the bitmap may be negative, indicating that the
+semitone is to be removed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>scale_degree</strong><span class="classifier">str</span></dt><dd><p>Spelling of a relative scale degree, e.g. ‘b3’, ‘7’, ‘#5’</p>
+</dd>
+<dt><strong>modulo</strong><span class="classifier">bool, default=True</span></dt><dd><p>If a scale degree exceeds the length of the bit-vector, modulo the
+scale degree back into the bit-vector; otherwise it is discarded.</p>
+</dd>
+<dt><strong>length</strong><span class="classifier">int, default=12</span></dt><dd><p>Length of the bit-vector to produce</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>bitmap</strong><span class="classifier">np.ndarray, in [-1, 0, 1], len=`length`</span></dt><dd><p>Bitmap representation of this scale degree.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.quality_to_bitmap">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">quality_to_bitmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quality</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.quality_to_bitmap" title="Link to this definition"></a></dt>
+<dd><p>Return the bitmap for a given quality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>quality</strong><span class="classifier">str</span></dt><dd><p>Chord quality name.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>bitmap</strong><span class="classifier">np.ndarray</span></dt><dd><p>Bitmap representation of this quality (12-dim).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.reduce_extended_quality">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">reduce_extended_quality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quality</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.reduce_extended_quality" title="Link to this definition"></a></dt>
+<dd><p>Map an extended chord quality to a simpler one, moving upper voices to
+a set of scale degree extensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>quality</strong><span class="classifier">str</span></dt><dd><p>Extended chord quality to reduce.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>base_quality</strong><span class="classifier">str</span></dt><dd><p>New chord quality.</p>
+</dd>
+<dt><strong>extensions</strong><span class="classifier">set</span></dt><dd><p>Scale degrees extensions for the quality.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.validate_chord_label">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">validate_chord_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.validate_chord_label" title="Link to this definition"></a></dt>
+<dd><p>Test for well-formedness of a chord label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chord_label</strong><span class="classifier">str</span></dt><dd><p>Chord label to validate.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.split">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_extended_chords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.split" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Parse a chord label into its four constituent parts:</dt><dd><ul class="simple">
+<li><p>root</p></li>
+<li><p>quality shorthand</p></li>
+<li><p>scale degrees</p></li>
+<li><p>bass</p></li>
+</ul>
+</dd>
+<dt>Note: Chords lacking quality AND interval information are major.</dt><dd><ul class="simple">
+<li><p>If a quality is specified, it is returned.</p></li>
+<li><p>If an interval is specified WITHOUT a quality, the quality field is
+empty.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Some examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;C&#39;</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;maj&#39;</span><span class="p">,</span> <span class="p">{},</span> <span class="s1">&#39;1&#39;</span><span class="p">]</span>
+<span class="s1">&#39;G#:min(*b3,*5)/5&#39;</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;*b3&#39;</span><span class="p">,</span> <span class="s1">&#39;*5&#39;</span><span class="p">},</span> <span class="s1">&#39;5&#39;</span><span class="p">]</span>
+<span class="s1">&#39;A:(3)/6&#39;</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;3&#39;</span><span class="p">},</span> <span class="s1">&#39;6&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chord_label</strong><span class="classifier">str</span></dt><dd><p>A chord label.</p>
+</dd>
+<dt><strong>reduce_extended_chords</strong><span class="classifier">bool</span></dt><dd><p>Whether to map the upper voicings of extended chords (9’s, 11’s, 13’s)
+to semitone extensions. (Default value = False)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>chord_parts</strong><span class="classifier">list</span></dt><dd><p>Split version of the chord label.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.join">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quality</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.join" title="Link to this definition"></a></dt>
+<dd><p>Join the parts of a chord into a complete chord label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chord_root</strong><span class="classifier">str</span></dt><dd><p>Root pitch class of the chord, e.g. ‘C’, ‘Eb’</p>
+</dd>
+<dt><strong>quality</strong><span class="classifier">str</span></dt><dd><p>Quality of the chord, e.g. ‘maj’, ‘hdim7’
+(Default value = ‘’)</p>
+</dd>
+<dt><strong>extensions</strong><span class="classifier">list</span></dt><dd><p>Any added or absent scaled degrees for this chord, e.g. [‘4’, ‘*3’]
+(Default value = None)</p>
+</dd>
+<dt><strong>bass</strong><span class="classifier">str</span></dt><dd><p>Scale degree of the bass note, e.g. ‘5’.
+(Default value = ‘’)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>chord_label</strong><span class="classifier">str</span></dt><dd><p>A complete chord label.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.encode">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_extended_chords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict_bass_intervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.encode" title="Link to this definition"></a></dt>
+<dd><p>Translate a chord label to numerical representations for evaluation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chord_label</strong><span class="classifier">str</span></dt><dd><p>Chord label to encode.</p>
+</dd>
+<dt><strong>reduce_extended_chords</strong><span class="classifier">bool</span></dt><dd><p>Whether to map the upper voicings of extended chords (9’s, 11’s, 13’s)
+to semitone extensions.
+(Default value = False)</p>
+</dd>
+<dt><strong>strict_bass_intervals</strong><span class="classifier">bool</span></dt><dd><p>Whether to require that the bass scale degree is present in the chord.
+(Default value = False)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>root_number</strong><span class="classifier">int</span></dt><dd><p>Absolute semitone of the chord’s root.</p>
+</dd>
+<dt><strong>semitone_bitmap</strong><span class="classifier">np.ndarray, dtype=int</span></dt><dd><p>12-dim vector of relative semitones in the chord spelling.</p>
+</dd>
+<dt><strong>bass_number</strong><span class="classifier">int</span></dt><dd><p>Relative semitone of the chord’s bass note, e.g. 0=root, 7=fifth, etc.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.encode_many">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">encode_many</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chord_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_extended_chords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.encode_many" title="Link to this definition"></a></dt>
+<dd><p>Translate a set of chord labels to numerical representations for sane
+evaluation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>chord_labels</strong><span class="classifier">list</span></dt><dd><p>Set of chord labels to encode.</p>
+</dd>
+<dt><strong>reduce_extended_chords</strong><span class="classifier">bool</span></dt><dd><p>Whether to map the upper voicings of extended chords (9’s, 11’s, 13’s)
+to semitone extensions.
+(Default value = False)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>root_number</strong><span class="classifier">np.ndarray, dtype=int</span></dt><dd><p>Absolute semitone of the chord’s root.</p>
+</dd>
+<dt><strong>interval_bitmap</strong><span class="classifier">np.ndarray, dtype=int</span></dt><dd><p>12-dim vector of relative semitones in the given chord quality.</p>
+</dd>
+<dt><strong>bass_number</strong><span class="classifier">np.ndarray, dtype=int</span></dt><dd><p>Relative semitones of the chord’s bass notes.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.rotate_bitmap_to_root">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">rotate_bitmap_to_root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bitmap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chord_root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.rotate_bitmap_to_root" title="Link to this definition"></a></dt>
+<dd><p>Circularly shift a relative bitmap to its absolute pitch classes.</p>
+<p>For clarity, the best explanation is an example. Given ‘G:Maj’, the root
+and quality map are as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">quality</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># Relative chord shape</span>
+</pre></div>
+</div>
+<p>After rotating to the root, the resulting bitmap becomes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abs_quality</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># G, B, and D</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>bitmap</strong><span class="classifier">np.ndarray, shape=(12,)</span></dt><dd><p>Bitmap of active notes, relative to the given root.</p>
+</dd>
+<dt><strong>chord_root</strong><span class="classifier">int</span></dt><dd><p>Absolute pitch class number.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>bitmap</strong><span class="classifier">np.ndarray, shape=(12,)</span></dt><dd><p>Absolute bitmap of active pitch classes.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.rotate_bitmaps_to_roots">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">rotate_bitmaps_to_roots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bitmaps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roots</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.rotate_bitmaps_to_roots" title="Link to this definition"></a></dt>
+<dd><p>Circularly shift a relative bitmaps to absolute pitch classes.</p>
+<p>See <a class="reference internal" href="#mir_eval.chord.rotate_bitmap_to_root" title="mir_eval.chord.rotate_bitmap_to_root"><code class="xref py py-func docutils literal notranslate"><span class="pre">rotate_bitmap_to_root()</span></code></a> for more information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>bitmaps</strong><span class="classifier">np.ndarray, shape=(N, 12)</span></dt><dd><p>Bitmap of active notes, relative to the given root.</p>
+</dd>
+<dt><strong>roots</strong><span class="classifier">np.ndarray, shape=(N,)</span></dt><dd><p>Absolute pitch class number.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>bitmap</strong><span class="classifier">np.ndarray, shape=(N, 12)</span></dt><dd><p>Absolute bitmaps of active pitch classes.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.validate">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.validate" title="Link to this definition"></a></dt>
+<dd><p>Check that the input annotations to a comparison function look like
+valid chord labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.weighted_accuracy">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">weighted_accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comparisons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.weighted_accuracy" title="Link to this definition"></a></dt>
+<dd><p>Compute the weighted accuracy of a list of chord comparisons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>comparisons</strong><span class="classifier">np.ndarray</span></dt><dd><p>List of chord comparison scores, in [0, 1] or -1</p>
+</dd>
+<dt><strong>weights</strong><span class="classifier">np.ndarray</span></dt><dd><p>Weights (not necessarily normalized) for each comparison.
+This can be a list of interval durations</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>score</strong><span class="classifier">float</span></dt><dd><p>Weighted accuracy</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Here, we&#39;re using the &quot;thirds&quot; function to compare labels</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># but any of the comparison functions would work.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">thirds</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.thirds">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">thirds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.thirds" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along root &amp; third relationships.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">thirds</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.thirds_inv">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">thirds_inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.thirds_inv" title="Link to this definition"></a></dt>
+<dd><p>Score chords along root, third, &amp; bass relationships.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">thirds_inv</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.triads">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">triads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.triads" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along triad (root &amp; quality to #5) relationships.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">triads</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.triads_inv">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">triads_inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.triads_inv" title="Link to this definition"></a></dt>
+<dd><p>Score chords along triad (root, quality to #5, &amp; bass) relationships.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">triads_inv</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.tetrads">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">tetrads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.tetrads" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along tetrad (root &amp; full quality) relationships.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">tetrads</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.tetrads_inv">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">tetrads_inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.tetrads_inv" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along tetrad (root, full quality, &amp; bass) relationships.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">tetrads_inv</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.root">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.root" title="Link to this definition"></a></dt>
+<dd><p>Compare chords according to roots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0], or -1 if the comparison is out of
+gamut.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.mirex">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">mirex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.mirex" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along MIREX rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">mirex</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.majmin">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">majmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.majmin" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along major-minor rules. Chords with qualities outside
+Major/minor/no-chord are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0], or -1 if the comparison is out of
+gamut.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">majmin</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.majmin_inv">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">majmin_inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.majmin_inv" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along major-minor rules, with inversions. Chords with
+qualities outside Major/minor/no-chord are ignored, and the bass note must
+exist in the triad (bass in [1, 3, 5]).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0], or -1 if the comparison is out of
+gamut.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">majmin_inv</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.sevenths">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">sevenths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.sevenths" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along MIREX ‘sevenths’ rules. Chords with qualities
+outside [maj, maj7, 7, min, min7, N] are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0], or -1 if the comparison is out of
+gamut.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">sevenths</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.sevenths_inv">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">sevenths_inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.sevenths_inv" title="Link to this definition"></a></dt>
+<dd><p>Compare chords along MIREX ‘sevenths’ rules. Chords with qualities
+outside [maj, maj7, 7, min, min7, N] are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Reference chord labels to score against.</p>
+</dd>
+<dt><strong>estimated_labels</strong><span class="classifier">list, len=n</span></dt><dd><p>Estimated chord labels to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>comparison_scores</strong><span class="classifier">np.ndarray, shape=(n,), dtype=float</span></dt><dd><p>Comparison scores, in [0.0, 1.0], or -1 if the comparison is out of
+gamut.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">adjust_intervals</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">NO_CHORD</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">merge_labeled_intervals</span><span class="p">(</span>
+<span class="gp">... </span>     <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">intervals_to_durations</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comparisons</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">sevenths_inv</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">weighted_accuracy</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.directional_hamming_distance">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">directional_hamming_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_intervals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.directional_hamming_distance" title="Link to this definition"></a></dt>
+<dd><p>Compute the directional hamming distance between reference and
+estimated intervals as defined by <a class="footnote-reference brackets" href="#harte2010towards" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and used for MIREX
+‘OverSeg’, ‘UnderSeg’ and ‘MeanSeg’ measures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_intervals</strong><span class="classifier">np.ndarray, shape=(n, 2), dtype=float</span></dt><dd><p>Reference chord intervals to score against.</p>
+</dd>
+<dt><strong>estimated_intervals</strong><span class="classifier">np.ndarray, shape=(m, 2), dtype=float</span></dt><dd><p>Estimated chord intervals to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>directional hamming distance</strong><span class="classifier">float</span></dt><dd><p>directional hamming distance between reference intervals and
+estimated intervals.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">overseg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">directional_hamming_distance</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">ref_intervals</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">underseg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">directional_hamming_distance</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">est_intervals</span><span class="p">,</span> <span class="n">ref_intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seg</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">overseg</span><span class="p">,</span> <span class="n">underseg</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.overseg">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">overseg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_intervals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.overseg" title="Link to this definition"></a></dt>
+<dd><p>Compute the MIREX ‘OverSeg’ score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_intervals</strong><span class="classifier">np.ndarray, shape=(n, 2), dtype=float</span></dt><dd><p>Reference chord intervals to score against.</p>
+</dd>
+<dt><strong>estimated_intervals</strong><span class="classifier">np.ndarray, shape=(m, 2), dtype=float</span></dt><dd><p>Estimated chord intervals to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>oversegmentation score</strong><span class="classifier">float</span></dt><dd><p>Comparison score, in [0.0, 1.0], where 1.0 means no oversegmentation.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">overseg</span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.underseg">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">underseg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_intervals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.underseg" title="Link to this definition"></a></dt>
+<dd><p>Compute the MIREX ‘UnderSeg’ score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_intervals</strong><span class="classifier">np.ndarray, shape=(n, 2), dtype=float</span></dt><dd><p>Reference chord intervals to score against.</p>
+</dd>
+<dt><strong>estimated_intervals</strong><span class="classifier">np.ndarray, shape=(m, 2), dtype=float</span></dt><dd><p>Estimated chord intervals to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>undersegmentation score</strong><span class="classifier">float</span></dt><dd><p>Comparison score, in [0.0, 1.0], where 1.0 means no undersegmentation.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">underseg</span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.seg">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">seg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimated_intervals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.seg" title="Link to this definition"></a></dt>
+<dd><p>Compute the MIREX ‘MeanSeg’ score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>reference_intervals</strong><span class="classifier">np.ndarray, shape=(n, 2), dtype=float</span></dt><dd><p>Reference chord intervals to score against.</p>
+</dd>
+<dt><strong>estimated_intervals</strong><span class="classifier">np.ndarray, shape=(m, 2), dtype=float</span></dt><dd><p>Estimated chord intervals to score against.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>segmentation score</strong><span class="classifier">float</span></dt><dd><p>Comparison score, in [0.0, 1.0], where 1.0 means perfect segmentation.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">seg</span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span> <span class="n">est_intervals</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.merge_chord_intervals">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">merge_chord_intervals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.merge_chord_intervals" title="Link to this definition"></a></dt>
+<dd><p>Merge consecutive chord intervals if they represent the same chord.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>intervals</strong><span class="classifier">np.ndarray, shape=(n, 2), dtype=float</span></dt><dd><p>Chord intervals to be merged, in the format returned by
+<a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals" title="mir_eval.io.load_labeled_intervals"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.io.load_labeled_intervals()</span></code></a>.</p>
+</dd>
+<dt><strong>labels</strong><span class="classifier">list, shape=(n,)</span></dt><dd><p>Chord labels to be merged, in the format returned by
+<a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals" title="mir_eval.io.load_labeled_intervals"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.io.load_labeled_intervals()</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>merged_ivs</strong><span class="classifier">np.ndarray, shape=(k, 2), dtype=float</span></dt><dd><p>Merged chord intervals, k &lt;= n</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mir_eval.chord.evaluate">
+<span class="sig-prename descclassname"><span class="pre">mir_eval.chord.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">est_labels</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mir_eval.chord.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Compute weighted accuracy for all comparison functions for the given
+reference and estimated annotations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ref_intervals</strong><span class="classifier">np.ndarray, shape=(n, 2)</span></dt><dd><p>Reference chord intervals, in the format returned by
+<a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals" title="mir_eval.io.load_labeled_intervals"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.io.load_labeled_intervals()</span></code></a>.</p>
+</dd>
+<dt><strong>ref_labels</strong><span class="classifier">list, shape=(n,)</span></dt><dd><p>reference chord labels, in the format returned by
+<a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals" title="mir_eval.io.load_labeled_intervals"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.io.load_labeled_intervals()</span></code></a>.</p>
+</dd>
+<dt><strong>est_intervals</strong><span class="classifier">np.ndarray, shape=(m, 2)</span></dt><dd><p>estimated chord intervals, in the format returned by
+<a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals" title="mir_eval.io.load_labeled_intervals"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.io.load_labeled_intervals()</span></code></a>.</p>
+</dd>
+<dt><strong>est_labels</strong><span class="classifier">list, shape=(m,)</span></dt><dd><p>estimated chord labels, in the format returned by
+<a class="reference internal" href="io.html#mir_eval.io.load_labeled_intervals" title="mir_eval.io.load_labeled_intervals"><code class="xref py py-func docutils literal notranslate"><span class="pre">mir_eval.io.load_labeled_intervals()</span></code></a>.</p>
+</dd>
+<dt><strong>**kwargs</strong></dt><dd><p>Additional keyword arguments which will be passed to the
+appropriate metric or preprocessing functions.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>scores</strong><span class="classifier">dict</span></dt><dd><p>Dictionary of scores, where the key is the metric name (str) and
+the value is the (float) score achieved.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">ref_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;ref.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">est_intervals</span><span class="p">,</span>
+<span class="gp">... </span> <span class="n">est_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load_labeled_intervals</span><span class="p">(</span><span class="s1">&#39;est.lab&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="n">mir_eval</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ref_intervals</span><span class="p">,</span> <span class="n">ref_labels</span><span class="p">,</span>
+<span class="gp">... </span>                                 <span class="n">est_intervals</span><span class="p">,</span> <span class="n">est_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="beat.html" class="btn btn-neutral float-left" title="mir_eval.beat" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="melody.html" class="btn btn-neutral float-right" title="mir_eval.melody" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2014, Colin Raffel et al..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

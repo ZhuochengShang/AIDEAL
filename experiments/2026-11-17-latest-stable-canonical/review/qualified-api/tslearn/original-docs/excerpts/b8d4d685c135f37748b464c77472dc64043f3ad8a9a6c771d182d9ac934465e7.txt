@@ -1,0 +1,34 @@
+locate(X)[source]
+
+Compute shapelet match location for a set of time series.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+Returns:
+
+array of shape=(n_ts, n_shapelets)
+
+Location of the shapelet matches for the provided time series.
+
+Examples
+
+>>> from tslearn.generators import random_walk_blobs
+>>> X = numpy.zeros((3, 10, 1))
+>>> X[0, 4:7, 0] = numpy.array([1, 2, 3])
+>>> y = [1, 0, 0]
+>>> # Data is all zeros except a motif 1-2-3 in the first time series
+>>> clf = LearningShapelets(n_shapelets_per_size={3: 1}, max_iter=1,
+...                     verbose=0)
+>>> _ = clf.fit(X, y)
+>>> weights_shapelet = [
+...     numpy.array([[[1], [2], [3]]])
+... ]
+>>> clf.set_weights(weights_shapelet, layer_name="shapelets_0")
+>>> clf.locate(X)
+array([[4],
+       [0],
+       [0]])

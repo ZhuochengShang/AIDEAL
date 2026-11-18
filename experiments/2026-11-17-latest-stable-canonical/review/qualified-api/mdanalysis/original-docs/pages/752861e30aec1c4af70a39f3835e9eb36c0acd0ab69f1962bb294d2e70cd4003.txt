@@ -1,0 +1,325 @@
+4.3.7.1.2. Clustering
+
+4.3.7.1.2.1. clustering frontend — MDAnalysis.analysis.encore.clustering.cluster
+
+The module defines a function serving as front-end for various clustering algorithms, wrapping them to allow them to be used interchangably.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ MDAnalysis.analysis.encore.clustering.cluster.cluster(ensembles, method=None, select='name CA', distance_matrix=None, allow_collapsed_result=True, ncores=1, **kwargs)[source]
+
+Cluster frames from one or more ensembles, using one or more clustering methods. The function optionally takes pre-calculated distances matrices as an argument. Note that not all clustering procedure can work directly on distance matrices, so the distance matrices might be ignored for particular choices of method.
+
+Parameters:
+
+ensembles (MDAnalysis.Universe, or list, or list of list thereof) – The function takes either a single Universe object, a list of Universe objects or a list of lists of Universe objects. If given a single universe, it simply clusters the conformations in the trajectory. If given a list of ensembles, it will merge them and cluster them together, keeping track of the ensemble to which each of the conformations belong. Finally, if passed a list of list of ensembles, the function will just repeat the functionality just described - merging ensembles for each ensemble in the outer loop.
+
+method (encore.ClusteringMethod or list thereof, optional) – A single or a list of instances of the Clustering classes from the clustering module. A separate analysis will be run for each method. Note that different parameters for the same clustering method can be explored by adding different instances of the same clustering class.
+
+select (str, optional) – Atom selection string in the MDAnalysis format. Default is “name CA”
+
+distance_matrix (encore.utils.TriangularMatrix or list thereof, optional) – Distance matrix used for clustering. If this parameter is not supplied the matrix will be calculated on the fly. If several distance matrices are supplied, an analysis will be done for each of them. The number of provided distance matrices should match the number of provided ensembles.
+
+allow_collapsed_result (bool, optional) – Whether a return value of a list of one value should be collapsed into just the value.
+
+ncores (int, optional) – Maximum number of cores to be used (default is 1).
+
+Returns:
+
+list of ClustersCollection objects (or potentially a single
+
+ClusteringCollection object if allow_collapsed_result is set to True)
+
+Example
+
+Two ensembles are created as Universe object using a topology file and two trajectories. The topology- and trajectory files used are obtained from the MDAnalysis test suite for two different simulations of the protein AdK. Here, we cluster two ensembles
+
+>>> from MDAnalysis import Universe
+>>> import MDAnalysis.analysis.encore as encore
+>>> from MDAnalysis.tests.datafiles import PSF, DCD, DCD2
+>>> ens1 = Universe(PSF, DCD)
+>>> ens2 = Universe(PSF, DCD2)
+>>> cluster_collection = encore.cluster([ens1,ens2])
+>>> print cluster_collection
+
+You can change the parameters of the clustering method by explicitly specifying the method
+
+>>> cluster_collection =
+        encore.cluster(
+             [ens1,ens2],
+             method=encore.AffinityPropagationNative(preference=-2.))
+
+Here is an illustration using DBSCAN algorithm, instead of the default clustering method
+
+>>> cluster_collection =
+        encore.cluster(
+             [ens1,ens2],
+             method=encore.DBSCAN())
+
+You can also combine multiple methods in one call
+
+>>> cluster_collection =
+        encore.cluster(
+             [ens1,ens2],
+             method=[encore.AffinityPropagationNative(preference=-1.),
+                     encore.AffinityPropagationNative(preference=-2.)])
+
+In addition to standard cluster membership information, the cluster_collection output keep track of the origin of each conformation, so you check how the different trajectories are represented in each cluster. Here, for brevity, we print just the members of the two first clusters
+
+>>> print [cluster.metadata["ensemble_membership"]
+             for cluster in cluster_collection][:2]
+[array([1, 1, 1, 1, 2]), array([1, 1, 1, 1, 1])]
+
+4.3.7.1.2.2. Cluster representation — MDAnalysis.analysis.encore.clustering.ClusterCollection
+
+The module contains the Cluster and ClusterCollection classes which are designed to store results from clustering algorithms.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ class MDAnalysis.analysis.encore.clustering.ClusterCollection.Cluster(elem_list=None, centroid=None, idn=None, metadata=None)[source]
+
+Generic Cluster class for clusters with centroids.
+
+ id
+
+Cluster ID number. Useful for the ClustersCollection class
+
+Type:
+
+int
+
+ metadata
+
+dict of lists or numpy.array, containing metadata for the cluster elements. The iterable must return the same number of elements as those that belong to the cluster.
+
+Type:
+
+iterable
+
+ size
+
+number of elements.
+
+Type:
+
+int
+
+ centroid
+
+cluster centroid.
+
+Type:
+
+element object
+
+ elements
+
+array containing the cluster elements.
+
+Type:
+
+numpy.array
+
+Class constructor. If elem_list is None, an empty cluster is created
+
+and the remaining arguments ignored.
+
+Parameters:
+
+elem_list (numpy.array or None) – numpy array of cluster elements
+
+centroid (None or element object) – centroid
+
+idn (int) – cluster ID
+
+metadata (iterable) – metadata, one value for each cluster element. The iterable must have the same length as the elements array.
+
+ class MDAnalysis.analysis.encore.clustering.ClusterCollection.ClusterCollection(elements=None, metadata=None)[source]
+
+Clusters collection class; this class represents the results of a full clustering run. It stores a group of clusters defined as encore.clustering.Cluster objects.
+
+ clusters
+
+list of of Cluster objects which are part of the Cluster collection
+
+Type:
+
+list
+
+Class constructor. If elements is None, an empty cluster collection will be created. Otherwise, the constructor takes as input an iterable of ints, for instance:
+
+[ a, a, a, a, b, b, b, c, c, … , z, z ]
+
+the variables a,b,c,…,z are cluster centroids, here as cluster element numbers (i.e. 3 means the 4th element of the ordered input for clustering). The array maps a correspondence between cluster elements (which are implicitly associated with the position in the array) with centroids, i. e. defines clusters. For instance:
+
+[ 1, 1, 1, 4, 4, 5 ]
+
+means that elements 0, 1, 2 form a cluster which has 1 as centroid, elements 3 and 4 form a cluster which has 4 as centroid, and element 5 has its own cluster.
+
+Parameters:
+
+elements (iterable of ints or None) – clustering results. See the previous description for details
+
+metadata ({str:list, str:list,...} or None) – metadata for the data elements. The list must be of the same size as the elements array, with one value per element.
+
+ get_centroids()[source]
+
+Get the centroids of the clusters
+
+Returns:
+
+centroids (list of cluster element objects)
+
+list of cluster centroids
+
+ get_ids()[source]
+
+Get the ID numbers of the clusters
+
+Returns:
+
+ids (list of int)
+
+list of cluster ids
+
+4.3.7.1.2.3. clustering frontend — MDAnalysis.analysis.encore.clustering.ClusteringMethod
+
+The module defines classes for interfacing to various clustering algorithms. One has been implemented natively, and will always be available, while others are available only if scikit-learn is installed
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+Added in version 0.16.0.
+
+Deprecated since version 2.8.0: This module is deprecated in favour of the MDAKit mdaencore and will be removed in MDAnalysis 3.0.0.
+
+ class MDAnalysis.analysis.encore.clustering.ClusteringMethod.AffinityPropagation(damping=0.9, preference=-1.0, max_iter=500, convergence_iter=50, **kwargs)[source]
+
+Interface to the Affinity propagation clustering procedure implemented in sklearn.
+
+Parameters:
+
+damping (float, optional) – Damping factor (default is 0.9). Parameter for the Affinity Propagation for clustering.
+
+preference (float, optional) – Preference parameter used in the Affinity Propagation algorithm for clustering (default -1.0). A high preference value results in many clusters, a low preference will result in fewer numbers of clusters.
+
+max_iter (int, optional) – Maximum number of iterations for affinity propagation (default is 500).
+
+convergence_iter (int, optional) – Minimum number of unchanging iterations to achieve convergence (default is 50). Parameter in the Affinity Propagation for clustering.
+
+**kwargs (optional) – Other keyword arguments are passed to sklearn.cluster.AffinityPropagation.
+
+ class MDAnalysis.analysis.encore.clustering.ClusteringMethod.AffinityPropagationNative(damping=0.9, preference=-1.0, max_iter=500, convergence_iter=50, add_noise=True)[source]
+
+Interface to the natively implemented Affinity propagation procedure.
+
+Parameters:
+
+damping (float, optional) – Damping factor (default is 0.9). Parameter for the Affinity Propagation for clustering.
+
+preference (float, optional) – Preference parameter used in the Affinity Propagation algorithm for clustering (default -1.0). A high preference value results in many clusters, a low preference will result in fewer numbers of clusters.
+
+max_iter (int, optional) – Maximum number of iterations for affinity propagation (default is 500).
+
+convergence_iter (int, optional) – Minimum number of unchanging iterations to achieve convergence (default is 50). Parameter in the Affinity Propagation for clustering.
+
+add_noise (bool, optional) – Apply noise to similarity matrix before running clustering (default is True)
+
+ class MDAnalysis.analysis.encore.clustering.ClusteringMethod.ClusteringMethod[source]
+
+Base class for any Clustering Method
+
+ class MDAnalysis.analysis.encore.clustering.ClusteringMethod.DBSCAN(eps=0.5, min_samples=5, algorithm='auto', leaf_size=30, **kwargs)[source]
+
+Interface to the DBSCAN clustering procedure implemented in sklearn.
+
+Parameters:
+
+eps (float, optional (default = 0.5)) – The maximum distance between two samples for them to be considered as in the same neighborhood.
+
+min_samples (int, optional (default = 5)) – The number of samples (or total weight) in a neighborhood for a point to be considered as a core point. This includes the point itself.
+
+algorithm ({'auto', 'ball_tree', 'kd_tree', 'brute'}, optional) – The algorithm to be used by the NearestNeighbors module to compute pointwise distances and find nearest neighbors. See NearestNeighbors module documentation for details.
+
+leaf_size (int, optional (default = 30)) – Leaf size passed to BallTree or cKDTree. This can affect the speed of the construction and query, as well as the memory required to store the tree. The optimal value depends on the nature of the problem.
+
+sample_weight (array, shape (n_samples,), optional) – Weight of each sample, such that a sample with a weight of at least min_samples is by itself a core sample; a sample with negative weight may inhibit its eps-neighbor from being core. Note that weights are absolute, and default to 1.
+
+ class MDAnalysis.analysis.encore.clustering.ClusteringMethod.KMeans(n_clusters, max_iter=300, n_init=10, init='k-means++', algorithm='auto', tol=0.0001, verbose=False, random_state=None, copy_x=True, **kwargs)[source]
+
+Parameters:
+
+n_clusters (int) – The number of clusters to form as well as the number of centroids to generate.
+
+max_iter (int, optional (default 300)) – Maximum number of iterations of the k-means algorithm to run.
+
+n_init (int, optional (default 10)) – Number of time the k-means algorithm will be run with different centroid seeds. The final results will be the best output of n_init consecutive runs in terms of inertia.
+
+init ({'k-means++', 'random', or ndarray, or a callable}, optional) – Method for initialization, default to ‘k-means++’: ‘k-means++’ : selects initial cluster centers for k-mean clustering in a smart way to speed up convergence. See section Notes in k_init for more details. ‘random’: generate k centroids from a Gaussian with mean and variance estimated from the data. If an ndarray is passed, it should be of shape (n_clusters, n_features) and gives the initial centers. If a callable is passed, it should take arguments X, k and and a random state and return an initialization.
+
+tol (float, optional (default 1e-4)) – The relative increment in the results before declaring convergence.
+
+verbose (boolean, optional (default False)) – Verbosity mode.
+
+random_state (integer or numpy.RandomState, optional) – The generator used to initialize the centers. If an integer is given, it fixes the seed. Defaults to the global numpy random number generator.
+
+copy_x (boolean, optional) – When pre-computing distances it is more numerically accurate to center the data first. If copy_x is True, then the original data is not modified. If False, the original data is modified, and put back before the function returns, but small numerical differences may be introduced by subtracting and then adding the data mean.
+
+ accepts_distance_matrix = False
+
+Interface to the KMeans clustering procedure implemented in sklearn.
+
+ MDAnalysis.analysis.encore.clustering.ClusteringMethod.encode_centroid_info(clusters, cluster_centers_indices)[source]
+
+Adjust cluster indices to include centroid information as described in documentation for ClusterCollection
+
+4.3.7.1.2.4. Clustering algorithms
+
+The following clustering algorithms are always available:
+
+Cython wrapper for the C implementation of the Affinity Perturbation clustering algorithm.
+
+Author:
+
+Matteo Tiberti, Wouter Boomsma, Tone Bengtsen
+
+ MDAnalysis.analysis.encore.clustering.affinityprop.AffinityPropagation(s, preference, lam, max_iterations, convergence, noise=1)
+
+Affinity propagation clustering algorithm. This class is a Cython wrapper around the Affinity propagation algorithm, which is implement as a C library (see ap.c). The implemented algorithm is described in the paper:
+
+Clustering by Passing Messages Between Data Points. Brendan J. Frey and Delbert Dueck, University of Toronto Science 315, 972–976, February 2007
+
+Parameters:
+
+s (encore.utils.TriangularMatrix object) – Triangular matrix containing the similarity values for each pair of clustering elements. Notice that the current implementation does not allow for asymmetric values (i.e. similarity(a,b) is assumed to be equal to similarity(b,a))
+
+preference (numpy.array of floats or float) – Preference values, which the determine the number of clusters. If a single value is given, all the preference values are set to that. Otherwise, the list is used to set the preference values (one value per element, so the list must be of the same size as the number of elements)
+
+lam (float) – Floating point value that defines how much damping is applied to the solution at each iteration. Must be ]0,1]
+
+max_iterations (int) – Maximum number of iterations
+
+convergence (int) – Number of iterations in which the cluster centers must remain the same in order to reach convergence
+
+noise (int) – Whether to apply noise to the input s matrix, such there are no equal values. 1 is for yes, 0 is for no.
+
+Returns:
+
+elements – List of cluster-assigned elements, which can be used by encore.utils.ClustersCollection to generate Cluster objects. See these classes for more details.
+
+Return type:
+
+list of int or None

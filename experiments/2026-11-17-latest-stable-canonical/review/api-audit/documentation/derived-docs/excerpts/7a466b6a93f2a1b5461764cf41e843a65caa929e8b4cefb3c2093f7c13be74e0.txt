@@ -1,0 +1,36 @@
+property atoms
+
+Get a static AtomGroup identical to the group of currently selected Atoms in the UpdatingAtomGroup.
+
+By returning a static AtomGroup it becomes possible to compare the contents of the group between trajectory frames. See the Example below.
+
+Note
+
+The atoms attribute of an UpdatingAtomGroup behaves differently from AtomGroup.atoms: the latter returns the AtomGroup itself whereas the former returns a AtomGroup and not an UpdatingAtomGroup (for this, use UpdatingAtomGroup.copy()).
+
+Example
+
+The static atoms allows comparison of groups of atoms between frames. For example, track water molecules that move in and out of a solvation shell of a protein
+
+u = mda.Universe(TPR, XTC)
+water_shell = u.select_atoms("name OW and around 3.5 protein",
+                             updating=True)
+water_shell_prev = water_shell.atoms
+
+for ts in u.trajectory:
+    exchanged = water_shell - water_shell_prev
+
+print(ts.time, "waters in shell =", water_shell.n_residues)
+print(ts.time, "waters that exchanged = ", exchanged.n_residues)
+print(ts.time, "waters that remained bound = ",
+      water_shell.n_residues - exchanged.n_residues)
+
+water_shell_prev = water_shell.atoms
+
+By remembering the atoms of the current time step in water_shell_prev, it becomes possible to use the subtraction of AtomGroups to find the water molecules that changed.
+
+See also
+
+copy
+
+return a true copy of the UpdatingAtomGroup

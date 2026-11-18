@@ -1,0 +1,40 @@
+mir_eval.chord.evaluate(ref_intervals, ref_labels, est_intervals, est_labels, **kwargs)
+
+Compute weighted accuracy for all comparison functions for the given reference and estimated annotations.
+
+Parameters:
+
+ref_intervalsnp.ndarray, shape=(n, 2)
+
+Reference chord intervals, in the format returned by mir_eval.io.load_labeled_intervals().
+
+ref_labelslist, shape=(n,)
+
+reference chord labels, in the format returned by mir_eval.io.load_labeled_intervals().
+
+est_intervalsnp.ndarray, shape=(m, 2)
+
+estimated chord intervals, in the format returned by mir_eval.io.load_labeled_intervals().
+
+est_labelslist, shape=(m,)
+
+estimated chord labels, in the format returned by mir_eval.io.load_labeled_intervals().
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> (ref_intervals,
+...  ref_labels) = mir_eval.io.load_labeled_intervals('ref.lab')
+>>> (est_intervals,
+...  est_labels) = mir_eval.io.load_labeled_intervals('est.lab')
+>>> scores = mir_eval.chord.evaluate(ref_intervals, ref_labels,
+...                                  est_intervals, est_labels)

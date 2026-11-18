@@ -1,0 +1,31 @@
+guess_acceptors(select='all', max_charge=-0.5)[source]
+
+Guesses which atoms could be considered acceptors in the analysis.
+
+Acceptor selections may be achieved with either a resname, atom name combination, or when those are absent, atom types.
+
+Parameters:
+
+select (str (optional)) – Selection string for atom group from which acceptors will be identified. (e.g., (resname X and name O1) or type 2)
+
+max_charge (float (optional)) – The charge of an acceptor atom must be less than this value.
+
+Returns:
+
+potential_acceptors – String containing the resname and name of all atoms that potentially capable of forming hydrogen bonds.
+
+Return type:
+
+str
+
+Notes
+
+Acceptor selections may be achieved with either a resname, atom name combination, or when those are absent, atom types.
+
+This function makes use of and atomic charges to identify which atoms could be considered acceptor atoms in the hydrogen bond analysis. If an atom has an atomic charge less than max_charge then it is considered capable of participating in hydrogen bonds.
+
+If acceptors_sel is None, this function is called to guess the selection.
+
+Alternatively, this function may be used to quickly generate a str of potential acceptor atoms involved in hydrogen bonding. This str may then be modified before being used to set the attribute acceptors_sel.
+
+Changed in version 2.4.0: Added ability to use atom types

@@ -1,0 +1,27 @@
+mir_eval.sonify.clicks(times, fs, click=None, length=None)
+
+Return a signal with the signal ‘click’ placed at each specified time
+
+Parameters:
+
+timesnp.ndarray
+
+times to place clicks, in seconds
+
+fsint
+
+desired sampling rate of the output signal
+
+clicknp.ndarray
+
+click signal, defaults to a 1 kHz blip
+
+lengthint
+
+desired number of samples in the output signal, defaults to times.max()*fs + click.shape[0] + 1
+
+Returns:
+
+click_signalnp.ndarray
+
+Synthesized click signal

@@ -1,0 +1,139 @@
+{
+  "validation": {
+    "status": "passed",
+    "observed_at": "2026-11-17T20:07:00.560283+00:00",
+    "release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504",
+    "release_status": "verified",
+    "registry_module": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504/vendor/aideal_engine/src/aideal/api_source_registry.py",
+    "config_results": [
+      {
+        "library": "mdanalysis",
+        "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis",
+        "selected_api_count": 435,
+        "canonical_identity_signature_paths_exact": true,
+        "manifest_exact": true,
+        "full_document_bundle_hash_exact": true,
+        "doc_code_mentions_exact": true,
+        "coverage_found": 38,
+        "coverage_not_found": 397,
+        "config_sha256": "1c8f957530e74b1e87f84d9e5ebf36db2ce2ec29fadcf4a1d33ead1db53e2741",
+        "manifest_sha256": "f247ed2ba64570403e11eeab8afae74efbdfc2989f5166d75d967a5176fabffa"
+      },
+      {
+        "library": "tslearn",
+        "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/tslearn",
+        "selected_api_count": 116,
+        "canonical_identity_signature_paths_exact": true,
+        "manifest_exact": true,
+        "full_document_bundle_hash_exact": true,
+        "doc_code_mentions_exact": true,
+        "coverage_found": 56,
+        "coverage_not_found": 60,
+        "config_sha256": "d8497ac1ec058f3c8cc8c0aad5466c77b32254ff957d01a32a5c85b9d9baf303",
+        "manifest_sha256": "d154c450d3bd98f90c564cfce9db494cd2e80d32e8bf36964dba184249f1ec1e"
+      },
+      {
+        "library": "mir_eval",
+        "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mir_eval",
+        "selected_api_count": 125,
+        "canonical_identity_signature_paths_exact": true,
+        "manifest_exact": true,
+        "full_document_bundle_hash_exact": true,
+        "doc_code_mentions_exact": true,
+        "coverage_found": 22,
+        "coverage_not_found": 103,
+        "config_sha256": "97b2aca3b3be5cd08c1e3b6655222c006f13b2d9b4c9f9f61af3613442d6854d",
+        "manifest_sha256": "9a7829adffbe23f7a1963c9d1ff314451be01fd22750effcb86a3b6bd0b0d9c9"
+      },
+      {
+        "library": "thumbnailator",
+        "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator",
+        "selected_api_count": 94,
+        "canonical_identity_signature_paths_exact": true,
+        "manifest_exact": true,
+        "full_document_bundle_hash_exact": true,
+        "doc_code_mentions_exact": true,
+        "coverage_found": 94,
+        "coverage_not_found": 0,
+        "config_sha256": "ff4ecfbf457791eb8959651f3b4603a3d53a3e580b8c0ac30e02db65874f7849",
+        "manifest_sha256": "5ea8a11e5c955062b37ee80e28e11c668b2bbc3cd7323ca1619bd78d14ca0c41"
+      }
+    ],
+    "model_calls": 0,
+    "source_or_inventory_mutations": false
+  },
+  "thumbnailator_native_controls": {
+    "status": "passed",
+    "observed_at": "2026-11-17T20:07:03.612160+00:00",
+    "scope": "Operator positive/negative controls, not model-generated task evidence or independent-oracle scores.",
+    "release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-c7a8f0af0504",
+    "config": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/thumbnailator/configs/aideal.yaml",
+    "config_sha256": "ff4ecfbf457791eb8959651f3b4603a3d53a3e580b8c0ac30e02db65874f7849",
+    "target_declaration": {
+      "name": "resize",
+      "qualified_name": "net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer.resize",
+      "owner": "net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer",
+      "signature": "@Override public void resize(BufferedImage srcImage, BufferedImage destImage) throws NullPointerException",
+      "file": "source/src/main/java/net/coobird/thumbnailator/resizers/ProgressiveBilinearResizer.java",
+      "line": 90,
+      "site_id": "Java:thumbnailator:src/main/java/net/coobird/thumbnailator/resizers/ProgressiveBilinearResizer.java:3224:method:resize"
+    },
+    "runtime_jar": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar",
+    "runtime_jar_sha256": "9ba7b5a55731932f2aec94e138b0f15166158e5881497dfb555db30836b7d607",
+    "controls": [
+      {
+        "control": "positive",
+        "command": "mkdir -p \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/positive/classes\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/javac --release 8 -cp \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar\" -d \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/positive/classes\" \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/positive/ApiTest.java\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/java -Djava.awt.headless=true -cp \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/positive/classes:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar\" ApiTest",
+        "cwd": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator",
+        "exit_code": 0,
+        "native_gate_pass": true,
+        "expected_pass": true,
+        "scaffold_sha256": "3c080ca213b715720e4e93a52e8ff19f7890a778289355657b54462db4b6e2c6",
+        "program_sha256": "d2a81653d8af55f2a3c74dabed4848bc4bf95df6fa39db50ff91b8c4b597d209",
+        "stdout_sha256": "e6ccbe02ee18af2c835f98db80db06a2da36bbfa329aec1c459bdb8c2148582b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "directory": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/positive"
+      },
+      {
+        "control": "negative",
+        "command": "mkdir -p \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/negative/classes\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/javac --release 8 -cp \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar\" -d \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/negative/classes\" \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/negative/ApiTest.java\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/java -Djava.awt.headless=true -cp \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/negative/classes:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar\" ApiTest",
+        "cwd": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator",
+        "exit_code": 1,
+        "native_gate_pass": false,
+        "expected_pass": false,
+        "scaffold_sha256": "3c080ca213b715720e4e93a52e8ff19f7890a778289355657b54462db4b6e2c6",
+        "program_sha256": "a634426a5d33cf27f76c462acb6c38afda7ec655fd88df479ed6c409062be757",
+        "stdout_sha256": "a54d7499c42c4b21667e3bccecd6c6a65ada8f0d033fa5424ae5fdd28a454a79",
+        "stderr_sha256": "7de5445a9ccfe16330c67c634685b4d3c9cc454f36ecdd090f634a2cf2b045e0",
+        "directory": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/negative"
+      },
+      {
+        "control": "no_witness",
+        "command": "mkdir -p \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/no_witness/classes\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/javac --release 8 -cp \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar\" -d \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/no_witness/classes\" \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/no_witness/ApiTest.java\" && /home/zshan011/apps/aideal/runtimes/jdk17/bin/java -Djava.awt.headless=true -cp \"/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/no_witness/classes:/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runtime/jars/thumbnailator-0.4.21.jar\" ApiTest",
+        "cwd": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator",
+        "exit_code": 0,
+        "native_gate_pass": false,
+        "expected_pass": false,
+        "failure_reason": "no-correctness-check",
+        "program_sha256": "311f18c102838e8fa5aae815bf507aea9863624e78f458453a9a6eed469a8465",
+        "stdout_sha256": "163afbdecc25930c577694e9b8b09e6fefde494311c6232fe77b380be78cd505",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "directory": "/home/zshan011/apps/aideal/checks/2026-11-17-latest-stable-runtime/native-controls/thumbnailator/no_witness"
+      }
+    ],
+    "model_calls": 0,
+    "measured_outputs_modified": false,
+    "source_or_inventory_mutations": false,
+    "supplemental_release": "/home/zshan011/apps/aideal/releases/2026-11-17-canonical-api-a6e8bb84fe32",
+    "executor_and_registry_code_identical_between_verified_releases": {
+      "config.py": "63d7e8151ea488d78e21360ec71e54e044e53ec7fc22810c24c5490ce2496aaa",
+      "doc_check_inputs.py": "373735af61508676128ffbe912ce422bb158ce6786fb599dec0e4a391029275f",
+      "doc_check_execution.py": "ece97bb2c9891ae053b98b47bf406d1d64e9219c0f1d2081e8b2bddd106e8ad2",
+      "execution.py": "3c24779983b973cd08239b0fd562e154ed6161a85f8bdb4020de778ae7984c81",
+      "api_registry.py": "11e5bd515bb68ff52c7ee1cd216be9222375b0645eabacbece74782bafdde7ff",
+      "api_source_registry.py": "aa7a4a439d32ebfe19e2fb5e21a02011890bb4bdd74a27a732466b630ee89fca"
+    },
+    "witness_omission_rejected": true,
+    "completed_at": "2026-11-17T20:12:22.561933+00:00"
+  }
+}

@@ -1,143 +1,176 @@
-# AIDEAL — source-embedded error guidance
+# AIDEAL — develop documentation and evaluate its effect
 
-This branch publishes the September 24 update to AIDEAL's development and
-evaluation code. It preserves the previously published README generation,
-selective README evaluation, alias development and experiment recording tools.
+Current launch: [completed results and the Java/Scala reader correction](experiments/2026-11-17-latest-stable-canonical/RUN_RECOVERY.md). Original R0 and README authoring are running on the cluster; each saved status includes its observation time.
 
-The new workflow collects failures from a separate Original development R0 run,
-proposes function-specific guidance, checks the proposed correction with four
-execution controls, and commits validated comments beside the affected functions
-in new Error Hints only and Combined branches. Evaluation retrieves a note only
-after a matching failure. It also records incomplete model responses separately
-and supports a compact repair context with an independent repair output limit.
+**Current all-library launch:** [inputs, folders, function calls, prompts, logs and results](experiments/2026-11-17-latest-stable-canonical/RUN_FLOW.md) · [running status and real traces](experiments/2026-11-17-latest-stable-canonical/operator/launch/live/README.md).
 
-- [Source-hint development, validation and installation](docs/SOURCE_EMBEDDED_ERROR_GUIDANCE.md)
-- [Failure attribution, repair context and output handling](docs/SOURCE_GUIDED_REPAIRS.md)
-- [Release scope and software checks](docs/SOURCE_HINT_RELEASE.md)
-- [Example configuration](configs/source_guided_evaluation.example.yaml)
-- [All six libraries and their source branches](studies/README.md)
+**Current six-library preparation (November 17, 2026):** [experiment guide](experiments/2026-11-17-latest-stable-canonical/EXPERIMENT_GUIDE.md), [all qualified API/task inputs](experiments/2026-11-17-latest-stable-canonical/review/qualified-bank/INDEX.html), [readiness fixes](experiments/2026-11-17-latest-stable-canonical/READINESS_FIXES.md), and [review commands](experiments/2026-11-17-latest-stable-canonical/RUNBOOK.md). Original R0 and README authoring are authorized and running; the linked preparation files preserve the earlier review checkpoint.
 
-**Experiment status:** the source-hint software is available, but actual RDPro
-source annotations and the separate 192-trial rerun remain pending. Publishing
-this code does not start a model run or convert historical JSON-hint outcomes
-into source-embedded-hint results. Use a new validated freeze for the new protocol.
 
-## Earlier RDPro pipeline publication
-
-The prepared source matches a fresh clone of official Bitbucket Beast/RDPro 0.10.1 byte-for-byte. The user requested the five-condition, 32-task, three-trial run (480 units). Exact prompts, outputs, code, attempts, tokens, timing, errors and results are being bound to the run before execution.
-
-[Source verification](studies/rdpro/2026-09-22-full-pipeline/provenancePUBLIC.md) · [Recording, scope and estimated duration](studies/rdpro/2026-09-22-full-pipeline/RECORDED_RUN.md) · [Study design](studies/rdpro/2026-09-22-full-pipeline/README.md)
-
-The following study links preserve the earlier published setup and evidence.
-Their preparation-time status is historical, not a live experiment monitor.
-
-## Shared evaluation and library studies
-
-The earlier setup branch, `setup/2026-09-21-library-five-conditions`, connects one shared AIDEAL evaluator to the source repositories for all six registered libraries. The existing RDPro pilot is preserved. SedonaDB, MDAnalysis, tslearn, mir_eval and Thumbnailator each have a new baseline-only five-condition preparation; their treatments, independent benchmark adapters and evaluations are pending.
-
-AIDEAL and all six companion source repositories are public.
-
-Start with the [library index](studies/README.md) for source versions, configuration, implementation links and future output locations. Each companion repository has a navigation-only `main` and five source branches: Original, README only, Alias only, Error hints only and Combined. All five new conditions start at the same per-library baseline; no generated treatment or measured result is implied by a branch name. No model was called during this setup.
-
-## Completed RDPro pilot
-
-- [RDPro evaluation: setup, five conditions and results](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md)
-- [Actual checker, JVM harness and offline tests](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/harness/README.md)
-- [Audited result summary](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/RESULTS.md)
-- [Exact RDPro treatment branch names and commits](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/source_versions.json)
-- [Separate RDPro source repository](https://github.com/ZhuochengShang/AIDEAL-RDPro) · [one-clone/five-worktree guide](studies/rdpro/2026-09-21-gpt-5.3-codex-five-conditions/README.md#one-clone-five-worktrees)
-
-The five RDPro condition source versions are mapped to dated refs in the companion [AIDEAL-RDPro repository](https://github.com/ZhuochengShang/AIDEAL-RDPro). It publishes new clean snapshot commits with source trees identical to the measured versions; malformed historical Git ancestry is not shipped. This AIDEAL branch supplies the shared prompts, protocol/settings, checker/tests and audited results; it retains the original measured source identities and selected treatment artifacts. A new run must use a new local freeze bound to the publication commits. It does not contain the private fixture bank, expected answers, runtime binaries or complete machine-bound evidence. Repeating the original experiment requires those local inputs; the included synthetic harness tests run independently.
-
-The five remote condition refs have been verified against their published snapshot commits, whose trees match the measured versions.
-
-The pilot resolved 40 model tasks after 120 trusted controls validated. No generated error hint was delivered, so the hints-only arm's extra pass cannot establish a hint benefit. The study README explains this and the other limitations.
-
-The toolkit guide follows below. `python scripts/aideal verify` checks this branch's complete integrity inventory. The source-only `scripts/build_publication_manifest.py` intentionally rejects study exports; do not use it to overwrite this branch's inventory.
+**Run readiness checked November 12, 2026:** [automation, study prerequisites and code-review route](docs/AUTOMATION_READINESS.md).
 
 [Codex pilot and shared budget](docs/OPENAI_CODEX_PILOT.md) · [Gemini Flash settings](docs/GEMINI_FLASH.md) · [Legacy-code review](docs/LEGACY_CODE_REVIEW.md)
 
-AIDEAL prepares and evaluates changes that may help language models use a software library: clearer documentation, forwarding aliases, function-specific error hints, and source refactors that preserve the public API.
+AIDEAL develops documentation, aliases and failure hints for existing libraries,
+then compares how well an LLM uses their APIs. Start with the workflow entrypoints
+and follow helper functions when needed.
 
-The toolkit records source versions, model inputs, checker controls, execution attempts, and scores needed to review a comparison. It supports five treatment conditions, an original/refactor pair, or all six conditions. A separate three-README evaluator remains available.
+| Workflow | Main entry points | Current boundary |
+|---|---|---|
+| **README comparison** | `freeze-evaluation` → `run-evaluation` | Three supplied README versions; one backend and independent bank |
+| **Treatment comparison** | `freeze-conditions` → `run-conditions` | Five treatment arms, Original/refactor pair, or six arms; explicit validated library adapters required |
+| **Development and versions** | `preview-library` → `propose-library` → bundle/install | Bounded LLM batches, multi-file aliases, evidence-based hints and separate refactor candidates |
 
-**The framework and this small pilot do not establish a general effectiveness claim.** Offline tests check controller behavior. Local library controls and regression probes check selected implementations and harness behavior. This branch includes the reviewed RDPro pilot summary and selected generated treatments; private study inputs, complete request/response transcripts, runtime JARs and machine-bound experiment evidence remain local.
+There is no default library, language or API count. RDPro and SedonaDB are examples.
+The historical three-README RDPro pilot remains paused under its `REVIEW_HOLD.json`.
+The current five-condition treatment study has separate inputs, versions and results.
 
-## Read first
+**GitHub:** [public toolkit repository](https://github.com/ZhuochengShang/AIDEAL) · [local publication checkout and update guide](docs/PUBLICATION.md).
 
-- [Workflow summary](docs/SUMMARY.md): design, prompts, data boundaries and harness responsibilities.
-- [Configuration](docs/CONFIGURATION.md): library, model, task bank and adapter inputs.
-- [Output locations](docs/OUTPUTS.md): especially generated API tests, controls and audience results.
-- [Conditions and versions](docs/VERSIONS.md): which changes belong in each condition.
-- [Scoring](docs/SCORING.md): fixed denominators, repair budgets and incomplete runs.
-- [Code review route](docs/CODE_REVIEW.md): implementation entry points and generated function map.
+**Outputs:** [API test files, logs and study results](docs/OUTPUTS.md).
+**Cleanup:** [retired RDPro components and restoration record](docs/LEGACY_RDPRO_CLEANUP.md).
 
-## Start with an explicit library
+**Start here:** [current implementation and real-study status](docs/CURRENT_STATUS.md),
+[library-wide workflow](docs/LIBRARY_TREATMENT_WORKFLOW.md),
+[condition/version navigator](docs/VERSION_NAVIGATION.md), and
+[score formulas and current saved results](docs/EVALUATION_SCORING.md).
+The [system figures](docs/system_design/README.md) are a preserved pre-extension
+review snapshot; use the current guides for the newly implemented treatment runner.
 
-Use Python 3.10 or later. Source inspection and study preparation require the base dependencies:
+## Start your code review
+
+**Shared evaluation and code guide, November 12:** [interactive workflow and source links](docs/EVALUATION_CODE_GUIDE.html) · [reading order and commands](docs/EVALUATION_CODE_GUIDE.md) · [current treatment workflow](docs/TREATMENT_WORKFLOW.md).
+
+Both evaluation commands now enter one schedule, repair loop and evidence checker.
+The [workflow map](docs/CODE_MAP.html) opens on those shared entry points, with
+helpers collapsed underneath. Canonical evaluation files use the `evaluation_`
+prefix so they appear together in the file browser.
+
+| Read first | What it owns |
+|---|---|
+| [evaluation_runner.py](workflow/evaluation_runner.py) | `run_study`, `run_unit`, `verify_row` and `replay`: scheduling, bounded repair and verified resume |
+| [evaluation_conditions.py](workflow/evaluation_conditions.py) | Treatment-specific context and library/backend checks |
+| [evaluation_readme.py](workflow/evaluation_readme.py) | Original/Generated/Repaired README selection and shared provider/evidence helpers |
+
+Open `evaluation_freeze.py`, `evaluation_context.py`, `evaluation_inputs.py`
+and `evaluation_report.py` when following those responsibilities. The two old
+main entry modules remain compatibility aliases. Historical studies retain their
+recorded controller; new source requires a new freeze.
+
+Use the **Full function reference** only when following a particular dependency.
+The [source index](docs/FUNCTION_INDEX.md) offers clickable locations for Codex.
+The [pipeline reference](docs/PIPELINE_REFERENCE.md) explains the boundaries;
+[the simplification record](docs/WORKFLOW_SIMPLIFICATION.md) records removals,
+consolidations and checks. [Earlier module cleanup](docs/CODE_CLEANUP.md) describes
+the split of the two large engine files.
+
+## Three-README evaluation
+
+Supply Original README, Generated README and Repaired README explicitly. The
+runner does not generate those documents. It holds the backend, task bank, model,
+context budget and repair budget constant across conditions.
+
+`freeze-evaluation` validates independent reference/negative controls and freezes
+identities. `run-evaluation` runs or resumes the matched comparison. An adapter
+checks execution, independent correctness and target-API use. A successful exit
+alone is insufficient. Five branches are not required for this comparison.
+
+Read [the evaluation design](docs/EVALUATING_YOUR_LIBRARY.md),
+[the runnable guide](docs/README_EVALUATION_RUNNER.md) and
+[the YAML example](configs/readme_evaluation.example.yaml).
+
+## Documentation development
+
+The engine under `vendor/aideal_engine/src/aideal/` discovers APIs, authors
+README entries, checks examples and repairs documentation. Its CLI and MCP
+interface are separate from the portable controller. The old `readme_agent.py`
+and `doc_checks.py` import their implementations from focused modules.
+
+See [development stages and prompts](docs/PIPELINE_REFERENCE.md#3-legacy-document-development-and-its-prompts)
+and [configuration rules](docs/CONFIGURATION.md). Model grading, native execution
+and independent held-out evaluation are different evidence levels. Development
+answers must not leak into the held-out audience inputs.
+
+## Alias, fix-hint and source refactor development
+
+Use `preview-library` to inspect all configured public APIs in bounded batches,
+then `propose-library` for recorded, resumable model requests. `bundle-proposals`
+combines selected batches without concatenating source files. `install-treatments`
+commits the complete version into the applicable isolated branches. For current native hints, use `preview-native-hints` → `propose-native-hints`
+→ `validate-native-hints` → `install-native-hints`. Install the README/alias
+bundle first, then review, commit and rebuild the native source edits.
+Bundles exclude legacy JSON hints unless `--include-legacy-hints` is selected.
+The [treatment guide](docs/TREATMENT_WORKFLOW.md) records the full sequence and
+the explicitly retained compatibility commands. Generated proposals require
+library-specific checks before evaluation.
+
+`scan-duplicates` and `compare-duplicates` suggest refactors for attached
+libraries and compare compatible before/after reports. `install-refactor` versions
+an explicit source replacement/deletion manifest on a separate branch, preserving
+the original five arms. Tests must establish API compatibility. The [RDPro baseline review](docs/SOURCE_REFACTOR_REVIEW.md)
+contains concrete candidates for schema decoding, raster validation and URL encoding.
+Read [the commands, branch routing and current study inventory](docs/STUDY_TREATMENTS.md)
+and [exact README-generation inputs](docs/README_GENERATION_INPUTS.md).
+
+## Matched treatment and refactor evaluation
+
+The treatment design compares Original, README only, Alias only, Error hints only
+and Combined. Refactor only can be studied separately or as a sixth condition.
+`attach` prepares five isolated worktrees; `versions` shows their exact paths,
+commits, current treatment record and any separate refactor version.
+
+`freeze-conditions` validates the actual checker against reference, wrong-output
+and no-target controls for every backend. `run-conditions` executes the shared
+microtask/puzzle bank and records the delivered README, alias interface and
+post-failure hints. Installed code must be built/imported by the configured adapter;
+a branch or model proposal alone is not a measured improvement.
+
+Library-specific builds, fixtures, independent oracles and regression checks are
+explicit inputs. There is no universal automatic compiler or oracle generator.
+Use `freeze-conditions` followed by `run-conditions` with an explicit study.
+The [workflow diagram and cleanup guide](docs/EVALUATION_CODE_GUIDE.html)
+connects the commands, functions, prompts and saved outputs.
+
+The detailed attachment instructions and planned sequence are in
+[Five-condition preparation](docs/FIVE_CONDITION_PREPARATION.md) and
+[library treatment workflow](docs/LIBRARY_TREATMENT_WORKFLOW.md).
+
+## Installation and software checks
+
+Use Python 3.10+ with `requirements.txt` in the chosen environment. The portable
+launcher works from any directory:
 
 ```sh
-python -m pip install -r requirements.txt
-python scripts/aideal --help
-python scripts/aideal status
+python3 /path/to/AIDEAL_workflow/scripts/aideal --help
 ```
 
-Copy [configs/aideal.example.yaml](configs/aideal.example.yaml) to a study workspace's `configs/aideal.yaml`, then set source/test patterns and original documentation paths. Replace every placeholder. The example is a schema guide, not a runnable library configuration.
+From the repository root:
 
 ```sh
-python scripts/aideal attach \
-  --repo /absolute/path/to/clean-library \
-  --config /absolute/path/to/workspace/configs/aideal.yaml \
-  --output /absolute/path/to/study
-
-python scripts/aideal preview-library \
-  --study /absolute/path/to/study \
-  --output /absolute/path/to/study/development/preview_v1 \
-  --batch-size 12
+python3 -m unittest discover -s tests
+python3 scripts/build_code_map.py
+node --test tests/test_code_map_ui.cjs
 ```
 
-Attachment pins the baseline in an isolated Git store and creates five preparation worktrees. Preview records bounded source/API context and coverage without calling a model. Add `--api` for explicit APIs and `--alias-path-template` for a language-appropriate new alias module path.
+The Python suite uses synthetic/temporary studies. The Node checks exercise
+navigator state with a DOM test double; they do not replace visual browser review.
+The map generator parses source without importing the project or running experiments.
+`python3 -m workflow verify` compares against the historical artifact manifest;
+reviewed source edits can intentionally differ from that snapshot. Do not rewrite
+historical identities to make this check pass.
 
-Model proposals require an explicit [development-model configuration](configs/improvements.example.yaml). The included Google adapter uses [requirements-evaluation.txt](requirements-evaluation.txt). The optional [Codex adapter](docs/OPENAI_CODEX_PILOT.md) uses [requirements-openai.txt](requirements-openai.txt) and a shared budget ledger. Each provider reads its credentials from the launching environment.
+## Operating the project
 
-Native README authoring is a separate engine interface. Install its model-provider dependencies when using that path:
+Respect review holds and existing edits. Use each study's explicit YAML, validated
+adapter and protocol; keep attempts and conditions separate. New source identities
+require fresh validation/freezing before a new experiment. Preserve actual requests,
+responses, execution logs and unresolved outcomes. The included operator skill
+provides guidance; it is not automatically sent to the audience model.
 
-```sh
-python -m pip install -e './vendor/aideal_engine[providers]'
-python -m aideal.cli --help
-```
+The optional MCP server uses `requirements-mcp.txt` and `scripts/aideal serve`.
+It exposes attachment, inspection and operating instructions. It is not a Codex
+marketplace plugin or a complete evaluation interface.
 
-The retained distribution name is `grail-agent`; its native console command is `aideal`. Use `python scripts/aideal ...` for the portable controller and `python -m aideal.cli ...` for native documentation development to avoid ambiguity. [Third-party notices](THIRD_PARTY_NOTICES.md) explain the retained naming and provenance.
-
-## Develop, then measure
-
-1. Generate or select the README; review bounded alias/hint/refactor proposals from development evidence.
-2. Build and regression-test proposed changes. Bundle selected README/alias/hint artifacts and install their exact versions; install a source refactor separately.
-3. Supply an independent held-out microtask/puzzle bank, trusted reference and negative controls, and a library-specific execution adapter.
-4. Configure [condition_evaluation.example.yaml](configs/condition_evaluation.example.yaml), validate every backend, and freeze.
-5. Run fresh audience solutions and inspect matched results.
-
-```sh
-python scripts/aideal freeze-conditions \
-  --config /absolute/path/to/study/conditions.yaml \
-  --output /absolute/path/to/study/frozen_v1
-
-python scripts/aideal run-conditions \
-  --study /absolute/path/to/study/frozen_v1/frozen.json \
-  --output /absolute/path/to/study/runs/first
-```
-
-Freezing executes configured controls; running calls the configured model and checker. Repeating a compatible run output resumes saved work. Changed source, prompts, tasks, model settings or checker artifacts require a new validated identity. Preparation folders and installed commits alone are not evaluated treatments.
-
-## Review the implementation
-
-The portable controller is in [workflow/](workflow/); native documentation development is in [vendor/aideal_engine/src/aideal/](vendor/aideal_engine/src/aideal/). See the [API test guide](docs/OUTPUTS.md#development-readme-api-checks) for native execution outputs.
-
-The [function index](docs/FUNCTION_INDEX.md) provides static caller/callee links. To use the interactive [CODE_MAP.html](docs/CODE_MAP.html), open the downloaded file in a browser; GitHub's file view does not execute its JavaScript. Static calls are review aids, not runtime traces or unused-code proof.
-
-```sh
-# Offline controller/regression fixtures; no real provider call is required.
-python -m unittest discover -s tests
-```
-
-Library-specific build tools, fixture data, oracle design, runtime isolation, and source-to-binary checks remain explicit study responsibilities. Generic subprocess execution is not an operating-system sandbox.
+[Study examples](studies/README.md), [historical reporting](studies/historical/)
+and [proposed metrics](docs/EVALUATION_METRICS_PROPOSAL.md) remain separate from
+current evaluation results. Historical outcomes are never inserted as new scores.

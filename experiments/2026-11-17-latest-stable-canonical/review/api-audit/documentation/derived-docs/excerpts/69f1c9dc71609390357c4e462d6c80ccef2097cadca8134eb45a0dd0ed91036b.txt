@@ -1,0 +1,55 @@
+class MDAnalysis.coordinates.XYZ.XYZReader(filename, **kwargs)[source]
+
+Reads from an XYZ file
+
+Data:
+
+ts
+
+Timestep object containing coordinates of current frame
+
+Methods:
+
+len(xyz)
+
+return number of frames in xyz
+
+for ts in xyz:
+
+iterate through trajectory
+
+The XYZ file format follows VMD’s xyzplugin and is also described under XYZ format.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based. Added dt and time_offset keywords (passed to Timestep)
+
+ Writer(filename, n_atoms=None, **kwargs)[source]
+
+Returns a XYZWriter for filename with the same parameters as this XYZ.
+
+Parameters:
+
+filename (str) – filename of the output trajectory
+
+n_atoms (int (optional)) – number of atoms. If none is given use the same number of atoms from the reader instance is used
+
+**kwargs – See XYZWriter for additional kwargs
+
+Return type:
+
+XYZWriter (see there for more details)
+
+See also
+
+XYZWriter
+
+ close()[source]
+
+Close xyz trajectory file if it was open.
+
+ property n_atoms
+
+number of atoms in a frame
+
+ units = {'length': 'Angstrom', 'time': 'ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

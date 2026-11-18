@@ -1,0 +1,15 @@
+class MDAnalysis.coordinates.chemfiles.ChemfilesReader(filename, chemfiles_format='', **kwargs)[source]
+
+Coordinate reader using chemfiles.
+
+The file format to used is guessed based on the file extension. If no matching format is found, a ChemfilesError is raised. It is also possible to manually specify the format to use for a given file.
+
+Added in version 1.0.0.
+
+Parameters:
+
+filename (chemfiles.Trajectory or str) – the chemfiles object to read or filename to read
+
+chemfiles_format (str (optional)) – if filename was a string, use the given format name instead of guessing from the extension. The list of supported formats and the associated names is available in the chemfiles documentation.
+
+**kwargs (dict) – General reader arguments.

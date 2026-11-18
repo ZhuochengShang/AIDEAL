@@ -6,7 +6,9 @@ from __future__ import annotations
 
 import random
 import re
+from .readme_format import api_storage_key
 from .config import AidealConfig
+from .api_registry import target_key
 from .error_log import ErrorLog, new_run_id
 from .execution import exclusive_work_dir
 from .readme_agent import public_api_details, public_api_surface
@@ -21,6 +23,108 @@ from .doc_check_provenance import (
 )
 
 
+def _canonical_prompt_targets(cfg) -> dict[str, dict] | None:
+    """Expose only frozen public declaration identities, never source bodies.
+
+    Canonical selection in the API manifest is the sole opt-in. The registry
+    validates its complete hash-bound receipt before any target is returned.
+    This requests a declaration; it does not establish which overload ran.
+    """
+    import hashlib
+    import json
+    from .api_registry import configured_api_details
+    from .experiment_identity import digest_native
+
+    codebase = cfg.raw.get("codebase", {})
+    locator = codebase.get("api_inventory")
+    if not locator:
+        if codebase.get("identity_mode") == "qualified":
+            raise ValueError("Qualified execution requires a frozen source API inventory")
+        return None
+    content = (cfg.root / locator).read_bytes()
+    manifest = json.loads(content)
+    qualified_inventory = manifest.get("kind") == "qualified_source_api_inventory"
+    if not qualified_inventory and not any(field.startswith("canonical_") for field in manifest):
+        if codebase.get("identity_mode") == "qualified":
+            raise ValueError("Qualified execution requires a selected target binding")
+        return None
+    if hashlib.sha256(content).hexdigest() != codebase.get("api_inventory_sha256"):
+        raise ValueError("Canonical prompt target requires the frozen API inventory checksum")
+    details = configured_api_details(cfg)
+    if not manifest.get("canonical_selection"):
+        raise ValueError("Canonical prompt target requires a complete selection binding")
+    targets = {}
+    for row in details:
+        if target_key(row) in targets:
+            raise ValueError("Canonical prompt target must have exactly one definition per identity")
+        # Explicit allowlist: descriptions, bodies, audit evidence, examples,
+        # and implementations are not audience task metadata.
+        target = {
+            "schema_version": 1,
+            "selection_policy_version": manifest.get("canonical_selection_policy_version"),
+            "selection_receipt_sha256": manifest.get("canonical_selection_sha256"),
+            "selected_site_id": row["site_id"],
+            "qualified_name": row["qualified_name"],
+            "owner": row["owner"],
+            "signature": row["signature"],
+            "parameters": [{"name": param["name"], "type": param["type"]}
+                           for param in row["params"]],
+            "parameter_count": len(row["params"]),
+        }
+        if row.get("target_kind") == "registered_sql":
+            target.update(target_kind="registered_sql", parameters=[], parameter_count=None,
+                          parameter_count_status=row["parameter_count_status"])
+        if row.get("api_id"):
+            target.update(api_id=row["api_id"], identity_version=row.get("identity_version"),
+                          display_name=row["name"], parameter_count=row.get("parameter_count"),
+                          parameter_count_status=row.get("parameter_count_status", "known"))
+            for field in ("exposure_ids", "preferred_public_path", "public_access_paths"):
+                if row.get(field):
+                    target[field] = row[field]
+        if qualified_inventory:
+            if not row.get("api_id"):
+                raise ValueError("Qualified inventory returned a target without api_id")
+            target.update(schema_version=2, inventory_kind=manifest["kind"],
+                          api_inventory_sha256=codebase["api_inventory_sha256"],
+                          source_inventory_sha256=manifest["source_inventory_sha256"],
+                          source_commit=manifest["source_commit"], source_tree=manifest["source_tree"],
+                          source_version=manifest["source_version"])
+        target["target_fingerprint"] = digest_native(target)
+        targets[target_key(row)] = target
+    return targets
+
+
+def _requested_target_context(execution_context: str, target: dict | None) -> str:
+    if target is None:
+        return execution_context
+    if target.get("target_kind") == "registered_sql":
+        block = ("Requested registered SQL operation:\n"
+                 f"SQL name: {target['qualified_name']}\n"
+                 f"Documented call patterns: {target['signature']}\n"
+                 f"Arity status: {target['parameter_count_status']}\n"
+                 "Call this registered SQL operation using a documented call pattern; no finite maximum arity is asserted.")
+        return execution_context + ("\n\n" if execution_context else "") + block
+    parameters = "; ".join(f"{param['name']}: {param['type']}" for param in target["parameters"])
+    parameter_text = (f"Parameters in declaration order ({target['parameter_count']}): {parameters or '(none)'}"
+                      if target['parameter_count'] is not None else
+                      "Parameter arity unresolved; the empty extracted list does not assert a zero-argument call.")
+    block = (
+        "Requested target declaration (frozen canonical selection):\n"
+        f"Qualified name: {target['qualified_name']}\n"
+        f"Owner: {target['owner']}\n"
+        f"Declaration: {target['signature']}\n"
+        f"{parameter_text}\n"
+        "Write the requested call against this owner and declaration, with its indicated parameter list."
+    )
+    public_paths = target.get("public_access_paths") or ([target["preferred_public_path"]]
+                   if target.get("preferred_public_path") else [])
+    if public_paths:
+        block += ("\nVerified public access paths for the same defining API: " +
+                  ", ".join(public_paths) +
+                  ". Use a public access path when the defining namespace is internal.")
+    return execution_context + ("\n\n" if execution_context else "") + block
+
+
 @exclusive_work_dir
 def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_source: str,
                            show_code: bool = False, class_context: bool = False,
@@ -28,6 +132,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                            resume: bool = False, timeout_s: int | None = None,
                            shared_doc: str | None = None,
                            doc_scope: str = "entry") -> dict:
+    # Ask the audience model to write programs for the selected API entries.
+    # Insert each program into the configured scaffold, then build and run it.
+    # Save execution evidence and use failures for the permitted code repairs.
+    # Success follows this native runner's checks, not the portable study oracle.
     """Compile/run each API's audience snippet via the configured command.
     PASS = the program runs (success_marker present, exit 0). Real failures
     (compile/runtime) are logged with the actual error text.
@@ -176,6 +284,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     require_correctness = bool(ex.get("require_correctness", False))
     timeout = int(timeout_s or ex.get("timeout_seconds", 600) or 600)
     strip_snippet_imports = bool(ex.get("strip_snippet_imports", False))
+    # Opt in for long schedules: preserve the failed unit, then stop on a
+    # provider outage instead of sending the same failing request for every API.
+    stop_on_provider_error = bool(ex.get("stop_on_provider_error", False))
+    stopped_on_provider_error = False
     output_tail_chars = int(ex.get("output_tail_chars", 2000) or 2000)
     if max_fix_rounds is None:                                # CLI/bench override wins
         max_fix_rounds = int(ex.get("max_fix_rounds", 3) or 0)   # default 3 fixes (4 attempts)
@@ -203,6 +315,17 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         max_fix_rounds=max_fix_rounds, manifest_sha256=manifest_sha256,
         document_sha256=doc_sha256, scaffold_file=scaffold_file,
         sample_data=sample_data, class_context=class_context, timeout=timeout)
+    canonical_targets = _canonical_prompt_targets(cfg)
+    if any(":" in entry.name for entry in inventory) and canonical_targets is None:
+        raise ValueError("Qualified execution requires exact requested target metadata")
+    if canonical_targets is not None:
+        fingerprint_components["canonical_requested_targets"] = {
+            "protocol_version": 1, "targets_sha256": digest_native(canonical_targets),
+            "targets_count": len(canonical_targets),
+        }
+        missing = sorted({entry.name for entry in inventory} - set(canonical_targets))
+        if missing:
+            raise ValueError("Requested APIs lack a canonical target declaration: " + repr(missing))
     experiment_fingerprint = digest_native(fingerprint_components)
 
     # Crash-proof progress: one JSONL row per finished API, flushed as it
@@ -256,8 +379,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     entry_classes = set(ex.get("entrypoint_classes", []) or [])
     if entry_classes and not include:
         import os as _os
-        include = {d["name"] for d in public_api_details(cfg)
-                   if d["visibility"] == "public"
+        include = {target_key(d) for d in public_api_details(cfg)
+                   if (d["visibility"] == "public" or d.get("public_exposure_established"))
                    and _os.path.basename(d["file"])[:-6] in entry_classes}
     if include:
         inventory = [e for e in inventory if e.name in include]
@@ -315,10 +438,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     # index so runtime stack frames can be mapped back to repo source lines.
     from .readme_agent import _subsume_overloads, _dedup_deprioritize
     import glob as _globmod
-    _pub_details = [d for d in public_api_details(cfg) if d["visibility"] == "public"]
+    _pub_details = [d for d in public_api_details(cfg) if (d["visibility"] == "public" or d.get("public_exposure_established"))]
     _by_name_det: dict[str, list] = {}
     for _d in _pub_details:
-        _by_name_det.setdefault(_d["name"], []).append(_d)
+        _by_name_det.setdefault(target_key(_d), []).append(_d)
     _depri = _dedup_deprioritize(cfg)
     site_of: dict[str, dict] = {}
     for _n, _recs in _by_name_det.items():
@@ -348,7 +471,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                 "status", "attempts", "pass_round", "wall_s", "llm_calls",
                 "input_tokens", "output_tokens", "by_model", "error_category",
                 "error", "locus", "doc_chars", "document_sha256", "source",
-                "source_other_sites", "codebase_frames", "rendered_prompt_sha256")}
+                "source_other_sites", "codebase_frames", "rendered_prompt_sha256",
+                "attempt_evidence")}
             metrics[entry.name]["evidence_fingerprint"] = row.get("experiment_fingerprint")
             per_api[entry.name] = row.get("execution_evidence") or f"resumed: {row.get('status')}"
             if row.get("status") == "pass":
@@ -358,7 +482,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             continue
         api_t0 = _time.time()
         api_u0 = usage_snapshot()
-        work_api = work_dir / f"run_{entry.name}"
+        work_api = work_dir / f"run_{api_storage_key(entry.name)}"
         (work_api / "classes").mkdir(parents=True, exist_ok=True)
         scala_file = work_api / str(ex.get("test_filename", "ApiTest.scala"))
         cmd = (cmd_template.replace("{scala_file}", str(scala_file))
@@ -374,32 +498,83 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         last_run = {"stdout": "", "stderr": "", "exit_code": None}
         rounds_trace: list[dict] = []
         prompt_hashes = []
+        attempt_evidence = []
         prev_sig, same_sig = None, 0   # stuck detector state (per API)
         import sys as _sys
         receiver = _receiver_hint(entry.name, owner_map)
+        requested_target = (canonical_targets or {}).get(entry.name)
+        if ":" in entry.name:
+            if requested_target is None:
+                raise ValueError(f"Qualified target metadata missing: {entry.name}")
+            # Adapters must not infer an API from a filesystem slug. This exact
+            # identity is already included in the immutable run fingerprint.
+            (work_api / "requested_target.json").write_text(_json.dumps(
+                requested_target, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
         for attempt in range(1 + max_fix_rounds):
             # A condition's first attempt must be documentation-only. Historical
             # error-log feedback would leak earlier treatments into A1/A2 even
             # with max_fix_rounds=0. Only an actual retry may see failures.
             known = [] if attempt == 0 else log.failures_for(entry.name)
+            # Keep each delivered request and answer, including failed provider
+            # calls. Continue numbering on resume so earlier evidence is immutable.
+            previous_attempts = [int(p.name[8:]) for p in work_api.glob("attempt_*")
+                                 if p.is_dir() and p.name[8:].isdigit()]
+            evidence_number = max(previous_attempts, default=0) + 1
+            evidence_dir = work_api / f"attempt_{evidence_number:04d}"
+            evidence_dir.mkdir()
+            attempt_evidence.append(str(evidence_dir))
+            selected_model = writer_spec if attempt == 0 else fixer_spec
+            provider_t0 = _time.time()
+            provider_u0 = usage_snapshot()
             try:
                 delivered_prompt = load_prompt(cfg, "aideal/comprehension_write_exec",
                                  api_body=body_for(entry), api_name=entry.name,
                                  available_inputs=available_inputs,
                                  receiver=receiver or "(receiver type not resolved)",
                                  known_failures=known or "(none yet)",
-                                 execution_context=ex.get("execution_context", ""),
+                                 execution_context=_requested_target_context(
+                                     ex.get("execution_context", ""), requested_target),
                                  exec_hints=ex.get("exec_hints", ""),
                                  io_hints=io_hints_text)
                 prompt_hashes.append(_hashlib.sha256(_json.dumps(delivered_prompt).encode()).hexdigest())
-                snippet = _strip_fences(invoke_text(
-                    writer_spec if attempt == 0 else fixer_spec, *delivered_prompt),
-                    strip_imports=strip_snippet_imports)
+                # Store only the selected model and rendered messages, never
+                # model configuration objects, credentials, or environment values.
+                (evidence_dir / "request.json").write_text(_json.dumps({
+                    "api": entry.name, "round": attempt, "run_id": run_id,
+                    "attempt_number": evidence_number,
+                    "provider": selected_model.provider, "model": selected_model.model,
+                    **({"max_output_tokens": selected_model.max_output_tokens}
+                       if selected_model.max_output_tokens is not None else {}),
+                    "system": delivered_prompt[0], "user": delivered_prompt[1],
+                    **({"requested_target_declaration": requested_target}
+                       if requested_target is not None else {}),
+                }, ensure_ascii=False, indent=2), encoding="utf-8")
+                raw_response = invoke_text(selected_model, *delivered_prompt)
+                (evidence_dir / "response.txt").write_text(raw_response, encoding="utf-8")
+                (evidence_dir / "provider.json").write_text(_json.dumps({
+                    "status": "returned", "wall_s": _time.time() - provider_t0,
+                    "usage": usage_delta(provider_u0),
+                }, ensure_ascii=False, indent=2), encoding="utf-8")
+                snippet = _strip_fences(raw_response, strip_imports=strip_snippet_imports)
             except Exception as llm_exc:
-                # provider error (quota/network/bad model id) must not kill a
-                # 200-API run — record it as this API's failure and move on.
+                # Preserve the failed unit before optionally stopping the outer
+                # schedule. The default still continues to the next API.
+                from .llm import ProviderOutputError
+                provider_response = None
                 cat = "llm-error"
+                if isinstance(llm_exc, ProviderOutputError):
+                    cat = llm_exc.category
+                    provider_response = llm_exc.provider_evidence
+                    (evidence_dir / "response.txt").write_text(
+                        llm_exc.response_text, encoding="utf-8")
                 msg = f"{type(llm_exc).__name__}: {llm_exc}"
+                (evidence_dir / "provider.json").write_text(_json.dumps({
+                    "status": "error", "error": msg, "category": cat,
+                    **({"provider_response": provider_response}
+                       if provider_response is not None else {}),
+                    "wall_s": _time.time() - provider_t0,
+                    "usage": usage_delta(provider_u0),
+                }, ensure_ascii=False, indent=2), encoding="utf-8")
                 last = {"cat": cat, "msg": msg, "locus": "", "code": ""}
                 rounds_trace.append({"round": attempt, "status": "fail",
                                      "category": cat, "error": msg[:160]})
@@ -413,6 +588,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                                    .replace("# AIDEAL_DATA_BINDINGS", bindings),
                                    snippet, region, placeholders)
             scala_file.write_text(scala, encoding="utf-8")
+            (evidence_dir / scala_file.name).write_text(scala, encoding="utf-8")
+            execution_t0 = _time.time()
             try:
                 # shell=True so the `scalac && jar && spark-submit` pipeline runs
                 from .execution import run_command
@@ -426,6 +603,13 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                     return b.decode("utf-8", "ignore") if isinstance(b, (bytes, bytearray)) else (b or "")
                 out, err_out, rc = _txt(e.stdout), _txt(e.stderr) + "\n[timeout]", 124
             last_run = {"stdout": out or "", "stderr": err_out or "", "exit_code": rc}
+            (evidence_dir / "stdout.txt").write_text(last_run["stdout"], encoding="utf-8")
+            (evidence_dir / "stderr.txt").write_text(last_run["stderr"], encoding="utf-8")
+            (evidence_dir / "execution.json").write_text(_json.dumps({
+                "command": cmd, "cwd": str(work_dir), "timeout_s": timeout,
+                "exit_code": rc, "wall_s": _time.time() - execution_t0,
+                "stdout_file": "stdout.txt", "stderr_file": "stderr.txt",
+            }, ensure_ascii=False, indent=2), encoding="utf-8")
             merged = (out or "") + "\n" + (err_out or "")
             ran = (rc == 0) and (success_marker in merged if success_marker else True) \
                 and not (error_marker and error_marker in merged) \
@@ -517,6 +701,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             "status": "pass" if ran else "fail",
             "attempts": len(rounds_trace),
             "rendered_prompt_sha256": prompt_hashes,
+            "attempt_evidence": attempt_evidence,
             "pass_round": next((r["round"] for r in rounds_trace
                                 if r["status"] == "pass"), None),
             "wall_s": round(_time.time() - api_t0, 1),
@@ -545,7 +730,14 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                                    "experiment_fingerprint": experiment_fingerprint,
                                    "execution_evidence": per_api[entry.name],
                                    **metrics[entry.name]}, ensure_ascii=False) + "\n")
+        if stop_on_provider_error and (last.get("cat") == "llm-error"
+                                      or last.get("cat", "").startswith("provider-")):
+            stopped_on_provider_error = True
+            _sys.stderr.write("[comprehension] Provider error saved; stopping the remaining API schedule.\n")
+            _sys.stderr.flush()
+            break
     n = len(inventory)
+    attempted_n = len(metrics)
     # Doc-quality denominator excludes infra-only failures (missing-dependency runs
     # are environment noise, not documentation failures — see _classify_error). The
     # raw pass/n is kept as `score_with_infra` for transparency.
@@ -556,7 +748,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     #   executed          = the runnable subset actually compiled/run here
     raw = public_api_surface(cfg, override_filter="all")
     intended = public_api_surface(cfg)
-    covered = {e.name for e in inventory}
+    covered = set(metrics)
     return {
         "check": "comprehension",
         "mode": "execute",
@@ -564,6 +756,11 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         "run": {   # micro-benchmark header: everything a condition needs to be comparable
             "run_id": run_id,
             "api_count": n,
+            "selected_api_count": n,
+            "attempted_api_count": attempted_n,
+            "remaining_api_count": n - attempted_n,
+            "complete": attempted_n == n and not stopped_on_provider_error,
+            "stopped_on_provider_error": stopped_on_provider_error,
             "manifest_api_count": manifest_inventory_n,
             "models": {"audience": f"{writer_spec.provider}:{writer_spec.model}",
                        "fixer": f"{fixer_spec.provider}:{fixer_spec.model}"},
@@ -581,6 +778,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             "checkpoint_reuse": reuse,
             "doc_scope": doc_scope,
         },
+        # Retain the historical selected-API denominator. An interrupted score
+        # is only a lower bound; callers must check run.complete before reporting
+        # a final evaluation result. Unattempted APIs have no fabricated metrics.
+        "score_scope": "selected_apis_incomplete" if stopped_on_provider_error else "selected_apis",
         "passed": bool(scored_n) and passed_n == scored_n,
         "score": round(passed_n / scored_n, 3) if scored_n else 0.0,
         "score_with_infra": round(passed_n / n, 3) if n else 0.0,
@@ -589,7 +790,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             "raw_surface": len(raw),
             "intended_surface": len(intended),
             "surface_filter": cfg.surface_filter,
-            "executed": n,
+            "selected": n,
+            "executed": attempted_n,
             "scored": scored_n,
             "infra_excluded": infra_n,
             "untested_intended": sorted(intended - covered)[:20],

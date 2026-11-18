@@ -1,0 +1,314 @@
+6.1.2.2. Default Guesser
+
+DefaultGuesser is a generic guesser class that has basic guessing methods. This class is a general purpose guesser that can be used with most topologies, but being generic makes it the least accurate among all guessers.
+
+6.1.2.2.1. Guessing behavior
+
+This section describes how each attribute is guessed by the DefaultGuesser.
+
+6.1.2.2.1.1. Masses
+
+We first attempt to look up the mass of an atom based on its element if the element TopologyAttr is available. If not, we attempt to lookup the mass based on the atom type (type) TopologyAttr. If neither of these is available, we attempt to guess the atom type based on the atom name (name) and then lookup the mass based on the guessed atom type.
+
+6.1.2.2.1.2. Types
+
+We attempt to guess the atom type based on the atom name (name). The name is first stripped of any numbers and symbols, and then looked up in the MDAnalysis.guesser.tables.atomelements table. If the name is not found, we continue checking variations of the name following the logic in DefaultGuesser.guess_atom_element(). Ultimately, if no match is found, the first character of the stripped name is returned.
+
+6.1.2.2.1.3. Elements
+
+This follows the same method as guessing atom types.
+
+6.1.2.2.1.4. Bonds
+
+Bonds are guessed based on the distance between atoms. See DefaultGuesser.guess_bonds() for more details.
+
+6.1.2.2.1.5. Angles
+
+Angles are guessed based on the bonds between atoms. See DefaultGuesser.guess_angles() for more details.
+
+6.1.2.2.1.6. Dihedrals
+
+Dihedrals are guessed based on the angles between atoms. See DefaultGuesser.guess_dihedrals() for more details.
+
+6.1.2.2.1.7. Improper Dihedrals
+
+Improper dihedrals are guessed based on the angles between atoms. See DefaultGuesser.guess_improper_dihedrals() for more details.
+
+6.1.2.2.1.8. Aromaticities
+
+Aromaticity is guessed using RDKit’s GetIsAromatic method. See DefaultGuesser.guess_aromaticities() for more details.
+
+6.1.2.2.2. Classes
+
+ class MDAnalysis.guesser.default_guesser.DefaultGuesser(universe, box=None, vdwradii=None, fudge_factor=0.55, lower_bound=0.1, **kwargs)[source]
+
+This guesser holds generic methods (not directed to specific contexts) for guessing different topology attribute. It has the same methods which where originally found in Topology.guesser.py. The attributes that can be guessed by this class are:
+
+masses
+
+types
+
+elements
+
+angles
+
+dihedrals
+
+bonds
+
+improper dihedrals
+
+aromaticities
+
+You can use this guesser either directly through an instance, or through the guess_TopologyAttrs() method.
+
+Parameters:
+
+universe (Universe) – The Universe to apply the guesser on
+
+box (np.ndarray, optional) – The box of the Universe. This is used for bond guessing.
+
+vdwradii (dict, optional) – Dict relating atom types: vdw radii. This is used for bond guessing
+
+fudge_factor (float, optional) – The factor by which atoms must overlap each other to be considered a bond. Larger values will increase the number of bonds found. [0.55]
+
+lower_bound (float, optional) – The minimum bond length. All bonds found shorter than this length will be ignored. This is useful for parsing PDB with altloc records where atoms with altloc A and B may be very close together and there should be no chemical bond between them. [0.1]
+
+Examples
+
+to guess bonds for a universe:
+
+import MDAnalysis as mda
+from MDAnalysisTests.datafiles import two_water_gro
+
+u = mda.Universe(two_water_gro, context='default', to_guess=['bonds'])
+
+Added in version 2.8.0.
+
+ copy()
+
+Return a copy of this Guesser
+
+ get_atom_mass(element)[source]
+
+Return the atomic mass in u for element. Masses are looked up in MDAnalysis.guesser.tables.masses.
+
+Warning
+
+Until version 3.0.0 unknown masses are set to 0.0
+
+ guess_angles(bonds=None)[source]
+
+Given a list of Bonds, find all angles that exist between atoms.
+
+Works by assuming that if atoms 1 & 2 are bonded, and 2 & 3 are bonded, then (1,2,3) must be an angle.
+
+Parameters:
+
+bonds (Bonds) – from which angles should be guessed
+
+Returns:
+
+List of tuples defining the angles. Suitable for use in u._topology
+
+Return type:
+
+list of tuples
+
+See also
+
+guess_bonds()
+
+ guess_aromaticities(atomgroup=None)[source]
+
+Guess aromaticity of atoms using RDKit
+
+Returns:
+
+aromaticities – Array of boolean values for the aromaticity of each atom
+
+Return type:
+
+numpy.ndarray
+
+ guess_atom_charge(atoms)[source]
+
+Guess atom charge from the name.
+
+Warning
+
+Not implemented; simply returns 0.
+
+ guess_atom_element(atomname)[source]
+
+Guess the element of the atom from the name.
+
+First all numbers and symbols are stripped from the name. Then the name is looked up in the MDAnalysis.guesser.tables.atomelements table. If the name is not found, we remove the last character or first character from the name and check the table for both, with a preference for removing the last character. If the name is still not found, we iteratively continue to remove the last character or first character until we find a match. If ultimately no match is found, the first character of the stripped name is returned.
+
+If the input name is an empty string, an empty string is returned.
+
+The table comes from CHARMM and AMBER atom types, where the first character is not sufficient to determine the atom type. Some GROMOS ions have also been added.
+
+See also
+
+guess_atom_type(), MDAnalysis.guesser.tables
+
+ guess_atom_mass(atomname)[source]
+
+Guess a mass based on the atom name.
+
+guess_atom_element() is used to determine the kind of atom.
+
+Warning
+
+Until version 3.0.0 anything not recognized is simply set to 0.0; if you rely on the masses you might want to double-check.
+
+ guess_attr(attr_to_guess, force_guess=False)
+
+map the attribute to be guessed with the apporpiate guessing method
+
+Parameters:
+
+attr_to_guess (str) – an atrribute to be guessed then to be added to the universe
+
+force_guess (bool) – To indicate wether to only partialy guess the empty values of the attribute or to overwrite all existing values by guessed one
+
+Return type:
+
+NDArray of guessed values
+
+ guess_bonds(atoms=None, coords=None)[source]
+
+Guess if bonds exist between two atoms based on their distance.
+
+Bond between two atoms is created, if the two atoms are within
+
+ \[d < f \cdot (R_1 + R_2)\]
+
+of each other, where \(R_1\) and \(R_2\) are the VdW radii of the atoms and \(f\) is an ad-hoc fudge_factor. This is the same algorithm that VMD uses.
+
+Parameters:
+
+atoms (AtomGroup) – atoms for which bonds should be guessed
+
+coords (np.ndarray, optional) – coordinates of the atoms. If not provided, the coordinates of the atoms in the universe are used.
+
+Returns:
+
+List of tuples suitable for use in Universe topology building.
+
+Return type:
+
+list
+
+Warning
+
+No check is done after the bonds are guessed to see if Lewis structure is correct. This is wrong and will burn somebody.
+
+Raises:
+
+ValueError – If inputs are malformed or vdwradii data is missing.
+
+ guess_dihedrals(angles=None)[source]
+
+Given a list of Angles, find all dihedrals that exist between atoms.
+
+Works by assuming that if (1,2,3) is an angle, and 3 & 4 are bonded, then (1,2,3,4) must be a dihedral.
+
+Parameters:
+
+angles (Angles) – from which dihedrals should be guessed
+
+Returns:
+
+List of tuples defining the dihedrals. Suitable for use in u._topology
+
+Return type:
+
+list of tuples
+
+ guess_gasteiger_charges(atomgroup)[source]
+
+Guess Gasteiger partial charges using RDKit
+
+Parameters:
+
+atomgroup (mda.core.groups.AtomGroup) – Atoms for which the charges will be guessed
+
+Returns:
+
+charges – Array of float values representing the charge of each atom
+
+Return type:
+
+numpy.ndarray
+
+ guess_improper_dihedrals(angles=None)[source]
+
+Given a list of Angles, find all improper dihedrals that exist between atoms.
+
+Works by assuming that if (1,2,3) is an angle, and 2 & 4 are bonded, then (2, 1, 3, 4) must be an improper dihedral. ie the improper dihedral is the angle between the planes formed by (1, 2, 3) and (1, 3, 4)
+
+Returns:
+
+List of tuples defining the improper dihedrals.
+
+Suitable for use in u._topology
+
+ guess_masses(atom_types=None, indices_to_guess=None)[source]
+
+Guess the mass of many atoms based upon their type. For guessing masses through guess_TopologyAttrs():
+
+First try to guess masses from atom elements, if not available, try to guess masses from types and if not available, try to guess types.
+
+Parameters:
+
+atom_types (Optional[np.ndarray]) – Atom types/elements to guess masses from
+
+indices_to_guess (Optional[np.ndarray]) – Mask array for partially guess masses for certain atoms
+
+Returns:
+
+atom_masses
+
+Return type:
+
+np.ndarray dtype float64
+
+Raises:
+
+ValueError – If there are no atom types or elements to guess mass from.
+
+ guess_types(atom_types=None, indices_to_guess=None)[source]
+
+Guess the atom type of many atoms based on atom name
+
+Parameters:
+
+(optional) (indices_to_guess) – atoms names if types guessing is desired to be from names
+
+(optional) – Mask array for partially guess types for certain atoms
+
+Returns:
+
+atom_types
+
+Return type:
+
+np.ndarray dtype object
+
+Raises:
+
+ValueError – If there is no names to guess types from.
+
+ is_guessable(attr_to_guess)
+
+check if the passed atrribute can be guessed by the guesser class
+
+Parameters:
+
+guess (str) – Attribute to be guessed then added to the Universe
+
+Return type:
+
+bool

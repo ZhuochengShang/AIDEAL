@@ -1,0 +1,22 @@
+write_all_timesteps(obj)[source]
+
+Write all timesteps associated with obj to the PDB file.
+
+obj can be a AtomGroup or a Universe.
+
+The method writes the frames from the one specified as start until the end, using a step of step (start and step are set in the constructor). Thus, if u is a Universe then
+
+u.trajectory[-2]
+pdb = PDBWriter("out.pdb", u.atoms.n_atoms)
+pdb.write_all_timesteps(u)
+
+will write a PDB trajectory containing the last 2 frames and
+
+pdb = PDBWriter("out.pdb", u.atoms.n_atoms, start=12, step=2)
+pdb.write_all_timesteps(u)
+
+will be writing frames 12, 14, 16, …
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 2.0.0: CONECT record moved to close()

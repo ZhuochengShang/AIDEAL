@@ -1,0 +1,41 @@
+class MDAnalysis.coordinates.MOL2.MOL2Writer(filename, n_atoms=None, convert_units=True)[source]
+
+mol2 format writer
+
+Write a file in the Tripos molecule structure format (MOL2).
+
+Note
+
+MOL2Writer can only be used to write out previously loaded MOL2 files. If you’re trying to convert, for example, a PDB file to MOL you should use other tools, like rdkit.
+
+Here is an example how to use rdkit to convert a PDB to MOL:
+
+from rdkit import Chem
+mol = Chem.MolFromPDBFile("molecule.pdb", removeHs=False)
+Chem.MolToMolFile(mol, "molecule.mol" )
+
+MOL2 writer is currently not available for rdkit master. It requires SYBYL atomtype generation. See page 7 for list of SYBYL atomtypes (http://tripos.com/tripos_resources/fileroot/pdfs/mol2_format2.pdf).
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Create a new MOL2Writer
+
+Parameters:
+
+filename (str) – name of output file
+
+convert_units (bool (optional)) – units are converted to the MDAnalysis base format; [True]
+
+ close()[source]
+
+Close the trajectory file.
+
+ encode_block(obj)[source]
+
+Parameters:
+
+obj (AtomGroup or Universe)
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

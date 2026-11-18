@@ -1,0 +1,21 @@
+MDAnalysis.selections.get_writer(filename: str, defaultformat: str) → SelectionWriterBase[source]
+
+Return a SelectionWriter for filename or a defaultformat.
+
+Parameters:
+
+filename (str) – name of the output file; the extension is used to guess the file format
+
+defaultformat (str) – if filename does not have an extension, use defaultformat instead
+
+Returns:
+
+SelectionWriterBase – the writer class for the detected format
+
+Return type:
+
+type
+
+Raises:
+
+NotImplementedError – for any format that is not defined

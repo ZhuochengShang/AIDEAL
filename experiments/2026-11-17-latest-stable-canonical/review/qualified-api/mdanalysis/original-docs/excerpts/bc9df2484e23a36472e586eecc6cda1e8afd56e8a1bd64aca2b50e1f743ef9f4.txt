@@ -1,0 +1,28 @@
+class MDAnalysis.transformations.nojump.NoJump(check_continuity=True, max_threads=None)[source]
+
+Returns transformed coordinates for the given timestep so that an atom does not move more than half the periodic box size between two timesteps, and will move across periodic boundary edges. The algorithm used is based on [1], equation B6 for non-orthogonal systems, so it is general to most applications where molecule trajectories should not “jump” from one side of a periodic box to another.
+
+Note that this transformation depends on a periodic box dimension being set for every frame in the trajectory, and that this box dimension can be transformed to an orthonormal unit cell. If not, an error is emitted. Since it is typical to transform all frames sequentially when unwrapping trajectories, warnings are emitted if non-sequential timesteps are transformed using NoJump.
+
+Example
+
+Suppose you had a molecular trajectory with a protein dimer that moved across a periodic boundary. This will normally appear to make the dimer split apart. This transformation uses the molecular motions between frames in a wrapped trajectory to create an unwrapped trajectory where molecules never move more than half a periodic box dimension between subsequent frames. Thus, the normal use case is to apply the transformation to every frame of a trajectory, and to do so sequentially.
+
+transformation = NoJump()
+u.trajectory.add_transformations(transformation)
+for ts in u.trajectory:
+    print(ts.positions)
+
+In this case, ts.positions will return the NoJump unwrapped trajectory, which would keep protein dimers together if they are together in the inital timestep. The unwrapped trajectory may also be useful to compute diffusion coefficients via the Einstein relation. To reverse the process, wrap the coordinates again.
+
+Return type:
+
+MDAnalysis.coordinates.timestep.Timestep
+
+References
+
+Parameters:
+
+max_threads (int, optional) – The maximum thread number can be used. Default is None, which means the default or the external setting.
+
+parallelizable (bool, optional) – A check for if this can be used in split-apply-combine parallel analysis approach. Default is True.

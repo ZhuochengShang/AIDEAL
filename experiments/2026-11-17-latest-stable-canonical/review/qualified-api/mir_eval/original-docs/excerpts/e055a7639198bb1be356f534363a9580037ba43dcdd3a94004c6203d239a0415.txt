@@ -1,0 +1,29 @@
+mir_eval.io.load_tempo(filename, delimiter='\\s+', comment='#')
+
+Load tempo estimates from an annotation file in MIREX format. The file should consist of three numeric columns: the first two correspond to tempo estimates (in beats-per-minute), and the third denotes the relative confidence of the first value compared to the second (in the range [0, 1]). The file should contain only one row.
+
+Parameters:
+
+filenamestr or os.Pathlike
+
+Path to the annotation file
+
+delimiterstr
+
+Separator regular expression. By default, lines will be split by any amount of whitespace.
+
+commentstr or None
+
+Comment regular expression. Any lines beginning with this string or pattern will be ignored.
+
+Setting to None disables comments.
+
+Returns:
+
+tempinp.ndarray, non-negative
+
+The two tempo estimates
+
+weightfloat [0, 1]
+
+The relative importance of tempi[0] compared to tempi[1]

@@ -1,0 +1,213 @@
+4.2.3. Analysis results and their aggregation — MDAnalysis.analysis.results
+
+Module introduces two classes, Results and ResultsGroup, used for storing and aggregating data in MDAnalysis.analysis.base.AnalysisBase.run(), respectively.
+
+4.2.3.1. Classes
+
+The Results class is an extension of a built-in dictionary type, that holds all assigned attributes in self.data and allows for access either via dict-like syntax, or via class-like syntax:
+
+from MDAnalysis.analysis.results import Results
+r = Results()
+r.array = [1, 2, 3, 4]
+assert r['array'] == r.array == [1, 2, 3, 4]
+
+The ResultsGroup can merge multiple Results objects. It is mainly used by MDAnalysis.analysis.base.AnalysisBase class, that uses ResultsGroup.merge() method to aggregate results from multiple workers, initialized during a parallel run:
+
+from MDAnalysis.analysis.results import Results, ResultsGroup
+import numpy as np
+
+r1, r2 = Results(), Results()
+r1.masses = [1, 2, 3, 4, 5]
+r2.masses = [0, 0, 0, 0]
+r1.vectors = np.arange(10).reshape(5, 2)
+r2.vectors = np.arange(8).reshape(4, 2)
+
+group = ResultsGroup(
+    lookup = {
+        'masses': ResultsGroup.flatten_sequence,
+        'vectors': ResultsGroup.ndarray_vstack
+        }
+    )
+
+r = group.merge([r1, r2])
+assert r.masses == list((*r1.masses, *r2.masses))
+assert (r.vectors == np.vstack([r1.vectors, r2.vectors])).all()
+
+ class MDAnalysis.analysis.results.Results(*args, **kwargs)[source]
+
+Container object for storing results.
+
+Results are dictionaries that provide two ways by which values can be accessed: by dictionary key results["value_key"] or by object attribute, results.value_key. Results stores all results obtained from an analysis after calling run().
+
+The implementation is similar to the sklearn.utils.Bunch class in scikit-learn.
+
+Raises:
+
+AttributeError – If an assigned attribute has the same name as a default attribute.
+
+ValueError – If a key is not of type str and therefore is not able to be accessed by attribute.
+
+Examples
+
+>>> from MDAnalysis.analysis.base import Results
+>>> results = Results(a=1, b=2)
+>>> results['b']
+2
+>>> results.b
+2
+>>> results.a = 3
+>>> results['a']
+3
+>>> results.c = [1, 2, 3, 4]
+>>> results['c']
+[1, 2, 3, 4]
+
+Added in version 2.0.0.
+
+Changed in version 2.8.0: Moved Results to MDAnalysis.analysis.results
+
+ class MDAnalysis.analysis.results.ResultsGroup(lookup: dict[str, Callable] = None)[source]
+
+Management and aggregation of results stored in Results instances.
+
+A ResultsGroup is an optional description for Result “dictionaries” that are used in analysis classes based on AnalysisBase. For each key in a Result it describes how multiple pieces of the data held under the key are to be aggregated. This approach is necessary when parts of a trajectory are analyzed independently (e.g., in parallel) and then need to me merged (with merge()) to obtain a complete data set.
+
+Parameters:
+
+lookup (dict[str, Callable], optional) – aggregation functions lookup dict, by default None
+
+Examples
+
+from MDAnalysis.analysis.results import ResultsGroup, Results
+group = ResultsGroup(lookup={'mass': ResultsGroup.float_mean})
+obj1 = Results(mass=1)
+obj2 = Results(mass=3)
+assert {'mass': 2.0} == group.merge([obj1, obj2])
+
+# you can also set `None` for those attributes that you want to skip
+lookup = {'mass': ResultsGroup.float_mean, 'trajectory': None}
+group = ResultsGroup(lookup)
+objects = [Results(mass=1, skip=None), Results(mass=3, skip=object)]
+assert group.merge(objects, require_all_aggregators=False) == {'mass': 2.0}
+
+Added in version 2.8.0.
+
+ static flatten_sequence(arrs: list[list])[source]
+
+Flatten a list of lists into a list
+
+Parameters:
+
+arrs (list[list]) – list of lists
+
+Returns:
+
+flattened list
+
+Return type:
+
+list
+
+ static float_mean(floats: list[float])[source]
+
+calculates mean of input float values
+
+Parameters:
+
+floats (list[float]) – list of float values
+
+Returns:
+
+mean value
+
+Return type:
+
+float
+
+ merge(objects: Sequence[Results], require_all_aggregators: bool = True) → Results[source]
+
+Merge multiple Results into a single Results instance.
+
+Merge multiple Results instances into a single one, using the lookup dictionary to determine the appropriate aggregator functions for each named results attribute. If the resulting object only contains a single element, it just returns it without using any aggregators.
+
+Parameters:
+
+objects (Sequence[Results]) – Multiple Results instances with the same data attributes.
+
+require_all_aggregators (bool, optional) – if True, raise an exception when no aggregation function for a particular argument is found. Allows to skip aggregation for the parameters that aren’t needed in the final object – see ResultsGroup.
+
+Returns:
+
+merged Results
+
+Return type:
+
+Results
+
+Raises:
+
+ValueError – if no aggregation function for a key is found and require_all_aggregators=True
+
+ static ndarray_hstack(arrs: list[ndarray])[source]
+
+Performs horizontal stack of input arrays
+
+Parameters:
+
+arrs (list[np.ndarray]) – input numpy arrays
+
+Returns:
+
+result of stacking
+
+Return type:
+
+np.ndarray
+
+ static ndarray_mean(arrs: list[ndarray])[source]
+
+calculates mean of input ndarrays along axis=0
+
+Parameters:
+
+arrs (list[np.ndarray]) – list of input arrays. Must have the same shape.
+
+Returns:
+
+mean of input arrays
+
+Return type:
+
+np.ndarray
+
+ static ndarray_sum(arrs: list[ndarray])[source]
+
+sums an ndarray along axis=0
+
+Parameters:
+
+arrs (list[np.ndarray]) – list of input arrays. Must have the same shape.
+
+Returns:
+
+sum of input arrays
+
+Return type:
+
+np.ndarray
+
+ static ndarray_vstack(arrs: list[ndarray])[source]
+
+Performs vertical stack of input arrays
+
+Parameters:
+
+arrs (list[np.ndarray]) – input numpy arrays
+
+Returns:
+
+result of stacking
+
+Return type:
+
+np.ndarray

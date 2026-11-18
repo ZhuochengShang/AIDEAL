@@ -1,0 +1,13 @@
+next_as_aux(auxname)[source]
+
+Move to the next timestep for which there is at least one step from the auxiliary auxname within the cutoff specified in auxname.
+
+This allows progression through the trajectory without encountering NaN representative values (unless these are specifically part of the auxiliary data).
+
+If the auxiliary cutoff is not set, where auxiliary steps are less frequent (auxiliary.dt > trajectory.dt), this allows progression at the auxiliary pace (rounded to nearest timestep); while if the auxiliary steps are more frequent, this will work the same as calling next().
+
+See the Auxiliary API.
+
+See also
+
+iter_as_aux()

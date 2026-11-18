@@ -1,0 +1,43 @@
+tslearn.metrics.subsequence_path(acc_cost_mat, idx_path_end, be=None)[source]
+
+Compute the optimal path through an accumulated cost matrix given the endpoint of the sequence.
+
+Parameters:
+
+acc_cost_mat: array-like, shape=(sz1, sz2)
+
+Accumulated cost matrix comparing subsequence from a longer sequence.
+
+idx_path_end: int
+
+The end position of the matched subsequence in the longer sequence.
+
+beBackend object or string or None
+
+Backend. If be is an instance of the class NumPyBackend or the string “numpy”, the NumPy backend is used. If be is an instance of the class PyTorchBackend or the string “pytorch”, the PyTorch backend is used. If be is None, the backend is determined by the input arrays. See our dedicated user-guide page for more information.
+
+Returns:
+
+path: list of tuples of integer pairs
+
+Matching path represented as a list of index pairs. In each pair, the first index corresponds to subseq and the second one corresponds to longseq. The startpoint of the Path is \(P_0 = (0, ?)\) and it ends at \(P_L = (len(subseq)-1, idx\_path\_end)\)
+
+See also
+
+dtw_subsequence_path
+
+Get the similarity score for DTW
+
+subsequence_cost_matrix
+
+Calculate the required cost matrix
+
+Examples
+
+>>> acc_cost_mat = numpy.array([[1., 0., 0., 1., 4.],
+...                             [5., 1., 1., 0., 1.]])
+>>> # calculate the globally optimal path
+>>> optimal_end_point = numpy.argmin(acc_cost_mat[-1, :])
+>>> path = subsequence_path(acc_cost_mat, optimal_end_point)
+>>> path
+[(0, 2), (1, 3)]

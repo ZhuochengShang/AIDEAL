@@ -1,0 +1,14 @@
+MDAnalysis.lib.transformations.reflection_from_matrix(matrix)[source]
+
+Return mirror plane point and normal vector from reflection matrix.
+
+>>> from MDAnalysis.lib.transformations import (reflection_matrix,
+...     reflection_from_matrix, is_same_transform)
+>>> import numpy as np
+>>> v0 = np.random.random(3) - 0.5
+>>> v1 = np.random.random(3) - 0.5
+>>> M0 = reflection_matrix(v0, v1)
+>>> point, normal = reflection_from_matrix(M0)
+>>> M1 = reflection_matrix(point, normal)
+>>> is_same_transform(M0, M1)
+True

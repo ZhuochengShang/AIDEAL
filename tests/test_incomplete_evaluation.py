@@ -6,6 +6,9 @@ from unittest.mock import patch
 import test_condition_evaluation as fixtures
 import test_evaluation as legacy_fixtures
 from workflow.ablation import load
+from workflow.evaluation_conditions import _ConditionPolicy
+from workflow.evaluation_runner import verify_row
+from workflow.evaluation_program_generation import rounds
 from workflow import condition_evaluation as runner
 from workflow import evaluation as legacy
 
@@ -69,7 +72,7 @@ print(json.dumps({'code':'correct' if repair else 'wrong',
         self.assertFalse(list(path.parent.glob('round_01/execution_*')))
         for number, cap in [(0, 100), (1, 250)]:
             self.assertEqual(cap, load(path.parent / f'round_{number:02d}/provider_001/request.json')['max_output_tokens'])
-        runner._verify_saved_row(runner.open_conditions(study), row, path.parent)
+        verify_row(_ConditionPolicy(runner.open_conditions(study)), row, path.parent)
 
     def test_rebound_receipt_and_provider_request_reject_before_calls(self):
         fixture, study, out = self.setup_condition({'code': 'partial', 'response_status': 'incomplete'})
@@ -81,7 +84,7 @@ print(json.dumps({'code':'correct' if repair else 'wrong',
         forged = load(receipt)
         forged.update(status='complete', executable=True)
         receipt.write_text(json.dumps(forged))
-        row['round_evidence'] = runner._round_evidence(path.parent)
+        row['round_evidence'] = rounds(path.parent, exposure=True)
         path.write_text(json.dumps(row))
         with patch.object(runner, '_request_solution') as provider:
             with self.assertRaisesRegex(ValueError, 'generation evidence differs'):
@@ -92,7 +95,7 @@ print(json.dumps({'code':'correct' if repair else 'wrong',
         value = load(request)
         value['max_output_tokens'] += 1
         request.write_text(json.dumps(value))
-        row['round_evidence'] = runner._round_evidence(path.parent)
+        row['round_evidence'] = rounds(path.parent, exposure=True)
         path.write_text(json.dumps(row))
         with patch.object(runner, '_request_solution') as provider:
             with self.assertRaisesRegex(ValueError, 'provider request differs'):

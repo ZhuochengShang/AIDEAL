@@ -1,7 +1,7 @@
 """Explicit, bounded development inputs; never import or execute library code."""
 from dataclasses import replace
-from functools import lru_cache
 import glob
+import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -11,10 +11,11 @@ from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json
 from .preparation import _engine_config_module
 from .treatment_versions import _run as _git, _check_worktree
-from .scala_owners import _tokens as _scala_tokens, owner_at_line
 
 
 def alias_target(value):
+    # Return a normalized relative path for a supported source file, or None if
+    # aliases were not requested.
     if value is None:
         return None
     if not isinstance(value, str) or not value or '\\' in value or '\x00' in value:
@@ -28,6 +29,8 @@ def alias_target(value):
 
 
 def original_checkout(study):
+    # Resolve the recorded Original checkout, then check that its path, branch,
+    # commit, and on-disk files match the baseline.
     study = Path(study).resolve()
     attachment = load(study / 'attachment.json')
     item = attachment['worktrees']['original']
@@ -47,6 +50,8 @@ def original_checkout(study):
 
 def development_destination(study, output):
     """Keep preview/proposal outputs outside all library source checkouts."""
+    # Resolve the requested output and compare it with the original repository and
+    # every attached worktree.
     output = Path(output).resolve()
     attachment = load(Path(study) / 'attachment.json')
     roots = [Path(attachment['repository']).resolve()]
@@ -58,14 +63,21 @@ def development_destination(study, output):
 
 def _development_errors(path, definitions, max_characters=12000):
     """Only explicit development logs; never read a held-out bank or its oracles."""
+    # Return selected log rows, a hash binding for the log file, and a count of
+    # skipped rows. An absent log contributes no evidence.
     if path is None:
         return [], None, 0
     path = Path(path).resolve()
     rows, omitted, used = [], 0, 0
     by_name = {}
     for definition in definitions:
-        for name in (definition['name'], definition['qualified_name'], definition['id']):
+        labels = [definition['name'], definition['qualified_name'], definition['id']]
+        labels += [definition.get('source_function_id'), *definition.get('exposure_ids', []),
+                   *definition.get('public_access_paths', [])]
+        for name in filter(None, labels):
             by_name.setdefault(name, set()).add(definition['id'])
+    # Match each failure to one API and keep only bounded text from the development
+    # log.
     for number, line in enumerate(path.read_text().splitlines(), 1):
         if not line.strip():
             continue
@@ -103,57 +115,117 @@ def _development_errors(path, definitions, max_characters=12000):
     return rows, bind(path), omitted
 
 
-@lru_cache(maxsize=128)
-def _scala_package(source):
-    """Accept leading, unbraced package declarations; ignore comments/literals."""
-    tokens = _scala_tokens(source)
-    cursor, packages = 0, []
-    while cursor < len(tokens) and tokens[cursor].value == 'package':
-        line = tokens[cursor].line
-        cursor += 1
-        parts = []
-        while cursor < len(tokens) and tokens[cursor].line == line and tokens[cursor].value != ';':
-            parts.append(tokens[cursor].value)
-            cursor += 1
-        if (not parts or any(not re.fullmatch(r'[A-Za-z_$][\w$]*', part)
-                             for part in parts[::2])
-                or len(parts) % 2 != 1 or any(part != '.' for part in parts[1::2])):
-            raise ValueError('Unsupported Scala package declaration')
-        packages.append(''.join(parts))
-        if cursor < len(tokens) and tokens[cursor].value == ';':
-            cursor += 1
-    if any(token.value == 'package' for token in tokens[cursor:]):
-        raise ValueError('Non-leading Scala package declarations require explicit resolution')
-    return '.'.join(packages)
+def _select_library_apis(definitions, apis):
+    """Select explicit identities; qualified-mode shorthand must be unambiguous."""
+    if not apis:
+        return definitions
+    if not any(row.get('api_id') for row in definitions):
+        selected = [row for row in definitions if {row['id'], row['name'], row['qualified_name']}.intersection(apis)]
+        known = {row[key] for row in selected for key in ('id', 'name', 'qualified_name')}
+        if set(apis) - known:
+            raise ValueError('Requested API not found: ' + ', '.join(sorted(set(apis) - known)))
+        return selected
+    exact = {row['id']: row for row in definitions}
+    selected = set()
+    for requested in apis:
+        if requested in exact:
+            selected.add(requested)
+            continue
+        matches = [row for row in definitions if requested in {
+            row['name'], row['qualified_name'], row.get('source_function_id'),
+            *row.get('public_access_paths', []), *row.get('exposure_ids', [])}]
+        if not matches:
+            raise ValueError('Requested API not found: ' + requested)
+        if len(matches) != 1:
+            raise ValueError('Ambiguous API shorthand; use one exact API ID: ' + ', '.join(row['id'] for row in matches))
+        selected.add(matches[0]['id'])
+    return [row for row in definitions if row['id'] in selected]
 
 
-def _scala_receiver_facts(source, line, name):
-    """Add lexical facts without redefining discovery identity or public scope."""
-    facts = dict.fromkeys(('receiver', 'owner_kind', 'owner_path', 'qualified_receiver',
-                           'source_qualified_name', 'owner_declaration'))
-    try:
-        owner = owner_at_line(source, line, name)
-        package = _scala_package(source)
-    except ValueError as exc:
-        return {**facts, 'qualification_status': 'unresolved', 'qualification_reason': str(exc)}
-    qualified = '.'.join(filter(None, (package, owner['owner_path'])))
-    declaration_line = owner['declaration_line']
-    return {**owner, 'qualified_receiver': qualified,
-            'source_qualified_name': qualified + '.' + name,
-            'owner_declaration': {'line': declaration_line,
-                                  'text': source.splitlines()[declaration_line - 1]},
-            'qualification_status': 'resolved_lexical',
-            'qualification_reason': 'Direct named-owner member; not a type, visibility or dispatch proof.'}
+def _qualified_library_definitions(cfg, root, tracked):
+    """Discover on pinned provenance, then byte-check the attached source copy.
+
+    The attached checkout has an instrumentation commit. It is not the pristine
+    inventory root, so changing cfg.root would invalidate both inventory and
+    documentation bindings. Only verified defining files are relocated here.
+    """
+    from aideal.api_discovery import public_api_details
+    from aideal.api_registry import target_key
+    from aideal.original_documentation import original_document_paths
+    codebase = cfg.raw.get('codebase', {})
+    locator = codebase.get('api_inventory')
+    if not locator:
+        raise ValueError('Qualified development requires a hash-bound source inventory')
+    inventory_path = (cfg.root / locator).resolve(strict=True)
+    inventory_ref = bind(inventory_path)
+    if inventory_ref['sha256'] != codebase.get('api_inventory_sha256'):
+        raise ValueError('Qualified development inventory checksum differs from configuration')
+    inventory = load(inventory_path)
+    # Registry discovery validates manifests, receipts and pristine source first.
+    discovered = public_api_details(cfg)
+    if inventory.get('kind') == 'registered_sql':
+        raise ValueError('Registered SQL documentation is not implementation source; a reviewed native registration adapter is required for alias/hint development')
+    source_root = inventory.get('source_root')
+    if not source_root:
+        raise ValueError('Qualified development inventory needs its pinned source_root')
+    pinned = (cfg.root / source_root).resolve(strict=True)
+    refs = [inventory_ref, *[bind(path) for path in original_document_paths(cfg)]]
+    for field in ('source_inventory', 'canonical_selection', 'parser_contract'):
+        if inventory.get(field):
+            refs.append(bind((cfg.root / inventory[field]).resolve(strict=True)))
+    definitions = []
+    for row in discovered:
+        if row['visibility'] != 'public' and row.get('public_exposure_established') is not True:
+            continue
+        original_path = (cfg.root / (row.get('defining_file') or row['file'])).resolve(strict=True)
+        if not original_path.is_relative_to(pinned):
+            raise ValueError('API defining source escapes the pinned inventory root')
+        relative = original_path.relative_to(pinned).as_posix()
+        candidate = root / relative
+        if (relative not in tracked or '.aideal' in Path(relative).parts or candidate.is_symlink()
+                or not candidate.is_file() or not candidate.resolve().is_relative_to(root)):
+            raise ValueError('API defining source is not an ordinary tracked attached file: ' + relative)
+        original_bytes, attached_bytes = original_path.read_bytes(), candidate.read_bytes()
+        source_hash = hashlib.sha256(original_bytes).hexdigest()
+        if (source_hash != (row.get('source_sha256') or row.get('file_sha256'))
+                or attached_bytes != original_bytes):
+            raise ValueError('Attached defining source differs from the pinned inventory: ' + relative)
+        # Source patchers use path:line:name, independently of the public API ID.
+        # Python's parser also validates its lexical module/class ownership.
+        source_name = row['qualified_name'] if candidate.suffix == '.py' else row['name']
+        identity = target_key(row)
+        definitions.append({**row, 'id': identity, 'file': relative,
+            'source_function_id': f"{relative}:{row['line']}:{source_name}",
+            'source_discovery': {'api_id': identity, 'pinned_file': str(original_path),
+                                 'attached_file': relative, 'file_sha256': source_hash,
+                                 'mapping': 'identical_bytes_in_tracked_attached_source'}})
+        refs.append(bind(original_path))
+    if not all(verify_artifact(ref) for ref in refs):
+        raise ValueError('Pinned development provenance changed during discovery')
+    return definitions, list({ref['path']: ref for ref in refs}.values())
 
 
 def _library_inputs(study, apis=None):
     """Discover the full pinned public surface without importing target code."""
+    # Verify the saved configuration, then map its source patterns into the pinned
+    # Original worktree before discovering APIs.
     study, root, attachment = original_checkout(study)
     source = load(study / 'source.json')
     refs = source['configuration_layers']
     if not all(verify_artifact(ref) for ref in refs):
         raise ValueError('Configuration changed since attachment')
     cfg = _engine_config_module().load_config(source['configuration']['path'])
+    engine_path = str(Path(__file__).resolve().parents[1] / 'vendor/aideal_engine/src')
+    if engine_path not in sys.path:
+        sys.path.insert(0, engine_path)
+    tracked = set(_git(root, 'ls-files', '-z').split('\x00'))
+    if cfg.raw.get('codebase', {}).get('identity_mode') == 'qualified':
+        definitions, provenance_refs = _qualified_library_definitions(cfg, root, tracked)
+        definitions = _select_library_apis(definitions, apis)
+        definitions.sort(key=lambda row: (row['file'], row['line'], row['id']))
+        if not definitions or len({row['id'] for row in definitions}) != len(definitions):
+            raise ValueError('Qualified discovery returned no APIs or duplicate defining identities')
+        return study, root, attachment, cfg, definitions, refs + provenance_refs
     repository = Path(attachment['repository']).resolve()
     patterns = []
     for pattern in cfg.source_globs:
@@ -161,7 +233,6 @@ def _library_inputs(study, apis=None):
         if not absolute.is_relative_to(repository):
             raise ValueError('Configured source pattern escapes the pinned repository')
         patterns.append(str(root / absolute.relative_to(repository)))
-    tracked = set(_git(root, 'ls-files', '-z').split('\x00'))
     files = sorted({Path(p) for pattern in patterns for p in glob.glob(pattern, recursive=True)
                     if Path(p).is_file()})
     for path in files:
@@ -171,25 +242,16 @@ def _library_inputs(study, apis=None):
              and '.aideal' not in p.relative_to(root).parts]
     if not files:
         raise ValueError('No tracked source files match the configured patterns')
-    engine_path = str(Path(__file__).resolve().parents[1] / 'vendor/aideal_engine/src')
-    if engine_path not in sys.path:
-        sys.path.insert(0, engine_path)
     from aideal.api_discovery import public_api_details
     # Resolve discovery inside the pinned checkout, not the caller's mutable repo.
     local = replace(cfg, root=root, source_globs=[glob.escape(str(p)) for p in files], test_globs=[])
-    definitions, scala_sources = [], {}
+    definitions = []
     for row in public_api_details(local):
         if row['visibility'] != 'public':
             continue
         row = {**row, 'id': f"{row['file']}:{row['line']}:{row['qualified_name']}"}
         if apis and not {row['id'], row['qualified_name'], row['name']}.intersection(apis):
             continue
-        if Path(row['file']).suffix == '.scala':
-            if row['file'] not in scala_sources:
-                scala_sources[row['file']] = (root / row['file']).read_text()
-            # Keep the original id/qualified_name and selection semantics. These
-            # additional facts disambiguate receivers for the model only.
-            row.update(_scala_receiver_facts(scala_sources[row['file']], row['line'], row['name']))
         definitions.append(row)
     definitions.sort(key=lambda r: (r['file'], r['line'], r['id']))
     if apis:
@@ -205,6 +267,8 @@ def _library_inputs(study, apis=None):
 
 def _semantic_context(cfg, root, attachment):
     """Expose discovery semantics and explicit profile, never model credentials."""
+    # Resolve the configured profile path and record the supplied profile plus
+    # discovery settings for use in the prompt.
     configured = Path(cfg.raw.get('files', {}).get('project_profile', 'configs/project_profile.yaml'))
     path = (cfg.root / configured).resolve()
     repository = Path(attachment['repository']).resolve()
@@ -229,12 +293,22 @@ def _semantic_context(cfg, root, attachment):
 
 def _source_windows(root, definitions):
     """Capture bounded literal source evidence, keyed by original function ID."""
+    # Attach a short literal excerpt and its line numbers to each definition. Read and
+    # bind each source file once.
     refs, file_lines = {}, {}
     for row in definitions:
         path = root / row['file']
         if row['file'] not in file_lines:
-            file_lines[row['file']] = path.read_text().splitlines()
+            if row.get('source_discovery'):
+                data = path.read_bytes()
+                if hashlib.sha256(data).hexdigest() != row['source_discovery']['file_sha256']:
+                    raise ValueError('Attached source changed before source-window capture')
+                file_lines[row['file']] = data.decode('utf-8').splitlines()
+            else:
+                file_lines[row['file']] = path.read_text().splitlines()
             refs[row['file']] = bind(path)
+            if row.get('source_discovery') and refs[row['file']]['sha256'] != row['source_discovery']['file_sha256']:
+                raise ValueError('Attached source changed during source-window capture')
         lines = file_lines[row['file']]
         first, last = max(0, row['line'] - 4), min(len(lines), row['line'] + 60)
         row['source_window'] = {'start_line': first + 1, 'end_line': last,
@@ -254,9 +328,21 @@ def _source_windows(root, definitions):
     return list(refs.values())
 
 
+def _hint_identity_fields(definitions):
+    """Bridge qualified evaluation targets to exact source-edit locations."""
+    if not any(row.get('api_id') for row in definitions):
+        return {}
+    return {'api_function_ids': {row['id']: row['source_function_id'] for row in definitions},
+            'api_public_paths': {row['id']: row.get('public_access_paths') or
+                                 [path.rsplit(':', 1)[-1] for path in row.get('exposure_ids', [])]
+                                 for row in definitions}}
+
+
 def preview_improvements(study, output, *, alias_path=None, apis=None, development_errors=None,
                          max_apis=12, max_context_characters=60000):
     """Save the exact development context before any model command is permitted."""
+    # Prepare one preview for a small API selection. Save the prompt data and input
+    # hashes for the later proposal command.
     if type(max_apis) is not int or not 1 <= max_apis <= 100:
         raise ValueError('max_apis must be between 1 and 100')
     if type(max_context_characters) is not int or not 1000 <= max_context_characters <= 250000:
@@ -274,7 +360,7 @@ def preview_improvements(study, output, *, alias_path=None, apis=None, developme
     errors, error_ref, omitted = _development_errors(development_errors, selected)
     context = {'project': cfg.project_name, 'language': cfg.language,
                'baseline_revision': attachment['revision'], 'alias_destination': target,
-               'apis': selected, 'development_errors': errors, **semantics,
+               'apis': selected, 'development_errors': errors, **semantics, **_hint_identity_fields(selected),
                'coverage': {'matching_definitions': available, 'selected_definitions': len(selected),
                             'omitted_definitions': available - len(selected), 'omitted_error_rows': omitted,
                             'source_window_policy': 'Three preceding lines and up to sixty following lines; not the full codebase.'}}

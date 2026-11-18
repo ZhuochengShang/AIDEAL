@@ -1,0 +1,110 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>CODE REVIEW ROUTE</title><style>body{max-width:1280px;margin:30px auto;padding:0 25px;font:16px/1.6 system-ui;color:#18344b}a{color:#1765a6}table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow:auto}td,th{border:1px solid #ccd7e2;padding:10px;text-align:left}th{background:#eef4f9}pre{background:#eff3f7;padding:16px;overflow:auto}code{overflow-wrap:anywhere}img{max-width:100%}h2{margin-top:36px;border-top:1px solid #d8e3eb;padding-top:20px}</style><h1>Code review route for the frozen release</h1>
+<p>Release <code>2026-11-17-qualified-api-f3c6fd6fe802</code>; 684 tests and 365 subtests passed on both Mac and lab cluster. Code links refer to these frozen files, so line numbers do not move with your working checkout.</p>
+<table>
+<thead>
+<tr>
+  <th>Step</th>
+  <th>Function and source</th>
+  <th>What to check</th>
+  <th>Prompt boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1. Select API identities</td>
+  <td><a href="evaluator-qualified/vendor/aideal_engine/src/aideal/api_canonical_selection.py#L424"><code>_select_qualified</code> — api_canonical_selection.py:424</a></td>
+  <td>Groups only the same defining owner/API, elects explicit arity and retains exclusion evidence.</td>
+  <td>No LLM</td>
+</tr>
+<tr>
+  <td>2. Load original documentation</td>
+  <td><a href="evaluator-qualified/vendor/aideal_engine/src/aideal/original_documentation.py#L23"><code>load_original_documents</code> — original_documentation.py:23</a></td>
+  <td>Checks source/document versions, hashes, mappings and shared README.</td>
+  <td>No LLM</td>
+</tr>
+<tr>
+  <td>3. Prepare Original R0</td>
+  <td><a href="evaluator-qualified/scripts/run_original_micro.py#L43"><code>prepare</code> — run_original_micro.py:43</a></td>
+  <td>Copies inventory/config bindings and freezes the selected bank and Original exposure.</td>
+  <td>No LLM in --prepare</td>
+</tr>
+<tr>
+  <td>4. Execute the native micro loop</td>
+  <td><a href="evaluator-qualified/vendor/aideal_engine/src/aideal/doc_check_execution.py#L129"><code>_comprehension_execute</code> — doc_check_execution.py:129</a></td>
+  <td>Builds the audience prompt, saves the requested target and executes complete responses. The initial plan allows R0 only.</td>
+  <td>prompts/comprehension_write_exec.md</td>
+</tr>
+<tr>
+  <td>5. Check provider output and usage</td>
+  <td><a href="evaluator-qualified/vendor/aideal_engine/src/aideal/llm.py#L208"><code>invoke_text</code> — llm.py:208</a></td>
+  <td>Calls the configured model, records usage and rejects known incomplete/refused/empty output.</td>
+  <td>Receives the rendered request</td>
+</tr>
+<tr>
+  <td>6. Prepare README authoring</td>
+  <td><a href="evaluator-qualified/scripts/run_readme_generation.py#L71"><code>prepare</code> — run_readme_generation.py:71</a></td>
+  <td>Binds all configured targets, whole original corpus and author settings.</td>
+  <td>No LLM in --prepare</td>
+</tr>
+<tr>
+  <td>7. Generate the README</td>
+  <td><a href="evaluator-qualified/vendor/aideal_engine/src/aideal/readme_generation.py#L133"><code>find_or_create</code> — readme_generation.py:133</a></td>
+  <td>Distills the full corpus in recorded chunks and generates exact-identity entries.</td>
+  <td>prompts/readme_distill.md; prompts/readme_entry.md</td>
+</tr>
+<tr>
+  <td>8. Record each author request</td>
+  <td><a href="evaluator-qualified/vendor/aideal_engine/src/aideal/readme_recording.py#L47"><code>ReadmeCallRecorder</code> — readme_recording.py:47</a></td>
+  <td>Saves requests, responses, status, timing and usage for authoring.</td>
+  <td>No independent model call</td>
+</tr>
+<tr>
+  <td>9. Import native R0 failures</td>
+  <td><a href="evaluator-qualified/workflow/native_r0_evidence.py#L213"><code>build_native_r0_preview</code> — native_r0_evidence.py:213</a></td>
+  <td>Verifies the frozen run and records every attempt disposition; source-backed runtime failures can enter hint development.</td>
+  <td>No LLM</td>
+</tr>
+<tr>
+  <td>10. Propose embedded hints</td>
+  <td><a href="evaluator-qualified/workflow/native_hints.py#L223"><code>propose_native_hints</code> — native_hints.py:223</a></td>
+  <td>Asks the author for guidance at verified existing exception sites; no accepted sites means no call.</td>
+  <td>prompts/native_hint_development.md</td>
+</tr>
+<tr>
+  <td>11. Validate and install hints</td>
+  <td><a href="evaluator-qualified/workflow/native_hints.py#L348"><code>validate_native_hints</code> — native_hints.py:348</a></td>
+  <td>Runs paired controls before install_native_hints can commit the changed exception message.</td>
+  <td>Validation uses executable controls</td>
+</tr>
+<tr>
+  <td>12. Install source treatments</td>
+  <td><a href="evaluator-qualified/workflow/treatment_versions.py#L345"><code>apply_treatments</code> — treatment_versions.py:345</a></td>
+  <td>Checks source/tree bindings and installs the reviewed artifacts in their designated branches.</td>
+  <td>No LLM</td>
+</tr>
+<tr>
+  <td>13. Run matched conditions later</td>
+  <td><a href="evaluator-qualified/workflow/evaluation_runner.py#L78"><code>run_unit</code> — evaluation_runner.py:78</a></td>
+  <td>Shared condition runner performs R0 then bounded R1/R2 with request and execution receipts. This is not the initial native full-bank launcher.</td>
+  <td>Condition policy supplies the prompt</td>
+</tr>
+</tbody>
+</table>
+<p>The prompt files listed above are frozen under <a href="evaluator-qualified/prompts/">evaluator-qualified/prompts</a>. The <a href="review/qualified-pilots/INDEX.html">six complete previews</a> show the rendered requests, data paths and execution scaffolds before any model call. The full bank provides all requested target identities and input bindings.</p>
+<p>The native R0 bridge is not an automatic promise to patch every failure. Compiler failures, unsupported exception messages, ambiguous frames and missing source evidence remain explicit dispositions. A source hint is installed only after validation. Alias development also requires build/behavior validation before its branch becomes a treatment.</p>
+<pre><code class="language-mermaid">flowchart TD
+  A[Selected API and pinned original docs] --&gt; B[Prepare Original R0 inputs]
+  B --&gt; C[Audience writes program]
+  C --&gt; D[Build, run, check and record]
+  D --&gt; E[Native failure intake and source diagnosis]
+  E --&gt; F[Propose, validate and install embedded hints]
+  A --&gt; G[Distill corpus and generate README entries]
+  G --&gt; H[Validate and install generated README]
+  A --&gt; I[Propose and validate aliases]
+  F --&gt; J[Matched five-condition evaluation]
+  H --&gt; J
+  I --&gt; J
+  J --&gt; K[R0 then at most R1 and R2]
+  K --&gt; L[Separate deep dive and fresh evaluation]
+</code></pre>
+<p>Only input preparation and offline checks have completed for this replacement study. Model-generation nodes remain held for review.</p>

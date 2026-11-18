@@ -1,0 +1,19 @@
+MDAnalysis.analysis.helix_analysis.local_screw_angles(global_axis, ref_axis, helix_directions)[source]
+
+Cylindrical azimuth angles between the local direction vectors, as projected onto the cross-section of the helix, from (-pi, pi]. The origin (angle=0) is set to the plane of global_axis and ref_axis.
+
+Parameters:
+
+global_axis (numpy.ndarray of shape (3,)) – Vector of best fit. Screw angles are calculated perpendicular to this axis.
+
+ref_axis (numpy.ndarray of shape (3,)) – Reference length-wise axis. One of the reference vectors is orthogonal to this axis.
+
+helix_directions (numpy.ndarray of shape (N, 3)) – array of vectors representing the local direction of each helix window.
+
+Returns:
+
+Array of screw angles.
+
+Return type:
+
+numpy.ndarray of shape (N,)

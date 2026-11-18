@@ -1,0 +1,21 @@
+MDAnalysis.analysis.pca.cosine_content(pca_space, i)[source]
+
+Measure the cosine content of the PCA projection.
+
+The cosine content of pca projections can be used as an indicator if a simulation is converged. Values close to 1 are an indicator that the simulation isn’t converged. For values below 0.7 no statement can be made. If you use this function please cite [1].
+
+Parameters:
+
+pca_space (array, shape (number of frames, number of components)) – The PCA space to be analyzed.
+
+i (int) – The index of the pca_component projection to be analyzed.
+
+Returns:
+
+A float reflecting the cosine content of the ith projection in the PCA
+
+space. The output is bounded by 0 and 1, with 1 reflecting an agreement
+
+with cosine while 0 reflects complete disagreement.
+
+References

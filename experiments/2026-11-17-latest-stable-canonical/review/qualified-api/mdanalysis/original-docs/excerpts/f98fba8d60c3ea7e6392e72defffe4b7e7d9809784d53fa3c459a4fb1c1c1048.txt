@@ -1,0 +1,124 @@
+class MDAnalysis.analysis.base.AnalysisFromFunction(function, trajectory=None, *args, **kwargs)[source]
+
+Create an AnalysisBase from a function working on AtomGroups
+
+Parameters:
+
+function (callable) – function to evaluate at each frame
+
+trajectory (MDAnalysis.coordinates.Reader, optional) – trajectory to iterate over. If None the first AtomGroup found in args and kwargs is used as a source for the trajectory.
+
+*args (list) – arguments for function
+
+**kwargs (dict) – arguments for function and AnalysisBase
+
+ results.frames
+
+simulation frames used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.times
+
+simulation times used in analysis
+
+Type:
+
+numpy.ndarray
+
+ results.timeseries
+
+Results for each frame of the wrapped function, stored after call to AnalysisFromFunction.run().
+
+Type:
+
+numpy.ndarray
+
+Raises:
+
+ValueError – if function has the same kwargs as AnalysisBase
+
+Example
+
+def rotation_matrix(mobile, ref):
+    return mda.analysis.align.rotation_matrix(mobile, ref)[0]
+
+rot = AnalysisFromFunction(rotation_matrix, trajectory,
+                            mobile, ref).run()
+print(rot.results.timeseries)
+
+Changed in version 1.0.0: Support for directly passing the start, stop, and step arguments has been removed. These should instead be passed to AnalysisFromFunction.run().
+
+Changed in version 2.0.0: Former results are now stored as results.timeseries
+
+Changed in version 2.8.0: Added get_supported_backends(), introducing ‘serial’, ‘multiprocessing’ and ‘dask’ backends.
+
+ _conclude()[source]
+
+Finalize the results you’ve gathered.
+
+Called at the end of the run() method to finish everything up.
+
+Notes
+
+Aggregation of results from individual workers happens in self.run(), so here you have to implement everything as if you had a non-parallel run. If you want to enable proper aggregation for parallel runs for you analysis class, implement self._get_aggregator and check MDAnalysis.analysis.results for how to use it.
+
+ _get_aggregator()[source]
+
+Returns a default aggregator that takes entire results if there is a single object, and raises ValueError otherwise
+
+Returns:
+
+aggregating object
+
+Return type:
+
+ResultsGroup
+
+Added in version 2.8.0.
+
+ _prepare()[source]
+
+Set things up before the analysis loop begins.
+
+Notes
+
+self.results is initialized already in self.__init__() with an empty instance of MDAnalysis.analysis.results.Results object. You can still call your attributes as if they were usual ones, Results just keeps track of that to be able to run a proper aggregation after a parallel run, if necessary.
+
+ _single_frame()[source]
+
+Calculate data from a single frame of trajectory
+
+Don’t worry about normalising, just deal with a single frame. Attributes accessible during your calculations:
+
+self._frame_index: index of the frame in results array
+
+self._ts – Timestep instance
+
+self._sliced_trajectory – trajectory that you’re iterating over
+
+self.results – MDAnalysis.analysis.results.Results instance holding run results initialized in _prepare().
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.

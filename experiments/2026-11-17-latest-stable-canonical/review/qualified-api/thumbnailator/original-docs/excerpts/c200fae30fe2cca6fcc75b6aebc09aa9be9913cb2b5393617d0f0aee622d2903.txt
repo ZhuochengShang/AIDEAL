@@ -1,0 +1,42 @@
+fitWithinDimensions
+public
+FixedSizeThumbnailMaker
+fitWithinDimensions
+(boolean fit)
+Sets whether or not the thumbnail should fit within the specified
+dimensions.
+When the dimensions of a thumbnail will exceed the specified dimensions,
+with the aspect ratio of the original being preserved, then if this
+method was called with
+false
+, then the resulting thumbnail will
+have the larger dimension align with the specified dimension, and the
+other will exceed the given dimension.
+When
+keepAspectRatio(boolean)
+is
+false
+, then calling
+this method with
+true
+or
+false
+makes no difference, as
+the thumbnail dimensions will be exactly the given dimensions.
+Parameters:
+fit
+- Whether or not to maintain the aspect ratio in the
+thumbnail the same as the original image.
+If
+true
+is specified, then the
+thumbnail image will have the same aspect ratio
+as the original image.
+Returns:
+A reference to this object.
+Throws:
+IllegalStateException
+- If whether to keep the aspect ratio has
+already been previously set.
+Since:
+0.4.0

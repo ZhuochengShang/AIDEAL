@@ -1,0 +1,38 @@
+mir_eval.onset.f_measure(reference_onsets, estimated_onsets, window=0.05)
+
+Compute the F-measure of correct vs incorrectly predicted onsets. “Correctness” is determined over a small window.
+
+Parameters:
+
+reference_onsetsnp.ndarray
+
+reference onset locations, in seconds
+
+estimated_onsetsnp.ndarray
+
+estimated onset locations, in seconds
+
+windowfloat
+
+Window size, in seconds (Default value = .05)
+
+Returns:
+
+f_measurefloat
+
+2*precision*recall/(precision + recall)
+
+precisionfloat
+
+(# true positives)/(# true positives + # false positives)
+
+recallfloat
+
+(# true positives)/(# true positives + # false negatives)
+
+Examples
+
+>>> reference_onsets = mir_eval.io.load_events('reference.txt')
+>>> estimated_onsets = mir_eval.io.load_events('estimated.txt')
+>>> F, P, R = mir_eval.onset.f_measure(reference_onsets,
+...                                    estimated_onsets)

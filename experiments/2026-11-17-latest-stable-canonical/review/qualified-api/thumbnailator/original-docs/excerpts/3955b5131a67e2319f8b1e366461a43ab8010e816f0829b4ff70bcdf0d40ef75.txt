@@ -1,0 +1,46 @@
+write
+public void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Writes the resulting image to the
+OutputStream
+.
+Specified by:
+write
+in interface
+ImageSink
+<
+OutputStream
+>
+Overrides:
+write
+in class
+AbstractImageSink
+<
+OutputStream
+>
+Parameters:
+img
+- The image to write.
+Throws:
+UnsupportedFormatException
+- When an unsupported format has been
+specified by the
+AbstractImageSink.setOutputFormatName(String)
+method.
+IOException
+- When a problem occurs while writing
+the image.
+NullPointerException
+- If the image is
+null
+.
+IllegalStateException
+- If the output format has not been set
+by calling the
+AbstractImageSink.setOutputFormatName(String)
+method.

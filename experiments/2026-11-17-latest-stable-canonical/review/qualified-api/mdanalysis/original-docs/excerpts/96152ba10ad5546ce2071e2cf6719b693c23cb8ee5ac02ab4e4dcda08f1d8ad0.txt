@@ -1,0 +1,36 @@
+MDAnalysis.analysis.dssp.dssp.assign(coord: ndarray, donor_mask: ndarray | None = None, box: ndarray | None = None, backend: str = 'serial') → ndarray[source]
+
+Assigns secondary structure for a given coordinate array, either with or without assigned hydrogens
+
+Parameters:
+
+coord (np.ndarray) – input coordinates in either (n, 4, 3) or (n, 5, 3) shape, without or with hydrogens, respectively. Second dimension k represents (N, CA, C, O) atoms coordinates (if k=4), or (N, CA, C, O, H) coordinates (when k=5).
+
+donor_mask (np.array | None, optional) –
+Mask out any hydrogens that should not be considered (in particular HN in PRO). If None then all H will be used (behavior up to 2.9.0).
+
+Added in version 2.10.0.
+
+box (array_like, optional) –
+The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+Added in version 2.11.0.
+
+backend (str, optional) –
+Backend for distance calculations, by default "serial". Can be set to "distopia" if `distopia`_ is installed.
+
+Added in version 2.11.0.
+
+Returns:
+
+output (n,) array with one-hot labels in C3 notation (‘-’, ‘H’, ‘E’), representing loop, helix and sheet, respectively.
+
+Return type:
+
+np.ndarray
+
+Added in version 2.8.0.
+
+Changed in version 2.10.0: Support masking of donors.
+
+Changed in version 2.11.0: Speedup with capped_distance and support periodic boundary checking via box param.

@@ -1,0 +1,31 @@
+class MDAnalysis.coordinates.GRO.GROReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Reader for the Gromacs GRO structure format.
+
+Note
+
+This Reader will only read the first frame present in a file.
+
+Note
+
+GRO files with zeroed 3 entry unit cells (i.e. 0.0 0.0 0.0) are read as missing unit cell information. In these cases dimensions will be set to None.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+Changed in version 2.0.0: Reader now only parses boxes defined with 3 or 9 fields. Reader now reads a 3 entry zero unit cell (i.e. [0, 0, 0]) as a being without dimension information (i.e. will the timestep dimension to None).
+
+ Writer(filename, n_atoms=None, **kwargs)[source]
+
+Returns a CRDWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output GRO file
+
+Return type:
+
+GROWriter
+
+ units = {'length': 'nm', 'time': None, 'velocity': 'nm/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

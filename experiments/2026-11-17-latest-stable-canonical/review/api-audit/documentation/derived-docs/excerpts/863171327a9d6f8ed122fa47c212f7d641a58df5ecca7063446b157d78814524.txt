@@ -1,0 +1,20 @@
+get_description()[source]
+
+Get the values of the parameters necessary for replicating the AuxReader.
+
+An AuxReader can be duplicated using auxreader():
+
+description = original_aux.get_description()
+new_aux = MDAnalysis.auxiliary.auxreader(**description)
+
+The resulting dictionary may also be passed directly to add_auxiliary() to reload an auxiliary into a trajectory:
+
+trajectory.add_auxiliary(**description)
+
+Returns:
+
+Key-word arguments and values that can be used to replicate the AuxReader.
+
+Return type:
+
+dict

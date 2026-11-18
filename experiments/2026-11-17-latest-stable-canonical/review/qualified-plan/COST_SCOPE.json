@@ -1,0 +1,100 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "rate_source": "https://ai.google.dev/gemini-api/docs/pricing",
+  "method": "Exact rendered R0 and distillation characters divided by4; README entry inputs and all output lengths are explicit scenario assumptions, not provider counts.",
+  "minimum_generation_calls": 10639,
+  "per_api_calls": 10614,
+  "distillation_calls": 25,
+  "actual_usage": null,
+  "actual_cost": null,
+  "scopes": [
+    {
+      "bank": "mdanalysis",
+      "targets": 1538,
+      "r0_input_chars": 31082572,
+      "distillation_input_chars": 1915051,
+      "distillation_calls": 13,
+      "max_output_tokens": 8192
+    },
+    {
+      "bank": "mir_eval",
+      "targets": 178,
+      "r0_input_chars": 1687005,
+      "distillation_input_chars": 208487,
+      "distillation_calls": 2,
+      "max_output_tokens": 8192
+    },
+    {
+      "bank": "rdpro_java",
+      "targets": 1393,
+      "r0_input_chars": 11463692,
+      "distillation_input_chars": 133308,
+      "distillation_calls": 1,
+      "max_output_tokens": 8192
+    },
+    {
+      "bank": "rdpro_scala",
+      "targets": 1394,
+      "r0_input_chars": 12644838,
+      "distillation_input_chars": 133309,
+      "distillation_calls": 1,
+      "max_output_tokens": 8192
+    },
+    {
+      "bank": "sedonadb",
+      "targets": 217,
+      "r0_input_chars": 3732905,
+      "distillation_input_chars": 372537,
+      "distillation_calls": 3,
+      "max_output_tokens": 8192
+    },
+    {
+      "bank": "thumbnailator",
+      "targets": 225,
+      "r0_input_chars": 2186977,
+      "distillation_input_chars": 301369,
+      "distillation_calls": 2,
+      "max_output_tokens": 8192
+    },
+    {
+      "bank": "tslearn",
+      "targets": 362,
+      "r0_input_chars": 8320232,
+      "distillation_input_chars": 433034,
+      "distillation_calls": 3,
+      "max_output_tokens": 8192
+    }
+  ],
+  "scenarios": [
+    {
+      "assumed_author_entry_input_tokens": 4000,
+      "assumed_average_output_tokens_per_call": 1000,
+      "rough_total_input_tokens": 39881829,
+      "total_output_tokens_scenario": 10639000,
+      "estimated_usd": 25.93
+    },
+    {
+      "assumed_author_entry_input_tokens": 8000,
+      "assumed_average_output_tokens_per_call": 2500,
+      "rough_total_input_tokens": 61109829,
+      "total_output_tokens_scenario": 26597500,
+      "estimated_usd": 55.17
+    },
+    {
+      "assumed_author_entry_input_tokens": 16000,
+      "assumed_average_output_tokens_per_call": 8192,
+      "rough_total_input_tokens": 103565829,
+      "total_output_tokens_scenario": 87154688,
+      "estimated_usd": 156.62
+    }
+  ],
+  "not_included": [
+    "provider retries",
+    "six separate pilots",
+    "aliases and hint authoring/validation",
+    "R1/R2",
+    "remaining four condition runs",
+    "puzzles/deep dive"
+  ],
+  "hard_budget_ceiling": false
+}

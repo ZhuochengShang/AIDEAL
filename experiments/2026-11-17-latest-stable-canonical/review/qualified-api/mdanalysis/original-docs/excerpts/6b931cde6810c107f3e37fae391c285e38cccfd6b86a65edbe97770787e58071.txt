@@ -1,0 +1,24 @@
+MDAnalysis.lib.util.static_variables(**kwargs)[source]
+
+Decorator equipping functions or methods with static variables.
+
+Static variables are declared and initialized by supplying keyword arguments and initial values to the decorator.
+
+Example
+
+>>> from MDAnalysis.lib.util import static_variables
+>>> @static_variables(msg='foo calls', calls=0)
+... def foo():
+...     foo.calls += 1
+...     print("{}: {}".format(foo.msg, foo.calls))
+...
+>>> foo()
+foo calls: 1
+>>> foo()
+foo calls: 2
+
+Note
+
+Based on https://stackoverflow.com/a/279586 by Claudiu
+
+Added in version 0.19.0.

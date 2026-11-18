@@ -1,0 +1,23 @@
+check_compatible(other)
+
+Check if other can be used in an arithmetic operation.
+
+other is compatible if
+
+other is a scalar or an array-like broadcastable to the grid
+
+other is a grid defined on the same edges
+
+In order to make other compatible, resample it on the same grid as this one using resample().
+
+Parameters:
+
+other (Grid or float or int) – Another object to be used for standard arithmetic operations with this Grid
+
+Raises:
+
+TypeError – if not compatible
+
+See also
+
+resample()

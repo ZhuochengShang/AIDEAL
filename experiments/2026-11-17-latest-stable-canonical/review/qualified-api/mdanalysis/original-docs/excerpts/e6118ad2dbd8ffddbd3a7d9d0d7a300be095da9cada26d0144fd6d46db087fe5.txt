@@ -1,0 +1,38 @@
+class MDAnalysis.transformations.boxdimensions.set_dimensions(dimensions, max_threads=None, parallelizable=True)[source]
+
+Set simulation box dimensions.
+
+Timestep dimensions are modified in place.
+
+Examples
+
+e.g. set simulation box dimensions to a vector containing unit cell dimensions [a, b, c, alpha, beta, gamma], lengths a, b, c are in the MDAnalysis length unit (Å), and angles are in degrees. The same dimensions will be used for every frame in the trajectory.
+
+dim = np.array([2, 2, 2, 90, 90, 90])
+transform = mda.transformations.boxdimensions.set_dimensions(dim)
+u.trajectory.add_transformations(transform)
+
+Or e.g. set simulation box dimensions to a vector containing unit cell dimensions [a, b, c, alpha, beta, gamma] at the first frame, and [2a, 2b, 2c, alpha, beta, gamma] at the second frame.
+
+dim = np.array([
+    [2, 2, 2, 90, 90, 90],
+    [4, 4, 4, 90, 90, 90],
+])
+transform = mda.transformations.boxdimensions.set_dimensions(dim)
+u.trajectory.add_transformations(transform)
+
+Parameters:
+
+dimensions (iterable of floats or two-dimensional np.typing.NDArrayLike) – vector that contains unit cell lengths and angles. Expected shapes are (6, 0) or (1, 6) or (N, 6), where N is the number of frames in the trajectory. If shape is (6, 0) or (1, 6), the same dimensions will be used at every frame in the trajectory.
+
+Return type:
+
+Timestep object
+
+Changed in version 2.7.0: Added the option to set varying box dimensions (i.e. an NPT trajectory).
+
+Parameters:
+
+max_threads (int, optional) – The maximum thread number can be used. Default is None, which means the default or the external setting.
+
+parallelizable (bool, optional) – A check for if this can be used in split-apply-combine parallel analysis approach. Default is True.

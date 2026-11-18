@@ -7,6 +7,8 @@ from .ablation import digest
 
 def public_failure(payload):
     """Accept only an adapter's explicitly public, diagnostic-backed attribution."""
+    # Return the three public failure fields only when the diagnostic text is present
+    # in the adapter's public feedback.
     value = payload.get('public_failure')
     fields = ('function_id', 'requirement_id', 'diagnostic')
     if not isinstance(value, dict) or set(value) != set(fields):
@@ -20,12 +22,17 @@ def public_failure(payload):
 
 
 def compact_previous(previous):
+    # Input: the latest complete program and its public execution feedback.
+    # Remove duplicate diagnostic paragraphs and return the context plus a receipt.
+    # This is deterministic text cleanup: it neither calls an LLM nor edits code.
     """Keep the complete latest candidate and exact unique diagnostic paragraphs.
 
     Remove repeated *whole* paragraphs, not individual lines: a repeated caret,
     source line or stack frame inside another diagnostic can change its meaning.
     History and private fields never enter the model prompt.
     """
+    # Split feedback at blank lines and keep the first copy of each nonempty
+    # paragraph. The returned receipt measures the resulting text change.
     feedback = previous['feedback']
     chunks = re.split(r'\n[ \t]*\n', feedback)
     seen, kept, repeated = set(), [], 0
@@ -50,6 +57,8 @@ def compact_previous(previous):
 
 def _blocks(text):
     """Markdown paragraphs, preserving each fenced code block as an atomic unit."""
+    # Track open Markdown fences while splitting on blank lines. Blank lines inside a
+    # fence stay in the same code block.
     blocks, current, fence = [], [], None
     for line in text.splitlines(keepends=True):
         marker = re.match(r'^\s*(`{3,}|~{3,})', line)
@@ -76,6 +85,9 @@ def distill_documentation(paths, targets, max_characters):
     The same policy applies to every arm. Source implementations and test answers
     are not inputs. Oversized blocks are omitted explicitly, never sliced.
     """
+    # Read the public documents together. If they exceed the character limit, rank
+    # whole blocks by target-name matches and return the text plus a selection
+    # receipt.
     text = '\n\n'.join(Path(p).read_text() for p in paths)
     blocks = _blocks(text)
     if len(text) <= max_characters:
@@ -103,6 +115,8 @@ def distill_documentation(paths, targets, max_characters):
 
 def render_guidance(selection, max_characters):
     """Deliver complete source annotations or report an explicit allowance omission."""
+    # Format each matched hint as a complete unit. Keep a record of hints that would
+    # exceed the shared character allowance.
     selected = selection['matched']
     delivered, omitted, texts = [], [], []
     for hint in selected:

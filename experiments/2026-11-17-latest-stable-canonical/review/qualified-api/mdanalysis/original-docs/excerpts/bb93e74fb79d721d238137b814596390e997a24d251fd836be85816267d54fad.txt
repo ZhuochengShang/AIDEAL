@@ -1,0 +1,7 @@
+_pos
+
+numpy.ndarray of dtype float32 of shape (n_atoms, 3) and internal C order, holding the raw cartesian coordinates (in MDAnalysis units, i.e. Å).
+
+Note
+
+Normally one does not directly access _pos but uses the positions attribute of a AtomGroup but sometimes it can be faster to directly use the raw coordinates. Any changes to this array are immediately reflected in the atom positions. If the frame is written to a new trajectory then the coordinates are changed. If a new trajectory frame is loaded, then all contents of _pos are overwritten.

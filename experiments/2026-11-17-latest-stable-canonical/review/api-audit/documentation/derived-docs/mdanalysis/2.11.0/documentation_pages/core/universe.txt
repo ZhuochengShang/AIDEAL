@@ -1,0 +1,736 @@
+13.2.1. Core object: Universe — MDAnalysis.core.universe
+
+The Universe class ties a topology and a trajectory together. Almost all code in MDAnalysis starts with a Universe.
+
+Normally, a Universe is created from files:
+
+import MDAnalysis as mda
+u = mda.Universe("topology.psf", "trajectory.dcd")
+
+In order to construct new simulation system it is also convenient to construct a Universe from existing AtomGroup instances with the Merge() function.
+
+13.2.1.1. Classes
+
+ class MDAnalysis.core.universe.Universe(topology=None, *coordinates, all_coordinates=False, format=None, topology_format=None, transformations=None, guess_bonds=False, vdwradii=None, fudge_factor=0.55, lower_bound=0.1, in_memory=False, context='default', to_guess=('types', 'masses'), force_guess=(), in_memory_step=1, **kwargs)[source]
+
+The MDAnalysis Universe contains all the information describing the system.
+
+The system always requires a topology file — in the simplest case just a list of atoms. This can be a CHARMM/NAMD PSF file or a simple coordinate file with atom informations such as XYZ, PDB, GROMACS GRO or TPR, or CHARMM CRD. See Table of Supported Topology Formats for what kind of topologies can be read.
+
+A trajectory file provides coordinates; the coordinates have to be ordered in the same way as the list of atoms in the topology. A trajectory can be a single frame such as a PDB, CRD, or GRO file, or it can be a MD trajectory (in CHARMM/NAMD/LAMMPS DCD, GROMACS XTC/TRR, AMBER nc, generic XYZ format, …). See Table of supported coordinate formats for what can be read as a “trajectory”.
+
+As a special case, when the topology is a file that contains atom information and coordinates (such as XYZ, PDB, GRO or CRD, see Table of supported coordinate formats) then the coordinates are immediately loaded from the “topology” file unless a trajectory is supplied.
+
+Parameters:
+
+topology (str, stream, Topology, numpy.ndarray, None) – A CHARMM/XPLOR PSF topology file, PDB file or Gromacs GRO file; used to define the list of atoms. If the file includes bond information, partial charges, atom masses, … then these data will be available to MDAnalysis. Alternatively, an existing MDAnalysis.core.topology.Topology instance may be given, numpy coordinates, or None for an empty universe.
+
+coordinates (str, stream, list of str, list of stream (optional)) – Coordinates can be provided as files of a single frame (eg a PDB, CRD, or GRO file); a list of single frames; or a trajectory file (in CHARMM/NAMD/LAMMPS DCD, Gromacs XTC/TRR, or generic XYZ format). The coordinates must be ordered in the same way as the list of atoms in the topology. See Table of supported coordinate formats for what can be read as coordinates. Alternatively, streams can be given.
+
+topology_format (str, None, default None) – Provide the file format of the topology file; None guesses it from the file extension. Can also pass a subclass of MDAnalysis.topology.base.TopologyReaderBase to define a custom reader to be used on the topology file.
+
+format (str, None, default None) – Provide the file format of the coordinate or trajectory file; None guesses it from the file extension. Note that this keyword has no effect if a list of file names is supplied because the “chained” reader has to guess the file format for each individual list member. Can also pass a subclass of MDAnalysis.coordinates.base.ProtoReader to define a custom reader to be used on the trajectory file.
+
+all_coordinates (bool, default False) – If set to True specifies that if more than one filename is passed they are all to be used, if possible, as coordinate files (employing a MDAnalysis.coordinates.chain.ChainReader). The default behavior is to take the first file as a topology and the remaining as coordinates. The first argument will always always be used to infer a topology regardless of all_coordinates.
+
+guess_bonds (bool, default False) –
+Once Universe has been loaded, attempt to guess the connectivity between atoms. This will populate the .bonds, .angles, and .dihedrals attributes of the Universe.
+
+Deprecated since version 2.8.0: This keyword is deprecated and will be removed in MDAnalysis 3.0. Please pass (“bonds”, “angles”, “dihedrals”) into to_guess or force_guess instead to guess bonds, angles, and dihedrals respectively.
+
+vdwradii (dict, None, default None) –
+For use with guess_bonds. Supply a dict giving a vdwradii for each atom type which are used in guessing bonds.
+
+Deprecated since version 2.8.0: This keyword is deprecated and will be removed in MDAnalysis 3.0. Please pass it into Guesser creation (guesser), or to guess_TopologyAttrs() method instead. If passed into guess_TopologyAttrs, it will override the values set during Guesser creation.
+
+context (str or Guesser, default 'default') – Type of the Guesser to be used in guessing TopologyAttrs
+
+to_guess (list[str] (optional, default ['types', 'masses'])) –
+TopologyAttrs to be guessed. These TopologyAttrs will be wholly guessed if they don’t exist in the Universe. If they already exist in the Universe, only empty or missing values will be guessed.
+
+Warning
+
+In MDAnalysis 2.x, types and masses are being automatically guessed if they are missing (to_guess=('types, 'masses')). However, starting with release 3.0 no guessing will be done by default and it will be up to the user to request guessing using to_guess and force_guess.
+
+force_guess (list[str], (optional)) – TopologyAttrs in this list will be force guessed. If the TopologyAttr does not already exist in the Universe, this has no effect. If the TopologyAttr does already exist, all values will be overwritten by guessed values.
+
+fudge_factor (float, default [0.55]) –
+For use with guess_bonds. Supply the factor by which atoms must overlap each other to be considered a bond.
+
+Deprecated since version 2.8.0: This keyword is deprecated and will be removed in MDAnalysis 3.0. Please pass it into Guesser creation (guesser), or to guess_TopologyAttrs() method instead. If passed into guess_TopologyAttrs, it will override the values set during Guesser creation.
+
+lower_bound (float, default [0.1]) –
+For use with guess_bonds. Supply the minimum bond length.
+
+Deprecated since version 2.8.0: This keyword is deprecated and will be removed in MDAnalysis 3.0. Please pass it into Guesser creation (guesser), or to guess_TopologyAttrs() method instead. If passed into guess_TopologyAttrs, it will override the values set during Guesser creation.
+
+transformations: function or list, None, default None
+
+Provide a list of transformations that you wish to apply to the trajectory upon reading. Transformations can be found in MDAnalysis.transformations, or can be user-created.
+
+in_memory: bool, default False
+
+After reading in the trajectory, transfer it to an in-memory representations, which allow for manipulation of coordinates.
+
+in_memory_step: int, default 1
+
+Only read every nth frame into in-memory representation.
+
+continuous: bool, default False
+
+The continuous option is used by the ChainReader, which contains the functionality to treat independent trajectory files as a single virtual trajectory.
+
+**kwargs: extra arguments are passed to the topology parser.
+
+For instance, when reading a PDB file (PDBReader, PDBParser), set force_chainids_to_segids=True to make the universe use the chainIDs (column 22) instead of the segmentIDs (column 73-76) as the segids in the universe and select the corresponding SegmentGroup.
+
+ trajectory
+
+currently loaded trajectory reader; readers are described in Coordinates modules
+
+Type:
+
+base.ReaderBase or base.SingleFrameReaderBase
+
+ dimensions
+
+system dimensions (simulation unit cell, if set in the trajectory) at the current time step (see MDAnalysis.coordinates.base.Timestep.dimensions). The unit cell can be set for the current time step (but the change is not permanent unless written to a file).
+
+Type:
+
+numpy.ndarray
+
+ atoms
+
+all particles (Atom) in the system, as read from the topology file
+
+Type:
+
+AtomGroup
+
+ residues
+
+all residues (Residue) in the system
+
+Type:
+
+ResidueGroup
+
+ segments
+
+all segments (Segment) in the system
+
+Type:
+
+SegmentGroup
+
+ bonds
+
+all bonds (if defined in the topology) as provided by Universe.atoms.bonds
+
+Type:
+
+topologyattrs.Bonds
+
+ angles
+
+all angles (if defined in the topology), same as Universe.atoms.angles
+
+Type:
+
+topologyattrs.Angles
+
+ dihedrals
+
+all dihedral angles (if defined in the topology), same as Universe.atoms.dihedrals
+
+Type:
+
+topologyattrs.Dihedrals
+
+ impropers
+
+all improper dihedral angles (if defined in the topology), same as Universe.atoms.impropers
+
+Type:
+
+topologyattrs.Impropers
+
+Examples
+
+Examples for setting up a Universe:
+
+u = Universe(topology, trajectory)          # read system from file(s)
+u = Universe(pdbfile)                       # read atoms and coordinates from PDB or GRO
+u = Universe(topology, [traj1, traj2, ...]) # read from a list of trajectories
+u = Universe(topology, traj1, traj2, ...)   # read from multiple trajectories
+
+Load new data into a universe (replaces old trajectory and does not append):
+
+u.load_new(trajectory)                      # read from a new trajectory file
+
+Selecting atoms with select_atoms()
+
+ag = u.select_atoms(...)
+
+returns an AtomGroup.
+
+Changed in version 1.0.0: Universe() now raises an error. Use Universe(None) or Universe.empty() instead. Removed instant selectors.
+
+Changed in version 2.0.0: Universe now can be (un)pickled. topology and trajectory are reserved upon unpickle.
+
+Changed in version 2.5.0: Added fudge_factor and lower_bound parameters for use with guess_bonds.
+
+Changed in version 2.8.0: Added guess_TopologyAttrs() API guessing masses and atom types after topology is read from a registered parser.
+
+Changed in version 2.10.0: Added :meth: ~MDAnalysis.core.universe.Universe.set_groups API to set residues/segments based on the atomwise resids/segids.
+
+ add_Residue(segment=None, **attrs)[source]
+
+Add a new Residue to this Universe
+
+New Residues will not contain any Atoms, but can be assigned to Atoms as per usual. If the Universe contains multiple segments, this must be specified as a keyword.
+
+Parameters:
+
+segment (MDAnalysis.Segment) – If there are multiple segments, then the Segment that the new Residue will belong in must be specified.
+
+attrs (dict) – For each Residue attribute, the value for the new Residue must be specified
+
+Return type:
+
+A reference to the new Residue
+
+Raises:
+
+NoDataError – If any information was missing. This happens before any changes have been made, ie the change is rolled back.
+
+Example
+
+Adding a new GLY residue, then placing atoms within it:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> u = mda.Universe(PSF, DCD)
+>>> newres = u.add_Residue(segment=u.segments[0], resid=42, resname='GLY', resnum=0)
+>>> u.atoms[[1, 2, 3]].residues = newres
+>>> u.select_atoms('resname GLY and resid 42 and resnum 0')
+<AtomGroup with 3 atoms>
+
+ add_Segment(**attrs)[source]
+
+Add a new Segment to this Universe
+
+Parameters:
+
+attrs (dict) – For each Segment attribute as a key, give the value in the new Segment
+
+Return type:
+
+A reference to the new Segment
+
+Raises:
+
+NoDataError – If any attributes were not specified as a keyword.
+
+ add_TopologyAttr(topologyattr, values=None)[source]
+
+Add a new topology attribute to the Universe
+
+Adding a TopologyAttribute to the Universe makes it available to all AtomGroups etc throughout the Universe.
+
+Parameters:
+
+topologyattr (TopologyAttr or string) – Either a MDAnalysis TopologyAttr object or the name of a possible topology attribute.
+
+values (np.ndarray, optional) – If initiating an attribute from a string, the initial values to use. If not supplied, the new TopologyAttribute will have empty or zero values.
+
+Example
+
+For example to add bfactors to a Universe:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> u = mda.Universe(PSF, DCD)
+>>> u.add_TopologyAttr('tempfactors')
+>>> u.atoms.tempfactors
+array([0., 0., 0., ..., 0., 0., 0.])
+
+Changed in version 0.17.0: Can now also add TopologyAttrs with a string of the name of the attribute to add (eg ‘charges’), can also supply initial values using values keyword.
+
+Changed in version 1.1.0: Now warns when adding bfactors to a Universe with existing tempfactors, or adding tempfactors to a Universe with existing bfactors. In version 2.0, MDAnalysis will stop treating tempfactors and bfactors as separate attributes. Instead, they will be aliases of the same attribute.
+
+ add_angles(values, types=None, guessed=False)[source]
+
+Add new Angles to this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Angles; or TopologyGroup) – An iterable of: tuples of 3 atom indices, or AtomGroups with 3 atoms, or Angles. If every value is a Angle, all keywords are ignored. If AtomGroups, Angles, or a TopologyGroup are passed, they must be from the same Universe.
+
+types (iterable (optional, default None)) – None, or an iterable of hashable values with the same length as values
+
+guessed (bool or iterable (optional, default False)) – bool, or an iterable of hashable values with the same length as values
+
+versionadded: (..) – 1.0.0:
+
+ add_bonds(values, types=None, guessed=False, order=None)[source]
+
+Add new Bonds to this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Bonds; or TopologyGroup) – An iterable of: tuples of 2 atom indices, or AtomGroups with 2 atoms, or Bonds. If every value is a Bond, all keywords are ignored. If AtomGroups, Bonds, or a TopologyGroup are passed, they must be from the same Universe.
+
+types (iterable (optional, default None)) – None, or an iterable of hashable values with the same length as values
+
+guessed (bool or iterable (optional, default False)) – bool, or an iterable of hashable values with the same length as values
+
+order (iterable (optional, default None)) – None, or an iterable of hashable values with the same length as values
+
+Example
+
+Adding TIP4P water bonds with a list of AtomGroups:
+
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import GRO
+u = mda.Universe(GRO)
+sol = u.select_atoms('resname SOL')
+ow_hw1 = sol.select_atoms('name OW or name HW1').split('residue')
+ow_hw2 = sol.select_atoms('name OW or name HW2').split('residue')
+ow_mw = sol.select_atoms('name OW or name MW').split('residue')
+u.add_bonds(ow_hw1 + ow_hw2 + ow_mw)
+
+You can only add bonds from the same Universe. If you would like to add AtomGroups, Bonds, or a TopologyGroup from a different Universe, convert them to indices first.
+
+from MDAnalysis.tests.datafiles import PSF
+u2 = mda.Universe(PSF)
+
+#  assuming you have already added bonds to u
+u2.add_bonds(u.bonds.to_indices())
+
+Added in version 1.0.0.
+
+ add_dihedrals(values, types=None, guessed=False)[source]
+
+Add new Dihedrals to this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Dihedrals; or TopologyGroup) – An iterable of: tuples of 4 atom indices, or AtomGroups with 4 atoms, or Dihedrals. If every value is a Dihedral, all keywords are ignored. If AtomGroups, Dihedrals, or a TopologyGroup are passed, they must be from the same Universe.
+
+types (iterable (optional, default None)) – None, or an iterable of hashable values with the same length as values
+
+guessed (bool or iterable (optional, default False)) – bool, or an iterable of hashable values with the same length as values
+
+Added in version 1.0.0.
+
+ add_impropers(values, types=None, guessed=False)[source]
+
+Add new Impropers to this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Impropers; or TopologyGroup) – An iterable of: tuples of 4 atom indices, or AtomGroups with 4 atoms, or Impropers. If every value is an Improper, all keywords are ignored. If AtomGroups, Impropers, or a TopologyGroup are passed, they must be from the same Universe.
+
+types (iterable (optional, default None)) – None, or an iterable of hashable values with the same length as values
+
+guessed (bool or iterable (optional, default False)) – bool, or an iterable of hashable values with the same length as values
+
+Added in version 1.0.0.
+
+ property coord
+
+Reference to current timestep and coordinates of universe.
+
+The raw trajectory coordinates are Universe.coord.positions, represented as a numpy.float32 array.
+
+Because coord is a reference to a Timestep, it changes its contents while one is stepping through the trajectory.
+
+Note
+
+In order to access the coordinates it is better to use the AtomGroup.positions() method; for instance, all coordinates of the Universe as a numpy array: Universe.atoms.positions().
+
+ copy()[source]
+
+Return an independent copy of this Universe
+
+ del_TopologyAttr(topologyattr)[source]
+
+Remove a topology attribute from the Universe
+
+Removing a TopologyAttribute from the Universe makes it unavailable to all AtomGroups etc throughout the Universe.
+
+Parameters:
+
+topologyattr (TopologyAttr or string) – Either a MDAnalysis TopologyAttr object or the name of a possible topology attribute.
+
+Example
+
+For example to remove bfactors to a Universe:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> u = mda.Universe(PSF, DCD)
+>>> u.add_TopologyAttr('tempfactors')
+>>> hasattr(u.atoms[:3], 'tempfactors')
+True
+>>>
+>>> u.del_TopologyAttr('tempfactors')
+>>> hasattr(u.atoms[:3], 'tempfactors')
+False
+
+Added in version 2.0.0.
+
+ delete_angles(values)[source]
+
+Delete Angles from this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Angles; or TopologyGroup) – An iterable of: tuples of 3 atom indices, or AtomGroups with 3 atoms, or Angles. If AtomGroups, Angles, or a TopologyGroup are passed, they must be from the same Universe.
+
+Added in version 1.0.0.
+
+ delete_bonds(values)[source]
+
+Delete Bonds from this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Bonds; or TopologyGroup) – An iterable of: tuples of 2 atom indices, or AtomGroups with 2 atoms, or Bonds. If AtomGroups, Bonds, or a TopologyGroup are passed, they must be from the same Universe.
+
+Example
+
+Deleting bonds from a Universe:
+
+import MDAnalysis as mda
+from MDAnalysis.tests.datafiles import PSF
+u = mda.Universe(PSF)
+
+#  delete first 5 bonds
+u.delete_bonds(u.bonds[:5])
+
+If you are deleting bonds in the form of AtomGroups, Bonds, or a TopologyGroup, they must come from the same Universe. If you want to delete bonds from another Universe, convert them to indices first.
+
+from MDAnalysis.tests.datafiles import PDB
+u2 = mda.Universe(PDB)
+
+u.delete_bonds(u2.bonds.to_indices())
+
+Added in version 1.0.0.
+
+ delete_dihedrals(values)[source]
+
+Delete Dihedrals from this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Dihedrals; or TopologyGroup) – An iterable of: tuples of 4 atom indices, or AtomGroups with 4 atoms, or Dihedrals. If AtomGroups, Dihedrals, or a TopologyGroup are passed, they must be from the same Universe.
+
+Added in version 1.0.0.
+
+ delete_impropers(values)[source]
+
+Delete Impropers from this Universe.
+
+Parameters:
+
+values (iterable of tuples, AtomGroups, or Impropers; or TopologyGroup) – An iterable of: tuples of 4 atom indices, or AtomGroups with 4 atoms, or Impropers. If AtomGroups, Angles, or a TopologyGroup are passed, they must be from the same Universe.
+
+Added in version 1.0.0.
+
+ classmethod empty(n_atoms, n_residues=1, n_segments=1, n_frames=1, atom_resindex=None, residue_segindex=None, trajectory=False, velocities=False, forces=False)[source]
+
+Create a blank Universe
+
+Useful for building a Universe without requiring existing files, for example for system building.
+
+If trajectory is set to True, a MDAnalysis.coordinates.memory.MemoryReader will be attached to the Universe.
+
+Parameters:
+
+n_atoms (int) – number of Atoms in the Universe
+
+n_residues (int, default 1) – number of Residues in the Universe, defaults to 1
+
+n_segments (int, default 1) – number of Segments in the Universe, defaults to 1
+
+n_frames (int, default 1) – number of Frames in the Universe, defaults to 1
+
+atom_resindex (array like, optional) – mapping of atoms to residues, e.g. with 6 atoms, atom_resindex=[0, 0, 1, 1, 2, 2] would put 2 atoms into each of 3 residues.
+
+residue_segindex (array like, optional) – mapping of residues to segments
+
+trajectory (bool, optional) – if True, attaches a MDAnalysis.coordinates.memory.MemoryReader allowing coordinates to be set and written.
+
+velocities (bool, optional) – include velocities in the MDAnalysis.coordinates.memory.MemoryReader
+
+forces (bool, optional) – include forces in the MDAnalysis.coordinates.memory.MemoryReader
+
+Returns:
+
+Universe instance with dummy values for atoms and undefined coordinates/velocities/forces
+
+Return type:
+
+Universe
+
+Examples
+
+For example to create a new Universe with 6 atoms in 2 residues, with positions for the atoms and a mass attribute:
+
+u = mda.Universe.empty(6, 2,
+                       atom_resindex=np.array([0, 0, 0, 1, 1, 1]),
+                       trajectory=True,
+      )
+u.add_TopologyAttr('masses')
+
+Added in version 0.17.0.
+
+Changed in version 0.19.0: The attached Reader when trajectory=True is now a MemoryReader
+
+Changed in version 1.0.0: Universes can now be created with 0 atoms
+
+ classmethod from_smiles(smiles, sanitize=True, addHs=True, generate_coordinates=True, numConfs=1, rdkit_kwargs=None, **kwargs)[source]
+
+Create a Universe from a SMILES string with rdkit
+
+Parameters:
+
+smiles (str) – SMILES string
+
+sanitize (bool (optional, default True)) – Toggle the sanitization of the molecule
+
+addHs (bool (optional, default True)) – Add all necessary hydrogens to the molecule
+
+generate_coordinates (bool (optional, default True)) – Generate 3D coordinates using RDKit’s AllChem.EmbedMultipleConfs() function. Requires adding hydrogens with the addHs parameter
+
+numConfs (int (optional, default 1)) – Number of frames to generate coordinates for. Ignored if generate_coordinates=False
+
+rdkit_kwargs (dict (optional)) – Other arguments passed to the RDKit EmbedMultipleConfs() function
+
+kwargs (dict) – Parameters passed on Universe creation
+
+Returns:
+
+universe – contains atom names and topology information (bonds) derived from the input SMILES string; coordinates are included if generate_coordinates was set to True
+
+Return type:
+
+Universe
+
+Examples
+
+To create a Universe with 10 conformers of ethanol:
+
+>>> from rdkit.Chem import AllChem
+>>> u = mda.Universe.from_smiles('CCO', numConfs=10)
+>>> u
+<Universe with 9 atoms>
+>>> u.trajectory
+<RDKitReader with 10 frames of 9 atoms>
+
+To use a different conformer generation algorithm, like ETKDGv3:
+
+>>> u = mda.Universe.from_smiles('CCO', rdkit_kwargs=dict(
+...      params=AllChem.ETKDGv3()))
+>>> u.trajectory
+<RDKitReader with 1 frames of 9 atoms>
+
+Added in version 2.0.0.
+
+ guess_TopologyAttrs(context=None, to_guess=None, force_guess=None, error_if_missing=True, **kwargs)[source]
+
+Guess and add attributes through a specific context-aware guesser.
+
+Parameters:
+
+context (str or Guesser class) – For calling a matching guesser class for this specific context
+
+to_guess (Optional[list[str]]) –
+TopologyAttrs to be guessed. These TopologyAttrs will be wholly guessed if they don’t exist in the Universe. If they already exist in the Universe, only empty or missing values will be guessed.
+
+Warning
+
+In MDAnalysis 2.x, types and masses are being automatically guessed if they are missing (to_guess=('types, 'masses')). However, starting with release 3.0 no guessing will be done by default and it will be up to the user to request guessing using to_guess and force_guess.
+
+force_guess (Optional[list[str]]) – TopologyAttrs in this list will be force guessed. If the TopologyAttr does not already exist in the Universe, this has no effect. If the TopologyAttr does already exist, all values will be overwritten by guessed values.
+
+error_if_missing (bool) – If True, raise an error if the guesser cannot guess the attribute due to missing TopologyAttrs used as the inputs for guessing. If False, a warning will be raised instead. Errors will always be raised if an attribute is in the force_guess list, even if this parameter is set to False.
+
+**kwargs (extra arguments to be passed to the guesser class)
+
+Examples
+
+To guess masses and types attributes:
+
+u.guess_TopologyAttrs(context='default', to_guess=['masses', 'types'])
+
+Added in version 2.8.0.
+
+ property kwargs
+
+keyword arguments used to initialize this universe
+
+ load_new(filename, format=None, in_memory=False, in_memory_step=1, **kwargs)[source]
+
+Load coordinates from filename.
+
+The file format of filename is autodetected from the file name suffix or can be explicitly set with the format keyword. A sequence of files can be read as a single virtual trajectory by providing a list of filenames.
+
+Parameters:
+
+filename (str or list) – the coordinate file (single frame or trajectory) or a list of filenames, which are read one after another.
+
+format (str or list or object (optional)) – provide the file format of the coordinate or trajectory file; None guesses it from the file extension. Note that this keyword has no effect if a list of file names is supplied because the “chained” reader has to guess the file format for each individual list member [None]. Can also pass a subclass of MDAnalysis.coordinates.base.ProtoReader to define a custom reader to be used on the trajectory file.
+
+in_memory (bool (optional)) –
+Directly load trajectory into memory with the MemoryReader
+
+Added in version 0.16.0.
+
+**kwargs (dict) – Other kwargs are passed to the trajectory reader (only for advanced use)
+
+Returns:
+
+universe
+
+Return type:
+
+Universe
+
+Raises:
+
+TypeError – if trajectory format can not be determined or no appropriate trajectory reader found
+
+Changed in version 0.8: If a list or sequence that is provided for filename only contains a single entry then it is treated as single coordinate file. This has the consequence that it is not read by the ChainReader but directly by its specialized file format reader, which typically has more features than the ChainReader.
+
+Changed in version 0.17.0: Now returns a Universe instead of the tuple of file/array and detected file type.
+
+Changed in version 2.4.0: Passes through kwargs if in_memory=True.
+
+ property models
+
+Models in this Universe.
+
+The MMTF format can define various models for a given structure. The topology (eg residue identity) can change between different models, resulting in a different number of atoms in each model.
+
+A list of AtomGroups, each representing a single model.
+
+Note
+
+This requires the underlying topology to have models. Otherwise, a NoDataError is raised.
+
+ select_atoms(*args, **kwargs)[source]
+
+Select atoms.
+
+See also
+
+MDAnalysis.core.groups.AtomGroup.select_atoms()
+
+ set_groups(atomwise_resids=None, atomwise_segids=None)[source]
+
+Set the groups (ResidueGroup, SegmentGroup) of the Universe by atomwise resids/segids.
+
+The topology will also be updated based on the provided atomwise_resids and atomwise_segids. The original resids and segids will be stored in attributes atomwise_resids_orig and/or atomwise_segids_orig if they are modified. See notes for the logic of the function.
+
+Parameters:
+
+atomwise_resids – A list of residue IDs to be set for the Universe. The length of the list should be equal to the number of atoms in the Universe. If None, the original resids will be used.
+
+atomwise_segids – A list of segment IDs to be set for the Universe. The length of the list should be equal to the number of atoms in the Universe. If None, the original segids will be used.
+
+Raises:
+
+AssertionError – If the length of the provided atomwise_resids or atomwise_segids does not match the number of atoms in the Universe.
+
+Notes
+
+First, the function will check if resids or segids is provided. If both resids and segids are not provided (None), it will do nothing. If only one of them is provided, it will use the original values for the other one. If both are provided, it will use the provided values for both resids and segids. The function will then update the topology by a new generated topology with new values of the resids and segids. Finally, the corresponding new ResidueGroup and SegmentGroup will be created by the updated topology.
+
+Examples
+
+To set custom segment IDs for the segments of the Universe:
+
+atomwise_segids = ['A', 'A', 'B', 'B']
+u.set_groups(atomwise_segids=atomwise_segids)
+
+# Now the Universe has two segments with segIDs 'A' and 'B'
+u.segments
+>>> <SegmentGroup with 2 segments>
+
+Added in version 2.10.0.
+
+ transfer_to_memory(start=None, stop=None, step=None, verbose=False, **kwargs)[source]
+
+Transfer the trajectory to in memory representation.
+
+Replaces the current trajectory reader object with one of type MDAnalysis.coordinates.memory.MemoryReader to support in-place editing of coordinates.
+
+Parameters:
+
+start (int, optional) – start reading from the nth frame.
+
+stop (int, optional) – read upto and excluding the nth frame.
+
+step (int, optional) – Read in every nth frame. [1]
+
+verbose (bool, optional) – Will print the progress of loading trajectory to memory, if set to True. Default value is False.
+
+Added in version 0.16.0.
+
+Changed in version 2.4.0: Passes through kwargs to MemoryReader
+
+13.2.1.2. Functions
+
+ MDAnalysis.core.universe.Merge(*args)[source]
+
+Create a new new Universe from one or more AtomGroup instances.
+
+Parameters:
+
+*args (AtomGroup) – One or more AtomGroups.
+
+Returns:
+
+universe
+
+Return type:
+
+Universe
+
+Raises:
+
+ValueError – Too few arguments or an AtomGroup is empty and
+
+TypeError – Arguments are not AtomGroup instances.
+
+Notes
+
+The resulting Universe will only inherit the common topology attributes that all merged universes share.
+
+AtomGroup instances can come from different Universes, or can come directly from a select_atoms() call.
+
+Merge can also be used with a single AtomGroup if the user wants to, for example, re-order the atoms in the Universe.
+
+If multiple AtomGroup instances from the same Universe are given, the merge will first simply “add” together the AtomGroup instances.
+
+Merging does not create a full trajectory but only a single structure even if the input consists of one or more trajectories. However, one can use the MemoryReader to construct a trajectory for the new Universe as described under Creating an in-memory trajectory of a sub-system.
+
+Example
+
+In this example, protein, ligand, and solvent were externally prepared in three different PDB files. They are loaded into separate Universe objects (where they could be further manipulated, e.g. renumbered, relabeled, rotated, …) The Merge() command is used to combine all of them together:
+
+u1 = Universe("protein.pdb")
+u2 = Universe("ligand.pdb")
+u3 = Universe("solvent.pdb")
+u = Merge(u1.select_atoms("protein"), u2.atoms, u3.atoms)
+u.atoms.write("system.pdb")
+
+The complete system is then written out to a new PDB file.
+
+Changed in version 0.9.0: Raises exceptions instead of assertion errors.
+
+Changed in version 0.16.0: The trajectory is now a MemoryReader.

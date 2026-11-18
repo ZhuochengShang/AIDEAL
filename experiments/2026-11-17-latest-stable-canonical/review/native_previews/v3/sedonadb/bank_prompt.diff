@@ -1,0 +1,16 @@
+--- bank_baseline_r0
++++ v3_review_pilot_r0
+@@ -73,7 +73,7 @@
+ Available input path variables already in scope (choose the matching one(s) by type):
+ - raster_cea_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/cea.tif
+ - raster_test4_tif = /home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/test4.tiff
+-- output_dir = /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/runs/original/sedonadb/sedonadb/execution/output
++- output_dir = /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_export/native_previews/v3/sedonadb/execution/output
+ 
+ RECEIVER — call `ST_Area` on the RIGHT type (calling it on the wrong receiver is
+ the #1 failure; if it is an instance method, first obtain a value of the owner type,
+@@ -129,4 +129,4 @@
+ contract permits it, and print the same structured line.
+ Do not call other heavyweight operations unless `ST_Area` is the writer; keep the
+ body focused on `ST_Area` so the run isolates that one call.
+-Use individual SQL statements. Paths raster_cea_tif and raster_test4_tif are available local fixture files; output_dir is available for tiny outputs. Use only these paths when a documented operation needs a file. Tiny SQL VALUES and documented constructors are available for in-memory inputs. Do not use remote URLs. No repairs are permitted in this R0 run.+Use individual SQL statements. Paths raster_cea_tif and raster_test4_tif are available local fixture files; output_dir is available for tiny outputs. Use only these paths when a documented operation needs a file. Tiny SQL VALUES and documented constructors are available for in-memory inputs. Do not use remote URLs. This review pilot permits an initial attempt and up to two code-repair attempts; stop immediately when an attempt passes.

@@ -1,0 +1,39 @@
+class MDAnalysis.analysis.backends.BackendSerial(n_workers: int)[source]
+
+A built-in backend that does serial execution of the function, without any parallelization.
+
+Parameters:
+
+n_workers (int) – Is ignored in this class, and if n_workers > 1, a warning will be given.
+
+Added in version 2.8.0.
+
+ _get_warnings()[source]
+
+Get dictionary with condition: warning_message pairs that ensure the good usage of the backend instance. Here, it checks if the number of workers is not 1, otherwise gives warning.
+
+Returns:
+
+dictionary with condition: warning_message pairs that will get checked during _validate() run
+
+Return type:
+
+dict
+
+ apply(func: Callable, computations: list) → list[source]
+
+Serially applies func to each task object in computations.
+
+Parameters:
+
+func (Callable) – function to be called on each of the tasks in computations list
+
+computations (list) – computation tasks to apply function to
+
+Returns:
+
+list of results of the function
+
+Return type:
+
+list

@@ -1,0 +1,43 @@
+MDAnalysis.analysis.leaflet.optimize_cutoff(universe, select, dmin=10.0, dmax=20.0, step=0.5, max_imbalance=0.2, **kwargs)[source]
+
+Find cutoff that minimizes number of disconnected groups.
+
+Applies heuristics to find best groups:
+
+at least two groups (assumes that there are at least 2 leaflets)
+
+reject any solutions for which:
+
+ \[\frac{|N_0 - N_1|}{|N_0 + N_1|} > \mathrm{max_imbalance}\]
+
+with \(N_i\) being the number of lipids in group \(i\). This heuristic picks groups with balanced numbers of lipids.
+
+Parameters:
+
+universe (Universe) – MDAnalysis.Universe instance
+
+select (AtomGroup or str) – AtomGroup or selection string as used for LeafletFinder
+
+dmin (float (optional))
+
+dmax (float (optional))
+
+step (float (optional)) – scan cutoffs from dmin to dmax at stepsize step (in Angstroms)
+
+max_imbalance (float (optional)) – tuning parameter for the balancing heuristic [0.2]
+
+kwargs (other keyword arguments) – other arguments for LeafletFinder
+
+Returns:
+
+optimum cutoff and number of groups found
+
+Return type:
+
+(cutoff, N)
+
+Note
+
+This function can die in various ways if really no appropriate number of groups can be found; it ought to be made more robust.
+
+Changed in version 1.0.0: Changed selection keyword to select

@@ -1,0 +1,37 @@
+mir_eval.util.interpolate_intervals(intervals, labels, time_points, fill_value=None)
+
+Assign labels to a set of points in time given a set of intervals.
+
+Time points that do not lie within an interval are mapped to fill_value.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+An array of time intervals, as returned by mir_eval.io.load_intervals(). The i th interval spans time intervals[i, 0] to intervals[i, 1].
+
+Intervals are assumed to be disjoint.
+
+labelslist, shape=(n,)
+
+The annotation for each interval
+
+time_pointsarray_like, shape=(m,)
+
+Points in time to assign labels. These must be in non-decreasing order.
+
+fill_valuetype(labels[0])
+
+Object to use for the label with out-of-range time points. (Default value = None)
+
+Returns:
+
+aligned_labelslist
+
+Labels corresponding to the given time points.
+
+Raises:
+
+ValueError
+
+If time_points is not in non-decreasing order.

@@ -1,0 +1,19 @@
+class MDAnalysis.coordinates.TRC.TRCReader(filename, convert_units=True, **kwargs)[source]
+
+Coordinate reader for the GROMOS11 format
+
+ close()[source]
+
+Close the trc trajectory file if it was open.
+
+ property n_atoms
+
+The number of atoms in one frame.
+
+ property n_frames
+
+The number of frames in the trajectory.
+
+ units = {'length': 'nm', 'time': 'ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

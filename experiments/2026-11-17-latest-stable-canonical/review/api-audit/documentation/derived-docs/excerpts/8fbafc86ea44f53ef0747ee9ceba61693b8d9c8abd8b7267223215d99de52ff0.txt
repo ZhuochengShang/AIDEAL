@@ -1,0 +1,39 @@
+_configure_backend(backend: str | BackendBase, n_workers: int, unsupported_backend: bool = False) → BackendBase[source]
+
+Matches a passed backend string value with class attributes parallelizable and get_supported_backends() to check if downstream calculations can be performed.
+
+Parameters:
+
+backend (Union[str, BackendBase]) –
+
+backend to be used:
+
+str is matched to a builtin backend (one of “serial”, “multiprocessing” and “dask”)
+
+BackendBase subclass is checked for the presence of an apply() method
+
+n_workers (int) – positive integer with number of workers (processes, in case of built-in backends) to split the work between
+
+unsupported_backend (bool, optional) – if you want to run your custom backend on a parallelizable class that has not been tested by developers, by default False
+
+Returns:
+
+instance of a BackendBase class that will be used for computations
+
+Return type:
+
+BackendBase
+
+Raises:
+
+ValueError – if parallelizable is set to False but backend is not serial
+
+ValueError – if parallelizable is True and custom backend instance is used without specifying unsupported_backend=True
+
+ValueError – if your trajectory has associated parallelizable transformations but backend is not serial
+
+ValueError – if n_workers was specified twice – in the run() method and durin __init__ of a custom backend
+
+ValueError – if your backend object instance doesn’t have an apply method
+
+Added in version 2.8.0.

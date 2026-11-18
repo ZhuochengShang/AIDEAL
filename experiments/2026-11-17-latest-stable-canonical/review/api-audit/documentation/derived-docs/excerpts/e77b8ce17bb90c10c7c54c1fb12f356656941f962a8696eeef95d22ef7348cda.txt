@@ -1,0 +1,28 @@
+_setup_frames(trajectory, start=None, stop=None, step=None, frames=None)[source]
+
+Pass a Reader object and define the desired iteration pattern through the trajectory
+
+Parameters:
+
+trajectory (mda.Reader) – A trajectory Reader
+
+start (int, optional) – start frame of analysis
+
+stop (int, optional) – stop frame of analysis
+
+step (int, optional) – number of frames to skip between each analysed frame
+
+frames (array_like, optional) –
+array of integers or booleans to slice trajectory; cannot be combined with start, stop, step
+
+Added in version 2.2.0.
+
+Raises:
+
+ValueError – if both frames and at least one of start, stop, or frames is provided (i.e., set to another value than None)
+
+Changed in version 1.0.0: Added .frames and .times arrays as attributes
+
+Changed in version 2.2.0: Added ability to iterate through trajectory by passing a list of frame indices in the frames keyword argument
+
+Changed in version 2.8.0: Split function into two: _define_run_frames() and _prepare_sliced_trajectory(): first one defines the limits for the whole run and is executed once during run() in _setup_frames(), second one prepares sliced trajectory for each of the workers and gets executed twice: one time in _setup_frames() for the whole trajectory, second time in _compute() for each of the computation groups.

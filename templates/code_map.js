@@ -164,11 +164,6 @@ function selectFunction(id) {
     make('div', f.path + ':' + f.line + ' · ' + f.kind, 'path'),
     make('p', f.summary || 'Inspect its source, callers and dependencies below.'),
     make('div', f.signature, 'signature'));
-  if (f.source_url) {
-    const sourceLink = make('a', 'Open this definition on GitHub');
-    sourceLink.href = f.source_url;
-    el('detail').append(sourceLink);
-  }
   const columns = make('div', undefined, 'cols');
   for (const [label, ids] of [['Calls / helpers', f.calls], ['Called by', f.called_by]]) {
     const box = make('div');

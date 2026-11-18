@@ -1,0 +1,11 @@
+property velocities
+
+Velocities of the Atoms in the AtomGroup.
+
+A numpy.ndarray with shape=(n_atoms, 3) and dtype=numpy.float32.
+
+The velocities can be changed by assigning an array of the appropriate shape, i.e. either (n_atoms, 3) to assign individual velocities or (3,) to assign the same velocity to all Atoms (e.g. ag.velocities = array([0,0,0]) will give all Atoms zero velocity).
+
+Raises:
+
+NoDataError – If the underlying Timestep does not contain velocities.

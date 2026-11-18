@@ -1,0 +1,21 @@
+class MDAnalysis.core.accessors.Accessor(name, accessor)[source]
+
+Used to pass data between two classes
+
+Parameters:
+
+name (str) – Name of the property in the parent class
+
+accessor (class) – A class that needs access to its parent’s instance
+
+Example
+
+If you want the property to be named “convert_to” in the AtomGroup class, use:
+
+>>> class AtomGroup:
+>>>     # ...
+>>>     convert_to = Accessor("convert_to", ConverterWrapper)
+
+And when calling ag.convert_to.rdkit(), the “rdkit” method of the ConverterWrapper will be able to have access to “ag”
+
+Added in version 2.0.0.

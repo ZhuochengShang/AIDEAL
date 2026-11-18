@@ -1,0 +1,9 @@
+charmm_bitfield
+
+This DCDFile reader can process files written by different MD simulation programs. For files produced by CHARMM or other programs that follow the same convention we are reading a special CHARMM bitfield that stores different flags about additional information that is stored in the dcd. The bit flags are:
+
+DCD_IS_CHARMM       = 0x01
+DCD_HAS_4DIMS       = 0x02
+DCD_HAS_EXTRA_BLOCK = 0x04
+
+Here DCD_HAS_EXTRA_BLOCK means that unitcell information is stored.

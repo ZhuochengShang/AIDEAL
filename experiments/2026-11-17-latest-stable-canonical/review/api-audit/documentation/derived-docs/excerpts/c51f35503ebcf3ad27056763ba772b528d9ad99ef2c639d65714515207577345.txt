@@ -1,0 +1,17 @@
+class MDAnalysis.topology.tpr.utils.TPXUnpacker2020(data)[source]
+
+Unpacker for TPX files from and later than gromacs 2020.
+
+A new implementation of the serializer (InMemorySerializer), introduced in gromacs 2020, changes le meaning of some types in the file body (the header keep using the previous implementation of the serializer).
+
+ do_string()[source]
+
+Emulate gmx_fio_do_string
+
+ classmethod from_unpacker(unpacker)[source]
+
+ unpack_fstring(n)[source]
+
+ unpack_uchar()[source]
+
+ unpack_ushort()[source]

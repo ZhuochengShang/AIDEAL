@@ -1,0 +1,19 @@
+MDAnalysis.lib.mdamath.norm(v: _Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str]) → float[source]
+
+Calculate the norm of a vector v.
+
+ \[v = \sqrt{\mathbf{v}\cdot\mathbf{v}}\]
+
+This version is faster then numpy.linalg.norm because it only works for a single vector and therefore can skip a lot of the additional fuss linalg.norm does.
+
+Parameters:
+
+v (array_like) – 1D array of shape (N) for a vector of length N
+
+Returns:
+
+norm of the vector
+
+Return type:
+
+float

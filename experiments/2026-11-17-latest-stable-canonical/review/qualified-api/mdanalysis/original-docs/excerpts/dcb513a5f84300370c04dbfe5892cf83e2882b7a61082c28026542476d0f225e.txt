@@ -1,0 +1,21 @@
+search(atoms: AtomGroup, radius: float, level: str = 'A') → AtomGroup | ResidueGroup | SegmentGroup | None[source]
+
+Return all atoms/residues/segments that are within radius of the atoms in atoms.
+
+Parameters:
+
+atoms (AtomGroup, MDAnalysis.core.groups.AtomGroup) – AtomGroup object
+
+radius (float) – Radius for search in Angstrom.
+
+level (str) – char (A, R, S). Return atoms(A), residues(R) or segments(S) within radius of atoms.
+
+Returns:
+
+AtomGroup (AtomGroup) – When level='A', AtomGroup is being returned.
+
+ResidueGroup (ResidueGroup) – When level='R', ResidueGroup is being returned.
+
+SegmentGroup (SegmentGroup) – When level='S', SegmentGroup is being returned.
+
+Changed in version 2.0.0: Now returns AtomGroup (when empty this is now an empty AtomGroup instead of an empty list), ResidueGroup, or a SegmentGroup

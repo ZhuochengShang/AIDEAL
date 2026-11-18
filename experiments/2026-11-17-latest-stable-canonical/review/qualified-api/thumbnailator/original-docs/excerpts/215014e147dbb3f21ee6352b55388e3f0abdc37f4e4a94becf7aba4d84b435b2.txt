@@ -1,0 +1,37 @@
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+File
+dir,
+int start)
+throws
+IOException
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are consecutively numbered
+beginning from from the given value, with the directory specified.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+, and the
+specified value is
+5
+:
+/foo/bar/5
+/foo/bar/6
+/foo/bar/7
+/foo/bar/8
+and so on.
+Parameters:
+dir
+- The directory in which the files are to be located.
+start
+- The value from which to start counting.
+Throws:
+IOException
+- If the specified directory path is not a directory,
+or if does not exist.

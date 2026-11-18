@@ -1,0 +1,113 @@
+12.4. XVG auxiliary reader — MDAnalysis.auxiliary.XVG
+
+xvg files are produced by Gromacs during simulation or analysis, formatted for plotting data with Grace.
+
+Data is column-formatted; time/data selection is enabled by providing column indices.
+
+Note
+
+By default, the time of each step is assumed to be stored in the first column, in units of ps.
+
+ class MDAnalysis.auxiliary.XVG.XVGStep(time_selector=0, data_selector=None, **kwargs)[source]
+
+AuxStep class for .xvg file format.
+
+Extends the base AuxStep class to allow selection of time and data-of-interest fields (by column index) from the full set of data read each step.
+
+Parameters:
+
+time_selector (int | None, optional) – Index of column in .xvg file storing time, assumed to be in ps. Default value is 0 (i.e. first column).
+
+data_selector (list of int | None, optional) – List of indices of columns in .xvg file containing data of interest to be stored in data. Default value is None.
+
+**kwargs – Other AuxStep options.
+
+See also
+
+AuxStep
+
+12.4.1. XVG Readers
+
+The default XVGReader reads and stores the full contents of the .xvg file on initialisation, while a second reader (XVGFileReader) that reads steps one at a time as required is also provided for when a lower memory footprint is desired.
+
+Note
+
+Data is assumed to be time-ordered.
+
+Multiple datasets, separated in the .xvg file by ‘&’, are currently not supported (the readers will stop at the first line starting ‘&’).
+
+ class MDAnalysis.auxiliary.XVG.XVGReader(filename, **kwargs)[source]
+
+Auxiliary reader to read data from an .xvg file.
+
+Default reader for .xvg files. All data from the file will be read and stored on initialisation.
+
+Parameters:
+
+filename (str) – Location of the file containing the auxiliary data.
+
+**kwargs – Other AuxReader options.
+
+See also
+
+AuxReader
+
+Note
+
+The file is assumed to be of a size such that reading and storing the full contents is practical.
+
+ read_all_times()[source]
+
+Get NumPy array of time at each step.
+
+Returns:
+
+Time at each step.
+
+Return type:
+
+NumPy array of float
+
+ class MDAnalysis.auxiliary.XVG.XVGFileReader(filename, **kwargs)[source]
+
+Auxiliary reader to read (one step at a time) from an .xvg file.
+
+An alternative XVG reader which reads each step from the .xvg file as needed (rather than reading and storing all from the start), for a lower memory footprint.
+
+Parameters:
+
+filename (str) – Location of the file containing the auxiliary data.
+
+**kwargs – Other AuxReader options.
+
+See also
+
+AuxFileReader
+
+Note
+
+The default reader for .xvg files is XVGReader.
+
+ read_all_times()[source]
+
+Iterate through all steps to build times list.
+
+Returns:
+
+Time of each step
+
+Return type:
+
+NumPy array of float
+
+ MDAnalysis.auxiliary.XVG.uncomment(lines)[source]
+
+Remove comments from lines in an .xvg file
+
+Parameters:
+
+lines (list of str) – Lines as directly read from .xvg file
+
+Yields:
+
+str – The next non-comment line, with any trailing comments removed

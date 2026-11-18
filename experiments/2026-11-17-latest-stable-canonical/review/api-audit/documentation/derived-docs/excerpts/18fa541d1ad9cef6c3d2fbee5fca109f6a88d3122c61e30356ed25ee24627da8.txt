@@ -1,0 +1,33 @@
+mir_eval.display.piano_roll(intervals, pitches=None, midi=None, ax=None, **kwargs)
+
+Plot a quantized piano roll as intervals
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+timing intervals for notes
+
+pitchesnp.ndarray, shape=(n,), optional
+
+pitches of notes (in Hz).
+
+midinp.ndarray, shape=(n,), optional
+
+pitches of notes (in MIDI numbers).
+
+At least one of pitches or midi must be provided.
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the intervals. If none is provided, a new set of axes is created.
+
+**kwargs
+
+Additional keyword arguments to labeled_intervals().
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes

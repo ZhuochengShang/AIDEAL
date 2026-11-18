@@ -1,0 +1,21 @@
+MDAnalysis.lib.transformations.scale_from_matrix(matrix)[source]
+
+Return scaling factor, origin and direction from scaling matrix.
+
+>>> from MDAnalysis.lib.transformations import (scale_matrix,
+...      scale_from_matrix, is_same_transform)
+>>> import random
+>>> import numpy as np
+>>> factor = random.random() * 10 - 5
+>>> origin = np.random.random(3) - 0.5
+>>> direct = np.random.random(3) - 0.5
+>>> S0 = scale_matrix(factor, origin)
+>>> factor, origin, direction = scale_from_matrix(S0)
+>>> S1 = scale_matrix(factor, origin, direction)
+>>> is_same_transform(S0, S1)
+True
+>>> S0 = scale_matrix(factor, origin, direct)
+>>> factor, origin, direction = scale_from_matrix(S0)
+>>> S1 = scale_matrix(factor, origin, direction)
+>>> is_same_transform(S0, S1)
+True

@@ -1,0 +1,245 @@
+FILE /home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/lib/python3.10/site-packages/sedonadb/__init__.py
+FILE /home/zshan011/apps/aideal/envs/2026-11-16-sedonadb/lib/python3.10/site-packages/sedonadb/context.py
+359:             >>> import tempfile
+360:             >>> sd = sedona.db.connect()
+361:             >>> df = geopandas.GeoDataFrame({
+362:             ...     "geometry": geopandas.GeoSeries.from_wkt(["POINT (0 1)"], crs=3857)
+363:             ... })
+364:             >>>
+365:             >>> with tempfile.TemporaryDirectory() as td:
+366:             ...     df.to_file(f"{td}/df.fgb")
+367:             ...     sd.read_pyogrio(f"{td}/df.fgb").show()
+368:             ...
+369:             ┌──────────────┐
+370:             │ wkb_geometry │
+371:             │   geometry   │
+372:             ╞══════════════╡
+373:             │ POINT(0 1)   │
+374:             └──────────────┘
+375: 
+376:         """
+377:         return self.read.pyogrio(
+378:             table_paths, options=options, extension=extension, partitioning=partitioning
+379:         )
+380: 
+381:     def sql(
+382:         self, sql: str, *, params: Union[List, Tuple, Dict, None] = None
+383:     ) -> DataFrame:
+384:         """Create a [`DataFrame`][sedonadb.dataframe.DataFrame] by executing SQL
+385: 
+563:         - Shapely geometries become SedonaDB geometry objects.
+564:         - GeoArrow scalars (WKB, WKT, or native encodings) become SedonaDB
+565:         geometries with CRS and edge type (planar or spherical) preserved.
+566:         - GeoSeries objects of length 1 become SedonaDB geometries
+567:         with CRS preserved.
+568:         - GeoDataFrame objects with a single column and single row become
+569:         SedonaDB geometries with CRS preserved.
+570:         - Pandas DataFrame objects with a single column and single row
+571:         are converted using `pa.array()`.
+572:         - SedonaDB DataFrame objects that evaluate to a single column and
+573:         row become a scalar value according to the single represented
+574:         value.
+575:         - pyproj CRS objects become PROJJSON strings (e.g., so they may be used
+576:         in `ST_SetCRS()`, `ST_Point()`, or `ST_GeomFromWKT()`).
+577:         - pandas `Timestamp` and `Timedelta` values keep their full resolution
+578:         (and time zone); `pandas.NA` and `numpy.ma.masked` become NULL and
+579:         `pandas.NaT` a timestamp NULL.
+580:         - NumPy `datetime64`/`timedelta64` values in any unit convert at a
+581:         lossless Arrow resolution, 0-d arrays resolve as their scalar, and
+582:         structured `numpy.void` values become structs.
+583:         """
+584:         return lit_expr(value, ctx=self)
+585: 
+586: 
+587: def connect() -> SedonaContext:
+588:     """Create a new [`SedonaContext`][sedonadb.context.SedonaContext]
+589: 
+599:     return SedonaContext()
+600: 
+601: 
+602: def configure_proj(
+603:     preset: Literal["auto", "pyproj", "homebrew", "conda", "system", None] = None,
+604:     *,
+605:     shared_library: Union[str, Path] = None,
+606:     database_path: Union[str, Path] = None,
+607:     search_path: Union[str, Path] = None,
+608:     verbose: bool = False,
+609: ):
+610:     """Configure PROJ source
+611: 
+612:     SedonaDB loads PROJ dynamically to ensure aligned results and configuration
+613:     against other Python and/or system libraries. This is normally configured
+614:     on package load but may need additional configuration (particularly if the
+615:     automatic configuration fails).
+616: 
+617:     This function may be called at any time; however, once ST_Transform has
+618:     been called, subsequent configuration has no effect.
+619: 
+620:     Args:
+621:         preset: One of:
+622:             - None: Use custom values of shared_library and/or other keyword
+623:               arguments.
+624:             - auto: Try all presets in the order pyproj, conda, homebrew,
+625:               system and warn if none succeeded.
+711:     )
+712: 
+713: 
+714: def _configure_proj_pyproj():
+715:     import pyproj
+716: 
+717:     data_dir = Path(pyproj.datadir.get_data_dir())
+718:     database_path = data_dir / "proj.db"
+719:     possible_files = []
+720: 
+721:     if sys.platform == "darwin":
+722:         dylibs_dir = Path(pyproj.__file__).parent / ".dylibs"
+723:         if dylibs_dir.exists():
+724:             possible_files.extend(dylibs_dir.glob("libproj*.dylib*"))
+725:     else:
+726:         dylibs_dir = Path(pyproj.__file__).parent.parent / "pyproj.libs"
+727:         if dylibs_dir.exists():
+728:             possible_files.extend(dylibs_dir.glob("proj*.dll"))
+729:             possible_files.extend(dylibs_dir.glob("libproj*.so*"))
+730: 
+731:     # If pyproj has bundled PROJ libraries, use them
+732:     if len(possible_files) == 1:
+733:         configure_proj(
+734:             shared_library=possible_files[0],
+735:             database_path=database_path,
+736:             search_path=data_dir,
+737:         )
+814:     return None
+815: 
+816: 
+817: def _configure_proj_system():
+818:     # For system installs, try common library names that might be on PATH/LD_LIBRARY_PATH
+819:     import ctypes
+820: 
+821:     names_to_try = []
+822:     if sys.platform == "win32":
+823:         names_to_try = ["proj.dll", "proj_9.dll"]
+824:     elif sys.platform == "darwin":
+825:         names_to_try = ["libproj.dylib"]
+826:     else:
+827:         names_to_try = ["libproj.so"]
+828: 
+829:     for name in names_to_try:
+830:         try:
+831:             ctypes.CDLL(name)
+832:             configure_proj(shared_library=name)
+833:             return
+834:         except OSError:
+835:             continue
+836: 
+837:     raise ValueError(
+838:         f"Can't load PROJ shared library '{names_to_try[0]}': "
+839:         "Could not find module (or one of its dependencies). "
+840:         "Try using the full path with constructor syntax."
+841:     )
+842: 
+843: 
+844: def _configure_proj_prefix(prefix: str):
+845:     prefix = Path(prefix)
+846:     if not prefix.exists():
+847:         raise ValueError(f"Can't configure PROJ from prefix '{prefix}': does not exist")
+848: 
+849:     if sys.platform == "win32":
+850:         # Windows conda uses Library/bin for DLLs and Library/share for data
+851:         lib_dir = prefix / "Library" / "bin"
+852:         data_dir = prefix / "Library" / "share" / "proj"
+853:     else:
+854:         lib_dir = prefix / "lib"
+855:         data_dir = prefix / "share" / "proj"
+856: 
+857:     shared_library = _find_proj_shared_library(lib_dir)
+858: 
+859:     configure_proj(
+860:         shared_library=shared_library,
+861:         database_path=data_dir / "proj.db",
+862:         search_path=data_dir,
+863:     )
+864: 
+865: 
+866: def configure_gdal(
+867:     preset: Optional[
+868:         Literal["auto", "rasterio", "pyogrio", "conda", "homebrew", "system"]
+869:     ] = None,
+870:     *,
+871:     shared_library: Optional[Union[str, Path]] = None,
+872:     verbose: bool = False,
+873: ) -> None:
+874:     """Configure GDAL source
+875: 
+876:     SedonaDB loads GDAL dynamically at runtime. This is normally configured
+877:     on package load but may need additional configuration (particularly if the
+878:     automatic configuration fails).
+879: 
+880:     This function may be called at any time; however, once a GDAL-backed
+881:     operation has been performed, subsequent configuration has no effect.
+882: 
+883:     Args:
+884:         preset: One of:
+885:             - None: Use a custom `shared_library` path.
+886:             - auto: Try all presets in the order rasterio, pyogrio, conda,
+887:               homebrew, system and warn if none succeeded.
+888:             - pyogrio: Attempt to use the GDAL shared library bundled with
+889:               pyogrio. This aligns the GDAL version with the one used by
+1019:     return possible_files[0]
+1020: 
+1021: 
+1022: def _configure_gdal_pyogrio():
+1023:     configure_gdal(shared_library=_find_gdal_in_package("pyogrio"))
+1024: 
+1025: 
+1026: def _configure_gdal_rasterio():
+1027:     configure_gdal(shared_library=_find_gdal_in_package("rasterio"))
+1028: 
+1029: 
+1030: def _gdal_lib_pattern() -> str:
+1031:     """Return a glob pattern for finding GDAL shared libraries."""
+1032:     if sys.platform == "win32":
+1033:         return "gdal*.dll"
+1034:     elif sys.platform == "darwin":
+1035:         return "libgdal*.dylib"
+1036:     else:
+1037:         return "libgdal.so*"
+1038: 
+1039: 
+1040: def _find_gdal_shared_library(lib_dir: Path) -> Path:
+1041:     """Find the GDAL shared library in the given directory.
+1042: 
+1043:     Raises ValueError if not found or multiple matches.
+1044:     """
+1045:     pattern = _gdal_lib_pattern()
+1046:     possible_files = list(lib_dir.glob(pattern))
+1047: 
+1048:     # Filter out debug/test variants if multiple matches
+1049:     if len(possible_files) > 1:
+1063:     return possible_files[0]
+1064: 
+1065: 
+1066: def _configure_gdal_conda():
+1067:     # Try CONDA_PREFIX first, then fall back to sys.prefix
+1068:     conda_prefix = os.environ.get("CONDA_PREFIX")
+1069:     if conda_prefix:
+1070:         prefix = Path(conda_prefix)
+1071:     else:
+1072:         # When running python directly without `conda activate`, CONDA_PREFIX
+1073:         # may not be set, but sys.prefix points to the environment
+1074:         prefix = Path(sys.prefix)
+1075: 
+1076:     if not prefix.exists():
+1077:         raise ValueError(f"Can't configure GDAL from prefix '{prefix}': does not exist")
+1078: 
+1079:     if sys.platform == "win32":
+1080:         lib_dir = prefix / "Library" / "bin"
+1081:     else:
+1082:         lib_dir = prefix / "lib"
+1083: 
+1084:     if not lib_dir.exists():
+1085:         raise ValueError(f"Can't find GDAL library directory '{lib_dir}'")
+1086: 
+1087:     shared_library = _find_gdal_shared_library(lib_dir)
+1088:     configure_gdal(shared_library=shared_library)
+1089: 
+SHAPELY_INIT_EXISTS False

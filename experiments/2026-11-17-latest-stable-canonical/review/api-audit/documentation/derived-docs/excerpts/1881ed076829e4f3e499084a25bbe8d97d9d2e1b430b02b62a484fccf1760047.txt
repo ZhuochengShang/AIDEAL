@@ -1,0 +1,63 @@
+mir_eval.transcription.match_notes(ref_intervals, ref_pitches, est_intervals, est_pitches, onset_tolerance=0.05, pitch_tolerance=50.0, offset_ratio=0.2, offset_min_tolerance=0.05, strict=False)
+
+Compute a maximum matching between reference and estimated notes, subject to onset, pitch and (optionally) offset constraints.
+
+Given two note sequences represented by ref_intervals, ref_pitches, est_intervals and est_pitches (see mir_eval.io.load_valued_intervals()), we seek the largest set of correspondences (i, j) such that:
+
+The onset of reference note i is within onset_tolerance of the onset of estimated note j.
+
+The pitch of reference note i is within pitch_tolerance of the pitch of estimated note j.
+
+If offset_ratio is not None, the offset of reference note i has to be within offset_tolerance of the offset of estimated note j, where offset_tolerance is equal to offset_ratio times the reference note’s duration, i.e. offset_ratio * ref_duration[i] where ref_duration[i] = ref_intervals[i, 1] - ref_intervals[i, 0]. If the resulting offset_tolerance is less than 0.05 (50 ms), 0.05 is used instead.
+
+If offset_ratio is None, note offsets are ignored, and only criteria 1 and 2 are taken into consideration.
+
+Every reference note is matched against at most one estimated note.
+
+This is useful for computing precision/recall metrics for note transcription.
+
+Note there are separate functions match_note_onsets() and match_note_offsets() for matching notes based on onsets only or based on offsets only, respectively.
+
+Parameters:
+
+ref_intervalsnp.ndarray, shape=(n,2)
+
+Array of reference notes time intervals (onset and offset times)
+
+ref_pitchesnp.ndarray, shape=(n,)
+
+Array of reference pitch values in Hertz
+
+est_intervalsnp.ndarray, shape=(m,2)
+
+Array of estimated notes time intervals (onset and offset times)
+
+est_pitchesnp.ndarray, shape=(m,)
+
+Array of estimated pitch values in Hertz
+
+onset_tolerancefloat > 0
+
+The tolerance for an estimated note’s onset deviating from the reference note’s onset, in seconds. Default is 0.05 (50 ms).
+
+pitch_tolerancefloat > 0
+
+The tolerance for an estimated note’s pitch deviating from the reference note’s pitch, in cents. Default is 50.0 (50 cents).
+
+offset_ratiofloat > 0 or None
+
+The ratio of the reference note’s duration used to define the offset_tolerance. Default is 0.2 (20%), meaning the offset_tolerance will equal the ref_duration * 0.2, or 0.05 (50 ms), whichever is greater. If offset_ratio is set to None, offsets are ignored in the matching.
+
+offset_min_tolerancefloat > 0
+
+The minimum tolerance for offset matching. See offset_ratio description for an explanation of how the offset tolerance is determined. Note: this parameter only influences the results if offset_ratio is not None.
+
+strictbool
+
+If strict=False (the default), threshold checks for onset, offset, and pitch matching are performed using <= (less than or equal). If strict=True, the threshold checks are performed using < (less than).
+
+Returns:
+
+matchinglist of tuples
+
+A list of matched reference and estimated notes. matching[i] == (i, j) where reference note i matches estimated note j.

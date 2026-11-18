@@ -1,0 +1,30 @@
+ts_zeros
+
+ tslearn.utils.ts_zeros(sz, d=1)[source]
+
+Returns a time series made of zero values.
+
+Parameters:
+
+szint
+
+Time series size.
+
+dint (optional, default: 1)
+
+Time series dimensionality.
+
+Returns:
+
+numpy.ndarray
+
+A time series made of zeros.
+
+Examples
+
+>>> ts_zeros(3, 2)
+array([[0., 0.],
+       [0., 0.],
+       [0., 0.]])
+>>> ts_zeros(5).shape
+(5, 1)

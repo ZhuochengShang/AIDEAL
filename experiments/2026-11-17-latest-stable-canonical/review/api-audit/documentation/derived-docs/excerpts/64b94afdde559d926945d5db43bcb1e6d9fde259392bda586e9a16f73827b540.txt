@@ -1,0 +1,27 @@
+property unique
+
+An AtomGroup containing sorted and unique Atoms only.
+
+Examples
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> u = mda.Universe(PSF, DCD)
+>>> ag = u.atoms[[2, 1, 2, 2, 1, 0]]
+>>> ag
+<AtomGroup with 6 atoms>
+>>> ag.ix
+array([2, 1, 2, 2, 1, 0])
+>>> ag2 = ag.unique
+>>> ag2
+<AtomGroup with 3 atoms>
+>>> ag2.ix
+array([0, 1, 2])
+>>> ag2.unique is ag2
+False
+
+See also
+
+asunique, ,
+
+This function now always returns a copy.

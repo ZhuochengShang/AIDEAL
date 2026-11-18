@@ -1,0 +1,56 @@
+keepAspectRatio
+public
+Thumbnails.Builder
+<
+T
+>
+keepAspectRatio
+(boolean keep)
+Sets whether or not to keep the aspect ratio of the original image
+for the thumbnail.
+Calling this method without first calling the
+size(int, int)
+method will result in an
+IllegalStateException
+to be thrown.
+If this method is not called when, by default the aspect ratio of
+the original image is preserved for the thumbnail.
+Calling this method after calling the
+scale(double)
+method
+or the
+scale(double, double)
+method will result in a
+IllegalStateException
+.
+Parameters:
+keep
+-
+true
+if the thumbnail is to maintain
+the aspect ratio of the original image,
+false
+otherwise.
+Returns:
+Reference to this object.
+Throws:
+IllegalStateException
+- If
+the
+size(int, int)
+has
+not yet been called to specify the
+size of the thumbnail, or
+the
+scale(double)
+method has been called, or
+the
+scale(double, double)
+method has been called, or
+the
+width(int)
+and/or
+height(int)
+has been called
+and not preserving the aspect ratio
+is desired.

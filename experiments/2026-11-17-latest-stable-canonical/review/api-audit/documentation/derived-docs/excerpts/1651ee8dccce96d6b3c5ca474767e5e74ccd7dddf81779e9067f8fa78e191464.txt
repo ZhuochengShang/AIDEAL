@@ -1,0 +1,23 @@
+merge(objects: Sequence[Results], require_all_aggregators: bool = True) → Results[source]
+
+Merge multiple Results into a single Results instance.
+
+Merge multiple Results instances into a single one, using the lookup dictionary to determine the appropriate aggregator functions for each named results attribute. If the resulting object only contains a single element, it just returns it without using any aggregators.
+
+Parameters:
+
+objects (Sequence[Results]) – Multiple Results instances with the same data attributes.
+
+require_all_aggregators (bool, optional) – if True, raise an exception when no aggregation function for a particular argument is found. Allows to skip aggregation for the parameters that aren’t needed in the final object – see ResultsGroup.
+
+Returns:
+
+merged Results
+
+Return type:
+
+Results
+
+Raises:
+
+ValueError – if no aggregation function for a key is found and require_all_aggregators=True

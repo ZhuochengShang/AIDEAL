@@ -1,0 +1,3 @@
+classmethod _atom_sorter(atom: Atom) → Tuple[int, int][source]
+
+Sorts atoms in the molecule in a way that makes it easy for the bond order and charge infering code to get the correct state on the first try. Currently sorts by number of unpaired electrons, then by number of heavy atom neighbors (i.e. atoms at the edge first).

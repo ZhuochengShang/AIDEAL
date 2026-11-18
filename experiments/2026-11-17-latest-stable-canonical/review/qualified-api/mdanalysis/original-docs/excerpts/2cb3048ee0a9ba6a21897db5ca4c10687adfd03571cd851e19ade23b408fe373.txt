@@ -1,0 +1,38 @@
+check_slice_indices(start, stop, step)
+
+Check frame indices are valid and clip to fit trajectory.
+
+The usage follows standard Python conventions for range() but see the warning below.
+
+Parameters:
+
+start (int or None) – Starting frame index (inclusive). None corresponds to the default of 0, i.e., the initial frame.
+
+stop (int or None) – Last frame index (exclusive). None corresponds to the default of n_frames, i.e., it includes the last frame of the trajectory.
+
+step (int or None) – step size of the slice, None corresponds to the default of 1, i.e, include every frame in the range start, stop.
+
+Returns:
+
+start, stop, step – Integers representing the slice
+
+Return type:
+
+tuple (int, int, int)
+
+Warning
+
+The returned values start, stop and step give the expected result when passed in range() but gives unexpected behavior when passed in a slice when stop=None and step=-1
+
+This can be a problem for downstream processing of the output from this method. For example, slicing of trajectories is implemented by passing the values returned by check_slice_indices() to range()
+
+range(start, stop, step)
+
+and using them as the indices to randomly seek to. On the other hand, in MDAnalysis.analysis.base.AnalysisBase the values returned by check_slice_indices() are used to splice the trajectory by creating a slice instance
+
+slice(start, stop, step)
+
+This creates a discrepancy because these two lines are not equivalent:
+
+range(10, -1, -1)             # [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+range(10)[slice(10, -1, -1)]  # []

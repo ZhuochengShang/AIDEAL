@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import patch
 
 from workflow.ablation import bind
-from workflow.condition_setup import checked_outcome, execute_condition
+from workflow.evaluation_freeze import checked_outcome, execute_condition
 
 
 class ConditionAdjudicationTests(unittest.TestCase):
@@ -72,7 +72,7 @@ class ConditionAdjudicationTests(unittest.TestCase):
                    'config': {'conditions': {'original': {'adapter': {'command': ['synthetic-checker']}}},
                               'common': {'execution_timeout_s': 1}}}
         case = {'id': 'synthetic', 'oracle': 'not-read', 'target_apis': ['f']}
-        with patch('workflow.condition_setup.invoke', return_value={'status': 'adapter_error'}) as invoke:
+        with patch('workflow.evaluation_freeze.invoke', return_value={'status': 'adapter_error'}) as invoke:
             destination, _ = execute_condition(payload, 'original', case, 'candidate', parent)
         self.assertEqual(parent / 'execution_002', destination)
         self.assertEqual(destination, invoke.call_args.args[2])

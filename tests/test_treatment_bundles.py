@@ -32,6 +32,50 @@ class LibraryVersionTests(unittest.TestCase):
         self.assertEqual(applied, apply_treatments(f.study, result['proposal']))
         f.assert_original_unchanged()
 
+    def test_legacy_hints_require_opt_in_and_default_install_keeps_native_targets_clear(self):
+        f = self.fixture
+        source = f.proposal('mixed')
+        original = load(source)
+        hints_path = Path(original['artifacts']['error_hints']['path'])
+        hints = [{'function_id': 'src/library.py:1:original',
+                  'match': 'invalid value', 'hint': 'Use the supported argument.'}]
+        f.write_json(hints_path, {'schema_version': 1, 'hints': hints})
+        original['artifacts']['error_hints'] = bind(hints_path)
+        f.write_json(source, original)
+        source_bytes, hint_bytes = source.read_bytes(), hints_path.read_bytes()
+
+        for include, folder in ((False, 'current'), (True, 'legacy')):
+            with self.subTest(include_legacy_hints=include):
+                bundled = (bundle_proposals([source], self.root / folder, include_legacy_hints=True)
+                           if include else bundle_proposals([source], self.root / folder))
+                proposal = load(bundled['proposal'])
+                receipt = load(proposal['legacy_hint_selection']['path'])
+                self.assertEqual(int(include), bundled['hints'])
+                self.assertEqual(int(not include), bundled['omitted_legacy_hints'])
+                self.assertEqual(1, receipt['candidate_count'])
+                self.assertEqual(int(include), receipt['installed_count'])
+                self.assertEqual(int(not include), receipt['omitted_count'])
+                self.assertEqual([original['artifacts']['error_hints']], receipt['source_artifacts'])
+                self.assertEqual([{**hints[0], 'status': 'unverified'}], receipt['candidates'])
+                self.assertEqual(include, 'error_hints' in proposal['artifacts'])
+                self.assertEqual(source_bytes, (self.root / folder / 'batch_0001.json').read_bytes())
+                applied = apply_treatments(f.study, bundled['proposal'])
+                for arm in ('error_hints_only', 'combined'):
+                    installed = f.paths[arm] / '.aideal/treatments/error_hints.json'
+                    self.assertEqual(include, installed.exists())
+                    if include:
+                        self.assertEqual(receipt['candidates'], load(installed)['hints'])
+                    self.assertNotIn('.aideal/treatments/legacy_hint_selection.json',
+                                     applied['arms'][arm]['files'])
+                before = Path(bundled['proposal']).read_bytes()
+                with self.assertRaises(FileExistsError):
+                    bundle_proposals([source], self.root / folder,
+                                     include_legacy_hints=not include)
+                self.assertEqual(before, Path(bundled['proposal']).read_bytes())
+        self.assertEqual(source_bytes, source.read_bytes())
+        self.assertEqual(hint_bytes, hints_path.read_bytes())
+        f.assert_original_unchanged()
+
     def test_bundle_rejects_collisions_and_mismatched_baselines_before_output(self):
         f = self.fixture
         first = f.proposal('a', roles=['alias', 'alias_interface'])

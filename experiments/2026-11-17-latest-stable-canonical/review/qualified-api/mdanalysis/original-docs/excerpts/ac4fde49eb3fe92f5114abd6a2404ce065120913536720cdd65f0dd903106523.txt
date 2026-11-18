@@ -1,0 +1,9 @@
+_conclude()[source]
+
+Finalize the results you’ve gathered.
+
+Called at the end of the run() method to finish everything up.
+
+Notes
+
+Aggregation of results from individual workers happens in self.run(), so here you have to implement everything as if you had a non-parallel run. If you want to enable proper aggregation for parallel runs for you analysis class, implement self._get_aggregator and check MDAnalysis.analysis.results for how to use it.

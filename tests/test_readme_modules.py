@@ -213,6 +213,96 @@ Use an optional value.
             self.assertEqual(3, len(calls))
             self.assertEqual(before, self.cfg.llm_readme.read_bytes())
 
+    def test_generation_resume_rejects_changed_grounding_tests(self):
+        with self.fake_models() as calls:
+            self.readme.find_or_create(self.cfg, generate=True, max_generated=0)
+            before = self.cfg.llm_readme.read_bytes()
+            call_count = len(calls)
+            (self.root / 'tests/OpsTest.scala').write_text(
+                'test("new usage") { assert(Ops.scale(3, 10) == 30) }\n')
+            with self.assertRaisesRegex(ValueError, 'fingerprint changed'):
+                self.readme.find_or_create(self.cfg, generate=True, max_generated=0, resume=True)
+            self.assertEqual(before, self.cfg.llm_readme.read_bytes())
+            self.assertEqual(call_count, len(calls))
+
+    def test_generation_resume_binds_effective_custom_and_fallback_templates(self):
+        prompts = import_module('aideal.prompts')
+        # Relative and absolute configured directories must use the same
+        # resolver as actual prompt rendering, including a per-file fallback.
+        for absolute in (False, True):
+            with self.subTest(absolute=absolute):
+                custom = self.root / ('absolute-prompts' if absolute else 'custom-prompts')
+                fallback = self.root / ('fallback-absolute' if absolute else 'fallback-relative')
+                (custom / 'aideal').mkdir(parents=True)
+                (fallback / 'aideal').mkdir(parents=True)
+                entry = custom / 'aideal/readme_entry.md'
+                distill = fallback / 'aideal/readme_distill.md'
+                unused = fallback / 'aideal/readme_entry.md'
+                entry.write_text('SYSTEM: custom entry\nUSER: initial template\n')
+                distill.write_text('SYSTEM: fallback distillation\nUSER: original text\n')
+                unused.write_text('SYSTEM: unused default\nUSER: unused template\n')
+                self.cfg.raw['files'] = {'prompts_dir': str(custom) if absolute else custom.name}
+                with patch.object(prompts, 'DEFAULT_PROMPTS', fallback), self.fake_models() as calls:
+                    self.readme.find_or_create(self.cfg, generate=True, max_generated=0, force=True)
+                    count = len(calls)
+                    unused.write_text('This inactive fallback must not invalidate the run.\n')
+                    self.readme.find_or_create(self.cfg, generate=True, max_generated=0, resume=True)
+                    self.assertEqual(count, len(calls))
+                    original = entry.read_text()
+                    entry.write_text(original + 'Changed active entry instructions.\n')
+                    with self.assertRaisesRegex(ValueError, 'fingerprint changed'):
+                        self.readme.find_or_create(self.cfg, generate=True, max_generated=0, resume=True)
+                    entry.write_text(original)
+                    distill.write_text(distill.read_text() + 'Changed active fallback.\n')
+                    with self.assertRaisesRegex(ValueError, 'fingerprint changed'):
+                        self.readme.find_or_create(self.cfg, generate=True, max_generated=0, resume=True)
+                    self.assertEqual(count, len(calls))
+
+    def test_external_original_readme_is_reported_after_skeleton_and_generation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            document = Path(directory).resolve() / 'README.md'
+            document.write_text('# External usage\n```scala\nOps.scale(2)\n```\n')
+            self.cfg.original_readme = document
+            self.cfg.original_readme_files = [document]
+            skeleton = self.readme.find_or_create(self.cfg)
+            self.assertEqual([str(document)], skeleton['used_original_readme'])
+            with self.fake_models():
+                generated = self.readme.find_or_create(self.cfg, generate=True, max_generated=0, force=True)
+            self.assertEqual([str(document)], generated['used_original_readme'])
+            self.assertEqual(2, generated['generated_ok'])
+
+    def test_python_unrelated_owners_are_not_subsumed_as_overloads(self):
+        self.python_source()
+        (self.root / 'src/api.py').write_text(
+            'class Reader:\n    def run(self, value: int):\n        return value\n\n'
+            'class Writer:\n    def run(self, value: int, destination: str):\n        return destination\n')
+        details = self.readme.public_api_details(self.cfg)
+        maximal, subsumed = self.readme._subsume_overloads(details)
+        self.assertEqual({'api.Reader.run', 'api.Writer.run'}, {r['qualified_name'] for r in maximal})
+        self.assertEqual([], subsumed)
+        # Preserve the historical catalog/denominator contract in this fix.
+        result = self.readme.find_or_create(self.cfg)
+        self.assertEqual(1, result['api_entries'])
+        self.assertIn('destination', self.cfg.llm_readme.read_text())
+
+    def test_generation_resume_binds_api_origin_implementation(self):
+        self.python_source()
+        self.cfg.raw['codebase']['api_origin'] = {
+            'source_roots': ['src'], 'library_namespaces': ['api'],
+            'external_namespaces': ['builtins', 'math']}
+        target = ENGINE / 'aideal/api_origin.py'
+        original_read = Path.read_bytes
+        def changed_origin_bytes(path):
+            content = original_read(path)
+            return content + b'\n# Synthetic ownership implementation change.\n' if path == target else content
+        with self.fake_models() as calls:
+            self.readme.find_or_create(self.cfg, generate=True, max_generated=0)
+            before = len(calls)
+            with patch.object(Path, 'read_bytes', changed_origin_bytes):
+                with self.assertRaisesRegex(ValueError, 'fingerprint changed'):
+                    self.readme.find_or_create(self.cfg, generate=True, max_generated=0, resume=True)
+            self.assertEqual(before, len(calls))
+
     def test_generation_identity_covers_the_moved_implementations(self):
         tree = ast.parse((ENGINE / 'aideal/readme_generation.py').read_text())
         node = next(n for n in ast.walk(tree) if isinstance(n, ast.Assign)

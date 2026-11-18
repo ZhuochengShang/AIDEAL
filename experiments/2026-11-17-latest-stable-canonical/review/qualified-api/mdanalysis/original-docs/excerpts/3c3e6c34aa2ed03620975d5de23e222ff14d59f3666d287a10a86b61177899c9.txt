@@ -1,0 +1,39 @@
+rmsip(other, n_components=None)[source]
+
+Compute the root mean square inner product between subspaces.
+
+This is only symmetric if the number of components is the same for both instances. The RMSIP effectively measures how correlated the vectors of this instance are to those of other.
+
+Please cite [Amadei1999] and [Leo-Macias2004] if you use this function.
+
+Parameters:
+
+other (PCA) – Another PCA class. This must have already been run.
+
+n_components (int or tuple of ints, optional) – number of components to compute for the inner products. None computes all of them.
+
+Returns:
+
+Root mean square inner product of the selected subspaces. 0 indicates that they are mutually orthogonal, whereas 1 indicates that they are identical.
+
+Return type:
+
+float
+
+Examples
+
+You can compare the RMSIP between different intervals of the same trajectory. For example, to compare similarity within the top three principal components:
+
+>>> first_interval = pca.PCA(u, select="backbone").run(start=0, stop=25)
+>>> second_interval = pca.PCA(u, select="backbone").run(start=25, stop=50)
+>>> last_interval = pca.PCA(u, select="backbone").run(start=75)
+>>> round(first_interval.rmsip(second_interval, n_components=3), 6)
+0.381476
+>>> round(first_interval.rmsip(last_interval, n_components=3), 6)
+0.174782
+
+See also
+
+rmsip()
+
+Added in version 1.0.0.

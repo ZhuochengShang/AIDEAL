@@ -1,0 +1,39 @@
+mir_eval.chord.split(chord_label, reduce_extended_chords=False)
+
+Parse a chord label into its four constituent parts:
+
+root
+
+quality shorthand
+
+scale degrees
+
+bass
+
+Note: Chords lacking quality AND interval information are major.
+
+If a quality is specified, it is returned.
+
+If an interval is specified WITHOUT a quality, the quality field is empty.
+
+Some examples:
+
+'C' -> ['C', 'maj', {}, '1']
+'G#:min(*b3,*5)/5' -> ['G#', 'min', {'*b3', '*5'}, '5']
+'A:(3)/6' -> ['A', '', {'3'}, '6']
+
+Parameters:
+
+chord_labelstr
+
+A chord label.
+
+reduce_extended_chordsbool
+
+Whether to map the upper voicings of extended chords (9’s, 11’s, 13’s) to semitone extensions. (Default value = False)
+
+Returns:
+
+chord_partslist
+
+Split version of the chord label.

@@ -1,0 +1,197 @@
+class MDAnalysis.core.topologyattrs.Charges(values, guessed=False)[source]
+
+ center_of_charge(wrap=False, unwrap=False, compound='group')[source]
+
+Center of (absolute) charge of (compounds of) the group
+
+ \[\boldsymbol R = \frac{\sum_i \vert q_i \vert \boldsymbol r_i} {\sum_i \vert q_i \vert}\]
+
+where \(q_i\) is the charge and \(\boldsymbol r_i\) the position of atom \(i\) in the given MDAnalysis.core.groups.AtomGroup. Centers of charge per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly. If the charges of a compound sum up to zero, the center of mass coordinates of that compound will be nan (not a number).
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact. Instead, the resulting center-of-mass position vectors will be moved to the primary unit cell after calculation.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', the center of mass of all atoms in the group will be returned as a single position vector. Otherwise, the centers of mass of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+center – Position vector(s) of the center(s) of charge of the group. If compound was set to 'group', the output will be a single position vector. If compound was set to 'segments' or 'residues', the output will be a 2d coordinate array of shape (n, 3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Note
+
+This method can only be accessed if the underlying topology has information about atomic charges.
+
+Added in version 2.2.0.
+
+ dipole_moment(**kwargs)[source]
+
+Dipole moment of the group or compounds in a group.
+
+ \[\mu = |\boldsymbol{\mu}| = \sqrt{ \sum_{i=1}^{D} \mu^2 }\]
+
+Where \(D\) is the number of dimensions, in this case 3.
+
+Computes the dipole moment of Atoms in the group. Dipole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is a net charge, the magnitude of the dipole moment is dependent on the center chosen. See dipole_vector().
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Dipole moment(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ dipole_vector(wrap=False, unwrap=False, compound='group', center='mass')[source]
+
+Dipole vector of the group.
+
+ \[\boldsymbol{\mu} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+Computes the dipole vector of Atoms in the group. Dipole vector per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that the magnitude of the dipole moment is independent of the center chosen unless the species has a net charge. In the case of a charged group the dipole moment can be later adjusted with:
+
+ \[\boldsymbol{\mu}_{COC} = \boldsymbol{\mu}_{COM} + q_{ag}\mathbf{r}_{COM} - q_{ag}\boldsymbol{r}_{COC}\]
+
+Where \(\mathbf{r}_{COM}\) is the center of mass and \(\mathbf{r}_{COC}\) is the center of charge.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Dipole vector(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ dtype
+
+alias of float
+
+ get_residues(rg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ get_segments(sg)[source]
+
+By default, the values for each atom present in the set of residues are returned in a single array. This behavior can be overriden in child attributes.
+
+ quadrupole_moment(**kwargs)[source]
+
+Quadrupole moment of the group according to [1].
+
+ \[Q = \sqrt{\frac{2}{3}{\hat{\mathsf{Q}}}:{\hat{\mathsf{Q}}}}\]
+
+where the quadrupole moment is calculated from the tensor double contraction of the traceless quadropole tensor \(\hat{\mathsf{Q}}\)
+
+Computes the quadrupole moment of Atoms in the group. Quadrupole per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole moment is dependant on the center chosen and cannot be translated.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Quadrupole moment(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ quadrupole_tensor(wrap=False, unwrap=False, compound='group', center='mass')[source]
+
+Traceless quadrupole tensor of the group or compounds.
+
+This tensor is first computed as the outer product of vectors from a reference point to some atom, and multiplied by the atomic charge. The tensor of each atom is then summed to produce the quadrupole tensor of the group:
+
+ \[\mathsf{Q} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} ) \otimes ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+The traceless quadrupole tensor, \(\hat{\mathsf{Q}}\), is then taken from:
+
+ \[\hat{\mathsf{Q}} = \frac{3}{2} \mathsf{Q} - \frac{1}{2} tr(\mathsf{Q})\]
+
+Computes the quadrupole tensor of Atoms in the group. Tensor per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole tensor is dependent on the center (e.g., \(\mathbf{r}_{COM}\)) chosen and cannot be translated.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Quadrupole tensor(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single tensor of shape (3,3). Otherwise, the output will be a 1d array of shape (n,3,3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.
+
+ total_charge(compound='group')[source]
+
+Total charge of (compounds of) the group.
+
+Computes the total charge of Atoms in the group. Total charges per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Parameters:
+
+compound ({'group', 'segments', 'residues', 'molecules', 'fragments'},) – optional If ‘group’, the total charge of all atoms in the group will be returned as a single value. Otherwise, the total charges per Segment, Residue, molecule, or fragment will be returned as a 1d array. Note that, in any case, only the charges of Atoms belonging to the group will be taken into account.
+
+Returns:
+
+Total charge of (compounds of) the group. If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,) where n is the number of compounds.
+
+Return type:
+
+float or numpy.ndarray
+
+Changed in version 0.20.0: Added compound parameter

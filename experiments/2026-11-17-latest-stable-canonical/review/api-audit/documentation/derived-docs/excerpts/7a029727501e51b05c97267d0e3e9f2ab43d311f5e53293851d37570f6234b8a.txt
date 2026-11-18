@@ -1,0 +1,9 @@
+MDAnalysis.lib.transformations.euler_from_quaternion(quaternion, axes='sxyz')[source]
+
+Return Euler angles from quaternion for specified axis sequence.
+
+>>> from MDAnalysis.lib.transformations import euler_from_quaternion
+>>> import numpy as np
+>>> angles = euler_from_quaternion([0.99810947, 0.06146124, 0, 0])
+>>> np.allclose(angles, [0.123, 0, 0])
+True

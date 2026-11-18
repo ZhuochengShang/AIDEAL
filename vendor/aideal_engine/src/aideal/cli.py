@@ -184,11 +184,11 @@ def _run(argv: list[str] | None = None) -> int:
     sp = sub.add_parser("manifest",
                         help="freeze the experiment denominators: writes docs/api_coverage.json "
                              "(S/O/G sets + coverage percentages — a first-class result) and "
-                             "docs/api_manifest_shared.json (T = S∩O∩G, consumed by EVERY 2x2 "
-                             "cell). --set surface freezes all of S instead of T")
+                             "docs/api_manifest_shared.json (T = S∩O∩G, for a shared-documentation "
+                             "subset). --set surface freezes all of S for a full-scope comparison")
     sp.add_argument("--set", choices=["shared", "surface"], default="shared",
-                    help="which set the manifest freezes: shared T (default; fair "
-                         "quality comparison) or the whole surface S (coverage-style runs)")
+                    help="which set the manifest freezes: shared T (legacy default; "
+                         "documented-subset analysis) or the whole surface S (full-scope comparison)")
     sp.add_argument("--coverage-out", default="docs/api_coverage.json")
     sp.add_argument("--out", default=None,
                     help="manifest path (default docs/api_manifest_shared.json or "

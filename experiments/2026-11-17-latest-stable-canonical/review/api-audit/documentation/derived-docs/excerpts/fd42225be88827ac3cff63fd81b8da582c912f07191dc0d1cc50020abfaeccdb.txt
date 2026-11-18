@@ -1,0 +1,41 @@
+dipole_vector(wrap=False, unwrap=False, compound='group', center='mass')
+
+Dipole vector of the group.
+
+ \[\boldsymbol{\mu} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+Computes the dipole vector of Atoms in the group. Dipole vector per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that the magnitude of the dipole moment is independent of the center chosen unless the species has a net charge. In the case of a charged group the dipole moment can be later adjusted with:
+
+ \[\boldsymbol{\mu}_{COC} = \boldsymbol{\mu}_{COM} + q_{ag}\mathbf{r}_{COM} - q_{ag}\boldsymbol{r}_{COC}\]
+
+Where \(\mathbf{r}_{COM}\) is the center of mass and \(\mathbf{r}_{COC}\) is the center of charge.
+
+wrapbool, optional
+
+If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrapbool, optional
+
+If True, compounds will be unwrapped before computing their centers.
+
+compound{‘group’, ‘segments’, ‘residues’, ‘molecules’,
+
+‘fragments’}, optional
+
+If 'group', a single dipole vector returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 2d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center{‘mass’, ‘charge’}, optional
+
+Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+numpy.ndarray
+
+Dipole vector(s) of (compounds of) the group in \(eÅ\). If compound was set to 'group', the output will be a single value. Otherwise, the output will be a 1d array of shape (n,3) where n is the number of compounds.
+
+Added in version 2.4.0.
+
+Note
+
+This requires the underlying topology to have charges. Otherwise, a NoDataError is raised.

@@ -1,0 +1,216 @@
+ThumbnailMaker (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.makers
+Class ThumbnailMaker
+java.lang.Object
+net.coobird.thumbnailator.makers.ThumbnailMaker
+Direct Known Subclasses:
+FixedSizeThumbnailMaker
+,
+ScaledThumbnailMaker
+public abstract class
+ThumbnailMaker
+extends
+Object
+An abstract class which provides support functionalities for
+ThumbnailMaker
+implementations.
+Author:
+coobird
+Constructor Summary
+ThumbnailMaker
+()
+Creates and initializes an instance of
+ThumbnailMaker
+.
+Method Summary
+ThumbnailMaker
+defaultImageType
+()
+Sets the type of the
+BufferedImage
+to be the default type.
+ThumbnailMaker
+defaultResizer
+()
+Sets the
+Resizer
+to use the default
+Resizer
+.
+ThumbnailMaker
+defaultResizerFactory
+()
+Sets the
+ResizerFactory
+to use
+DefaultResizerFactory
+.
+ThumbnailMaker
+imageType
+(int imageType)
+Sets the type for the
+BufferedImage
+to produce.
+abstract
+BufferedImage
+make
+(
+BufferedImage
+img)
+Makes a thumbnail.
+ThumbnailMaker
+resizer
+(
+Resizer
+resizer)
+Sets the
+Resizer
+which is used for the resizing operation.
+ThumbnailMaker
+resizerFactory
+(
+ResizerFactory
+resizerFactory)
+Sets the
+ResizerFactory
+which is used to obtain a
+Resizer
+for the resizing operation.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+ThumbnailMaker
+public
+ThumbnailMaker
+()
+Creates and initializes an instance of
+ThumbnailMaker
+.
+Method Detail
+make
+public abstract
+BufferedImage
+make
+(
+BufferedImage
+img)
+Makes a thumbnail.
+Parameters:
+img
+- The source image.
+Returns:
+The thumbnail created from the source image, using the
+parameters set by the
+ThumbnailMaker
+.
+imageType
+public
+ThumbnailMaker
+imageType
+(int imageType)
+Sets the type for the
+BufferedImage
+to produce.
+Parameters:
+imageType
+- The type of the
+BufferedImage
+.
+Returns:
+A reference to this object.
+defaultImageType
+public
+ThumbnailMaker
+defaultImageType
+()
+Sets the type of the
+BufferedImage
+to be the default type.
+Returns:
+A reference to this object.
+resizer
+public
+ThumbnailMaker
+resizer
+(
+Resizer
+resizer)
+Sets the
+Resizer
+which is used for the resizing operation.
+Parameters:
+resizer
+- The
+Resizer
+to use when resizing the image
+to create the thumbnail.
+Returns:
+A reference to this object.
+defaultResizer
+public
+ThumbnailMaker
+defaultResizer
+()
+Sets the
+Resizer
+to use the default
+Resizer
+.
+Returns:
+A reference to this object.
+resizerFactory
+public
+ThumbnailMaker
+resizerFactory
+(
+ResizerFactory
+resizerFactory)
+Sets the
+ResizerFactory
+which is used to obtain a
+Resizer
+for the resizing operation.
+Parameters:
+resizerFactory
+- The
+ResizerFactory
+to obtain the
+Resizer
+used when resizing the image
+to create the thumbnail.
+Returns:
+A reference to this object.
+Since:
+0.4.0
+defaultResizerFactory
+public
+ThumbnailMaker
+defaultResizerFactory
+()
+Sets the
+ResizerFactory
+to use
+DefaultResizerFactory
+.
+Returns:
+A reference to this object.
+Since:
+0.4.0
+Copyright © 2025. All rights reserved.

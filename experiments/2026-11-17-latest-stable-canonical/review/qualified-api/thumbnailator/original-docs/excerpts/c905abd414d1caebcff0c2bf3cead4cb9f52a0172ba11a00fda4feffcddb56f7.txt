@@ -1,0 +1,42 @@
+ConsecutivelyNumberedFilenames
+public
+ConsecutivelyNumberedFilenames
+(
+String
+format,
+int start)
+Instantiates an
+ConsecutivelyNumberedFilenames
+object which
+returns
+File
+s with file names which are based on a format string.
+The numbering will be consecutive from the specified value.
+The format string should contain the string
+%d
+which will be
+replaced with a consecutively counted number. Additional formatting
+can be applied. For more details, please refer to the section on
+Numeric
+formatting in the Java API specification for the
+Formatter
+class.
+File name sequence
+For a case where the parent directory is
+/foo/bar/
+, and the
+specified value is
+5
+, with the format string
+image-%d
+:
+image-5
+image-6
+image-7
+image-8
+and so on.
+Parameters:
+format
+- The format string to use.
+start
+- The value from which to start counting.

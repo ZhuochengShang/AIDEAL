@@ -1,0 +1,188 @@
+class MDAnalysis.coordinates.base.StreamReaderBase(filename, convert_units=True, **kwargs)[source]
+
+Base class for readers that read a continuous stream of data.
+
+This class is designed for readers that process continuous data streams, such as live feeds from simulations. Unlike traditional trajectory readers that can randomly access frames, streaming readers have fundamental constraints:
+
+No random access: Cannot seek to arbitrary frames (no traj[5])
+
+Forward-only: Can only iterate sequentially through frames
+
+No length: Total number of frames is unknown until stream ends
+
+No rewinding: Cannot restart or rewind the stream
+
+No copying: Cannot create independent copies of the reader
+
+No reopening: Cannot restart iteration once stream is consumed
+
+No timeseries: Cannot use timeseries() or bulk data extraction
+
+No writers: Cannot create Writer() or OtherWriter() instances
+
+No pickling: Cannot serialize reader instances (limits multiprocessing)
+
+No StreamWriterBase: No complementary Writer class available for streaming data
+
+The reader raises RuntimeError for operations that require random access or rewinding, including rewind(), copy(), timeseries(), Writer(), OtherWriter(), and len(). Only slice notation is supported for iteration.
+
+Parameters:
+
+filename (str or file-like) – Source of the streaming data
+
+convert_units (bool, optional) – Whether to convert units from native to MDAnalysis units (default: True)
+
+**kwargs – Additional keyword arguments passed to the parent ReaderBase
+
+See also
+
+StreamFrameIteratorSliced
+
+Iterator for stepped streaming access
+
+ReaderBase
+
+Base class for standard trajectory readers
+
+Added in version 2.10.0.
+
+ OtherWriter(filename, **kwargs)[source]
+
+Writer creation is not supported for streaming trajectories.
+
+OtherWriter initialization requires frame-based parameters and trajectory indexing information. Streaming readers process data sequentially without meaningful frame indexing, making writer setup impossible.
+
+Parameters:
+
+filename (str) – Output filename (ignored, as method is not supported)
+
+**kwargs – Additional keyword arguments (ignored, as method is not supported)
+
+Raises:
+
+RuntimeError – Always raised, as writer creation is not supported for streaming trajectories
+
+ Writer(filename, **kwargs)[source]
+
+Writer creation is not supported for streaming trajectories.
+
+Writer creation requires trajectory metadata that streaming readers cannot provide due to their sequential processing nature.
+
+Parameters:
+
+filename (str) – Output filename (ignored, as method is not supported)
+
+**kwargs – Additional keyword arguments (ignored, as method is not supported)
+
+Raises:
+
+RuntimeError – Always raised, as writer creation is not supported for streaming trajectories
+
+ check_slice_indices(start, stop, step)[source]
+
+Check and validate slice indices for streaming trajectories.
+
+Streaming trajectories have fundamental constraints that differ from traditional trajectory files:
+
+No start/stop indices: Since streams process data continuously without knowing the total length, start and stop must be None
+
+Step-only slicing: Only the step parameter is meaningful, controlling how many frames to skip during iteration
+
+Forward-only: step must be positive (> 0) as streams cannot be processed backward in time
+
+Parameters:
+
+start (int or None) – Starting frame index. Must be None for streaming readers.
+
+stop (int or None) – Ending frame index. Must be None for streaming readers.
+
+step (int or None) – Step size for iteration. Must be positive integer or None (equivalent to 1).
+
+Returns:
+
+(start, stop, step) with validated values
+
+Return type:
+
+tuple
+
+Raises:
+
+ValueError – If start or stop are not None, or if step is not a positive integer.
+
+Examples
+
+Valid streaming slices:
+
+traj[:]        # All frames (step=None, equivalent to step=1)
+traj[::2]      # Every 2nd frame
+traj[::10]     # Every 10th frame
+
+Invalid streaming slices:
+
+traj[5:]       # Cannot specify start index
+traj[:100]     # Cannot specify stop index
+traj[5:100:2]  # Cannot specify start or stop indices
+traj[::-1]     # Cannot go backwards (negative step)
+
+See also
+
+__getitem__, StreamFrameIteratorSliced
+
+Added in version 2.10.0.
+
+ copy()[source]
+
+Reader copying is not supported for streaming trajectories.
+
+Streaming readers maintain internal state and connection resources that cannot be duplicated. Each stream connection is unique and cannot be copied.
+
+Raises:
+
+RuntimeError – Always raised, as copying is not supported for streaming trajectories
+
+ property n_frames
+
+Changes as stream is processed unlike other readers
+
+ next()[source]
+
+Advance to the next timestep in the streaming trajectory.
+
+Streaming readers process frames sequentially and cannot rewind once iteration completes. Use for ts in trajectory for iteration.
+
+Returns:
+
+The next timestep in the stream
+
+Return type:
+
+Timestep
+
+Raises:
+
+StopIteration – When the stream ends or no more frames are available
+
+ rewind()[source]
+
+Rewinding is not supported for streaming trajectories.
+
+Streaming readers process data continuously from streams and cannot restart or go backward in the stream once consumed.
+
+Raises:
+
+RuntimeError – Always raised, as rewinding is not supported for streaming trajectories
+
+ timeseries(**kwargs)[source]
+
+Timeseries extraction is not supported for streaming trajectories.
+
+Streaming readers cannot randomly access frames or store bulk coordinate data in memory, which timeseries() requires. Use sequential frame iteration instead.
+
+Parameters:
+
+**kwargs – Any keyword arguments (ignored, as method is not supported)
+
+Raises:
+
+RuntimeError – Always raised, as timeseries extraction is not supported for streaming trajectories

@@ -1,0 +1,44 @@
+watermark
+public
+Thumbnails.Builder
+<
+T
+>
+watermark
+(
+Position
+position,
+BufferedImage
+image,
+float opacity,
+int insets)
+Sets the image, opacity, position and insets for the watermark to
+apply on to the thumbnail.
+This method can be called multiple times to apply multiple
+watermarks.
+If multiple watermarks are to be applied, the watermarks will be
+applied in the order that this method is called.
+Calling this method to set this parameter is optional.
+Parameters:
+position
+- The position of the watermark.
+image
+- The image of the watermark.
+opacity
+- The opacity of the watermark.
+The value should be between
+0.0f
+and
+1.0f
+, where
+0.0f
+is completely
+transparent, and
+1.0f
+is completely
+opaque.
+insets
+- Inset size around the watermark.
+Cannot be negative.
+Returns:
+Reference to this object.

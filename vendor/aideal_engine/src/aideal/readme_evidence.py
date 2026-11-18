@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import re
 from .config import AidealConfig
+from .api_registry import target_key
 from .api_discovery import (
     public_api_details,
 )
@@ -114,12 +115,14 @@ def _grounding_tiers(cfg: AidealConfig):
       sibling (a tested method on the same class shows the pattern) > guessed.
     Returns (tiers{name->tier}, class_of{name->class}, test_index)."""
     import os as _os
-    details = {d["name"]: d for d in public_api_details(cfg)}
-    class_of = {n: (_os.path.basename(details[n].get("file", ""))[:-6]
+    details = {target_key(d): d for d in public_api_details(cfg)}
+    class_of = {n: (details[n].get("owner", "") if details[n].get("api_id") else
+                    _os.path.basename(details[n].get("file", ""))[:-6]
                     if details[n].get("file", "").endswith(".scala") else "")
                 for n in details}
     names = [e.name for e in parse_readme(cfg.llm_readme)]
-    test_index = api_test_examples(cfg)
+    test_index = ({} if any(row.get("api_id") for row in details.values())
+                  else api_test_examples(cfg))
     exec_status = _exec_status_map(cfg)
     tested_classes = {class_of.get(n) for n, ex in test_index.items() if ex and class_of.get(n)}
     tiers = {}

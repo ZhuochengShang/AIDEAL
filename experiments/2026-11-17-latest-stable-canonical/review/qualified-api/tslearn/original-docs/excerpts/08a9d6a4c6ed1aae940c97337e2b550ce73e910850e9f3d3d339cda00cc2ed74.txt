@@ -1,0 +1,340 @@
+class tslearn.forecasting.AutoVARIMA(max_p=5, max_d=2, max_q=5, default_d_for_non_stationarity=0, seasonal_period=None, max_iter=50, verbose=0)[source]
+
+Automatically selects the best Vector Autoregressive Integrated Moving Average (VARIMA) model through Hyndman-Khandakar algorithm [1] [2].
+
+Parameters:
+
+max_pint (default: 5)
+
+Maximum order of the AutoRegressive (AR) component to consider.
+
+max_dint (default: 2)
+
+Maximum order of differencing considered to achieve stationarity.
+
+max_qint (default: 5)
+
+Maximum order of the Moving-Average (MA) component to consider.
+
+default_d_for_non_stationarityint or None (default 0)
+
+Used as differentiation order if stationarity cannot be achieved within max_d. If None, an error is raised if stationarity cannot be achieved within max_d.
+
+seasonal_period: int or None (default: None)
+
+Naïve seasonal integration to apply to VARIMA models
+
+max_iterint (default: 50)
+
+The maximum number of iterations to apply to VARIMA models fitting.
+
+verboseint (default 0)
+
+When set to a positive integer, displays logs of the tested VARIMA models selection process. If set to 2 or more, also propagates verbosity to the VARIMA models.
+
+Attributes:
+
+best_estimator_: VARIMA
+
+the fitted VARIMA model.
+
+See also
+
+VARIMA
+
+Vector AutoRegressive Integrated Moving Average (VARIMA) estimator.
+
+Notes
+
+This estimator supports variable length time-series
+
+References
+
+ [1]
+R. J. Hyndman and G. Athanasopoulos, Forecasting: Principles and Practice. OTexts, 2014. https://otexts.com/fpp3/
+
+ [2]
+Hyndman, R. J., & Khandakar, Y. (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(1), 1–22.
+
+Methods
+
+fit(X[, y])
+ |
+Selects the best Vector Autoregressive Moving Average (VARIMA) model through Hyndman-Khandakar algorithm for the given data.
+ |
+
+fit_predict(X[, y, n])
+ |
+Selects the best Vector Autoregressive Moving Average (VARIMA) model and forecasts n timestamps for the given data.
+ |
+
+from_hdf5(path)
+ |
+Load model from a HDF5 file.
+ |
+
+from_json(path)
+ |
+Load model from a JSON file.
+ |
+
+from_pickle(path)
+ |
+Load model from a pickle file.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+predict([X, n])
+ |
+Forecast with the model selected at fitting time.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+set_predict_request(*[, n])
+ |
+Configure whether metadata should be requested to be passed to the predict method.
+ |
+
+to_hdf5(path)
+ |
+Save model to a HDF5 file.
+ |
+
+to_json(path)
+ |
+Save model to a JSON file.
+ |
+
+to_pickle(path)
+ |
+Save model to a pickle file.
+ |
+
+ fit(X, y=None)[source]
+
+Selects the best Vector Autoregressive Moving Average (VARIMA) model through Hyndman-Khandakar algorithm for the given data.
+
+Parameters:
+
+X: array-like, shape (n_ts, sz, d)
+
+Time-series dataset.
+
+yIgnored
+
+Returns:
+
+self
+
+the fitted estimator
+
+ fit_predict(X, y=None, n=1)[source]
+
+Selects the best Vector Autoregressive Moving Average (VARIMA) model and forecasts n timestamps for the given data.
+
+Parameters:
+
+X: array-like, shape (n_ts, sz, d)
+
+Time-series dataset.
+
+yIgnored
+
+nint (default: 1)
+
+The number of timestamps to forecast, a.k.a. the horizon.
+
+Returns:
+
+array, shape = (n_ts, n, d)
+
+Array of forecasted timestamps
+
+ classmethod from_hdf5(path)[source]
+
+Load model from a HDF5 file. Requires h5py http://docs.h5py.org/
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ classmethod from_json(path)[source]
+
+Load model from a JSON file.
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ classmethod from_pickle(path)[source]
+
+Load model from a pickle file.
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ predict(X=None, n=1)[source]
+
+Forecast with the model selected at fitting time.
+
+Parameters:
+
+Xarray-like, shape (n_ts, sz, d), optional
+
+Time-series dataset to forecast. If None, the fitted data is forecasted otherwise the fitted model is applied to the given data.
+
+nint (default: 1)
+
+The number of timestamps to forecast, a.k.a. the horizon.
+
+Returns:
+
+array, shape = (n_ts, n, d)
+
+Array of forecasted timestamps
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_predict_request(*, n: bool | None | str = '$UNCHANGED$') → AutoVARIMA
+
+Configure whether metadata should be requested to be passed to the predict method.
+
+Note that this method is only relevant when this estimator is used as a sub-estimator within a meta-estimator and metadata routing is enabled with enable_metadata_routing=True (see sklearn.set_config()). Please check the User Guide on how the routing mechanism works.
+
+The options for each parameter are:
+
+True: metadata is requested, and passed to predict if provided. The request is ignored if metadata is not provided.
+
+False: metadata is not requested and the meta-estimator will not pass it to predict.
+
+None: metadata is not requested, and the meta-estimator will raise an error if the user provides it.
+
+str: metadata should be passed to the meta-estimator with this given alias instead of the original name.
+
+The default (sklearn.utils.metadata_routing.UNCHANGED) retains the existing request. This allows you to change the request for some parameters and not others.
+
+Added in version 1.3.
+
+Parameters:
+
+nstr, True, False, or None, default=sklearn.utils.metadata_routing.UNCHANGED
+
+Metadata routing for n parameter in predict.
+
+Returns:
+
+selfobject
+
+The updated object.
+
+ to_hdf5(path)[source]
+
+Save model to a HDF5 file. Requires h5py http://docs.h5py.org/
+
+Parameters:
+
+pathstr
+
+Full file path. File must not already exist.
+
+Raises:
+
+FileExistsError
+
+If a file with the same path already exists.
+
+ to_json(path)[source]
+
+Save model to a JSON file.
+
+Parameters:
+
+pathstr
+
+Full file path.
+
+ to_pickle(path)[source]
+
+Save model to a pickle file.
+
+Parameters:
+
+pathstr
+
+Full file path.

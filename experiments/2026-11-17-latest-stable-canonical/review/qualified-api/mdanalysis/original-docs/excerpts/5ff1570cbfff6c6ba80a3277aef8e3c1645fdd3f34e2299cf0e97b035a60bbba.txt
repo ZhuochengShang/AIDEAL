@@ -1,0 +1,21 @@
+guess_angles(bonds=None)[source]
+
+Given a list of Bonds, find all angles that exist between atoms.
+
+Works by assuming that if atoms 1 & 2 are bonded, and 2 & 3 are bonded, then (1,2,3) must be an angle.
+
+Parameters:
+
+bonds (Bonds) – from which angles should be guessed
+
+Returns:
+
+List of tuples defining the angles. Suitable for use in u._topology
+
+Return type:
+
+list of tuples
+
+See also
+
+guess_bonds()

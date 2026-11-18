@@ -1,0 +1,17 @@
+mir_eval.segment.validate_boundary(reference_intervals, estimated_intervals, trim)
+
+Check that the input annotations to a segment boundary estimation metric (i.e. one that only takes in segment intervals) look like valid segment times, and throws helpful errors if not.
+
+Parameters:
+
+reference_intervalsnp.ndarray, shape=(n, 2)
+
+reference segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+estimated_intervalsnp.ndarray, shape=(m, 2)
+
+estimated segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+trimbool
+
+will the start and end events be trimmed?

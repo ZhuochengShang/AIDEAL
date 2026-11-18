@@ -12,6 +12,8 @@ from .treatment_versions import (_blob, _check_worktree, _committed, _install,
 
 
 def _version(value):
+    # Require a lowercase SHA-256 string before using a version identity in a record
+    # filename.
     if not isinstance(value, str) or re.fullmatch(r'[0-9a-f]{64}', value) is None:
         raise ValueError('Invalid refactor version identity')
     return value
@@ -19,6 +21,8 @@ def _version(value):
 
 def _lineage(records, version, expected_sha256=None):
     """Follow explicit predecessor hashes; never infer latest from file times."""
+    # Read each record and its predecessor in turn. Check the expected record checksum
+    # and reject repeated versions.
     result = {}
     while version is not None:
         _version(version)
@@ -44,6 +48,8 @@ def _lineage(records, version, expected_sha256=None):
 
 
 def _current(records):
+    # Resolve the current pointer and validate its record binding. Return an empty
+    # lineage when no pointer exists.
     path = _safe_path(records, 'current.json')
     if not path.exists():
         return None, {}
@@ -59,6 +65,8 @@ def _current(records):
 
 def _other_pending(records, permitted):
     """Prevent a second lineage while an earlier install needs recovery."""
+    # A pending journal is allowed only if its version belongs to the lineage being
+    # recovered or installed.
     for path in records.glob('*.pending.json'):
         _safe_path(records, path.name)
         if _version(path.name.removesuffix('.pending.json')) not in permitted:
@@ -66,6 +74,8 @@ def _other_pending(records, permitted):
 
 
 def _check_repository(root, clone, branch):
+    # Check the working directory, shared Git repository, and branch name before
+    # reading or changing the refactor checkout.
     common = Path(_run(root, 'rev-parse', '--git-common-dir'))
     if not common.is_absolute():
         common = root / common
@@ -75,6 +85,8 @@ def _check_repository(root, clone, branch):
 
 
 def _candidate(proposal_path, baseline, original):
+    # Read explicit source replacements and deletions for the attached commit. Return
+    # their verified bytes and expected Git entries.
     path = Path(proposal_path).expanduser().absolute()
     if path.is_symlink():
         raise ValueError('Refactor proposal must not be a symlink')
@@ -146,6 +158,8 @@ def install_refactor(study, proposal_path):
     Exact replacement files/deletions are journaled. This does not execute or
     approve generated code; independent regression and study controls follow.
     """
+    # Derive the branch and journal names from the proposal hash. Use an output lock
+    # so two refactor installs cannot advance the pointer together.
     study, original, attachment = original_checkout(study)
     assert_review_released(study)
     proposal, files, removed, data = _candidate(proposal_path, attachment['revision'], original)
@@ -163,6 +177,8 @@ def install_refactor(study, proposal_path):
         message = 'AIDEAL source refactor ' + version
         identity = {'proposal_sha256': version, 'source': str(root), 'branch': branch,
                     'baseline_revision': parent, 'files': files, 'removed_paths': removed}
+        # A completed record can be reused only if its identity, Git commit, and
+        # lineage still agree.
         if record_path.exists():
             record = load(record_path)
             if not isinstance(record, dict) or any(record.get(k) != v for k, v in identity.items()):
@@ -188,6 +204,8 @@ def install_refactor(study, proposal_path):
         expected = {**identity, 'previous_version': current_version,
                     'previous_record_sha256': bind(records / (current_version + '.json'))['sha256']
                     if current_version else None}
+        # Save the expected branch and file changes before creating or editing the
+        # worktree.
         if journal_path.exists():
             if load(journal_path) != expected:
                 raise ValueError('Refactor journal changed')
@@ -208,6 +226,8 @@ def install_refactor(study, proposal_path):
         head = _run(root, 'rev-parse', 'HEAD')
         if head != parent and not _committed(root, parent, head, files, removed, message):
             raise ValueError('Unexpected refactor HEAD; preserve changes for review')
+        # Stage only the recorded replacements and removals. Compare the full index
+        # with the intended tree before committing.
         if head == parent:
             allowed = {**files, **{p: None for p in removed}}
             _check_worktree(root, parent, allowed, installing=True)
@@ -239,6 +259,8 @@ def install_refactor(study, proposal_path):
 
 def study_versions(study):
     """Read current source/artifact pointers; do not switch any Git branch."""
+    # Build a read-only report from the attachment, the branches’ current commits, and
+    # any installed refactor or treatment pointers.
     study = Path(study).expanduser().resolve(strict=True)
     attachment = load(study / 'attachment.json')
     rows = []

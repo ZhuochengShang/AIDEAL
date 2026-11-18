@@ -1,0 +1,37 @@
+MDAnalysis.lib.distances.distance_array(reference: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, configuration: ndarray[tuple[Any, ...], dtype[_ScalarT]] | AtomGroup, box: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, result: ndarray[tuple[Any, ...], dtype[_ScalarT]] | None = None, backend: str = 'serial') → ndarray[tuple[Any, ...], dtype[_ScalarT]][source]
+
+Calculate all possible distances between a reference set and another configuration.
+
+If there are n positions in reference and m positions in configuration, a distance array of shape (n, m) will be computed.
+
+If the optional argument box is supplied, the minimum image convention is applied when calculating distances. Either orthogonal or triclinic boxes are supported.
+
+If a 2D numpy array of dtype numpy.float64 with the shape (n, m) is provided in result, then this preallocated array is filled. This can speed up calculations.
+
+Parameters:
+
+reference (numpy.ndarray or AtomGroup) – Reference coordinate array of shape (3,) or (n, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+configuration (numpy.ndarray or AtomGroup) – Configuration coordinate array of shape (3,) or (m, 3) (dtype is arbitrary, will be converted to numpy.float32 internally). Also accepts an AtomGroup.
+
+box (array_like, optional) – The unitcell dimensions of the system, which can be orthogonal or triclinic and must be provided in the same format as returned by MDAnalysis.coordinates.timestep.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma].
+
+result (numpy.ndarray, optional) – Preallocated result array which must have the shape (n, m) and dtype numpy.float64. Avoids creating the array which saves time when the function is called repeatedly.
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) – Keyword selecting the type of acceleration.
+
+Returns:
+
+d – Array containing the distances d[i,j] between reference coordinates i and configuration coordinates j.
+
+Return type:
+
+numpy.ndarray (dtype=numpy.float64, shape=(n, m))
+
+Changed in version 0.13.0: Added backend keyword.
+
+Changed in version 0.19.0: Internal dtype conversion of input coordinates to numpy.float32. Now also accepts single coordinates as input.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as an argument in any position and checks inputs using type hinting.
+
+Changed in version 2.9.0: Added support for the distopia backend.

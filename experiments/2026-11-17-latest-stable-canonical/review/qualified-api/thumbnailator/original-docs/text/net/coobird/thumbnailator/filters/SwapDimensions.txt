@@ -1,0 +1,73 @@
+SwapDimensions (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.filters
+Class SwapDimensions
+java.lang.Object
+net.coobird.thumbnailator.filters.SwapDimensions
+All Implemented Interfaces:
+ImageFilter
+public class
+SwapDimensions
+extends
+Object
+implements
+ImageFilter
+This is a no-op filter that acts as a "flag" to enable proper handling of
+dimensions for images that will be oriented by using Exif metadata.
+This is an internal filter that should not be used by consumers of
+Thumbnailator.
+Method Summary
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Applies a image filtering operation on an image.
+static
+SwapDimensions
+getInstance
+()
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+getInstance
+public static
+SwapDimensions
+getInstance
+()
+apply
+public
+BufferedImage
+apply
+(
+BufferedImage
+img)
+Description copied from interface:
+ImageFilter
+Applies a image filtering operation on an image.
+Specified by:
+apply
+in interface
+ImageFilter
+Parameters:
+img
+- The image to apply the filtering on.
+Returns:
+The resulting image after applying this filter.
+Copyright © 2025. All rights reserved.

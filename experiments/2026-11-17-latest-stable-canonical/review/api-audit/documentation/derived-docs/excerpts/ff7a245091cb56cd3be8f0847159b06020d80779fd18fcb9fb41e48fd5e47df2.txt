@@ -1,0 +1,29 @@
+MDAnalysis.lib.util.anyopen(datasource, mode='rt', reset=True)[source]
+
+Open datasource (gzipped, bzipped, uncompressed) and return a stream.
+
+datasource can be a filename or a stream (see isstream()). By default, a stream is reset to its start if possible (via seek() or reset()).
+
+If possible, the attribute stream.name is set to the filename or “<stream>” if no filename could be associated with the datasource.
+
+Parameters:
+
+datasource – a file (from file or open()) or a stream (e.g. from urllib2.urlopen() or io.StringIO)
+
+mode ({'r', 'w', 'a'} (optional)) – Open in r(ead), w(rite) or a(ppend) mode. This string is directly passed to the file opening handler (either Python’s openfe, bz2, or gzip). More complex modes are supported if the file opening handler supports it.
+
+reset (bool (optional)) – try to read (mode ‘r’) the stream from the start
+
+Return type:
+
+file-like object
+
+See also
+
+openany()
+
+to be used with the with statement.
+
+Changed in version 0.9.0: Only returns the stream and tries to set stream.name = filename instead of the previous behavior to return a tuple (stream, filename).
+
+Changed in version 2.0.0: New read handlers support pickle functionality if datasource is a filename. They return a custom picklable file stream in MDAnalysis.lib.picklable_file_io.

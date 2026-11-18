@@ -1,0 +1,221 @@
+class MDAnalysis.analysis.rdf.InterRDF_s(u, ags, nbins=75, range=(0.0, 15.0), norm='rdf', density=False, backend='serial', **kwargs)[source]
+
+Site-specific radial distribution function
+
+Calculates site-specific radial distribution functions. Instead of two groups of atoms it takes as input a list of pairs of AtomGroup, [[A, B], [C, D], ...]. Given the same A and B to InterRDF_s, the output will be a list of individual RDFs between A1 and B1, A1 and B2, A2 and B1, A2 and B2 (and similarly for C and D). These site-specific radial distribution functions are typically calculated if one is interested in the solvation shells of a ligand in a binding site or the solvation of specific residues in a protein.
+
+Parameters:
+
+u (Universe) –
+a Universe that contains atoms in ags
+
+Deprecated since version 2.3.0: This parameter is superflous and will be removed in MDAnalysis 3.0.0.
+
+ags (list) – a list of pairs of AtomGroup instances
+
+nbins (int) – Number of bins in the histogram
+
+range (tuple or list) – The size of the RDF
+
+norm (str, {'rdf', 'density', 'none'}) –
+For ‘rdf’ calculate \(g_{ab}(r)\). For ‘density’ the single particle density \(n_{ab}(r)\) is computed. ‘none’ computes the number of particles occurences in each spherical shell.
+
+Added in version 2.3.0.
+
+density (bool) –
+False: calculate \(g_{ab}(r)\); True: calculate the true single particle density \(n_{ab}(r)\). density overwrites the norm parameter.
+
+Added in version 1.0.1: This keyword was available since 0.19.0 but was not documented. Furthermore, it had the opposite meaning. Since 1.0.1 it is officially supported as documented.
+
+Deprecated since version 2.3.0: Instead of density=True use norm=’density’
+
+backend ({'serial', 'OpenMP', 'distopia'}, optional) –
+Keyword selecting the type of acceleration of the distance calculations. Default is ‘serial’.
+
+Added in version 2.10.0.
+
+ results.bins
+
+numpy.ndarray of the centers of the nbins histogram bins; all individual site-specific RDFs have the same bins.
+
+Added in version 2.0.0.
+
+Type:
+
+numpy.ndarray
+
+ bins
+
+Alias to the results.bins attribute.
+
+Deprecated since version 2.0.0: This attribute will be removed in 3.0.0. Use results.bins instead.
+
+Type:
+
+numpy.ndarray
+
+ results.edges
+
+array of the nbins + 1 edges of the histogram bins; all individual site-specific RDFs have the same bins.
+
+Added in version 2.0.0.
+
+Type:
+
+numpy.ndarray
+
+ edges
+
+Alias to the results.edges attribute.
+
+Deprecated since version 2.0.0: This attribute will be removed in 3.0.0. Use results.edges instead.
+
+Type:
+
+numpy.ndarray
+
+ results.rdf
+
+list of the site-specific radial distribution functions if norm=’rdf’ or density functions for the bins if norm=’density’. The list contains len(ags) entries. Each entry for the i-th pair [A, B] = ags[i] in ags is a numpy.ndarray with shape (len(A), len(B)), i.e., a stack of RDFs. For example, results.rdf[i][0, 2] is the RDF between atoms A[0] and B[2].
+
+Added in version 2.0.0.
+
+Type:
+
+list
+
+ rdf
+
+Alias to the results.rdf attribute.
+
+Deprecated since version 2.0.0: This attribute will be removed in 3.0.0. Use results.rdf instead.
+
+Type:
+
+list
+
+ results.count
+
+list of the site-specific radial histograms, i.e., the raw counts, for all results.bins. The data have the same structure as results.rdf except that the arrays contain the raw counts.
+
+Added in version 2.0.0.
+
+Type:
+
+list
+
+ count
+
+Alias to the results.count attribute.
+
+Deprecated since version 2.0.0: This attribute will be removed in 3.0.0. Use results.count instead.
+
+Type:
+
+list
+
+ results.cdf
+
+list of the site-specific cumulative counts, for all results.bins. The data have the same structure as results.rdf except that the arrays contain the cumulative counts.
+
+This attribute only exists after get_cdf() has been run.
+
+Added in version 2.0.0.
+
+Type:
+
+list
+
+ cdf
+
+Alias to the results.cdf attribute.
+
+Deprecated since version 2.0.0: This attribute will be removed in 3.0.0. Use results.cdf instead.
+
+Type:
+
+list
+
+Example
+
+First create the InterRDF_s object, by supplying one Universe and one list of pairs of AtomGroups, then use the run() method:
+
+from MDAnalysisTests.datafiles import GRO_MEMPROT, XTC_MEMPROT
+u = mda.Universe(GRO_MEMPROT, XTC_MEMPROT)
+
+s1 = u.select_atoms('name ZND and resid 289')
+s2 = u.select_atoms('(name OD1 or name OD2) and resid 51 and sphzone 5.0 (resid 289)')
+s3 = u.select_atoms('name ZND and (resid 291 or resid 292)')
+s4 = u.select_atoms('(name OD1 or name OD2) and sphzone 5.0 (resid 291)')
+ags = [[s1, s2], [s3, s4]]
+
+rdf = InterRDF_s(u, ags)
+rdf.run()
+
+Results are available through the results.bins and results.rdf attributes:
+
+plt.plot(rdf.results.bins, rdf.results.rdf[0][0, 0])
+
+(Which plots the rdf between the first atom in s1 and the first atom in s2)
+
+To generate the cumulative distribution function (cdf) in the sense of “particles within radius \(r\)”, i.e., \(N_{ab}(r)\), use the get_cdf() method
+
+cdf = rdf.get_cdf()
+
+Results are available through the results.cdf attribute:
+
+plt.plot(rdf.results.bins, rdf.results.cdf[0][0, 0])
+
+(Which plots the cdf between the first atom in s1 and the first atom in s2)
+
+Added in version 0.19.0.
+
+Changed in version 1.0.0: Support for the start, stop, and step keywords has been removed. These should instead be passed to InterRDF_s.run().
+
+Changed in version 2.0.0: Store results as attributes bins, edges, rdf, count and cdf of the results attribute of AnalysisBase.
+
+Changed in version 2.3.0: Introduce norm and exclusion_blocks attributes.
+
+Deprecated since version 2.3.0: Instead of density=True use norm=’density’
+
+Deprecated since version 2.3.0: The universe parameter is superflous.
+
+Changed in version 2.10.0: Enabled parallel execution with the multiprocessing and dask backends; use the new method get_supported_backends() to see all supported backends.
+
+ get_cdf()[source]
+
+Calculate the cumulative counts for all sites.
+
+This is the cumulative count within a given radius, i.e., \(N_{ab}(r)\).
+
+The result is returned and also stored in the attribute results.cdf.
+
+Returns:
+
+cdf – list of arrays with the same structure as results.rdf
+
+Return type:
+
+list
+
+ classmethod get_supported_backends()[source]
+
+Tuple with backends supported by the core library for a given class. User can pass either one of these values as backend=... to run() method, or a custom object that has apply method (see documentation for run()):
+
+‘serial’: no parallelization
+
+‘multiprocessing’: parallelization using multiprocessing.Pool
+
+‘dask’: parallelization using dask.delayed.compute(). Requires installation of mdanalysis[dask]
+
+If you want to add your own backend to an existing class, pass a backends.BackendBase subclass (see its documentation to learn how to implement it properly), and specify unsupported_backend=True.
+
+Returns:
+
+names of built-in backends that can be used in run(backend=...)()
+
+Return type:
+
+tuple
+
+Added in version 2.8.0.

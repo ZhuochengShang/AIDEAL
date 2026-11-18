@@ -1,0 +1,27 @@
+convert_to(format_specifier, **kwargs)
+
+Returns an instance of the native object for a given format.
+
+Implemented formats:
+
+DX
+
+gridData.OpenDX.field (OpenDX format)
+
+MRC
+
+mrcfile.mrcinterpreter.MrcInterpreter via gridData.mrc.MRC (MRC/CCP4 format)
+
+VDB
+
+OpenVDB format, e.g., openvdb.FloatGrid or, if available, openvdb.DoubleGrid via gridData.OpenVDB.OpenVDBField
+
+Parameters:
+
+format_specifier ({"DX", "MRC", "VDB"})
+
+Return type:
+
+native object
+
+Added in version 1.2.0.

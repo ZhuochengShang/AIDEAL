@@ -1,0 +1,34 @@
+tslearn.utils.to_sktime_dataset(X)[source]
+
+Transform a tslearn-compatible dataset into a sktime dataset.
+
+Parameters:
+
+X: array, shape = (n_ts, sz, d)
+
+tslearn-formatted dataset to be cast to sktime format
+
+Returns:
+
+Pandas data-frame
+
+sktime-formatted dataset
+
+Notes
+
+Conversion from/to sktime format requires pandas to be installed.
+
+Examples
+
+>>> tslearn_arr = numpy.random.randn(10, 16, 1)
+>>> sktime_arr = to_sktime_dataset(tslearn_arr)
+>>> sktime_arr.shape
+(10, 1)
+>>> sktime_arr["dim_0"][0].shape
+(16,)
+>>> tslearn_arr = numpy.random.randn(10, 16, 2)
+>>> sktime_arr = to_sktime_dataset(tslearn_arr)
+>>> sktime_arr.shape
+(10, 2)
+>>> sktime_arr["dim_1"][0].shape
+(16,)

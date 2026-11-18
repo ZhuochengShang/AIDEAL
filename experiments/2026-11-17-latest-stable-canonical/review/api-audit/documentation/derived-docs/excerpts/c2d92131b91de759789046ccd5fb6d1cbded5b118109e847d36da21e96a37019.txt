@@ -1,0 +1,25 @@
+convert(obj, cache=True, implicit_hydrogens=False, force=False, inferrer=MDAnalysisInferrer(max_iter=200, sanitize=True), **kwargs)[source]
+
+Write selection at current trajectory frame to Mol.
+
+Parameters:
+
+obj (AtomGroup or) – Universe
+
+cache (bool) – Use a cached copy of the molecule’s topology when available. To be used, the cached molecule and the new one have to be made from the same AtomGroup selection and with the same arguments passed to the converter
+
+inferrer (Optional[Callable[[Chem.Mol], Chem.Mol]]) – A callable to infer bond orders and charges for the RDKit molecule created by the converter. If None, inferring is skipped.
+
+implicit_hydrogens (bool) – Whether to allow implicit hydrogens on the molecule or not.
+
+force (bool) – Force the conversion when no hydrogens were detected but inferrer is not None. Useful for inorganic molecules mostly.
+
+NoImplicit (bool) –
+Opposite of implicit_hydrogens.
+
+Deprecated since version 2.10.0: Use implicit_hydrogens instead (with an opposite value).
+
+max_iter (int) –
+Maximum number of iterations to standardize conjugated systems. See _rebuild_conjugated_bonds().
+
+Deprecated since version 2.10.0: Use inferrer=MDAnalysisInferrer(max_iter=...) instead.

@@ -1,0 +1,6 @@
+scores = mir_eval.alignment.evaluate(ref_events, est_events)
+assert isinstance(scores, dict)
+assert 'Precision' in scores
+assert 'Recall' in scores
+assert 'F-measure' in scores
+print(f"__CHECK__ python:mir_eval.alignment.evaluate {scores['F-measure']:.4f}")

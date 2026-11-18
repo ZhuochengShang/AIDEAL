@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/runtime/run_snippet.py", line 33, in <module>
+    runpy.run_path(str(path), run_name="__main__")
+  File "/home/zshan011/anaconda3/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/home/zshan011/anaconda3/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/home/zshan011/anaconda3/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/controls/unmaterialized_target/run_ST_Area/ApiTest.py", line 22, in <module>
+    main()
+  File "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/controls/unmaterialized_target/run_ST_Area/ApiTest.py", line 17, in main
+    _tracked_connection.verify()
+  File "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/sedonadb/runtime/sedona_runtime.py", line 143, in verify
+    raise AssertionError(f"Target SQL function {self.target} was not called and materialized through sd.sql")
+AssertionError: Target SQL function ST_Area was not called and materialized through sd.sql

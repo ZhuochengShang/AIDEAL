@@ -1,0 +1,31 @@
+mir_eval.util.match_events(ref, est, window, distance=None)
+
+Compute a maximum matching between reference and estimated event times, subject to a window constraint.
+
+Given two lists of event times ref and est, we seek the largest set of correspondences (ref[i], est[j]) such that distance(ref[i], est[j]) <= window, and each ref[i] and est[j] is matched at most once.
+
+This is useful for computing precision/recall metrics in beat tracking, onset detection, and segmentation.
+
+Parameters:
+
+refnp.ndarray, shape=(n,)
+
+Array of reference values
+
+estnp.ndarray, shape=(m,)
+
+Array of estimated values
+
+windowfloat > 0
+
+Size of the window.
+
+distancefunction
+
+function that computes the outer distance of ref and est. By default uses |ref[i] - est[j]|
+
+Returns:
+
+matchinglist of tuples
+
+A list of matched reference and event numbers. matching[i] == (i, j) where ref[i] matches est[j].

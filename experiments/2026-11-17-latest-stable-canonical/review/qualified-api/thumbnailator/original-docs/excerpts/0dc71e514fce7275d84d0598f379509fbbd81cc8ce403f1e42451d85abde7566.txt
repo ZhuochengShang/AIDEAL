@@ -1,0 +1,39 @@
+fromInputStreams
+public static
+Thumbnails.Builder
+<
+InputStream
+>
+fromInputStreams
+(
+Iterable
+<? extends
+InputStream
+> inputStreams)
+Indicate to make thumbnails for images obtained from the specified
+InputStream
+s.
+Note that the
+InputStream.close()
+method will not be called
+upon reading the source image from the
+InputStream
+.
+Parameters:
+inputStreams
+-
+InputStream
+s which provide images for
+which thumbnails are to be produced.
+Returns:
+Reference to a builder object which is used to
+specify the parameters for creating the thumbnail.
+Throws:
+NullPointerException
+- If the argument is
+null
+.
+IllegalArgumentException
+- If the argument is an empty collection.
+Since:
+0.3.1

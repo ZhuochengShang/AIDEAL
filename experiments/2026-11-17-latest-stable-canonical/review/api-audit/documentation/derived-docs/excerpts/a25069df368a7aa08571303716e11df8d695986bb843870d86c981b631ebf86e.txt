@@ -1,0 +1,33 @@
+subtract(other)
+
+Group with elements from this Group that don’t appear in other
+
+The original order of this group is kept, as well as any duplicate elements. If an element of this Group is duplicated and appears in the other Group or Component, then all the occurences of that element are removed from the returned Group.
+
+Parameters:
+
+other (Group or Component) – Group or Component with other.level same as self.level
+
+Returns:
+
+Group with the elements of self that are not in other, conserves order and duplicates.
+
+Return type:
+
+Group
+
+Example
+
+Unlike difference() this method will not sort or remove duplicates.
+
+>>> ag1 = u.atoms[[3, 3, 2, 2, 1, 1]]
+>>> ag2 = u.atoms[2]
+>>> ag3 = ag1.subtract(ag2)
+>>> ag3.indices
+array([3, 3, 1, 1])
+
+See also
+
+concatenate, difference
+
+Added in version 0.16.

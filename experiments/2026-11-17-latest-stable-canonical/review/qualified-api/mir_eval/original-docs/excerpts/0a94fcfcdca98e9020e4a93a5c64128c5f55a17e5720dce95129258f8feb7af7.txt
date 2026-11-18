@@ -1,0 +1,25 @@
+mir_eval.chord.scale_degree_to_bitmap(scale_degree, modulo=False, length=12)
+
+Create a bitmap representation of a scale degree.
+
+Note that values in the bitmap may be negative, indicating that the semitone is to be removed.
+
+Parameters:
+
+scale_degreestr
+
+Spelling of a relative scale degree, e.g. ‘b3’, ‘7’, ‘#5’
+
+modulobool, default=True
+
+If a scale degree exceeds the length of the bit-vector, modulo the scale degree back into the bit-vector; otherwise it is discarded.
+
+lengthint, default=12
+
+Length of the bit-vector to produce
+
+Returns:
+
+bitmapnp.ndarray, in [-1, 0, 1], len=`length`
+
+Bitmap representation of this scale degree.

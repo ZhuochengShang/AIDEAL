@@ -1,0 +1,86 @@
+MDAnalysis.lib.util.check_coords(*coord_names, **options)[source]
+
+Decorator for automated coordinate array checking.
+
+This decorator is intended for use especially in MDAnalysis.lib.distances. It takes an arbitrary number of positional arguments which must correspond to names of positional arguments of the decorated function. It then checks if the corresponding values are valid coordinate arrays or an AtomGroup. If the input is an array and all these arrays are single coordinates (i.e., their shape is (3,)), the decorated function can optionally return a single coordinate (or angle) instead of an array of coordinates (or angles). This can be used to enable computations of single observables using functions originally designed to accept only 2-d coordinate arrays.
+
+If the input is an AtomGroup it is converted into its corresponding position array via a call to AtomGroup.positions.
+
+The checks performed on each individual coordinate array are:
+
+Check that coordinate arrays are of type numpy.ndarray.
+
+Check that coordinate arrays have a shape of (n, 3) (or (3,) if single coordinates are allowed; see keyword argument allow_single).
+
+Automatic dtype conversion to numpy.float32.
+
+Optional replacement by a copy; see keyword argument enforce_copy .
+
+If coordinate arrays aren’t C-contiguous, they will be automatically replaced by a C-contiguous copy.
+
+Optional check for equal length of all coordinate arrays; see optional keyword argument check_lengths_match.
+
+Parameters:
+
+*coord_names (tuple) – Arbitrary number of strings corresponding to names of positional arguments of the decorated function.
+
+**options (dict, optional) –
+
+enforce_copy (bool, optional) – Enforce working on a copy of the coordinate arrays. This is useful to ensure that the input arrays are left unchanged. Default: True
+
+enforce_dtype (bool, optional) – Enforce a conversion to float32. Default: True
+
+allow_single (bool, optional) – Allow the input coordinate array to be a single coordinate with shape (3,).
+
+convert_single (bool, optional) – If True, single coordinate arrays will be converted to have a shape of (1, 3). Only has an effect if allow_single is True. Default: True
+
+reduce_result_if_single (bool, optional) – If True and all input coordinates are single, a decorated function func will return func()[0] instead of func(). Only has an effect if allow_single is True. Default: True
+
+check_lengths_match (bool, optional) – If True, a ValueError is raised if not all coordinate arrays contain the same number of coordinates. Default: True
+
+allow_atomgroup (bool, optional) – If False, a TypeError is raised if an AtomGroup is supplied Default: False
+
+Raises:
+
+ValueError – If the decorator is used without positional arguments (for development purposes only). If any of the positional arguments supplied to the decorator doesn’t correspond to a name of any of the decorated function’s positional arguments. If any of the coordinate arrays has a wrong shape.
+
+TypeError – If any of the coordinate arrays is not a numpy.ndarray or an AtomGroup. If the dtype of any of the coordinate arrays is not convertible to numpy.float32.
+
+Example
+
+>>> import numpy as np
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests.datafiles import PSF, DCD
+>>> from MDAnalysis.lib.util import check_coords
+>>> @check_coords('coords1', 'coords2', allow_atomgroup=True)
+... def coordsum(coords1, coords2):
+...     assert coords1.dtype == np.float32
+...     assert coords2.flags['C_CONTIGUOUS']
+...     return coords1 + coords2
+...
+>>> # automatic dtype conversion:
+>>> coordsum(np.zeros(3, dtype=np.int64), np.ones(3))
+array([1., 1., 1.], dtype=float32)
+>>>
+>>> # automatic handling of non-contiguous arrays:
+>>> coordsum(np.zeros(3), np.ones(6)[::2])
+array([1., 1., 1.], dtype=float32)
+>>>
+>>> # automatic handling of AtomGroups
+>>> u = mda.Universe(PSF, DCD)
+>>> try:
+...     coordsum(u.atoms, u.select_atoms("index 1 to 10"))
+... except ValueError as err:
+...     err
+ValueError('coordsum(): coords1, coords2 must contain the same number of coordinates, got [3341, 10].')
+>>>
+>>> # automatic shape checking:
+>>> try:
+...     coordsum(np.zeros(3), np.ones(6))
+... except ValueError as err:
+...     err
+ValueError('coordsum(): coords2.shape must be (3,) or (n, 3), got (6,)')
+
+Added in version 0.19.0.
+
+Changed in version 2.3.0: Can now accept an AtomGroup as input, and added option allow_atomgroup with default False to retain old behaviour

@@ -1,0 +1,207 @@
+IfdStructure (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.util.exif
+Class IfdStructure
+java.lang.Object
+net.coobird.thumbnailator.util.exif.IfdStructure
+public class
+IfdStructure
+extends
+Object
+IFD structure as defined in Section 4.6.2 of the Exif Specification
+version 2.3.
+Author:
+coobird
+Constructor Summary
+IfdStructure
+(int tag,
+int type,
+int count,
+int offsetValue)
+Instantiates a IFD with the given attributes.
+Method Summary
+boolean
+equals
+(
+Object
+obj)
+Returns whether this object is equal to the given object.
+int
+getCount
+()
+Returns the count element in the IFD structure, indicating the number
+of values the value field..
+int
+getOffsetValue
+()
+Returns either the offset or value of the IFD.
+int
+getTag
+()
+Returns the tag element in the IFD structure.
+IfdType
+getType
+()
+Returns the type element in the IFD structure.
+int
+hashCode
+()
+Returns the calculated hash code for this object.
+boolean
+isOffset
+()
+Returns whether the value returned by the
+getOffsetValue()
+method is an offset value.
+boolean
+isValue
+()
+Returns whether the value returned by the
+getOffsetValue()
+method is an actual value.
+String
+toString
+()
+Returns a textual
+String
+reprensentation of this object.
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+IfdStructure
+public
+IfdStructure
+(int tag,
+int type,
+int count,
+int offsetValue)
+Instantiates a IFD with the given attributes.
+Parameters:
+tag
+- The tag element.
+type
+- The type element.
+count
+- The count of values.
+offsetValue
+- The offset or value.
+Method Detail
+getTag
+public int
+getTag
+()
+Returns the tag element in the IFD structure.
+Returns:
+An integer representation of the tag element.
+Should be a value between 0x00 to 0xFF.
+getType
+public
+IfdType
+getType
+()
+Returns the type element in the IFD structure.
+Returns:
+An
+IfdType
+enum indicating the type.
+getCount
+public int
+getCount
+()
+Returns the count element in the IFD structure, indicating the number
+of values the value field..
+Returns:
+A count indicating the number of values.
+getOffsetValue
+public int
+getOffsetValue
+()
+Returns either the offset or value of the IFD.
+Returns:
+Either the offset or value. The type of the returned value
+can be determined by the return of the
+isOffset()
+or
+isValue()
+method.
+isValue
+public boolean
+isValue
+()
+Returns whether the value returned by the
+getOffsetValue()
+method is an actual value.
+Returns:
+true
+if the value returned by the
+getOffsetValue()
+method is a value,
+false
+otherwise.
+isOffset
+public boolean
+isOffset
+()
+Returns whether the value returned by the
+getOffsetValue()
+method is an offset value.
+Returns:
+true
+if the value returned by the
+getOffsetValue()
+method is a offset value,
+false
+otherwise.
+hashCode
+public int
+hashCode
+()
+Returns the calculated hash code for this object.
+Overrides:
+hashCode
+in class
+Object
+Returns:
+Hash code for this object.
+equals
+public boolean
+equals
+(
+Object
+obj)
+Returns whether this object is equal to the given object.
+Overrides:
+equals
+in class
+Object
+Returns:
+true
+if the given object and this object is
+equivalent,
+false
+otherwise.
+toString
+public
+String
+toString
+()
+Returns a textual
+String
+reprensentation of this object.
+Overrides:
+toString
+in class
+Object
+Returns:
+A textual representation of this object.
+Copyright © 2025. All rights reserved.

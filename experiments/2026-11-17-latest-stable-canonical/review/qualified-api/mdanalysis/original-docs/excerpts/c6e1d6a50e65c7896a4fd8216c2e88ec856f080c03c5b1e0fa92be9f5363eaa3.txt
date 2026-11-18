@@ -1,0 +1,35 @@
+quadrupole_tensor(wrap=False, unwrap=False, compound='group', center='mass')[source]
+
+Traceless quadrupole tensor of the group or compounds.
+
+This tensor is first computed as the outer product of vectors from a reference point to some atom, and multiplied by the atomic charge. The tensor of each atom is then summed to produce the quadrupole tensor of the group:
+
+ \[\mathsf{Q} = \sum_{i=1}^{N} q_{i} ( \mathbf{r}_{i} - \mathbf{r}_{COM} ) \otimes ( \mathbf{r}_{i} - \mathbf{r}_{COM} )\]
+
+The traceless quadrupole tensor, \(\hat{\mathsf{Q}}\), is then taken from:
+
+ \[\hat{\mathsf{Q}} = \frac{3}{2} \mathsf{Q} - \frac{1}{2} tr(\mathsf{Q})\]
+
+Computes the quadrupole tensor of Atoms in the group. Tensor per Residue, Segment, molecule, or fragment can be obtained by setting the compound parameter accordingly.
+
+Note that when there is an unsymmetrical plane in the molecule or group, the magnitude of the quadrupole tensor is dependent on the center (e.g., \(\mathbf{r}_{COM}\)) chosen and cannot be translated.
+
+Parameters:
+
+wrap (bool, optional) – If True and compound is 'group', move all atoms to the primary unit cell before calculation. If True and compound is not group, the centers of mass of each compound will be calculated without moving any atoms to keep the compounds intact.
+
+unwrap (bool, optional) – If True, compounds will be unwrapped before computing their centers.
+
+compound ({'group', 'segments', 'residues', 'molecules', ) – ‘fragments’}, optional If 'group', a single quadrupole value returns. Otherwise, an array of each Segment, Residue, molecule, or fragment will be returned as an array of position vectors, i.e. a 1d array. Note that, in any case, only the positions of Atoms belonging to the group will be taken into account.
+
+center ({'mass', 'charge'}, optional) – Choose whether the dipole vector is calculated at the center of “mass” or the center of “charge”, default is “mass”.
+
+Returns:
+
+Quadrupole tensor(s) of (compounds of) the group in \(eÅ^2\). If compound was set to 'group', the output will be a single tensor of shape (3,3). Otherwise, the output will be a 1d array of shape (n,3,3) where n is the number of compounds.
+
+Return type:
+
+numpy.ndarray
+
+Added in version 2.4.0.

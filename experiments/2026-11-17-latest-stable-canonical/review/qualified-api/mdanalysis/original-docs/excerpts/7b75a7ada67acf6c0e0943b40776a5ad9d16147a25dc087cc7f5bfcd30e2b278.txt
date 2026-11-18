@@ -1,0 +1,13 @@
+property force
+
+Force on the atom.
+
+The force can be changed by assigning an array of shape (3,).
+
+Note
+
+changing the force is not reflected in any files; reading any frame from the trajectory will replace the change with that from the file
+
+Raises:
+
+NoDataError – If the underlying Timestep does not contain forces.

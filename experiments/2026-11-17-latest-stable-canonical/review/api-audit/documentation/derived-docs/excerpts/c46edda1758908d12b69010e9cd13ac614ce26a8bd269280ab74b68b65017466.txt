@@ -1,0 +1,27 @@
+MDAnalysis.coordinates.core.reader(filename, format=None, **kwargs)[source]
+
+Provide a trajectory reader instance for filename.
+
+This function guesses the file format from the extension of filename and it will throw a TypeError if the extension is not recognized.
+
+In most cases, no special keyword arguments are necessary.
+
+All other keywords are passed on to the underlying Reader classes; see their documentation for details.
+
+Parameters:
+
+filename (str or tuple) – filename (or tuple of filenames) of the input coordinate file
+
+kwargs – Keyword arguments for the selected Reader class.
+
+Returns:
+
+A trajectory Reader instance
+
+Return type:
+
+Reader
+
+See also
+
+Table of supported coordinate formats

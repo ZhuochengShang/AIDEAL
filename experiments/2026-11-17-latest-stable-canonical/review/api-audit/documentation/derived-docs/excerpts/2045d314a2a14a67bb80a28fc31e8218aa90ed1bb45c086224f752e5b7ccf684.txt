@@ -1,0 +1,27 @@
+mir_eval.sonify.chords(chord_labels, intervals, fs, **kwargs)
+
+Synthesizes chord labels
+
+Parameters:
+
+chord_labelslist of str
+
+List of chord label strings.
+
+intervalsnp.ndarray, shape=(len(chord_labels), 2)
+
+Start and end times of each chord label
+
+fsint
+
+Sampling rate to synthesize at
+
+**kwargs
+
+Additional keyword arguments to pass to mir_eval.sonify.time_frequency()
+
+Returns:
+
+outputnp.ndarray
+
+Synthesized chord labels

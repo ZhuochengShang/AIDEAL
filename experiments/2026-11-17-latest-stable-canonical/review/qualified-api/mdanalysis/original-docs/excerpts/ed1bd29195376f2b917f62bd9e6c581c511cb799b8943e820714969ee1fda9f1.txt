@@ -1,0 +1,22 @@
+property isunique
+
+Boolean indicating whether all components of the group are unique, i.e., the group contains no duplicates.
+
+Examples
+
+>>> ag = u.atoms[[2, 1, 2, 2, 1, 0]]
+>>> ag
+<AtomGroup with 6 atoms>
+>>> ag.isunique
+False
+>>> ag2 = ag.unique
+>>> ag2
+<AtomGroup with 3 atoms>
+>>> ag2.isunique
+True
+
+See also
+
+asunique
+
+Added in version 0.19.0.

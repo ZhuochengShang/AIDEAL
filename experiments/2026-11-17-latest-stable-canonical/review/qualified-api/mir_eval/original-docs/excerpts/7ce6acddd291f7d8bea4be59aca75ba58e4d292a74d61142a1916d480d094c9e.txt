@@ -1,0 +1,37 @@
+mir_eval.melody.resample_melody_series(times, frequencies, voicing, times_new, kind='linear')
+
+Resamples frequency and voicing time series to a new timescale. Maintains any zero (“unvoiced”) values in frequencies.
+
+If times and times_new are equivalent, no resampling will be performed.
+
+Parameters:
+
+timesnp.ndarray
+
+Times of each frequency value
+
+frequenciesnp.ndarray
+
+Array of frequency values, >= 0
+
+voicingnp.ndarray
+
+Array which indicates voiced or unvoiced. This array may be binary or have continuous values between 0 and 1.
+
+times_newnp.ndarray
+
+Times to resample frequency and voicing sequences to
+
+kindstr
+
+kind parameter to pass to scipy.interpolate.interp1d. (Default value = ‘linear’)
+
+Returns:
+
+frequencies_resamplednp.ndarray
+
+Frequency array resampled to new timebase
+
+voicing_resamplednp.ndarray
+
+Voicing array resampled to new timebase

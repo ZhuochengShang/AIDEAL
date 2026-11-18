@@ -1,0 +1,57 @@
+mir_eval.separation.bss_eval_images(reference_sources, estimated_sources, compute_permutation=True)
+
+Compute the bss_eval_images function from the BSS_EVAL Matlab toolbox.
+
+Ordering and measurement of the separation quality for estimated source signals in terms of filtered true source, interference and artifacts. This method also provides the ISR measure.
+
+The decomposition allows a time-invariant filter distortion of length 512, as described in Section III.B of [1].
+
+Passing False for compute_permutation will improve the computation performance of the evaluation; however, it is not always appropriate and is not the way that the BSS_EVAL Matlab toolbox computes bss_eval_images.
+
+Parameters:
+
+reference_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing true sources
+
+estimated_sourcesnp.ndarray, shape=(nsrc, nsampl, nchan)
+
+matrix containing estimated sources
+
+compute_permutationbool, optional
+
+compute permutation of estimate/source combinations (True by default)
+
+Returns:
+
+sdrnp.ndarray, shape=(nsrc,)
+
+vector of Signal to Distortion Ratios (SDR)
+
+isrnp.ndarray, shape=(nsrc,)
+
+vector of source Image to Spatial distortion Ratios (ISR)
+
+sirnp.ndarray, shape=(nsrc,)
+
+vector of Source to Interference Ratios (SIR)
+
+sarnp.ndarray, shape=(nsrc,)
+
+vector of Sources to Artifacts Ratios (SAR)
+
+permnp.ndarray, shape=(nsrc,)
+
+vector containing the best ordering of estimated sources in the mean SIR sense (estimated source number perm[j] corresponds to true source number j). Note: perm will be (1,2,...,nsrc) if compute_permutation is False.
+
+References
+
+Examples
+
+>>> # reference_sources[n] should be an ndarray of samples of the
+>>> # n'th reference source
+>>> # estimated_sources[n] should be the same for the n'th estimated
+>>> # source
+>>> (sdr, isr, sir, sar,
+...  perm) = mir_eval.separation.bss_eval_images(reference_sources,
+...                                               estimated_sources)

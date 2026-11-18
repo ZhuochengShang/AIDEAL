@@ -1,0 +1,84 @@
+class MDAnalysis.analysis.dielectric.DielectricConstant(atomgroup, temperature=300, make_whole=True, **kwargs)[source]
+
+Computes the average dipole moment
+
+ \[\boldsymbol M = \sum_i q_i \boldsymbol r_i\]
+
+where \(q_i\) is the charge and \(\boldsymbol r_i\) the position of atom \(i\) in the given MDAnalysis.core.groups.AtomGroup. Also, the static dielectric constant
+
+ \[\varepsilon = 1 + \frac{\langle M^2 \rangle - \langle M \rangle^2} {3 \varepsilon_ 0 V k_B T}\]
+
+is calculated for a system in tin foil boundary conditions, which is the usual case if electrostatics are handled with a Ewald summation technique. See [Neumann1983] for details on the derivation.
+
+Warning
+
+Applying this class requires that no free charges, such as ions or charged fragments, are present in the simulation.
+
+Parameters:
+
+atomgroup (MDAnalysis.core.groups.AtomGroup) – Atomgroup on which the analysis is executed
+
+temperature (float) – Temperature (Kelvin) at which the system has been simulated
+
+make_whole (bool) – Make molecules whole; If the input already contains whole molecules this can be disabled to gain speedup
+
+verbose (bool) – Show detailed progress of the calculation
+
+ results.M
+
+Directional dependant dipole moment \(\langle \boldsymbol M \rangle\) in \(eÅ\).
+
+Type:
+
+numpy.ndarray
+
+ results.M2
+
+Directional dependant squared dipole moment \(\langle \boldsymbol M^2 \rangle\) in \((eÅ)^2\)
+
+Type:
+
+numpy.ndarray
+
+ results.fluct
+
+Directional dependant dipole moment fluctuation \(\langle \boldsymbol M^2 \rangle - \langle \boldsymbol M \rangle^2\) in \((eÅ)^2\)
+
+Type:
+
+float
+
+ results.eps
+
+Directional dependant static dielectric constant
+
+Type:
+
+numpy.ndarray
+
+ results.eps_mean
+
+Static dielectric constant
+
+Type:
+
+float
+
+Example
+
+Create a DielectricConstant instance by supplying an AtomGroup, then use the run() method:
+
+import MDAnalysis as mda
+from MDAnalysis.analysis.dielectric import DielectricConstant
+from MDAnalysisTests.datafiles import PSF_TRICLINIC, DCD_TRICLINIC
+
+# Load a pure water system
+universe = mda.Universe(PSF_TRICLINIC, DCD_TRICLINIC)
+
+diel = DielectricConstant(universe.atoms)
+diel.run()
+print(diel.results)
+
+The static dielectric constant of the provided atomgroup is saved within the Results attribute.
+
+Added in version 2.1.0.

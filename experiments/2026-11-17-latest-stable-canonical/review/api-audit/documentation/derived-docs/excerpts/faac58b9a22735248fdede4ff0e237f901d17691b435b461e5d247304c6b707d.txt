@@ -1,0 +1,77 @@
+class MDAnalysis.lib.nsgrid.FastNS(cutoff, coords, box, pbc=True)
+
+Grid based search between positions
+
+Minimum image convention is used for distance evaluations if pbc is set to True.
+
+Changed in version 1.0.2: Rewrote to fix bugs with triclinic boxes
+
+Changed in version 2.11.0: Fixed missed neighbours in triclinic boxes where both the x component of the second box vector and the y component of the third are non-zero or more than one angle is non-90º (Issue #4906).
+
+If box is not supplied, the range of coordinates i.e. [xmax, ymax, zmax] - [xmin, ymin, zmin] should be used to construct a pseudo box. Subsequently, the origin should also be shifted to [xmin, ymin, zmin]. These arguments must be provided to the function.
+
+Parameters:
+
+cutoff (float) – Desired cutoff distance
+
+coords (numpy.ndarray) – atom coordinates of shape (N, 3) for N atoms. dtype=numpy.float32. For Non-PBC calculations, all the coords must be within the bounding box specified by box
+
+box (numpy.ndarray) – Box dimension of shape (6, ). The dimensions must be provided in the same format as returned by MDAnalysis.coordinates.base.Timestep.dimensions: [lx, ly, lz, alpha, beta, gamma]. For non-PBC evaluations, provide an orthogonal bounding box (dtype = numpy.float32)
+
+pbc (boolean) – Handle to switch periodic boundary conditions on/off [True]
+
+Note
+
+pbc=False Only works for orthogonal boxes.
+
+Care must be taken such that all particles are inside the bounding box as defined by the box argument for non-PBC calculations.
+
+In case of Non-PBC calculations, a bounding box must be provided to encompass all the coordinates as well as the search coordinates. The dimension should be similar to box argument but for an orthogonal box. For instance, one valid set of argument for box for the case of no PBC could be [10, 10, 10, 90, 90, 90]
+
+Following operations are advisable for non-PBC calculations
+
+lmax = all_coords.max(axis=0)
+lmin = all_coords.min(axis=0)
+pseudobox[:3] = 1.1*(lmax - lmin)
+pseudobox[3:] = 90.
+shift = all_coords.copy()
+shift -= lmin
+gridsearch = FastNS(max_cutoff, shift, box=pseudobox, pbc=False)
+
+ search(self, float[, : ] search_coords)
+
+Search a group of atoms against initialized coordinates
+
+Creates a new grid with the query atoms and searches against the initialized coordinates. The search is exclusive i.e. only the pairs (i, j) such that atom[i] from query atoms and atom[j] from the initialized set of coordinates is stored as neighbors.
+
+PBC-aware/non PBC-aware calculations are automatically enabled during the instantiation of :class:FastNS.
+
+Parameters:
+
+search_coords (numpy.ndarray) – Query coordinates of shape (N, 3) where N is the number of queries
+
+Returns:
+
+results – An NSResults object holding neighbor search results, which can be accessed by its methods get_pairs() and get_pair_distances().
+
+Return type:
+
+NSResults
+
+Note
+
+For non-PBC aware calculations, the current implementation doesn’t work if any of the query coordinates lies outside the box supplied to FastNS.
+
+ self_search(self)
+
+Searches all the pairs within the initialized coordinates
+
+All the pairs among the initialized coordinates are registered in hald the time. Although the algorithm is still the same, but the distance checks can be reduced to half in this particular case as every pair need not be evaluated twice.
+
+Returns:
+
+results – An NSResults object holding neighbor search results, which can be accessed by its methods get_pairs() and get_pair_distances().
+
+Return type:
+
+NSResults

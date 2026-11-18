@@ -1,0 +1,86 @@
+dtw_barycenter_averaging_subgradient
+
+ tslearn.barycenters.dtw_barycenter_averaging_subgradient(X, barycenter_size=None, init_barycenter=None, max_iter=30, initial_step_size=0.05, final_step_size=0.005, tol=1e-05, random_state=None, weights=None, metric_params=None, verbose=False)[source]
+
+DTW Barycenter Averaging (DBA) method estimated through subgradient descent algorithm.
+
+DBA was originally presented in [1]. This implementation is based on a idea from [2] (Stochastic Subgradient Mean Algorithm).
+
+Parameters:
+
+Xarray-like, shape=(n_ts, sz, d)
+
+Time series dataset.
+
+barycenter_sizeint or None (default: None)
+
+Size of the barycenter to generate. If None, the size of the barycenter is that of the data provided at fit time or that of the initial barycenter if specified.
+
+init_barycenterarray or None (default: None)
+
+Initial barycenter to start from for the optimization process. If None, the initial barycenter is the pointwise mean of X linearly interpolated to target barycenter size.
+
+max_iterint (default: 30)
+
+Number of iterations of the Expectation-Maximization optimization procedure.
+
+initial_step_sizefloat (default: 0.05)
+
+Initial step size for the subgradient descent algorithm. Default value is the one suggested in [2].
+
+final_step_sizefloat (default: 0.005)
+
+Final step size for the subgradient descent algorithm. Default value is the one suggested in [2].
+
+tolfloat (default: 1e-5)
+
+Tolerance to use for early stopping: if the absolute change in cost is lower than this value, the Expectation-Maximization procedure stops.
+
+random_stateint, RandomState instance or None, optional (default=None)
+
+If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random.
+
+weights: None or array
+
+Weights of each X[i]. Must be the same size as len(X). If None, uniform weights are used.
+
+metric_params: dict or None (default: None)
+
+DTW constraint parameters to be used. See tslearn.metrics.dtw_path for a list of accepted parameters If None, no constraint is used for DTW computations.
+
+verboseboolean (default: False)
+
+Whether to print information about the cost at each iteration or not.
+
+Returns:
+
+numpy.array of shape (barycenter_size, d) or (sz, d) if barycenter_size is None
+
+DBA barycenter of the provided time series dataset.
+
+References
+
+ [1]
+F. Petitjean, A. Ketterlin & P. Gancarski. A global averaging method for dynamic time warping, with applications to clustering. Pattern Recognition, Elsevier, 2011, Vol. 44, Num. 3, pp. 678-693
+
+ [2] (1,2,3)
+D. Schultz and B. Jain. Nonsmooth Analysis and Subgradient Methods for Averaging in Dynamic Time Warping Spaces. Pattern Recognition, 74, 340-358.
+
+Examples
+
+>>> time_series = [[1, 2, 3, 4], [1, 2, 4, 5]]
+>>> dtw_barycenter_averaging_subgradient(
+...     time_series,
+...     max_iter=10,
+...     random_state=0
+... )
+array([[1. ],
+       [2. ],
+       [3.5...],
+       [4.5...]])
+
+Examples using tslearn.barycenters.dtw_barycenter_averaging_subgradient
+
+Barycenters
+
+Barycenters

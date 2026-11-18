@@ -1,0 +1,761 @@
+{
+  "source_commit": "751453f04cd6e09842adf3073b2b3dac7d1777bc",
+  "files": [
+    {
+      "path": "python/sedonadb/Cargo.toml",
+      "sha256": "8f2e170bf89a969069ccb0ebd7fe96b166937877b52c2358b689487729f407ae",
+      "closest_mentions": [],
+      "excerpts": [
+        {
+          "line": 27,
+          "text": "# Pure Python extension \u2014 no Rust API consumers, so skip rustdoc."
+        },
+        {
+          "line": 28,
+          "text": "doc = false"
+        },
+        {
+          "line": 29,
+          "text": ""
+        },
+        {
+          "line": 30,
+          "text": "[features]"
+        },
+        {
+          "line": 31,
+          "text": "default = [\"mimalloc\"]"
+        },
+        {
+          "line": 32,
+          "text": "mimalloc = [\"dep:mimalloc\", \"dep:libmimalloc-sys\"]"
+        },
+        {
+          "line": 33,
+          "text": "s2geography = [\"sedona/s2geography\"]"
+        },
+        {
+          "line": 34,
+          "text": "gpu = [\"sedona/gpu\"]"
+        },
+        {
+          "line": 35,
+          "text": ""
+        },
+        {
+          "line": 36,
+          "text": "[dependencies]"
+        },
+        {
+          "line": 37,
+          "text": "adbc_core = { workspace = true }"
+        },
+        {
+          "line": 38,
+          "text": "arrow-buffer = { workspace = true }"
+        },
+        {
+          "line": 39,
+          "text": "arrow-schema = { workspace = true }"
+        },
+        {
+          "line": 40,
+          "text": "bytes = { workspace = true }"
+        },
+        {
+          "line": 41,
+          "text": "arrow-array = { workspace = true }"
+        },
+        {
+          "line": 42,
+          "text": "async-trait = { workspace = true }"
+        },
+        {
+          "line": 43,
+          "text": "datafusion = { workspace = true }"
+        },
+        {
+          "line": 44,
+          "text": "datafusion-common = { workspace = true }"
+        },
+        {
+          "line": 45,
+          "text": "datafusion-execution = { workspace = true }"
+        },
+        {
+          "line": 46,
+          "text": "datafusion-expr = { workspace = true }"
+        },
+        {
+          "line": 47,
+          "text": "datafusion-ffi = { workspace = true }"
+        },
+        {
+          "line": 48,
+          "text": "futures = { workspace = true }"
+        },
+        {
+          "line": 49,
+          "text": "pyo3 = { workspace = true }"
+        },
+        {
+          "line": 50,
+          "text": "sedona = { workspace = true }"
+        },
+        {
+          "line": 51,
+          "text": "sedona-common = { workspace = true }"
+        },
+        {
+          "line": 52,
+          "text": "sedona-adbc = { workspace = true }"
+        }
+      ]
+    },
+    {
+      "path": "rust/sedona/Cargo.toml",
+      "sha256": "87c519d5634e3856ab055cf111f969f2e48333e649d39447a1737ebcb632af70",
+      "closest_mentions": [],
+      "excerpts": [
+        {
+          "line": 30,
+          "text": "[lints.clippy]"
+        },
+        {
+          "line": 31,
+          "text": "result_large_err = \"allow\""
+        },
+        {
+          "line": 32,
+          "text": ""
+        },
+        {
+          "line": 33,
+          "text": "[features]"
+        },
+        {
+          "line": 34,
+          "text": "default = [\"aws\", \"azure\", \"gcp\", \"http\", \"geo\", \"geos\", \"tg\", \"spatial-join\"]"
+        },
+        {
+          "line": 35,
+          "text": "aws = [\"dep:aws-config\", \"dep:aws-credential-types\", \"object_store/aws\"]"
+        },
+        {
+          "line": 36,
+          "text": "azure = [\"object_store/azure\"]"
+        },
+        {
+          "line": 37,
+          "text": "gcp = [\"object_store/gcp\"]"
+        },
+        {
+          "line": 38,
+          "text": "geo = [\"dep:sedona-geo\"]"
+        },
+        {
+          "line": 39,
+          "text": "geos = [\"dep:sedona-geos\"]"
+        },
+        {
+          "line": 40,
+          "text": "tg = [\"dep:sedona-tg\"]"
+        },
+        {
+          "line": 41,
+          "text": "http = [\"object_store/http\"]"
+        },
+        {
+          "line": 42,
+          "text": "pointcloud = [\"dep:sedona-pointcloud\"]"
+        },
+        {
+          "line": 43,
+          "text": "proj = [\"sedona-proj/proj-sys\"]"
+        },
+        {
+          "line": 44,
+          "text": "gdal = [\"sedona-gdal/gdal-sys\"]"
+        },
+        {
+          "line": 45,
+          "text": "# Enable bindgen for GDAL versions without pre-built bindings (e.g., GDAL 3.13+)."
+        },
+        {
+          "line": 46,
+          "text": "bindgen = [\"sedona-gdal/bindgen\"]"
+        },
+        {
+          "line": 47,
+          "text": "spatial-join = [\"dep:sedona-spatial-join\", \"dep:sedona-spatial-join-raster\"]"
+        },
+        {
+          "line": 48,
+          "text": "gpu = [\"dep:sedona-spatial-join-gpu\", \"sedona-spatial-join-gpu/gpu\"]"
+        },
+        {
+          "line": 49,
+          "text": "s2geography = [\"dep:sedona-s2geography\", \"dep:sedona-spatial-join-geography\"]"
+        },
+        {
+          "line": 50,
+          "text": ""
+        },
+        {
+          "line": 51,
+          "text": "[dev-dependencies]"
+        },
+        {
+          "line": 52,
+          "text": "tempfile = { workspace = true }"
+        },
+        {
+          "line": 53,
+          "text": "tokio = { workspace = true, features = [\"rt-multi-thread\"] }"
+        },
+        {
+          "line": 54,
+          "text": "rstest = { workspace = true }"
+        },
+        {
+          "line": 55,
+          "text": ""
+        },
+        {
+          "line": 56,
+          "text": "[dependencies]"
+        },
+        {
+          "line": 57,
+          "text": "arrow-schema = { workspace = true }"
+        },
+        {
+          "line": 58,
+          "text": "arrow-array = { workspace = true }"
+        },
+        {
+          "line": 59,
+          "text": "arrow-buffer = { workspace = true }"
+        },
+        {
+          "line": 60,
+          "text": "async-trait = { workspace = true }"
+        },
+        {
+          "line": 61,
+          "text": "aws-config = { version = \"1.5.17\", optional = true }"
+        },
+        {
+          "line": 62,
+          "text": "aws-credential-types = { version = \"1.2.0\", optional = true }"
+        },
+        {
+          "line": 63,
+          "text": "comfy-table = { workspace = true }"
+        },
+        {
+          "line": 64,
+          "text": "datafusion = { workspace = true, default_features = false, features = [\"sql\", \"parquet\", \"nested_expressions\"] }"
+        },
+        {
+          "line": 65,
+          "text": "datafusion-catalog = { workspace = true }"
+        },
+        {
+          "line": 66,
+          "text": "datafusion-common = { workspace = true }"
+        },
+        {
+          "line": 67,
+          "text": "# `arrow_buffer_pool` exposes the adapter that lets Arrow buffers claim"
+        },
+        {
+          "line": 68,
+          "text": "# their allocation from DataFusion's memory pool (the raster chunk cache)."
+        },
+        {
+          "line": 69,
+          "text": "datafusion-execution = { workspace = true, features = [\"arrow_buffer_pool\"] }"
+        },
+        {
+          "line": 70,
+          "text": "datafusion-expr = { workspace = true, features = [\"sql\"] }"
+        },
+        {
+          "line": 71,
+          "text": "datafusion-ffi = { workspace = true }"
+        },
+        {
+          "line": 72,
+          "text": "datafusion-optimizer = { workspace = true }"
+        },
+        {
+          "line": 73,
+          "text": "datafusion-physical-plan = { workspace = true }"
+        },
+        {
+          "line": 74,
+          "text": "datafusion-session = { workspace = true }"
+        },
+        {
+          "line": 75,
+          "text": "dirs = { workspace = true }"
+        },
+        {
+          "line": 76,
+          "text": "futures = { workspace = true }"
+        },
+        {
+          "line": 77,
+          "text": "geo-traits = { workspace = true }"
+        },
+        {
+          "line": 78,
+          "text": "geo-types = { workspace = true }"
+        },
+        {
+          "line": 79,
+          "text": "object_store = { workspace = true }"
+        },
+        {
+          "line": 80,
+          "text": "parking_lot = { workspace = true }"
+        },
+        {
+          "line": 81,
+          "text": "regex = { workspace = true }"
+        },
+        {
+          "line": 82,
+          "text": "sedona-common = { workspace = true }"
+        },
+        {
+          "line": 83,
+          "text": "sedona-catalog = { workspace = true }"
+        },
+        {
+          "line": 86,
+          "text": "sedona-functions = { workspace = true }"
+        },
+        {
+          "line": 87,
+          "text": "sedona-geo = { workspace = true, optional = true }"
+        },
+        {
+          "line": 88,
+          "text": "sedona-geometry = { workspace = true }"
+        },
+        {
+          "line": 89,
+          "text": "sedona-geoparquet = { workspace = true }"
+        },
+        {
+          "line": 90,
+          "text": "sedona-geos = { workspace = true, optional = true }"
+        },
+        {
+          "line": 91,
+          "text": "sedona-pointcloud = { workspace = true, optional = true }"
+        },
+        {
+          "line": 92,
+          "text": "sedona-proj = { workspace = true }"
+        },
+        {
+          "line": 93,
+          "text": "sedona-gdal = { workspace = true }"
+        },
+        {
+          "line": 94,
+          "text": "sedona-raster = { workspace = true }"
+        },
+        {
+          "line": 95,
+          "text": "sedona-raster-functions = { workspace = true }"
+        },
+        {
+          "line": 96,
+          "text": "sedona-raster-gdal = { workspace = true }"
+        },
+        {
+          "line": 97,
+          "text": "sedona-schema = { workspace = true }"
+        },
+        {
+          "line": 98,
+          "text": "sedona-spatial-join = { workspace = true, optional = true }"
+        },
+        {
+          "line": 99,
+          "text": "sedona-spatial-join-gpu = { workspace = true, optional = true }"
+        },
+        {
+          "line": 100,
+          "text": "sedona-spatial-join-geography = { workspace = true, optional = true }"
+        },
+        {
+          "line": 101,
+          "text": "sedona-spatial-join-raster = { workspace = true, optional = true }"
+        },
+        {
+          "line": 102,
+          "text": "sedona-query-planner = { workspace = true }"
+        },
+        {
+          "line": 103,
+          "text": "sedona-s2geography = { workspace = true, optional = true }"
+        },
+        {
+          "line": 104,
+          "text": "sedona-testing = { workspace = true }"
+        },
+        {
+          "line": 105,
+          "text": "sedona-tg = { workspace = true, optional = true }"
+        },
+        {
+          "line": 106,
+          "text": "serde = { workspace = true }"
+        },
+        {
+          "line": 107,
+          "text": "serde_json = { workspace = true }"
+        },
+        {
+          "line": 108,
+          "text": "tokio = { workspace = true }"
+        },
+        {
+          "line": 109,
+          "text": "url = { workspace = true }"
+        }
+      ]
+    },
+    {
+      "path": "c/sedona-s2geography/src/register.rs",
+      "sha256": "5c98c554076a15ec99a66e5ddf994fb1006710f77d3e07770519a81313766e05",
+      "closest_mentions": [],
+      "excerpts": []
+    },
+    {
+      "path": "c/sedona-s2geography/src/kernels.rs",
+      "sha256": "a0b3ccc5f13808aec331bad14d1c0917f59595ed476e13ccbdf7caa4e778f8e9",
+      "closest_mentions": [
+        112,
+        501,
+        502
+      ],
+      "excerpts": [
+        {
+          "line": 108,
+          "text": "    }"
+        },
+        {
+          "line": 109,
+          "text": ""
+        },
+        {
+          "line": 110,
+          "text": "    // Binary (geography, geography) -> geography"
+        },
+        {
+          "line": 111,
+          "text": "    let binary_geog_fns = ["
+        },
+        {
+          "line": 112,
+          "text": "        \"st_closestpoint\","
+        },
+        {
+          "line": 113,
+          "text": "        \"st_difference\","
+        },
+        {
+          "line": 114,
+          "text": "        \"st_intersection\","
+        },
+        {
+          "line": 115,
+          "text": "        \"st_longestline\","
+        },
+        {
+          "line": 116,
+          "text": "        \"st_shortestline\","
+        },
+        {
+          "line": 117,
+          "text": "        \"st_symdifference\","
+        },
+        {
+          "line": 118,
+          "text": "        \"st_union\","
+        },
+        {
+          "line": 119,
+          "text": "    ];"
+        },
+        {
+          "line": 120,
+          "text": "    for fn_name in binary_geog_fns {"
+        },
+        {
+          "line": 121,
+          "text": "        kernels.push(("
+        },
+        {
+          "line": 122,
+          "text": "            fn_name.to_string(),"
+        },
+        {
+          "line": 123,
+          "text": "            Arc::new(NullKernelHelper::new(ArgMatcher::new("
+        },
+        {
+          "line": 124,
+          "text": "                vec![ArgMatcher::is_geography(), ArgMatcher::is_null()],"
+        },
+        {
+          "line": 125,
+          "text": "                WKB_GEOGRAPHY,"
+        },
+        {
+          "line": 126,
+          "text": "            ))),"
+        },
+        {
+          "line": 127,
+          "text": "        ));"
+        },
+        {
+          "line": 128,
+          "text": "        kernels.push(("
+        },
+        {
+          "line": 129,
+          "text": "            fn_name.to_string(),"
+        },
+        {
+          "line": 130,
+          "text": "            Arc::new(NullKernelHelper::new(ArgMatcher::new("
+        },
+        {
+          "line": 131,
+          "text": "                vec![ArgMatcher::is_null(), ArgMatcher::is_geography()],"
+        },
+        {
+          "line": 497,
+          "text": "        tester.assert_scalar_result_equals(result, \"POINT (0 0.5)\");"
+        },
+        {
+          "line": 498,
+          "text": "    }"
+        },
+        {
+          "line": 499,
+          "text": ""
+        },
+        {
+          "line": 500,
+          "text": "    #[test]"
+        },
+        {
+          "line": 501,
+          "text": "    fn closest_point() {"
+        },
+        {
+          "line": 502,
+          "text": "        let udf = s2_udf(\"st_closestpoint\");"
+        },
+        {
+          "line": 503,
+          "text": "        let tester = ScalarUdfTester::new(udf.into(), vec![WKB_GEOGRAPHY, WKB_GEOGRAPHY]);"
+        },
+        {
+          "line": 504,
+          "text": "        tester.assert_return_type(WKB_GEOGRAPHY);"
+        },
+        {
+          "line": 505,
+          "text": "        let result = tester"
+        },
+        {
+          "line": 506,
+          "text": "            .invoke_scalar_scalar(\"LINESTRING (0 0, 0 1)\", \"POINT (-1 -1)\")"
+        },
+        {
+          "line": 507,
+          "text": "            .unwrap();"
+        },
+        {
+          "line": 508,
+          "text": "        tester.assert_scalar_result_equals(result, \"POINT (0 0)\");"
+        },
+        {
+          "line": 509,
+          "text": "    }"
+        },
+        {
+          "line": 510,
+          "text": ""
+        },
+        {
+          "line": 511,
+          "text": "    #[test]"
+        },
+        {
+          "line": 512,
+          "text": "    fn contains() {"
+        },
+        {
+          "line": 513,
+          "text": "        let udf = s2_udf(\"st_contains\");"
+        },
+        {
+          "line": 514,
+          "text": "        let tester = ScalarUdfTester::new(udf.into(), vec![WKB_GEOGRAPHY, WKB_GEOGRAPHY]);"
+        },
+        {
+          "line": 515,
+          "text": "        tester.assert_return_type(DataType::Boolean);"
+        },
+        {
+          "line": 516,
+          "text": "        let result = tester"
+        },
+        {
+          "line": 517,
+          "text": "            .invoke_scalar_scalar(\"POLYGON ((0 0, 0 1, 1 0, 0 0))\", \"POINT (0.25 0.25)\")"
+        },
+        {
+          "line": 518,
+          "text": "            .unwrap();"
+        },
+        {
+          "line": 519,
+          "text": "        tester.assert_scalar_result_equals(result, true);"
+        },
+        {
+          "line": 520,
+          "text": "    }"
+        },
+        {
+          "line": 521,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "path": "c/sedona-geos/src/register.rs",
+      "sha256": "db71a2e427926e3ba4222667d29fad8d6287add153e04080dc369f37c980c21e",
+      "closest_mentions": [],
+      "excerpts": []
+    },
+    {
+      "path": "rust/sedona-geo/src/register.rs",
+      "sha256": "d90a2fbf366242bae9e8d75a54cf210a0464898a12706909c4dfcc02c569981b",
+      "closest_mentions": [],
+      "excerpts": []
+    },
+    {
+      "path": "rust/sedona-functions/src/register.rs",
+      "sha256": "add630b9b301623fba35b2df0ddd366a563b2b1eae1b87a94b2eedc8323db754",
+      "closest_mentions": [],
+      "excerpts": []
+    },
+    {
+      "path": "docs/reference/sql/st_closestpoint.qmd",
+      "sha256": "73e9cb95a8eccd442c8957ba255da854ed892f3b466469e499f52c89581a323c",
+      "closest_mentions": [
+        19,
+        20,
+        31
+      ],
+      "excerpts": [
+        {
+          "line": 15,
+          "text": "# KIND, either express or implied.  See the License for the"
+        },
+        {
+          "line": 16,
+          "text": "# specific language governing permissions and limitations"
+        },
+        {
+          "line": 17,
+          "text": "# under the License."
+        },
+        {
+          "line": 18,
+          "text": ""
+        },
+        {
+          "line": 19,
+          "text": "title: ST_ClosestPoint"
+        },
+        {
+          "line": 20,
+          "text": "description: Returns the 2-dimensional point on geom1 that is closest to geom2."
+        },
+        {
+          "line": 21,
+          "text": "kernels:"
+        },
+        {
+          "line": 22,
+          "text": "  - returns: geometry"
+        },
+        {
+          "line": 23,
+          "text": "    args: [geometry, geometry]"
+        },
+        {
+          "line": 24,
+          "text": "  - returns: geography"
+        },
+        {
+          "line": 25,
+          "text": "    args: [geography, geography]"
+        },
+        {
+          "line": 26,
+          "text": "---"
+        },
+        {
+          "line": 27,
+          "text": ""
+        },
+        {
+          "line": 28,
+          "text": "## Examples"
+        },
+        {
+          "line": 29,
+          "text": ""
+        },
+        {
+          "line": 30,
+          "text": "```sql"
+        },
+        {
+          "line": 31,
+          "text": "SELECT ST_ClosestPoint("
+        },
+        {
+          "line": 32,
+          "text": "    ST_GeogFromText('LINESTRING(0 0, 10 10)'),"
+        },
+        {
+          "line": 33,
+          "text": "    ST_GeogPoint(5, 0)"
+        },
+        {
+          "line": 34,
+          "text": ");"
+        },
+        {
+          "line": 35,
+          "text": "```"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+class MDAnalysis.analysis.encore.clustering.ClusterCollection.Cluster(elem_list=None, centroid=None, idn=None, metadata=None)[source]
+
+Generic Cluster class for clusters with centroids.
+
+ id
+
+Cluster ID number. Useful for the ClustersCollection class
+
+Type:
+
+int
+
+ metadata
+
+dict of lists or numpy.array, containing metadata for the cluster elements. The iterable must return the same number of elements as those that belong to the cluster.
+
+Type:
+
+iterable
+
+ size
+
+number of elements.
+
+Type:
+
+int
+
+ centroid
+
+cluster centroid.
+
+Type:
+
+element object
+
+ elements
+
+array containing the cluster elements.
+
+Type:
+
+numpy.array
+
+Class constructor. If elem_list is None, an empty cluster is created
+
+and the remaining arguments ignored.
+
+Parameters:
+
+elem_list (numpy.array or None) – numpy array of cluster elements
+
+centroid (None or element object) – centroid
+
+idn (int) – cluster ID
+
+metadata (iterable) – metadata, one value for each cluster element. The iterable must have the same length as the elements array.

@@ -1,0 +1,45 @@
+class MDAnalysis.transformations.fit.fit_rot_trans(ag, reference, plane=None, weights=None, max_threads=1, parallelizable=True)[source]
+
+Perform a spatial superposition by minimizing the RMSD.
+
+Spatially align the group of atoms ag to reference by doing a RMSD fit.
+
+This fit works as a way to remove translations and rotations of a given AtomGroup in a trajectory. A plane can be given using the flag plane so that only translations and rotations in that particular plane are removed. This is useful for protein-membrane systems to where the membrane must remain in the same orientation.
+
+Note
+
+max_threads is set to 1 for this transformation with which it performs better.
+
+Example
+
+Removing the translations and rotations of a given AtomGroup ag on the XY plane by fitting it to a reference ref, using the masses as weights for the RMSD fit:
+
+ag = u.select_atoms("protein")
+ref = mda.Universe("reference.pdb")
+transform = mda.transformations.fit_rot_trans(ag, ref, plane="xy",
+                                              weights="mass")
+u.trajectory.add_transformations(transform)
+
+Parameters:
+
+ag (Universe or AtomGroup) – structure to translate and rotate, a AtomGroup or a whole Universe
+
+reference (Universe or AtomGroup) – reference structure, a AtomGroup or a whole Universe
+
+plane (str, optional) – used to define the plane on which the rotations and translations will be removed. Defined as a string of the plane. Supported planes are “yz”, “xz” and “xy” planes.
+
+weights ({“mass”, None} or array_like, optional) – choose weights. With "mass" uses masses as weights; with None weigh each atom equally. If a float array of the same length as ag is provided, use each element of the array_like as a weight for the corresponding atom in ag.
+
+Return type:
+
+MDAnalysis.coordinates.timestep.Timestep
+
+Changed in version 2.0.0: The transformation was changed from a function/closure to a class with __call__.
+
+Changed in version 2.0.0: The transformation was changed to inherit from the base class for limiting threads and checking if it can be used in parallel analysis.
+
+Parameters:
+
+max_threads (int, optional) – The maximum thread number can be used. Default is None, which means the default or the external setting.
+
+parallelizable (bool, optional) – A check for if this can be used in split-apply-combine parallel analysis approach. Default is True.

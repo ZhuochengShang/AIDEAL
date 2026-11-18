@@ -1,0 +1,32 @@
+get_weights(layer_name=None)[source]
+
+Return model weights (or weights for a given layer if layer_name is provided).
+
+Parameters:
+
+layer_name: str or None (default: None)
+
+Name of the layer for which weights should be returned. If None, all model weights are returned. Available layer names with weights are:
+
+“shapelets_i_j” with i an integer for the shapelet id and j an integer for the dimension
+
+“classification” for the final classification layer
+
+Returns:
+
+list
+
+list of model (or layer) weights
+
+Examples
+
+>>> from tslearn.generators import random_walk_blobs
+>>> X, y = random_walk_blobs(n_ts_per_blob=100, sz=256, d=1, n_blobs=3)
+>>> clf = LearningShapelets(n_shapelets_per_size={10: 5}, max_iter=1,
+...                     verbose=0)
+>>> clf.fit(X, y).get_weights("classification")[0].shape
+(5, 3)
+>>> clf.get_weights("shapelets_0")[0].shape
+(5, 10, 1)
+>>> len(clf.get_weights("shapelets_0"))
+1

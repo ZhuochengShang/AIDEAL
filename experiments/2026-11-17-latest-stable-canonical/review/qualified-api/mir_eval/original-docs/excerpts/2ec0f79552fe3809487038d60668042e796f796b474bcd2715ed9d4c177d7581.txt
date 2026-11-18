@@ -1,0 +1,31 @@
+mir_eval.multipitch.compute_accuracy(true_positives, n_ref, n_est)
+
+Compute accuracy metrics.
+
+Parameters:
+
+true_positivesnp.ndarray
+
+Array containing the number of true positives at each time point.
+
+n_refnp.ndarray
+
+Array containing the number of reference frequencies at each time point.
+
+n_estnp.ndarray
+
+Array containing the number of estimate frequencies at each time point.
+
+Returns:
+
+precisionfloat
+
+sum(true_positives)/sum(n_est)
+
+recallfloat
+
+sum(true_positives)/sum(n_ref)
+
+accfloat
+
+sum(true_positives)/sum(n_est + n_ref - true_positives)

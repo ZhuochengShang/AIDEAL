@@ -1,0 +1,102 @@
+ExifUtils (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.util.exif
+Class ExifUtils
+java.lang.Object
+net.coobird.thumbnailator.util.exif.ExifUtils
+public final class
+ExifUtils
+extends
+Object
+An utility class used to obtain the orientation information from a given
+Exif metadata.
+Author:
+coobird
+Method Summary
+static
+Orientation
+getExifOrientation
+(
+ImageReader
+reader,
+int imageIndex)
+Returns the orientation obtained from the Exif metadata.
+static
+Orientation
+getOrientationFromExif
+(byte[] exifData)
+Returns the orientation obtained from the Exif metadata.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+getExifOrientation
+public static
+Orientation
+getExifOrientation
+(
+ImageReader
+reader,
+int imageIndex)
+throws
+IOException
+Returns the orientation obtained from the Exif metadata.
+Parameters:
+reader
+- An
+ImageReader
+which is reading the
+target image.
+imageIndex
+- The index of the image from which the Exif
+metadata should be read from.
+Returns:
+The orientation information obtained from the
+Exif metadata, as a
+Orientation
+enum.
+Returns
+null
+if no orientation is found.
+Throws:
+IOException
+- When an error occurs during reading.
+IllegalArgumentException
+- If the
+ImageReader
+does not
+have the target image set, or if the
+reader does not have a JPEG open.
+getOrientationFromExif
+public static
+Orientation
+getOrientationFromExif
+(byte[] exifData)
+Returns the orientation obtained from the Exif metadata.
+Parameters:
+exifData
+- A byte array containing Exif data.
+Returns:
+The orientation information obtained from the
+Exif metadata, as a
+Orientation
+enum.
+Returns
+null
+if no orientation is found.
+Copyright © 2025. All rights reserved.

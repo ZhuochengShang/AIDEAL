@@ -1,0 +1,29 @@
+kneighbors(X=None, n_neighbors=None, return_distance=True)[source]
+
+Finds the K-neighbors of a point.
+
+Returns indices of and distances to the neighbors of each point.
+
+Parameters:
+
+Xarray-like, shape (n_ts, sz, d)
+
+The query time series. If not provided, neighbors of each indexed point are returned. In this case, the query point is not considered its own neighbor.
+
+n_neighborsint
+
+Number of neighbors to get (default is the value passed to the constructor).
+
+return_distanceboolean, optional. Defaults to True.
+
+If False, distances will not be returned
+
+Returns:
+
+distarray
+
+Array representing the distance to points, only present if return_distance=True
+
+indarray
+
+Indices of the nearest points in the population matrix.

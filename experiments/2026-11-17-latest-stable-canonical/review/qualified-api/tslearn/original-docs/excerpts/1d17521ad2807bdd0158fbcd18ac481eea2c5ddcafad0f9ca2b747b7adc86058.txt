@@ -1,0 +1,224 @@
+class tslearn.datasets.UCR_UEA_datasets(use_cache=True, root_dir=None)[source]
+
+A convenience class to access UCR/UEA time series datasets.
+
+When using one (or several) of these datasets in research projects, please cite [1].
+
+This class will attempt to recover from some known misnamed files, like the StarLightCurves dataset being provided in StarlightCurves.zip and alike.
+
+Parameters:
+
+use_cachebool (default: True)
+
+Whether a cached version of the dataset should be used in load_dataset(), if one is found. Datasets are always cached upon loading, and this parameter only determines whether the cached version shall be refreshed upon loading.
+
+root_dirstr or None (default: None)
+
+Directory to be used to cache downloaded datasets. If None, a default directory is used:
+
+If the environment variable XDG_DATA_HOME is set, the default directory is $XDG_DATA_HOME/tslearn/UCR_UEA.
+
+Otherwise, the default directory is ~/.tslearn/datasets/UCR_UEA.
+
+See also
+
+CachedDatasets
+
+Provides pre-selected datasets for offline use.
+
+Notes
+
+Downloading dataset files can be time-consuming, it is recommended using use_cache=True (default) in order to only experience downloading time once per dataset and work on a cached version of the datasets afterward.
+
+References
+
+ [1]
+A. Bagnall, J. Lines, W. Vickers and E. Keogh, The UEA & UCR Time Series Classification Repository, www.timeseriesclassification.com
+
+Methods
+
+baseline_accuracy([list_datasets, list_methods])
+ |
+Report baseline performances as provided by UEA/UCR website (for univariate datasets only).
+ |
+
+cache_all()
+ |
+Cache all datasets from the UCR/UEA archive for later use.
+ |
+
+list_cached_datasets()
+ |
+List datasets from the UCR/UEA archive that are available in cache.
+ |
+
+list_datasets()
+ |
+List datasets (both univariate and multivariate) available in the UCR/UEA archive.
+ |
+
+list_multivariate_datasets()
+ |
+List multivariate datasets in the UCR/UEA archive.
+ |
+
+list_univariate_datasets()
+ |
+List univariate datasets in the UCR/UEA archive.
+ |
+
+load_dataset(dataset_name)
+ |
+Load a dataset from the UCR/UEA archive from its name.
+ |
+
+ baseline_accuracy(list_datasets=None, list_methods=None)[source]
+
+Report baseline performances as provided by UEA/UCR website (for univariate datasets only).
+
+Parameters:
+
+list_datasets: list or None (default: None)
+
+A list of strings indicating for which datasets performance should be reported. If None, performance is reported for all datasets.
+
+list_methods: list or None (default: None)
+
+A list of baselines methods for which performance should be reported. If None, performance for all baseline methods is reported.
+
+Returns:
+
+dict
+
+A dictionary in which keys are dataset names and associated values are themselves dictionaries that provide accuracy scores for the requested methods.
+
+Examples
+
+>>> uea_ucr = UCR_UEA_datasets()
+>>> dict_acc = uea_ucr.baseline_accuracy(
+...         list_datasets=["Adiac", "ChlorineConcentration"],
+...         list_methods=["C45"])
+>>> len(dict_acc)
+2
+>>> dict_acc["Adiac"]
+{'C45': 0.542199...}
+>>> all_dict_acc = uea_ucr.baseline_accuracy()
+>>> len(all_dict_acc)
+85
+
+ cache_all()[source]
+
+Cache all datasets from the UCR/UEA archive for later use.
+
+ list_cached_datasets()[source]
+
+List datasets from the UCR/UEA archive that are available in cache.
+
+Examples
+
+>>> beetlefly = UCR_UEA_datasets().load_dataset("BeetleFly")
+>>> l = UCR_UEA_datasets().list_cached_datasets()
+>>> "BeetleFly" in l
+True
+
+ list_datasets()[source]
+
+List datasets (both univariate and multivariate) available in the UCR/UEA archive.
+
+Returns:
+
+list of str:
+
+A list of names of all (univariate and multivariate) dataset names.
+
+Examples
+
+>>> l = UCR_UEA_datasets().list_datasets()
+>>> "PenDigits" in l
+True
+>>> "BeetleFly" in l
+True
+>>> "DatasetThatDoesNotExist" in l
+False
+
+ list_multivariate_datasets()[source]
+
+List multivariate datasets in the UCR/UEA archive.
+
+Returns:
+
+list of str:
+
+A list of the names of all multivariate dataset namas.
+
+Examples
+
+>>> l = UCR_UEA_datasets().list_multivariate_datasets()
+>>> "PenDigits" in l
+True
+
+ list_univariate_datasets()[source]
+
+List univariate datasets in the UCR/UEA archive.
+
+Returns:
+
+list of str:
+
+A list of the names of all univariate datasets.
+
+Examples
+
+>>> l = UCR_UEA_datasets().list_univariate_datasets()
+>>> len(l)
+128
+
+ load_dataset(dataset_name)[source]
+
+Load a dataset from the UCR/UEA archive from its name.
+
+On failure, None is returned for each of the four values and a RuntimeWarning is printed.
+
+Parameters:
+
+dataset_namestr
+
+Name of the dataset. Should be in the list returned by list_datasets
+
+Returns:
+
+numpy.ndarray of shape (n_ts_train, sz, d) or None
+
+Training time series. None if unsuccessful.
+
+numpy.ndarray of integers or strings with shape (n_ts_train, ) or None
+
+Training labels. None if unsuccessful.
+
+numpy.ndarray of shape (n_ts_test, sz, d) or None
+
+Test time series. None if unsuccessful.
+
+numpy.ndarray of integers or strings with shape (n_ts_test, ) or None
+
+Test labels. None if unsuccessful.
+
+Examples
+
+>>> data_loader = UCR_UEA_datasets()
+>>> X_train, y_train, X_test, y_test = data_loader.load_dataset(
+...         "TwoPatterns")
+>>> X_train.shape
+(1000, 128, 1)
+>>> y_train.shape
+(1000,)
+>>> X_train, y_train, X_test, y_test = data_loader.load_dataset(
+...         "Adiac")
+>>> X_train.shape
+(390, 176, 1)
+>>> X_train, y_train, X_test, y_test = data_loader.load_dataset(
+...         "PenDigits")
+>>> X_train.shape
+(7494, 8, 2)
+>>> assert (None, None, None, None) == data_loader.load_dataset(
+...         "DatasetThatDoesNotExist")

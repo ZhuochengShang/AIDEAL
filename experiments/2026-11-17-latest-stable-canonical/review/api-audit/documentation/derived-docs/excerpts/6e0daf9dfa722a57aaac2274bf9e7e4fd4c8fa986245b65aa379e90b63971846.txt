@@ -1,0 +1,17 @@
+has_valid_coordinates(criteria, x)[source]
+
+Returns True if all values are within limit values of their formats.
+
+Due to rounding, the test is asymmetric (and min is supposed to be negative):
+
+min < x <= max
+
+Parameters:
+
+criteria (dict) – dictionary containing the max and min values in native units
+
+x (numpy.ndarray) – (x, y, z) coordinates of atoms selected to be written out
+
+Return type:
+
+bool

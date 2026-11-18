@@ -1,0 +1,21 @@
+bsphere(wrap=False)
+
+Return the bounding sphere of the selection.
+
+The sphere is calculated relative to the center of geometry.
+
+Parameters:
+
+wrap (bool, optional) – If True, move all atoms to the primary unit cell before calculation. [False]
+
+Returns:
+
+R (float) – Radius of the bounding sphere.
+
+center (numpy.ndarray) – Coordinates of the sphere center as [xcen, ycen, zcen].
+
+Added in version 0.7.3.
+
+Changed in version 0.8: Added pbc keyword
+
+Changed in version 2.1.0: Renamed pbc kwarg to wrap. pbc is still accepted but is deprecated and will be removed in version 3.0.

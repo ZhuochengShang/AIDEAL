@@ -6,7 +6,6 @@ changes a source checkout, applies its patch, or validates guidance empirically.
 """
 import argparse
 import difflib
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -14,19 +13,19 @@ import re
 import shutil
 import tempfile
 
+from .ablation import bytes_sha256
 from .source_hints import (MAX_SOURCE_BYTES, REQUIRED, index_source_hints,
                            insert_source_hint, strip_source_hints)
 
 
-def _sha(data):
-    return hashlib.sha256(data).hexdigest()
-
-
 def _write_json(path, value):
+    # Write a readable UTF-8 artifact with stable key order and a trailing newline.
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 
 
 def _read_spec(path):
+    # Check the schema and size limits before using any proposed edits.
+    # Keep the original bytes for the exact spec copy in the proposal directory.
     data = path.read_bytes()
     if len(data) > 2_000_000:
         raise ValueError('Source hint spec exceeds size bound')
@@ -49,6 +48,7 @@ def _read_spec(path):
 
 
 def _relative_source(function_id):
+    # Split the canonical ID into a checkout-relative source path and a declaration line.
     if not isinstance(function_id, str):
         raise ValueError('function_id must be a canonical string')
     parts = function_id.rsplit(':', 2)
@@ -64,6 +64,8 @@ def _relative_source(function_id):
 
 def prepare_source_hints(source_root, spec_path, output):
     """Return a manifest for a new reviewable annotation-only proposal directory."""
+    # Check the requested files and source hashes, then prepare copies for review.
+    # Return the manifest after the source index reads back the expected annotations.
     root, spec_path = Path(source_root).resolve(strict=True), Path(spec_path).resolve(strict=True)
     output = Path(output).absolute()
     if output.exists() or output.is_symlink():
@@ -99,7 +101,7 @@ def prepare_source_hints(source_root, spec_path, output):
         if source.stat().st_size > MAX_SOURCE_BYTES:
             raise ValueError('Proposed source exceeds source size bound')
         original = source.read_bytes()
-        if _sha(original) != spec['source_sha256'][relative.as_posix()]:
+        if bytes_sha256(original) != spec['source_sha256'][relative.as_posix()]:
             raise ValueError('Baseline source hash changed: ' + relative.as_posix())
         text, edited = original.decode('utf-8'), original.decode('utf-8')
         for _, hint in sorted(proposals, key=lambda item: item[0], reverse=True):
@@ -107,8 +109,8 @@ def prepare_source_hints(source_root, spec_path, output):
         if strip_source_hints(edited) != strip_source_hints(text):
             raise ValueError('Proposal changed text outside source hint comments')
         prepared[relative] = edited.encode('utf-8')
-        sources.append({'path': relative.as_posix(), 'baseline_sha256': _sha(original),
-                        'proposed_sha256': _sha(prepared[relative]), 'source_bytes': len(original)})
+        sources.append({'path': relative.as_posix(), 'baseline_sha256': bytes_sha256(original),
+                        'proposed_sha256': bytes_sha256(prepared[relative]), 'source_bytes': len(original)})
         for line in difflib.unified_diff(text.splitlines(keepends=True), edited.splitlines(keepends=True),
                 fromfile='a/' + relative.as_posix(), tofile='b/' + relative.as_posix()):
             patches.append(line if line.endswith('\n') else line + '\n\\ No newline at end of file\n')
@@ -135,7 +137,7 @@ def prepare_source_hints(source_root, spec_path, output):
         _write_json(stage / 'source_hint_index.json', index)
         manifest = {'schema_version': 1, 'status': 'unvalidated',
                     'source_root': str(root), 'output': str(output),
-                    'spec_sha256': _sha(spec_data), 'patch_sha256': _sha(patch),
+                    'spec_sha256': bytes_sha256(spec_data), 'patch_sha256': bytes_sha256(patch),
                     'sources': sources, 'coverage': index['coverage'],
                     'new_hint_count': len(spec['hints']),
                     'source_artifacts': [str(output / 'source' / p) for p in prepared],
@@ -153,6 +155,8 @@ def prepare_source_hints(source_root, spec_path, output):
 
 
 def main(argv=None):
+    # Read the source root, input spec, and output location from the command line.
+    # Print the proposal manifest as JSON for the caller.
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-root', required=True)
     parser.add_argument('--spec', required=True)

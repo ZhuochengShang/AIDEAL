@@ -1,0 +1,24 @@
+property unique
+
+Return a ResidueGroup containing sorted and unique Residues only.
+
+Examples
+
+>>> rg = u.residues[[2, 1, 2, 2, 1, 0]]
+>>> rg
+<ResidueGroup with 6 residues>
+>>> rg.ix
+array([2, 1, 2, 2, 1, 0])
+>>> rg2 = rg.unique
+>>> rg2
+<ResidueGroup with 3 residues>
+>>> rg2.ix
+array([0, 1, 2])
+>>> rg2.unique is rg2
+False
+
+Added in version 0.16.0.
+
+Changed in version 0.19.0: If the ResidueGroup is already unique, ResidueGroup.unique now returns the group itself instead of a copy.
+
+Changed in version 2.0.0: This function now always returns a copy.

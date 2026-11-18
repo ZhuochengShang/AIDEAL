@@ -1,0 +1,21 @@
+mir_eval.segment.validate_structure(reference_intervals, reference_labels, estimated_intervals, estimated_labels)
+
+Check that the input annotations to a structure estimation metric (i.e. one that takes in both segment boundaries and their labels) look like valid segment times and labels, and throws helpful errors if not.
+
+Parameters:
+
+reference_intervalsnp.ndarray, shape=(n, 2)
+
+reference segment intervals, in the format returned by mir_eval.io.load_labeled_intervals().
+
+reference_labelslist, shape=(n,)
+
+reference segment labels, in the format returned by mir_eval.io.load_labeled_intervals().
+
+estimated_intervalsnp.ndarray, shape=(m, 2)
+
+estimated segment intervals, in the format returned by mir_eval.io.load_labeled_intervals().
+
+estimated_labelslist, shape=(m,)
+
+estimated segment labels, in the format returned by mir_eval.io.load_labeled_intervals().

@@ -1,0 +1,127 @@
+7.31. Reading trajectories with chemfiles — MDAnalysis.coordinates.chemfiles
+
+MDAnalysis interoperates with the chemfiles library. The chemfiles C++ library supports an expanding set of file formats, some of which are not natively supported by MDAnalysis. Using the CHEMFILES reader you can use chemfiles for the low-level file reading. Check the list of chemfile-supported file formats.
+
+7.31.1. Using the CHEMFILES reader
+
+When reading, set the format="CHEMFILES" keyword argument and I/O is delegated to chemfiles. For example:
+
+>>> import MDAnalysis as mda
+>>> from MDAnalysis.tests import datafiles as data
+>>> u = mda.Universe(data.TPR, data.TRR, format="CHEMFILES")
+>>> print(u.trajectory)
+<ChemfilesReader ~/anaconda3/envs/mda3/lib/python3.8/site-packages/MDAnalysisTests/data/adk_oplsaa.trr with 10 frames of 47681 atoms>
+
+You can then use the Universe as usual while chemfiles is handling the I/O transparently in the background.
+
+chemfiles can also write a number of formats for which there are no Writers in MDAnalysis. For example, to write a mol2 file:
+
+>>> u = mda.Universe(data.mol2_ligand)
+>>> with mda.Writer("ligand.mol2", format="CHEMFILES") as W:
+...     W.write(u.atoms)
+
+7.31.2. Classes
+
+Classes to read and write files using the chemfiles library. This library provides C++ implementation of multiple formats readers and writers.
+
+ class MDAnalysis.coordinates.chemfiles.ChemfilesReader(filename, chemfiles_format='', **kwargs)[source]
+
+Coordinate reader using chemfiles.
+
+The file format to used is guessed based on the file extension. If no matching format is found, a ChemfilesError is raised. It is also possible to manually specify the format to use for a given file.
+
+Added in version 1.0.0.
+
+Parameters:
+
+filename (chemfiles.Trajectory or str) – the chemfiles object to read or filename to read
+
+chemfiles_format (str (optional)) – if filename was a string, use the given format name instead of guessing from the extension. The list of supported formats and the associated names is available in the chemfiles documentation.
+
+**kwargs (dict) – General reader arguments.
+
+ class MDAnalysis.coordinates.chemfiles.ChemfilesWriter(filename, n_atoms=0, mode='w', chemfiles_format='', topology=None, **kwargs)[source]
+
+Coordinate writer using chemfiles.
+
+The file format to used is guessed based on the file extension. If no matching format is found, a ChemfilesError is raised. It is also possible to manually specify the format to use for a given file.
+
+Chemfiles support writting to files with varying number of atoms if the underlying format support it. This is the case of most of text-based formats.
+
+Added in version 1.0.0.
+
+Parameters:
+
+filename (str) – filename of trajectory file.
+
+n_atoms (int) – number of atoms in the trajectory to write. This value is not used and can vary during trajectory, if the underlying format support it
+
+mode (str (optional)) – file opening mode: use ‘a’ to append to an existing file or ‘w’ to create a new file
+
+chemfiles_format (str (optional)) –
+use the given format name instead of guessing from the extension. The list of supported formats and the associated names is available in chemfiles documentation.
+
+topology (Universe or AtomGroup (optional)) – use the topology from this AtomGroup or Universe to write all the timesteps to the file
+
+**kwargs (dict) – General writer arguments.
+
+ class MDAnalysis.coordinates.chemfiles.ChemfilesPicklable(path, mode='r', format='')[source]
+
+Chemfiles file object (read-only) that can be pickled.
+
+This class provides a file-like object (as returned by chemfiles.Trajectory) that, unlike standard Python file objects, can be pickled. Only read mode is supported.
+
+When the file is pickled, path, mode, and format of the file handle are saved. On unpickling, the file is opened by path with mode, and saved format. This means that for a successful unpickle, the original file still has to be accessible with its filename.
+
+Note
+
+Can only be used with reading (‘r’) mode. Upon pickling, the current frame is reset. universe.trajectory[i] has to be used to return to its original frame.
+
+Parameters:
+
+filename (str) – a filename given a text or byte string.
+
+mode ('r' , optional) – only ‘r’ can be used for pickling.
+
+format ('', optional) – guessed from the file extension if empty.
+
+Example
+
+f = ChemfilesPicklable(XYZ, 'r', '')
+print(f.read())
+f.close()
+
+can also be used as context manager:
+
+with ChemfilesPicklable(XYZ) as f:
+    print(f.read())
+
+See also
+
+MDAnalysis.lib.picklable_file_io.FileIOPicklable, MDAnalysis.lib.picklable_file_io.BufferIOPicklable, MDAnalysis.lib.picklable_file_io.TextIOPicklable, MDAnalysis.lib.picklable_file_io.GzipPicklable, MDAnalysis.lib.picklable_file_io.BZ2Picklable
+
+Added in version 2.0.0.
+
+Open the file at the given path using the given mode and optional file format.
+
+Valid modes are 'r' for read, 'w' for write and 'a' for append.
+
+The format parameter is needed when the file format does not match the extension, or when there is not standard extension for this format. If format is an empty string, the format will be guessed from the file extension.
+
+7.31.3. Helper functions
+
+ MDAnalysis.coordinates.chemfiles.MIN_CHEMFILES_VERSION = <Version('0.10')>
+
+Lowest version of chemfiles that is supported by MDAnalysis.
+
+ MDAnalysis.coordinates.chemfiles.MAX_CHEMFILES_VERSION = <Version('0.11')>
+
+Lowest version of chemfiles that is not supported by MDAnalysis.
+
+ MDAnalysis.coordinates.chemfiles.check_chemfiles_version()[source]
+
+Check if an appropriate chemfiles is available
+
+Returns True if a usable chemfiles version is available, with MIN_CHEMFILES_VERSION <= version < MAX_CHEMFILES_VERSION
+
+Added in version 1.0.0.

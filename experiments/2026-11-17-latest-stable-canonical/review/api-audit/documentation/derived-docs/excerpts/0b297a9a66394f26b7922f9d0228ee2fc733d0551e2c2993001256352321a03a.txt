@@ -1,0 +1,24 @@
+MDAnalysis.analysis.distances.dist(A, B, offset=0, box=None)[source]
+
+Return distance between atoms in two atom groups.
+
+The distance is calculated atom-wise. The residue ids are also returned because a typical use case is to look at CA distances before and after an alignment. Using the offset keyword one can also add a constant offset to the resids which facilitates comparison with PDB numbering.
+
+Parameters:
+
+A (AtomGroup) – AtomGroup with the same number of atoms
+
+B (AtomGroup) – AtomGroup with the same number of atoms
+
+offset (integer or tuple, optional, default 0) –
+An integer offset is added to resids_A and resids_B (see below) in order to produce PDB numbers.
+
+If offset is tuple then offset[0] is added to resids_A and offset[1] to resids_B. Note that one can actually supply numpy arrays of the same length as the atom group so that an individual offset is added to each resid.
+
+Returns:
+
+resids_A (array) – residue ids of the A group (possibly changed with offset)
+
+resids_B (array) – residue ids of the B group (possibly changed with offset)
+
+distances (array) – distances between the atoms

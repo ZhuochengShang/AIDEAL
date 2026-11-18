@@ -1,0 +1,442 @@
+class tslearn.piecewise.SymbolicAggregateApproximation(n_segments=1, alphabet_size_avg=5, scale=False)[source]
+
+Symbolic Aggregate approXimation (SAX) transformation.
+
+SAX was originally presented in [1].
+
+Parameters:
+
+n_segmentsint (default: 1)
+
+Number of PAA segments to compute
+
+alphabet_size_avgint (default: 5)
+
+Number of SAX symbols to use
+
+scale: bool (default: False)
+
+Whether input data should be scaled for each feature to have zero mean and unit variance across the dataset passed at fit time. Default for this parameter is set to False in version 0.4 to ensure backward compatibility, but is likely to change in a future version.
+
+Attributes:
+
+breakpoints_avg_numpy.ndarray of shape (alphabet_size - 1, )
+
+List of breakpoints used to generate SAX symbols
+
+References
+
+ [1]
+J. Lin, E. Keogh, L. Wei, et al. Experiencing SAX: a novel symbolic representation of time series. Data Mining and Knowledge Discovery, 2007. vol. 15(107)
+
+Examples
+
+>>> sax = SymbolicAggregateApproximation(n_segments=3, alphabet_size_avg=2)
+>>> data = [[-1., 2., 0.1, -1., 1., -1.], [1., 3.2, -1., -3., 1., -1.]]
+>>> sax_data = sax.fit_transform(data)
+>>> sax_data.shape
+(2, 3, 1)
+>>> sax_data
+array([[[1],
+        [0],
+        [1]],
+
+       [[1],
+        [0],
+        [1]]])
+>>> sax.distance_sax(sax_data[0], sax_data[1])
+0.0
+>>> sax.distance(data[0], data[1])
+0.0
+>>> sax.inverse_transform(sax_data)
+array([[[ 0.67448975],
+        [ 0.67448975],
+        [-0.67448975],
+        [-0.67448975],
+        [ 0.67448975],
+        [ 0.67448975]],
+
+       [[ 0.67448975],
+        [ 0.67448975],
+        [-0.67448975],
+        [-0.67448975],
+        [ 0.67448975],
+        [ 0.67448975]]])
+
+Methods
+
+distance(ts1, ts2)
+ |
+Compute distance between SAX representations as defined in [1].
+ |
+
+distance_paa(paa1, paa2)
+ |
+Compute distance between PAA representations as defined in [1].
+ |
+
+distance_sax(sax1, sax2)
+ |
+Compute distance between SAX representations as defined in [1].
+ |
+
+fit(X[, y])
+ |
+Fit a SAX representation.
+ |
+
+fit_transform(X[, y])
+ |
+Fit a SAX representation and transform the data accordingly.
+ |
+
+from_hdf5(path)
+ |
+Load model from a HDF5 file.
+ |
+
+from_json(path)
+ |
+Load model from a JSON file.
+ |
+
+from_pickle(path)
+ |
+Load model from a pickle file.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+inverse_transform(X)
+ |
+Compute time series corresponding to given SAX representations.
+ |
+
+set_output(*[, transform])
+ |
+Set output container.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+to_hdf5(path)
+ |
+Save model to a HDF5 file.
+ |
+
+to_json(path)
+ |
+Save model to a JSON file.
+ |
+
+to_pickle(path)
+ |
+Save model to a pickle file.
+ |
+
+transform(X[, y])
+ |
+Transform a dataset of time series into its SAX representation.
+ |
+
+ distance(ts1, ts2)[source]
+
+Compute distance between SAX representations as defined in [1].
+
+Parameters:
+
+ts1array-like
+
+A time series
+
+ts2array-like
+
+Another time series
+
+Returns:
+
+float
+
+SAX distance
+
+References
+
+ [1] (1,2)
+J. Lin, E. Keogh, L. Wei, et al. Experiencing SAX: a novel symbolic representation of time series. Data Mining and Knowledge Discovery, 2007. vol. 15(107)
+
+ distance_paa(paa1, paa2)[source]
+
+Compute distance between PAA representations as defined in [1].
+
+Parameters:
+
+paa1array-like
+
+PAA representation of a time series
+
+paa2array-like
+
+PAA representation of another time series
+
+Returns:
+
+float
+
+PAA distance
+
+References
+
+ [1] (1,2)
+E. Keogh & M. Pazzani. Scaling up dynamic time warping for datamining applications. SIGKDD 2000, pp. 285–289.
+
+ distance_sax(sax1, sax2)[source]
+
+Compute distance between SAX representations as defined in [1].
+
+Parameters:
+
+sax1array-like
+
+SAX representation of a time series
+
+sax2array-like
+
+SAX representation of another time series
+
+Returns:
+
+float
+
+SAX distance
+
+References
+
+ [1] (1,2)
+J. Lin, E. Keogh, L. Wei, et al. Experiencing SAX: a novel symbolic representation of time series. Data Mining and Knowledge Discovery, 2007. vol. 15(107)
+
+ fit(X, y=None)[source]
+
+Fit a SAX representation.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset
+
+Returns:
+
+SymbolicAggregateApproximation
+
+self
+
+ fit_transform(X, y=None, **fit_params)[source]
+
+Fit a SAX representation and transform the data accordingly.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset
+
+Returns:
+
+numpy.ndarray of integers with shape (n_ts, n_segments, d)
+
+SAX-Transformed dataset
+
+ classmethod from_hdf5(path)[source]
+
+Load model from a HDF5 file. Requires h5py http://docs.h5py.org/
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ classmethod from_json(path)[source]
+
+Load model from a JSON file.
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ classmethod from_pickle(path)[source]
+
+Load model from a pickle file.
+
+Parameters:
+
+pathstr
+
+Full path to file.
+
+Returns:
+
+Model instance
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ inverse_transform(X)[source]
+
+Compute time series corresponding to given SAX representations.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz_sax, d)
+
+A dataset of SAX series.
+
+Returns:
+
+numpy.ndarray of shape (n_ts, sz_original_ts, d)
+
+A dataset of time series corresponding to the provided representation.
+
+ set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ to_hdf5(path)[source]
+
+Save model to a HDF5 file. Requires h5py http://docs.h5py.org/
+
+Parameters:
+
+pathstr
+
+Full file path. File must not already exist.
+
+Raises:
+
+FileExistsError
+
+If a file with the same path already exists.
+
+ to_json(path)[source]
+
+Save model to a JSON file.
+
+Parameters:
+
+pathstr
+
+Full file path.
+
+ to_pickle(path)[source]
+
+Save model to a pickle file.
+
+Parameters:
+
+pathstr
+
+Full file path.
+
+ transform(X, y=None)[source]
+
+Transform a dataset of time series into its SAX representation.
+
+Parameters:
+
+Xarray-like of shape (n_ts, sz, d)
+
+Time series dataset
+
+Returns:
+
+numpy.ndarray of integers with shape (n_ts, n_segments, d)
+
+SAX-Transformed dataset

@@ -1,0 +1,614 @@
+{
+  "checked_at": "2026-11-17T19:22:18.689178+00:00",
+  "scope": "Read-only local provenance, active cluster catalogs/source metadata, upstream official release APIs; no model calls or upgrades in this audit.",
+  "all_six_latest_stable": false,
+  "summary": "MDAnalysis is 2.9.0 vs stable 2.11.0; tslearn is 0.10.0.dev vs stable 0.10.0; mir_eval version label is 0.8.2 but source differs from the stable tag. Beast regular-file bytes and Thumbnailator pinned source match stable release content. Active SedonaDB version/source-provenance labels match 0.5.0, but its synthetic measured snapshot omits upstream entries and is not the exact upstream tree.",
+  "aideal": {
+    "release_short_identity": "f2fc66558adb",
+    "verified_files": 216,
+    "status": "Root agent independently verified latest local AIDEAL code deployed on cluster 2026-11-17; not reverified by this library subaudit."
+  },
+  "library_records": [
+    {
+      "library": "rdpro",
+      "name": "RDPro / Beast",
+      "observed_source_version": "0.10.1",
+      "source_provenance_revision": "5ee41a6dc37ebe5f63bf7a3a0b74c5483460b9c8",
+      "source_repository": "https://bitbucket.org/bdlabucr/beast.git",
+      "latest_stable_version": "0.10.1",
+      "latest_stable_tag": "beast-0.10.1",
+      "latest_stable_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+      "status": "all 921 regular-file bytes match latest stable; measured/source snapshot commits are synthetic",
+      "cluster_snapshot": {
+        "head": "72a611573f4b17f3934080663499802bb4798d20",
+        "head_error": "",
+        "tree": "757142fe21ba53b1388880d6abc7423aff844295",
+        "tree_error": "",
+        "head_metadata": "2026-11-16T23:30:33-08:00\nPinned upstream source snapshot for isolated AIDEAL study",
+        "head_metadata_error": "",
+        "branches": "study/2026-11-16-gemini-3.1-flash-lite/alias-only 72a611573f4b17f3934080663499802bb4798d20\nstudy/2026-11-16-gemini-3.1-flash-lite/combined 85523f0bb11c6b8c9dfbbdcee1c19f6b519dc27e\nstudy/2026-11-16-gemini-3.1-flash-lite/error-hints-only 72a611573f4b17f3934080663499802bb4798d20\nstudy/2026-11-16-gemini-3.1-flash-lite/original 72a611573f4b17f3934080663499802bb4798d20\nstudy/2026-11-16-gemini-3.1-flash-lite/readme-only bfce51174fb7de8dc6275140eb5af6b2e2c64fb7\nstudy/2026-11-17-rdpro-entire-source/alias-only 72a611573f4b17f3934080663499802bb4798d20\nstudy/2026-11-17-rdpro-entire-source/combined 72a611573f4b17f3934080663499802bb4798d20\nstudy/2026-11-17-rdpro-entire-source/error-hints-only 72a611573f4b17f3934080663499802bb4798d20\nstudy/2026-11-17-rdpro-entire-source/original 72a611573f4b17f3934080663499802bb4798d20\nstudy/2026-11-17-rdpro-entire-source/readme-only 72a611573f4b17f3934080663499802bb4798d20",
+        "branches_error": "",
+        "pom": {
+          "groupId": "edu.ucr.cs.bdlab",
+          "artifactId": "beast",
+          "version": "0.10.1"
+        }
+      },
+      "latest_default_branch": {
+        "url": "https://api.bitbucket.org/2.0/repositories/bdlabucr/beast/refs/branches/master",
+        "branch": "master",
+        "commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+        "date": "2025-02-27T06:28:30+00:00",
+        "subject": "Released version 0.10.1"
+      },
+      "official_release_metadata": {
+        "url": "https://repo.maven.apache.org/maven2/edu/ucr/cs/bdlab/beast/maven-metadata.xml",
+        "latest": "0.10.1",
+        "release": "0.10.1",
+        "lastUpdated": "20250301004447",
+        "versions": [
+          "0.1.0-RC2",
+          "0.1.0-RC3",
+          "0.2.0-RC1",
+          "0.2.0",
+          "0.2.1",
+          "0.2.3-RC2",
+          "0.2.3",
+          "0.5.0-RC1",
+          "0.5.0",
+          "0.5.1-RC1",
+          "0.7.0",
+          "0.8.0-RC1",
+          "0.8.0-RC2",
+          "0.8.2",
+          "0.8.3-RC1",
+          "0.8.3-RC2",
+          "0.8.3",
+          "0.9.0-RC1",
+          "0.9.0-RC2",
+          "0.9.0",
+          "0.9.1-RC1",
+          "0.9.1",
+          "0.9.2-RC1",
+          "0.9.2",
+          "0.9.3-RC1",
+          "0.9.4-RC1",
+          "0.9.4-RC2",
+          "0.9.4",
+          "0.9.5-RC1",
+          "0.9.5-RC2",
+          "0.9.5",
+          "0.10.0-RC1",
+          "0.10.0-RC2",
+          "0.10.0",
+          "0.10.1-RC1",
+          "0.10.1-RC2",
+          "0.10.1"
+        ]
+      },
+      "source_comparison": {
+        "checked_at": "2026-11-17T19:20:57.061019+00:00",
+        "archive_url": "https://bitbucket.org/bdlabucr/beast/get/547f7f912131a8032f6b5d26991415a5faf05cef.tar.gz",
+        "archive_sha256": "1af132c7772be6a8741698a76d76448041ef2abad6295f2538b7e4228b9d5965",
+        "local_source": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/rdpro/2026-09-22-gpt-5.3-codex-broad-study/Original/source",
+        "upstream_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+        "remote_file_count": 921,
+        "local_file_count": 921,
+        "local_only": [],
+        "upstream_only": [],
+        "different_bytes": [],
+        "comparison_note": "Git blob SHA-1 of official archive file bytes compared against local snapshot HEAD tracked blobs; archive metadata/export substitutions may appear as differences."
+      },
+      "fetch_url": "https://bitbucket.org/bdlabucr/beast/get/547f7f912131a8032f6b5d26991415a5faf05cef.tar.gz",
+      "installed_runtime": "Historical JARs labeled 0.10.1 plus source overlay and public helper JARs. All eight historical module JARs differ from official Maven Central bytes/checksums; stable-only runtime is not established.",
+      "maven_audit_receipt": "/tmp/aideal-version-audit-2026-11-17/rdpro_maven_audit.json",
+      "maven_payload_comparison_receipt": "/tmp/aideal-version-audit-2026-11-17/rdpro_maven_payload_comparison.json"
+    },
+    {
+      "library": "mdanalysis",
+      "name": "MDAnalysis",
+      "observed_source_version": "2.9.0",
+      "source_provenance_revision": "81b8ef51e5bc1aa2824294ac6c52818c74975658",
+      "source_repository": "https://github.com/MDAnalysis/mdanalysis.git",
+      "latest_stable_version": "2.11.0",
+      "latest_stable_tag": "package-2.11.0",
+      "latest_stable_commit": "ace84dde1363e32aa94cd3f29a42c2f590bd0575",
+      "status": "upgrade required",
+      "cluster_snapshot": {
+        "head": "8429f1f6361e53482e8c5412fe2951ad682832d2",
+        "head_error": "",
+        "tree": "cd8e34787e5316476544eae4f7f40b467b3d0bbc",
+        "tree_error": "",
+        "head_metadata": "2026-11-16T23:34:13-08:00\nPinned upstream source snapshot for isolated AIDEAL study",
+        "head_metadata_error": "",
+        "branches": "study/2026-11-16-gemini-3.1-flash-lite/alias-only 8429f1f6361e53482e8c5412fe2951ad682832d2\nstudy/2026-11-16-gemini-3.1-flash-lite/combined 377872631da8d8bd60ef6eae7449bf6e9875277b\nstudy/2026-11-16-gemini-3.1-flash-lite/error-hints-only 8429f1f6361e53482e8c5412fe2951ad682832d2\nstudy/2026-11-16-gemini-3.1-flash-lite/original 8429f1f6361e53482e8c5412fe2951ad682832d2\nstudy/2026-11-16-gemini-3.1-flash-lite/readme-only 377872631da8d8bd60ef6eae7449bf6e9875277b",
+        "branches_error": "",
+        "declared_version_lines": [
+          "__version__ = \"2.9.0\"  # NOTE: keep in sync with RELEASE in setup.py"
+        ]
+      },
+      "upstream": {
+        "latest_release": {
+          "tag_name": "package-2.11.0",
+          "published_at": "2026-10-21T12:48:43Z",
+          "prerelease": false,
+          "draft": false,
+          "html_url": "https://github.com/MDAnalysis/mdanalysis/releases/tag/package-2.11.0"
+        },
+        "latest_release_commit": {
+          "tag": "package-2.11.0",
+          "sha": "ace84dde1363e32aa94cd3f29a42c2f590bd0575",
+          "html_url": "https://github.com/MDAnalysis/mdanalysis/commit/ace84dde1363e32aa94cd3f29a42c2f590bd0575",
+          "commit_date": "2026-10-21T09:30:35Z"
+        },
+        "default_branch": {
+          "repo": "MDAnalysis/mdanalysis",
+          "branch": "develop",
+          "sha": "a72b0c2aff2b0a356c577557d2323b9c24512a61",
+          "html_url": "https://github.com/MDAnalysis/mdanalysis/commit/a72b0c2aff2b0a356c577557d2323b9c24512a61",
+          "commit_date": "2026-11-16T20:56:53Z",
+          "subject": "Release netCDF memory-map pages after each frame (#5463)"
+        },
+        "evidence_urls": [
+          "https://api.github.com/repos/MDAnalysis/mdanalysis/releases/latest",
+          "https://api.github.com/repos/MDAnalysis/mdanalysis/commits/develop"
+        ]
+      },
+      "fetch_url": "https://github.com/MDAnalysis/mdanalysis/archive/ace84dde1363e32aa94cd3f29a42c2f590bd0575.tar.gz",
+      "stable_package_requirements": {
+        "url": "https://pypi.org/pypi/MDAnalysis/2.11.0/json",
+        "version": "2.11.0",
+        "requires_python": ">=3.11",
+        "requires_dist": [
+          "numpy>=1.26.0",
+          "GridDataFormats>=0.4.0",
+          "mmtf-python>=1.0.0",
+          "joblib>=0.12",
+          "scipy>=1.5.0",
+          "matplotlib>=1.5.1",
+          "tqdm>=4.43.0",
+          "threadpoolctl",
+          "packaging",
+          "filelock",
+          "mda-xdrlib",
+          "netCDF4>=1.0; extra == \"extra-formats\"",
+          "h5py>=2.10; extra == \"extra-formats\"",
+          "chemfiles>=0.10; extra == \"extra-formats\"",
+          "parmed; extra == \"extra-formats\"",
+          "pooch; extra == \"extra-formats\"",
+          "pyedr>=0.7.0; extra == \"extra-formats\"",
+          "pytng>=0.2.3; extra == \"extra-formats\"",
+          "gsd>3.0.0; extra == \"extra-formats\"",
+          "gemmi>=0.7.5; extra == \"extra-formats\"",
+          "rdkit>=2022.09.1; extra == \"extra-formats\"",
+          "imdclient>=0.2.2; extra == \"extra-formats\"",
+          "biopython>=1.80; extra == \"analysis\"",
+          "seaborn; extra == \"analysis\"",
+          "scikit-learn; extra == \"analysis\"",
+          "tidynamics>=1.0.0; extra == \"analysis\"",
+          "networkx>=2.0; extra == \"analysis\"",
+          "waterdynamics; extra == \"analysis\"",
+          "pathsimanalysis; extra == \"analysis\"",
+          "mdahole2; extra == \"analysis\"",
+          "sphinx; extra == \"doc\"",
+          "sphinx-sitemap; extra == \"doc\"",
+          "mdanalysis-sphinx-theme>=1.3.0; extra == \"doc\"",
+          "sphinxcontrib-bibtex; extra == \"doc\"",
+          "pybtex; extra == \"doc\"",
+          "pybtex-docutils; extra == \"doc\"",
+          "dask; extra == \"parallel\""
+        ],
+        "project_urls": {
+          "Blog": "https://www.mdanalysis.org/blog/",
+          "Discord": "https://discord.com/channels/807348386012987462/",
+          "Documentation": "https://docs.mdanalysis.org/",
+          "Download": "https://github.com/MDAnalysis/mdanalysis/releases",
+          "Github Discussions": "https://github.com/MDAnalysis/mdanalysis/discussions",
+          "Homepage": "https://www.mdanalysis.org",
+          "Issue Tracker": "https://github.com/mdanalysis/mdanalysis/issues",
+          "Source": "https://github.com/mdanalysis/mdanalysis",
+          "User Guide": "https://userguide.mdanalysis.org/"
+        }
+      },
+      "installed_distribution_version": "2.9.0",
+      "observed_import_version": "2.9.0"
+    },
+    {
+      "library": "tslearn",
+      "name": "tslearn",
+      "observed_source_version": "0.10.0.dev",
+      "source_provenance_revision": "f8f13ddf4186e2cc99c8ef495aeb46b1254a01f7",
+      "source_repository": "https://github.com/tslearn-team/tslearn.git",
+      "latest_stable_version": "0.10.0",
+      "latest_stable_tag": "v0.10.0",
+      "latest_stable_commit": "f6072f237313d610413359ecc899cdb9038f4b7e",
+      "status": "replace development snapshot with stable release",
+      "cluster_snapshot": {
+        "head": "49f5bfa96d6cd06a06ea78a9b9d69760fa2a508b",
+        "head_error": "",
+        "tree": "f8e64d3e0869bc042bdd727cf877829b584aec27",
+        "tree_error": "",
+        "head_metadata": "3af627acc0767defdd1f2886daaf93a947cd231e\n2026-11-16T23:43:37-08:00\nRestore exact upstream source snapshot bytes after archive attribute substitution",
+        "head_metadata_error": "",
+        "branches": "study/2026-11-16-gemini-3.1-flash-lite/alias-only 49f5bfa96d6cd06a06ea78a9b9d69760fa2a508b\nstudy/2026-11-16-gemini-3.1-flash-lite/combined 1563e2450dbb3a6e3c97868486e67f5351c83f88\nstudy/2026-11-16-gemini-3.1-flash-lite/error-hints-only 49f5bfa96d6cd06a06ea78a9b9d69760fa2a508b\nstudy/2026-11-16-gemini-3.1-flash-lite/original 49f5bfa96d6cd06a06ea78a9b9d69760fa2a508b\nstudy/2026-11-16-gemini-3.1-flash-lite/readme-only 1563e2450dbb3a6e3c97868486e67f5351c83f88",
+        "branches_error": "",
+        "declared_version_lines": [
+          "__version__ = \"0.10.0.dev\""
+        ]
+      },
+      "upstream": {
+        "latest_release": {
+          "tag_name": "v0.10.0",
+          "published_at": "2026-10-21T15:13:12Z",
+          "prerelease": false,
+          "draft": false,
+          "html_url": "https://github.com/tslearn-team/tslearn/releases/tag/v0.10.0"
+        },
+        "latest_release_commit": {
+          "tag": "v0.10.0",
+          "sha": "f6072f237313d610413359ecc899cdb9038f4b7e",
+          "html_url": "https://github.com/tslearn-team/tslearn/commit/f6072f237313d610413359ecc899cdb9038f4b7e",
+          "commit_date": "2026-10-21T15:09:18Z"
+        },
+        "default_branch": {
+          "repo": "tslearn-team/tslearn",
+          "branch": "main",
+          "sha": "9ee24b58b6d38440fac5bce8e942ed55ee6419a2",
+          "html_url": "https://github.com/tslearn-team/tslearn/commit/9ee24b58b6d38440fac5bce8e942ed55ee6419a2",
+          "commit_date": "2026-11-16T09:48:07Z",
+          "subject": "Fix preprocessing serialization (#812)"
+        },
+        "evidence_urls": [
+          "https://api.github.com/repos/tslearn-team/tslearn/releases/latest",
+          "https://api.github.com/repos/tslearn-team/tslearn/commits/main"
+        ]
+      },
+      "fetch_url": "https://github.com/tslearn-team/tslearn/archive/f6072f237313d610413359ecc899cdb9038f4b7e.tar.gz",
+      "stable_package_requirements": {
+        "url": "https://pypi.org/pypi/tslearn/0.10.0/json",
+        "version": "0.10.0",
+        "requires_python": ">=3.10",
+        "requires_dist": [
+          "scikit-learn>=1.5",
+          "numpy>=1.24.3",
+          "scipy>=1.10.1",
+          "numba>=0.61",
+          "joblib>=1.2",
+          "statsmodels>=0.14",
+          "torch; extra == \"pytorch\"",
+          "torch; extra == \"foundation\"",
+          "pytest; extra == \"tests\"",
+          "h5py; extra == \"tests\"",
+          "sphinx; extra == \"docs\"",
+          "pydata_sphinx_theme; extra == \"docs\"",
+          "sphinx-gallery; extra == \"docs\"",
+          "sphinx_copybutton; extra == \"docs\"",
+          "numpydoc; extra == \"docs\"",
+          "matplotlib; extra == \"docs\"",
+          "pypandoc; extra == \"docs\"",
+          "torch; extra == \"docs\"",
+          "chronos-forecasting>=2.0; extra == \"docs\"",
+          "torch; extra == \"all-features\"",
+          "numpy<2; (\"darwin\" in sys_platform and \"x86_64\" in platform_machine) and extra == \"all-features\"",
+          "h5py; extra == \"all-features\"",
+          "keras<3.12; (\"darwin\" in sys_platform and \"x86_64\" in platform_machine) and extra == \"all-features\"",
+          "keras; extra == \"all-features\"",
+          "cesium; extra == \"all-features\"",
+          "pandas; extra == \"all-features\"",
+          "stumpy; extra == \"all-features\""
+        ],
+        "project_urls": {
+          "changelog": "https://github.com/tslearn-team/tslearn/CHANGELOG.md",
+          "documentation": "http://tslearn.readthedocs.io",
+          "issues": "https://github.com/tslearn-team/tslearn/issues",
+          "source": "https://github.com/tslearn-team/tslearn"
+        }
+      },
+      "installed_distribution_version": null,
+      "observed_import_version": "0.10.0.dev",
+      "import_evidence": "native-final-release-controls/summary.json in exported VALIDATION.json"
+    },
+    {
+      "library": "mir_eval",
+      "name": "mir_eval",
+      "observed_source_version": "0.8.2",
+      "source_provenance_revision": "fe73b3533737814f83dbd9739f06e90f5f82f758",
+      "source_repository": "https://github.com/mir-evaluation/mir_eval.git",
+      "latest_stable_version": "0.8.2",
+      "latest_stable_tag": "0.8.2",
+      "latest_stable_commit": "8db0b3812e2032544c1fc00d02d4256cab043f3d",
+      "status": "version label matches; source is later development commit, replace for stable-only protocol",
+      "cluster_snapshot": {
+        "head": "b73db5fa8b32ceb98d9b52f4b48eb58233e7e49e",
+        "head_error": "",
+        "tree": "3a5a01ea65b8db088f3e71da0a5c1b5ab90fa788",
+        "tree_error": "",
+        "head_metadata": "2026-11-16T23:37:26-08:00\nPinned upstream source snapshot for isolated AIDEAL study",
+        "head_metadata_error": "",
+        "branches": "study/2026-11-16-gemini-3.1-flash-lite/alias-only b73db5fa8b32ceb98d9b52f4b48eb58233e7e49e\nstudy/2026-11-16-gemini-3.1-flash-lite/combined 1787d4bb4f97082fadc31569cc9f769e8f05150d\nstudy/2026-11-16-gemini-3.1-flash-lite/error-hints-only b73db5fa8b32ceb98d9b52f4b48eb58233e7e49e\nstudy/2026-11-16-gemini-3.1-flash-lite/original b73db5fa8b32ceb98d9b52f4b48eb58233e7e49e\nstudy/2026-11-16-gemini-3.1-flash-lite/readme-only 1787d4bb4f97082fadc31569cc9f769e8f05150d",
+        "branches_error": "",
+        "declared_version_lines": [
+          "__version__ = \"0.8.2\""
+        ]
+      },
+      "upstream": {
+        "latest_release": {
+          "tag_name": "0.8.2",
+          "published_at": "2025-02-25T18:09:21Z",
+          "prerelease": false,
+          "draft": false,
+          "html_url": "https://github.com/mir-evaluation/mir_eval/releases/tag/0.8.2"
+        },
+        "latest_release_commit": {
+          "tag": "0.8.2",
+          "sha": "8db0b3812e2032544c1fc00d02d4256cab043f3d",
+          "html_url": "https://github.com/mir-evaluation/mir_eval/commit/8db0b3812e2032544c1fc00d02d4256cab043f3d",
+          "commit_date": "2025-02-25T18:08:38Z"
+        },
+        "default_branch": {
+          "repo": "mir-evaluation/mir_eval",
+          "branch": "main",
+          "sha": "862261303e42a24bb7eec6333df03d7100af5f93",
+          "html_url": "https://github.com/mir-evaluation/mir_eval/commit/862261303e42a24bb7eec6333df03d7100af5f93",
+          "commit_date": "2026-11-12T16:20:56Z",
+          "subject": "Modernize packaging, testing, expire deprecations, and CI infrastructure (#446)"
+        },
+        "evidence_urls": [
+          "https://api.github.com/repos/mir-evaluation/mir_eval/releases/latest",
+          "https://api.github.com/repos/mir-evaluation/mir_eval/commits/main"
+        ]
+      },
+      "fetch_url": "https://github.com/mir-evaluation/mir_eval/archive/8db0b3812e2032544c1fc00d02d4256cab043f3d.tar.gz",
+      "stable_package_requirements": {
+        "url": "https://pypi.org/pypi/mir_eval/0.8.2/json",
+        "version": "0.8.2",
+        "requires_python": null,
+        "requires_dist": [
+          "numpy>=1.15.4",
+          "scipy>=1.4.0",
+          "decorator",
+          "matplotlib>=3.3.0; extra == \"display\"",
+          "numpydoc; extra == \"docs\"",
+          "sphinx_rtd_theme; extra == \"docs\"",
+          "matplotlib>=3.3.0; extra == \"docs\"",
+          "matplotlib>=3.3.0; extra == \"tests\"",
+          "pytest; extra == \"tests\"",
+          "pytest-cov; extra == \"tests\"",
+          "pytest-mpl; extra == \"tests\""
+        ],
+        "project_urls": {
+          "Homepage": "https://github.com/mir-evaluation/mir_eval"
+        }
+      },
+      "installed_distribution_version": null,
+      "observed_import_version": "0.8.2",
+      "import_evidence": "native-final-release-controls/summary.json in exported VALIDATION.json"
+    },
+    {
+      "library": "thumbnailator",
+      "name": "Thumbnailator",
+      "observed_source_version": "0.4.21",
+      "source_provenance_revision": "c9d99613878bbbf1f4d9369585b4cb5352c3b474",
+      "source_repository": "https://github.com/coobird/thumbnailator.git",
+      "latest_stable_version": "0.4.21",
+      "latest_stable_tag": "0.4.21",
+      "latest_stable_commit": "c9d99613878bbbf1f4d9369585b4cb5352c3b474",
+      "status": "stable source content/provenance and runtime version match; measured HEAD is synthetic, not the upstream release commit",
+      "cluster_snapshot": {
+        "head": "41713744f4d4c1272b9f0c06f4303ca394a82891",
+        "head_error": "",
+        "tree": "bea09a3170bf507338dc89214598e7ac45cdc107",
+        "tree_error": "",
+        "head_metadata": "2026-11-16T23:37:51-08:00\nPinned upstream source snapshot for isolated AIDEAL study",
+        "head_metadata_error": "",
+        "branches": "study/2026-11-16-gemini-3.1-flash-lite/alias-only 41713744f4d4c1272b9f0c06f4303ca394a82891\nstudy/2026-11-16-gemini-3.1-flash-lite/combined 65306eab493065183726f14c1f9f42289624d05d\nstudy/2026-11-16-gemini-3.1-flash-lite/error-hints-only 41713744f4d4c1272b9f0c06f4303ca394a82891\nstudy/2026-11-16-gemini-3.1-flash-lite/original 41713744f4d4c1272b9f0c06f4303ca394a82891\nstudy/2026-11-16-gemini-3.1-flash-lite/readme-only 65306eab493065183726f14c1f9f42289624d05d",
+        "branches_error": "",
+        "pom": {
+          "groupId": "net.coobird",
+          "artifactId": "thumbnailator",
+          "version": "0.4.21"
+        }
+      },
+      "upstream": {
+        "latest_release": null,
+        "default_branch": {
+          "repo": "coobird/thumbnailator",
+          "branch": "master",
+          "sha": "e31168ca792b549966db090c51d4d671e393b2ab",
+          "html_url": "https://github.com/coobird/thumbnailator/commit/e31168ca792b549966db090c51d4d671e393b2ab",
+          "commit_date": "2026-02-17T17:48:14Z",
+          "subject": "Add contribution guidelines."
+        },
+        "evidence_urls": [
+          "https://api.github.com/repos/coobird/thumbnailator/releases/latest",
+          "https://api.github.com/repos/coobird/thumbnailator/commits/master"
+        ],
+        "latest_release_commit": {
+          "tag": "0.4.21",
+          "sha": "c9d99613878bbbf1f4d9369585b4cb5352c3b474",
+          "html_url": "https://github.com/coobird/thumbnailator/commit/c9d99613878bbbf1f4d9369585b4cb5352c3b474",
+          "commit_date": "2025-09-30T17:13:09Z"
+        },
+        "official_release_metadata": {
+          "url": "https://repo.maven.apache.org/maven2/net/coobird/thumbnailator/maven-metadata.xml",
+          "latest": "0.4.21",
+          "release": "0.4.21",
+          "lastUpdated": "20251002055933",
+          "versions": [
+            "0.4.1",
+            "0.4.2",
+            "0.4.3",
+            "0.4.4",
+            "0.4.5",
+            "0.4.6",
+            "0.4.7",
+            "0.4.8",
+            "0.4.9",
+            "0.4.10",
+            "0.4.11",
+            "0.4.12",
+            "0.4.13",
+            "0.4.14",
+            "0.4.15",
+            "0.4.16",
+            "0.4.17",
+            "0.4.18",
+            "0.4.19",
+            "0.4.20",
+            "0.4.21"
+          ]
+        }
+      },
+      "fetch_url": "https://github.com/coobird/thumbnailator/archive/c9d99613878bbbf1f4d9369585b4cb5352c3b474.tar.gz",
+      "installed_runtime": "thumbnailator-0.4.21.jar"
+    },
+    {
+      "library": "sedonadb",
+      "name": "SedonaDB",
+      "observed_source_version": "0.5.0",
+      "source_provenance_revision": "751453f04cd6e09842adf3073b2b3dac7d1777bc",
+      "source_repository": "https://github.com/apache/sedona-db.git",
+      "latest_stable_version": "0.5.0",
+      "latest_stable_tag": "apache-sedona-db-0.5.0",
+      "latest_stable_commit": "751453f04cd6e09842adf3073b2b3dac7d1777bc",
+      "status": "stable version/provenance label matches, but measured synthetic source tree is incomplete vs official release; re-materialize full pinned upstream tree",
+      "cluster_snapshot": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/sedonadb-release-0.5.0",
+        "resolved": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/sedonadb-release-0.5.0",
+        "head": "d1a2b1edb2cf1f40a0bfaccdfc4796b763e0f6a0",
+        "head_error": "",
+        "tree": "0852cfb9a34422364ad7c0a454a1daa132c193e7",
+        "tree_error": "",
+        "metadata": "2026-11-16T23:45:44-08:00\nPin official SedonaDB 0.5.0 source and documentation snapshot",
+        "metadata_error": ""
+      },
+      "upstream": {
+        "latest_release": {
+          "tag_name": "apache-sedona-db-0.5.0",
+          "published_at": "2026-10-02T14:49:50Z",
+          "prerelease": false,
+          "draft": false,
+          "html_url": "https://github.com/apache/sedona-db/releases/tag/apache-sedona-db-0.5.0"
+        },
+        "latest_release_commit": {
+          "tag": "apache-sedona-db-0.5.0",
+          "sha": "751453f04cd6e09842adf3073b2b3dac7d1777bc",
+          "html_url": "https://github.com/apache/sedona-db/commit/751453f04cd6e09842adf3073b2b3dac7d1777bc",
+          "commit_date": "2026-10-02T03:27:20Z"
+        },
+        "default_branch": {
+          "repo": "apache/sedona-db",
+          "branch": "main",
+          "sha": "5153885d011f90d93fc5e50b95588238ac5daa47",
+          "html_url": "https://github.com/apache/sedona-db/commit/5153885d011f90d93fc5e50b95588238ac5daa47",
+          "commit_date": "2026-11-17T03:33:12Z",
+          "subject": "fix(python/sedonadb): convert results to Arrow without geoarrow-pyarrow (#1573)"
+        },
+        "evidence_urls": [
+          "https://api.github.com/repos/apache/sedona-db/releases/latest",
+          "https://api.github.com/repos/apache/sedona-db/commits/main"
+        ]
+      },
+      "fetch_url": "https://github.com/apache/sedona-db/archive/751453f04cd6e09842adf3073b2b3dac7d1777bc.tar.gz",
+      "stable_package_requirements": {
+        "url": "https://pypi.org/pypi/sedonadb/0.5.0/json",
+        "version": "0.5.0",
+        "requires_python": ">=3.9",
+        "requires_dist": [
+          "adbc-driver-manager[dbapi]; extra == \"geopandas\"",
+          "geoarrow-pyarrow; extra == \"geopandas\"",
+          "geopandas; extra == \"geopandas\"",
+          "sedonadb-expr; extra == \"geopandas\"",
+          "adbc-driver-manager[dbapi]; extra == \"test\"",
+          "adbc-driver-postgresql; extra == \"test\"",
+          "datafusion; extra == \"test\"",
+          "duckdb; extra == \"test\"",
+          "geoarrow-c>=0.4.0; extra == \"test\"",
+          "geoarrow-pyarrow>=0.3.0; extra == \"test\"",
+          "geopandas; extra == \"test\"",
+          "pandas; extra == \"test\"",
+          "polars; extra == \"test\"",
+          "pytest; extra == \"test\"",
+          "pyyaml; extra == \"test\"",
+          "rasterio; extra == \"test\"",
+          "sedonadb-expr; extra == \"test\""
+        ],
+        "project_urls": null
+      },
+      "installed_distribution_version": "0.5.0",
+      "observed_import_version": "0.5.0",
+      "source_tree_caveat": {
+        "prior_measured_head": "d1a2b1edb2cf1f40a0bfaccdfc4796b763e0f6a0",
+        "prior_measured_tree": "0852cfb9a34422364ad7c0a454a1daa132c193e7",
+        "not_exact_upstream_tree": true,
+        "verified_regular_file_matches": 1423,
+        "omitted_gitlinks": 4,
+        "omitted_regular_file": "r/sedonadb/src/rust/Cargo.toml",
+        "root_proof": "/tmp/aideal-branch-publication-2026-11-17/sedonadb_tree_proof.json",
+        "tree_comparison": {
+          "upstream_tree": "6df26bb6d03c599737addb7002b41d37806c1889",
+          "cluster_tree": "0852cfb9a34422364ad7c0a454a1daa132c193e7",
+          "upstream_leaf_entries": 1428,
+          "cluster_leaf_entries": 1423,
+          "missing": [
+            {
+              "path": "c/sedona-s2geography/s2geography",
+              "mode": "160000",
+              "type": "commit",
+              "sha": "3ab3dd9ab95dd473647f7ed9fcaccbb784d58dc1"
+            },
+            {
+              "path": "c/sedona-s2geography/s2geometry",
+              "mode": "160000",
+              "type": "commit",
+              "sha": "a37aba69f14af676e9605cd9515c8aca6cef8342"
+            },
+            {
+              "path": "r/sedonadb/src/rust/Cargo.toml",
+              "mode": "100644",
+              "type": "blob",
+              "sha": "8301bf93a5ff81e20273c4220b31d2fd3630ddd0"
+            },
+            {
+              "path": "submodules/geoarrow-data",
+              "mode": "160000",
+              "type": "commit",
+              "sha": "e8eaa04487d982398f07713cde527c5c5edeee1e"
+            },
+            {
+              "path": "submodules/sedona-testing",
+              "mode": "160000",
+              "type": "commit",
+              "sha": "4a05ef1c3c9dbeaab8568211112b32a2a50fcda4"
+            }
+          ],
+          "extra": [],
+          "changed": [],
+          "regular_files_identical": false
+        }
+      }
+    }
+  ],
+  "notes": [
+    "Cluster snapshot commit timestamps are packaging dates, not upstream release dates.",
+    "Do not infer runtime imports from package inventory: tslearn and mir_eval are loaded from source paths and have no installed distribution metadata in the shared environment.",
+    "Local original_micro_libraries.yaml SedonaDB blocked entry is obsolete for the active cluster study; active catalog has a native adapter and a completed 226-name R0 per root report.",
+    "Existing source tree source/sedonadb is historical; active source target is sources/sedonadb-release-0.5.0.",
+    "The stable-only choice is now authorized by the user; new source changes and regenerated manifests belong in a new study, preserving earlier results.",
+    "A source-provenance revision is not the same field as the actual measured repository HEAD. Synthetic snapshot commits and incomplete trees must not be called exact upstream commits."
+  ],
+  "supporting_files": [
+    "sedonadb_active_source.json",
+    "beast_source_comparison.json",
+    "cluster_versions.json",
+    "upstream_bitbucket_maven.json",
+    "upstream_github.json",
+    "upstream_pypi.json",
+    "upstream_thumbnailator_tag.json"
+  ],
+  "remaining_uncertainty": [
+    "The version audit retains the original old-study observations. New-study runtime preparation is complete within the explicitly tested scope; see RUNTIME_PREPARATION.json and RUNTIME_READY.json.",
+    "Network-backed and unexercised optional input formats are not certified by module linkage or representative preflight."
+  ],
+  "post_audit_upgrade_preparation": "RUNTIME_PREPARATION.json"
+}

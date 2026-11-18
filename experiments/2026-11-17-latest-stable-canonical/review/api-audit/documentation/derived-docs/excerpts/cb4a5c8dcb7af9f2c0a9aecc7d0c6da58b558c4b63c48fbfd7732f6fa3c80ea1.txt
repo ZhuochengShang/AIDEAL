@@ -1,0 +1,27 @@
+MDAnalysis.analysis.pca.cumulative_overlap(a, b, i=0, n_components=None)[source]
+
+Compute the cumulative overlap of a vector in a subspace.
+
+This is not symmetric. The cumulative overlap measures the overlap of the chosen vector in a, in the b subspace.
+
+Please cite [Yang2008] if you use this function.
+
+Parameters:
+
+a (array, shape (n_components, n_features) or vector, length n_features) – The first subspace containing the vector of interest. Alternatively, the actual vector. Must have the same number of features as b.
+
+b (array, shape (n_components, n_features)) – The second subspace. Must have the same number of features as a.
+
+i (int, optional) – The index of eigenvector to be analysed.
+
+n_components (int, optional) – number of components in b to compute for the cumulative overlap. None computes all of them.
+
+Returns:
+
+Cumulative overlap of the chosen vector in a to the b subspace. 0 indicates that they are mutually orthogonal, whereas 1 indicates that they are identical.
+
+Return type:
+
+float
+
+Added in version 1.0.0.

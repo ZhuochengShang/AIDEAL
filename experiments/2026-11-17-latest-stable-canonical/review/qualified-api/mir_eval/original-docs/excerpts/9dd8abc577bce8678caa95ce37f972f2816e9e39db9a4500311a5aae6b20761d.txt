@@ -1,0 +1,48 @@
+mir_eval.beat.continuity(reference_beats, estimated_beats, continuity_phase_threshold=0.175, continuity_period_threshold=0.175)
+
+Get metrics based on how much of the estimated beat sequence is continually correct.
+
+Parameters:
+
+reference_beatsnp.ndarray
+
+reference beat times, in seconds
+
+estimated_beatsnp.ndarray
+
+query beat times, in seconds
+
+continuity_phase_thresholdfloat
+
+Allowable ratio of how far is the estimated beat can be from the reference beat (Default value = 0.175)
+
+continuity_period_thresholdfloat
+
+Allowable distance between the inter-beat-interval and the inter-annotation-interval (Default value = 0.175)
+
+Returns:
+
+CMLcfloat
+
+Correct metric level, continuous accuracy
+
+CMLtfloat
+
+Correct metric level, total accuracy (continuity not required)
+
+AMLcfloat
+
+Any metric level, continuous accuracy
+
+AMLtfloat
+
+Any metric level, total accuracy (continuity not required)
+
+Examples
+
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> CMLc, CMLt, AMLc, AMLt = mir_eval.beat.continuity(reference_beats,
+                                                      estimated_beats)

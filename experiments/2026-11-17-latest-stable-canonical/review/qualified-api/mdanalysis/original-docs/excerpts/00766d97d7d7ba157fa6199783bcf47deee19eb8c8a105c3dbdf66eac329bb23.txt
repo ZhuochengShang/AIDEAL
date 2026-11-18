@@ -1,0 +1,49 @@
+MDAnalysis.core.universe.Merge(*args)[source]
+
+Create a new new Universe from one or more AtomGroup instances.
+
+Parameters:
+
+*args (AtomGroup) – One or more AtomGroups.
+
+Returns:
+
+universe
+
+Return type:
+
+Universe
+
+Raises:
+
+ValueError – Too few arguments or an AtomGroup is empty and
+
+TypeError – Arguments are not AtomGroup instances.
+
+Notes
+
+The resulting Universe will only inherit the common topology attributes that all merged universes share.
+
+AtomGroup instances can come from different Universes, or can come directly from a select_atoms() call.
+
+Merge can also be used with a single AtomGroup if the user wants to, for example, re-order the atoms in the Universe.
+
+If multiple AtomGroup instances from the same Universe are given, the merge will first simply “add” together the AtomGroup instances.
+
+Merging does not create a full trajectory but only a single structure even if the input consists of one or more trajectories. However, one can use the MemoryReader to construct a trajectory for the new Universe as described under Creating an in-memory trajectory of a sub-system.
+
+Example
+
+In this example, protein, ligand, and solvent were externally prepared in three different PDB files. They are loaded into separate Universe objects (where they could be further manipulated, e.g. renumbered, relabeled, rotated, …) The Merge() command is used to combine all of them together:
+
+u1 = Universe("protein.pdb")
+u2 = Universe("ligand.pdb")
+u3 = Universe("solvent.pdb")
+u = Merge(u1.select_atoms("protein"), u2.atoms, u3.atoms)
+u.atoms.write("system.pdb")
+
+The complete system is then written out to a new PDB file.
+
+Changed in version 0.9.0: Raises exceptions instead of assertion errors.
+
+Changed in version 0.16.0: The trajectory is now a MemoryReader.

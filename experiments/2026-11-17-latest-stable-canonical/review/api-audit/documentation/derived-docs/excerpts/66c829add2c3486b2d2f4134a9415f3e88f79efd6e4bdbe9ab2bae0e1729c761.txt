@@ -1,0 +1,19 @@
+transfer_to_memory(start=None, stop=None, step=None, verbose=False, **kwargs)[source]
+
+Transfer the trajectory to in memory representation.
+
+Replaces the current trajectory reader object with one of type MDAnalysis.coordinates.memory.MemoryReader to support in-place editing of coordinates.
+
+Parameters:
+
+start (int, optional) – start reading from the nth frame.
+
+stop (int, optional) – read upto and excluding the nth frame.
+
+step (int, optional) – Read in every nth frame. [1]
+
+verbose (bool, optional) – Will print the progress of loading trajectory to memory, if set to True. Default value is False.
+
+Added in version 0.16.0.
+
+Changed in version 2.4.0: Passes through kwargs to MemoryReader

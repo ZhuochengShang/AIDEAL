@@ -1,0 +1,29 @@
+guess_donors(select='all', max_charge=-0.5)[source]
+
+Guesses which atoms could be considered donors in the analysis. Only use if the universe topology does not contain bonding information, otherwise donor-hydrogen pairs may be incorrectly assigned.
+
+Parameters:
+
+select (str (optional)) – Selection string for atom group from which donors will be identified. (e.g., (resname X and name O1) or type 2)
+
+max_charge (float (optional)) – The charge of a donor atom must be less than this value.
+
+Returns:
+
+potential_donors – String containing the resname and name of all atoms that are potentially capable of forming hydrogen bonds.
+
+Return type:
+
+str
+
+Notes
+
+Donor selections may be achieved with either a resname, atom name combination, or when those are absent, atom types.
+
+This function makes use of and atomic charges to identify which atoms could be considered donor atoms in the hydrogen bond analysis. If an atom has an atomic charge less than max_charge, and it is within d_h_cutoff of a hydrogen atom, then it is considered capable of participating in hydrogen bonds.
+
+If donors_sel is None, and the universe topology does not have bonding information, this function is called to guess the selection.
+
+Alternatively, this function may be used to quickly generate a str of potential donor atoms involved in hydrogen bonding. This str may then be modified before being used to set the attribute donors_sel.
+
+Changed in version 2.4.0: Added ability to use atom types

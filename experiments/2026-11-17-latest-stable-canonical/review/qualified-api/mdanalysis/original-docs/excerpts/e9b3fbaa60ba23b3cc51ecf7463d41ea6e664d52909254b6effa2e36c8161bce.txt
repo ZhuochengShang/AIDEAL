@@ -1,0 +1,63 @@
+MDAnalysis.analysis.align.fasta2select(fastafilename, is_aligned=False, ref_resids=None, target_resids=None, ref_offset=0, target_offset=0, verbosity=3, alnfilename=None, treefilename=None, clustalw='clustalw2')[source]
+
+Return selection strings that will select equivalent residues.
+
+The function aligns two sequences provided in a FASTA file and constructs MDAnalysis selection strings of the common atoms. When these two strings are applied to the two different proteins they will generate AtomGroups of the aligned residues.
+
+fastafilename contains the two un-aligned sequences in FASTA format. The reference is assumed to be the first sequence, the target the second. ClustalW produces a pairwise alignment (which is written to a file with suffix .aln). The output contains atom selection strings that select the same atoms in the two structures.
+
+Unless ref_offset and/or target_offset are specified, the resids in the structure are assumed to correspond to the positions in the un-aligned sequence, namely the first residue has resid == 1.
+
+In more complicated cases (e.g., when the resid numbering in the input structure has gaps due to missing parts), simply provide the sequence of resids as they appear in the topology in ref_resids or target_resids, e.g.
+
+target_resids = [a.resid for a in trj.select_atoms('name CA')]
+
+(This translation table is combined with any value for ref_offset or target_offset!)
+
+Parameters:
+
+fastafilename (str, path to filename) – FASTA file with first sequence as reference and second the one to be aligned (ORDER IS IMPORTANT!)
+
+is_aligned (bool (optional)) –
+
+False (default)
+
+run clustalw for sequence alignment;
+
+True
+
+use the alignment in the file (e.g. from STAMP) [False]
+
+ref_offset (int (optional)) – add this number to the column number in the FASTA file to get the original residue number, default: 0
+
+target_offset (int (optional)) – add this number to the column number in the FASTA file to get the original residue number, default: 0
+
+ref_resids (str (optional)) – sequence of resids as they appear in the reference structure
+
+target_resids (str (optional)) – sequence of resids as they appear in the target
+
+alnfilename (str (optional)) – filename of ClustalW alignment (clustal format) that is produced by clustalw when is_aligned = False. default None uses the name and path of fastafilename and substitutes the suffix with ‘.aln’.
+
+treefilename (str (optional)) – filename of ClustalW guide tree (Newick format); if default None the the filename is generated from alnfilename with the suffix ‘.dnd’ instead of ‘.aln’
+
+clustalw (str (optional)) – path to the ClustalW (or ClustalW2) binary; only needed for is_aligned = False, default: “ClustalW2”
+
+Returns:
+
+select_dict – dictionary with ‘reference’ and ‘mobile’ selection string that can be used immediately in AlignTraj as select=select_dict.
+
+Return type:
+
+dict
+
+See also
+
+sequence_alignment(), which, programs.
+
+Raises:
+
+ImportError – If optional dependency Biopython is not available.
+
+Changed in version 1.0.0: Passing alnfilename or treefilename as None will create a file in the current working directory.
+
+Changed in version 2.7.0: Biopython is now an optional dependency which this method requires.

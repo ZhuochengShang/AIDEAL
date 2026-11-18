@@ -1,0 +1,20 @@
+role: A Python developer using SedonaDB SQL for geospatial computation.
+project:
+  name: SedonaDB 0.5.0 registered SQL operations
+  language: Python and SQL
+  description: Official SedonaDB 0.5.0 SQL scalar and aggregate operations called
+    through its Python SQL connection. Targets are public SQL names and their documented
+    call patterns; runtime user-defined signatures are not assigned a finite maximum
+    arity.
+domain: Geospatial vector and raster analysis
+target_users:
+- Python developers using SedonaDB SQL
+use_cases:
+- Run small SQL queries and verify materialized geometry, raster, scalar, and aggregate
+  results.
+constraints:
+- Use the original SQL API and original documentation only.
+- Write Python statements using sd.sql(query).to_arrow_table(); assert known documented
+  results and print the __CHECK__ witness.
+- Use tiny literal inputs or the supplied local raster files. No remote datasets or
+  services.

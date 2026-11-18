@@ -1,0 +1,117 @@
+Coordinate (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.geometry
+Class Coordinate
+java.lang.Object
+net.coobird.thumbnailator.geometry.Coordinate
+All Implemented Interfaces:
+Position
+public final class
+Coordinate
+extends
+Object
+implements
+Position
+This class calculates the position of an image which is to be enclosed,
+using an absolute coordinate at which the image should be located.
+Author:
+coobird
+Constructor Summary
+Coordinate
+(int x,
+int y)
+Instantiates an object which calculates the position of an image, using
+the given coordinates.
+Method Summary
+Point
+calculate
+(int enclosingWidth,
+int enclosingHeight,
+int width,
+int height,
+int insetLeft,
+int insetRight,
+int insetTop,
+int insetBottom)
+Calculates the position of an object enclosed by an enclosing object.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Constructor Detail
+Coordinate
+public
+Coordinate
+(int x,
+int y)
+Instantiates an object which calculates the position of an image, using
+the given coordinates.
+Parameters:
+x
+- The horizontal component of the top-left corner of the
+image to be enclosed.
+y
+- The vertical component of the top-left corner of the
+image to be enclosed.
+Method Detail
+calculate
+public
+Point
+calculate
+(int enclosingWidth,
+int enclosingHeight,
+int width,
+int height,
+int insetLeft,
+int insetRight,
+int insetTop,
+int insetBottom)
+Description copied from interface:
+Position
+Calculates the position of an object enclosed by an enclosing object.
+Specified by:
+calculate
+in interface
+Position
+Parameters:
+enclosingWidth
+- The width of the enclosing object that is
+to contain the enclosed object.
+enclosingHeight
+- The height of the enclosing object that is
+to contain the enclosed object.
+width
+- The width of the object that is to be
+placed inside an enclosing object.
+height
+- The height of the object that is to be
+placed inside an enclosing object.
+insetLeft
+- The inset on the left-hand side of the
+object to be enclosed.
+insetRight
+- The inset on the right-hand side of the
+object to be enclosed.
+insetTop
+- The inset on the top side of the
+object to be enclosed.
+insetBottom
+- The inset on the bottom side of the
+object to be enclosed.
+Returns:
+The position to place the object.
+Copyright © 2025. All rights reserved.

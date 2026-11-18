@@ -15,6 +15,8 @@ else:
 
 def response_record(response):
     """Keep partial output and usage, and expose provider completion evidence."""
+    # Extract the candidate text, finish information and usage from the SDK response.
+    # Use the shared classifier to label completion before returning it.
     code = response.text or ''
     record = {'code': code, 'model_version': response.model_version}
     candidates = getattr(response, 'candidates', None)
@@ -37,6 +39,11 @@ def response_record(response):
 
 def main():
     # Lazy SDK imports keep configuration inspection and software tests offline.
+    # Portable Google provider entry point: read one request JSON from stdin.
+    # Use the locally configured key for one SDK request, then print response
+    # status/code/usage as JSON. The controller records it and owns outer retries.
+    # Pass the validated token limit through to the SDK and allow a single HTTP
+    # attempt. The evaluator controls any later attempt.
     from google import genai
     from google.genai import types
     request = json.load(sys.stdin)

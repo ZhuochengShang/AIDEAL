@@ -1,0 +1,41 @@
+class MDAnalysis.transformations.wrap.unwrap(ag, max_threads=None, parallelizable=True)[source]
+
+Move all atoms in an AtomGroup so that bonds don’t split over images
+
+Atom positions are modified in place.
+
+This function is most useful when atoms have been packed into the primary unit cell, causing breaks mid molecule, with the molecule then appearing on either side of the unit cell. This is problematic for operations such as calculating the center of mass of the molecule.
+
++-----------+     +-----------+
+|           |     |           |
+| 6       3 |     |         3 | 6
+| !       ! |     |         ! | !
+|-5-8   1-2-| ->  |       1-2-|-5-8
+| !       ! |     |         ! | !
+| 7       4 |     |         4 | 7
+|           |     |           |
++-----------+     +-----------+
+
+Example
+
+ag = u.atoms
+transform = mda.transformations.unwrap(ag)
+u.trajectory.add_transformations(transform)
+
+Parameters:
+
+atomgroup (AtomGroup) – The MDAnalysis.core.groups.AtomGroup to work with. The positions of this are modified in place.
+
+Return type:
+
+MDAnalysis.coordinates.timestep.Timestep
+
+Changed in version 2.0.0: The transformation was changed from a function/closure to a class with __call__.
+
+Changed in version 2.0.0: The transformation was changed to inherit from the base class for limiting threads and checking if it can be used in parallel analysis.
+
+Parameters:
+
+max_threads (int, optional) – The maximum thread number can be used. Default is None, which means the default or the external setting.
+
+parallelizable (bool, optional) – A check for if this can be used in split-apply-combine parallel analysis approach. Default is True.

@@ -1,0 +1,141 @@
+mir_eval.key
+
+Key Detection involves determining the underlying key (distribution of notes and note transitions) in a piece of music. Key detection algorithms are evaluated by comparing their estimated key to a ground-truth reference key and reporting a score according to the relationship of the keys.
+
+Conventions
+
+Keys are represented as strings of the form '(key) (mode)', e.g. 'C# major' or 'Fb minor'. The case of the key is ignored. Note that certain key strings are equivalent, e.g. 'C# major' and 'Db major'. The mode may only be specified as either 'major' or 'minor', no other mode strings will be accepted.
+
+Metrics
+
+mir_eval.key.weighted_score(): Heuristic scoring of the relation of two keys.
+
+ mir_eval.key.validate_key(key)
+
+Check that a key is well-formatted, e.g. in the form 'C# major'. The Key can be ‘X’ if it is not possible to categorize the Key and mode can be ‘other’ if it can’t be categorized as major or minor.
+
+Parameters:
+
+keystr
+
+Key to verify
+
+ mir_eval.key.validate(reference_key, estimated_key)
+
+Check that the input annotations to a metric are valid key strings and throws helpful errors if not.
+
+Parameters:
+
+reference_keystr
+
+Reference key string.
+
+estimated_keystr
+
+Estimated key string.
+
+ mir_eval.key.split_key_string(key)
+
+Split a key string (of the form, e.g. 'C# major'), into a tuple of (key, mode) where key is is an integer representing the semitone distance from C.
+
+Parameters:
+
+keystr
+
+String representing a key.
+
+Returns:
+
+keyint
+
+Number of semitones above C.
+
+modestr
+
+String representing the mode.
+
+ mir_eval.key.weighted_score(reference_key, estimated_key)
+
+Compute a heuristic score which is weighted according to the relationship of the reference and estimated key, as follows:
+
+Relationship
+ |
+Score
+ |
+
+Same key and mode
+ |
+1.0
+ |
+
+Estimated key is a perfect fifth above reference key
+ |
+0.5
+ |
+
+Relative major/minor (same key signature)
+ |
+0.3
+ |
+
+Parallel major/minor (same key)
+ |
+0.2
+ |
+
+Other
+ |
+0.0
+ |
+
+Parameters:
+
+reference_keystr
+
+Reference key string.
+
+estimated_keystr
+
+Estimated key string.
+
+Returns:
+
+scorefloat
+
+Score representing how closely related the keys are.
+
+Examples
+
+>>> ref_key = mir_eval.io.load_key('ref.txt')
+>>> est_key = mir_eval.io.load_key('est.txt')
+>>> score = mir_eval.key.weighted_score(ref_key, est_key)
+
+ mir_eval.key.evaluate(reference_key, estimated_key, **kwargs)
+
+Compute all metrics for the given reference and estimated annotations.
+
+Parameters:
+
+reference_keystr
+
+Reference key string.
+
+estimated_keystr
+
+Estimated key string.
+
+**kwargs
+
+Additional keyword arguments which will be passed to the appropriate metric or preprocessing functions.
+
+Returns:
+
+scoresdict
+
+Dictionary of scores, where the key is the metric name (str) and the value is the (float) score achieved.
+
+Examples
+
+>>> ref_key = mir_eval.io.load_key('reference.txt')
+>>> est_key = mir_eval.io.load_key('estimated.txt')
+>>> scores = mir_eval.key.evaluate(ref_key, est_key)

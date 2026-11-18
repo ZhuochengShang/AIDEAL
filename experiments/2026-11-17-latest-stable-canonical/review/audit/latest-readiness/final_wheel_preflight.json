@@ -1,0 +1,183 @@
+{
+  "observed_at": "2026-11-17T20:09:47.771039+00:00",
+  "python": "3.12.15 (main, Oct  7 2026, 04:52:47) [GCC 8.5.0 20210514 (Red Hat 8.5.0-29)]",
+  "executable": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/bin/python",
+  "kind": "operator_runtime_preflight_not_audience_score",
+  "model_calls": 0,
+  "imports": {
+    "MDAnalysis": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/__init__.py",
+      "module_version": "2.11.0",
+      "distribution_version": "2.11.0",
+      "expected_version": "2.11.0"
+    },
+    "MDAnalysisTests": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysisTests/__init__.py",
+      "module_version": "2.11.0",
+      "distribution_version": "2.11.0",
+      "expected_version": "2.11.0"
+    },
+    "tslearn": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/tslearn/__init__.py",
+      "module_version": "0.10.0",
+      "distribution_version": "0.10.0",
+      "expected_version": "0.10.0"
+    },
+    "mir_eval": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/mir_eval/__init__.py",
+      "module_version": "0.8.2",
+      "distribution_version": "0.8.2",
+      "expected_version": "0.8.2"
+    },
+    "MDAnalysis.coordinates.timestep": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/timestep.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "c2a5655747c6f0c132d896ed1423f07373fca6cc500fb9bcb996ca3358703664"
+    },
+    "MDAnalysis.lib.c_distances": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/lib/c_distances.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "5f50acb517ed3e1dfe87d7045e0f24cd02b9930876dfec1479074c29d39c4e5b"
+    },
+    "MDAnalysis.lib.c_distances_openmp": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/lib/c_distances_openmp.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "87d310a348c9f74554fa42a8c73c73e6ed95d654855d9113696e3b31a2df2ca2"
+    },
+    "MDAnalysis.lib.qcprot": {
+      "file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/lib/qcprot.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "f0476cd87a1e00e43cefe5e4c007a9c506adf10ad95aa6884c5857795b9e5de3"
+    }
+  },
+  "tests": [
+    {
+      "name": "MDAnalysis matching fixture and compiled distance/RMSD operations",
+      "status": "pass",
+      "detail": {
+        "atoms": 3341,
+        "frames": 98,
+        "fixtures": [
+          {
+            "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysisTests/data/adk.psf",
+            "sha256": "96cec916c4b5b19a7acb91bd1e672fb9c8b032aee1e7f0868a50655902c9b5b8"
+          },
+          {
+            "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/MDAnalysisTests/data/adk_dims.dcd",
+            "sha256": "859a5bd9e7de45a0f2401f7971c5ffc296168e7c23f6f65382bde7c1686c19f1"
+          }
+        ]
+      }
+    },
+    {
+      "name": "tslearn DTW and scaling positive/negative controls",
+      "status": "pass",
+      "detail": {
+        "same_dtw": 0.0,
+        "different_dtw": 5.0990195135927845,
+        "matrix": [
+          [
+            0.0,
+            5.0990195135927845
+          ],
+          [
+            5.0990195135927845,
+            0.0
+          ]
+        ]
+      }
+    },
+    {
+      "name": "mir_eval precision and beat positive/negative controls",
+      "status": "pass",
+      "detail": {
+        "correct_beat_f_measure": 1.0,
+        "shifted_beat_f_measure": 0.0
+      }
+    }
+  ],
+  "optional_dependencies": {
+    "torch": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/torch/__init__.py"
+    },
+    "keras": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/keras/__init__.py"
+    },
+    "tensorflow": {
+      "available": false,
+      "origin": null
+    },
+    "cesium": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/cesium/__init__.py"
+    },
+    "stumpy": {
+      "available": false,
+      "origin": null
+    },
+    "h5py": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/h5py/__init__.py"
+    },
+    "gemmi": {
+      "available": false,
+      "origin": null
+    },
+    "rdkit": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/rdkit/__init__.py"
+    },
+    "netCDF4": {
+      "available": false,
+      "origin": null
+    },
+    "chemfiles": {
+      "available": false,
+      "origin": null
+    },
+    "parmed": {
+      "available": false,
+      "origin": null
+    },
+    "pyedr": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/pyedr/__init__.py"
+    },
+    "pytng": {
+      "available": false,
+      "origin": null
+    },
+    "gsd": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/gsd/__init__.py"
+    },
+    "imdclient": {
+      "available": false,
+      "origin": null
+    },
+    "waterdynamics": {
+      "available": false,
+      "origin": null
+    },
+    "pathsimanalysis": {
+      "available": false,
+      "origin": null
+    },
+    "mdahole2": {
+      "available": false,
+      "origin": null
+    },
+    "mdaencore": {
+      "available": false,
+      "origin": null
+    },
+    "pooch": {
+      "available": true,
+      "origin": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/pooch/__init__.py"
+    }
+  },
+  "pip_check": {
+    "returncode": 0,
+    "output": "No broken requirements found."
+  },
+  "passed": true,
+  "scope_limit": "Core package imports and selected numerical/fixture execution controls only; this does not establish every optional dependency or every selected API contract."
+}

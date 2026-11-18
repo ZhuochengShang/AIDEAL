@@ -1,0 +1,21 @@
+early_predict_proba(X)[source]
+
+Provides probability estimates as well as estimated delays before prediction timestamps for a dataset of incomplete time series.
+
+Prediction timestamps are timestamps at which a prediction is made in early classification setting.
+
+Parameters:
+
+Xarray-like of shape (n_series, t, n_features)
+
+A dataset of incomplete time series observed up to time t
+
+Returns:
+
+array-like, shape (n_series, n_classes)
+
+Probabilities for each class in the model, where classes are ordered as they are in self.classes_.
+
+array-like of shape (n_series,)
+
+Estimated delays before prediction timestamps.

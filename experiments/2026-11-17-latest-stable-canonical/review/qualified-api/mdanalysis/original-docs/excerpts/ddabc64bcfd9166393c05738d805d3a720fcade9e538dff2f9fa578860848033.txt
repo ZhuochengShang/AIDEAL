@@ -1,0 +1,29 @@
+class MDAnalysis.coordinates.PDBQT.PDBQTWriter(filename, **kwargs)[source]
+
+PDBQT writer that implements a subset of the PDB 3.2 standard and the PDBQT spec.
+
+Changed in version 2.6.0: Files are now written in wt mode, and keep extensions, allowing for files to be written under compressed formats
+
+ close()[source]
+
+Close the trajectory file.
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)
+
+ write(selection, frame=None)[source]
+
+Write selection at current trajectory frame to file.
+
+Parameters:
+
+selection (AtomGroup) – The selection to be written
+
+frame (int (optional)) – optionally move to frame index frame before writing; the default is to write the current trajectory frame
+
+Note
+
+The last letter of the segid is used as the PDB chainID.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based

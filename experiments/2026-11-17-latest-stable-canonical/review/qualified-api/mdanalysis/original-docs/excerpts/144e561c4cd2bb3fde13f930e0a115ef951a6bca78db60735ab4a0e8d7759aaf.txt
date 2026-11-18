@@ -1,0 +1,27 @@
+class MDAnalysis.coordinates.TRJ.TRJReader(filename, n_atoms=None, **kwargs)[source]
+
+AMBER trajectory reader.
+
+Reads the ASCII formatted AMBER TRJ format. Periodic box information is auto-detected.
+
+The number of atoms in a timestep must be provided in the n_atoms keyword because it is not stored in the trajectory header and cannot be reliably autodetected. The constructor raises a ValueError if n_atoms is left at its default value of None.
+
+The length of a timestep is not stored in the trajectory itself but can be set by passing the dt keyword argument to the constructor; it is assumed to be in ps. The default value is 1 ps.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based. kwarg delta renamed to dt, for uniformity with other Readers
+
+ close()[source]
+
+Close trj trajectory file if it was open.
+
+ property n_frames
+
+Number of frames (obtained from reading the whole trajectory).
+
+ open_trajectory()[source]
+
+Open the trajectory for reading and load first frame.
+
+ units = {'length': 'Angstrom', 'time': 'ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

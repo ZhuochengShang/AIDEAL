@@ -1,0 +1,7 @@
+class MDAnalysis.core.selection.SmartsSelection(parser, tokens)[source]
+
+Select atoms based on SMARTS queries.
+
+Uses RDKit to run the query and converts the result to MDAnalysis. Supports chirality.
+
+Changed in version 2.2.0: rdkit_wargs and smarts_kwargs can now be passed to control the behaviour of the RDKit converter and RDKit’s GetSubstructMatches respectively. The default maxMatches value passed to GetSubstructMatches has been changed from 1000 to max(1000, n_atoms * 10) in order to limit cases where too few matches were generated. A warning is now also thrown if maxMatches has been reached.

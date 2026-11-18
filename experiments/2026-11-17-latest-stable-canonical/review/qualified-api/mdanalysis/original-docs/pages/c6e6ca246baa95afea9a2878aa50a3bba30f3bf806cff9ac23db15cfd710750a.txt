@@ -1,0 +1,13 @@
+7.5. DESRES file format — MDAnalysis.coordinates.DMS
+
+Classes to read DESRES Molecular Structure file format (DMS) coordinate files (as used by the Desmond MD package).
+
+ class MDAnalysis.coordinates.DMS.DMSReader(filename, convert_units=True, n_atoms=None, **kwargs)[source]
+
+Reads both coordinates and velocities.
+
+Changed in version 0.11.0: Frames now 0-based instead of 1-based
+
+ units = {'length': 'A', 'time': None, 'velocity': 'A/ps'}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

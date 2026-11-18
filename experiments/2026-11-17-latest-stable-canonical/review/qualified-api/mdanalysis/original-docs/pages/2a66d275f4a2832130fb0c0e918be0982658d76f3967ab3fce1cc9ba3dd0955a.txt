@@ -1,0 +1,326 @@
+15.3.1. Low-level Gromacs XDR trajectory reading — MDAnalysis.lib.formats.libmdaxdr
+
+libmdaxdr contains the classes XTCFile and TRRFile. Both can be used to read and write frames from and to Gromacs XTC and TRR files. These classes are used internally by MDAnalysis in MDAnalysis.coordinates.XTC and MDAnalysis.coordinates.TRR. They behave similar to normal file objects.
+
+For example, one can use a XTCFile to directly calculate mean coordinates (where the coordinates are stored in x attribute of the namedtuple frame):
+
+with XTCFile("trajectory.xtc") as xtc:
+   n_atoms = xtc.n_atoms
+   mean = np.zeros((n_atoms, 3))
+   # iterate over trajectory
+   for frame in xtc:
+       mean += frame.x
+
+The XTCFile class can be useful as a compressed storage format.
+
+Besides iteration, XTCFile and TRRFile one can also seek to arbitrary frames using the seek() method. This is provided by lazily generating a offset list for stored frames. The offset list is generated the first time len() or :~XTCFile.seek is called.
+
+(For more details on how to use XTCFile and TRRFile on their own please see the source code in lib/formats/libmdaxdr.pyx for the time being.)
+
+ class MDAnalysis.lib.formats.libmdaxdr.TRRFile
+
+File-like wrapper for gromacs TRR files.
+
+This class can be similar to the normal file objects in python. The read() function will return a frame and all information in it instead of a single line. Additionally the context-manager protocoll is supported as well.
+
+Parameters:
+
+fname (str) – The filename to open.
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+Examples
+
+>>> from MDAnalysis.lib.formats.libmdaxdr import TRRFile
+>>> with TRRFile('foo.trr') as f:
+>>>     for frame in f:
+>>>         print(frame.x)
+
+Notes
+
+This class can be pickled. The pickle will store filename, mode, current frame and offsets
+
+Changed in version 2.4.0: Added read_direct_xvf method to read into an existing positions array
+
+ calc_offsets()
+
+read byte offsets from TRR file directly
+
+ close()
+
+Close the open XDR file
+
+Raises:
+
+IOError –
+
+ offsets
+
+get byte offsets from current xdr file
+
+See also
+
+set_offsets
+
+ open(fname, mode)
+
+Open a XDR file
+
+If another XDR file is currently opened it will be closed
+
+Parameters:
+
+fname (str) – The filename to open.
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+Raises:
+
+IOError –
+
+ read()
+
+Read next frame in the TRR file
+
+Returns:
+
+frame – namedtuple with frame information
+
+Return type:
+
+libmdaxdr.TRRFrame
+
+See also
+
+TRRFrame, XTCFile
+
+Raises:
+
+IOError –
+
+ read_direct_xvf(positions, velocities, forces)
+
+Read next frame in the TRR file with positions read directly into a pre-existing array.
+
+Parameters:
+
+positions (np.ndarray) – positions array to read positions into
+
+Returns:
+
+frame – namedtuple with frame information
+
+Return type:
+
+libmdaxdr.TRRFrame
+
+See also
+
+TRRFrame, XTCFile
+
+Raises:
+
+IOError –
+
+Added in version 2.4.0.
+
+ seek(frame)
+
+Seek to Frame.
+
+Please note that this function will generate internal file offsets if they haven’t been set before. For large file this means the first seek can be very slow. Later seeks will be very fast.
+
+Parameters:
+
+frame (int) – seek the file to given frame
+
+Raises:
+
+IOError –
+
+ set_offsets(offsets)
+
+set frame offsets
+
+ tell()
+
+Get current frame
+
+ write(xyz, velocity, forces, box, step, time, _lambda, natoms)
+
+write one frame into TRR file.
+
+Parameters:
+
+xyz (array_like, shape=(n_atoms, 3), optional) – cartesion coordinates. Only written if not None.
+
+velocity (array_like, shape=(n_atoms, 3), optional) – cartesion velocities. Only written if not None.
+
+forces (array_like, shape=(n_atoms, 3), optional) – cartesion forces. Only written if not None.
+
+box (array_like, shape=(3, 3)) – Box vectors for this frame
+
+step (int) – current step number, 1 indexed
+
+time (float) – current time
+
+_lambda (float) – current lambda value
+
+natoms (int) – number of atoms in frame
+
+Raises:
+
+IOError –
+
+ class MDAnalysis.lib.formats.libmdaxdr.XTCFile
+
+File-like wrapper for gromacs XTC files.
+
+This class can be similar to the normal file objects in python. The read() function will return a frame and all information in it instead of a single line. Additionally the context-manager protocoll is supported as well.
+
+Parameters:
+
+fname (str) – The filename to open.
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+Examples
+
+>>> from MDAnalysis.lib.formats.libmdaxdr import XTCFile
+>>> with XTCFile('foo.trr') as f:
+>>>     for frame in f:
+>>>         print(frame.x)
+
+Notes
+
+This class can be pickled. The pickle will store filename, mode, current frame and offsets
+
+Changed in version 2.4.0: Added read_direct_x method to read into an existing positions array
+
+ calc_offsets()
+
+Calculate offsets from XTC file directly
+
+ close()
+
+Close the open XDR file
+
+Raises:
+
+IOError –
+
+ offsets
+
+get byte offsets from current xdr file
+
+See also
+
+set_offsets
+
+ open(fname, mode)
+
+Open a XDR file
+
+If another XDR file is currently opened it will be closed
+
+Parameters:
+
+fname (str) – The filename to open.
+
+mode (('r', 'w')) – The mode in which to open the file, either ‘r’ read or ‘w’ write
+
+Raises:
+
+IOError –
+
+ read()
+
+Read next frame in the XTC file
+
+Returns:
+
+frame – namedtuple with frame information
+
+Return type:
+
+libmdaxdr.XTCFrame
+
+See also
+
+XTCFrame, TRRFile
+
+Raises:
+
+IOError –
+
+ read_direct_x(positions)
+
+Read next frame in the XTC file with positions read directly into a pre-existing array.
+
+Parameters:
+
+positions (np.ndarray) – positions array to read positions into
+
+Returns:
+
+frame – namedtuple with frame information
+
+Return type:
+
+libmdaxdr.XTCFrame
+
+See also
+
+XTCFrame, TRRFile
+
+Raises:
+
+IOError –
+
+Added in version 2.4.0.
+
+ seek(frame)
+
+Seek to Frame.
+
+Please note that this function will generate internal file offsets if they haven’t been set before. For large file this means the first seek can be very slow. Later seeks will be very fast.
+
+Parameters:
+
+frame (int) – seek the file to given frame
+
+Raises:
+
+IOError –
+
+ set_offsets(offsets)
+
+set frame offsets
+
+ tell()
+
+Get current frame
+
+ write(xyz, box, step, time, precision=1000.0)
+
+write one frame to the XTC file
+
+Parameters:
+
+xyz (array_like, shape=(n_atoms, 3)) – cartesion coordinates
+
+box (array_like, shape=(3, 3)) – Box vectors for this frame
+
+step (int) – current step number, 1 indexed
+
+time (float) – current time
+
+precision (float (optional)) – precision of saved trajectory, see Notes
+
+Notes
+
+Gromacs specifies the precision a little bit strange. The coordinates will be multiplied by precision and then converted to an integer. This means a precision of 1000 yields an accuracy of 3 decimal places.
+
+Raises:
+
+IOError –

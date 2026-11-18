@@ -1,0 +1,417 @@
+5.27. Utility functions for the TPR topology parser
+
+The MDAnalysis.topology.tpr module contains classes and functions on which the Gromacs TPR topology reader TPRParser is built.
+
+5.27.1. TPR support
+
+The MDAnalysis.topology.tpr module is required for the MDAnalysis.topology.TPRParser module.
+
+ MDAnalysis.topology.tpr.SUPPORTED_VERSIONS = (58, 73, 83, 100, 103, 110, 112, 116, 119, 122, 127, 129, 133, 134, 137, 138)
+
+Built-in immutable sequence.
+
+If no argument is given, the constructor returns an empty tuple. If iterable is specified the tuple is initialized from iterable’s items.
+
+If the argument is a tuple, the return value is the same object.
+
+Sub-modules
+
+MDAnalysis.topology.tpr.setting
+
+MDAnalysis.topology.tpr.obj
+
+MDAnalysis.topology.tpr.utils
+
+5.27.2. TPRParser settings
+
+Definition of constants.
+
+The currently read file format versions are defined in SUPPORTED_VERSIONS.
+
+ MDAnalysis.topology.tpr.setting.SUPPORTED_VERSIONS = (58, 73, 83, 100, 103, 110, 112, 116, 119, 122, 127, 129, 133, 134, 137, 138)
+
+Gromacs TPR file format versions that can be read by the TPRParser.
+
+ MDAnalysis.topology.tpr.setting.interaction_types = [('BONDS', 'Bond', 2), ('G96BONDS', 'G96Bond', 2), ('MORSE', 'Morse', 2), ('CUBICBONDS', 'Cubic Bonds', 2), ('CONNBONDS', 'Connect Bonds', 2), ('HARMONIC', 'Harmonic Pot.', 2), ('FENEBONDS', 'FENE Bonds', 2), ('TABBONDS', 'Tab. Bonds', 2), ('TABBONDSNC', 'Tab. Bonds NC', 2), ('RESTRAINTPOT', 'Restraint Pot.', 2), ('ANGLES', 'Angle', 3), ('G96ANGLES', 'G96Angle', 3), ('RESTRANGLES', 'Restricted Angles', 3), ('LINEAR_ANGLES', 'Lin. Angle', 3), ('CROSS_BOND_BOND', 'Bond-Cross', 3), ('CROSS_BOND_ANGLE', 'BA-Cross', 3), ('UREY_BRADLEY', 'U-B', 3), ('QANGLES', 'Quartic Angles', 3), ('TABANGLES', 'Tab. Angles', 3), ('PDIHS', 'Proper Dih.', 4), ('RBDIHS', 'Ryckaert-Bell.', 4), ('RESTRDIHS', 'Restricted Dih.', 4), ('CBTDIHS', 'CBT Dih.', 4), ('FOURDIHS', 'Fourier Dih.', 4), ('IDIHS', 'Improper Dih.', 4), ('PIDIHS', 'Improper Dih.', 4), ('TABDIHS', 'Tab. Dih.', 4), ('CMAP', 'CMAP Dih.', 5), ('GB12', 'GB 1-2 Pol.', 2), ('GB13', 'GB 1-3 Pol.', 2), ('GB14', 'GB 1-4 Pol.', 2), ('GBPOL', 'GB Polarization', None), ('NPSOLVATION', 'Nonpolar Sol.', None), ('LJ14', 'LJ-14', 2), ('COUL14', 'Coulomb-14', None), ('LJC14_Q', 'LJC-14 q', 2), ('LJC_NB', 'LJC Pairs NB', 2), ('LJ_SR', 'LJ (SR)', 2), ('BHAM', 'Buck.ham (SR)', 2), ('LJ_LR', 'LJ (LR)', None), ('BHAM_LR', 'Buck.ham (LR)', None), ('DISPCORR', 'Disper. corr.', None), ('COUL_SR', 'Coulomb (SR)', None), ('COUL_LR', 'Coulomb (LR)', None), ('RF_EXCL', 'RF excl.', None), ('COUL_RECIP', 'Coul. recip.', None), ('LJ_RECIP', 'LJ recip.', None), ('DPD', 'DPD', None), ('POLARIZATION', 'Polarization', 2), ('WATERPOL', 'Water Pol.', 5), ('THOLE', 'Thole Pol.', 4), ('ANHARM_POL', 'Anharm. Pol.', 2), ('POSRES', 'Position Rest.', 1), ('FBPOSRES', 'Flat-bottom posres', 1), ('DISRES', 'Dis. Rest.', 2), ('DISRESVIOL', 'D.R.Viol. (nm)', None), ('ORIRES', 'Orient. Rest.', 2), ('ORDEV', 'Ori. R. RMSD', None), ('ANGRES', 'Angle Rest.', 4), ('ANGRESZ', 'Angle Rest. Z', 2), ('DIHRES', 'Dih. Rest.', 4), ('DIHRESVIOL', 'Dih. Rest. Viol.', None), ('CONSTR', 'Constraint', 2), ('CONSTRNC', 'Constr. No Conn.', 2), ('SETTLE', 'Settle', 3), ('VSITE1', 'Virtual site 1', 2), ('VSITE2', 'Virtual site 2', 3), ('VSITE2FD', 'Virtual site 2fd', 3), ('VSITE3', 'Virtual site 3', 4), ('VSITE3FD', 'Virtual site 3fd', 4), ('VSITE3FAD', 'Virtual site 3fad', 4), ('VSITE3OUT', 'Virtual site 3out', 4), ('VSITE4FD', 'Virtual site 4fd', 5), ('VSITE4FDN', 'Virtual site 4fdn', 5), ('VSITEN', 'Virtual site N', 2), ('COM_PULL', 'COM Pull En.', None), ('DENSITYFIT', 'Density fitting', None), ('EQM', 'Quantum En.', None), ('EPOT', 'Potential', None), ('EKIN', 'Kinetic En.', None), ('ETOT', 'Total Energy', None), ('ECONS', 'Conserved En.', None), ('TEMP', 'Temperature', None), ('VTEMP', 'Vir. Temp. (not used)', None), ('PDISPCORR', 'Pres. DC', None), ('PRES', 'Pressure', None), ('DH/DL_CON', 'dH/dl constr.', None), ('DV/DL', 'dVremain/dl', None), ('DK/DL', 'dEkin/dl', None), ('DVC/DL', 'dVcoul/dl', None), ('DVV/DL', 'dVvdw/dl', None), ('DVB/DL', 'dVbonded/dl', None), ('DVR/DL', 'dVrestraint/dl', None), ('DVT/DL', 'dVtemperature/dl', None)]
+
+Interaction types from <gromacs_dir>/gmxlib/ifunc.c
+
+5.27.3. Class definitions for the TPRParser
+
+ class MDAnalysis.topology.tpr.obj.Atom(m, q, mB, qB, tp, typeB, ptype, resind, atomnumber)
+
+Create new instance of Atom(m, q, mB, qB, tp, typeB, ptype, resind, atomnumber)
+
+ atomnumber
+
+Alias for field number 8
+
+ m
+
+Alias for field number 0
+
+ mB
+
+Alias for field number 2
+
+ ptype
+
+Alias for field number 6
+
+ q
+
+Alias for field number 1
+
+ qB
+
+Alias for field number 3
+
+ resind
+
+Alias for field number 7
+
+ tp
+
+Alias for field number 4
+
+ typeB
+
+Alias for field number 5
+
+ class MDAnalysis.topology.tpr.obj.AtomKind(id, name, type, resid, resname, mass, charge, atomic_number)[source]
+
+ property element_symbol
+
+The symbol of the atom element.
+
+The symbol corresponding to the atomic number. If the atomic number is not recognized, which happens if a particle is not really an atom (e.g a coarse-grained particle), an empty string is returned.
+
+ class MDAnalysis.topology.tpr.obj.Atoms(atoms, nr, nres, type, typeB, atomnames, resnames)
+
+Create new instance of Atoms(atoms, nr, nres, type, typeB, atomnames, resnames)
+
+ atomnames
+
+Alias for field number 5
+
+ atoms
+
+Alias for field number 0
+
+ nr
+
+Alias for field number 1
+
+ nres
+
+Alias for field number 2
+
+ resnames
+
+Alias for field number 6
+
+ type
+
+Alias for field number 3
+
+ typeB
+
+Alias for field number 4
+
+ class MDAnalysis.topology.tpr.obj.Box(size, rel, v)
+
+Create new instance of Box(size, rel, v)
+
+ rel
+
+Alias for field number 1
+
+ size
+
+Alias for field number 0
+
+ v
+
+Alias for field number 2
+
+ class MDAnalysis.topology.tpr.obj.Ilist(nr, ik, iatoms)
+
+Create new instance of Ilist(nr, ik, iatoms)
+
+ iatoms
+
+Alias for field number 2
+
+ ik
+
+Alias for field number 1
+
+ nr
+
+Alias for field number 0
+
+ class MDAnalysis.topology.tpr.obj.InteractionKind(name, long_name, natoms)[source]
+
+natoms: number of atoms involved in this type of interaction
+
+ process(atom_ndx)[source]
+
+ class MDAnalysis.topology.tpr.obj.Molblock(molb_type, molb_nmol, molb_natoms_mol, molb_nposres_xA, molb_nposres_xB)
+
+Create new instance of Molblock(molb_type, molb_nmol, molb_natoms_mol, molb_nposres_xA, molb_nposres_xB)
+
+ molb_natoms_mol
+
+Alias for field number 2
+
+ molb_nmol
+
+Alias for field number 1
+
+ molb_nposres_xA
+
+Alias for field number 3
+
+ molb_nposres_xB
+
+Alias for field number 4
+
+ molb_type
+
+Alias for field number 0
+
+ class MDAnalysis.topology.tpr.obj.MoleculeKind(name, atomkinds, bonds=None, angles=None, dihe=None, impr=None, donors=None, acceptors=None)[source]
+
+ number_of_atoms()[source]
+
+ number_of_residues()[source]
+
+ remap_angles(atom_start_ndx)[source]
+
+ remap_bonds(atom_start_ndx)[source]
+
+ remap_dihe(atom_start_ndx)[source]
+
+ remap_impr(atom_start_ndx)[source]
+
+ class MDAnalysis.topology.tpr.obj.Mtop(nmoltype, moltypes, nmolblock)
+
+Create new instance of Mtop(nmoltype, moltypes, nmolblock)
+
+ moltypes
+
+Alias for field number 1
+
+ nmolblock
+
+Alias for field number 2
+
+ nmoltype
+
+Alias for field number 0
+
+ class MDAnalysis.topology.tpr.obj.Params(atnr, ntypes, functype, reppow, fudgeQQ)
+
+Create new instance of Params(atnr, ntypes, functype, reppow, fudgeQQ)
+
+ atnr
+
+Alias for field number 0
+
+ fudgeQQ
+
+Alias for field number 4
+
+ functype
+
+Alias for field number 2
+
+ ntypes
+
+Alias for field number 1
+
+ reppow
+
+Alias for field number 3
+
+ class MDAnalysis.topology.tpr.obj.TpxHeader(ver_str, precision, fver, fgen, file_tag, natoms, ngtc, fep_state, lamb, bIr, bTop, bX, bV, bF, bBox, sizeOfTprBody)
+
+Create new instance of TpxHeader(ver_str, precision, fver, fgen, file_tag, natoms, ngtc, fep_state, lamb, bIr, bTop, bX, bV, bF, bBox, sizeOfTprBody)
+
+ bBox
+
+Alias for field number 14
+
+ bF
+
+Alias for field number 13
+
+ bIr
+
+Alias for field number 9
+
+ bTop
+
+Alias for field number 10
+
+ bV
+
+Alias for field number 12
+
+ bX
+
+Alias for field number 11
+
+ fep_state
+
+Alias for field number 7
+
+ fgen
+
+Alias for field number 3
+
+ file_tag
+
+Alias for field number 4
+
+ fver
+
+Alias for field number 2
+
+ lamb
+
+Alias for field number 8
+
+ natoms
+
+Alias for field number 5
+
+ ngtc
+
+Alias for field number 6
+
+ precision
+
+Alias for field number 1
+
+ sizeOfTprBody
+
+Alias for field number 15
+
+ ver_str
+
+Alias for field number 0
+
+5.27.4. Utilities for the TPRParser
+
+Function calling order:
+
+(TPRParser.py call do_mtop)
+do_mtop -> do_symtab
+        -> do_ffparams -> do_iparams
+        -> do_moltype  -> do_atoms  -> do_atom
+                                    -> do_resinfo
+                       -> do_ilists
+                       -> do_block
+                       -> do_blocka
+        -> do_molblock
+
+Then compose the stuffs in the format MDAnalysis.Universe reads in.
+
+The module also contains the do_inputrec() to read the TPR header with.
+
+ class MDAnalysis.topology.tpr.utils.TPXUnpacker(data)[source]
+
+Extend the standard XDR unpacker for the specificity of TPX files.
+
+ do_string()[source]
+
+Emulate gmx_fio_do_string
+
+gmx_fio_do_string reads a string from a XDR file. On the contrary to the python unpack_string, gmx_fio_do_string reads the size as an unsigned integer before reading the actual string.
+
+See <gromacs-2016-src>/src/gromacs/fileio/gmx_system_xdr.c:454
+
+ unpack_int64()[source]
+
+ unpack_uchar()[source]
+
+ unpack_uint64()[source]
+
+ unpack_ushort()[source]
+
+ class MDAnalysis.topology.tpr.utils.TPXUnpacker2020(data)[source]
+
+Unpacker for TPX files from and later than gromacs 2020.
+
+A new implementation of the serializer (InMemorySerializer), introduced in gromacs 2020, changes le meaning of some types in the file body (the header keep using the previous implementation of the serializer).
+
+ do_string()[source]
+
+Emulate gmx_fio_do_string
+
+ classmethod from_unpacker(unpacker)[source]
+
+ unpack_fstring(n)[source]
+
+ unpack_uchar()[source]
+
+ unpack_ushort()[source]
+
+ MDAnalysis.topology.tpr.utils.define_unpack_real(prec, data)[source]
+
+Define an unpack_real method of data based on the float precision used
+
+ MDAnalysis.topology.tpr.utils.do_atom(data, fver)[source]
+
+ MDAnalysis.topology.tpr.utils.do_atoms(data, symtab, fver)[source]
+
+ MDAnalysis.topology.tpr.utils.do_block(data)[source]
+
+ MDAnalysis.topology.tpr.utils.do_blocka(data)[source]
+
+ MDAnalysis.topology.tpr.utils.do_ffparams(data, fver)[source]
+
+ MDAnalysis.topology.tpr.utils.do_harm(data)[source]
+
+ MDAnalysis.topology.tpr.utils.do_ilists(data, fver)[source]
+
+ MDAnalysis.topology.tpr.utils.do_iparams(data, functypes, fver)[source]
+
+ MDAnalysis.topology.tpr.utils.do_molblock(data)[source]
+
+ MDAnalysis.topology.tpr.utils.do_moltype(data, symtab, fver)[source]
+
+ MDAnalysis.topology.tpr.utils.do_mtop(data, fver, tpr_resid_from_one=False, precision=4)[source]
+
+ MDAnalysis.topology.tpr.utils.do_resinfo(data, symtab, fver, nres)[source]
+
+ MDAnalysis.topology.tpr.utils.do_rvec(data)[source]
+
+ MDAnalysis.topology.tpr.utils.do_symstr(data, symtab)[source]
+
+ MDAnalysis.topology.tpr.utils.do_symtab(data)[source]
+
+ MDAnalysis.topology.tpr.utils.extract_box_info(data, fver)[source]
+
+ MDAnalysis.topology.tpr.utils.fileVersion_err(fver)[source]
+
+ MDAnalysis.topology.tpr.utils.ndo_int(data, n)[source]
+
+mimic of gmx_fio_ndo_real in gromacs
+
+ MDAnalysis.topology.tpr.utils.ndo_ivec(data, n)[source]
+
+mimic of gmx_fio_ndo_rvec in gromacs
+
+ MDAnalysis.topology.tpr.utils.ndo_real(data, n)[source]
+
+mimic of gmx_fio_ndo_real in gromacs
+
+ MDAnalysis.topology.tpr.utils.ndo_rvec(data, n)[source]
+
+mimic of gmx_fio_ndo_rvec in gromacs
+
+ MDAnalysis.topology.tpr.utils.read_tpxheader(data)[source]
+
+this function is now compatible with do_tpxheader in tpxio.cpp

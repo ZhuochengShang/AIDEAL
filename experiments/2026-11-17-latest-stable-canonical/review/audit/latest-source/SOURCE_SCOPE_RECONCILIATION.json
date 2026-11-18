@@ -1,0 +1,257 @@
+{
+  "mdanalysis": {
+    "old_api_names": 1032,
+    "latest_public_api_names": 1053,
+    "common_names": 1031,
+    "new_names": [
+      "IMDReader",
+      "MDAnalysisInferrer",
+      "MMCIFParser",
+      "MMCIFReader",
+      "MockH5pyFile",
+      "MockHOOMDTrajectory",
+      "MockIMDClient",
+      "MockTrajectory",
+      "RDKitInferrer",
+      "StreamFrameIteratorSliced",
+      "StreamReaderBase",
+      "TPRReader",
+      "TemplateInferrer",
+      "acceptors_sel",
+      "assign_from_template_with_adjusted_hydrogens",
+      "donors_sel",
+      "from_PDB",
+      "hydrogens_sel",
+      "nested_array_sum",
+      "reorder_atoms",
+      "sanitize_mol",
+      "set_groups"
+    ],
+    "old_names_not_in_latest_public_inventory": [
+      {
+        "name": "get_connections",
+        "reason": "Excluded by explicit public-owner/access rules in the AST inventory",
+        "latest_exclusion_evidence": [
+          {
+            "path": "package/MDAnalysis/core/groups.py",
+            "line": 444,
+            "name": "get_connections",
+            "owner": "_MutableBase",
+            "reason": "private_owner_chain"
+          }
+        ],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/mdanalysis/package/MDAnalysis/core/groups.py",
+            "line": 443,
+            "signature": "def get_connections(self, typename, outside=True)",
+            "source_sha256": "a360198d47fa222923b607b8a85cb9389efd59058deb90a2d8a720d010f9a716"
+          }
+        ]
+      }
+    ],
+    "old_coverage_path": "/tmp/aideal-bank-viewer-final-2026-11-17/audit/coverage/mdanalysis.json",
+    "old_coverage_sha256": "1395e431a331038f29b1506af243c8a3591e55ce57be0799008bf64fa3bb02d8",
+    "note": "Discovery reconciliation occurs before structural body exclusions and maximum-arity selection. Name omissions do not imply semantic duplicates."
+  },
+  "tslearn": {
+    "old_api_names": 235,
+    "latest_public_api_names": 237,
+    "common_names": 230,
+    "new_names": [
+      "LinearProbeForecaster",
+      "ScaledForecastingPipeline",
+      "TimeSeriesFoundationEmbedder",
+      "ZeroShotForecaster",
+      "score",
+      "silhouette_samples",
+      "soft_dtw_normalized"
+    ],
+    "old_names_not_in_latest_public_inventory": [
+      {
+        "name": "accumulated_matrix_from_dist_matrix",
+        "reason": "Not a declared callable in the latest pinned configured source; not classified as a semantic duplicate",
+        "latest_exclusion_evidence": [],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/tslearn/tslearn/metrics/dtw_variants.py",
+            "line": 456,
+            "signature": "def accumulated_matrix_from_dist_matrix(dist_matrix, mask, be=None)",
+            "source_sha256": "ced9480494f7ac3fba991f833d3060062caa7cf17bfdb314a71d603ba25218df"
+          }
+        ]
+      },
+      {
+        "name": "backward",
+        "reason": "Excluded by explicit public-owner/access rules in the AST inventory",
+        "latest_exclusion_evidence": [
+          {
+            "path": "tslearn/metrics/soft_dtw_loss_pytorch.py",
+            "line": 99,
+            "name": "backward",
+            "owner": "_SoftDTWLossPyTorch",
+            "reason": "private_owner_chain"
+          }
+        ],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/tslearn/tslearn/metrics/soft_dtw_loss_pytorch.py",
+            "line": 62,
+            "signature": "def backward(ctx, grad_output)",
+            "source_sha256": "e7c5ce3b5c409795851ceb827da89271323dca2be664dab47a829286e1f4bd01"
+          }
+        ]
+      },
+      {
+        "name": "njit_accumulated_matrix",
+        "reason": "Not a declared callable in the latest pinned configured source; not classified as a semantic duplicate",
+        "latest_exclusion_evidence": [],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/tslearn/tslearn/metrics/dtw_variants.py",
+            "line": 74,
+            "signature": "def njit_accumulated_matrix(s1, s2, mask)",
+            "source_sha256": "ced9480494f7ac3fba991f833d3060062caa7cf17bfdb314a71d603ba25218df"
+          }
+        ]
+      },
+      {
+        "name": "njit_accumulated_matrix_from_dist_matrix",
+        "reason": "Not a declared callable in the latest pinned configured source; not classified as a semantic duplicate",
+        "latest_exclusion_evidence": [],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/tslearn/tslearn/metrics/dtw_variants.py",
+            "line": 426,
+            "signature": "def njit_accumulated_matrix_from_dist_matrix(dist_matrix, mask)",
+            "source_sha256": "ced9480494f7ac3fba991f833d3060062caa7cf17bfdb314a71d603ba25218df"
+          }
+        ]
+      },
+      {
+        "name": "njit_sakoe_chiba_mask",
+        "reason": "Not a declared callable in the latest pinned configured source; not classified as a semantic duplicate",
+        "latest_exclusion_evidence": [],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/tslearn/tslearn/metrics/dtw_variants.py",
+            "line": 1487,
+            "signature": "def njit_sakoe_chiba_mask(sz1, sz2, radius=1)",
+            "source_sha256": "ced9480494f7ac3fba991f833d3060062caa7cf17bfdb314a71d603ba25218df"
+          }
+        ]
+      }
+    ],
+    "old_coverage_path": "/tmp/aideal-bank-viewer-final-2026-11-17/audit/coverage/tslearn.json",
+    "old_coverage_sha256": "33a00e8bb87e334a1c8c4cee0e3bd6abec1ab440b449d565cca10f06c5ae6fa3",
+    "note": "Discovery reconciliation occurs before structural body exclusions and maximum-arity selection. Name omissions do not imply semantic duplicates."
+  },
+  "mir_eval": {
+    "old_api_names": 148,
+    "latest_public_api_names": 147,
+    "common_names": 147,
+    "new_names": [],
+    "old_names_not_in_latest_public_inventory": [
+      {
+        "name": "register_colormap",
+        "reason": "Not a declared callable in the latest pinned configured source; not classified as a semantic duplicate",
+        "latest_exclusion_evidence": [],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/mir_eval/mir_eval/display.py",
+            "line": 117,
+            "signature": "def register_colormap(name, cmap)",
+            "source_sha256": "c38e1fde860509c0e100a8b584ef10e88adb0184a241ea54bd3a3cf2e5c2e98b"
+          }
+        ]
+      }
+    ],
+    "old_coverage_path": "/tmp/aideal-bank-viewer-final-2026-11-17/audit/coverage/mir_eval.json",
+    "old_coverage_sha256": "6e570b981fa45cb54f89108c2b3f66c6c1dda859283848a0ab368ff03e1f2e43",
+    "note": "Discovery reconciliation occurs before structural body exclusions and maximum-arity selection. Name omissions do not imply semantic duplicates."
+  },
+  "thumbnailator": {
+    "old_api_names": 149,
+    "latest_public_api_names": 145,
+    "common_names": 145,
+    "new_names": [],
+    "old_names_not_in_latest_public_inventory": [
+      {
+        "name": "clear",
+        "reason": "Excluded by explicit public-owner/access rules in the AST inventory",
+        "latest_exclusion_evidence": [
+          {
+            "path": "src/main/java/net/coobird/thumbnailator/util/Configurations.java",
+            "line": 130,
+            "name": "clear",
+            "reason": "nonpublic_callable_or_owner"
+          }
+        ],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/thumbnailator/src/main/java/net/coobird/thumbnailator/util/Configurations.java",
+            "line": 130,
+            "signature": "static void clear()",
+            "source_sha256": "fe42e5335b86c7e6828256586edb122ad9fc763c66fe59952a50f61b12cb4c78"
+          }
+        ]
+      },
+      {
+        "name": "createOutputStream",
+        "reason": "Excluded by explicit public-owner/access rules in the AST inventory",
+        "latest_exclusion_evidence": [
+          {
+            "path": "src/main/java/net/coobird/thumbnailator/tasks/io/FileImageSink.java",
+            "line": 326,
+            "name": "createOutputStream",
+            "reason": "nonpublic_callable_or_owner"
+          }
+        ],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/thumbnailator/src/main/java/net/coobird/thumbnailator/tasks/io/FileImageSink.java",
+            "line": 326,
+            "signature": "OutputStream createOutputStream(File destinationFile)",
+            "source_sha256": "8cb77bab77d8fc353ffb3020a472b8c6d3bd7d0cde9be453cca3abc1fb09e581"
+          }
+        ]
+      },
+      {
+        "name": "if",
+        "reason": "Old regex false positive: else if statement at DefaultResizerFactory.java:139, not a method or constructor",
+        "latest_exclusion_evidence": [],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/thumbnailator/src/main/java/net/coobird/thumbnailator/resizers/DefaultResizerFactory.java",
+            "line": 139,
+            "signature": "else if (thumbWidth > origWidth && thumbHeight > origHeight)",
+            "source_sha256": "f434383bc1e72a8ec40f6bd330f28311a11870124d20c75b7d6351c57ce35a3d"
+          }
+        ]
+      },
+      {
+        "name": "init",
+        "reason": "Excluded by explicit public-owner/access rules in the AST inventory",
+        "latest_exclusion_evidence": [
+          {
+            "path": "src/main/java/net/coobird/thumbnailator/util/Configurations.java",
+            "line": 108,
+            "name": "init",
+            "reason": "nonpublic_callable_or_owner"
+          }
+        ],
+        "old_definitions": [
+          {
+            "file": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/sources/thumbnailator/src/main/java/net/coobird/thumbnailator/util/Configurations.java",
+            "line": 108,
+            "signature": "static void init()",
+            "source_sha256": "fe42e5335b86c7e6828256586edb122ad9fc763c66fe59952a50f61b12cb4c78"
+          }
+        ]
+      }
+    ],
+    "old_coverage_path": "/tmp/aideal-bank-viewer-final-2026-11-17/audit/coverage/thumbnailator.json",
+    "old_coverage_sha256": "43ae8f891c9324d18d179587822b8d06501071960a4740d6cf1f82c00d2ec2d7",
+    "note": "Discovery reconciliation occurs before structural body exclusions and maximum-arity selection. Name omissions do not imply semantic duplicates."
+  }
+}

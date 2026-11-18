@@ -1,0 +1,39 @@
+mir_eval.chord.weighted_accuracy(comparisons, weights)
+
+Compute the weighted accuracy of a list of chord comparisons.
+
+Parameters:
+
+comparisonsnp.ndarray
+
+List of chord comparison scores, in [0, 1] or -1
+
+weightsnp.ndarray
+
+Weights (not necessarily normalized) for each comparison. This can be a list of interval durations
+
+Returns:
+
+scorefloat
+
+Weighted accuracy
+
+Examples
+
+>>> (ref_intervals,
+...  ref_labels) = mir_eval.io.load_labeled_intervals('ref.lab')
+>>> (est_intervals,
+...  est_labels) = mir_eval.io.load_labeled_intervals('est.lab')
+>>> est_intervals, est_labels = mir_eval.util.adjust_intervals(
+...     est_intervals, est_labels, ref_intervals.min(),
+...     ref_intervals.max(), mir_eval.chord.NO_CHORD,
+...     mir_eval.chord.NO_CHORD)
+>>> (intervals,
+...  ref_labels,
+...  est_labels) = mir_eval.util.merge_labeled_intervals(
+...      ref_intervals, ref_labels, est_intervals, est_labels)
+>>> durations = mir_eval.util.intervals_to_durations(intervals)
+>>> # Here, we're using the "thirds" function to compare labels
+>>> # but any of the comparison functions would work.
+>>> comparisons = mir_eval.chord.thirds(ref_labels, est_labels)
+>>> score = mir_eval.chord.weighted_accuracy(comparisons, durations)

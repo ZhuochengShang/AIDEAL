@@ -1,0 +1,89 @@
+### 1. Project purpose
+`mir_eval` is a scientific Python library designed for the reproducible evaluation of Music Information Retrieval (MIR) systems. It provides standardized implementations of metrics for common MIR tasks, I/O utilities for loading standard annotation formats, and visualization/sonification tools to assist in qualitative analysis.
+
+### 2. Main workflows
+*   **Annotation Loading:** Use `mir_eval.io` to load ground-truth and estimated data from text files into NumPy arrays.
+*   **Metric Computation:** Pass loaded arrays to task-specific modules (e.g., `mir_eval.beat`, `mir_eval.chord`, `mir_eval.melody`) to compute performance scores.
+*   **Evaluation Aggregation:** Use the `evaluate()` function provided in most modules to compute a comprehensive suite of metrics for a given task.
+*   **Visualization:** Use `mir_eval.display` to generate plots (e.g., piano rolls, pitch contours, segmentations) using Matplotlib.
+*   **Sonification:** Use `mir_eval.sonify` to create audio representations of annotations for "evaluation by ear."
+
+### 3. Important APIs and usage patterns
+*   **Task Modules:** Each task (e.g., `beat`, `chord`, `melody`, `onset`, `segment`, `hierarchy`, `multipitch`, `pattern`, `alignment`, `key`, `separation`) contains a `validate()` function to check input formats and an `evaluate()` function for batch metric calculation.
+*   **Data Structures:**
+    *   **Events:** 1D NumPy arrays of timestamps (seconds).
+    *   **Intervals:** $N \times 2$ NumPy arrays (start, end).
+    *   **Labeled Intervals:** $N \times 2$ intervals + list of $N$ labels.
+    *   **Ragged Time Series:** Used for multi-pitch/multi-source data where the number of values per timestamp varies.
+*   **Chord Encoding:** The `mir_eval.chord` module provides complex utilities to parse, encode, and compare chord labels using sub-alphabets (e.g., `majmin`, `triads`, `sevenths`).
+
+### 4. Inputs and file formats
+*   **Delimited Text:** `mir_eval.io.load_delimited` is the base loader.
+*   **Specific Loaders:**
+    *   `load_events`: Single column of floats.
+    *   `load_labeled_events`: Time (float) + Label (str).
+    *   `load_intervals`: Start (float) + End (float).
+    *   `load_labeled_intervals`: Start (float) + End (float) + Label (str).
+    *   `load_ragged_time_series`: Time (float) + variable number of values.
+    *   `load_patterns`: MIREX 2013 format (list of lists of tuples).
+
+### 5. Outputs and generated artifacts
+*   **Metric Scores:** Most `evaluate()` functions return a dictionary mapping metric names (strings) to scores (floats).
+*   **Visualizations:** Matplotlib `Axes` objects.
+*   **Audio:** NumPy arrays representing synthesized signals (e.g., click tracks, piano rolls).
+
+### 6. Configuration and environment assumptions
+*   **Dependencies:** Requires `numpy`, `scipy`, and `matplotlib`.
+*   **Conventions:** Time is always in seconds. Frequencies are in Hz (or cents for melody). Chord labels follow standard syntax (e.g., `C:maj`).
+
+### 7. Commands and examples
+
+**Beat Evaluation:**
+```python
+>>> reference_beats = mir_eval.io.load_events('reference.txt')
+>>> reference_beats = mir_eval.beat.trim_beats(reference_beats)
+>>> estimated_beats = mir_eval.io.load_events('estimated.txt')
+>>> estimated_beats = mir_eval.beat.trim_beats(estimated_beats)
+>>> scores = mir_eval.beat.evaluate(reference_beats, estimated_beats)
+```
+
+**Chord Evaluation:**
+```python
+>>> (ref_intervals, ref_labels) = mir_eval.io.load_labeled_intervals('ref.lab')
+>>> (est_intervals, est_labels) = mir_eval.io.load_labeled_intervals('est.lab')
+>>> scores = mir_eval.chord.evaluate(ref_intervals, ref_labels,
+...                                  est_intervals, est_labels)
+```
+
+**Melody Evaluation:**
+```python
+>>> ref_time, ref_freq = mir_eval.io.load_time_series('ref.txt')
+>>> est_time, est_freq = mir_eval.io.load_time_series('est.txt')
+>>> scores = mir_eval.melody.evaluate(ref_time, ref_freq,
+...                                   est_time, est_freq)
+```
+
+**Segmentation Evaluation:**
+```python
+>>> (ref_intervals, ref_labels) = mir_eval.io.load_labeled_intervals('ref.lab')
+>>> (est_intervals, est_labels) = mir_eval.io.load_labeled_intervals('est.lab')
+>>> scores = mir_eval.segment.evaluate(ref_intervals, ref_labels,
+...                                    est_intervals, est_labels)
+```
+
+### 8. Constraints, preconditions, compatibility rules
+*   **Preconditions:** For most metrics, reference and estimated arrays must be sorted by time.
+*   **Interval Adjustment:** Use `mir_eval.util.adjust_intervals` to ensure estimated intervals span the same duration as reference intervals before evaluation.
+*   **Deprecation:** `mir_eval.io.load_wav` is deprecated; use `soundfile` instead. `mir_eval.separation` is deprecated; use `sigsep-museval`.
+*   **Chord Labels:** Invalid labels raise `InvalidChordException`.
+
+### 9. Facts to preserve in the final README
+*   `mir_eval` is the standard for reproducible MIR research.
+*   Metrics are based on established literature (e.g., MIREX, BSS_EVAL).
+*   The library supports both flat and hierarchical structure evaluation.
+*   All time-based inputs must be in seconds.
+
+### 10. Missing or weak documentation
+*   The `mir_eval.sonify.pitch_contour` documentation is truncated in the provided source.
+*   The `mir_eval.display` module lacks comprehensive examples for all plot types.
+*   The distinction between "transitive" and "reduced" modes in `hierarchy` metrics could be explained with more theoretical depth.

@@ -2,6 +2,8 @@
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 import sys
+from types import ModuleType
+import hashlib
 
 from .ablation import ARMS, bind, load, preflight, save
 
@@ -17,9 +19,18 @@ CONDITION_FOLDERS = {
 
 def _engine_config_module():
     """Load the pinned engine's YAML loader, without importing its model clients."""
-    name = "_aideal_workflow_engine_config"
+    # Cache the configuration loader under its own module name. Subsequent calls reuse
+    # the same imported loader.
+    path = Path(__file__).resolve().parents[1] / "vendor/aideal_engine/src/aideal/config.py"
+    # A private package lets the loader resolve its sibling documentation module
+    # without importing model clients or another checkout's installed AIDEAL.
+    package = "_aideal_workflow_engine_" + hashlib.sha256(str(path.parent).encode()).hexdigest()[:16]
+    name = package + ".config"
     if name not in sys.modules:
-        path = Path(__file__).resolve().parents[1] / "vendor/aideal_engine/src/aideal/config.py"
+        if package not in sys.modules:
+            namespace = ModuleType(package)
+            namespace.__path__ = [str(path.parent)]
+            sys.modules[package] = namespace
         spec = spec_from_file_location(name, path)
         module = module_from_spec(spec)
         sys.modules[name] = module  # dataclasses needs the module registered.
@@ -38,6 +49,8 @@ def prepare_study(config, output):
     loader's path rules. JSON files below are generated records, not replacement
     user configuration. No commands or model clients from the YAML are executed.
     """
+    # Resolve the input YAML and new output directory, then create the shared draft
+    # plan and five condition records from the loaded settings.
     config = Path(config).expanduser().resolve()
     output = Path(output).expanduser().resolve()
     if not config.is_file():
@@ -60,6 +73,8 @@ def prepare_study(config, output):
             raise ValueError(f"Unknown extends adapter: {name}")
         layers.append(adapter)
     layers.append(config)
+    # Bind the original configuration layers and documentation so later inspection can
+    # identify the exact inputs used.
     source = {
         "configuration": bind(config), "configuration_layers": [bind(p) for p in layers],
         "workspace_root": str(cfg.root), "project": cfg.project_name,
@@ -135,6 +150,8 @@ def prepare_study(config, output):
 
 def prepared_study_status(directory):
     """Report generic draft readiness without implying adapter execution exists."""
+    # Read the draft plan, bank and source records. Return the counts and preflight
+    # issues an operator can inspect before launching anything.
     directory = Path(directory).expanduser().resolve()
     plan = load(directory / "plan.draft.json")
     bank = load(directory / "bank.draft.json")

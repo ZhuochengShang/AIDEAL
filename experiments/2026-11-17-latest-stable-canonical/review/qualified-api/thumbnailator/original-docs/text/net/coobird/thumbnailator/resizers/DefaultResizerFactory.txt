@@ -1,0 +1,184 @@
+DefaultResizerFactory (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers
+Class DefaultResizerFactory
+java.lang.Object
+net.coobird.thumbnailator.resizers.DefaultResizerFactory
+All Implemented Interfaces:
+ResizerFactory
+public class
+DefaultResizerFactory
+extends
+Object
+implements
+ResizerFactory
+This class provides factory methods which provides suitable
+Resizer
+s
+for a given situation.
+Resizer
+s returned by this
+ResizerFactory
+:
+The
+Resizer
+s returned by this
+ResizerFactory
+depends on
+the size of the source and destination images. The conditions and the
+Resizer
+s returned are as follows:
+Default via
+getResizer()
+ProgressiveBilinearResizer
+Destination image has the same dimensions as the source image via
+getResizer(Dimension, Dimension)
+NullResizer
+Both the width and height of the destination image is larger than the
+source image via
+getResizer(Dimension, Dimension)
+BicubicResizer
+Both the width and height of the destination image is smaller in the
+source image by a factor larger than 2,
+via
+getResizer(Dimension, Dimension)
+ProgressiveBilinearResizer
+Both the width and height of the destination image is smaller in the
+source image not by a factor larger than 2,
+via
+getResizer(Dimension, Dimension)
+BilinearResizer
+Other conditions not described via
+getResizer(Dimension, Dimension)
+ProgressiveBilinearResizer
+Usage:
+The following example code demonstrates how to use
+DefaultResizerFactory
+in order to obtain the optimal
+Resizer
+, and using that in order to
+perform the resizing operation.
+BufferedImage sourceImage = new BufferedImageBuilder(400, 400).build();
+BufferedImage destImage = new BufferedImageBuilder(200, 200).build();
+Dimension sourceSize = new Dimension(sourceImage.getWidth(), sourceImage.getHeight());
+Dimension destSize = new Dimension(destImage.getWidth(), destImage.getHeight());
+// Obtain the optimal Resizer for this resizing operation.
+Resizer resizer = DefaultResizerFactory.getInstance().getResizer(sourceSize, destSize);
+// Perform the resizing using the Resizer obtained from the ResizerFactory.
+resizer.resize(sourceImage, destImage);
+When a specific
+Resizer
+is required, the
+Resizers
+enum
+is another way to obtain
+Resizer
+s.
+Since:
+0.4.0
+Author:
+coobird
+See Also:
+Resizers
+Method Summary
+static
+ResizerFactory
+getInstance
+()
+Returns an instance of this class.
+Resizer
+getResizer
+()
+Returns the default
+Resizer
+.
+Resizer
+getResizer
+(
+Dimension
+originalSize,
+Dimension
+thumbnailSize)
+Returns a suitable
+Resizer
+, given the
+Dimension
+s of the
+original image and the thumbnail image.
+Methods inherited from class java.lang.
+Object
+equals
+,
+getClass
+,
+hashCode
+,
+notify
+,
+notifyAll
+,
+toString
+,
+wait
+,
+wait
+,
+wait
+Method Detail
+getInstance
+public static
+ResizerFactory
+getInstance
+()
+Returns an instance of this class.
+Returns:
+An instance of this class.
+getResizer
+public
+Resizer
+getResizer
+()
+Description copied from interface:
+ResizerFactory
+Returns the default
+Resizer
+.
+Specified by:
+getResizer
+in interface
+ResizerFactory
+Returns:
+The default
+Resizer
+.
+getResizer
+public
+Resizer
+getResizer
+(
+Dimension
+originalSize,
+Dimension
+thumbnailSize)
+Description copied from interface:
+ResizerFactory
+Returns a suitable
+Resizer
+, given the
+Dimension
+s of the
+original image and the thumbnail image.
+Specified by:
+getResizer
+in interface
+ResizerFactory
+Parameters:
+originalSize
+- The size of the original image.
+thumbnailSize
+- The size of the thumbnail.
+Returns:
+The suitable
+Resizer
+to perform the
+resizing operation for the given condition.
+Copyright © 2025. All rights reserved.

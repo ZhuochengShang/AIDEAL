@@ -20,43 +20,41 @@ class BudgetError(RuntimeError):
 
 
 def digest(value):
+    # Fingerprint the JSON value with sorted keys so request and settings hashes are
+    # stable across dictionary ordering.
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'),
                                     allow_nan=False).encode()).hexdigest()
 
 
 def _now():
+    # Use an ISO timestamp in UTC so ledger records can be compared across hosts.
     return datetime.now(timezone.utc).isoformat()
 
 
 def _integer(value):
+    # Accept a nonnegative integer count and reject booleans, which Python otherwise
+    # treats as integers.
     return type(value) is int and value >= 0
 
 
 class BudgetLedger:
-    def __init__(self, path, max_cost_usd='5', *, policy='legacy-v1', study_id=None):
+    def __init__(self, path, max_cost_usd='5'):
+        # Resolve the shared ledger path and convert the configured dollar cap to
+        # integer nanodollars. Store the settings that every later open must match.
         self.path = Path(path).expanduser().resolve()
-        if policy not in ('legacy-v1', 'study-v2'):
-            raise BudgetError('Unknown explicit budget policy')
-        if policy == 'legacy-v1' and study_id is not None:
-            raise BudgetError('Legacy ledgers do not accept a study identity')
-        if policy == 'study-v2':
-            import re
-            if not isinstance(study_id, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._:-]{0,127}', study_id):
-                raise BudgetError('Study policy requires a stable nonempty study_id')
-        ceiling = 100 if policy == 'study-v2' else 5
         try:
             cap = Decimal(str(max_cost_usd)) * 1_000_000_000
-            if not cap.is_finite() or cap <= 0 or cap > ceiling * 1_000_000_000 or cap != cap.to_integral_value():
+            if not cap.is_finite() or cap <= 0 or cap > 5_000_000_000 or cap != cap.to_integral_value():
                 raise ValueError
             cap = int(cap)
         except (InvalidOperation, ValueError):
-            raise BudgetError(f'Budget must be positive, at most ${ceiling}, and precise to nanodollars') from None
+            raise BudgetError('Budget must be positive, at most $5, and precise to nanodollars') from None
         self.identity = {'schema_version': 1, 'model': MODEL, 'max_cost_nanousd': cap,
                          'prices_nanousd_per_token': PRICES, 'framing_tokens': FRAMING_TOKENS}
-        if policy == 'study-v2':
-            self.identity.update(schema_version=2, policy=policy, study_id=study_id)
 
     def _save(self, data):
+        # Flush a temporary sibling file before replacing the ledger, then flush the
+        # parent directory to persist the replacement.
         fd, name = tempfile.mkstemp(prefix=self.path.name + '.', suffix='.tmp', dir=self.path.parent)
         try:
             with os.fdopen(fd, 'w') as output:
@@ -75,6 +73,8 @@ class BudgetLedger:
                 os.unlink(name)
 
     def _validate(self, data, marker):
+        # Check the ledger identity and recompute each reservation or charge before
+        # allowing the caller to spend against it.
         if not isinstance(data, dict):
             raise BudgetError('Invalid ledger document; refusing to spend')
         if any(data.get(key) != value for key, value in self.identity.items()):
@@ -101,6 +101,9 @@ class BudgetLedger:
 
     @contextmanager
     def _locked(self):
+        # Use the lock file both to serialize updates and to remember the ledger ID.
+        # The caller receives validated data and successful updates are saved before
+        # releasing the lock.
         self.path.parent.mkdir(parents=True, exist_ok=True)
         fd = os.open(str(self.path) + '.lock', os.O_RDWR | os.O_CREAT, 0o600)
         with os.fdopen(fd, 'r+') as lock:
@@ -125,6 +128,8 @@ class BudgetLedger:
             self._save(data)
 
     def reserve(self, system, prompt, max_output_tokens, request_sha256, settings_sha256):
+        # Estimate an upper cost from UTF-8 prompt bytes, framing allowance and the
+        # requested output cap. Reserve that amount before sending the request.
         if not isinstance(system, str) or not isinstance(prompt, str):
             raise BudgetError('Only text requests can be reserved')
         if type(max_output_tokens) is not int or max_output_tokens <= 0:
@@ -148,6 +153,8 @@ class BudgetLedger:
 
     @staticmethod
     def _actual(usage):
+        # Use provider token counts to price cached and uncached input separately.
+        # Return None when the counts cannot establish a charge.
         if not isinstance(usage, dict):
             return None
         incoming, cached, outgoing = (usage.get(key) for key in
@@ -158,6 +165,8 @@ class BudgetLedger:
 
     def finish(self, reservation_id, *, usage=None, response_id=None, status=None, failure=None):
         """Only complete, final usage releases a reservation; uncertain calls stay charged."""
+        # Look up this request's reservation and finalize it once. Missing final usage
+        # leaves the full amount charged for later review.
         violation = False
         with self._locked() as data:
             row = next((row for row in data['records'] if row['id'] == reservation_id), None)
@@ -168,6 +177,8 @@ class BudgetLedger:
             if amount is None:
                 row.update(state='uncertain', failure=failure or {'type': 'MissingFinalUsage'})
             else:
+                # Final usage replaces the reserved charge. If it exceeds the
+                # estimate, persist the charge and block further requests for review.
                 row.update(state='settled', charged_nanousd=amount, usage=usage)
                 violation = (amount > row['reserved_nanousd'] or
                              usage['input_tokens'] > row['input_upper_tokens'] or

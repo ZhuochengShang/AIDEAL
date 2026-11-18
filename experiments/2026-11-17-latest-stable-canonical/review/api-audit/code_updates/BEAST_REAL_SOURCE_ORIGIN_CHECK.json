@@ -1,0 +1,983 @@
+{
+  "status": "PASS",
+  "check_type": "read-only ownership filtering of actual pinned source declarations",
+  "official_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+  "identical_tree_public_commit": "88effa8abe57b1c844cdd59581e4cade8d0807dc",
+  "production_files": [
+    "cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+    "cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+    "cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+    "cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala"
+  ],
+  "declarations_checked": 31,
+  "retained_by_origin_filter": 31,
+  "source_line_names_verified": true,
+  "source_file_hashes_verified": true,
+  "policy_version": "source_file_and_declaring_namespace_v2",
+  "final_benchmark_count_claimed": false,
+  "model_calls": 0,
+  "subject_executions": 0,
+  "decisions": [
+    {
+      "name": "startServer",
+      "qualified_name": "org.apache.spark.beast.CRSServer.startServer",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/CRSServer.scala:3956:method:startServer",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "line": 91,
+      "signature": "[](defaultPort:Int):Int",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.CRSServer.startServer",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_hashes": {
+        "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b"
+      },
+      "ownership_sha256": "0121f5a3fd2b01bae115953675629fc5f656309f7e16c1dc406baacaeaf8faba"
+    },
+    {
+      "name": "startServer",
+      "qualified_name": "org.apache.spark.beast.CRSServer.startServer",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/CRSServer.scala:5757:method:startServer",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "line": 134,
+      "signature": "[](sc:SparkContext):Boolean",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.CRSServer.startServer",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_hashes": {
+        "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b"
+      },
+      "ownership_sha256": "1763f365746cfb8def88704eec9a5b3d12f2c92b76905be98972c52bacc06862"
+    },
+    {
+      "name": "startServer",
+      "qualified_name": "org.apache.spark.beast.CRSServer.startServer",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/CRSServer.scala:6402:method:startServer",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "line": 148,
+      "signature": "[](jsc:JavaSparkContext):Boolean",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.CRSServer.startServer",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_hashes": {
+        "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b"
+      },
+      "ownership_sha256": "be3ef34f7575555d4173b196bd77fc567ccec9c5719535f403f3498094eeadff"
+    },
+    {
+      "name": "stopServer",
+      "qualified_name": "org.apache.spark.beast.CRSServer.stopServer",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/CRSServer.scala:6936:method:stopServer",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "line": 162,
+      "signature": "[](wait:Boolean):Unit",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.CRSServer.stopServer",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_hashes": {
+        "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b"
+      },
+      "ownership_sha256": "c38848b598a9120192bffa9e12891278b03877b252153647314c3704245b7e67"
+    },
+    {
+      "name": "crsToSRID",
+      "qualified_name": "org.apache.spark.beast.CRSServer.crsToSRID",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/CRSServer.scala:11730:method:crsToSRID",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "line": 270,
+      "signature": "[](crs:CoordinateReferenceSystem):Int",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.CRSServer.crsToSRID",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_hashes": {
+        "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b"
+      },
+      "ownership_sha256": "92ddcbc8aa10720fedf842c8cf71fcaaabc3d051de5a9cf4db6f6aa10ffb8384"
+    },
+    {
+      "name": "sridToCRS",
+      "qualified_name": "org.apache.spark.beast.CRSServer.sridToCRS",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/CRSServer.scala:15325:method:sridToCRS",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "line": 352,
+      "signature": "[](srid:Int):CoordinateReferenceSystem",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.CRSServer.sridToCRS",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_hashes": {
+        "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b"
+      },
+      "ownership_sha256": "1348f9d06993eaaaab373cadc45311d320d362ca0afc91dc1d3324569d576860"
+    },
+    {
+      "name": "sparkConfFromHadoopConf",
+      "qualified_name": "org.apache.spark.beast.CRSServer.sparkConfFromHadoopConf",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/CRSServer.scala:17233:method:sparkConfFromHadoopConf",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "line": 406,
+      "signature": "[](hadoopConf:Configuration):SparkConf",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.CRSServer.sparkConfFromHadoopConf",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/CRSServer.scala",
+      "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b",
+      "declared_hashes": {
+        "file_sha256": "d4450c5b403f8c92731f991f1e7bf67e67285f5f5eee6520e86cdba358f52b7b"
+      },
+      "ownership_sha256": "f5153c74d5e86259b1313ee0230995dd5773682002ab92350605131b4f18be75"
+    },
+    {
+      "name": "registerUDT",
+      "qualified_name": "org.apache.spark.beast.SparkSQLRegistration.registerUDT",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala:516:method:registerUDT",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "line": 13,
+      "signature": "[]():Unit",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.SparkSQLRegistration.registerUDT",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c",
+      "declared_file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c",
+      "declared_hashes": {
+        "file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c"
+      },
+      "ownership_sha256": "2311526d70e812e5e0d0d9d1cc064282e3b13d2858779ccb2184fbf7ae7d650e"
+    },
+    {
+      "name": "getFunctionName",
+      "qualified_name": "org.apache.spark.beast.SparkSQLRegistration.getFunctionName",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala:1052:method:getFunctionName",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "line": 27,
+      "signature": "[](function:FunctionBuilder):String",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.SparkSQLRegistration.getFunctionName",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c",
+      "declared_file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c",
+      "declared_hashes": {
+        "file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c"
+      },
+      "ownership_sha256": "831bda397684dc353ceaefeefedb2cad28c00c034dd57cd71c3872f6ca1c856a"
+    },
+    {
+      "name": "registerUDF",
+      "qualified_name": "org.apache.spark.beast.SparkSQLRegistration.registerUDF",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala:1521:method:registerUDF",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "line": 35,
+      "signature": "[](sparkSession:SparkSession):Unit",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.SparkSQLRegistration.registerUDF",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/SparkSQLRegistration.scala",
+      "file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c",
+      "declared_file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c",
+      "declared_hashes": {
+        "file_sha256": "9fc7c019f08b63e3ed4f7e89e3b9621bba55956b22e9f16a4c4002170fd3021c"
+      },
+      "ownership_sha256": "8780725ccf8df38c19a0154eb60a5d4c0de9a007935cf4a3813b773b70376c74"
+    },
+    {
+      "name": "sqlType",
+      "qualified_name": "org.apache.spark.beast.sql.EnvelopeDataType.sqlType",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala:1135:method:sqlType",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "line": 28,
+      "signature": "[]:DataType",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.EnvelopeDataType.sqlType",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_hashes": {
+        "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867"
+      },
+      "ownership_sha256": "4bc0c981c7757fac2e37e5b4749e40a1d6f79d05f28f06515ea033c09b1ee058"
+    },
+    {
+      "name": "serialize",
+      "qualified_name": "org.apache.spark.beast.sql.EnvelopeDataType.serialize",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala:1323:method:serialize",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "line": 31,
+      "signature": "[](obj:Envelope):Any",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.EnvelopeDataType.serialize",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_hashes": {
+        "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867"
+      },
+      "ownership_sha256": "19ee6ef67246587254c5f4818c6a76c6a210e2316dcd24dfac809b4bff47fa5e"
+    },
+    {
+      "name": "deserialize",
+      "qualified_name": "org.apache.spark.beast.sql.EnvelopeDataType.deserialize",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala:1382:method:deserialize",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "line": 33,
+      "signature": "[](datum:Any):Envelope",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.EnvelopeDataType.deserialize",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_hashes": {
+        "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867"
+      },
+      "ownership_sha256": "071c74b978d8f510a7d6d48b5db25e5752950fb5edce341d5baa31c33c2bb709"
+    },
+    {
+      "name": "userClass",
+      "qualified_name": "org.apache.spark.beast.sql.EnvelopeDataType.userClass",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala:1504:method:userClass",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "line": 39,
+      "signature": "[]:Class[Envelope]",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.EnvelopeDataType.userClass",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_hashes": {
+        "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867"
+      },
+      "ownership_sha256": "b29a63313b7333141849b27336ea8ae3429a24f029b152d501816d86d8608d50"
+    },
+    {
+      "name": "defaultSize",
+      "qualified_name": "org.apache.spark.beast.sql.EnvelopeDataType.defaultSize",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala:1567:method:defaultSize",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "line": 41,
+      "signature": "[]:Int",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.EnvelopeDataType.defaultSize",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_hashes": {
+        "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867"
+      },
+      "ownership_sha256": "94c0356dc61044a37307b75e4e91924e9d0ae08bd49484054705f86c1739f9d9"
+    },
+    {
+      "name": "fromRow",
+      "qualified_name": "org.apache.spark.beast.sql.EnvelopeDataType.fromRow",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala:1666:method:fromRow",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "line": 45,
+      "signature": "[](x:InternalRow):Envelope",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.EnvelopeDataType.fromRow",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_hashes": {
+        "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867"
+      },
+      "ownership_sha256": "e6c52a6af110407fc71465d23fafdd146eff3df983960b85d5b16052ad199d8d"
+    },
+    {
+      "name": "toRow",
+      "qualified_name": "org.apache.spark.beast.sql.EnvelopeDataType.toRow",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala:1790:method:toRow",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "line": 48,
+      "signature": "[](e:Envelope):InternalRow",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.EnvelopeDataType.toRow",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/EnvelopeDataType.scala",
+      "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867",
+      "declared_hashes": {
+        "file_sha256": "4fcfcfd2fe6f2b4b8fdd15bcd7bcd227e7a1e20818ea9664761017c31b62c867"
+      },
+      "ownership_sha256": "a73c08f90128962f3a019760da3b73dd0dbe84a152ffc1c014aa0419e7046b17"
+    },
+    {
+      "name": "sqlType",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.sqlType",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:1362:method:sqlType",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 31,
+      "signature": "[]:DataType",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.sqlType",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "277408a960ccaa1e7b0500f62b9cef97e808bbec19f7f7ec9bcbefffa70ffb65"
+    },
+    {
+      "name": "serialize",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.serialize",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:1440:method:serialize",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 33,
+      "signature": "[](geometry:Geometry):ArrayData",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.serialize",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "b01d2a770792367a9c028e8f04536dd8740f03da0afbb7866731e286b56c980c"
+    },
+    {
+      "name": "deserialize",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.deserialize",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:1733:method:deserialize",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 41,
+      "signature": "[](datum:Any):Geometry",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.deserialize",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "3952de639671da264d70084e867fc27f83a3f12a690686a673f2014e96c31176"
+    },
+    {
+      "name": "userClass",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.userClass",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:1955:method:userClass",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 46,
+      "signature": "[]:Class[Geometry]",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.userClass",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "b3f79ce4d1f1d3a7489761884c5617eac8f31c2e187603483162bfa9515c7036"
+    },
+    {
+      "name": "typeName",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.typeName",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2018:method:typeName",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 48,
+      "signature": "[]:String",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.typeName",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "9a9a2e2697cbfc718e52c120f629caf610ff8548179137c6bb545dc49bb38ef2"
+    },
+    {
+      "name": "toString",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.toString",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2064:method:toString",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 50,
+      "signature": "[]:String",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.toString",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "e5161b83a796a9dfbb576160e8ebadb0199049e177bb5cd7d9199778321e332e"
+    },
+    {
+      "name": "hashCode",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.hashCode",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2114:method:hashCode",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 52,
+      "signature": "[]():Int",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.hashCode",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "c342f96a33a475d8db2f7da0ef7186a4c9db7398a8b243c286a018ba0f840f8d"
+    },
+    {
+      "name": "equals",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.equals",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2185:method:equals",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 54,
+      "signature": "[](other:Any):Boolean",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.equals",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "6c900d15339eed3ca15275ae9ae488cf899d7328b9ddd81d204bf121d1b32e95"
+    },
+    {
+      "name": "geometryWriter",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.geometryWriter",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2408:method:geometryWriter",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 59,
+      "signature": "[]:GeometryWriter",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.geometryWriter",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "4058137e739b5fd87608bb1b8e5b1e69d9dddb1f1462acfca8f835074f523c45"
+    },
+    {
+      "name": "geometryReader",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.geometryReader",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2603:method:geometryReader",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 66,
+      "signature": "[]:GeometryReader",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.geometryReader",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "c764e6979c40e02e7760cd529bdc7db86d6c4ca1ed823735a6ede94ae4ea65a3"
+    },
+    {
+      "name": "geometryType",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.geometryType",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2784:method:geometryType",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 72,
+      "signature": "[]:DataType",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.geometryType",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "4b7b3840326340669606aea51ca0245799bcbdad9e4a2506b8913029062d36e6"
+    },
+    {
+      "name": "getGeometryFromRow",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.getGeometryFromRow",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2833:method:getGeometryFromRow",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 74,
+      "signature": "[](record:InternalRow,i:Int):Geometry",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.getGeometryFromRow",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "8197b0ea2dd849811b1b54696e55923d0747d22deee402496f41ff2cfbb99480"
+    },
+    {
+      "name": "getGeometryFromArray",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.getGeometryFromArray",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:2982:method:getGeometryFromArray",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 77,
+      "signature": "[](array:ArrayData):Geometry",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.getGeometryFromArray",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "04c3895570fda193cdd4e9c79020a0ea152b3292b3c510a3c4e7695b2418edca"
+    },
+    {
+      "name": "setGeometryInRow",
+      "qualified_name": "org.apache.spark.beast.sql.GeometryDataType.setGeometryInRow",
+      "site_id": "Scala:cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala:3169:method:setGeometryInRow",
+      "file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "line": 82,
+      "signature": "[](geometry:Geometry):ArrayData",
+      "definition_kind": null,
+      "defining_owner_claims": {},
+      "defining_namespace": "org.apache.spark.beast.sql.GeometryDataType.setGeometryInRow",
+      "defining_file": "source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "policy_sha256": "93327e392da09f6500c9644222356c48dc720249869c6775ef8dd73118fa32f3",
+      "status": "library_defined",
+      "reason": "owned_source_and_declaring_namespace",
+      "library_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "external_namespace_matches": [
+        "org.apache.spark"
+      ],
+      "most_specific_namespace_matches": [
+        "org.apache.spark.beast"
+      ],
+      "resolved_defining_file": "/private/var/folders/83/6ly5xs5j5ns3gmwbqgjqd7rw0000gn/T/aideal-beast-origin-vkmhvthc/source/cg/src/main/scala/org/apache/spark/beast/sql/GeometryDataType.scala",
+      "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25",
+      "declared_hashes": {
+        "file_sha256": "42c5251a274eb5805edd01f2e0675c7380b2cb813bee51223bdcfec41d8afb25"
+      },
+      "ownership_sha256": "7eba251396b00bd496504231925feecc162cfadc8a3b4c9f981eb5c3812fc900"
+    }
+  ]
+}

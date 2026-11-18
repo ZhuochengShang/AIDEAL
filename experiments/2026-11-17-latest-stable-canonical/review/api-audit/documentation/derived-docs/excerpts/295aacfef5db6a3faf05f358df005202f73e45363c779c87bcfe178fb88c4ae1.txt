@@ -1,0 +1,19 @@
+parse(tpr_resid_from_one=True, **kwargs)[source]
+
+Parse a Gromacs TPR file into a MDAnalysis internal topology structure.
+
+Parameters:
+
+tpr_resid_from_one (bool (optional)) – Toggle whether to index resids from 1 or 0 from TPR files. TPR files index resids from 0 by default, even though GRO and ITP files index from 1.
+
+Returns:
+
+structure
+
+Return type:
+
+dict
+
+Changed in version 1.1.0: Added the tpr_resid_from_one keyword to control if resids are indexed from 0 or 1. Default False.
+
+Changed in version 2.0.0: Changed to tpr_resid_from_one=True by default.

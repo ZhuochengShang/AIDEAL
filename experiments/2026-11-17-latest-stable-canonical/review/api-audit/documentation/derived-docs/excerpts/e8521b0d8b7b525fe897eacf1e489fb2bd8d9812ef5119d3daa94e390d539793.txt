@@ -1,0 +1,15 @@
+count_by_type(analysis_func=None, **kwargs)[source]
+
+Counts the frequency of water bridge of a specific type.
+
+If one atom A from selection 1 is linked to atom B from selection 2 through one or more bridging waters, an entity will be created and the proportion of time that this linkage exists in the whole simulation will be calculated.
+
+The identification of a specific type of water bridge can be modified by supplying the analysis_func function. See Use count_by_type for detail.
+
+Returns:
+
+counts – Returns a list containing atom indices for A and B, residue names, residue numbers, atom names (for both A and B) and the fraction of the total time during which the water bridge was detected. This method returns None if method WaterBridgeAnalysis.run() was not executed first.
+
+Return type:
+
+list

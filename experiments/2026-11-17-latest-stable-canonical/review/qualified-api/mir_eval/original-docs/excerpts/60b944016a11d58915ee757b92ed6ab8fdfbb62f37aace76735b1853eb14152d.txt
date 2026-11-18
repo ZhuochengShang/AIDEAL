@@ -1,0 +1,27 @@
+mir_eval.io.load_wav(path, mono=True)
+
+Load a .wav file as a numpy array using scipy.io.wavfile.
+
+Warning
+
+This function is deprecatred in mir_eval 0.8.1 and will be removed in 0.9.0. We recommend using a dedicated audio IO library such as soundfile instead.
+
+Parameters:
+
+pathstr or os.Pathlike
+
+Path to a .wav file
+
+monobool
+
+If the provided .wav has more than one channel, it will be converted to mono if mono=True. (Default value = True)
+
+Returns:
+
+audio_datanp.ndarray
+
+Array of audio samples, normalized to the range [-1., 1.]
+
+fsint
+
+Sampling rate of the audio data

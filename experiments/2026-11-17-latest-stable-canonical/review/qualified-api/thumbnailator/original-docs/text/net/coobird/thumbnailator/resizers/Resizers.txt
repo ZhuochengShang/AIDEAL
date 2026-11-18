@@ -1,0 +1,222 @@
+Resizers (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.resizers
+Enum Resizers
+java.lang.Object
+java.lang.Enum
+<
+Resizers
+>
+net.coobird.thumbnailator.resizers.Resizers
+All Implemented Interfaces:
+Serializable
+,
+Comparable
+<
+Resizers
+>,
+Resizer
+public enum
+Resizers
+extends
+Enum
+<
+Resizers
+>
+implements
+Resizer
+This enum can be used to select a specific
+Resizer
+in order
+to perform a resizing operation.
+The instance held by a value of this enum is a single instance. When using
+specific implementations of
+Resizer
+s, it is preferable to obtain
+an instance of a
+Resizer
+through this enum or the
+DefaultResizerFactory
+class in order to prevent many instances of the
+Resizer
+class implementations from being instantiated.
+Usage:
+The following example code demonstrates how to use the
+Resizers
+enum
+in order to resize an image using bilinear interpolation:
+BufferedImage sourceImage = new BufferedImageBuilder(400, 400).build();
+BufferedImage destImage = new BufferedImageBuilder(200, 200).build();
+Resizers.BILINEAR.resize(sourceImage, destImage);
+Author:
+coobird
+See Also:
+DefaultResizerFactory
+Enum Constant Summary
+BICUBIC
+A
+Resizer
+which performs resizing operations using
+bicubic interpolation.
+BILINEAR
+A
+Resizer
+which performs resizing operations using
+bilinear interpolation.
+NULL
+A
+Resizer
+which does not perform resizing operations.
+PROGRESSIVE
+A
+Resizer
+which performs resizing operations using
+progressive bilinear scaling.
+Method Summary
+void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+Resizes an image.
+static
+Resizers
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+static
+Resizers
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.
+Methods inherited from class java.lang.
+Enum
+compareTo
+,
+equals
+,
+getDeclaringClass
+,
+hashCode
+,
+name
+,
+ordinal
+,
+toString
+,
+valueOf
+Methods inherited from class java.lang.
+Object
+getClass
+,
+notify
+,
+notifyAll
+,
+wait
+,
+wait
+,
+wait
+Enum Constant Detail
+NULL
+public static final
+Resizers
+NULL
+A
+Resizer
+which does not perform resizing operations. The source
+image will be drawn at the origin of the destination image.
+BILINEAR
+public static final
+Resizers
+BILINEAR
+A
+Resizer
+which performs resizing operations using
+bilinear interpolation.
+BICUBIC
+public static final
+Resizers
+BICUBIC
+A
+Resizer
+which performs resizing operations using
+bicubic interpolation.
+PROGRESSIVE
+public static final
+Resizers
+PROGRESSIVE
+A
+Resizer
+which performs resizing operations using
+progressive bilinear scaling.
+For details on this technique, refer to the documentation of the
+ProgressiveBilinearResizer
+class.
+Method Detail
+values
+public static final
+Resizers
+[]
+values
+()
+Returns an array containing the constants of this enum type, in
+the order they're declared.  This method may be used to iterate
+over the constants as follows:
+for(Resizers c : Resizers.values())
+System.out.println(c);
+Returns:
+an array containing the constants of this enum type, in
+the order they're declared
+valueOf
+public static
+Resizers
+valueOf
+(
+String
+name)
+Returns the enum constant of this type with the specified name.
+The string must match
+exactly
+an identifier used to declare an
+enum constant in this type.  (Extraneous whitespace characters are
+not permitted.)
+Parameters:
+name
+- the name of the enum constant to be returned.
+Returns:
+the enum constant with the specified name
+Throws:
+IllegalArgumentException
+- if this enum type has no constant
+with the specified name
+resize
+public void
+resize
+(
+BufferedImage
+srcImage,
+BufferedImage
+destImage)
+Description copied from interface:
+Resizer
+Resizes an image.
+The source image is resized to fit the dimensions of the destination
+image and drawn.
+Specified by:
+resize
+in interface
+Resizer
+Parameters:
+srcImage
+- The source image.
+destImage
+- The destination image.
+Copyright © 2025. All rights reserved.

@@ -1,0 +1,19 @@
+MDAnalysis.analysis.polymer.sort_backbone(backbone)[source]
+
+Rearrange a linear AtomGroup into backbone order
+
+Requires that the backbone has bond information, and that only backbone atoms are provided (ie no side chains or hydrogens).
+
+Parameters:
+
+backbone (AtomGroup) – the backbone atoms, not necessarily in order
+
+Returns:
+
+sorted_backbone – backbone in order, so sorted_backbone[i] is bonded to sorted_backbone[i - 1] and sorted_backbone[i + 1]
+
+Return type:
+
+AtomGroup
+
+Added in version 0.20.0.

@@ -1,0 +1,248 @@
+ZeroShotForecaster
+
+ class tslearn.foundation.ZeroShotForecaster(model, predict_fn=None, input_layout='univariate', context_length=None, horizon_axis='auto', quantile=0.5, model_kwargs=None)[source]
+
+Forecast with a pre-trained model, without any training.
+
+Time series foundation models are pre-trained on large corpora of series and are meant to forecast unseen series out of the box. This estimator wraps such a model behind the usual tslearn forecasting API, so that it can be compared to, or combined with, the other estimators of the library. Calling fit() is therefore not required and does not learn anything.
+
+The estimator makes no assumption about a particular implementation. It only assumes that model exposes a forecasting method (auto-detected among predict_quantiles, predict, forecast and generate) accepting the context values as its first argument and a forecast horizon as a keyword argument. When this is not the case, or when finer control is needed, pass an explicit predict_fn.
+
+Parameters:
+
+modelobject
+
+A pre-trained forecasting model or inference pipeline.
+
+predict_fncallable or None (default: None)
+
+Called as predict_fn(model, context, horizon), where context is a NumPy array laid out as prescribed by input_layout, and expected to return forecasts that can be broadcast to (n_rows, horizon). When None, the model’s own forecasting method is auto-detected.
+
+input_layout{“univariate”, “channels_last”, “channels_first”} (default: “univariate”)
+
+How the context is laid out when handed over to the model. "univariate" forecasts every channel of every series independently. The other two layouts feed a (n_ts, sz, d) or (n_ts, d, sz) array respectively, for models that are natively multivariate.
+
+context_lengthint or None (default: None)
+
+When set, only the last context_length timestamps of each series are used as context.
+
+horizon_axisint or “auto” (default: “auto”)
+
+Which axis of the array returned by the model holds the forecast horizon, axis 0 being the series. When "auto", the axis is inferred from the returned shape, preferring an axis whose size is exactly the horizon and, among those, the last one. A warning is raised if the shape leaves the choice ambiguous, which happens when the model returns as many quantiles as there are forecast steps. All the axes that are neither the series axis nor the horizon axis are taken to hold quantile levels or sample paths, and are reduced according to quantile.
+
+quantilefloat or None (default: 0.5)
+
+Probabilistic models return several quantiles or sample paths; this is the quantile used to derive a point forecast from them. When None, the mean is used instead. Note that the quantile is taken over the values the model returned.
+
+model_kwargsdict or None (default: None)
+
+Extra keyword arguments passed to the model’s forecasting method.
+
+Attributes:
+
+context_format_str
+
+How the batch of contexts ended up being presented to the model, among "2d", "3d" and "list". Set after the first call to predict() with the "univariate" layout.
+
+See also
+
+LinearProbeForecaster
+
+Fit a linear head on top of a frozen pre-trained model.
+
+Notes
+
+Unlike VARIMA, this estimator holds no state about the fitted data, so predict() requires X.
+
+Examples
+
+>>> from chronos import Chronos2Pipeline
+>>> pipeline = Chronos2Pipeline.from_pretrained("amazon/chronos-2")
+>>> model = ZeroShotForecaster(pipeline)
+>>> model.predict(X, n=24).shape
+(10, 24, 1)
+
+Methods
+
+fit(X[, y])
+ |
+Do nothing, as a zero-shot model needs no training.
+ |
+
+fit_predict(X[, y, n])
+ |
+Fit the estimator and forecast n timestamps for the given data.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+predict(X[, n])
+ |
+Forecast n timestamps ahead of the given series.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+set_predict_request(*[, n])
+ |
+Configure whether metadata should be requested to be passed to the predict method.
+ |
+
+ fit(X, y=None)[source]
+
+Do nothing, as a zero-shot model needs no training.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+yIgnored
+
+Returns:
+
+self
+
+The estimator, ready to be used for prediction
+
+ fit_predict(X, y=None, n=1)[source]
+
+Fit the estimator and forecast n timestamps for the given data.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+yIgnored
+
+nint (default: 1)
+
+The number of timestamps to forecast, a.k.a. the horizon.
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ predict(X, n=1)[source]
+
+Forecast n timestamps ahead of the given series.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset to forecast.
+
+nint (default: 1)
+
+The number of timestamps to forecast, a.k.a. the horizon.
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_predict_request(*, n: bool | None | str = '$UNCHANGED$') → ZeroShotForecaster
+
+Configure whether metadata should be requested to be passed to the predict method.
+
+Note that this method is only relevant when this estimator is used as a sub-estimator within a meta-estimator and metadata routing is enabled with enable_metadata_routing=True (see sklearn.set_config()). Please check the User Guide on how the routing mechanism works.
+
+The options for each parameter are:
+
+True: metadata is requested, and passed to predict if provided. The request is ignored if metadata is not provided.
+
+False: metadata is not requested and the meta-estimator will not pass it to predict.
+
+None: metadata is not requested, and the meta-estimator will raise an error if the user provides it.
+
+str: metadata should be passed to the meta-estimator with this given alias instead of the original name.
+
+The default (sklearn.utils.metadata_routing.UNCHANGED) retains the existing request. This allows you to change the request for some parameters and not others.
+
+Added in version 1.3.
+
+Parameters:
+
+nstr, True, False, or None, default=sklearn.utils.metadata_routing.UNCHANGED
+
+Metadata routing for n parameter in predict.
+
+Returns:
+
+selfobject
+
+The updated object.
+
+Examples using tslearn.foundation.ZeroShotForecaster
+
+Forecasting with a pre-trained model
+
+Forecasting with a pre-trained model
+
+A tour of the pre-trained forecasting model zoo
+
+A tour of the pre-trained forecasting model zoo

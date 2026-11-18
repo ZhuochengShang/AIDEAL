@@ -1,0 +1,33 @@
+class MDAnalysis.lib.picklable_file_io.FileIOPicklable(name, mode='r')[source]
+
+File object (read-only) that can be pickled.
+
+This class provides a file-like object (as returned by open(), namely io.FileIO) that, unlike standard Python file objects, can be pickled. Only read mode is supported.
+
+When the file is pickled, filename and position of the open file handle in the file are saved. On unpickling, the file is opened by filename, and the file is seeked to the saved position. This means that for a successful unpickle, the original file still has to be accessible with its filename.
+
+Note
+
+This class only supports reading files in binary mode. If you need to open a file in text mode, use the pickle_open().
+
+Parameters:
+
+name (str) – either a text or byte string giving the name (and the path if the file isn’t in the current working directory) of the file to be opened.
+
+mode (str) – only reading (‘r’) mode works. It exists to be consistent with a wider API.
+
+Example
+
+>>> import pickle
+>>> from MDAnalysis.tests.datafiles import PDB
+>>> file = FileIOPicklable(PDB)
+>>> _ = file.readline()
+>>> file_pickled = pickle.loads(pickle.dumps(file))
+>>> print(file.tell(), file_pickled.tell())
+55 55
+
+See also
+
+TextIOPicklable, BufferIOPicklable
+
+Added in version 2.0.0.

@@ -1,0 +1,124 @@
+ImageSink (Thumbnailator API Documentation (Version 0.4.21))
+net.coobird.thumbnailator.tasks.io
+Interface ImageSink<T>
+Type Parameters:
+T
+- The destination class to which the thumbnail is stored
+or written.
+All Known Implementing Classes:
+AbstractImageSink
+,
+BufferedImageSink
+,
+FileImageSink
+,
+OutputStreamImageSink
+public interface
+ImageSink<T>
+An interface to be implemented by classes which stores the image resulting
+from a thumbnail generation task.
+Author:
+coobird
+Method Summary
+T
+getSink
+()
+Returns the destination to which the thumbnail will be stored or
+written.
+String
+preferredOutputFormatName
+()
+Returns the output format to use from information provided for the
+output image.
+void
+setOutputFormatName
+(
+String
+format)
+Sets the output format of the resulting image.
+void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when storing the image.
+void
+write
+(
+BufferedImage
+img)
+Writes the resulting image to a destination.
+Method Detail
+write
+void
+write
+(
+BufferedImage
+img)
+throws
+IOException
+Writes the resulting image to a destination.
+Parameters:
+img
+- The image to write or store.
+Throws:
+IOException
+- When a problem occurs while writing or storing
+the image.
+NullPointerException
+- If the image is
+null
+.
+setOutputFormatName
+void
+setOutputFormatName
+(
+String
+format)
+Sets the output format of the resulting image.
+For
+ImageSink
+s which stores raw images, the format name specified
+by this method may be ignored.
+Parameters:
+format
+- File format with which to store the image.
+setThumbnailParameter
+void
+setThumbnailParameter
+(
+ThumbnailParameter
+param)
+Sets the
+ThumbnailParameter
+from which to retrieve parameters
+to use when storing the image.
+Parameters:
+param
+- The
+ThumbnailParameter
+with image
+writing parameters.
+preferredOutputFormatName
+String
+preferredOutputFormatName
+()
+Returns the output format to use from information provided for the
+output image.
+If the output format cannot be determined, then
+ThumbnailParameter.ORIGINAL_FORMAT
+should be returned.
+Returns:
+Name of the preferred output format.
+getSink
+T
+getSink
+()
+Returns the destination to which the thumbnail will be stored or
+written.
+Returns:
+The destination for the thumbnail image.
+Copyright © 2025. All rights reserved.

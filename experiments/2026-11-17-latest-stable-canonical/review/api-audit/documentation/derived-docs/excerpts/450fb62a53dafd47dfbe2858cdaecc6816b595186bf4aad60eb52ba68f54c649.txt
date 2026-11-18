@@ -1,0 +1,67 @@
+project_single_frame(components=None, group=None, anchor=None)[source]
+
+Computes a function to project structures onto selected PCs
+
+Applies Inverse-PCA transform to the PCA atomgroup. Optionally, calculates one displacement vector per residue to extrapolate the transform to atoms not in the PCA atomgroup.
+
+Parameters:
+
+components (int, array, optional) – Components to be projected onto. The default None maps onto all components.
+
+group (AtomGroup, optional) – The AtomGroup containing atoms to be projected. The projection applies to whole residues in group. The atoms in the PCA class are not affected by this argument. The default None does not extrapolate the projection to non-PCA atoms.
+
+anchor (string, optional) – The string to select the PCA atom whose displacement vector is applied to non-PCA atoms in a residue. The anchor selection is applied to group.The resulting atomselection must have exactly one PCA atom in each residue of group. The default None does not extrapolate the projection to non-PCA atoms.
+
+Returns:
+
+The resulting function f(ts) takes as input a Timestep ts, and returns ts with the projected structure
+
+Warning
+
+The transformation function takes a Timestep as input because this is required for Trajectory transformations (“on-the-fly” transformations). However, the inverse-PCA transformation is applied on the atoms of the Universe that was used for the PCA. It is expected that the ts is from the same Universe but this is currently not checked.
+
+Return type:
+
+function
+
+Notes
+
+When the PCA class is run for an atomgroup, the principal components are cached. The trajectory can then be projected onto one or more of these principal components. Since the principal components are sorted in the order of decreasing explained variance, the first few components capture the essential molecular motion.
+
+If N is the number of atoms in the PCA group, each component has the length 3N. A PCA score \(w\_i\), along component \(u\_i\), is calculated for a set of coordinates \((r(t))\) of the same atoms. The PCA scores are then used to transform the structure, \((r(t))\) at a timestep, back to the original space.
+
+ \[\begin{split}w_{i}(t) = ({\textbf r}(t) - \bar{{\textbf r}}) \cdot {\textbf u}_i \\ {\textbf r'}(t) = (w_{i}(t) \cdot {\textbf u}_i^T) + \bar{{\textbf r}}\end{split}\]
+
+For each residue, the projection can be extended to atoms that were not part of PCA by applying the displacement vector of a PCA atom to all the atoms in the residue. This could be useful to preserve the bond distance between a PCA atom and other non-PCA atoms in a residue.
+
+If there are r residues and n non-PCA atoms in total, the displacement vector has the size 3r. This needs to be broadcasted to a size 3n. An extrapolation trick is used to shape the array, since going over each residue for each frame can be expensive. Non-PCA atoms’ displacement vector is calculated with fancy indexing on the anchors’ displacement vector. index_extrapolate saves which atoms belong to which anchors. If there are two non-PCA atoms in the first anchor’s residue and three in the second anchor’s residue, index_extrapolate is [0, 0, 1, 1, 1]
+
+Examples
+
+Run PCA class before using this function. For backbone PCA, run:
+
+pca = PCA(universe, select='backbone').run()
+
+Obtain a transformation function to project the backbone trajectory onto the first principal component:
+
+project = pca.project_single_frame(components=0)
+
+To project onto the first two components, run:
+
+project = pca.project_single_frame(components=[0,1])
+
+Alternatively, the transformation can be applied to PCA atoms and extrapolated to other atoms according to the CA atom’s translation in each residue:
+
+all = u.select_atoms('all')
+project = pca.project_single_frame(components=0,
+                                   group=all, anchor='name CA')
+
+Finally, apply the transformation function to a timestep:
+
+project(u.trajectory.ts)
+
+or apply the projection to the universe:
+
+u.trajectory.add_transformations(project)
+
+Added in version 2.2.0.

@@ -1,0 +1,30 @@
+mir_eval.transcription.average_overlap_ratio(ref_intervals, est_intervals, matching)
+
+Compute the Average Overlap Ratio between a reference and estimated note transcription. Given a reference and corresponding estimated note, their overlap ratio (OR) is defined as the ratio between the duration of the time segment in which the two notes overlap and the time segment spanned by the two notes combined (earliest onset to latest offset):
+
+>>> OR = ((min(ref_offset, est_offset) - max(ref_onset, est_onset)) /
+...     (max(ref_offset, est_offset) - min(ref_onset, est_onset)))
+
+The Average Overlap Ratio (AOR) is given by the mean OR computed over all matching reference and estimated notes. The metric goes from 0 (worst) to 1 (best).
+
+Note: this function assumes the matching of reference and estimated notes (see match_notes()) has already been performed and is provided by the matching parameter. Furthermore, it is highly recommended to validate the intervals (see validate_intervals()) before calling this function, otherwise it is possible (though unlikely) for this function to attempt a divide-by-zero operation.
+
+Parameters:
+
+ref_intervalsnp.ndarray, shape=(n,2)
+
+Array of reference notes time intervals (onset and offset times)
+
+est_intervalsnp.ndarray, shape=(m,2)
+
+Array of estimated notes time intervals (onset and offset times)
+
+matchinglist of tuples
+
+A list of matched reference and estimated notes. matching[i] == (i, j) where reference note i matches estimated note j.
+
+Returns:
+
+avg_overlap_ratiofloat
+
+The computed Average Overlap Ratio score

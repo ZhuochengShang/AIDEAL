@@ -1,0 +1,49 @@
+class MDAnalysis.core.topologyobjects.Bond(ix, universe, type=None, guessed=False, order=None)[source]
+
+A bond between two Atom instances.
+
+Two Bond instances can be compared with the == and != operators. A bond is equal to another if the same atom numbers are connected and they have the same bond order. The ordering of the two atom numbers is ignored as is the fact that a bond was guessed.
+
+The presence of a particular atom can also be queried:
+
+>>> Atom in Bond
+
+will return either True or False.
+
+Changed in version 0.9.0: Now a subclass of TopologyObject. Changed class to use __slots__ and stores atoms in atoms attribute.
+
+Create a topology object
+
+Parameters:
+
+ix (numpy array) – indices of the Atoms
+
+universe (MDAnalysis.Universe)
+
+type (optional) – Type of the bond
+
+guessed (optional) – If the Bond is guessed
+
+ length(pbc=True)[source]
+
+Length of the bond.
+
+Changed in version 0.11.0: Added pbc keyword
+
+Changed in version 0.19.0: Changed default of pbc to True
+
+ partner(Atom)[source]
+
+Returns:
+
+the other Atom in this
+
+bond
+
+ value(pbc=True)
+
+Length of the bond.
+
+Changed in version 0.11.0: Added pbc keyword
+
+Changed in version 0.19.0: Changed default of pbc to True

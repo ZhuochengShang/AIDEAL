@@ -1,0 +1,17 @@
+next()[source]
+
+Advance to the next timestep in the streaming trajectory.
+
+Streaming readers process frames sequentially and cannot rewind once iteration completes. Use for ts in trajectory for iteration.
+
+Returns:
+
+The next timestep in the stream
+
+Return type:
+
+Timestep
+
+Raises:
+
+StopIteration – When the stream ends or no more frames are available

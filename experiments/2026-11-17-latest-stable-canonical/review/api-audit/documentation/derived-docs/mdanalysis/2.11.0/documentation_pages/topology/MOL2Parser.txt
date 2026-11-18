@@ -1,0 +1,207 @@
+5.14. MOL2 file format — MDAnalysis.coordinates.MOL2
+
+Classes to read Tripos molecule structure format (MOL2) coordinate and topology files. Used by the DOCK docking code.
+
+5.14.1. Classes
+
+ class MDAnalysis.topology.MOL2Parser.MOL2Parser(filename)[source]
+
+Reads topology from a Tripos MOL2 file.
+
+Creates the following Attributes:
+
+Atomids
+
+Atomnames
+
+Atomtypes
+
+Charges
+
+Resids
+
+Resnames
+
+Bonds
+
+Elements
+
+Note
+
+By default, masses will be guessed on Universe creation. This may change in release 3.0. See Guesser modules for more information.
+
+Notes
+
+Elements are obtained directly from the SYBYL atom types. If some atoms have unknown atom types, they will be assigned an empty element record. If all atoms have unknown atom types, the elements attribute will not be set.
+
+Dealing with optional fields:
+
+resid will set to 1 when not provided.
+
+If no atoms have resname field, resnames attribute will not be set; If some atoms have resname while some do not, ValueError will occur.
+
+If “NO_CHARGES” shows up in “@<TRIPOS>MOLECULE” section and no atoms have the charge field, charges attribute will not be set; If “NO_CHARGES” shows up while charge field appears, ValueError will occur; If a charge model is specified while some atoms don’t have charge, ValueError will occur as well.
+
+Raises:
+
+ValueError – If some atoms have the optional field resname (aka subst_name) while some do not.
+
+ValueError – If “NO_CHARGES” shows up in “@<TRIPOS>MOLECULE” section while some atoms have the optional field charge.
+
+ValueError – If a charge model is specified in “@<TRIPOS>MOLECULE” section while some atoms do not have the optional field charge.
+
+Changed in version 0.9: Now subclasses TopologyReaderBase
+
+Changed in version 0.20.0: Allows for comments at the top of the file Ignores status bit strings
+
+Changed in version 2.0.0: Bonds attribute is not added if no bonds are present in MOL2 file
+
+Changed in version 2.0.0: Parse elements from atom types.
+
+Changed in version 2.2.0: Read MOL2 files with optional columns omitted.
+
+Changed in version 2.8.0: Removed mass guessing (attributes guessing takes place now through universe.guess_TopologyAttrs() API).
+
+ close()
+
+Close the trajectory file.
+
+ convert_forces_from_native(force, inplace=True)
+
+Conversion of forces array force from native to base units
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_forces_to_native(force, inplace=True)
+
+Conversion of force array force from base to native units.
+
+Parameters:
+
+force (array_like) – Forces to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input force is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.7.
+
+ convert_pos_from_native(x, inplace=True)
+
+Conversion of coordinate array x from native units to base units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_pos_to_native(x, inplace=True)
+
+Conversion of coordinate array x from base units to native units.
+
+Parameters:
+
+x (array_like) – Positions to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input x is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_from_native(t, inplace=True)
+
+Convert time t from native units to base units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned (although note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.) In-place operations improve performance because allocating new arrays is avoided.
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_time_to_native(t, inplace=True)
+
+Convert time t from base units to native units.
+
+Parameters:
+
+t (array_like) – Time values to transform
+
+inplace (bool, optional) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input t is modified in place and also returned. (Also note that scalar values t are passed by value in Python and hence an in-place modification has no effect on the caller.)
+
+Changed in version 0.7.5: Keyword inplace can be set to False so that a modified copy is returned unless no conversion takes place, in which case the reference to the unmodified x is returned.
+
+ convert_velocities_from_native(v, inplace=True)
+
+Conversion of velocities array v from native to base units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ convert_velocities_to_native(v, inplace=True)
+
+Conversion of coordinate array v from base to native units
+
+Parameters:
+
+v (array_like) – Velocities to transform
+
+inplace (bool (optional)) – Whether to modify the array inplace, overwriting previous data
+
+Note
+
+By default, the input v is modified in place and also returned. In-place operations improve performance because allocating new arrays is avoided.
+
+Added in version 0.7.5.
+
+ parse(**kwargs)[source]
+
+Parse MOL2 file filename and return the dict structure.
+
+Return type:
+
+A MDAnalysis Topology object
+
+ units = {'length': None, 'time': None, 'velocity': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

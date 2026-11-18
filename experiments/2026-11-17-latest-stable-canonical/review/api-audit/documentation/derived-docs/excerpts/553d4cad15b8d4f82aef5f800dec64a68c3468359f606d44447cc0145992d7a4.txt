@@ -1,0 +1,20 @@
+class MDAnalysis.lib.picklable_file_io.BufferIOPicklable(raw)[source]
+
+A picklable buffer object for read-only FileIO object.
+
+This class provides a buffered io.BufferedReader that can be pickled. Note that this only works in read mode.
+
+Parameters:
+
+raw (FileIO object)
+
+Example
+
+file = FileIOPicklable('filename')
+buffer_wrapped = BufferIOPicklable(file)
+
+See also
+
+FileIOPicklable, TextIOPicklable
+
+Added in version 2.0.0.

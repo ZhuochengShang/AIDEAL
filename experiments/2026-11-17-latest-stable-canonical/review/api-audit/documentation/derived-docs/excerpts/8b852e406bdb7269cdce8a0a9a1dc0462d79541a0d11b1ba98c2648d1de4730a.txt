@@ -1,0 +1,23 @@
+class MDAnalysis.analysis.encore.clustering.ClusteringMethod.KMeans(n_clusters, max_iter=300, n_init=10, init='k-means++', algorithm='auto', tol=0.0001, verbose=False, random_state=None, copy_x=True, **kwargs)[source]
+
+Parameters:
+
+n_clusters (int) – The number of clusters to form as well as the number of centroids to generate.
+
+max_iter (int, optional (default 300)) – Maximum number of iterations of the k-means algorithm to run.
+
+n_init (int, optional (default 10)) – Number of time the k-means algorithm will be run with different centroid seeds. The final results will be the best output of n_init consecutive runs in terms of inertia.
+
+init ({'k-means++', 'random', or ndarray, or a callable}, optional) – Method for initialization, default to ‘k-means++’: ‘k-means++’ : selects initial cluster centers for k-mean clustering in a smart way to speed up convergence. See section Notes in k_init for more details. ‘random’: generate k centroids from a Gaussian with mean and variance estimated from the data. If an ndarray is passed, it should be of shape (n_clusters, n_features) and gives the initial centers. If a callable is passed, it should take arguments X, k and and a random state and return an initialization.
+
+tol (float, optional (default 1e-4)) – The relative increment in the results before declaring convergence.
+
+verbose (boolean, optional (default False)) – Verbosity mode.
+
+random_state (integer or numpy.RandomState, optional) – The generator used to initialize the centers. If an integer is given, it fixes the seed. Defaults to the global numpy random number generator.
+
+copy_x (boolean, optional) – When pre-computing distances it is more numerically accurate to center the data first. If copy_x is True, then the original data is not modified. If False, the original data is modified, and put back before the function returns, but small numerical differences may be introduced by subtracting and then adding the data mean.
+
+ accepts_distance_matrix = False
+
+Interface to the KMeans clustering procedure implemented in sklearn.

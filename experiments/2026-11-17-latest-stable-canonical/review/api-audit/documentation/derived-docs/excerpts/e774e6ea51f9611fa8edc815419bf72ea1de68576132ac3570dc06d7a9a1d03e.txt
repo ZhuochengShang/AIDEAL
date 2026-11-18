@@ -1,0 +1,11 @@
+_check_pdb_coordinates()[source]
+
+Check if the coordinate values fall within the range allowed for PDB files.
+
+Deletes the output file if this is the first frame or if frames have already been written (in multi-frame mode) adds a REMARK instead of the coordinates and closes the file.
+
+Raises:
+
+ValueError – if the coordinates fail the check.
+
+.. versionchanged – 1.0.0: Check if filename is StringIO when attempting to remove a PDB file with invalid coordinates (Issue #2512)

@@ -1,0 +1,53 @@
+{
+  "name": "python:mir_eval.alignment.evaluate",
+  "doc_source": "original",
+  "experiment_fingerprint": "a3c16e3a4c38c1ffbcebc379c6b532f608f2451cc24f276a8f6bebf1b62459e5",
+  "execution_evidence": {
+    "status": "fail",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "fail",
+        "category": "runtime",
+        "error": "AssertionError:"
+      }
+    ],
+    "error_category": "runtime",
+    "error": "AssertionError:",
+    "code": "scores = mir_eval.alignment.evaluate(ref_events, est_events)\nassert isinstance(scores, dict)\nassert 'Precision' in scores\nassert 'Recall' in scores\nassert 'F-measure' in scores\nprint(f\"__CHECK__ python:mir_eval.alignment.evaluate {scores['F-measure']:.4f}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.evaluate--349f6f96e5f93cc78d0fd96521e30797ba20812d2cb918d315cfb1161161e1a1/api_test.py",
+    "exit_code": 1,
+    "stdout_tail": "",
+    "stderr_tail": "__RUN_ERR__ AssertionError: \nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.evaluate--349f6f96e5f93cc78d0fd96521e30797ba20812d2cb918d315cfb1161161e1a1/api_test.py\", line 47, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.evaluate--349f6f96e5f93cc78d0fd96521e30797ba20812d2cb918d315cfb1161161e1a1/api_test.py\", line 42, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.evaluate--349f6f96e5f93cc78d0fd96521e30797ba20812d2cb918d315cfb1161161e1a1/api_test.py\", line 35, in api_test\n    assert 'Precision' in scores\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "status": "fail",
+  "attempts": 1,
+  "rendered_prompt_sha256": [
+    "f5b6342c89b422a8884624ee610a95f594d6b13800fe1492544441448b50dfce"
+  ],
+  "attempt_evidence": [
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.evaluate--349f6f96e5f93cc78d0fd96521e30797ba20812d2cb918d315cfb1161161e1a1/attempt_0001"
+  ],
+  "pass_round": null,
+  "wall_s": 3.8,
+  "llm_calls": 1,
+  "input_tokens": 2165,
+  "output_tokens": 77,
+  "by_model": {
+    "google:gemini-3.1-flash-lite": {
+      "calls": 1,
+      "input_tokens": 2165,
+      "output_tokens": 77,
+      "missing_usage_calls": 0,
+      "usage_complete": true
+    }
+  },
+  "error_category": "runtime",
+  "error": "AssertionError:",
+  "locus": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mir_eval/mir_eval/execution/run_python_mir_eval.alignment.evaluate--349f6f96e5f93cc78d0fd96521e30797ba20812d2cb918d315cfb1161161e1a1/api_test.py:35",
+  "doc_chars": 2516,
+  "document_sha256": "1e44deeea436167d3784dd3e6a17d9d62eb7b89cb4ccd0df94f30664a910a3a8",
+  "source": "source/mir_eval/alignment.py:312",
+  "source_other_sites": 0,
+  "codebase_frames": null
+}

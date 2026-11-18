@@ -1,0 +1,23 @@
+MDAnalysis.lib.util.guess_format(filename)[source]
+
+Return the format of filename
+
+The current heuristic simply looks at the filename extension and can work around compressed format extensions.
+
+Parameters:
+
+filename (str or stream) – path to the file or a stream, in which case filename.name is looked at for a hint to the format
+
+Returns:
+
+format – format specifier (upper case)
+
+Return type:
+
+str
+
+Raises:
+
+ValueError – if the heuristics are insufficient to guess a supported format
+
+Added in version 0.11.0: Moved into lib.util

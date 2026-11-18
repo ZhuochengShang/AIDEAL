@@ -1,0 +1,58 @@
+scale
+public
+Thumbnails.Builder
+<
+T
+>
+scale
+(double scaleWidth,
+double scaleHeight)
+Sets the scaling factor for the width and height of the thumbnail.
+If the scaling factor for the width and height are not equal, then
+the thumbnail will not preserve the aspect ratio of the original
+image.
+For example, to create thumbnails which are 50% the width of the
+original, while 75% the height of the original, the following code
+can be used:
+Thumbnails.of(image)
+.scale(0.5, 0.75)
+.toFile(thumbnail);
+Once this method is called, calling the
+size(int, int)
+method, or the
+scale(double)
+method, or the
+keepAspectRatio(boolean)
+method will result in an
+IllegalStateException
+.
+Calling this method multiple times will result in an
+IllegalStateException
+to be thrown.
+Parameters:
+scaleWidth
+- The scaling factor to use for the width when
+creating a thumbnail.
+The value must be a
+double
+which is
+greater than
+0.0
+, and not
+Double.POSITIVE_INFINITY
+.
+scaleHeight
+- The scaling factor to use for the height when
+creating a thumbnail.
+The value must be a
+double
+which is
+greater than
+0.0
+, and not
+Double.POSITIVE_INFINITY
+.
+Returns:
+Reference to this object.
+Since:
+0.3.10

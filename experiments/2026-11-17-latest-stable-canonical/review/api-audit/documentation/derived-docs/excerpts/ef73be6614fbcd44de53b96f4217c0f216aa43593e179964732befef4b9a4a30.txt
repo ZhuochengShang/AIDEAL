@@ -1,0 +1,15 @@
+get_connections(typename, outside=True)
+
+Get bonded connections between atoms as a TopologyGroup.
+
+Parameters:
+
+typename (str) – group name. One of {“bonds”, “angles”, “dihedrals”, “impropers”, “ureybradleys”, “cmaps”}
+
+outside (bool (optional)) – Whether to include connections involving atoms outside this group.
+
+Returns:
+
+TopologyGroup – containing the bonded group of choice, i.e. bonds, angles, dihedrals, impropers, ureybradleys or cmaps.
+
+.. versionadded:: 1.1.0

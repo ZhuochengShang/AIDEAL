@@ -1,0 +1,23 @@
+MDAnalysis.analysis.encore.covariance.covariance_matrix(ensemble, select='name CA', estimator=<function shrinkage_covariance_estimator>, weights='mass', reference=None)[source]
+
+Calculates (optionally mass weighted) covariance matrix
+
+Parameters:
+
+ensemble (Universe object) – The structural ensemble
+
+select (str (optional)) – Atom selection string in the MDAnalysis format.
+
+estimator (function (optional)) – Function that estimates the covariance matrix. It requires at least a “coordinates” numpy array (of shape (N,M,3), where N is the number of frames and M the number of atoms). See ml_covariance_estimator and shrinkage_covariance_estimator for reference.
+
+weights (str/array_like (optional)) – specify weights. If 'mass' then chose masses of ensemble atoms, if None chose uniform weights
+
+reference (MDAnalysis.Universe object (optional)) – Use the distances to a specific reference structure rather than the distance to the mean.
+
+Returns:
+
+cov_mat – Covariance matrix
+
+Return type:
+
+numpy.array

@@ -1,0 +1,266 @@
+class tslearn.foundation.TimeSeriesFoundationEmbedder(model, layer=None, layers_path=None, pooling='mean', tokens=None, token_index=0, input_layout='univariate', input_name=None, model_kwargs=None, batch_size=32, device=None, verbose=0)[source]
+
+Turn a frozen pre-trained time series model into a feature extractor.
+
+This transformer runs a (typically pre-trained) PyTorch model in inference mode and pools its hidden states into a single vector per time series. It is the building block used by LinearProbeForecaster, and can also be used on its own, for instance inside a sklearn.pipeline.Pipeline ahead of a classifier, to implement linear probing for classification.
+
+The transformer is deliberately agnostic to any particular model implementation. It only assumes that:
+
+model is a torch.nn.Module;
+
+its forward method accepts the raw context values through one argument (auto-detected among common names, see input_name);
+
+it returns hidden states of shape (batch, n_tokens, dim) if pooling=None and (batch, dim) otherwise.
+
+Parameters:
+
+modeltorch.nn.Module
+
+A pre-trained model used as a frozen feature extractor. Its parameters are never updated by this class.
+
+layerint or None (default: None)
+
+Which layer to read representations from. When None, the output of the model itself is used, which is usually the last hidden state after the final normalization layer. When an integer is given, a forward hook is placed on the corresponding block of the model’s layer stack, so that layer=0 probes the first block and layer=-1 the last one. Probing intermediate layers is often preferable, as the last layers of a pre-trained model tend to specialize towards its pre-training objective [1].
+
+layers_pathstr or None (default: None)
+
+Dotted path to the module holding the stack of layers, e.g. "encoder.block". Only used when layer is an integer. When None, the stack is auto-detected as the longest list of identical sub-modules.
+
+pooling{“mean”, “max”, “token”, “last”, “flatten”, None} (default: “mean”)
+
+How to aggregate the n_tokens representations of a series into a single vector. "token" selects the single token at index token_index, which is how one reaches a token that carries a meaning of its own, such as a class token for classification, or a forecast token for forecasting. "last" selects the last token and "flatten" concatenates them all, which yields a much larger, and context-length dependent, feature vector.
+
+None, for which the string "none" is accepted as an alias, applies no pooling at all: transform() then returns a time series dataset of shape (n_ts, n_tokens, dim) rather than a flat feature matrix, which turns this estimator into a time series to time series transform. Combined with tokens, this is a way to obtain one representation per timestep, or per patch of timesteps, that can be fed to any other tslearn estimator. Note that the resulting series are not accepted by the linear probes of this module, which need a flat feature matrix.
+
+tokensslice, (start, stop) pair or None (default: None)
+
+Which tokens to keep before pooling. Models often emit tokens that do not represent the input series, such as class, register or forecast tokens; excluding them is usually what one wants, both to build clean per-timestep representations and to avoid polluting an average. When None, all tokens are kept. This parameter does not affect pooling="token".
+
+token_indexint (default: 0)
+
+Index of the token to select when pooling="token".
+
+input_layout{“univariate”, “channels_last”, “channels_first”} (default: “univariate”)
+
+How the context is laid out when handed over to the model. "univariate" forecasts every channel of every series independently. The other two layouts feed a (n_ts, sz, d) or (n_ts, d, sz) array respectively, for models that are natively multivariate.
+
+input_namestr or None (default: None)
+
+Name of the forward argument receiving the context values.
+
+model_kwargsdict or None (default: None)
+
+Extra keyword arguments passed to every forward call.
+
+batch_sizeint (default: 32)
+
+Number of series embedded at once.
+
+verboseint (default: 0)
+
+When positive, prints progress information.
+
+Attributes:
+
+n_features_in_int
+
+Number of features (channels) of the series seen during fit.
+
+embedding_size_int
+
+Dimension of the produced embeddings. When pooling is None, this is the number of features of each timestep of the produced series.
+
+n_tokens_int or None
+
+Number of tokens kept per series when pooling is None, that is, the length of the produced series. None otherwise.
+
+Notes
+
+This estimator does not support variable length time series, as the NaN padding used by tslearn to represent them would propagate through most models.
+
+References
+
+ [1]
+G. Alain and Y. Bengio. Understanding intermediate layers using linear classifier probes. ICLR Workshop, 2017.
+
+Examples
+
+>>> from chronos import Chronos2Model
+>>> model = Chronos2Model.from_pretrained("amazon/chronos-2")
+>>> embedder = TimeSeriesFoundationEmbedder(model, layer=-2)
+>>> embedder.fit_transform(X).shape
+(10, 512)
+
+Keeping one representation per token, as a time series dataset:
+
+>>> embedder = TimeSeriesFoundationEmbedder(
+...     model, layer=-2, pooling=None, tokens=(0, -2))
+>>> embedder.fit_transform(X).shape
+(10, 16, 512)
+
+Methods
+
+fit(X[, y])
+ |
+Check the model and the input data.
+ |
+
+fit_transform(X[, y])
+ |
+Fit the estimator and embed a time series dataset.
+ |
+
+get_metadata_routing()
+ |
+Get metadata routing of this object.
+ |
+
+get_params([deep])
+ |
+Get parameters for this estimator.
+ |
+
+set_output(*[, transform])
+ |
+Set output container.
+ |
+
+set_params(**params)
+ |
+Set the parameters of this estimator.
+ |
+
+transform(X)
+ |
+Embed a time series dataset.
+ |
+
+ fit(X, y=None)[source]
+
+Check the model and the input data. No parameter is learnt.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+yIgnored
+
+Returns:
+
+self
+
+The fitted estimator
+
+ fit_transform(X, y=None, **fit_params)[source]
+
+Fit the estimator and embed a time series dataset.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+yIgnored
+
+Returns:
+
+array of shape=(n_ts, embedding_size_), or
+
+(n_ts, n_tokens_, embedding_size_) when pooling is None
+
+Frozen representations of the input series.
+
+ get_metadata_routing()
+
+Get metadata routing of this object.
+
+Please check User Guide on how the routing mechanism works.
+
+Returns:
+
+routingMetadataRequest
+
+A MetadataRequest encapsulating routing information.
+
+ get_params(deep=True)
+
+Get parameters for this estimator.
+
+Parameters:
+
+deepbool, default=True
+
+If True, will return the parameters for this estimator and contained subobjects that are estimators.
+
+Returns:
+
+paramsdict
+
+Parameter names mapped to their values.
+
+ set_output(*, transform=None)
+
+Set output container.
+
+See Introducing the set_output API for an example on how to use the API.
+
+Parameters:
+
+transform{“default”, “pandas”, “polars”}, default=None
+
+Configure output of transform and fit_transform.
+
+“default”: Default output format of a transformer
+
+“pandas”: DataFrame output
+
+“polars”: Polars output
+
+None: Transform configuration is unchanged
+
+Added in version 1.4: “polars” option was added.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ set_params(**params)
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects (such as Pipeline). The latter have parameters of the form <component>__<parameter> so that it’s possible to update each component of a nested object.
+
+Parameters:
+
+**paramsdict
+
+Estimator parameters.
+
+Returns:
+
+selfestimator instance
+
+Estimator instance.
+
+ transform(X)[source]
+
+Embed a time series dataset.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset.
+
+Returns:
+
+array of shape=(n_ts, embedding_size_), or
+
+(n_ts, n_tokens_, embedding_size_) when pooling is None
+
+Frozen representations of the input series.

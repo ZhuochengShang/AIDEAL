@@ -1,0 +1,42 @@
+class MDAnalysis.coordinates.chemfiles.ChemfilesPicklable(path, mode='r', format='')[source]
+
+Chemfiles file object (read-only) that can be pickled.
+
+This class provides a file-like object (as returned by chemfiles.Trajectory) that, unlike standard Python file objects, can be pickled. Only read mode is supported.
+
+When the file is pickled, path, mode, and format of the file handle are saved. On unpickling, the file is opened by path with mode, and saved format. This means that for a successful unpickle, the original file still has to be accessible with its filename.
+
+Note
+
+Can only be used with reading (‘r’) mode. Upon pickling, the current frame is reset. universe.trajectory[i] has to be used to return to its original frame.
+
+Parameters:
+
+filename (str) – a filename given a text or byte string.
+
+mode ('r' , optional) – only ‘r’ can be used for pickling.
+
+format ('', optional) – guessed from the file extension if empty.
+
+Example
+
+f = ChemfilesPicklable(XYZ, 'r', '')
+print(f.read())
+f.close()
+
+can also be used as context manager:
+
+with ChemfilesPicklable(XYZ) as f:
+    print(f.read())
+
+See also
+
+MDAnalysis.lib.picklable_file_io.FileIOPicklable, MDAnalysis.lib.picklable_file_io.BufferIOPicklable, MDAnalysis.lib.picklable_file_io.TextIOPicklable, MDAnalysis.lib.picklable_file_io.GzipPicklable, MDAnalysis.lib.picklable_file_io.BZ2Picklable
+
+Added in version 2.0.0.
+
+Open the file at the given path using the given mode and optional file format.
+
+Valid modes are 'r' for read, 'w' for write and 'a' for append.
+
+The format parameter is needed when the file format does not match the extension, or when there is not standard extension for this format. If format is an empty string, the format will be guessed from the file extension.

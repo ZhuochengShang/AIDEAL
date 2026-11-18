@@ -1,0 +1,19 @@
+predict(X, n=None)[source]
+
+Forecast horizon (or n, if set) timestamps ahead of the given series.
+
+Parameters:
+
+Xarray-like of shape=(n_ts, sz, d)
+
+Time series dataset to forecast, with sz >= context_length.
+
+nint or None (default: None)
+
+The number of timestamps to forecast. A single head is fitted for the whole horizon, so n may not exceed the horizon value used at fit time. When None, horizon is used.
+
+Returns:
+
+array of shape=(n_ts, n, d)
+
+Array of forecasted timestamps

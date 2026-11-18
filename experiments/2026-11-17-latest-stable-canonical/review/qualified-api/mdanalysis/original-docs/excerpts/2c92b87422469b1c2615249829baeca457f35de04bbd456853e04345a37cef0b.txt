@@ -1,0 +1,19 @@
+class MDAnalysis.lib.log.NullHandler(level=0)[source]
+
+Silent Handler.
+
+Useful as a default:
+
+h = NullHandler()
+logging.getLogger("MDAnalysis").addHandler(h)
+del h
+
+see the advice on logging and libraries in http://docs.python.org/library/logging.html?#configuring-logging-for-a-library
+
+Initializes the instance - basically setting the formatter to None and the filter list to empty.
+
+ emit(record)[source]
+
+Do whatever it takes to actually log the specified logging record.
+
+This version is intended to be implemented by subclasses and so raises a NotImplementedError.

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import re
 from .config import AidealConfig
+from .api_registry import target_key
 from .api_discovery import (
     public_api_details,
 )
@@ -64,7 +65,7 @@ def _catalogue_model(entries, tiers: dict, exec_status: dict, class_of: dict, ow
     gkey_label: dict[str, str] = {}
     for e in entries:
         f = (file_of or {}).get(e.name, "")
-        if f.endswith(".scala"):
+        if f.endswith(".scala") and ":" not in e.name:
             gkey = f[:-6]                              # path stem — unique per source file
             label = _os.path.basename(gkey)
         else:
@@ -145,7 +146,7 @@ def write_catalogue(cfg: AidealConfig) -> dict:
     tiers, class_of, _ = _grounding_tiers(cfg)
     exec_status = _exec_status_map(cfg)
     owner = _owner_map(cfg)
-    file_of = {d["name"]: d["file"] for d in public_api_details(cfg)}
+    file_of = {target_key(d): d["file"] for d in public_api_details(cfg)}
     model = _catalogue_model(entries, tiers, exec_status, class_of, owner, file_of=file_of)
     by_name = {e.name: e for e in entries}
     api_dir = cfg.llm_readme.parent / "api"

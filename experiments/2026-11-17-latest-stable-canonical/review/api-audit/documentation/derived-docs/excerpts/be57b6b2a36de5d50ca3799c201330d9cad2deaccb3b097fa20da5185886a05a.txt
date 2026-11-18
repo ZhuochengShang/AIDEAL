@@ -1,0 +1,282 @@
+class MDAnalysis.coordinates.PDB.PDBReader(filename, **kwargs)[source]
+
+PDBReader that reads a PDB-formatted file, no frills.
+
+The following PDB records are parsed (see PDB coordinate section for details):
+
+CRYST1 for unitcell A,B,C, alpha,beta,gamma
+
+ATOM or HETATM for serial,name,resName,chainID,resSeq,x,y,z,occupancy,tempFactor
+
+HEADER (header), TITLE (title), COMPND
+
+(compound), REMARK (remarks)
+
+all other lines are ignored
+
+Reads multi-MODEL PDB files as trajectories. The Timestep.data dictionary holds the occupancy and tempfactor (bfactor) values for each atom for a given frame. These attributes are commonly appropriated to store other time varying properties and so they are exposed here. Note this does not update the AtomGroup attributes, as the topology does not change with trajectory iteration.
+
+COLUMNS
+ |
+DATA TYPE
+ |
+FIELD
+ |
+DEFINITION
+ |
+
+1 - 6
+ |
+Record name
+ |
+“CRYST1”
+ |   |
+
+7 - 15
+ |
+Real(9.3)
+ |
+a
+ |
+a (Angstroms).
+ |
+
+16 - 24
+ |
+Real(9.3)
+ |
+b
+ |
+b (Angstroms).
+ |
+
+25 - 33
+ |
+Real(9.3)
+ |
+c
+ |
+c (Angstroms).
+ |
+
+34 - 40
+ |
+Real(7.2)
+ |
+alpha
+ |
+alpha (degrees).
+ |
+
+41 - 47
+ |
+Real(7.2)
+ |
+beta
+ |
+beta (degrees).
+ |
+
+48 - 54
+ |
+Real(7.2)
+ |
+gamma
+ |
+gamma (degrees).
+ |
+
+1 - 6
+ |
+Record name
+ |
+“ATOM “
+ |   |
+
+7 - 11
+ |
+Integer
+ |
+serial
+ |
+Atom serial number.
+ |
+
+13 - 16
+ |
+Atom
+ |
+name
+ |
+Atom name.
+ |
+
+17
+ |
+Character
+ |
+altLoc
+ |
+Alternate location indicator.
+ |
+
+18 - 21
+ |
+Residue name
+ |
+resName
+ |
+Residue name.
+ |
+
+22
+ |
+Character
+ |
+chainID
+ |
+Chain identifier.
+ |
+
+23 - 26
+ |
+Integer
+ |
+resSeq
+ |
+Residue sequence number.
+ |
+
+27
+ |
+AChar
+ |
+iCode
+ |
+Code for insertion of residues.
+ |
+
+31 - 38
+ |
+Real(8.3)
+ |
+x
+ |
+Orthogonal coordinates for X in Angstroms.
+ |
+
+39 - 46
+ |
+Real(8.3)
+ |
+y
+ |
+Orthogonal coordinates for Y in Angstroms.
+ |
+
+47 - 54
+ |
+Real(8.3)
+ |
+z
+ |
+Orthogonal coordinates for Z in Angstroms.
+ |
+
+55 - 60
+ |
+Real(6.2)
+ |
+occupancy
+ |
+Occupancy.
+ |
+
+61 - 66
+ |
+Real(6.2)
+ |
+tempFactor
+ |
+Temperature factor.
+ |
+
+67 - 72
+ |   |   |
+(not used in the official PDB format)
+ |
+
+73 - 76
+ |
+String
+ |
+segID
+ |
+(unofficial PDB format*)
+ |
+
+77 - 78
+ |
+LString(2)
+ |
+element
+ |
+Element symbol, right-justified.
+ |
+
+79 - 80
+ |
+LString(2)
+ |
+charge
+ |
+Charge on the atom.
+ |
+
+Notes
+
+If a system does not have unit cell parameters (such as in electron microscopy structures), the PDB file format requires the CRYST1 field to be provided with unitary values (cubic box with sides of 1 Å) and an appropriate REMARK. If unitary values are found within the CRYST1 field, PDBReader will not set unit cell dimensions (which will take the default value np.zeros(6), see Issue #2698) and it will warn the user.
+
+*The columns 73-76 are not part of the official PDB format but are used by some programs to store/operate the segment ID. For instance, Chimera assigns it as the attribute pdbSegment to allow command-line specification.
+
+See also
+
+PDBWriter PDBReader
+
+If you would like to force the use of chainID as the segID when parsing PDB, please use the keyword argument force_chainids_to_segids=True (MDAnalysis.topology.PDBParser.PDBParser). This will prioritize the chain ID to the segment ID.
+
+Changed in version 0.11.0: * Frames now 0-based instead of 1-based * New title (list with all TITLE lines).
+
+Changed in version 0.19.1: Can now read PDB files with DOS line endings
+
+Changed in version 0.20.0: Strip trajectory header of trailing spaces and newlines
+
+Changed in version 1.0.0: Raise user warning for CRYST1 record with unitary values (cubic box with sides of 1 Å) and do not set cell dimensions.
+
+Changed in version 2.5.0: Tempfactors (aka bfactors) are now read into the ts.data dictionary each frame. Occupancies are also read into this dictionary.
+
+Read coordinates from filename.
+
+filename can be a gzipped or bzip2ed compressed PDB file.
+
+If the pdb file contains multiple MODEL records then it is read as a trajectory where the MODEL numbers correspond to frame numbers.
+
+ Writer(filename, **kwargs)[source]
+
+Returns a PDBWriter for filename.
+
+Parameters:
+
+filename (str) – filename of the output PDB file
+
+Return type:
+
+PDBWriter
+
+ close()[source]
+
+Close the trajectory file.
+
+ units = {'length': 'Angstrom', 'time': None}
+
+dict with units of of time and length (and velocity, force, … for formats that support it)

@@ -1,0 +1,46 @@
+MDAnalysis.lib.picklable_file_io.pickle_open(name, mode='rt')[source]
+
+Open file and return a stream with pickle function implemented.
+
+This function returns a FileIOPicklable object wrapped in a BufferIOPicklable class when given the “rb” reading mode, or a FileIOPicklable object wrapped in a TextIOPicklable class with the “r” or “rt” reading mode. It can be used as a context manager, and replace the built-in open() function in read mode that only returns an unpicklable file object. In order to serialize a MDAnalysis.core.Universe, this function can used to open trajectory/topology files. This object composition is more flexible and easier than class inheritance to implement pickling for new readers.
+
+Note
+
+Can be only used with read mode.
+
+Parameters:
+
+name (str) – either a text or byte string giving the name (and the path if the file isn’t in the current working directory) of the file to be opened.
+
+mode ({'r', 'rt', 'rb'} (optional)) – ‘r’: open for reading in text mode; ‘rt’: read in text mode (default); ‘rb’: read in binary mode;
+
+Returns:
+
+stream-like object – when mode is ‘r’ or ‘rt’, returns TextIOPicklable; when mode is ‘rb’, returns BufferIOPicklable
+
+Return type:
+
+BufferIOPicklable or TextIOPicklable
+
+Raises:
+
+ValueError – if mode is not one of the allowed read modes
+
+Examples
+
+open as context manager:
+
+with pickle_open('filename') as f:
+    line = f.readline()
+
+open as function:
+
+f = pickle_open('filename')
+line = f.readline()
+f.close()
+
+See also
+
+MDAnalysis.lib.util.anyopen(), io.open()
+
+Added in version 2.0.0.

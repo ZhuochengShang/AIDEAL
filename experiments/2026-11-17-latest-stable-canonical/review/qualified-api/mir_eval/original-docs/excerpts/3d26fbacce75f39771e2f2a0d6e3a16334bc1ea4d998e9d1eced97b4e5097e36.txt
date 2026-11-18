@@ -1,0 +1,34 @@
+mir_eval.segment.deviation(reference_intervals, estimated_intervals, trim=False)
+
+Compute the median deviations between reference and estimated boundary times.
+
+Parameters:
+
+reference_intervalsnp.ndarray, shape=(n, 2)
+
+reference segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+estimated_intervalsnp.ndarray, shape=(m, 2)
+
+estimated segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+trimboolean
+
+if True, the first and last intervals are ignored. Typically, these denote start (0.0) and end-of-track markers. (Default value = False)
+
+Returns:
+
+reference_to_estimatedfloat
+
+median time from each reference boundary to the closest estimated boundary
+
+estimated_to_referencefloat
+
+median time from each estimated boundary to the closest reference boundary
+
+Examples
+
+>>> ref_intervals, _ = mir_eval.io.load_labeled_intervals('ref.lab')
+>>> est_intervals, _ = mir_eval.io.load_labeled_intervals('est.lab')
+>>> r_to_e, e_to_r = mir_eval.boundary.deviation(ref_intervals,
+...                                              est_intervals)

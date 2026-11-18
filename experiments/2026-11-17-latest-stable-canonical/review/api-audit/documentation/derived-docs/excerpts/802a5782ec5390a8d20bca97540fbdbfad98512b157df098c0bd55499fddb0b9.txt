@@ -1,0 +1,45 @@
+class MDAnalysis.core.topologyobjects.TopologyObject(ix, universe, type=None, guessed=False, order=None)[source]
+
+Base class for all Topology items.
+
+Defines the behaviour by which Bonds/Angles/etc in MDAnalysis should behave.
+
+Added in version 0.9.0.
+
+Changed in version 0.10.0: All TopologyObject now keep track of if they were guessed or not via the is_guessed managed property.
+
+Added in version 0.11.0: Added the value method to return the size of the object
+
+Changed in version 2.6.0: Updated Atom ID representation order to match that of AtomGroup indices
+
+Create a topology object
+
+Parameters:
+
+ix (numpy array) – indices of the Atoms
+
+universe (MDAnalysis.Universe)
+
+type (optional) – Type of the bond
+
+guessed (optional) – If the Bond is guessed
+
+ property atoms
+
+Atoms within this Bond
+
+ property indices
+
+Tuple of indices describing this object
+
+Added in version 0.10.0.
+
+ property type
+
+Type of the bond as a tuple
+
+Note
+
+When comparing types, it is important to consider the reverse of the type too, i.e.:
+
+a.type == b.type or a.type == b.type[::-1]

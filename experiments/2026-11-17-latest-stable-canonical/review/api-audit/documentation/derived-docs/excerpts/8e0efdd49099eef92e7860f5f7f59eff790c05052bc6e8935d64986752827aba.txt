@@ -1,0 +1,47 @@
+mir_eval.display.segments(intervals, labels, base=None, height=None, text=False, text_kw=None, ax=None, prop_cycle=None, **kwargs)
+
+Plot a segmentation as a set of disjoint rectangles.
+
+Parameters:
+
+intervalsnp.ndarray, shape=(n, 2)
+
+segment intervals, in the format returned by mir_eval.io.load_intervals() or mir_eval.io.load_labeled_intervals().
+
+labelslist, shape=(n,)
+
+reference segment labels, in the format returned by mir_eval.io.load_labeled_intervals().
+
+basenumber
+
+The vertical position of the base of the rectangles. By default, this will be the bottom of the plot.
+
+heightnumber
+
+The height of the rectangles. By default, this will be the top of the plot (minus base). .. note:: If either base or height are provided, both must be provided.
+
+textbool
+
+If true, each segment’s label is displayed in its upper-left corner
+
+text_kwdict
+
+If text == True, the properties of the text object can be specified here. See matplotlib.pyplot.Text for valid parameters
+
+axmatplotlib.pyplot.axes
+
+An axis handle on which to draw the segmentation. If none is provided, a new set of axes is created.
+
+prop_cyclecycle.Cycler
+
+An optional property cycle object to specify style properties. If not provided, the default property cycler will be retrieved from matplotlib.
+
+**kwargs
+
+Additional keyword arguments to pass to matplotlib.patches.Rectangle.
+
+Returns:
+
+axmatplotlib.pyplot.axes._subplots.AxesSubplot
+
+A handle to the (possibly constructed) plot axes
