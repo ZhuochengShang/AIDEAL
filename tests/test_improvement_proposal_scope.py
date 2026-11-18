@@ -47,6 +47,26 @@ class ProposalScopeTests(unittest.TestCase):
             self.assertIn('executable aliases only', request['system'])
             self.assertIn('empty lists for both "hints" and "refactors"', request['system'])
             self.assertIn('Return no alias when none is justified', request['system'])
+            self.assertIn('explicit top-level def or async def', request['system'])
+            self.assertIn('import renamings, assignments, or __all__ alone', request['system'])
+            self.assertIn('public class matching the requested filename and package', request['system'])
+            self.assertIn('explicit correctly typed receiver', request['system'])
+
+    def test_python_import_renaming_rejected_but_forwarding_def_accepted(self):
+        context = {'apis': [{'id': 'python:lib.validate', 'name': 'validate'}],
+                   'development_errors': [], 'alias_destination': 'lib/aliases.py'}
+        proposal = {**self.response,
+                    'aliases': [{'name': 'validate_beats', 'target_function': 'python:lib.validate',
+                                 'rationale': 'Makes the data domain explicit.'}],
+                    'alias_interface': 'lib.aliases.validate_beats(reference, estimated)',
+                    'alias_code': 'from lib import validate as validate_beats\n'}
+        with self.assertRaisesRegex(ValueError, 'does not define each proposed name'):
+            suggestions.validate_suggestions(proposal, context)
+        proposal['alias_code'] = ('from lib import validate\n'
+                                 'def validate_beats(reference, estimated):\n'
+                                 '    return validate(reference, estimated)\n')
+        accepted = suggestions.validate_suggestions(proposal, context)
+        self.assertEqual('validate_beats', accepted['aliases'][0]['name'])
 
     def test_default_settings_and_prompt_remain_compatible(self):
         settings = self.settings()

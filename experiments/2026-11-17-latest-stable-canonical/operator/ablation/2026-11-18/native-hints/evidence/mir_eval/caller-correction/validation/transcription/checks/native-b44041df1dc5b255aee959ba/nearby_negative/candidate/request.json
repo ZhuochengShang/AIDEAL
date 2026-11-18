@@ -1,0 +1,23 @@
+{
+  "protocol": "native_hint_development_v1",
+  "case_id": "native-b44041df1dc5b255aee959ba",
+  "role": "nearby_negative",
+  "variant": "candidate",
+  "code": "\"\"\"Independent negative control: reference lengths match; estimates do not.\"\"\"\nimport numpy as np\nfrom mir_eval.transcription import validate\n\nreference_intervals = np.array([[0.0, 0.8], [1.0, 1.8]])\nreference_pitches = np.array([440.0, 660.0])\nestimated_intervals = np.array([[0.05, 0.75], [1.05, 1.75]])\nestimated_pitches = np.array([440.0])\n# The separate estimated-input guard should raise its unchanged message.\nvalidate(reference_intervals, reference_pitches, estimated_intervals, estimated_pitches)\n",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval",
+  "source_overrides": {
+    "mir_eval/transcription.py": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/single_site/source/mir_eval/transcription.py",
+      "sha256": "c0d37914d7e426db5b1ad1f2de300a3c7946ecb62c15be9eb9e21ba2672a41bb",
+      "bytes": 36594
+    }
+  },
+  "source_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/transcription.py",
+      "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c",
+      "bytes": 36457
+    }
+  ],
+  "checker_context_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/private_checker.json"
+}

@@ -1,0 +1,35 @@
+{
+  "hints": [
+    {
+      "evidence_id": "native-324d79b51537ebd8e2890e69",
+      "function_id": "mir_eval/io.py:497:mir_eval.io.load_key",
+      "requirement_id": "ensure_single_line_file",
+      "error_line": 529,
+      "original_message": "Key file should contain only one line.",
+      "source_quote": "if len(scale) != 1:\n        raise ValueError(\"Key file should contain only one line.\")",
+      "action": "Append guidance: Ensure the input file contains exactly one row of data without trailing newlines or extra content.",
+      "corrected_code": "def load_key(filename, delimiter=r\"\\s+\", comment=\"#\"):\n    scale, mode = load_delimited(\n        filename, [str, str], delimiter=delimiter, comment=comment\n    )\n    if len(scale) != 1:\n        raise ValueError(\"Key file should contain only one line. Ensure the input file contains exactly one row of data without trailing newlines or extra content.\")\n    scale, mode = scale[0], mode[0]\n    key_string = f\"{scale} {mode}\"\n    try:\n        key.validate_key(key_string)\n    except ValueError as error:\n        warnings.warn(error.args[0])\n    return key_string"
+    },
+    {
+      "evidence_id": "native-20d37af33d8929ad6d1420e8",
+      "function_id": "mir_eval/multipitch.py:57:mir_eval.multipitch.validate",
+      "requirement_id": "match_time_freq_lengths",
+      "error_line": 87,
+      "original_message": "Reference times and frequencies have unequal lengths.",
+      "source_quote": "if ref_time.size != len(ref_freqs):\n        raise ValueError(\"Reference times and frequencies have unequal \" \"lengths.\")",
+      "action": "Append guidance: Verify that the number of time stamps matches the number of frequency arrays provided.",
+      "corrected_code": "def validate(ref_time, ref_freqs, est_time, est_freqs):\n    util.validate_events(ref_time, max_time=MAX_TIME)\n    util.validate_events(est_time, max_time=MAX_TIME)\n    if ref_time.size == 0:\n        warnings.warn(\"Reference times are empty.\")\n    if ref_time.ndim != 1:\n        raise ValueError(\"Reference times have invalid dimension\")\n    if len(ref_freqs) == 0:\n        warnings.warn(\"Reference frequencies are empty.\")\n    if est_time.size == 0:\n        warnings.warn(\"Estimated times are empty.\")\n    if est_time.ndim != 1:\n        raise ValueError(\"Estimated times have invalid dimension\")\n    if len(est_freqs) == 0:\n        warnings.warn(\"Estimated frequencies are empty.\")\n    if ref_time.size != len(ref_freqs):\n        raise ValueError(\"Reference times and frequencies have unequal lengths. Verify that the number of time stamps matches the number of frequency arrays provided.\")\n    if est_time.size != len(est_freqs):\n        raise ValueError(\"Estimate times and frequencies have unequal lengths. Verify that the number of time stamps matches the number of frequency arrays provided.\")\n    for freq in ref_freqs:\n        util.validate_frequencies(freq, max_freq=MAX_FREQ, min_freq=MIN_FREQ, allow_negatives=False)\n    for freq in est_freqs:\n        util.validate_frequencies(freq, max_freq=MAX_FREQ, min_freq=MIN_FREQ, allow_negatives=False)"
+    },
+    {
+      "evidence_id": "native-b44041df1dc5b255aee959ba",
+      "function_id": "mir_eval/transcription.py:117:mir_eval.transcription.validate",
+      "requirement_id": "match_interval_pitch_lengths",
+      "error_line": 137,
+      "original_message": "Reference intervals and pitches have different lengths.",
+      "source_quote": "if not ref_intervals.shape[0] == ref_pitches.shape[0]:\n        raise ValueError(\"Reference intervals and pitches have different \" \"lengths.\")",
+      "action": "Append guidance: Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+      "corrected_code": "def validate(ref_intervals, ref_pitches, est_intervals, est_pitches):\n    validate_intervals(ref_intervals, est_intervals)\n    if not ref_intervals.shape[0] == ref_pitches.shape[0]:\n        raise ValueError(\"Reference intervals and pitches have different lengths. Ensure the number of rows in the interval array matches the number of elements in the pitch array.\")\n    if not est_intervals.shape[0] == est_pitches.shape[0]:\n        raise ValueError(\"Estimated intervals and pitches have different lengths. Ensure the number of rows in the interval array matches the number of elements in the pitch array.\")\n    if ref_pitches.size > 0 and np.min(ref_pitches) <= 0:\n        raise ValueError(\"Reference contains at least one non-positive pitch value\")\n    if est_pitches.size > 0 and np.min(est_pitches) <= 0:\n        raise ValueError(\"Estimate contains at least one non-positive pitch value\")"
+    }
+  ],
+  "unsupported_evidence_ids": []
+}

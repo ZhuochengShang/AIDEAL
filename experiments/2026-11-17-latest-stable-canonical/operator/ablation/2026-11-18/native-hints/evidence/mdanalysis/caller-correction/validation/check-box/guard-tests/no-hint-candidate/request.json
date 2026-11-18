@@ -1,0 +1,23 @@
+{
+  "protocol": "native_hint_development_v1",
+  "case_id": "native-72cc3ddb0a88f53b873bd022",
+  "role": "trigger",
+  "variant": "candidate",
+  "code": "import sys\nimport traceback\n\ndef run():\n    # Imports are local so snippets may use either conventional aliases or full\n    # package names without Python's local-name analysis breaking the preamble.\n    import MDAnalysis as mda\n    import numpy as np\n    import os as _aideal_os\n\n    MDAnalysis = mda\n    numpy = np\n    output_dir = \"/tmp/aideal_mdanalysis_default_out\"\n    psf_path = r\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk.psf\"\n    dcd_path = r\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_dims.dcd\"\n    pdb_path = r\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_open.pdb\"\n    gro_path = r\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.gro\"\n    xtc_path = r\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures/adk_oplsaa.xtc\"\n    mdanalysis_fixture_dir = r\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/libraries/mdanalysis/fixtures\"\n    output_dir = r\"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/execution/output\"\n\n    # pre-loaded typed inputs (comprehension.execute.preamble)\n    MDAnalysis = mda  # type: module\n    numpy = np  # type: module\n    universe = mda.Universe(psf_path, dcd_path)  # type: MDAnalysis.Universe\n    atoms = universe.atoms  # type: MDAnalysis.core.groups.AtomGroup\n    protein = universe.select_atoms(\"protein\")  # type: MDAnalysis.core.groups.AtomGroup\n    backbone = universe.select_atoms(\"protein and backbone\")  # type: MDAnalysis.core.groups.AtomGroup\n    trajectory = universe.trajectory  # type: MDAnalysis.coordinates.base.ReaderBase\n    timestep = trajectory[0]  # type: MDAnalysis.coordinates.base.Timestep\n    _aideal_os.makedirs(output_dir, exist_ok=True)\n\n    # TODO API_TEST_START\n    from MDAnalysis.lib.util import check_box\n    import numpy as np\n\n    # Use the dimensions from the loaded timestep (which is periodic for the GRO fixture)\n    box_dims = timestep.dimensions\n    boxtype, checked_box = check_box(box_dims)\n\n    # Verify the output based on the documented contract\n    # For an orthogonal box (standard for many GRO files), shape should be (3,)\n    if boxtype == 'ortho':\n        assert checked_box.shape == (3,)\n        assert np.all(checked_box > 0)\n    elif boxtype == 'tri_vecs':\n        assert checked_box.shape == (3, 3)\n    else:\n        raise ValueError(\"Unknown boxtype returned\")\n\n    print(f\"__CHECK__ python:MDAnalysis.lib.util.check_box {boxtype} {checked_box.shape}\")\n    # TODO API_TEST_END\n    pass\n\n\nif __name__ == \"__main__\":\n    try:\n        run()\n        print(\"__DONE__\")\n    except Exception as exc:\n        sys.stderr.write(f\"__RUN_ERR__ {type(exc).__name__}: {exc}\\n\")\n        traceback.print_exc()\n        sys.exit(1)\n",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis",
+  "source_overrides": {
+    "package/MDAnalysis/lib/util.py": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/util.py",
+      "sha256": "4d37165adcc10536b8f51308924285fa02858e0ec84165082498308c135b46da",
+      "bytes": 87617
+    }
+  },
+  "source_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/util.py",
+      "sha256": "4d37165adcc10536b8f51308924285fa02858e0ec84165082498308c135b46da",
+      "bytes": 87617
+    }
+  ],
+  "checker_context_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/private_checker.json"
+}

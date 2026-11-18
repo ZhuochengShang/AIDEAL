@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "status": "source_hint_validated_not_installed_by_validation_operator",
+  "validation": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/checks/validation.json",
+    "sha256": "c4293227014b8f960b1fdd12dacbae0f0265ea502532adb6790be63217c05c9c"
+  },
+  "checks": [
+    {
+      "case_id": "native-72cc3ddb0a88f53b873bd022",
+      "role": "trigger",
+      "valid": true
+    },
+    {
+      "case_id": "native-72cc3ddb0a88f53b873bd022",
+      "role": "corrected",
+      "valid": true
+    },
+    {
+      "case_id": "native-72cc3ddb0a88f53b873bd022",
+      "role": "valid",
+      "valid": true
+    },
+    {
+      "case_id": "native-72cc3ddb0a88f53b873bd022",
+      "role": "nearby_negative",
+      "valid": true
+    }
+  ],
+  "executions": 8,
+  "source": {
+    "path": "package/MDAnalysis/lib/util.py",
+    "baseline": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/util.py",
+      "sha256": "4d37165adcc10536b8f51308924285fa02858e0ec84165082498308c135b46da",
+      "bytes": 87617
+    },
+    "candidate_sha256": "fcc026d39549ae3e9b0a8dedfb069e82d90b98b8bff26f3626d34dfd138778d9",
+    "candidate": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/single_site/source/package/MDAnalysis/lib/util.py",
+      "sha256": "fcc026d39549ae3e9b0a8dedfb069e82d90b98b8bff26f3626d34dfd138778d9",
+      "bytes": 87746
+    }
+  },
+  "emitted_message": "Box is None [AIDEAL fix:box_cannot_be_none] Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None.",
+  "corrected_caller": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/reviewed_corrected.py",
+    "sha256": "25706dbafda24e86180dca337e5118e5153e7831ddbd1718acb8b394bc73146c"
+  },
+  "guard_tests": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/GUARD_TESTS.json",
+    "sha256": "57583759d0b343be3aa11f834563d08fd6b4f8d28ed37da1ba9426a642868770"
+  },
+  "scope": {
+    "original_input": "None from timestep.dimensions of the supplied PSF/DCD trajectory.",
+    "corrected_input": "Hardcoded synthetic float32 cell [50,50,50,90,90,90]. The caller comment mentions GRO, but no GRO file is read.",
+    "original_trajectory_preserved": false,
+    "original_scaffold_preserved": false,
+    "independent_valid_input": [
+      10,
+      20,
+      30,
+      90,
+      90,
+      90
+    ],
+    "nearby_negative_input": [
+      10,
+      20,
+      30
+    ],
+    "established": [
+      "Exact native source exception emits the guidance.",
+      "Actual model-generated valid-call control produces independently verified cell geometry.",
+      "Different valid control preserves its results and all input values.",
+      "Nearby shape error remains unchanged."
+    ],
+    "not_established": [
+      "Recovery of the original trajectory metadata or task.",
+      "Audience repair success or held-out accuracy improvement.",
+      "Installation by this validation operator."
+    ]
+  }
+}

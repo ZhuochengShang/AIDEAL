@@ -1,0 +1,149 @@
+{
+  "status": "ok",
+  "returncode": 0,
+  "seconds": 1.4193166932091117,
+  "payload": {
+    "request_sha256": "60bd8e625b35c909d5502c0cd9c4fded6b8c284581a5698b5e3859d2695e0642",
+    "execution_pass": false,
+    "oracle_pass": true,
+    "target_reached": true,
+    "error_type": "ValueError",
+    "error_message": "Estimated intervals and pitches have different lengths.",
+    "public_feedback": "\nValueError: Estimated intervals and pitches have different lengths.",
+    "result_sha256": "a4f6ed87482b4d88c537500b0ddf098cefde83548f8d561ba92035072a6601a6",
+    "evidence": {
+      "calls": [
+        {
+          "inputs": {
+            "ref_intervals": {
+              "dtype": "float64",
+              "shape": [
+                2,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.8
+                ],
+                [
+                  1.0,
+                  1.8
+                ]
+              ]
+            },
+            "ref_pitches": {
+              "dtype": "float64",
+              "shape": [
+                2
+              ],
+              "values": [
+                440.0,
+                660.0
+              ]
+            },
+            "est_intervals": {
+              "dtype": "float64",
+              "shape": [
+                2,
+                2
+              ],
+              "values": [
+                [
+                  0.05,
+                  0.75
+                ],
+                [
+                  1.05,
+                  1.75
+                ]
+              ]
+            },
+            "est_pitches": {
+              "dtype": "float64",
+              "shape": [
+                1
+              ],
+              "values": [
+                440.0
+              ]
+            }
+          },
+          "return": null,
+          "error_type": "ValueError",
+          "error_message": "Estimated intervals and pitches have different lengths.",
+          "error_line": 139,
+          "inputs_after": {
+            "ref_intervals": {
+              "dtype": "float64",
+              "shape": [
+                2,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.8
+                ],
+                [
+                  1.0,
+                  1.8
+                ]
+              ]
+            },
+            "ref_pitches": {
+              "dtype": "float64",
+              "shape": [
+                2
+              ],
+              "values": [
+                440.0,
+                660.0
+              ]
+            },
+            "est_intervals": {
+              "dtype": "float64",
+              "shape": [
+                2,
+                2
+              ],
+              "values": [
+                [
+                  0.05,
+                  0.75
+                ],
+                [
+                  1.05,
+                  1.75
+                ]
+              ]
+            },
+            "est_pitches": {
+              "dtype": "float64",
+              "shape": [
+                1
+              ],
+              "values": [
+                440.0
+              ]
+            }
+          }
+        }
+      ],
+      "program_error": {
+        "type": "ValueError",
+        "message": "Estimated intervals and pitches have different lengths."
+      },
+      "stdout": "",
+      "stderr": "",
+      "loaded_module": {
+        "path": "/tmp/aideal-native-module-c470ujww/transcription.py",
+        "sha256": "c0d37914d7e426db5b1ad1f2de300a3c7946ecb62c15be9eb9e21ba2672a41bb"
+      },
+      "installed_baseline": {
+        "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/mir_eval/transcription.py",
+        "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c"
+      }
+    }
+  }
+}

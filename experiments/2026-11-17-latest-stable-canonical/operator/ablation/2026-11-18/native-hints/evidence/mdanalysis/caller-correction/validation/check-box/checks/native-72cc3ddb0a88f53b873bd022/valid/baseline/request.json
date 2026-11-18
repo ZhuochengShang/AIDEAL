@@ -1,0 +1,17 @@
+{
+  "protocol": "native_hint_development_v1",
+  "case_id": "native-72cc3ddb0a88f53b873bd022",
+  "role": "valid",
+  "variant": "baseline",
+  "code": "\"\"\"Independent orthogonal control with deliberately different dimensions.\"\"\"\nimport numpy as np\nfrom MDAnalysis.lib.util import check_box\n\ndimensions = np.array([10.0, 20.0, 30.0, 90.0, 90.0, 90.0], dtype=np.float32)\nkind, lengths = check_box(dimensions)\nassert kind == 'ortho'\nnp.testing.assert_array_equal(lengths, np.array([10.0, 20.0, 30.0], dtype=np.float32))\nprint(kind, lengths.tolist())\n",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis",
+  "source_overrides": {},
+  "source_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/lib/util.py",
+      "sha256": "4d37165adcc10536b8f51308924285fa02858e0ec84165082498308c135b46da",
+      "bytes": 87617
+    }
+  ],
+  "checker_context_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/private_checker.json"
+}

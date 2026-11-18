@@ -1,0 +1,195 @@
+{
+  "status": "ok",
+  "returncode": 0,
+  "seconds": 3.6736282659694552,
+  "payload": {
+    "request_sha256": "6ef7ccad321a72b612a698b9d09d008772d627a1bcf91c171a73a926982a440c",
+    "execution_pass": false,
+    "oracle_pass": true,
+    "target_reached": true,
+    "error_type": "ValueError",
+    "error_message": "Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+    "public_feedback": "__RUN_ERR__ ValueError: Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.\nTraceback (most recent call last):\n  File \"<development-control>\", line 45, in <module>\n  File \"<development-control>\", line 40, in run\n  File \"<development-control>\", line 33, in api_test\n  File \"/tmp/aideal-native-module-35re2foq/transcription.py\", line 137, in validate\n    raise ValueError(\"Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.\")\nValueError: Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.\n\nValueError: Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+    "result_sha256": "03ecf7ac5f78d7daedb223b0f1cdd316ace5c7dcfc85bb64648e3c4e751c2303",
+    "evidence": {
+      "calls": [
+        {
+          "inputs": {
+            "ref_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.5,
+                  1.0
+                ],
+                [
+                  1.0,
+                  1.5
+                ],
+                [
+                  1.5,
+                  2.0
+                ]
+              ]
+            },
+            "ref_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                440.0,
+                440.0,
+                0.0,
+                523.25,
+                523.25
+              ]
+            },
+            "est_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.48
+                ],
+                [
+                  0.48,
+                  1.02
+                ],
+                [
+                  1.02,
+                  1.48
+                ],
+                [
+                  1.48,
+                  2.0
+                ]
+              ]
+            },
+            "est_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                442.0,
+                438.0,
+                0.0,
+                525.0,
+                520.0
+              ]
+            }
+          },
+          "return": null,
+          "error_type": "ValueError",
+          "error_message": "Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+          "error_line": 137,
+          "inputs_after": {
+            "ref_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.5,
+                  1.0
+                ],
+                [
+                  1.0,
+                  1.5
+                ],
+                [
+                  1.5,
+                  2.0
+                ]
+              ]
+            },
+            "ref_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                440.0,
+                440.0,
+                0.0,
+                523.25,
+                523.25
+              ]
+            },
+            "est_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.48
+                ],
+                [
+                  0.48,
+                  1.02
+                ],
+                [
+                  1.02,
+                  1.48
+                ],
+                [
+                  1.48,
+                  2.0
+                ]
+              ]
+            },
+            "est_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                442.0,
+                438.0,
+                0.0,
+                525.0,
+                520.0
+              ]
+            }
+          }
+        }
+      ],
+      "program_error": {
+        "type": "SystemExit",
+        "message": "1"
+      },
+      "stdout": "",
+      "stderr": "__RUN_ERR__ ValueError: Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.\nTraceback (most recent call last):\n  File \"<development-control>\", line 45, in <module>\n  File \"<development-control>\", line 40, in run\n  File \"<development-control>\", line 33, in api_test\n  File \"/tmp/aideal-native-module-35re2foq/transcription.py\", line 137, in validate\n    raise ValueError(\"Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.\")\nValueError: Reference intervals and pitches have different lengths. [AIDEAL fix:interval_pitch_length_match] Ensure the number of rows in the interval array matches the number of elements in the pitch array.\n",
+      "loaded_module": {
+        "path": "/tmp/aideal-native-module-35re2foq/transcription.py",
+        "sha256": "c0d37914d7e426db5b1ad1f2de300a3c7946ecb62c15be9eb9e21ba2672a41bb"
+      },
+      "installed_baseline": {
+        "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/mir_eval/transcription.py",
+        "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c"
+      }
+    }
+  }
+}

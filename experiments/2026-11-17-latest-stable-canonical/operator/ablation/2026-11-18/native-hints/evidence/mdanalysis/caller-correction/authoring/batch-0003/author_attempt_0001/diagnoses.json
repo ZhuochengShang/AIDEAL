@@ -1,0 +1,35 @@
+{
+  "hints": [
+    {
+      "evidence_id": "native-5c03722a902b3501ffd747d3",
+      "function_id": "package/MDAnalysis/lib/pkdtree.py:101:MDAnalysis.lib.pkdtree.PeriodicKDTree.set_coords",
+      "requirement_id": "provide_cutoff_for_pbc",
+      "error_line": 143,
+      "original_message": "Provide a cutoff distance with tree.set_coords(...)",
+      "source_quote": "if cutoff is None:\n                raise RuntimeError(\n                    \"Provide a cutoff distance\" \" with tree.set_coords(...)\"\n                )",
+      "action": "Pass a float value for the 'cutoff' parameter when calling set_coords if the PeriodicKDTree was initialized with a box.",
+      "corrected_code": "import MDAnalysis as mda\nfrom MDAnalysis.lib.pkdtree import PeriodicKDTree\n\n# Use the GRO file which contains periodic box information\nu = mda.Universe(gro_path)\ncoords = u.atoms.positions\nbox = u.dimensions\n\n# Initialize the tree with coordinates and box\ntree = PeriodicKDTree(box=box)\n# Corrected: Provide a cutoff distance (e.g., 5.0) as required for PBC\ntree.set_coords(coords, cutoff=5.0)\n\n# Search for neighbors of the first 5 atoms within a 5.0 Angstrom radius\ncenters = coords[:5]\nradius = 5.0\npairs = tree.search_tree(centers, radius)\n\n# The result is an array of pairs (index_in_tree, index_in_centers)\nassert pairs.shape[1] == 2\nassert len(pairs) >= 5\n\nprint(f\"__CHECK__ python:MDAnalysis.lib.pkdtree.PeriodicKDTree.search_tree {pairs.shape}\")"
+    },
+    {
+      "evidence_id": "native-72cc3ddb0a88f53b873bd022",
+      "function_id": "package/MDAnalysis/lib/util.py:2607:MDAnalysis.lib.util.check_box",
+      "requirement_id": "box_cannot_be_none",
+      "error_line": 2652,
+      "original_message": "Box is None",
+      "source_quote": "if box is None:\n        raise ValueError(\"Box is None\")",
+      "action": "Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None.",
+      "corrected_code": "from MDAnalysis.lib.util import check_box\nimport numpy as np\n\n# Use a valid box array instead of None or an empty/invalid structure\n# The GRO fixture has valid dimensions\nbox_dims = np.array([50.0, 50.0, 50.0, 90.0, 90.0, 90.0], dtype=np.float32)\nboxtype, checked_box = check_box(box_dims)\n\n# Verify the output based on the documented contract\nif boxtype == 'ortho':\n    assert checked_box.shape == (3,)\n    assert np.all(checked_box > 0)\nelif boxtype == 'tri_vecs':\n    assert checked_box.shape == (3, 3)\nelse:\n    raise ValueError(\"Unknown boxtype returned\")\n\nprint(f\"__CHECK__ python:MDAnalysis.lib.util.check_box {boxtype} {checked_box.shape}\")"
+    },
+    {
+      "evidence_id": "native-fc8cc3c360074aa018eb2cb7",
+      "function_id": "package/MDAnalysis/topology/LAMMPSParser.py:277:MDAnalysis.topology.LAMMPSParser.DATAParser.parse",
+      "requirement_id": "lammps_data_format_required",
+      "error_line": 298,
+      "original_message": "Data file was missing Atoms section",
+      "source_quote": "if \"Atoms\" not in sects:\n            raise ValueError(\"Data file was missing Atoms section\")",
+      "action": "Provide a valid LAMMPS DATA file containing an 'Atoms' section; the GRO format is not compatible with the LAMMPS DATAParser.",
+      "corrected_code": "import os\nfrom MDAnalysis.topology.LAMMPSParser import DATAParser\n\n# Create a minimal valid LAMMPS DATA file content\nlammps_data_path = os.path.join(output_dir, \"test.data\")\nwith open(lammps_data_path, \"w\") as f:\n    f.write(\"LAMMPS Description\\n\\n1 atoms\\n\\nAtoms\\n\\n1 1 1 0.0 0.0 0.0\\n\")\n\n# Use the valid LAMMPS DATA file\nparser = DATAParser(lammps_data_path)\ntopology = parser.parse()\n\n# Verify the topology object has the expected attributes\nn_atoms = topology.n_atoms\nassert n_atoms == 1, \"Topology should contain 1 atom\"\n\nprint(f\"__CHECK__ python:MDAnalysis.topology.LAMMPSParser.DATAParser {n_atoms}\")"
+    }
+  ],
+  "unsupported_evidence_ids": []
+}

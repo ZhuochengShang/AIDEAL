@@ -24,7 +24,16 @@ def proposal_system_prompt(settings):
         prompt += ('\nThis request develops executable aliases only. Return empty lists for '
                    'both "hints" and "refactors", even if you notice other improvement opportunities. '
                    'Consider each supplied API, but propose an alias only when the evidence supports '
-                   'a clearer name or simpler calling pattern. Return no alias when none is justified.\n')
+                   'a clearer name or simpler calling pattern. Return no alias when none is justified.\n'
+                   'Return at most 20 aliases, each with a distinct new name and an exact supplied target ID. '
+                   'For Python, define each alias as an explicit top-level def or async def forwarding '
+                   'to the canonical implementation; import renamings, assignments, or __all__ alone '
+                   'do not define accepted wrappers. Preserve positional/keyword arguments and defaults. '
+                   'For Java, use public static forwarding methods in a public class matching the '
+                   'requested filename and package. For Scala, use forwarding defs in the requested '
+                   'package/object. An instance method needs an explicit correctly typed receiver; '
+                   'forward through it, not through the class. Document the callable import/access '
+                   'path in alias_interface. These are proposed wrappers, not validated changes.\n')
     return prompt
 
 

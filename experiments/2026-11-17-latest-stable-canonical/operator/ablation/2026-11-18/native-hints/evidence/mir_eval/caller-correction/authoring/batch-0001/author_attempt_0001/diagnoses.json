@@ -1,0 +1,35 @@
+{
+  "hints": [
+    {
+      "evidence_id": "native-324d79b51537ebd8e2890e69",
+      "function_id": "mir_eval/io.py:497:mir_eval.io.load_key",
+      "requirement_id": "single_line_file",
+      "error_line": 529,
+      "original_message": "Key file should contain only one line.",
+      "source_quote": "if len(scale) != 1:\n        raise ValueError(\"Key file should contain only one line.\")",
+      "action": "Ensure the input file contains exactly one row of data; remove any extra lines or headers.",
+      "corrected_code": "import mir_eval\nimport os\n\n# Create a temporary file with exactly one line as required by load_key\ntemp_file = \"temp_key.txt\"\nwith open(temp_file, \"w\") as f:\n    f.write(\"C major\")\n\ntry:\n    key_label = mir_eval.io.load_key(temp_file)\n    assert isinstance(key_label, str)\n    assert len(key_label.split()) == 2\n    print(f\"__CHECK__ python:mir_eval.io.load_key {key_label}\")\nfinally:\n    if os.path.exists(temp_file):\n        os.remove(temp_file)"
+    },
+    {
+      "evidence_id": "native-20d37af33d8929ad6d1420e8",
+      "function_id": "mir_eval/multipitch.py:57:mir_eval.multipitch.validate",
+      "requirement_id": "equal_length_check",
+      "error_line": 87,
+      "original_message": "Reference times and frequencies have unequal lengths.",
+      "source_quote": "if ref_time.size != len(ref_freqs):\n        raise ValueError(\"Reference times and frequencies have unequal \" \"lengths.\")",
+      "action": "Ensure the number of elements in the reference time array matches the number of frequency arrays in the list.",
+      "corrected_code": "import mir_eval\nimport numpy as np\n\n# ref_time must have the same length as the list of frequency arrays\nref_time = np.array([0.0, 0.5])\nref_freqs_list = [np.array([440.0]), np.array([440.0])]\nest_time = np.array([0.0, 0.5])\nest_freqs_list = [np.array([442.0]), np.array([438.0])]\n\nmir_eval.multipitch.validate(ref_time, ref_freqs_list, est_time, est_freqs_list)\n\nwitness = (len(ref_freqs_list), len(est_freqs_list))\nassert len(ref_freqs_list) == 2 and len(est_freqs_list) == 2\nprint(f\"__CHECK__ python:mir_eval.multipitch.validate {witness}\")"
+    },
+    {
+      "evidence_id": "native-b44041df1dc5b255aee959ba",
+      "function_id": "mir_eval/transcription.py:117:mir_eval.transcription.validate",
+      "requirement_id": "interval_pitch_length_match",
+      "error_line": 137,
+      "original_message": "Reference intervals and pitches have different lengths.",
+      "source_quote": "if not ref_intervals.shape[0] == ref_pitches.shape[0]:\n        raise ValueError(\"Reference intervals and pitches have different \" \"lengths.\")",
+      "action": "Ensure the number of rows in the interval array matches the number of elements in the pitch array.",
+      "corrected_code": "import mir_eval\nimport numpy as np\n\n# ref_intervals shape (n, 2) must match ref_pitches shape (n,)\nref_intervals = np.array([[0.0, 0.5], [0.5, 1.0]])\nref_pitches = np.array([440.0, 523.25])\nest_intervals = np.array([[0.0, 0.48], [0.48, 1.02]])\nest_pitches = np.array([442.0, 525.0])\n\nmir_eval.transcription.validate(ref_intervals, ref_pitches, est_intervals, est_pitches)\n\nwitness = ref_intervals.shape[0] + est_intervals.shape[0]\nassert ref_intervals.shape[0] == 2 and est_intervals.shape[0] == 2\nprint(f\"__CHECK__ python:mir_eval.transcription.validate {witness}\")"
+    }
+  ],
+  "unsupported_evidence_ids": []
+}

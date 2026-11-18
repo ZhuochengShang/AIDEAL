@@ -1,0 +1,251 @@
+{
+  "updated_at": "2026-11-18T17:43:58.464266+00:00",
+  "author_calls": [
+    {
+      "library": "mir_eval",
+      "phase": "initial",
+      "directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/authoring/batch-0001",
+      "completion": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/authoring/batch-0001/completion.json",
+        "sha256": "2df92a5aa036719fa70929980db9251fc7bccba6d883cf433a9847a0b5804e82"
+      },
+      "request": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/authoring/batch-0001/author_attempt_0001/author/request.json",
+        "sha256": "e70811f0a02469357853aa1a73dd1b0210d65176457cfa4027bf161700b919e1"
+      },
+      "process": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/authoring/batch-0001/author_attempt_0001/author/process.json",
+        "sha256": "2c06b0420a8fd955722d8e586ebe6537c89d3e0f477c34ac2d389ae09a0570b1"
+      },
+      "proposed": 3,
+      "unsupported": [],
+      "usage": {
+        "input_tokens": 17682,
+        "output_tokens": 1386
+      },
+      "model": "gemini-3.1-flash-lite",
+      "provider_seconds": 5.981667251326144,
+      "sites": [
+        {
+          "evidence_id": "native-324d79b51537ebd8e2890e69",
+          "function_id": "mir_eval/io.py:497:mir_eval.io.load_key",
+          "action": "Append guidance: Ensure the input file contains exactly one row of data without trailing newlines or extra content."
+        },
+        {
+          "evidence_id": "native-20d37af33d8929ad6d1420e8",
+          "function_id": "mir_eval/multipitch.py:57:mir_eval.multipitch.validate",
+          "action": "Append guidance: Verify that the number of time stamps matches the number of frequency arrays provided."
+        },
+        {
+          "evidence_id": "native-b44041df1dc5b255aee959ba",
+          "function_id": "mir_eval/transcription.py:117:mir_eval.transcription.validate",
+          "action": "Append guidance: Ensure the number of rows in the interval array matches the number of elements in the pitch array."
+        }
+      ]
+    },
+    {
+      "library": "mir_eval",
+      "phase": "corrected_caller",
+      "directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/authoring/batch-0001",
+      "completion": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/authoring/batch-0001/completion.json",
+        "sha256": "e5498ca6f22f8609f2d57d9c2acf0d53678c9e4571cf5977bfd2b60a538799a4"
+      },
+      "request": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/authoring/batch-0001/author_attempt_0001/author/request.json",
+        "sha256": "e014b8714cb242ab6825e5b1ad7e9f31353f1ed6c46711525f37991023fc38d5"
+      },
+      "process": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/authoring/batch-0001/author_attempt_0001/author/process.json",
+        "sha256": "295ebaa86ee4e4b0404e9abc52fd0c9de915189b6ddc9547f923945b1e1a2992"
+      },
+      "proposed": 3,
+      "unsupported": [],
+      "usage": {
+        "input_tokens": 17917,
+        "output_tokens": 1222
+      },
+      "model": "gemini-3.1-flash-lite",
+      "provider_seconds": 5.528792017139494,
+      "sites": [
+        {
+          "evidence_id": "native-324d79b51537ebd8e2890e69",
+          "function_id": "mir_eval/io.py:497:mir_eval.io.load_key",
+          "action": "Ensure the input file contains exactly one row of data; remove any extra lines or headers."
+        },
+        {
+          "evidence_id": "native-20d37af33d8929ad6d1420e8",
+          "function_id": "mir_eval/multipitch.py:57:mir_eval.multipitch.validate",
+          "action": "Ensure the number of elements in the reference time array matches the number of frequency arrays in the list."
+        },
+        {
+          "evidence_id": "native-b44041df1dc5b255aee959ba",
+          "function_id": "mir_eval/transcription.py:117:mir_eval.transcription.validate",
+          "action": "Ensure the number of rows in the interval array matches the number of elements in the pitch array."
+        }
+      ]
+    },
+    {
+      "library": "mdanalysis",
+      "phase": "corrected_caller",
+      "directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0001",
+      "completion": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0001/completion.json",
+        "sha256": "d447a03ee0c6f1a9c238a7f92e49c9a60550e56de077e79139e88e1d04187749"
+      },
+      "request": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0001/author_attempt_0001/author/request.json",
+        "sha256": "94e364bc36d9d4bdf015dff7504aab961374d70defb5a5471732ed83c2bb8e2f"
+      },
+      "process": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0001/author_attempt_0001/author/process.json",
+        "sha256": "c17e45d56c4379ec246c598afe24206ad94ee8c651234998220d5fded6f33b87"
+      },
+      "proposed": 3,
+      "unsupported": [],
+      "usage": {
+        "input_tokens": 28938,
+        "output_tokens": 1477
+      },
+      "model": "gemini-3.1-flash-lite",
+      "provider_seconds": 7.271647105924785,
+      "sites": [
+        {
+          "evidence_id": "native-1ae67f51c1e6924cbae320f1",
+          "function_id": "package/MDAnalysis/analysis/hydrogenbonds/hbond_autocorrel.py:432:MDAnalysis.analysis.hydrogenbonds.hbond_autocorrel.HydrogenBondAutoCorrel.run",
+          "action": "Ensure the provided selections (hydrogens, acceptors, donors) contain valid hydrogen-bonding pairs at the start of the trajectory; check that the selection strings or AtomGroups are not empty and physically overlap within the distance and angle criteria."
+        },
+        {
+          "evidence_id": "native-f9a7174ac6d5ace7edcecd5b",
+          "function_id": "package/MDAnalysis/core/groups.py:3821:MDAnalysis.core.groups.AtomGroup.write",
+          "action": "Verify that the AtomGroup selection is not empty before calling write; ensure the selection string matches atoms present in the current trajectory frame."
+        },
+        {
+          "evidence_id": "native-c2808cd929b13ffb797db29a",
+          "function_id": "package/MDAnalysis/analysis/rms.py:285:MDAnalysis.analysis.rms.process_selection",
+          "action": "Pass a valid selection type (string, 2-tuple, or dict) to process_selection; do not pass an AtomGroup object directly as it is not a supported input type for this utility."
+        }
+      ]
+    },
+    {
+      "library": "mdanalysis",
+      "phase": "corrected_caller",
+      "directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0002",
+      "completion": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0002/completion.json",
+        "sha256": "20acccbb81565ce799bd467b20bde9197dff4838022ae063f0a7b8568a92d730"
+      },
+      "request": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0002/author_attempt_0001/author/request.json",
+        "sha256": "a90510e87e7af15b6b5414c3597415a5a21d84cd7f5c75078f8cb3e3f268a61f"
+      },
+      "process": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0002/author_attempt_0001/author/process.json",
+        "sha256": "51a879b4dcac914fdb6a3426a8f7385324fea7f4175832f7c2a07043e26fecdc"
+      },
+      "proposed": 2,
+      "unsupported": [
+        "native-b6a40c663fa709c77bc04665"
+      ],
+      "usage": {
+        "input_tokens": 30648,
+        "output_tokens": 964
+      },
+      "model": "gemini-3.1-flash-lite",
+      "provider_seconds": 5.257488400675356,
+      "sites": [
+        {
+          "evidence_id": "native-866bc066a445ac365eaace3d",
+          "function_id": "package/MDAnalysis/converters/RDKit.py:445:MDAnalysis.converters.RDKit.atomgroup_to_mol",
+          "action": "Append: Ensure the AtomGroup has an 'elements' attribute by calling `ag.atoms.guess_elements('all')` before conversion."
+        },
+        {
+          "evidence_id": "native-71624d343a0fa7f13eaf45a1",
+          "function_id": "package/MDAnalysis/coordinates/base.py:1082:MDAnalysis.coordinates.base.ProtoReader.add_auxiliary",
+          "action": "Append: Use the keyword argument 'auxdata' explicitly when passing the data object to add_auxiliary."
+        }
+      ]
+    },
+    {
+      "library": "mdanalysis",
+      "phase": "corrected_caller",
+      "directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0003",
+      "completion": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0003/completion.json",
+        "sha256": "ebab539876a648e4bdedd451e50b3273fc24073d1c2fad9048f49da14a5d69f4"
+      },
+      "request": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0003/author_attempt_0001/author/request.json",
+        "sha256": "30e86977004d7be95c849fe742d431f850320342621729906929432a6451fe62"
+      },
+      "process": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/authoring/batch-0003/author_attempt_0001/author/process.json",
+        "sha256": "24ad69529b6c525b0141367a2400346d64f5837083292cbc048a0c6c901025cd"
+      },
+      "proposed": 3,
+      "unsupported": [],
+      "usage": {
+        "input_tokens": 29062,
+        "output_tokens": 1327
+      },
+      "model": "gemini-3.1-flash-lite",
+      "provider_seconds": 6.253514552488923,
+      "sites": [
+        {
+          "evidence_id": "native-5c03722a902b3501ffd747d3",
+          "function_id": "package/MDAnalysis/lib/pkdtree.py:101:MDAnalysis.lib.pkdtree.PeriodicKDTree.set_coords",
+          "action": "Pass a float value for the 'cutoff' parameter when calling set_coords if the PeriodicKDTree was initialized with a box."
+        },
+        {
+          "evidence_id": "native-72cc3ddb0a88f53b873bd022",
+          "function_id": "package/MDAnalysis/lib/util.py:2607:MDAnalysis.lib.util.check_box",
+          "action": "Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None."
+        },
+        {
+          "evidence_id": "native-fc8cc3c360074aa018eb2cb7",
+          "function_id": "package/MDAnalysis/topology/LAMMPSParser.py:277:MDAnalysis.topology.LAMMPSParser.DATAParser.parse",
+          "action": "Provide a valid LAMMPS DATA file containing an 'Atoms' section; the GRO format is not compatible with the LAMMPS DATAParser."
+        }
+      ]
+    }
+  ],
+  "total_input_tokens": 124247,
+  "total_output_tokens": 6376,
+  "current_distinct_proposals": 11,
+  "initial_superseded_mir_proposals": 3,
+  "unsupported_current_sites": 1,
+  "validated_sites": [
+    {
+      "library": "mir_eval",
+      "case_id": "native-b44041df1dc5b255aee959ba",
+      "validation": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/checks/validation.json",
+        "sha256": "1a00224d828fcabc23d0f9754faee426c16a710ea25933aefe21d97615067b87"
+      },
+      "scope_report": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/VALIDATION_REPORT.json",
+        "sha256": "2a958eb112e45c90eb019bd351b2f9347fd73ef449ed883cf83cb5b6e529d260"
+      }
+    },
+    {
+      "library": "mdanalysis",
+      "case_id": "native-72cc3ddb0a88f53b873bd022",
+      "validation": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/checks/validation.json",
+        "sha256": "c4293227014b8f960b1fdd12dacbae0f0265ea502532adb6790be63217c05c9c"
+      },
+      "scope_report": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/validation/check-box/VALIDATION_REPORT.json",
+        "sha256": "532f8d42ace4d8f2e8b391aa17e8201034ee33862a710df9a930465f427b8247"
+      }
+    }
+  ],
+  "mdanalysis_validation_status": "One source-message candidate passed eight paired controls; seven proposals remain unvalidated, including the excluded RDKit helper proposal.",
+  "scope": "Proposals and development validation; no held-out or audience repair benefit established. Installation is tracked separately.",
+  "review_exclusions": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mdanalysis/caller-correction/RDKIT_REVIEW.json",
+      "sha256": "3c1a70c14fbe603ef386b059c5b51faadb126b28d4be4b050c6088e6878a3623"
+    }
+  ]
+}

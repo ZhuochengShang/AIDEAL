@@ -1,0 +1,195 @@
+{
+  "status": "ok",
+  "returncode": 0,
+  "seconds": 3.824479282833636,
+  "payload": {
+    "request_sha256": "0fbc9353032ddadd148c1c046ff87e9841ff0bbce1e2a01408cbaba4b057da41",
+    "execution_pass": false,
+    "oracle_pass": true,
+    "target_reached": true,
+    "error_type": "ValueError",
+    "error_message": "Reference intervals and pitches have different lengths.",
+    "public_feedback": "__RUN_ERR__ ValueError: Reference intervals and pitches have different lengths.\nTraceback (most recent call last):\n  File \"<development-control>\", line 45, in <module>\n  File \"<development-control>\", line 40, in run\n  File \"<development-control>\", line 33, in api_test\n  File \"/tmp/aideal-native-module-2uwjr48b/transcription.py\", line 137, in validate\n    raise ValueError(\"Reference intervals and pitches have different \" \"lengths.\")\nValueError: Reference intervals and pitches have different lengths.\n\nValueError: Reference intervals and pitches have different lengths.",
+    "result_sha256": "03ecf7ac5f78d7daedb223b0f1cdd316ace5c7dcfc85bb64648e3c4e751c2303",
+    "evidence": {
+      "calls": [
+        {
+          "inputs": {
+            "ref_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.5,
+                  1.0
+                ],
+                [
+                  1.0,
+                  1.5
+                ],
+                [
+                  1.5,
+                  2.0
+                ]
+              ]
+            },
+            "ref_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                440.0,
+                440.0,
+                0.0,
+                523.25,
+                523.25
+              ]
+            },
+            "est_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.48
+                ],
+                [
+                  0.48,
+                  1.02
+                ],
+                [
+                  1.02,
+                  1.48
+                ],
+                [
+                  1.48,
+                  2.0
+                ]
+              ]
+            },
+            "est_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                442.0,
+                438.0,
+                0.0,
+                525.0,
+                520.0
+              ]
+            }
+          },
+          "return": null,
+          "error_type": "ValueError",
+          "error_message": "Reference intervals and pitches have different lengths.",
+          "error_line": 137,
+          "inputs_after": {
+            "ref_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.5
+                ],
+                [
+                  0.5,
+                  1.0
+                ],
+                [
+                  1.0,
+                  1.5
+                ],
+                [
+                  1.5,
+                  2.0
+                ]
+              ]
+            },
+            "ref_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                440.0,
+                440.0,
+                0.0,
+                523.25,
+                523.25
+              ]
+            },
+            "est_intervals": {
+              "dtype": "float64",
+              "shape": [
+                4,
+                2
+              ],
+              "values": [
+                [
+                  0.0,
+                  0.48
+                ],
+                [
+                  0.48,
+                  1.02
+                ],
+                [
+                  1.02,
+                  1.48
+                ],
+                [
+                  1.48,
+                  2.0
+                ]
+              ]
+            },
+            "est_pitches": {
+              "dtype": "float64",
+              "shape": [
+                5
+              ],
+              "values": [
+                442.0,
+                438.0,
+                0.0,
+                525.0,
+                520.0
+              ]
+            }
+          }
+        }
+      ],
+      "program_error": {
+        "type": "SystemExit",
+        "message": "1"
+      },
+      "stdout": "",
+      "stderr": "__RUN_ERR__ ValueError: Reference intervals and pitches have different lengths.\nTraceback (most recent call last):\n  File \"<development-control>\", line 45, in <module>\n  File \"<development-control>\", line 40, in run\n  File \"<development-control>\", line 33, in api_test\n  File \"/tmp/aideal-native-module-2uwjr48b/transcription.py\", line 137, in validate\n    raise ValueError(\"Reference intervals and pitches have different \" \"lengths.\")\nValueError: Reference intervals and pitches have different lengths.\n",
+      "loaded_module": {
+        "path": "/tmp/aideal-native-module-2uwjr48b/transcription.py",
+        "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c"
+      },
+      "installed_baseline": {
+        "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/mir_eval/transcription.py",
+        "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c"
+      }
+    }
+  }
+}

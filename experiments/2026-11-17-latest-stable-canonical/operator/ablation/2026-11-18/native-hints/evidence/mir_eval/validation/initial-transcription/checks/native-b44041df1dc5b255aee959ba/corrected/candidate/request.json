@@ -1,0 +1,23 @@
+{
+  "protocol": "native_hint_development_v1",
+  "case_id": "native-b44041df1dc5b255aee959ba",
+  "role": "corrected",
+  "variant": "candidate",
+  "code": "def validate(ref_intervals, ref_pitches, est_intervals, est_pitches):\n    validate_intervals(ref_intervals, est_intervals)\n    if not ref_intervals.shape[0] == ref_pitches.shape[0]:\n        raise ValueError(\"Reference intervals and pitches have different lengths. Ensure the number of rows in the interval array matches the number of elements in the pitch array.\")\n    if not est_intervals.shape[0] == est_pitches.shape[0]:\n        raise ValueError(\"Estimated intervals and pitches have different lengths. Ensure the number of rows in the interval array matches the number of elements in the pitch array.\")\n    if ref_pitches.size > 0 and np.min(ref_pitches) <= 0:\n        raise ValueError(\"Reference contains at least one non-positive pitch value\")\n    if est_pitches.size > 0 and np.min(est_pitches) <= 0:\n        raise ValueError(\"Estimate contains at least one non-positive pitch value\")",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval",
+  "source_overrides": {
+    "mir_eval/transcription.py": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/validation/initial-transcription/single_site/source/mir_eval/transcription.py",
+      "sha256": "51fa523b7488ecd19444467ce86d79fc304c14c3a8951ba17b0675a1787d4a21",
+      "bytes": 36612
+    }
+  },
+  "source_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/transcription.py",
+      "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c",
+      "bytes": 36457
+    }
+  ],
+  "checker_context_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/validation/initial-transcription/private_checker.json"
+}

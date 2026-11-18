@@ -1,0 +1,23 @@
+{
+  "protocol": "native_hint_development_v1",
+  "case_id": "native-b44041df1dc5b255aee959ba",
+  "role": "corrected",
+  "variant": "candidate",
+  "code": "import mir_eval\nimport numpy as np\n\n# ref_intervals shape (n, 2) must match ref_pitches shape (n,)\nref_intervals = np.array([[0.0, 0.5], [0.5, 1.0]])\nref_pitches = np.array([440.0, 523.25])\nest_intervals = np.array([[0.0, 0.48], [0.48, 1.02]])\nest_pitches = np.array([442.0, 525.0])\n\nmir_eval.transcription.validate(ref_intervals, ref_pitches, est_intervals, est_pitches)\n\nwitness = ref_intervals.shape[0] + est_intervals.shape[0]\nassert ref_intervals.shape[0] == 2 and est_intervals.shape[0] == 2\nprint(f\"__CHECK__ python:mir_eval.transcription.validate {witness}\")",
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval",
+  "source_overrides": {
+    "mir_eval/transcription.py": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/single_site/source/mir_eval/transcription.py",
+      "sha256": "c0d37914d7e426db5b1ad1f2de300a3c7946ecb62c15be9eb9e21ba2672a41bb",
+      "bytes": 36594
+    }
+  },
+  "source_bindings": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/mir_eval/transcription.py",
+      "sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c",
+      "bytes": 36457
+    }
+  ],
+  "checker_context_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/native-hint-authoring-2026-11-18/mir_eval/caller-correction/validation/transcription/private_checker.json"
+}

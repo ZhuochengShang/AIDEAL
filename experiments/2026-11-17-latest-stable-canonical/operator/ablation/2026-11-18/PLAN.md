@@ -23,7 +23,7 @@ The completed runs measure native API microbenchmark execution under the existin
 | Condition | Documentation in initial request | Callable implementation | R0 | R1/R2 | Deep dive |
 | --- | --- | --- | --- | --- | --- |
 | Original | Pinned original documentation | Original | Complete | Planned as a separately frozen repair experiment | No |
-| README only | Completed generated README | Original | Next executable stage | Planned, up to two repairs | After R2, revise affected entries; fresh evaluation |
+| README only | Completed generated README | Original | Running; first three libraries complete | Planned, up to two repairs | After R2, revise affected entries; fresh evaluation |
 | Alias only | Original + alias interface descriptions | Original + validated forwarding aliases | After alias validation | Up to two repairs | No |
 | Error Hints only | Original | Original + validated exception-message edits | After native-hint validation | Up to two repairs using emitted diagnostics | No |
 | Combined | Generated README + alias descriptions | Same validated aliases and native hints | After both validations | Up to two repairs | After R2, revised README; fresh evaluation |
@@ -36,7 +36,7 @@ flowchart TD
   B --> C[Publish README-only and README-bearing Combined branches]
   C --> D[Generated README R0: 2,850 targets]
   A --> E[Record every Original failure and classify eligible development evidence]
-  E --> F[Author proposes forwarding aliases with reasons]
+  B --> F[Author proposes forwarding aliases from API and source facts]
   E --> G[Author proposes guidance at supported existing exception sites]
   F --> H[Build, behavior preservation and executable alias-use checks]
   G --> I[Trigger, corrected, valid and unrelated-error controls on both versions]
@@ -49,6 +49,8 @@ flowchart TD
   M --> N[Optional deep dive, revised README, fresh evaluation]
   M --> O[Report micro/puzzle separately, success by round, time, tokens and coverage]
 ```
+
+Alias requests in this launch use API and source context; they do not include the Original failure logs. Their stated benefits are model proposals, not observed explanations of those failures. Native-hint authoring does use the recorded Original failures.
 
 ## Treatment acceptance
 
@@ -67,6 +69,8 @@ The existing environment includes known optional-dependency and compatibility fa
 Shared evaluator, operator scripts and evidence: `ZhuochengShang/AIDEAL`, branch `study/2026-11-17-latest-stable-canonical`.
 
 Each library repository uses `study/2026-11-17-latest-stable-canonical/{original,readme-only,alias-only,error-hints-only,combined}`. Branch names express intended conditions; receipts and commits establish what is actually installed. Never switch or patch the Original checkout to run another condition.
+
+A separately frozen repair protocol is being checked because the legacy native repair path truncates diagnostics and omits the previous program. The new protocol must expose the preceding program and bounded execution feedback, preserve emitted native hints, and apply the same repair policy to all five conditions. It must not silently reuse a zero-repair checkpoint with changed settings.
 
 The continuation's operator records belong under `operator/ablation/2026-11-18/`. Runtime outputs use a new namespace and retain exact requests, returned program text, provider metadata, execution stdout/stderr, result JSON, reports and completion bindings. A live progress report must distinguish queued, running, completed, failed and awaiting validation.
 

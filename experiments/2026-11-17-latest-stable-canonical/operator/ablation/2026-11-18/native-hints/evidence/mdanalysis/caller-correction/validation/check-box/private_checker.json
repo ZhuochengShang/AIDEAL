@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "module": "MDAnalysis.lib.util",
+  "target_name": "check_box",
+  "case_id": "native-72cc3ddb0a88f53b873bd022",
+  "source_sha256": "4d37165adcc10536b8f51308924285fa02858e0ec84165082498308c135b46da",
+  "roles": {
+    "trigger": {
+      "code_sha256": "2174ec04b1f454c7ea4c9c7ec8568b30d846ad0b09d518d60ee136967636e45a",
+      "input": null,
+      "outcome": "exception",
+      "error_line": 2652,
+      "messages": {
+        "baseline": "Box is None",
+        "candidate": "Box is None [AIDEAL fix:box_cannot_be_none] Ensure the input 'box' is a valid array-like object representing unit cell dimensions, not None."
+      }
+    },
+    "corrected": {
+      "code_sha256": "25706dbafda24e86180dca337e5118e5153e7831ddbd1718acb8b394bc73146c",
+      "input": {
+        "dtype": "float32",
+        "shape": [
+          6
+        ],
+        "values": [
+          50.0,
+          50.0,
+          50.0,
+          90.0,
+          90.0,
+          90.0
+        ]
+      },
+      "outcome": "success"
+    },
+    "valid": {
+      "code_sha256": "c714a3a60b7d349841a761f30f769df2ef20b2afcd93a5c5173ed86d54219838",
+      "input": {
+        "dtype": "float32",
+        "shape": [
+          6
+        ],
+        "values": [
+          10.0,
+          20.0,
+          30.0,
+          90.0,
+          90.0,
+          90.0
+        ]
+      },
+      "outcome": "success"
+    },
+    "nearby_negative": {
+      "code_sha256": "6f580fb399db75b40f4025caa8580fee4da7d71b7760ccec02c24f826de3c1ad",
+      "input": {
+        "dtype": "float32",
+        "shape": [
+          3
+        ],
+        "values": [
+          10.0,
+          20.0,
+          30.0
+        ]
+      },
+      "outcome": "exception",
+      "error_line": 2657,
+      "messages": {
+        "baseline": "Invalid box information. Must be of the form [lx, ly, lz, alpha, beta, gamma].",
+        "candidate": "Invalid box information. Must be of the form [lx, ly, lz, alpha, beta, gamma]."
+      }
+    }
+  },
+  "oracle": "Independent cell geometry equations; exact orthogonal lengths and float32 output, input preservation, direct public target call; no model-written assertion is used as oracle."
+}

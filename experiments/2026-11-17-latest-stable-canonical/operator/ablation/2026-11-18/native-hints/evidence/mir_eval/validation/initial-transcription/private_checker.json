@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "module": "mir_eval.transcription",
+  "target_name": "validate",
+  "case_id": "native-b44041df1dc5b255aee959ba",
+  "declaration_line": 117,
+  "source_sha256": "b8cc3165d1260ae9601a6b565891d4a299a0732f36a4cc3d842d08742a66a04c",
+  "roles": {
+    "trigger": {
+      "code_sha256": "adcaa593f638df2983bae35aac9139b885eec6770aac5c6c51402fa39d36243a",
+      "inputs": {
+        "ref_intervals": {
+          "dtype": "float64",
+          "shape": [
+            4,
+            2
+          ],
+          "values": [
+            [
+              0.0,
+              0.5
+            ],
+            [
+              0.5,
+              1.0
+            ],
+            [
+              1.0,
+              1.5
+            ],
+            [
+              1.5,
+              2.0
+            ]
+          ]
+        },
+        "ref_pitches": {
+          "dtype": "float64",
+          "shape": [
+            5
+          ],
+          "values": [
+            440.0,
+            440.0,
+            0.0,
+            523.25,
+            523.25
+          ]
+        },
+        "est_intervals": {
+          "dtype": "float64",
+          "shape": [
+            4,
+            2
+          ],
+          "values": [
+            [
+              0.0,
+              0.48
+            ],
+            [
+              0.48,
+              1.02
+            ],
+            [
+              1.02,
+              1.48
+            ],
+            [
+              1.48,
+              2.0
+            ]
+          ]
+        },
+        "est_pitches": {
+          "dtype": "float64",
+          "shape": [
+            5
+          ],
+          "values": [
+            442.0,
+            438.0,
+            0.0,
+            525.0,
+            520.0
+          ]
+        }
+      },
+      "outcome": "exception",
+      "error_type": "ValueError",
+      "error_line": 137,
+      "messages": {
+        "baseline": "Reference intervals and pitches have different lengths.",
+        "candidate": "Reference intervals and pitches have different lengths. [AIDEAL fix:match_interval_pitch_lengths] Append guidance: Ensure the number of rows in the interval array matches the number of elements in the pitch array."
+      }
+    },
+    "corrected": {
+      "code_sha256": "4711481f5d8fcb4b157bc9eb0595fca01aed5c7b2a5d55d7e89797a690386146",
+      "inputs": null,
+      "outcome": "success"
+    },
+    "valid": {
+      "code_sha256": "110a6a6a899c0e768b4e01395c1da1e56c963398b5c706dfe640c7878d182746",
+      "inputs": {
+        "ref_intervals": {
+          "dtype": "float64",
+          "shape": [
+            2,
+            2
+          ],
+          "values": [
+            [
+              0.0,
+              0.8
+            ],
+            [
+              1.0,
+              1.8
+            ]
+          ]
+        },
+        "ref_pitches": {
+          "dtype": "float64",
+          "shape": [
+            2
+          ],
+          "values": [
+            440.0,
+            660.0
+          ]
+        },
+        "est_intervals": {
+          "dtype": "float64",
+          "shape": [
+            1,
+            2
+          ],
+          "values": [
+            [
+              0.05,
+              0.75
+            ]
+          ]
+        },
+        "est_pitches": {
+          "dtype": "float64",
+          "shape": [
+            1
+          ],
+          "values": [
+            440.0
+          ]
+        }
+      },
+      "outcome": "success"
+    },
+    "nearby_negative": {
+      "code_sha256": "bf55bb98de296c0eb022f389825262c53dcbcca9e78d72f07a12ae7ddbeceb1a",
+      "inputs": {
+        "ref_intervals": {
+          "dtype": "float64",
+          "shape": [
+            2,
+            2
+          ],
+          "values": [
+            [
+              0.0,
+              0.8
+            ],
+            [
+              1.0,
+              1.8
+            ]
+          ]
+        },
+        "ref_pitches": {
+          "dtype": "float64",
+          "shape": [
+            2
+          ],
+          "values": [
+            440.0,
+            660.0
+          ]
+        },
+        "est_intervals": {
+          "dtype": "float64",
+          "shape": [
+            2,
+            2
+          ],
+          "values": [
+            [
+              0.05,
+              0.75
+            ],
+            [
+              1.05,
+              1.75
+            ]
+          ]
+        },
+        "est_pitches": {
+          "dtype": "float64",
+          "shape": [
+            1
+          ],
+          "values": [
+            440.0
+          ]
+        }
+      },
+      "outcome": "exception",
+      "error_type": "ValueError",
+      "error_line": 139,
+      "messages": {
+        "baseline": "Estimated intervals and pitches have different lengths.",
+        "candidate": "Estimated intervals and pitches have different lengths."
+      }
+    }
+  },
+  "corrected_oracle": "One traced call; nonempty finite note intervals, one positive Hertz pitch per note; unchanged inputs; None return; no program exception. Defined from the documented contract, not from author assertions. Trigger/valid/nearby use exact independent arrays."
+}
