@@ -5,6 +5,8 @@ import glob as globmod
 import re
 from pathlib import Path
 from .config import AidealConfig
+from .api_registry import target_key
+from .original_documentation import original_documents, original_target_texts, original_document_paths
 from .prompts import prompt_path
 from .readme_validation import validate_entry, is_complete_entry
 from .api_discovery import (
@@ -32,6 +34,49 @@ def distilled_readme_context(cfg: AidealConfig, *, refresh: bool = False, record
     Cached next to the LLM readme; reused across every entry generation so the
     full README isn't re-sent per API (efficient + accurate). Returns a
     'generate fresh' note when the project has no original README."""
+    bundle = original_documents(cfg)
+    if bundle is not None:
+        # Every character is assigned to a recorded request. Unlike the legacy
+        # cap, chunking cannot silently discard late pages or dataset APIs.
+        import hashlib
+        import json
+        from .llm import invoke_text
+        from .prompts import load as load_prompt
+        raw = bundle["text"]
+        width = int((cfg.raw.get("readme_generation") or {}).get("distill_chunk_chars", 150000))
+        if width <= 0:
+            raise ValueError("distill_chunk_chars must be positive")
+        chunks = [raw[start:start + width] for start in range(0, len(raw), width)]
+        messages = [load_prompt(cfg, "aideal/readme_distill", original_readme=chunk) for chunk in chunks]
+        model = cfg.model_for_role("author")
+        identity = hashlib.sha256(json.dumps(
+            {"manifest": bundle["sha256"], "model": vars(model), "messages": messages},
+            sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+        cache = cfg.llm_readme.parent / "original_readme_notes.md"
+        receipt = cache.with_suffix(".json")
+        if recorder is None and not refresh and cache.exists() and receipt.exists():
+            previous = json.loads(receipt.read_text(encoding="utf-8"))
+            note = cache.read_text(encoding="utf-8")
+            if (previous.get("identity") == identity and
+                    previous.get("note_sha256") == hashlib.sha256(note.encode()).hexdigest()):
+                return note
+        notes = [(recorder.invoke(model, *message, phase="distill") if recorder is not None
+                  else invoke_text(model, *message)).strip() for message in messages]
+        if any(not note for note in notes):
+            raise ValueError("Original-document distillation produced an empty chunk")
+        note = "\n\n".join(f"===== Original documentation part {i + 1}/{len(notes)} =====\n{part}"
+                           for i, part in enumerate(notes))
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cache.write_text(note, encoding="utf-8")
+        receipt.write_text(json.dumps({"schema": "aideal.original-doc-distillation/v1",
+            "identity": identity, "manifest_sha256": bundle["sha256"],
+            "corpus_sha256": hashlib.sha256(raw.encode()).hexdigest(), "corpus_chars": len(raw),
+            "truncated": False, "note_sha256": hashlib.sha256(note.encode()).hexdigest(),
+            "chunks": [{"start": i * width, "end": min((i + 1) * width, len(raw)),
+                        "input_sha256": hashlib.sha256(chunk.encode()).hexdigest(),
+                        "output_sha256": hashlib.sha256(notes[i].encode()).hexdigest()}
+                       for i, chunk in enumerate(chunks)]}, indent=2) + "\n", encoding="utf-8")
+        return note
     if not cfg.original_readme_files:
         return ("No original README exists for this project — generate documentation "
                 "fresh from the signature and project profile only.")
@@ -58,6 +103,11 @@ def _original_readme_snippets(cfg: AidealConfig, names, max_per_api: int = 2,
     instance-style `raster.mapPixels(f)` gets paraphrased into a non-compiling
     free-function `mapPixels(raster, f)`. Feeding the exact block back lets the
     author reproduce the true receiver/qualifier. Returns {name: [code blocks]}."""
+    if cfg.raw.get("files", {}).get("original_doc_manifest"):
+        # These are complete reviewed excerpts, not a bare-name fence match.
+        return {api: [text] for api, text in original_target_texts(cfg, names).items()}
+    if any(":" in name for name in names):
+        raise ValueError("Qualified README authoring requires a reviewed original-document manifest")
     if not cfg.original_readme_files:
         return {}
     from collections import defaultdict
@@ -94,6 +144,9 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
     file instead of getting an instant "found" no-op."""
     if cfg.llm_readme.exists() and not force and not resume:
         entries = parse_readme(cfg.llm_readme)
+        if generate and cfg.raw.get("codebase", {}).get("identity_mode") == "qualified":
+            raise ValueError("Existing qualified README requires force or resume: exact entry IDs alone "
+                             "do not verify its current source/document fingerprint")
         return {
             "action": "found",
             "path": str(cfg.llm_readme),
@@ -108,8 +161,9 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
     allowed = public_api_surface(cfg)
     by_name: dict[str, list[dict]] = {}
     for d in public_api_details(cfg):
-        if d["visibility"] == "public" and d["name"] in allowed:
-            by_name.setdefault(d["name"], []).append(d)
+        key = target_key(d)
+        if (d["visibility"] == "public" or d.get("public_exposure_established")) and key in allowed:
+            by_name.setdefault(key, []).append(d)
     surface = sorted(by_name)
     if api_names is not None:
         if not api_names or len(api_names) != len(set(api_names)):
@@ -123,6 +177,12 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
               else "Generated from the API surface, project profile, and distilled docs.")
     header = f"# {cfg.project_name} — LLM_readme\n\nLLM-facing API documentation. {_intro}\n\n"
     targets = surface[:max_generated] if (generate and max_generated) else surface
+    qualified = any(r.get("api_id") for records in by_name.values() for r in records)
+    if qualified and generate:
+        # Validate all requested mappings before even the first distillation.
+        original_target_texts(cfg, targets)
+        if ((cfg.comprehension or {}).get("execute", {}) or {}).get("probe_on_missing"):
+            raise ValueError("Qualified README authoring requires separately reviewed probe evidence")
     failures: list[dict] = []
     cfg.llm_readme.parent.mkdir(parents=True, exist_ok=True)
 
@@ -163,7 +223,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         _engine_dir = Path(__file__).resolve().parent
         _engine_files = [_engine_dir / name for name in (
             "config.py", "llm.py", "profile.py", "prompts.py", "readme_agent.py",
-            "readme_format.py",
+            "readme_format.py", "original_documentation.py",
             "readme_evidence.py",
             "readme_catalogue.py",
             "api_visibility.py",
@@ -172,7 +232,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             "api_intent.py",
             "api_overloads.py",
             "api_signatures.py",
-            "api_discovery.py", "api_origin.py", "api_registry.py", "api_sql_canonical.py", "api_source_registry.py", "api_canonical_selection.py",
+            "api_discovery.py", "api_origin.py", "api_registry.py", "api_sql_canonical.py", "api_source_registry.py", "api_canonical_selection.py", "api_public_inventory.py", "api_coverage.py",
             "readme_generation.py", "readme_recording.py",
             "readme_validation.py", "readme_replay.py", "doc_check_sources.py")]
         _generation_payload = {
@@ -180,6 +240,8 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             "project": cfg.project_name,
             "language": cfg.language,
             "author": f"{_author.provider}:{_author.model}",
+            **({"author_max_output_tokens": _author.max_output_tokens}
+               if _author.max_output_tokens is not None else {}),
             "config": cfg.raw,
             "project_profile": _generation_files_hash([_profile_path], cfg.root),
             "api_inventory": _generation_files_hash(
@@ -198,6 +260,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             "definitions": {
                 n: [r.get("signature", "") for r in by_name[n]] for n in targets
             },
+            "original_document_files": _generation_files_hash(original_document_paths(cfg), cfg.root),
             "original_document_sha256": _hashlib.sha256(
                 cfg.original_readme_text(limit=None).encode("utf-8")
             ).hexdigest(),
@@ -265,17 +328,18 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         # mtime-based cache wouldn't otherwise notice a prompt change).
         readme_ctx = distilled_readme_context(cfg, refresh=force, recorder=recorder)
         # index real usage from the existing test suite ONCE (ground-truth examples)
-        test_index = api_test_examples(cfg)
+        test_index = {} if qualified else api_test_examples(cfg)
         # ...and the VERBATIM per-API code blocks from the original readme, so the
         # entry can reproduce the project's real call form (which the distilled note
         # summarizes away) instead of paraphrasing it into a non-compiling shape.
-        orig_snippet_index = _original_readme_snippets(cfg, set(by_name))
+        orig_snippet_index = _original_readme_snippets(cfg, set(targets))
         # sibling grounding: map each API to its defining class and index which
         # classes have tested methods, so an API with NO direct test can borrow
         # the tested call pattern of a sibling on the same object/class.
         import os as _os
         from collections import defaultdict as _dd
-        _class_of = {n: (_os.path.basename(r[0].get("file", ""))[:-6]
+        _class_of = {n: (r[0].get("owner", "") if r and r[0].get("api_id") else
+                        _os.path.basename(r[0].get("file", ""))[:-6]
                          if r and r[0].get("file", "").endswith(".scala") else "")
                      for n, r in by_name.items()}
         _sibs_by_class = _dd(list)
@@ -309,7 +373,12 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                 # listed as a separate overload. Only genuinely distinct
                 # signatures (different types / other receiver contexts)
                 # remain in `overloads`.
-                maximals, _subsumed = _subsume_overloads(recs, _dedup_deprioritize(cfg))
+                if recs[0].get("api_id"):
+                    if len(recs) != 1:
+                        raise ValueError(f"Qualified API has more than one selected definition: {name}")
+                    maximals, _subsumed = recs, []
+                else:
+                    maximals, _subsumed = _subsume_overloads(recs, _dedup_deprioritize(cfg))
                 primary = maximals[0]
                 skeleton = _entry_skeleton(name, lang, recs)
                 # Scaladoc usually sits on the SHORT base overload; if the
@@ -324,6 +393,14 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                     "source_doc": _doc,
                     "overloads": [r["signature"] for r in maximals[1:]][:5],
                 }
+                if primary.get("api_id"):
+                    facts.update(api_id=primary["api_id"], display_name=primary["name"],
+                                 identity_version=primary.get("identity_version"),
+                                 parameter_count=primary.get("parameter_count"),
+                                 parameter_count_status=primary.get("parameter_count_status", "known"))
+                    for field in ("exposure_ids", "preferred_public_path", "public_access_paths"):
+                        if primary.get(field):
+                            facts[field] = primary[field]
                 # Compiler/AST identities survive into the actual author prompt,
                 # including nested owners and every same-name declaration site.
                 # Keep the existing signature and overload order unchanged.
@@ -392,7 +469,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                     validate_entry(entry, name, [r.get("description") for r in recs])
                     status = "ok"
                 except Exception as e:  # fell back to skeleton — record why, don't hide it
-                    if recorder is not None:
+                    if recorder is not None or qualified:
                         raise  # A recorded run stops at its first failed call.
                     failures.append({"api": name, "error": f"{type(e).__name__}: {e}"})
                     entry = skeleton

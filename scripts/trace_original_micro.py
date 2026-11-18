@@ -40,6 +40,7 @@ from aideal.error_log import ErrorLog
 from aideal.prompts import load as load_prompt, prompt_path
 from aideal.fixreport import write_report
 from aideal.llm import invoke_text, reset_usage, usage_snapshot, usage_delta
+from aideal.readme_format import api_storage_key
 from workflow.execution import atomic_json
 from scripts.run_original_micro import prepare
 from scripts.trace_view import build_trace_view, snapshot_sources
@@ -145,7 +146,9 @@ def walkthrough(root: Path, args):
     snapshot_sources(root)
     config_path = root / 'configs/aideal.yaml'
     execution = cfg.raw['comprehension']['execute']
-    work_api = cfg.root / execution['work_dir'] / f'run_{name}'
+    # Match the native evaluator's directory key while preserving the full API
+    # identity in prompts and results. Owners must never share an output folder.
+    work_api = cfg.root / execution['work_dir'] / f'run_{api_storage_key(name)}'
     program = work_api / execution['test_filename']
     inventory, _, error = _comprehension_inventory(
         cfg, 'original', manifest=[name], doc_scope='relevant')

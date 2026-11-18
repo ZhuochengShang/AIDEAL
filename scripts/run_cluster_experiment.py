@@ -11,6 +11,10 @@ from pathlib import Path
 import signal
 import subprocess
 import threading
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from workflow.evaluation_setup import assert_review_released
 
 
 def stamp():
@@ -66,6 +70,8 @@ def prepare(plan, secret):
 def supervise(plan, key_file, workers=2):
     if workers not in (1, 2):
         raise ValueError('Concurrency must be one or two')
+    # Honor the study review hold before even reading the credential file.
+    assert_review_released(plan['root'])
     secret = Path(key_file).read_text().strip()
     if not secret or '\n' in secret or '\r' in secret:
         raise ValueError('Key file must contain one nonempty credential')
@@ -118,6 +124,8 @@ def supervise(plan, key_file, workers=2):
                 with mutex:
                     if stopped.is_set():
                         raise InterruptedError('Queue stopped')
+                    assert_review_released(root)
+                    assert_review_released(job['output'])
                     process = subprocess.Popen(job['command'], cwd=release, env=env, stdout=subprocess.PIPE,
                                                stderr=subprocess.STDOUT, text=True, errors='replace',
                                                start_new_session=True, pass_fds=(lock.fileno(),))

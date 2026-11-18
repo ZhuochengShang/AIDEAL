@@ -19,13 +19,15 @@ sys.path.insert(0, str(ROOT / 'vendor/aideal_engine/src'))
 
 import yaml
 from aideal.config import load_config
-from aideal.api_registry import relocated_inventory_binding
+from aideal.api_registry import relocated_inventory_binding, inventory_runtime_bindings
 from aideal.doc_check_comprehension import comprehension_check
 from aideal.doc_check_sources import _load_manifest
+from aideal.original_documentation import original_document_paths
 from aideal.doc_check_provenance import _sha256_files
 from aideal.fixreport import write_report
 from aideal.llm import reset_usage
 from workflow.execution import atomic_json, ownership
+from workflow.evaluation_setup import assert_review_released
 
 
 def write_once(path, content):
@@ -60,7 +62,8 @@ def prepare(spec, destination, model, sample, *, max_fix_rounds=0, api=None, mod
         raise ValueError('The API manifest is empty')
     if api is not None and api not in names:
         raise ValueError(f'API {api!r} is not in the configured manifest: {names}')
-    if not original.original_readme_files:
+    documentation_paths = original_document_paths(original)
+    if not original.original_readme_files and not documentation_paths:
         raise ValueError('No original documentation resolved')
     source = Path(spec['source_link']['target']).resolve()
     if not source.is_dir():
@@ -81,14 +84,29 @@ def prepare(spec, destination, model, sample, *, max_fix_rounds=0, api=None, mod
 
     raw = deepcopy(original.raw)
     raw.pop('extends', None)
-    relocated_inventory = relocated_inventory_binding(original)
-    if relocated_inventory is not None:
-        content, checksum = relocated_inventory
+    runtime_bindings = inventory_runtime_bindings(original)
+    for relative, source_file in runtime_bindings:
+        if not relative.is_absolute():
+            write_once(destination / relative, source_file.read_bytes())
+    # Source ownership is fixed at preparation; relocation must not widen it.
+    origin = raw.get('codebase', {}).get('api_origin') or {}
+    if origin.get('source_roots'):
+        origin['source_roots'] = [str((original.root / p).resolve()) for p in origin['source_roots']]
+    inventory = (raw.get('codebase') or {}).get('api_inventory')
+    inventory_path = (original.root / inventory).resolve() if inventory else None
+    if inventory_path is not None:
+        # Even an already absolute provenance binding must be copied into the
+        # new run. Relocation returning None means the bytes need no edit.
+        relocated = relocated_inventory_binding(original)
+        content = relocated[0] if relocated is not None else inventory_path.read_bytes()
         write_once(destination / 'inputs/api_inventory.json', content)
-        raw['codebase'].update(api_inventory='inputs/api_inventory.json', api_inventory_sha256=checksum)
+        raw['codebase'].update(api_inventory='inputs/api_inventory.json',
+                               api_inventory_sha256=hashlib.sha256(content).hexdigest())
     files = raw.setdefault('files', {})
     # Retain original documentation inputs. All output-bearing paths are new.
     files['original_readme'] = [str(p) for p in original.original_readme_files]
+    if files.get('original_doc_manifest'):
+        files['original_doc_manifest'] = str((original.root / files['original_doc_manifest']).resolve())
     for field in ('prompts_dir', 'integration_tasks', 'aliases'):
         if files.get(field):
             files[field] = str((original.root / files[field]).resolve())
@@ -100,7 +118,13 @@ def prepare(spec, destination, model, sample, *, max_fix_rounds=0, api=None, mod
     provider = 'mock' if mode == 'trace-mock' else 'google'
     if mode == 'trace-mock':
         model = 'offline-rdpro-trace'
-    raw['models'] = {'registry': {'selected': {'provider': provider, 'model': model}},
+    # Keep an explicitly reviewed cap for this model; otherwise allow up to
+    # 8192 output tokens. Input distillation does not set this output allowance.
+    selected_spec = original.registry.get(original.roles.get('audience', ''))
+    cap = (selected_spec.max_output_tokens if selected_spec is not None and selected_spec.model == model
+           and selected_spec.provider == provider else None) or 8192
+    raw['models'] = {'registry': {'selected': {'provider': provider, 'model': model,
+                                            'max_output_tokens': cap}},
                      'roles': {role: 'selected' for role in ('author', 'audience', 'fixer')}}
     execution = raw['comprehension']['execute']
     scaffold = (original.root / execution['scaffold']).resolve()
@@ -125,11 +149,14 @@ def prepare(spec, destination, model, sample, *, max_fix_rounds=0, api=None, mod
         elif isinstance(value, dict) and value.get('path'):
             value['path'] = str((original.root / value['path']).resolve())
     raw['comprehension']['class_context'] = False
-    raw['comprehension']['relevant_doc_chars'] = 12000
+    # Preserve the reviewed context budget. Some versioned API reference
+    # entries exceed the legacy 12,000-character default and must not be cut.
+    raw['comprehension']['relevant_doc_chars'] = original.comprehension.get('relevant_doc_chars', 12000)
     # Refuse resume if code, documentation, fixtures, or runner contents changed.
     # Symlinks save disk space; these hashes bind their contents to this run.
-    inputs = list(original.original_readme_files)
-    if relocated_inventory is not None:
+    inputs = (list(original.original_readme_files) + list(documentation_paths)
+              + [source_file for _, source_file in runtime_bindings])
+    if inventory_path is not None:
         inputs.append(destination / 'inputs/api_inventory.json')
     for pattern in original.source_globs:
         inputs.extend(Path(p) for p in glob.glob(str(original.root / pattern), recursive=True))
@@ -164,6 +191,7 @@ def prepare(spec, destination, model, sample, *, max_fix_rounds=0, api=None, mod
 
 def run_library(cfg, destination, sample):
     """Use the existing native R0 engine and save its returned JSON explicitly."""
+    assert_review_released(destination)
     log = destination / 'console.log'
     print(f'  Progress log: {log}', flush=True)
     os.environ['MPLCONFIGDIR'] = str(destination / 'cache/matplotlib')

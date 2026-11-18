@@ -23,6 +23,7 @@ import re
 from pathlib import Path
 
 from .config import AidealConfig
+from .api_registry import target_key
 
 
 def _replace_entry_text(text: str, name: str, new_entry: str) -> str:
@@ -54,7 +55,7 @@ def _source_window(cfg: AidealConfig, name: str, before: int = 15, after: int = 
     — the same election dedup/readme use (subsumption + deprioritized paths)."""
     from .readme_agent import public_api_details, _subsume_overloads, _dedup_deprioritize
     recs = [d for d in public_api_details(cfg)
-            if d["visibility"] == "public" and d["name"] == name]
+            if (d["visibility"] == "public" or d.get("public_exposure_established")) and target_key(d) == name]
     if not recs:
         return "(definition not found on the public surface)", "(none)"
     maximals, _ = _subsume_overloads(recs, _dedup_deprioritize(cfg))
@@ -255,7 +256,7 @@ def _type_context(cfg: AidealConfig, name: str, max_types: int = 4,
     import glob as _glob
     from .readme_agent import public_api_details, _subsume_overloads, _dedup_deprioritize
     recs = [d for d in public_api_details(cfg)
-            if d["visibility"] == "public" and d["name"] == name]
+            if (d["visibility"] == "public" or d.get("public_exposure_established")) and target_key(d) == name]
     if not recs:
         return "(no public definition found)"
     canon = _subsume_overloads(recs, _dedup_deprioritize(cfg))[0][0]

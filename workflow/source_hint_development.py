@@ -112,12 +112,22 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
     manifest = load(manifest_path)
     if manifest.get('schema_version') != 1:
         raise ValueError('Development manifest needs schema_version 1')
+    if manifest.get('evidence_protocol') == 'native_original_r0/v1':
+        from .native_r0_evidence import build_native_r0_preview
+        return build_native_r0_preview(manifest_path, manifest, output, max_cases=max_cases)
+    if manifest.get('evidence_protocol') is not None:
+        raise ValueError('Unsupported development evidence protocol')
     _scope(manifest)
     root = _baseline(manifest['source_root'], manifest['baseline_revision'])
     output = _destination(root, output)
     apis, documents = manifest['api_function_ids'], manifest['original_documents']
     if not isinstance(apis, dict) or not apis or len(set(apis.values())) != len(apis):
         raise ValueError('Supply distinct canonical API identities')
+    public_paths = manifest.get('api_public_paths', {})
+    if (not isinstance(public_paths, dict) or set(public_paths) - set(apis)
+            or any(not isinstance(paths, list) or any(not isinstance(path, str) or not path for path in paths)
+                   for paths in public_paths.values())):
+        raise ValueError('Public access paths must belong to supplied qualified API identities')
     if not isinstance(documents, list) or not documents or not all(verify_artifact(d) for d in documents):
         raise ValueError('Pin the Original documentation artifacts')
     held_out = manifest.get('held_out_case_ids')
@@ -131,7 +141,7 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
         'failure_diagnosis.py', 'response_status.py', 'execution.py', 'ablation.py',
         'treatment_versions.py')]
     refs, cases, skipped, seen_ids, duplicate_groups = [bind(manifest_path), *documents, *controller_refs], [], [], set(), {}
-    index = {'api_function_ids': apis, 'records': []}
+    index = {'api_function_ids': apis, 'api_public_paths': public_paths, 'records': []}
     for row in attempts:
         _scope(row)
         identifier = row.get('case_id')
@@ -206,6 +216,7 @@ def build_development_preview(manifest_path, output, *, max_cases=16):
         raise ValueError('No attributable complete Original development R0 failures')
     preview = seal_record({'schema_version': 1, 'source_root': str(root), 'baseline_revision': manifest['baseline_revision'],
                      'api_function_ids': apis, 'cases': cases, 'skipped': skipped,
+                     **({'api_public_paths': public_paths} if public_paths else {}),
                      'split': 'development', 'condition': 'original', 'round': 0,
                      'artifacts': list({r['path']: r for r in refs}.values())})
     output.mkdir(parents=True)

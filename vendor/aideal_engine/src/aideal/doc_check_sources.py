@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import re
 from .config import AidealConfig
+from .api_registry import target_key
 from .readme_agent import parse_readme, public_api_surface
 from .doc_check_inputs import _owner_map
 from .readme_validation import is_complete_entry
+from .original_documentation import original_target_texts
 
 
 def _source_notes_for_entries(cfg, entries):
@@ -16,8 +18,8 @@ def _source_notes_for_entries(cfg, entries):
     if names:
         from .api_discovery import public_api_details
         for record in public_api_details(cfg):
-            if record["name"] in names:
-                notes.setdefault(record["name"], []).append(record.get("description"))
+            if target_key(record) in names:
+                notes.setdefault(target_key(record), []).append(record.get("description"))
     return notes
 
 
@@ -63,6 +65,8 @@ def _load_manifest(cfg: AidealConfig, manifest: str | None) -> list[str] | None:
     names = data["apis"] if isinstance(data, dict) else data
     if not isinstance(names, list) or not all(isinstance(n, str) and n for n in names):
         raise ValueError(f"manifest {p} must contain a non-empty-string API list")
+    if any(":" in name for name in names) and len(names) != len(set(names)):
+        raise ValueError("Qualified API manifest contains duplicate identities")
     names = list(dict.fromkeys(names))
     unknown = sorted(set(names) - set(public_api_surface(cfg)))
     # The primary experiment remains strictly source-surface bounded. A
@@ -142,6 +146,8 @@ def _relevant_original_texts(cfg: AidealConfig, names: list[str], limit: int) ->
     more than a thousand times. This preserves the same deterministic ranking
     and character cap while making all-surface overnight runs practical.
     """
+    if cfg.raw.get("files", {}).get("original_doc_manifest") or any(":" in name for name in names):
+        return original_target_texts(cfg, names, limit)
     from .readme_agent import _doc_code_mentions
     raw = cfg.original_readme_text(limit=None)
     coverage_cfg = ((cfg.raw or {}).get("coverage") or {})
@@ -179,7 +185,7 @@ def _relevant_original_texts(cfg: AidealConfig, names: list[str], limit: int) ->
     if registered is not None:
         original_paths = {path.resolve() for path in cfg.original_readme_files}
         for record in registered:
-            name = record["name"]
+            name = target_key(record)
             if name not in result:
                 continue
             page = (cfg.root / record["file"]).resolve()
@@ -195,6 +201,7 @@ def _relevant_doc_inventory(cfg: AidealConfig, doc_source: str, names: list[str]
     from .readme_agent import ApiEntry
     limit = int((cfg.comprehension or {}).get("relevant_doc_chars", 12000) or 12000)
     generated = {e.name: e for e in parse_readme(cfg.llm_readme)} if cfg.llm_readme.exists() else {}
+    qualified = any(":" in name for name in names)
     part_limit = limit // 2 if doc_source == "original+aideal" else limit
     original = (_relevant_original_texts(cfg, names, part_limit)
                 if doc_source in ("original", "original+aideal") else {})
@@ -205,9 +212,17 @@ def _relevant_doc_inventory(cfg: AidealConfig, doc_source: str, names: list[str]
             parts.append(original[name])
         if doc_source in ("aideal", "original+aideal"):
             entry = generated.get(name)
+            if qualified and not entry:
+                raise ValueError(f"Generated documentation missing exact API identity: {name}")
             if entry:
+                if qualified and len(entry.body) > part_limit:
+                    raise ValueError(f"Generated documentation for {name} exceeds budget: "
+                                     f"{len(entry.body)} > {part_limit}; no text was truncated")
                 parts.append(entry.body[:part_limit])
-        body = "\n\n===== RELATED DOCUMENTATION =====\n\n".join(parts)[:limit]
+        body = "\n\n===== RELATED DOCUMENTATION =====\n\n".join(parts)
+        if qualified and len(body) > limit:
+            raise ValueError(f"Combined documentation for {name} exceeds budget including separators")
+        body = body[:limit]
         inventory.append(ApiEntry(name=name, goal="", snippet="", body=body))
     return inventory
 
@@ -233,6 +248,13 @@ def _comprehension_inventory(cfg: AidealConfig, doc_source: str,
             names = sorted(public_api_surface(cfg))
         else:
             names = [e.name for e in _filled_entries(cfg)]
+        if any(":" in name for name in names):
+            if doc_source in ("original", "original+aideal"):
+                original_target_texts(cfg, names)
+            if doc_source == "aideal":
+                present = {entry.name for entry in _filled_entries(cfg)}
+                if set(names) - present:
+                    raise ValueError("Full generated documentation lacks requested qualified entries")
         try:
             shared = _shared_doc_text(cfg, doc_source)
         except FileNotFoundError as exc:
@@ -245,6 +267,9 @@ def _comprehension_inventory(cfg: AidealConfig, doc_source: str,
         return [ApiEntry(name=n, goal="", snippet="", body="") for n in names], \
             shared, None
     if doc_source == "original":
+        if cfg.raw.get("files", {}).get("original_doc_manifest"):
+            names = manifest or sorted(public_api_surface(cfg))
+            return _relevant_doc_inventory(cfg, doc_source, names), None, None
         if not cfg.original_readme_files:
             return None, None, {"check": "comprehension", "passed": False, "score": 0.0,
                                 "details": {"error": "files.original_readme not configured or missing"}}
@@ -274,6 +299,10 @@ def _comprehension_inventory(cfg: AidealConfig, doc_source: str,
     inventory = _filled_entries(cfg)
     if manifest:
         by = {e.name: e for e in inventory}
+        missing = set(manifest) - set(by)
+        if missing and any(":" in name for name in manifest):
+            raise ValueError("Generated documentation missing complete qualified entries: " +
+                             ", ".join(sorted(missing)))
         inventory = [by[n] for n in manifest if n in by]
     if not inventory:
         return None, None, {"check": "comprehension", "doc_source": doc_source, "passed": False,
@@ -295,7 +324,7 @@ def _build_catalogue_context(cfg: AidealConfig):
     tiers, class_of, _ = _grounding_tiers(cfg)
     exec_status = _exec_status_map(cfg)
     owner = _owner_map(cfg)
-    file_of = {d["name"]: d["file"] for d in public_api_details(cfg)}
+    file_of = {target_key(d): d["file"] for d in public_api_details(cfg)}
     model = _catalogue_model(entries, tiers, exec_status, class_of, owner, file_of=file_of)
     name_to_gkey = {x["name"]: g for g, m in model.items() for x in m["members"]}
     return model, name_to_gkey, {e.name: e for e in entries}
@@ -309,6 +338,8 @@ def _resolve_class_context(cfg: AidealConfig, override: bool | None) -> bool:
 
 
 def _normalize(name: str) -> str:
+    if ":" in name:
+        return name.strip("`")
     return re.sub(r"\[.*\]$", "", name).strip("`")
 
 

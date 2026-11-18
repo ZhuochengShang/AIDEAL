@@ -57,6 +57,8 @@ class ReadmeCallRecorder:
         request = {'schema': 1, 'binding': self.binding, 'provider': spec.provider,
                    'model': spec.model, 'phase': phase, 'api': api,
                    'system': system, 'user': user}
+        if spec.max_output_tokens is not None:
+            request['max_output_tokens'] = spec.max_output_tokens
         identity = digest(request)
         root = self.directory / identity
         root.mkdir(parents=True, exist_ok=True)
@@ -104,6 +106,12 @@ class ReadmeCallRecorder:
             state['response_sha256'] = digest(response)
             self._validate(text, api, source_docs)
         except BaseException as exc:
+            from .llm import ProviderOutputError
+            if isinstance(exc, ProviderOutputError):
+                partial = exc.response_text.encode()
+                atomic_bytes(attempt / 'response.txt', partial)
+                state.update(response_sha256=digest(partial),
+                             category=exc.category, provider_response=exc.provider_evidence)
             usage = usage_delta(before)
             state.update(status='failed_or_interrupted', error_type=type(exc).__name__,
                          usage=usage if usage.get('calls') else None,

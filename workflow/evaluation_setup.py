@@ -31,10 +31,10 @@ def _path(base, value):
 
 def assert_review_released(directory):
     """Honor an explicit review hold before executing any study work."""
-    # Look for a review hold in the given directory or its parent.
+    # A nested per-library/per-stage output still belongs to its held study.
     # Raise an error before the caller starts or resumes study work.
     directory = Path(directory).resolve()
-    for parent in (directory, directory.parent):
+    for parent in (directory, *directory.parents):
         hold = parent / 'REVIEW_HOLD.json'
         if hold.exists():
             raise ValueError(f'Evaluation paused for user code review: {hold}')

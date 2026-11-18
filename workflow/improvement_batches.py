@@ -6,7 +6,8 @@ from pathlib import Path
 from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json, invoke, ownership
 from .improvement_context import (alias_target, development_destination, _development_errors,
-                                  _library_inputs, _semantic_context, _source_windows)
+                                  _library_inputs, _semantic_context, _source_windows, _select_library_apis,
+                                  _hint_identity_fields)
 from .improvement_suggestions import PROMPT, _finish_proposal, _load_preview, _model_settings
 
 
@@ -75,12 +76,7 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
     output = development_destination(study, output)
     if output.exists():
         raise FileExistsError('Library preview output already exists')
-    definitions = public
-    if apis:
-        known = {row[k] for row in public for k in ('id', 'name', 'qualified_name')}
-        if set(apis) - known:
-            raise ValueError('Requested API not found: ' + ', '.join(sorted(set(apis) - known)))
-        definitions = [row for row in public if {row['id'], row['name'], row['qualified_name']}.intersection(apis)]
+    definitions = _select_library_apis(public, apis)
     source_refs = _source_windows(root, definitions)
     semantics, profile_refs = _semantic_context(cfg, root, attachment)
     errors, error_ref, omitted_errors = _development_errors(
@@ -110,7 +106,7 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
                 used += size
         return {**common, 'batch_id': f'batch-{number:04d}',
                 'alias_destination': _alias_destination(alias_path_template, number),
-                'apis': rows, 'development_errors': selected_errors,
+                'apis': rows, 'development_errors': selected_errors, **_hint_identity_fields(rows),
                 'coverage': {'matching_definitions': len(definitions), 'selected_definitions': len(rows),
                              'omitted_definitions': len(definitions) - len(rows),
                              'omitted_error_rows': omitted,
@@ -165,7 +161,7 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
                              'planned_definitions': sum(len(rows) for rows in groups),
                              'omitted_requested_definitions': 0, 'batch_count': len(batches),
                              'omitted_or_unmatched_development_rows': omitted_errors},
-                'api_catalog': catalog, 'artifacts': source_refs + shared_refs,
+                'api_catalog': catalog, 'artifacts': source_refs + shared_refs, **_hint_identity_fields(definitions),
                 'batches': batches, 'llm_calls': 0}
     manifest['manifest_sha256'] = digest(manifest)
     atomic_json(output / 'manifest.json', manifest)

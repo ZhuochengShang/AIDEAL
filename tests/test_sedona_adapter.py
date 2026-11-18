@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 from aideal.api_registry import registered_sql_details
 from run_snippet import validate_snippet
-from sedona_runtime import TrackedContext, calls_function, initialize_sedona, _database_identity
+from sedona_runtime import TrackedContext, calls_function, initialize_sedona, _database_identity, requested_sql_target
 
 
 class FakeFrame:
@@ -28,6 +28,24 @@ class FakeContext:
 
 
 class AdapterTests(unittest.TestCase):
+    def test_qualified_target_does_not_come_from_folder_slug(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary) / 'run_sql-ST_Area--opaque-hash'
+            directory.mkdir()
+            program = directory / 'ApiTest.py'
+            with self.assertRaisesRegex(ValueError, 'Missing target receipt'):
+                requested_sql_target(program)
+            receipt = directory / 'requested_target.json'
+            receipt.write_text(json.dumps({'api_id': 'sql:ST_Area', 'display_name': 'ST_Area'}))
+            self.assertEqual(('sql:ST_Area', 'ST_Area'), requested_sql_target(program))
+            receipt.write_text(json.dumps({'api_id': 'sql:ST_Area', 'display_name': 'ST_Length'}))
+            with self.assertRaisesRegex(ValueError, 'Invalid qualified SQL'):
+                requested_sql_target(program)
+
+    def test_legacy_sql_directory_remains_compatible(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            self.assertEqual(('ST_Area', 'ST_Area'), requested_sql_target(Path(temporary) / 'run_ST_Area/ApiTest.py'))
+
     def test_native_configuration_must_precede_package_import(self):
         with patch.dict("sys.modules", {"sedonadb": object()}):
             with self.assertRaisesRegex(RuntimeError, "before importing"):

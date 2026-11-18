@@ -231,6 +231,8 @@ def propose_native_hints(preview_path, model_config, output):
     from .improvement_suggestions import _model_settings
     from .response_status import solution_state
     preview = open_preview(preview_path)
+    if not preview['cases']:
+        return {'status': 'no_supported_runtime_hints', 'preview': str(preview_path), 'llm_calls': 0}
     output = _new_output(Path(preview['source_root']), output)
     settings = _model_settings(model_config)
     cases = {case['evidence_id']: case for case in preview['cases']}

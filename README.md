@@ -1,5 +1,8 @@
 # AIDEAL — develop documentation and evaluate its effect
 
+**Current six-library preparation (November 17, 2026):** [experiment guide](experiments/2026-11-17-latest-stable-canonical/EXPERIMENT_GUIDE.md), [all qualified API/task inputs](experiments/2026-11-17-latest-stable-canonical/review/qualified-bank/INDEX.html), [readiness fixes](experiments/2026-11-17-latest-stable-canonical/READINESS_FIXES.md), and [review commands](experiments/2026-11-17-latest-stable-canonical/RUNBOOK.md). Live runs remain paused for input review; earlier results retain their own scope.
+
+
 **Run readiness checked November 12, 2026:** [automation, study prerequisites and code-review route](docs/AUTOMATION_READINESS.md).
 
 [Codex pilot and shared budget](docs/OPENAI_CODEX_PILOT.md) · [Gemini Flash settings](docs/GEMINI_FLASH.md) · [Legacy-code review](docs/LEGACY_CODE_REVIEW.md)
@@ -18,7 +21,7 @@ There is no default library, language or API count. RDPro and SedonaDB are examp
 The historical three-README RDPro pilot remains paused under its `REVIEW_HOLD.json`.
 The current five-condition treatment study has separate inputs, versions and results.
 
-**GitHub:** [private toolkit repository](https://github.com/ZhuochengShang/AIDEAL) · [local publication checkout and update guide](docs/PUBLICATION.md).
+**GitHub:** [public toolkit repository](https://github.com/ZhuochengShang/AIDEAL) · [local publication checkout and update guide](docs/PUBLICATION.md).
 
 **Outputs:** [API test files, logs and study results](docs/OUTPUTS.md).
 **Cleanup:** [retired RDPro components and restoration record](docs/LEGACY_RDPRO_CLEANUP.md).

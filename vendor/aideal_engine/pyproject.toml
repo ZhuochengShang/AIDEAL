@@ -18,6 +18,8 @@ aideal = "aideal.cli:main"
 aideal-mcp = "aideal.mcp_server:main"
 
 [project.optional-dependencies]
+# Static verification of .pyx API definitions; never imports the subject library.
+inventory = ["Cython==3.3.1"]
 # extra providers for author/audience model experiments (Claude, Gemini, Kimi/Qwen via Ollama)
 providers = [
   "langchain-anthropic",

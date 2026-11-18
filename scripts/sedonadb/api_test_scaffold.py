@@ -1,11 +1,11 @@
 from pathlib import Path
 import math
 import json
-from sedona_runtime import TrackedContext
+from sedona_runtime import TrackedContext, requested_sql_target
 
 
 def main():
-    target_api = Path(__file__).parent.name.removeprefix("run_")
+    _, target_api = requested_sql_target(__file__)
     sd = TrackedContext(target_api)
     _tracked_connection = sd
     # AIDEAL_DATA_BINDINGS

@@ -19,9 +19,10 @@ sys.path.insert(0, str(ROOT / 'vendor/aideal_engine/src'))
 
 import yaml
 from aideal.config import load_config
-from aideal.api_registry import relocated_inventory_binding
+from aideal.api_registry import relocated_inventory_binding, target_key, inventory_runtime_bindings
 from aideal.api_discovery import public_api_details, public_api_surface
 from aideal.doc_check_sources import _load_manifest
+from aideal.original_documentation import original_document_paths
 from aideal.profile import profile_path, require_profile
 from aideal.prompts import prompt_path
 from aideal.readme_generation import find_or_create
@@ -30,6 +31,7 @@ from aideal.readme_validation import POLICY, is_complete_entry
 from aideal.readme_replay import prepare_replay, ReplayStore, verify_replay_receipts
 from aideal.readme_recording import ReadmeCallRecorder, ReadmeGenerationStopped, atomic_json, digest
 from workflow.execution import ownership
+from workflow.evaluation_setup import assert_review_released
 
 
 def write_once(path, value):
@@ -55,8 +57,10 @@ def inspect(spec, scope='surface', sample=None):
     if cfg.surface_filter.lower() in ('intent_score', 'intent', 'intended_llm', 'intent_llm'):
         raise ValueError('README launcher requires an explicit static API scope; freeze intent selection first')
     available = public_api_surface(cfg)
-    details = [d for d in public_api_details(cfg) if d['visibility'] == 'public' and d['name'] in available]
-    surface = sorted({d['name'] for d in details})
+    details = [d for d in public_api_details(cfg)
+               if (d['visibility'] == 'public' or d.get('public_exposure_established') is True)
+               and target_key(d) in available]
+    surface = sorted({target_key(d) for d in details})
     selected = surface if scope == 'surface' else sorted(_load_manifest(cfg, spec['manifest']))
     if not selected or len(selected) != len(set(selected)) or set(selected) - set(surface):
         raise ValueError('README scope is empty, duplicated, or missing from the current source surface')
@@ -80,6 +84,14 @@ def prepare(spec, destination, model, scope='surface', sample=None, reuse_from=N
         link.symlink_to(source, target_is_directory=True)
     raw = deepcopy(original.raw)
     raw.pop('extends', None)
+    runtime_bindings = inventory_runtime_bindings(original)
+    for relative, source_file in runtime_bindings:
+        if not relative.is_absolute():
+            write_once(destination / relative, source_file.read_bytes())
+    # The run directory changes, but the reviewed source-origin boundaries do not.
+    origin = raw.get('codebase', {}).get('api_origin') or {}
+    if origin.get('source_roots'):
+        origin['source_roots'] = [str((original.root / p).resolve()) for p in origin['source_roots']]
     inventory = (raw.get('codebase') or {}).get('api_inventory')
     inventory_path = (original.root / inventory).resolve() if inventory else None
     canonical_bound = False
@@ -93,12 +105,21 @@ def prepare(spec, destination, model, scope='surface', sample=None, reuse_from=N
             raw['codebase']['api_inventory_sha256'] = relocated_inventory[1]
     files = raw.setdefault('files', {})
     files['original_readme'] = [str(p) for p in original.original_readme_files]
+    if files.get('original_doc_manifest'):
+        # Its document paths are relative to the manifest, not this new config.
+        files['original_doc_manifest'] = str((original.root / files['original_doc_manifest']).resolve())
     files['prompts_dir'] = str((original.root / files.get('prompts_dir', 'prompts')).resolve())
     write_once(destination / 'configs/project_profile.yaml', profile_path(original).read_bytes())
     files.update(project_profile='configs/project_profile.yaml', llm_readme='docs/LLM_readme.md',
                  notes_to_self='docs/notes_to_self.md', error_log='logs/error_log.jsonl',
                  aliases='aliases/aliases.json', integration_tasks='configs/integration_tasks.yaml')
-    raw['models'] = {'registry': {'selected': {'provider': 'google', 'model': model}},
+    # Keep an explicitly reviewed cap for this model; otherwise allow up to
+    # 8192 output tokens. Input distillation does not set this output allowance.
+    selected_spec = original.registry.get(original.roles.get('author', ''))
+    cap = (selected_spec.max_output_tokens if selected_spec is not None and selected_spec.model == model
+           and selected_spec.provider == 'google' else None) or 8192
+    raw['models'] = {'registry': {'selected': {'provider': 'google', 'model': model,
+                                            'max_output_tokens': cap}},
                      'roles': {role: 'selected' for role in ('author', 'audience', 'fixer')}}
     # Authoring is static grounding only: no probes, auto hints or execution.
     raw.setdefault('comprehension', {})['execute'] = {
@@ -109,14 +130,18 @@ def prepare(spec, destination, model, scope='surface', sample=None, reuse_from=N
     relocated = public_api_surface(cfg)
     if set(names) - relocated:
         raise ValueError('Relocated source paths no longer contain the frozen README scope')
-    manifest = {'identity_kind': 'canonical_selected_target' if canonical_bound else 'bare_name_family',
+    qualified = bool(details) and all(d.get('api_id') for d in details)
+    manifest = {'identity_kind': ('language_qualified_api_v1' if qualified else
+                                 'canonical_selected_target' if canonical_bound else 'bare_name_family'),
                 'scope': scope, 'sample': sample,
                 'scope_count': scope_count, 'selected_count': len(names), 'names': names,
-                'note': ('One entry per selected public target. Its exact declaration or registered SQL operation is frozen by the canonical-selection receipt; each definition list contains only that selected target.'
+                'note': ('One entry per language and defining qualified API. Distinct owners stay separate; selected overloads and equivalent exposures are recorded in the source inventory.'
+                         if qualified else 'One entry per selected public target. Its exact declaration or registered SQL operation is frozen by the canonical-selection receipt; each definition list contains only that selected target.'
                          if canonical_bound else 'One entry per bare API name; same-name declarations remain grouped. Source definitions are explicit; no overload-complete claim.'),
-                'definitions': {name: [d for d in details if d['name'] == name] for name in names}}
+                'definitions': {name: [d for d in details if target_key(d) == name] for name in names}}
     write_once(destination / 'inputs/api_manifest.json', (json.dumps(manifest, indent=2) + '\n').encode())
-    inputs = list(original.original_readme_files) + [profile_path(original)]
+    inputs = (list(original.original_readme_files) + list(original_document_paths(original))
+              + [profile_path(original)] + [source_file for _, source_file in runtime_bindings])
     if inventory_path is not None:
         inputs.append(inventory_path)
     for pattern in original.source_globs + original.test_globs:
@@ -153,6 +178,7 @@ def prepare(spec, destination, model, scope='surface', sample=None, reuse_from=N
 
 
 def run_library(cfg, destination, manifest, identity):
+    assert_review_released(destination)
     destination = Path(destination)
     completion_path = destination / 'completion.json'
     state_path = cfg.root / '.aideal_exec/readme_generation_state.json'

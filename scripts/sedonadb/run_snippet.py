@@ -7,6 +7,7 @@ from pathlib import Path
 import runpy
 import sys
 import textwrap
+from sedona_runtime import requested_sql_target
 
 
 def validate_snippet(text):
@@ -22,6 +23,9 @@ def validate_snippet(text):
 
 if __name__ == "__main__":
     path = Path(sys.argv[1]).resolve()
+    target, _ = requested_sql_target(path)
+    receipt = path.parent / 'requested_target.json'
+    target_bytes = receipt.read_bytes() if receipt.exists() else None
     validate_snippet(path.read_text())
     class Tee(io.StringIO):
         def write(self, text):
@@ -31,7 +35,8 @@ if __name__ == "__main__":
     output = Tee()
     with redirect_stdout(output):
         runpy.run_path(str(path), run_name="__main__")
-    target = path.parent.name.removeprefix("run_")
+    if (receipt.read_bytes() if receipt.exists() else None) != target_bytes:
+        raise AssertionError('The program changed its requested target receipt')
     if not any(line.startswith(f"__CHECK__ {target} ") for line in output.getvalue().splitlines()):
         raise AssertionError("Missing target-specific structured correctness witness")
 

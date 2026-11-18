@@ -9,6 +9,15 @@ from pathlib import Path
 API_HEADER_RE = re.compile(r"^## API Test: `([^`]+)`\s*$", re.MULTILINE)
 
 
+def api_storage_key(api: str) -> str:
+    """Preserve legacy safe filenames; encode qualified IDs without collisions."""
+    if re.fullmatch(r"[A-Za-z0-9_.-]+", api) and api not in (".", ".."):
+        return api
+    import hashlib
+    slug = re.sub(r"[^A-Za-z0-9_.-]", "_", api)[:80].strip(".") or "api"
+    return f"{slug}--{hashlib.sha256(api.encode('utf-8')).hexdigest()}"
+
+
 @dataclass
 class ApiEntry:
     name: str
@@ -27,6 +36,9 @@ def parse_readme(path: Path) -> list[ApiEntry]:
         return []  # stage-0 codebases have no LLM readme yet
     text = path.read_text(encoding="utf-8", errors="ignore")
     matches = list(API_HEADER_RE.finditer(text))
+    names = [match.group(1) for match in matches]
+    if len(names) != len(set(names)):
+        raise ValueError("README contains duplicate API identities")
     entries = []
     for i, m in enumerate(matches):
         start = m.start()
@@ -82,7 +94,12 @@ def _entry_skeleton(name: str, lang: str, recs: list[dict]) -> str:
     """Build a doc-entry skeleton with the factual Signature / Parameters /
     Output pre-filled from the surface; Goal / Input / examples left as TODO
     for the author model. `recs` = all definition sites for this name."""
-    primary = max(recs, key=lambda r: len(r["params"]))     # richest overload
+    if any(r.get("api_id") for r in recs):
+        if len(recs) != 1 or recs[0].get("api_id") != name:
+            raise ValueError("Qualified README entry requires one selected defining API")
+        primary = recs[0]
+    else:
+        primary = max(recs, key=lambda r: len(r["params"]))
     sigs = list(dict.fromkeys((r["signature"] or name) for r in recs))
     sig_block = "\n".join(sigs)
     src = f"{primary['file']}:{primary['line']}"
@@ -91,6 +108,8 @@ def _entry_skeleton(name: str, lang: str, recs: list[dict]) -> str:
     doc = primary.get("description") or ""
     doc_line = f"\n_Source doc:_ {doc}\n" if doc else ""
     ret = primary["returns"] or "unspecified"
+    params_text = (_params_block(primary['params']) if primary.get("parameter_count", 0) is not None
+                   else "_Signature/parameter arity unresolved; this is not a verified zero-argument callable._")
     return f"""## API Test: `{name}`
 
 ### Signature
@@ -103,7 +122,7 @@ _Source: {src}_
 TODO: one sentence describing what `{name}` does, in the project's domain terms.
 
 ### Parameters
-{_params_block(primary['params'])}
+{params_text}
 
 ### Input
 TODO: the data, file formats, and preconditions the caller must provide.

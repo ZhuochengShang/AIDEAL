@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import re
 from .config import AidealConfig
+from .api_registry import target_key
 
 
 _FIXTURE_TYPES = {
@@ -154,7 +155,7 @@ def _consumed_type_counts(cfg: AidealConfig) -> dict:
     from .readme_agent import public_api_details
     c: Counter = Counter()
     for d in public_api_details(cfg):
-        if d.get("visibility") == "public":
+        if (d.get("visibility") == "public" or d.get("public_exposure_established")):
             for p in (d.get("params") or []):
                 b = _base_type(p.get("type", ""))
                 if b:
@@ -211,7 +212,7 @@ def _resolve_preamble(cfg: AidealConfig, ex: dict, sample_data: dict) -> str:
         from .profile import require_profile
         require_profile(cfg)
         counts = _consumed_type_counts(cfg)
-        ret_of = {d["name"]: _base_type(d.get("returns", "")) for d in public_api_details(cfg)}
+        ret_of = {target_key(d): _base_type(d.get("returns", "")) for d in public_api_details(cfg)}
         cands = [e for e in parse_readme(cfg.llm_readme)
                  if re.search(r"read|geoTiff|geojson|load|shapefile|spatialFile|wkt|import", e.name, re.I)]
         useful_names = _useful_readers([e.name for e in cands], ret_of, counts)
@@ -260,7 +261,7 @@ def _resolve_io_hints(cfg: AidealConfig, ex: dict, sample_data: dict) -> str:
         # high-index-but-central reader isn't truncated away — the bug that made
         # io_hints miss `shapefile` (past the first 12) and always suggest geojson.
         counts = _consumed_type_counts(cfg)
-        ret_of = {d["name"]: _base_type(d.get("returns", "")) for d in public_api_details(cfg)}
+        ret_of = {target_key(d): _base_type(d.get("returns", "")) for d in public_api_details(cfg)}
         cand = [e for e in parse_readme(cfg.llm_readme)
                 if re.search(r"read|write|save|load|geoTiff|geojson|shapefile|join", e.name, re.I)]
         cand.sort(key=lambda e: -counts.get(ret_of.get(e.name, ""), 0))
@@ -347,6 +348,11 @@ def _owner_map(cfg: AidealConfig) -> dict:
         f = d.get("file", "")
         if not f.endswith(".scala"):
             continue
+        if d.get("api_id"):
+            kind = d.get("owner_kind")
+            if d.get("owner") and kind in ("object", "class", "trait"):
+                owners[target_key(d)] = (d["owner"], "static" if kind == "object" else "instance")
+            continue
         stem = os.path.basename(f)[:-6]
         if f not in file_kind:
             try:
@@ -357,7 +363,7 @@ def _owner_map(cfg: AidealConfig) -> dict:
             has_type = bool(re.search(
                 rf"^\s*(?:final\s+|sealed\s+|abstract\s+|case\s+)?(?:class|trait)\s+{re.escape(stem)}\b", txt, re.M))
             file_kind[f] = "static" if (has_object and not has_type) else "instance"
-        owners[d["name"]] = (stem, file_kind[f])
+        owners[target_key(d)] = (stem, file_kind[f])
     # Bare names cannot distinguish companion methods or identically named
     # methods in different types. A reviewed study may supply source-verified
     # receiver metadata; this changes prompt guidance, never library code.
@@ -385,8 +391,9 @@ def _receiver_hint(entry_name: str, owner_map: dict) -> str:
     if not own:
         return ""
     typ, kind = own
+    call_name = entry_name.split(":", 1)[1].rsplit(".", 1)[-1] if ":" in entry_name else entry_name
     if kind == "static":
-        return f"`{entry_name}` is a STATIC method on object `{typ}` — call it as `{typ}.{entry_name}(...)`."
+        return f"`{entry_name}` is a STATIC method on object `{typ}` — call it as `{typ}.{call_name}(...)`."
     return (f"`{entry_name}` is an INSTANCE method on `{typ}` — you need a value of type `{typ}` to "
             f"call it on (obtain one from a preloaded input, or from a sibling method that returns / "
-            f"constructs a `{typ}`), then call `.{entry_name}` on it. Do NOT call it on an unrelated type.")
+            f"constructs a `{typ}`), then call `.{call_name}` on it. Do NOT call it on an unrelated type.")

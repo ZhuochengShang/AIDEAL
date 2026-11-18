@@ -151,7 +151,7 @@ def _trusted_identity_targets(
 
 
 def select_canonical_implementations(
-    records: Iterable[Mapping[str, Any]],
+    records: Iterable[Mapping[str, Any]], *, policy_version: str = POLICY_VERSION,
 ) -> dict[str, Any]:
     """Return a deterministic selection receipt for a reviewed public surface.
 
@@ -181,6 +181,10 @@ def select_canonical_implementations(
     ValueError. Unreviewed body records remain visible as excluded decisions.
     Inputs are not mutated. The receipt contains no timestamps or random IDs.
     """
+    if policy_version == QUALIFIED_POLICY_VERSION:
+        return _select_qualified(records)
+    if policy_version != POLICY_VERSION:
+        raise ValueError("Unsupported canonical selection policy version")
     normalized = [_normalize_record(row) for row in records]
     ids = [row["site_id"] for row in normalized]
     duplicates = sorted(site_id for site_id, count in Counter(ids).items() if count > 1)
@@ -285,3 +289,241 @@ def _validate_receipt(receipt: Mapping[str, Any]) -> None:
     )
     if not all(checks):
         raise RuntimeError("canonical selection receipt invariant failed")
+
+
+QUALIFIED_POLICY_VERSION = "owner_qualified_max_arity_v2"
+QUALIFIED_IDENTITY_VERSION = "language_qualified_api_v1"
+_SELECTION_FIELDS = ("status", "reason", "relationship", "canonical_site_id",
+                     "selection_note", "review_notes")
+
+
+def qualified_api_id(row, language=None):
+    """Name a defining API; distinguish compiler-proven Scala companions only.
+
+    The inventory reader verifies source/compiler provenance. The selector also
+    requires the claimed companion kinds to exist together in its input ledger.
+    A free-form owner-kind label cannot create a second API identity.
+    """
+    language = str(language or row["language"]).lower()
+    qualified = row["qualified_name"]
+    kind = row.get("identity_owner_kind")
+    if kind is None:
+        return language + ":" + qualified
+    proof = row.get("identity_disambiguation")
+    observed = row.get("defining_owner_kind") or row.get("owner_kind")
+    kinds = proof.get("owner_kinds") if isinstance(proof, Mapping) else None
+    if (language != "scala" or kind != observed or kind not in {"class", "trait", "object"}
+            or not isinstance(kinds, list) or any(not isinstance(value, str) for value in kinds)
+            or len(kinds) != len(set(kinds))
+            or set(kinds) not in ({"class", "object"}, {"trait", "object"})
+            or kind not in kinds or proof.get("method") != "compiler_owner_kind_collision"
+            or not row.get("source_span_sha256")
+            or proof.get("source_span_sha256") != row["source_span_sha256"]):
+        raise ValueError("Owner discriminator lacks compiler-bound companion collision evidence")
+    return language + ":" + kind + ":" + qualified
+
+
+def _qualified_record(record):
+    """Keep defining/source evidence; never replace an unknown arity with zero."""
+    if not isinstance(record, Mapping):
+        raise ValueError("each qualified record must be a mapping")
+    row = _json_copy(dict(record), str(record.get("site_id", "")), "record")
+    for field in _SELECTION_FIELDS:
+        row.pop(field, None)
+    for field in ("site_id", "language", "name", "qualified_name", "path"):
+        if not isinstance(row.get(field), str) or not row[field].strip():
+            raise ValueError("Qualified selection requires a nonempty " + field)
+    row["line"] = _integer(row.get("line"), "line", row["site_id"], 1)
+    identity = qualified_api_id(row)
+    if row.get("api_id") not in (None, identity):
+        raise ValueError("Qualified API identity differs from its defining language/name")
+    row.update(api_id=identity, identity_version=QUALIFIED_IDENTITY_VERSION)
+    arity = row.get("parameter_count")
+    status = row.get("parameter_count_status", "declared" if arity is not None else "unknown")
+    if str(status).startswith("unknown"):
+        if arity is not None:
+            row.setdefault("reported_parameter_count", arity)
+        arity = None
+    if arity is not None:
+        _integer(arity, "parameter_count", row["site_id"])
+        if isinstance(row.get("params"), list) and len(row["params"]) != arity:
+            raise ValueError("Qualified parameter count differs from explicit parameters")
+    if isinstance(row.get("params"), list):
+        names = [param.get("name") if isinstance(param, Mapping) else None
+                 for param in row["params"]]
+        if any(not isinstance(name, str) or not name for name in names) or len(set(names)) != len(names):
+            raise ValueError("Qualified parameters need unique nonempty names")
+    row.update(parameter_count=arity, parameter_count_status=status)
+    return row
+
+
+def _qualified_origin_status(row):
+    """Verify the bound origin decision; readers separately recheck source bytes."""
+    import hashlib
+    origin = row.get("api_origin")
+    if not isinstance(origin, Mapping):
+        return "unresolved", "missing_defining_origin_receipt"
+    payload = dict(origin); claimed = payload.pop("ownership_sha256", None)
+    observed = hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    if claimed != observed:
+        return "unresolved", "invalid_defining_origin_digest"
+    if origin.get("qualified_name") != row["qualified_name"] or origin.get("site_id") != row["site_id"]:
+        return "unresolved", "origin_identity_differs_from_definition"
+    if origin.get("status") == "external_defined":
+        return "excluded", "dependency_defined_api"
+    if origin.get("status") != "library_defined":
+        return "unresolved", "unresolved_defining_origin"
+    source_hash = row.get("source_sha256") or row.get("file_sha256")
+    if not source_hash or origin.get("file_sha256") != source_hash:
+        return "unresolved", "origin_source_hash_differs_from_definition"
+    return None, None
+
+
+def _forwarding_target(row, by_id):
+    """Accept only an attested unchanged-argument call to a known library site.
+
+    A parser/reader must validate the call expression against the bound source
+    span. Calls with callbacks, conversions, constants or side effects cannot
+    satisfy this pure argument map merely by looking like ``x.map(...)``.
+    """
+    proof = row.get("forwarding")
+    if not isinstance(proof, Mapping):
+        return None
+    target = by_id.get(proof.get("target_site_id"))
+    if (target is None or target["site_id"] == row["site_id"]
+            or proof.get("relation") != "direct_forwarder"
+            or proof.get("semantics_preserved") is not True
+            or not _has_evidence(proof.get("evidence"))
+            or not row.get("source_span_sha256") or not target.get("source_span_sha256")
+            or proof.get("source_span_sha256") != row["source_span_sha256"]
+            or proof.get("target_source_span_sha256") != target["source_span_sha256"]):
+        return None
+    source_params, target_params = row.get("params"), target.get("params")
+    mapping = proof.get("argument_map")
+    if (not isinstance(source_params, list) or not isinstance(target_params, list)
+            or not isinstance(mapping, list)
+            or row["parameter_count"] is None or target["parameter_count"] is None):
+        return None
+    if any(not isinstance(item, Mapping) or set(item) != {"source_parameter", "target_parameter"}
+           for item in mapping):
+        return None
+    sources = [item["source_parameter"] for item in mapping]
+    targets = [item["target_parameter"] for item in mapping]
+    if (any(not isinstance(value, str) for value in sources + targets)
+            or len(set(sources)) != len(sources) or len(set(targets)) != len(targets)
+            or set(sources) != {p.get("name") for p in source_params}
+            or set(targets) - {p.get("name") for p in target_params}):
+        return None
+    for param in target_params:
+        optional = param.get("required") is False or param.get("default") not in (None, "")
+        if param.get("name") not in targets and not optional:
+            return None
+    return target["site_id"]
+
+
+def _select_qualified(records):
+    """Select source-owned callable families while retaining a complete ledger."""
+    rows = sorted((_qualified_record(row) for row in records), key=_site_order)
+    by_id = {row["site_id"]: row for row in rows}
+    if len(by_id) != len(rows):
+        raise ValueError("duplicate site_id values in qualified selection")
+    observed_kinds = defaultdict(set)
+    for row in rows:
+        observed_kinds[(row["language"].lower(), row["qualified_name"])].add(
+            row.get("defining_owner_kind") or row.get("owner_kind"))
+    for row in rows:
+        if row.get("identity_owner_kind") is not None:
+            actual = observed_kinds[(row["language"].lower(), row["qualified_name"])]
+            if set(row["identity_disambiguation"]["owner_kinds"]) != actual:
+                raise ValueError("Companion discriminator differs from the input defining-owner family")
+    decisions, eligible, notes = {}, {}, {}
+    for row in rows:
+        site = row["site_id"]
+        status, reason = _qualified_origin_status(row)
+        if row.get("callable") is False or row.get("is_exposure") is True:
+            status, reason = "excluded", "noncallable_or_exposure_record"
+        elif (row.get("scope") != "production" or row.get("synthetic") is not False
+              or not ((row.get("declared_visibility") == "public" and row.get("public_owner_chain") is True)
+                      or row.get("public_exposure_established") is True)):
+            status, reason = "excluded", "not_public_production_definition"
+        elif row.get("is_abstract") is True or row.get("body_presence") == "absent":
+            status, reason = "excluded", "explicit_abstract_or_bodyless_declaration"
+        if status:
+            decisions[site] = {**row, "status": status, "reason": reason}
+        else:
+            eligible[site] = row
+            body = row.get("body_classification") or {}
+            if not isinstance(body, Mapping) or body.get("category") != "implementation":
+                notes[site] = ["Body category does not prove duplication; retain the owned callable unless a forwarding target is established."]
+    # Do not reinterpret same-qualified-name class/object collisions as overloads.
+    groups = defaultdict(list)
+    for row in eligible.values():groups[row["api_id"]].append(row)
+    for api_id, group in groups.items():
+        owner_kinds = {r.get("defining_owner_kind") or r.get("owner_kind") for r in group} - {None, ""}
+        constructor_kinds = {"constructor" if "constructor" in str(r.get("kind", r.get("definition_kind", ""))) else "operation" for r in group}
+        if len(owner_kinds) > 1 or len(constructor_kinds) > 1:
+            for row in group:
+                site=row["site_id"];decisions[site]={**row,"status":"unresolved","reason":"conflicting_defining_owner_kind"};eligible.pop(site)
+    proofs = {site: _forwarding_target(row, eligible) for site, row in eligible.items()}
+    # Direct targets must themselves remain implementation candidates. Chains
+    # are retained for review rather than silently redirected to another API.
+    removable = {site: target for site, target in proofs.items() if target and not proofs.get(target)}
+    def elect(removed):
+        families = defaultdict(list)
+        for site,row in eligible.items():
+            if site not in removed:families[row["api_id"]].append(row)
+        winners, unknown = {}, {}
+        for api_id, group in families.items():
+            conditions = {json.dumps(row.get("conditional_context") or [], sort_keys=True) for row in group}
+            if len(group) > 1 and len(conditions) > 1:
+                unknown.update({row["site_id"]: "conditional_definition_variant_unresolved" for row in group})
+            elif len(group)>1 and any(row["parameter_count"] is None for row in group):
+                unknown.update({row["site_id"]: "competing_overload_arity_unknown" for row in group})
+            else:
+                winners[api_id] = group[0] if len(group)==1 else min(group,key=_rank)
+        return winners, unknown
+    while True:
+        winners, unknown = elect(removable)
+        retained = {row["site_id"] for row in winners.values()}
+        unsupported = {site for site,target in removable.items() if target not in retained}
+        if not unsupported:break
+        for site in unsupported:removable.pop(site)
+    for site,row in eligible.items():
+        if site in removable:
+            decision={**row,"status":"omitted","reason":"proven_direct_forwarder","canonical_site_id":removable[site],"relationship":"source_bound_argument_forwarding"}
+        elif site in unknown:
+            decision={**row,"status":"unresolved","reason":unknown[site]}
+        else:
+            winner=winners[row["api_id"]]
+            if winner["site_id"]==site:
+                reason="sole_qualified_callable_arity_unknown" if row["parameter_count"] is None else "qualified_api_maximum_parameter_count"
+                decision={**row,"status":"selected","reason":reason}
+            else:
+                decision={**row,"status":"omitted","reason":"same_api_lower_parameter_count" if row["parameter_count"]<winner["parameter_count"] else "same_api_deterministic_arity_tie","canonical_site_id":winner["site_id"],"relationship":"overload_selection_policy_only"}
+        if row.get("forwarding") and site not in removable:
+            notes.setdefault(site,[]).append("Forwarding relation was not reduced: it lacks a validated map to an exactly retained library site.")
+        if site in notes:decision["review_notes"]=notes[site]
+        decisions[site]=decision
+    ordered=[decisions[row["site_id"]] for row in rows]
+    winners=sorted((r for r in ordered if r["status"]=="selected"),key=lambda r:(r["api_id"],*_site_order(r)))
+    counts=Counter(r["status"] for r in ordered)
+    receipt={"schema_version":2,"policy_version":QUALIFIED_POLICY_VERSION,"identity_version":QUALIFIED_IDENTITY_VERSION,
+             "policy":{"scope":"one_winner_per_defining_language_qualified_api","unknown_body_is_duplicate":False,
+                       "singleton_unknown_arity":"retain_without_inventing_zero","competing_unknown_arity":"unresolved",
+                       "forwarding":"source_bound_argument_map_to_exact_retained_library_site","same_api_omission_claims_equivalence":False},
+             "counts":{"input_sites":len(rows),"input_names":len({r['name'] for r in rows}),"input_api_ids":len({r['api_id'] for r in rows}),
+                       "winner_sites":len(winners),"winner_names":len({r['name'] for r in winners}),"winner_api_ids":len(winners),
+                       "excluded_sites":counts['excluded'],"omitted_sites":counts['omitted'],"unresolved_sites":counts['unresolved'],
+                       "review_note_sites":sum(bool(r.get('review_notes')) for r in ordered)},
+             "winner_site_ids":[r['site_id'] for r in winners],"winner_api_ids":[r['api_id'] for r in winners],
+             "winner_names":[r['name'] for r in winners],"winners":winners,"site_decisions":ordered,
+             "rejected_sites":[r for r in ordered if r['status']!='selected'],
+             "by_language":{language:{"winner_count":sum(r['language']==language for r in winners),
+                            "winner_site_ids":[r['site_id'] for r in winners if r['language']==language],
+                            "winner_api_ids":[r['api_id'] for r in winners if r['language']==language],
+                            "winner_names":[r['name'] for r in winners if r['language']==language]}
+                            for language in sorted({r['language'] for r in rows})},
+             "selection_resolved":counts['unresolved']==0}
+    if len({r['api_id'] for r in winners})!=len(winners) or sum(counts.values())!=len(rows):
+        raise RuntimeError("Qualified selection accounting failed")
+    return receipt

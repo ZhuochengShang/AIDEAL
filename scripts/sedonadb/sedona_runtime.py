@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import json
 import os
 from pathlib import Path
 import re
@@ -119,6 +120,25 @@ class TrackedFrame:
         result = self._frame.execute()
         self._owner.materialized_target |= self._uses_target
         return result
+
+
+def requested_sql_target(program):
+    """Resolve the evaluator's exact identity, independently of its folder slug."""
+    directory = Path(program).resolve().parent
+    record = directory / 'requested_target.json'
+    if record.is_file():
+        value = json.loads(record.read_text())
+        api_id = value.get('api_id')
+        name = value.get('display_name')
+        if (not isinstance(name, str) or not re.fullmatch(r'[A-Za-z_][A-Za-z_0-9]*', name)
+                or api_id != 'sql:' + name):
+            raise ValueError('Invalid qualified SQL target receipt')
+        return api_id, name
+    # Historical runs used a simple SQL function name as the directory suffix.
+    name = directory.name.removeprefix('run_')
+    if not re.fullmatch(r'[A-Za-z_][A-Za-z_0-9]*', name):
+        raise ValueError('Missing target receipt for qualified SQL output')
+    return name, name
 
 
 class TrackedContext:

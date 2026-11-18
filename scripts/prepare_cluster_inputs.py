@@ -150,6 +150,13 @@ class Exporter:
     def collect_library(self, name, spec, load_config, load_manifest):
         cfg = load_config(spec['base_config'])
         raw = deepcopy(cfg.raw)
+        # This historical exporter rewrites runtime/source layouts. It cannot
+        # rewrite qualified provenance receipts without invalidating their hashes.
+        # Current studies synchronize their frozen review/evaluator bundle instead.
+        if (raw.get('codebase', {}).get('identity_mode') == 'qualified'
+                or raw.get('files', {}).get('original_doc_manifest')):
+            raise ValueError('Qualified API/document bundles must use the current frozen-study '
+                             'synchronization path; this legacy exporter cannot preserve their provenance')
         raw.pop('extends', None)
         source = Path(spec['source_link']['target']).resolve()
         self.sources[name] = source_inventory(name, source)

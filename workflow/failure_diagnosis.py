@@ -24,18 +24,29 @@ def _code_only(code):
     return pattern.sub(lambda match: ''.join('\n' if c == '\n' else ' ' for c in match[0]), code)
 
 
+def _api_paths(index):
+    """Resolve stable API IDs to call spellings without losing owner ambiguity."""
+    paths = {}
+    aliases = index.get('api_public_paths', {})
+    for api, identity in index['api_function_ids'].items():
+        name = api.rsplit(':', 1)[-1] if api.partition(':')[0] in {'python','java','scala','sql','rust'} else api
+        for path in [name, *aliases.get(api, [])]:
+            paths.setdefault(path, set()).add(identity)
+    return paths
+
+
 def _owners(index, receiver, method):
     """Require an exact qualified owner, or an unambiguous short owner."""
     # Look up canonical function IDs from a receiver and method name.
     # Keep all matching short names so the caller can detect ambiguity.
-    mapping = index['api_function_ids']
+    mapping = _api_paths(index)
     full = receiver.replace('::', '.').replace('$', '') + '.' + method
     if full in mapping:
-        return {mapping[full]}
+        return mapping[full]
     if '.' in receiver or '::' in receiver:
         return set()
-    return {identity for api, identity in mapping.items()
-            if api == full or api.endswith('.' + full)}
+    return set().union(*(identities for api, identities in mapping.items()
+                         if api == full or api.endswith('.' + full)))
 
 
 def _receiver_ids(index, code, receiver, method):
@@ -94,8 +105,8 @@ def _calls_at(index, code, line_number, column):
         else:
             # A short function call needs an explicit import, not a task target.
             aliases = re.findall(r'\bfrom\s+([\w.]+)\s+import\s+' + re.escape(name) + r'\b', code)
-            ids = {index['api_function_ids'][module + '.' + name] for module in aliases
-                   if module + '.' + name in index['api_function_ids']}
+            mapping = _api_paths(index)
+            ids = set().union(*(mapping.get(module + '.' + name, set()) for module in aliases))
         if ids:
             calls.append((closing - match.start(), ids))
     if not calls:
@@ -162,8 +173,7 @@ def _import_call_ids(index, masked, class_name, canonical_owner):
         calls = re.finditer(r'\b' + re.escape(receiver) + r'\.([A-Za-z_]\w*)\s*\(', masked)
         for call in calls:
             api = canonical_owner + '.' + call[1]
-            if api in index['api_function_ids']:
-                ids.add(index['api_function_ids'][api])
+            ids.update(_api_paths(index).get(api, set()))
     return ids
 
 
@@ -180,7 +190,7 @@ def _import_evidence(index, code, feedback):
     headers = [(i, re.match(r'^\s*(.+?\.(?:scala|java)):(\d+)(?::\d+)?:\s*(?:error:?)?\s*(.*)', line))
                for i, line in enumerate(lines)]
     headers = [(i, match) for i, match in headers if match]
-    owners = {api.rsplit('.', 1)[0] for api in index['api_function_ids'] if '.' in api}
+    owners = {api.rsplit('.', 1)[0] for api in _api_paths(index) if '.' in api}
     evidence = []
     for position, (start, header) in enumerate(headers):
         end = headers[position + 1][0] if position + 1 < len(headers) else len(lines)

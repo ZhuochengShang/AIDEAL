@@ -1,5 +1,8 @@
 """Document repair orchestration; durable phases live in repair_journal.py."""
 from __future__ import annotations
+
+from .readme_format import api_storage_key
+from .original_documentation import original_target_texts
 import hashlib
 from pathlib import Path
 import time
@@ -170,7 +173,8 @@ def run(cfg: AidealConfig, apis: list[str] | None = None,
                              "ORIGINAL project documentation"
                              + (" IN FULL (full-doc mode)" if full_doc else "")
                              + "; content below.)\n"
-                             + _clip(cfg.original_readme_text(limit=None))
+                             + (original_target_texts(cfg, [name])[name] if ":" in name
+                                else _clip(cfg.original_readme_text(limit=None)))
                              + f"\n\nTarget function: `{name}`")
         else:
             original_body = entries[name].body
@@ -392,7 +396,7 @@ def run(cfg: AidealConfig, apis: list[str] | None = None,
             # audit trail per round (before/after/diagnosis diffable per round)
             chg = cfg.llm_readme.parent / "docfix_changes"
             chg.mkdir(parents=True, exist_ok=True)
-            tag = f"{name}.round{rnd}"
+            tag = f"{api_storage_key(name)}.round{rnd}"
             (chg / f"{tag}.diagnosis.txt").write_text(diagnosis, encoding="utf-8")
             (chg / f"{tag}.after.md").write_text(new_entry, encoding="utf-8")
             if not passed:
@@ -417,7 +421,7 @@ def run(cfg: AidealConfig, apis: list[str] | None = None,
             fixed += 1
             chg = cfg.llm_readme.parent / "docfix_changes"
             chg.mkdir(parents=True, exist_ok=True)
-            (chg / f"{name}.before.md").write_text(
+            (chg / f"{api_storage_key(name)}.before.md").write_text(
                 original_body if not created else "(no entry existed — created by doc-repair)",
                 encoding="utf-8")
             status = "doc-created" if created else "doc-fixed"

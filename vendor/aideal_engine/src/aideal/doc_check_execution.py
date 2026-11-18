@@ -6,7 +6,9 @@ from __future__ import annotations
 
 import random
 import re
+from .readme_format import api_storage_key
 from .config import AidealConfig
+from .api_registry import target_key
 from .error_log import ErrorLog, new_run_id
 from .execution import exclusive_work_dir
 from .readme_agent import public_api_details, public_api_surface
@@ -36,10 +38,15 @@ def _canonical_prompt_targets(cfg) -> dict[str, dict] | None:
     codebase = cfg.raw.get("codebase", {})
     locator = codebase.get("api_inventory")
     if not locator:
+        if codebase.get("identity_mode") == "qualified":
+            raise ValueError("Qualified execution requires a frozen source API inventory")
         return None
     content = (cfg.root / locator).read_bytes()
     manifest = json.loads(content)
-    if not any(field.startswith("canonical_") for field in manifest):
+    qualified_inventory = manifest.get("kind") == "qualified_source_api_inventory"
+    if not qualified_inventory and not any(field.startswith("canonical_") for field in manifest):
+        if codebase.get("identity_mode") == "qualified":
+            raise ValueError("Qualified execution requires a selected target binding")
         return None
     if hashlib.sha256(content).hexdigest() != codebase.get("api_inventory_sha256"):
         raise ValueError("Canonical prompt target requires the frozen API inventory checksum")
@@ -48,14 +55,14 @@ def _canonical_prompt_targets(cfg) -> dict[str, dict] | None:
         raise ValueError("Canonical prompt target requires a complete selection binding")
     targets = {}
     for row in details:
-        if row["name"] in targets:
-            raise ValueError("Canonical prompt target must have exactly one definition per name")
+        if target_key(row) in targets:
+            raise ValueError("Canonical prompt target must have exactly one definition per identity")
         # Explicit allowlist: descriptions, bodies, audit evidence, examples,
         # and implementations are not audience task metadata.
         target = {
             "schema_version": 1,
-            "selection_policy_version": manifest["canonical_selection_policy_version"],
-            "selection_receipt_sha256": manifest["canonical_selection_sha256"],
+            "selection_policy_version": manifest.get("canonical_selection_policy_version"),
+            "selection_receipt_sha256": manifest.get("canonical_selection_sha256"),
             "selected_site_id": row["site_id"],
             "qualified_name": row["qualified_name"],
             "owner": row["owner"],
@@ -67,8 +74,23 @@ def _canonical_prompt_targets(cfg) -> dict[str, dict] | None:
         if row.get("target_kind") == "registered_sql":
             target.update(target_kind="registered_sql", parameters=[], parameter_count=None,
                           parameter_count_status=row["parameter_count_status"])
+        if row.get("api_id"):
+            target.update(api_id=row["api_id"], identity_version=row.get("identity_version"),
+                          display_name=row["name"], parameter_count=row.get("parameter_count"),
+                          parameter_count_status=row.get("parameter_count_status", "known"))
+            for field in ("exposure_ids", "preferred_public_path", "public_access_paths"):
+                if row.get(field):
+                    target[field] = row[field]
+        if qualified_inventory:
+            if not row.get("api_id"):
+                raise ValueError("Qualified inventory returned a target without api_id")
+            target.update(schema_version=2, inventory_kind=manifest["kind"],
+                          api_inventory_sha256=codebase["api_inventory_sha256"],
+                          source_inventory_sha256=manifest["source_inventory_sha256"],
+                          source_commit=manifest["source_commit"], source_tree=manifest["source_tree"],
+                          source_version=manifest["source_version"])
         target["target_fingerprint"] = digest_native(target)
-        targets[row["name"]] = target
+        targets[target_key(row)] = target
     return targets
 
 
@@ -83,14 +105,23 @@ def _requested_target_context(execution_context: str, target: dict | None) -> st
                  "Call this registered SQL operation using a documented call pattern; no finite maximum arity is asserted.")
         return execution_context + ("\n\n" if execution_context else "") + block
     parameters = "; ".join(f"{param['name']}: {param['type']}" for param in target["parameters"])
+    parameter_text = (f"Parameters in declaration order ({target['parameter_count']}): {parameters or '(none)'}"
+                      if target['parameter_count'] is not None else
+                      "Parameter arity unresolved; the empty extracted list does not assert a zero-argument call.")
     block = (
         "Requested target declaration (frozen canonical selection):\n"
         f"Qualified name: {target['qualified_name']}\n"
         f"Owner: {target['owner']}\n"
         f"Declaration: {target['signature']}\n"
-        f"Parameters in declaration order ({target['parameter_count']}): {parameters or '(none)'}\n"
+        f"{parameter_text}\n"
         "Write the requested call against this owner and declaration, with its indicated parameter list."
     )
+    public_paths = target.get("public_access_paths") or ([target["preferred_public_path"]]
+                   if target.get("preferred_public_path") else [])
+    if public_paths:
+        block += ("\nVerified public access paths for the same defining API: " +
+                  ", ".join(public_paths) +
+                  ". Use a public access path when the defining namespace is internal.")
     return execution_context + ("\n\n" if execution_context else "") + block
 
 
@@ -285,6 +316,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         document_sha256=doc_sha256, scaffold_file=scaffold_file,
         sample_data=sample_data, class_context=class_context, timeout=timeout)
     canonical_targets = _canonical_prompt_targets(cfg)
+    if any(":" in entry.name for entry in inventory) and canonical_targets is None:
+        raise ValueError("Qualified execution requires exact requested target metadata")
     if canonical_targets is not None:
         fingerprint_components["canonical_requested_targets"] = {
             "protocol_version": 1, "targets_sha256": digest_native(canonical_targets),
@@ -346,8 +379,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     entry_classes = set(ex.get("entrypoint_classes", []) or [])
     if entry_classes and not include:
         import os as _os
-        include = {d["name"] for d in public_api_details(cfg)
-                   if d["visibility"] == "public"
+        include = {target_key(d) for d in public_api_details(cfg)
+                   if (d["visibility"] == "public" or d.get("public_exposure_established"))
                    and _os.path.basename(d["file"])[:-6] in entry_classes}
     if include:
         inventory = [e for e in inventory if e.name in include]
@@ -405,10 +438,10 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
     # index so runtime stack frames can be mapped back to repo source lines.
     from .readme_agent import _subsume_overloads, _dedup_deprioritize
     import glob as _globmod
-    _pub_details = [d for d in public_api_details(cfg) if d["visibility"] == "public"]
+    _pub_details = [d for d in public_api_details(cfg) if (d["visibility"] == "public" or d.get("public_exposure_established"))]
     _by_name_det: dict[str, list] = {}
     for _d in _pub_details:
-        _by_name_det.setdefault(_d["name"], []).append(_d)
+        _by_name_det.setdefault(target_key(_d), []).append(_d)
     _depri = _dedup_deprioritize(cfg)
     site_of: dict[str, dict] = {}
     for _n, _recs in _by_name_det.items():
@@ -449,7 +482,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             continue
         api_t0 = _time.time()
         api_u0 = usage_snapshot()
-        work_api = work_dir / f"run_{entry.name}"
+        work_api = work_dir / f"run_{api_storage_key(entry.name)}"
         (work_api / "classes").mkdir(parents=True, exist_ok=True)
         scala_file = work_api / str(ex.get("test_filename", "ApiTest.scala"))
         cmd = (cmd_template.replace("{scala_file}", str(scala_file))
@@ -470,6 +503,13 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
         import sys as _sys
         receiver = _receiver_hint(entry.name, owner_map)
         requested_target = (canonical_targets or {}).get(entry.name)
+        if ":" in entry.name:
+            if requested_target is None:
+                raise ValueError(f"Qualified target metadata missing: {entry.name}")
+            # Adapters must not infer an API from a filesystem slug. This exact
+            # identity is already included in the immutable run fingerprint.
+            (work_api / "requested_target.json").write_text(_json.dumps(
+                requested_target, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
         for attempt in range(1 + max_fix_rounds):
             # A condition's first attempt must be documentation-only. Historical
             # error-log feedback would leak earlier treatments into A1/A2 even
@@ -503,6 +543,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                     "api": entry.name, "round": attempt, "run_id": run_id,
                     "attempt_number": evidence_number,
                     "provider": selected_model.provider, "model": selected_model.model,
+                    **({"max_output_tokens": selected_model.max_output_tokens}
+                       if selected_model.max_output_tokens is not None else {}),
                     "system": delivered_prompt[0], "user": delivered_prompt[1],
                     **({"requested_target_declaration": requested_target}
                        if requested_target is not None else {}),
@@ -517,10 +559,19 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
             except Exception as llm_exc:
                 # Preserve the failed unit before optionally stopping the outer
                 # schedule. The default still continues to the next API.
+                from .llm import ProviderOutputError
+                provider_response = None
                 cat = "llm-error"
+                if isinstance(llm_exc, ProviderOutputError):
+                    cat = llm_exc.category
+                    provider_response = llm_exc.provider_evidence
+                    (evidence_dir / "response.txt").write_text(
+                        llm_exc.response_text, encoding="utf-8")
                 msg = f"{type(llm_exc).__name__}: {llm_exc}"
                 (evidence_dir / "provider.json").write_text(_json.dumps({
-                    "status": "error", "error": msg,
+                    "status": "error", "error": msg, "category": cat,
+                    **({"provider_response": provider_response}
+                       if provider_response is not None else {}),
                     "wall_s": _time.time() - provider_t0,
                     "usage": usage_delta(provider_u0),
                 }, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -679,7 +730,8 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                                    "experiment_fingerprint": experiment_fingerprint,
                                    "execution_evidence": per_api[entry.name],
                                    **metrics[entry.name]}, ensure_ascii=False) + "\n")
-        if stop_on_provider_error and last.get("cat") == "llm-error":
+        if stop_on_provider_error and (last.get("cat") == "llm-error"
+                                      or last.get("cat", "").startswith("provider-")):
             stopped_on_provider_error = True
             _sys.stderr.write("[comprehension] Provider error saved; stopping the remaining API schedule.\n")
             _sys.stderr.flush()

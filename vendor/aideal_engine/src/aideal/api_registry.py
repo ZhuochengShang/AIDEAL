@@ -7,6 +7,38 @@ import hashlib
 import json
 from pathlib import Path
 import re
+from .api_canonical_selection import qualified_api_id
+
+
+
+IDENTITY_VERSION = "language_qualified_api_v1"
+
+
+def target_key(row):
+    """Use the stable defining API identity when present, else the legacy name."""
+    return row.get("api_id") or row["name"]
+
+
+def with_api_identity(cfg, rows):
+    """Opt in to qualified keys without changing historical registry outputs."""
+    mode = (cfg.raw.get("codebase", {}) or {}).get("identity_mode", "legacy")
+    if mode not in ("legacy", "qualified"):
+        raise ValueError("codebase.identity_mode must be legacy or qualified")
+    if mode == "legacy":
+        return rows
+    result = []
+    for row in rows:
+        language = str(row.get("language") or cfg.language).lower()
+        qualified = row.get("qualified_name")
+        if row.get("definition_kind") == "registered_sql":
+            language, qualified = "sql", row["name"]
+        if not isinstance(qualified, str) or not qualified or (qualified == row["name"] and language != "sql"):
+            raise ValueError("Qualified discovery needs defining owner/module evidence: " + row["name"])
+        identity = qualified_api_id({**row, "qualified_name": qualified}, language)
+        if row.get("api_id") not in (None, identity):
+            raise ValueError("API identity differs from its defining language/name")
+        result.append({**row, "api_id": identity, "identity_version": IDENTITY_VERSION})
+    return result
 
 
 def configured_api_details(cfg, override_filter=None):
@@ -23,11 +55,16 @@ def configured_api_details(cfg, override_filter=None):
         raise ValueError("Configured API inventory checksum is missing or changed")
     data = json.loads(content)
     if data.get("kind") == "compiler_declared_methods":
-        return _compiler_details(cfg, data)
+        return with_api_identity(cfg, _compiler_details(cfg, data))
     if data.get("kind") == "source_audited_callables":
         from .api_source_registry import source_audited_details
-        return source_audited_details(cfg, data)
-    return _sql_details(cfg, data)
+        return with_api_identity(cfg, source_audited_details(cfg, data))
+    if data.get("kind") == "qualified_source_api_inventory":
+        if codebase.get("identity_mode") != "qualified":
+            raise ValueError("Qualified API inventory requires identity_mode=qualified")
+        from .api_public_inventory import qualified_inventory_details
+        return with_api_identity(cfg, qualified_inventory_details(cfg, data))
+    return with_api_identity(cfg, _sql_details(cfg, data))
 
 
 def registered_sql_details(cfg):
@@ -58,6 +95,31 @@ def relocated_inventory_binding(cfg):
         data[field] = str((cfg.root / data[field]).resolve())
     content = (json.dumps(data, sort_keys=True, indent=2) + "\n").encode()
     return content, hashlib.sha256(content).hexdigest()
+
+
+def inventory_runtime_bindings(cfg):
+    """List bound conditional-definition evidence that must follow a moved config."""
+    codebase = cfg.raw.get('codebase', {})
+    locator = codebase.get('api_inventory')
+    if not locator:
+        return []
+    raw = (cfg.root / locator).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != codebase.get('api_inventory_sha256'):
+        raise ValueError('Configured API inventory checksum changed')
+    data = json.loads(raw)
+    if data.get('kind') != 'qualified_source_api_inventory':
+        return []
+    ledger = _bound_json(cfg, data, 'source_inventory')
+    result = {}
+    for fact in ledger.get('binding_environment', {}).get('facts', {}).values():
+        relative = Path(fact['evidence_path'])
+        if not relative.is_absolute() and '..' in relative.parts:
+            raise ValueError('Runtime evidence cannot escape the prepared directory')
+        source = (cfg.root / relative).resolve()
+        if hashlib.sha256(source.read_bytes()).hexdigest() != fact['evidence_sha256']:
+            raise ValueError('Conditional runtime evidence changed')
+        result[str(relative)] = source
+    return [(Path(name), source) for name, source in sorted(result.items())]
 
 
 def _sql_details(cfg, data):

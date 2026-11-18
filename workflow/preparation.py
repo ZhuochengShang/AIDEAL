@@ -2,6 +2,8 @@
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 import sys
+from types import ModuleType
+import hashlib
 
 from .ablation import ARMS, bind, load, preflight, save
 
@@ -19,9 +21,16 @@ def _engine_config_module():
     """Load the pinned engine's YAML loader, without importing its model clients."""
     # Cache the configuration loader under its own module name. Subsequent calls reuse
     # the same imported loader.
-    name = "_aideal_workflow_engine_config"
+    path = Path(__file__).resolve().parents[1] / "vendor/aideal_engine/src/aideal/config.py"
+    # A private package lets the loader resolve its sibling documentation module
+    # without importing model clients or another checkout's installed AIDEAL.
+    package = "_aideal_workflow_engine_" + hashlib.sha256(str(path.parent).encode()).hexdigest()[:16]
+    name = package + ".config"
     if name not in sys.modules:
-        path = Path(__file__).resolve().parents[1] / "vendor/aideal_engine/src/aideal/config.py"
+        if package not in sys.modules:
+            namespace = ModuleType(package)
+            namespace.__path__ = [str(path.parent)]
+            sys.modules[package] = namespace
         spec = spec_from_file_location(name, path)
         module = module_from_spec(spec)
         sys.modules[name] = module  # dataclasses needs the module registered.
