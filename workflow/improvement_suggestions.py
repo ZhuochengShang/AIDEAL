@@ -16,6 +16,18 @@ from .refactor_proposals import validate_refactors
 PROMPT = Path(__file__).resolve().parents[1] / 'prompts/improvement_suggestions.md'
 
 
+
+def proposal_system_prompt(settings):
+    """Keep the default prompt intact; scope alias-only runs explicitly."""
+    prompt = PROMPT.read_text()
+    if settings.get('proposal_scope', 'all') == 'aliases_only':
+        prompt += ('\nThis request develops executable aliases only. Return empty lists for '
+                   'both "hints" and "refactors", even if you notice other improvement opportunities. '
+                   'Consider each supplied API, but propose an alias only when the evidence supports '
+                   'a clearer name or simpler calling pattern. Return no alias when none is justified.\n')
+    return prompt
+
+
 def _text(value, field, empty=False):
     # Return the original string so callers can retain its exact content. Allow blank
     # strings only for fields that opt in.
@@ -38,10 +50,13 @@ def _model_settings(path):
     for field in ('max_output_tokens', 'timeout_s'):
         if type(model.get(field)) is not int or model[field] <= 0:
             raise ValueError(f'model.{field} must be a positive integer')
+    scope = model.get('proposal_scope', 'all')
+    if scope not in ('all', 'aliases_only'):
+        raise ValueError('model.proposal_scope must be all or aliases_only')
     temperature = model.get('temperature', 0)
     if type(temperature) not in (int, float) or not math.isfinite(temperature) or temperature < 0:
         raise ValueError('model.temperature must be finite and nonnegative')
-    return {**model, 'temperature': temperature}
+    return {**model, 'temperature': temperature, 'proposal_scope': scope}
 
 
 def validate_suggestions(value, context, *, reserved_names=None):
@@ -148,7 +163,7 @@ def propose_improvements(preview_path, model_config, output, *, readme=None):
     output.mkdir(parents=True, exist_ok=False)
     atomic_json(output / 'preview.json', preview)
     atomic_json(output / 'model_configuration_identity.json', bind(model_config))
-    request = {'system': PROMPT.read_text(), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),
+    request = {'system': proposal_system_prompt(settings), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),
                'model': settings['name'], 'temperature': settings['temperature'],
                'max_output_tokens': settings['max_output_tokens']}
     # invoke stores exact system/user messages and full adapter stdout/stderr.

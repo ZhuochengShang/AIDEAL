@@ -328,6 +328,38 @@ def _source_windows(root, definitions):
     return list(refs.values())
 
 
+
+def compact_api_context(definitions):
+    """Keep calling facts and literal source; leave audit graphs in bound evidence.
+
+    Exact signatures and source windows are never shortened. A preferred public
+    access path plus at most seven alternatives is enough to orient a wrapper;
+    the full exposure graph remains recoverable from api_evidence.json.
+    """
+    fields = (
+        'id', 'api_id', 'name', 'qualified_name', 'source_function_id', 'file', 'line', 'end_line',
+        'signature', 'kind', 'definition_kind', 'language', 'source_language', 'module',
+        'scope', 'owner', 'defining_owner', 'defining_owner_kind', 'params', 'parameters',
+        'parameter_count', 'parameter_count_status', 'returns', 'decorators',
+        'implicit_receiver', 'public_owner_chain', 'conditional_context', 'is_abstract',
+        'public_exposure_established', 'source_window', 'declaration_context', 'preferred_public_path')
+    result = []
+    for row in definitions:
+        value = {key: row[key] for key in fields if key in row}
+        paths = row.get('public_access_paths') or [p.rsplit(':', 1)[-1] for p in row.get('exposure_ids', [])]
+        preferred = row.get('preferred_public_path')
+        paths = list(dict.fromkeys(([preferred] if preferred else []) + list(paths)))
+        value['public_access_paths'] = paths[:8]
+        value['omitted_public_access_paths'] = max(0, len(paths) - 8)
+        description = row.get('description')
+        if isinstance(description, str):
+            value['description'] = description[:2000]
+            value['description_characters'] = len(description)
+            value['description_truncated'] = len(description) > 2000
+        result.append(value)
+    return result
+
+
 def _hint_identity_fields(definitions):
     """Bridge qualified evaluation targets to exact source-edit locations."""
     if not any(row.get('api_id') for row in definitions):
@@ -358,21 +390,25 @@ def preview_improvements(study, output, *, alias_path=None, apis=None, developme
     selected_refs = _source_windows(root, selected)
     semantics, profile_refs = _semantic_context(cfg, root, attachment)
     errors, error_ref, omitted = _development_errors(development_errors, selected)
+    model_apis = compact_api_context(selected)
     context = {'project': cfg.project_name, 'language': cfg.language,
                'baseline_revision': attachment['revision'], 'alias_destination': target,
-               'apis': selected, 'development_errors': errors, **semantics, **_hint_identity_fields(selected),
+               'apis': model_apis, 'development_errors': errors, **semantics, **_hint_identity_fields(model_apis),
                'coverage': {'matching_definitions': available, 'selected_definitions': len(selected),
                             'omitted_definitions': available - len(selected), 'omitted_error_rows': omitted,
                             'source_window_policy': 'Three preceding lines and up to sixty following lines; not the full codebase.'}}
-    if len(json.dumps(context, ensure_ascii=False)) > max_context_characters:
+    if len(json.dumps(context, ensure_ascii=False, indent=2)) > max_context_characters:
         raise ValueError('Context exceeds budget; select fewer APIs or raise max_context_characters')
+    output = development_destination(study, output)
+    output.mkdir(parents=True, exist_ok=False)
+    atomic_json(output / 'api_evidence.json', {'schema_version': 1, 'apis': selected})
+    evidence = bind(output / 'api_evidence.json')
     preview = {'schema_version': 1, 'study': str(study), 'source_root': str(root),
                'baseline_revision': attachment['revision'], 'context': context,
-               'artifacts': selected_refs + refs + profile_refs + ([error_ref] if error_ref else []),
+               'api_evidence': evidence, 'context_policy': 'calling-facts-and-source-v1',
+               'artifacts': selected_refs + refs + profile_refs + [evidence] + ([error_ref] if error_ref else []),
                'error_scope': 'operator-designated development logs only',
                'llm_calls': 0}
     preview['preview_sha256'] = digest(preview)
-    output = development_destination(study, output)
-    output.mkdir(parents=True, exist_ok=False)
     atomic_json(output / 'preview.json', preview)
     return {'preview': str(output / 'preview.json'), 'llm_calls': 0, 'coverage': context['coverage']}

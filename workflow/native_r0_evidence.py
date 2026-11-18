@@ -190,14 +190,21 @@ def _frame_site(source, diagnostic, apis, runtime_roots=()):
     return None, 'ambiguous_runtime_source' if matches else 'no_supported_source_exception_frame'
 
 
+def _program_filename(execution):
+    """Use the native evaluator's filename convention for every attempt."""
+    # doc_check_execution writes ApiTest.scala when test_filename is absent.
+    filename = str(execution.get('test_filename', 'ApiTest.scala'))
+    if Path(filename).name != filename or filename.startswith('.'):
+        raise ValueError('Native program filename must be a plain filename')
+    return filename
+
+
 def _attempt(root, directory, api, cfg):
     """Bind exact native artifacts without copying private checker data."""
     directory = Path(directory).resolve(strict=True)
     if not directory.is_relative_to(root / 'execution'):
         raise ValueError('Native attempt directory escaped execution evidence')
-    filename = cfg.comprehension['execute']['test_filename']
-    if Path(filename).name != filename or filename.startswith('.'):
-        raise ValueError('Native program filename must be a plain filename')
+    filename = _program_filename(cfg.comprehension['execute'])
     refs = {}
     for key, name in [('provider_request', 'request.json'), ('provider_process', 'provider.json'),
                       ('response', 'response.txt'), ('execution_process', 'execution.json'),
@@ -336,7 +343,7 @@ def build_native_r0_preview(manifest_path, manifest, output, *, max_cases=16):
     # membership or promote them without a matching checkpoint record.
     bound_directories = {directory for _, directory in attempts}
     filenames = ('request.json', 'provider.json', 'response.txt', 'execution.json',
-                 'stdout.txt', 'stderr.txt', execution['test_filename'])
+                 'stdout.txt', 'stderr.txt', _program_filename(execution))
     for directory in sorted((root / 'execution').glob('run_*/attempt_*')):
         if not re.fullmatch(r'attempt_\d+', directory.name):
             continue

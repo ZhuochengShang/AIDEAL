@@ -179,6 +179,34 @@ class NativeR0EvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'changed native R0 evidence'):
             self.preview()
 
+    def test_missing_filename_uses_native_default_for_bound_and_unbound_attempts(self):
+        orphan = self.add_attempt('python:lib.f')
+        self.result['metrics'].pop('python:lib.f')
+        bound = Path(self.result['metrics']['python:lib.g']['attempt_evidence'][0])
+        for directory in (bound, orphan):
+            (directory / 'Generated.py').rename(directory / 'ApiTest.scala')
+        # Language changes do not alter this literal engine fallback. The saved
+        # source/diagnostics remain synthetic; no subject program is executed.
+        self.raw['project']['language'] = 'Scala'
+        self.raw['comprehension']['execute'].pop('test_filename')
+        self.config.write_text(yaml.safe_dump(self.raw))
+        self.save()
+        self.assertNotIn('test_filename', load_config(self.config).comprehension['execute'])
+        result, preview = self.preview()
+        self.assertEqual(1, result['cases'])
+        self.assertEqual(bind(bound / 'ApiTest.scala'),
+                         preview['cases'][0]['evidence']['executed_program'])
+        unbound = next(row for row in preview['intake']
+                       if row.get('disposition') == 'unbound_attempt_not_promoted')
+        self.assertEqual(bind(orphan / 'ApiTest.scala'), unbound['evidence']['ApiTest.scala'])
+
+    def test_explicit_program_filename_cannot_escape_attempt(self):
+        self.raw['comprehension']['execute']['test_filename'] = '../ApiTest.scala'
+        self.config.write_text(yaml.safe_dump(self.raw))
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'plain filename'):
+            self.preview()
+
     def test_uninstalled_cli_resolves_its_vendored_engine(self):
         import sys
         root=Path(__file__).resolve().parents[1]

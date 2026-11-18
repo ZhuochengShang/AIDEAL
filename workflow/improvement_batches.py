@@ -7,8 +7,9 @@ from .ablation import bind, digest, load, verify_artifact
 from .execution import atomic_json, invoke, ownership
 from .improvement_context import (alias_target, development_destination, _development_errors,
                                   _library_inputs, _semantic_context, _source_windows, _select_library_apis,
-                                  _hint_identity_fields)
-from .improvement_suggestions import PROMPT, _finish_proposal, _load_preview, _model_settings
+                                  _hint_identity_fields, compact_api_context)
+from .improvement_suggestions import (PROMPT, _finish_proposal, _load_preview, _model_settings,
+                                     proposal_system_prompt)
 
 
 def _integer(value, name, low, high):
@@ -104,9 +105,10 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
             else:
                 selected_errors.append(error)
                 used += size
+        model_apis = compact_api_context(rows)
         return {**common, 'batch_id': f'batch-{number:04d}',
                 'alias_destination': _alias_destination(alias_path_template, number),
-                'apis': rows, 'development_errors': selected_errors, **_hint_identity_fields(rows),
+                'apis': model_apis, 'development_errors': selected_errors, **_hint_identity_fields(model_apis),
                 'coverage': {'matching_definitions': len(definitions), 'selected_definitions': len(rows),
                              'omitted_definitions': len(definitions) - len(rows),
                              'omitted_error_rows': omitted,
@@ -138,13 +140,17 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
     if not all(verify_artifact(ref) for ref in source_refs + shared_refs):
         raise ValueError('Development inputs changed during preview')
     output.mkdir(parents=True, exist_ok=False)
+    atomic_json(output / 'api_evidence.json', {'schema_version': 1, 'apis': definitions})
+    evidence = bind(output / 'api_evidence.json')
+    shared_refs = shared_refs + [evidence]
     batches = []
     for value in contexts:
         paths = {str(root / row['file']) for row in value['apis']}
         preview = {'schema_version': 1, 'study': str(study), 'source_root': str(root),
                    'baseline_revision': attachment['revision'], 'context': value,
                    'artifacts': [ref for ref in source_refs if ref['path'] in paths] + shared_refs,
-                   'error_scope': 'operator-designated development logs only', 'llm_calls': 0}
+                   'error_scope': 'operator-designated development logs only',
+                   'api_evidence': evidence, 'context_policy': 'calling-facts-and-source-v1', 'llm_calls': 0}
         preview['preview_sha256'] = digest(preview)
         path = output / value['batch_id'] / 'preview.json'
         atomic_json(path, preview)
@@ -161,7 +167,9 @@ def preview_library_improvements(study, output, *, alias_path_template=None, api
                              'planned_definitions': sum(len(rows) for rows in groups),
                              'omitted_requested_definitions': 0, 'batch_count': len(batches),
                              'omitted_or_unmatched_development_rows': omitted_errors},
-                'api_catalog': catalog, 'artifacts': source_refs + shared_refs, **_hint_identity_fields(definitions),
+                'api_catalog': catalog, 'api_evidence': evidence,
+                'context_policy': 'calling-facts-and-source-v1',
+                'artifacts': source_refs + shared_refs, **_hint_identity_fields(definitions),
                 'batches': batches, 'llm_calls': 0}
     manifest['manifest_sha256'] = digest(manifest)
     atomic_json(output / 'manifest.json', manifest)
@@ -197,7 +205,7 @@ def _run_batch(preview_path, settings, output, identity, run_artifacts, public_n
         return _verified_completion(complete, identity), 0
     output.mkdir(parents=True, exist_ok=True)
     atomic_json(output / 'preview.json', preview)
-    request = {'system': PROMPT.read_text(), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),
+    request = {'system': proposal_system_prompt(settings), 'prompt': json.dumps(preview['context'], ensure_ascii=False, indent=2),
                'model': settings['name'], 'temperature': settings['temperature'],
                'max_output_tokens': settings['max_output_tokens']}
     atomic_json(output / 'request.json', request)

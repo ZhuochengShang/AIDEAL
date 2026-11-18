@@ -17,7 +17,7 @@ All six libraries now have the completed, unchanged authoring outputs on their `
 
 - Only generated documentation files were added. Each commit directly descends from the pinned public baseline.
 - RDPro keeps separate Java and Scala files in one commit, at `docs/LLM_readme.java.md` and `docs/LLM_readme.scala.md`. Other libraries use `docs/LLM_readme.md`.
-- Original, Alias only and Error hints only remain at their recorded baseline commits. Historical branches remain unchanged.
+- At this README installation, Original, Alias only and Error hints only retained their recorded baseline commits. Later treatment installation receipts record any subsequent branch updates. Historical branches were unchanged.
 - Installation did not switch a checkout or alter its index. Both treatment references changed in one atomic transaction per repository.
 - The README files match the author completion receipts and cover 2,850 selected targets.
 

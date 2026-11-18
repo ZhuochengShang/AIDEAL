@@ -12,6 +12,24 @@ guess a patch or claim execution/validation. Python, Java and braced Scala metho
 are supported. Multiple distinct error sites in the same file are allowed.
 Do not propose conflicting guidance for the same error site.
 
+
+Keep the source modification and the caller correction separate. The controller
+changes the existing exception message; you do not write replacement library
+functions. The action is the exact corrective sentence appended at runtime:
+write direct instructions for the caller without prefixes such as "Append
+guidance". Every instruction must follow from the cited source. Do not infer additional input or formatting restrictions from the diagnostic
+wording alone; check the supplied parsing and validation rules.
+
+corrected_code must be the COMPLETE corrected CALLER PROGRAM from the supplied
+case.code, including its imports, execution scaffold and required checks. Change
+its invalid inputs or call to satisfy the source-supported requirements. It must
+actually call the original imported library API. Do not define or replace that
+API, copy the library implementation, monkeypatch it, mock its result, skip the
+call, or catch an error merely to print a passing result. Check every other visible
+precondition too; correcting one violation may expose another. A function definition without an executed library call is
+not a corrected program. If you cannot support such a correction from the
+provided evidence, mark that evidence_id unsupported.
+
 Return JSON with exactly hints (a list) and unsupported_evidence_ids (a list).
 Account for each supplied evidence_id exactly once. Each hint contains:
 evidence_id, function_id (unchanged from evidence), requirement_id (letters, digits,
