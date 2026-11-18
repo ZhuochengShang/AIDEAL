@@ -2,7 +2,7 @@
 
 Updated November 17, 2026. The current scope is **2,850 selected targets across six libraries and seven language banks**. RDPro now covers Raptor and its supporting raster types. Other libraries retain their inputs, releases and running/completed jobs.
 
-**Launch status at 2026-11-18T02:19:17.352865+00:00.** All six final cluster preparation checks passed with zero model calls. The strict 330-target bank uses evaluator `2026-11-17-strict-raptor-64fcd34eb17c`. The selection/reader checks passed 98 tests and 36 subtests, and the actual reader resolved all 330 targets. A separate constructor-correction release passed its 664-test suite. These are software checks, not new experiment results. The replacement was published before launch and is queued behind the current library jobs; no new Raptor model request has started at this checkpoint. The gate waits for the existing queue to release its process lock. README authoring and R0 are separate stages; an authored entry is not an evaluation pass.
+**Queue status observed at 2026-11-18T02:23:47.650280+00:00.** All six final cluster preparation checks passed with zero model calls. The strict 330-target bank uses evaluator `2026-11-17-strict-raptor-64fcd34eb17c`. The selection/reader checks passed 98 tests and 36 subtests, and the actual reader resolved all 330 targets. A separate constructor-correction release passed its 664-test suite. These are software checks, not new experiment results. The replacement was published before launch and is queued behind the current library jobs; no new Raptor model request has started at this checkpoint. The gate waits for the existing queue to release its process lock. README authoring and R0 are separate stages; an authored entry is not an evaluation pass.
 
 [RDPro count explanation](review/raptor-scope/COUNT_EXPLANATION.md) · [replacement catalog](review/raptor-scope/plan/RUN_CATALOG.cluster.yaml) · [exact reduction decisions](review/raptor-scope/strict-no-wrappers/README.md) · [completed results](operator/launch/completed/) · [replacement preparation receipt](review/raptor-scope/operator/RECOVERY_CHECKS.json) · [code review route](CODE_REVIEW_ROUTE.md)
 
@@ -194,3 +194,5 @@ The source-selection review is a structural audit, not proof that all semantic d
 
 
 The historical `SYNC_MANIFEST.json` and `verify_snapshot.py` describe the earlier full-Beast preparation. For the current overlay, use [review file hashes](review/raptor-scope/REVIEW_FILE_HASHES.json) and the [evaluator binding](review/raptor-scope/operator/EVALUATOR_RELEASE.json). The cluster retains the original frozen review snapshot; the revised guide is stored beside it at the study root.
+
+[Cluster synchronization receipt](review/raptor-scope/operator/SYNC_VERIFICATION.json) verifies all 272 evaluator files. All 199 Python files in the release also match the local working copy.
