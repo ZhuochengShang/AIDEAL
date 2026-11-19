@@ -183,6 +183,20 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         original_target_texts(cfg, targets)
         if ((cfg.comprehension or {}).get("execute", {}) or {}).get("probe_on_missing"):
             raise ValueError("Qualified README authoring requires separately reviewed probe evidence")
+    author_evidence = {}
+    if qualified and generate:
+        from .readme_author_evidence import qualified_author_evidence, verify_author_evidence
+        from copy import deepcopy
+        if any(len(by_name[name]) != 1 for name in targets):
+            raise ValueError('Qualified author evidence requires one selected definition per API')
+        by_name = deepcopy(by_name)
+        author_evidence = qualified_author_evidence(cfg, [row for name in targets for row in by_name[name]])
+        # Compiler records can omit comments even when the selected declaration
+        # has attached Javadoc/Scaladoc. Supplement only from bound source bytes.
+        for name in targets:
+            comment = author_evidence[name]['source_comment']
+            if comment['status'] == 'source_bound' and not by_name[name][0].get('description'):
+                by_name[name][0]['description'] = comment['text']
     failures: list[dict] = []
     cfg.llm_readme.parent.mkdir(parents=True, exist_ok=True)
 
@@ -233,7 +247,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             "api_overloads.py",
             "api_signatures.py",
             "api_discovery.py", "api_origin.py", "api_registry.py", "api_sql_canonical.py", "api_source_registry.py", "api_canonical_selection.py", "api_public_inventory.py", "api_coverage.py",
-            "readme_generation.py", "readme_recording.py",
+            "readme_generation.py", "readme_author_evidence.py", "readme_recording.py",
             "readme_validation.py", "readme_replay.py", "doc_check_sources.py")]
         _generation_payload = {
             "schema": 3,
@@ -260,6 +274,7 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             "definitions": {
                 n: [r.get("signature", "") for r in by_name[n]] for n in targets
             },
+            "qualified_author_evidence": author_evidence,
             "original_document_files": _generation_files_hash(original_document_paths(cfg), cfg.root),
             "original_document_sha256": _hashlib.sha256(
                 cfg.original_readme_text(limit=None).encode("utf-8")
@@ -311,6 +326,17 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
             tmp.replace(state_path)
 
         _write_generation_state()
+        if author_evidence:
+            from .readme_recording import atomic_json
+            evidence_root = state_path.parent / 'readme_authoring' / generation_fingerprint
+            index = {}
+            for name, record in author_evidence.items():
+                destination = evidence_root / (_hashlib.sha256(name.encode()).hexdigest() + '.json')
+                atomic_json(destination, record)
+                index[name] = {'path': str(destination), 'sha256': _hashlib.sha256(destination.read_bytes()).hexdigest()}
+            atomic_json(evidence_root / 'index.json', {'generation_fingerprint': generation_fingerprint,
+                                                       'scope': 'repository development source only; no execution validation',
+                                                       'apis': index})
         # the readme is being (re)written -> invalidate readme-DERIVED caches so
         # io_hints / preamble rebuild from the NEW readme instead of a stale one.
         for _stale in ("io_hints.txt", "preamble.scala"):
@@ -328,7 +354,8 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
         # mtime-based cache wouldn't otherwise notice a prompt change).
         readme_ctx = distilled_readme_context(cfg, refresh=force, recorder=recorder)
         # index real usage from the existing test suite ONCE (ground-truth examples)
-        test_index = {} if qualified else api_test_examples(cfg)
+        test_index = ({key: value['test_examples'] for key, value in author_evidence.items()}
+                      if qualified else api_test_examples(cfg))
         # ...and the VERBATIM per-API code blocks from the original readme, so the
         # entry can reproduce the project's real call form (which the distilled note
         # summarizes away) instead of paraphrasing it into a non-compiling shape.
@@ -393,6 +420,20 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                     "source_doc": _doc,
                     "overloads": [r["signature"] for r in maximals[1:]][:5],
                 }
+                if qualified:
+                    evidence = author_evidence[name]
+                    comment = evidence['source_comment']
+                    # Text already appears as source_doc/test_examples; send its
+                    # provenance once without duplicating the same large excerpts.
+                    facts['authoring_evidence'] = {
+                        'schema': evidence['schema'],
+                        'source_comment': {k: v for k, v in comment.items() if k not in ('text', 'evidence')},
+                        'source_comment_span': {k: v for k, v in (comment.get('evidence') or {}).items() if k != 'text'},
+                        'test_selection': evidence['test_selection'],
+                        'test_examples': [{'span': {k: v for k, v in e['span'].items() if k != 'text'},
+                                           'matched_calls': e['matched_calls'],
+                                           'execution_status': e['execution_status'],
+                                           'self_contained': e['self_contained']} for e in evidence['test_examples']]}
                 if primary.get("api_id"):
                     facts.update(api_id=primary["api_id"], display_name=primary["name"],
                                  identity_version=primary.get("identity_version"),
@@ -423,7 +464,10 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                 examples = test_index.get(name, [])
                 if examples:
                     tests_text = "\n\n".join(
-                        f"// from {e['file']} — test(\"{e['test']}\")\n{e['code']}" for e in examples)
+                        (f"// Source excerpt from {e['file']} — {e['test']}; not execution validation\n"
+                         + (e.get('imports_context', '') + '\n' if qualified else '') + e['code']) for e in examples)
+                elif qualified:
+                    tests_text = "(no supported exact-owner test excerpt supplied; repository test availability and execution status are not established)"
                 else:
                     # no direct test -> borrow the tested SIBLING pattern (same class)
                     _cls = _class_of.get(name, "")
@@ -455,6 +499,8 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                 orig_examples_text = ("\n\n".join(_orig) if _orig
                                       else "(no verbatim code example for this API in the original readme)")
                 try:
+                    if qualified:
+                        verify_author_evidence(author_evidence[name])
                     messages = load_prompt(cfg, "aideal/readme_entry", api_name=name,
                                            api_facts=_json.dumps(facts, ensure_ascii=False, indent=2),
                                            original_readme_context=readme_ctx,
@@ -466,6 +512,8 @@ def find_or_create(cfg: AidealConfig, generate: bool = False, max_generated: int
                                              source_docs=[r.get("description") for r in recs])
                              if recorder is not None else invoke_text(
                                  cfg.model_for_role("author"), *messages)).strip()
+                    if qualified:
+                        verify_author_evidence(author_evidence[name])
                     validate_entry(entry, name, [r.get("description") for r in recs])
                     status = "ok"
                 except Exception as e:  # fell back to skeleton — record why, don't hide it

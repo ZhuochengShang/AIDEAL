@@ -1,0 +1,117 @@
+# Eight logical conditions, one shared evaluator, and no live model calls until
+# freeze-conditions has executed every independent control successfully.
+# Replace all paths/IDs/commits and list EVERY wrapper in alias_validation.
+# Four immutable implementations can serve eight documentation/resource arms.
+# Each audience arm still owns a separate output/checkpoint directory.
+condition_evaluation:
+  schema_version: 3  # Native exception messages; JSON/comment hint retrieval is rejected.
+  design: eight_arm
+  bank: ../bank/held_out_tasks.json
+  api_function_ids: {example_api: 'src/library.py:1:example_api'}
+  development_case_ids: [alias-valid, alias-error]
+  holdout_review: REPLACE with the actual disjoint development/held-out review.
+  model:
+    name: PIN_AUDIENCE_MODEL
+    command: [/path/to/python, /path/to/AIDEAL_workflow/workflow/model_adapter.py]
+    artifacts: [/path/to/AIDEAL_workflow/workflow/model_adapter.py]
+  common:
+    temperature: 0
+    max_output_tokens: 8192
+    max_snippet_fixes: 2
+    provider_attempt_limit: 2
+    execution_timeout_s: 150
+    provider_timeout_s: 180
+    trial_ids: [trial_01]
+    ordering_seed: 42
+    documentation_max_characters: 24000
+    alias_max_characters: 4000
+    hint_max_characters: 4000
+    source_access: false
+    memory_policy: episode_only  # R1/R2 may see only this task/trial's prior attempt.
+  alias_validation:
+    # A syntax-checked proposal or installed wrapper alone cannot pass admission.
+    proposal: ../development/alias-bundle/proposal.json
+    cases:
+      # Repeat this valid/error pair for each proposed alias. Add applicable
+      # positional, keyword/default and boundary cases; two cases are a minimum.
+      - id: alias-valid
+        split: development
+        kind: valid
+        alias: example_alias
+        target_api: example_api
+        canonical_reference: ../development/alias-controls/canonical-valid.py
+        alias_reference: ../development/alias-controls/alias-valid.py
+        oracle: ../development/alias-controls/valid-oracle.json
+        negative_controls: [../development/alias-controls/alias-wrong-result.py]
+        alias_negative_controls: [../development/alias-controls/canonical-valid.py]
+      - id: alias-error
+        split: development
+        kind: error
+        alias: example_alias
+        target_api: example_api
+        canonical_reference: ../development/alias-controls/canonical-error.py
+        alias_reference: ../development/alias-controls/alias-error.py
+        oracle: ../development/alias-controls/error-oracle.json
+        negative_controls: [../development/alias-controls/alias-wrong-error.py]
+        alias_negative_controls: [../development/alias-controls/canonical-error.py]
+  conditions:
+    original: &original
+      documents: [../original_documentation.txt]
+      source:
+        worktree: ../Original/source
+        revision: PIN_BASELINE_COMMIT
+        artifacts: [../runtime/original/build_identity.json, ../runtime/original/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/original/runtime.json]
+    readme_only:
+      <<: *original
+      documents: &d1 [../shared/README_D1.md]
+    alias_only: &aliases
+      <<: *original
+      alias_interface: &alias_interface ../shared/ALIASES.md
+      source:
+        worktree: ../Alias-only/source
+        revision: PIN_ALIAS_COMMIT
+        artifacts: [../runtime/aliases/build_identity.json, ../runtime/aliases/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py, ../runtime/aliases/runtime.json]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/aliases/runtime.json]
+    error_hints_only: &hints
+      <<: *original
+      native_hints_validation: &native_hints ../development/native-hints/validation/validation.json
+      source:
+        worktree: ../Error-hints-only/source
+        revision: PIN_NATIVE_HINT_COMMIT
+        artifacts: [../runtime/hints/build_identity.json, ../runtime/hints/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py, ../runtime/hints/runtime.json]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/hints/runtime.json]
+    readme_alias:
+      <<: *aliases
+      documents: *d1
+    readme_error_hints:
+      <<: *hints
+      documents: *d1
+    alias_error_hints: &aliases_hints
+      <<: *original
+      alias_interface: *alias_interface
+      native_hints_validation: *native_hints
+      source:
+        worktree: ../Alias-and-hints/source
+        revision: PIN_ALIAS_NATIVE_HINT_COMMIT
+        artifacts: [../runtime/aliases-hints/build_identity.json, ../runtime/aliases-hints/library.jar]
+      adapter:
+        command: [/path/to/python, ../adapter/execute_conditions.py, ../runtime/aliases-hints/runtime.json]
+        artifacts: [../adapter/execute_conditions.py, ../runtime/aliases-hints/runtime.json]
+    combined:
+      <<: *aliases_hints
+      documents: *d1
+# Checker requirements for alias development controls only:
+# - Run the actual canonical/alias programs against the declared backend.
+# - Independently check the shared oracle; trace canonical and named wrapper calls.
+# - Return the existing verdict fields plus aliases_reached (list of names),
+#   observed_kind (return/raise), and observation_sha256 for the actual normalized
+#   return value OR exception type/message. These are private checker fields.
+# - A direct canonical call must fail the alias-use control even with correct output.
+# Native hint text reaches the audience only through the library's execution error.

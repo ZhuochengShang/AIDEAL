@@ -189,9 +189,11 @@ def run_program_case(source_result, api, destination, code_override=None, runtim
     try:
         proc = run_command(cmd, cwd=physical, env=env, timeout=int(execution['timeout_s']), guard_dir=dest)
         out, err, rc = proc.stdout or '', proc.stderr or '', proc.returncode
+        output_decoding = getattr(proc, 'output_decoding', None)
     except subprocess.TimeoutExpired as exc:
-        def txt(x): return x.decode(errors='replace') if isinstance(x, bytes) else x or ''
+        def txt(x): return x.decode('utf-8', errors='backslashreplace') if isinstance(x, bytes) else x or ''
         out, err, rc = txt(exc.stdout), txt(exc.stderr) + '\n[timeout]', 124
+        output_decoding = getattr(exc, 'output_decoding', None)
     wall = time.monotonic() - started
     if profile and runtime_profile_receipts(load_runtime_profile(runtime_profile)) != runtime_receipts:
         raise ValueError('Runtime changed during replay; completion withheld')
@@ -208,7 +210,8 @@ def run_program_case(source_result, api, destination, code_override=None, runtim
                   'exit_code': rc, 'wall_s': wall, 'contract': contract,
                   'runtime_profile': runtime_receipts,
                   'java_assertions_requested': cfg.language.lower() in ('java', 'scala'),
-                  'output_bindings': receipt, 'stdout_file': 'stdout.txt', 'stderr_file': 'stderr.txt'}
+                  'output_bindings': receipt, 'stdout_file': 'stdout.txt', 'stderr_file': 'stderr.txt',
+                  'output_decoding': output_decoding}
     atomic(physical / 'execution.json', run_record)
     result = {'api': api, 'status': 'pass' if passed else 'fail', 'old_status': row['status'],
               'mode': identity['mode'], 'code': snippet, 'scala_file': str(test_file),
@@ -220,6 +223,8 @@ def run_program_case(source_result, api, destination, code_override=None, runtim
               'source_result': identity['source_result'],
               'runtime_profile': runtime_receipts,
               'evidence_bindings': [binding(dest / 'replay_identity.json'), *[binding(physical / n) for n in [program.name, 'execution.json', 'stdout.txt', 'stderr.txt']]]}
+    # Bind binary evidence as well as its human-readable decoded diagnostic.
+    result['evidence_bindings'].extend((output_decoding or {}).get('raw_streams', {}).values())
     for name in ('source_result', 'source_config', 'source_program', 'source_execution', 'source_request'):
         if binding(identity[name]['path']) != identity[name]:
             raise ValueError('Saved replay input changed during execution; completion withheld: ' + name)

@@ -12,7 +12,7 @@ from .evaluation_setup import (SYSTEM, CONTROLLER_MODULES, _mapping, _path, _str
                                verified_outcome)
 from .execution import atomic_json, checked_attempt_directory, invoke, ownership
 from .evaluation_inputs import (DESIGNS, backend_identity, bind_command, hint_bundle,
-                               match_treatments, read_bank)
+                               match_treatments, read_bank, read_alias_controls)
 
 from .source_hints import index_source_hints
 from .native_hints import verify_native_validation
@@ -38,7 +38,9 @@ def read_condition_config(path):
     if type(cfg.get('schema_version')) is not int or cfg['schema_version'] not in (1, 2, 3):
         raise ValueError('condition_evaluation needs schema_version 1, 2 or 3')
     if not isinstance(cfg.get('design'), str) or cfg['design'] not in DESIGNS:
-        raise ValueError('Choose five_arm, refactor_pair, or six_arm')
+        raise ValueError('Choose five_arm, six_arm, eight_arm, or refactor_pair')
+    if cfg['design'] == 'eight_arm' and cfg['schema_version'] != 3:
+        raise ValueError('Eight-arm studies require schema_version 3 native exception guidance')
     arms = DESIGNS[cfg['design']]
     conditions = _mapping(cfg.get('conditions'), 'conditions')
     if set(conditions) != set(arms):
@@ -49,6 +51,9 @@ def read_condition_config(path):
     refs.append(bind(cfg['bank']))
     bind_command(cfg.get('model'), 'model', path.parent, refs)
     _validate_common(_mapping(cfg.get('common'), 'common'), cfg['model'])
+    if cfg['design'] == 'eight_arm':
+        if cfg['common'].setdefault('memory_policy', 'episode_only') != 'episode_only':
+            raise ValueError('Eight-arm evaluation permits only episode-local repair feedback')
     for field in ('alias_max_characters', 'hint_max_characters'):
         value = cfg['common'].setdefault(field, 4000)
         if type(value) is not int or value < 1:
@@ -81,6 +86,12 @@ def read_condition_config(path):
                 raise ValueError('Native diagnostics require schema_version 3 without retrieved hints')
             condition['native_hints_validation'] = str(_path(path.parent, condition['native_hints_validation']))
             proposal = verify_native_validation(condition['native_hints_validation'])
+            if cfg['design'] == 'eight_arm':
+                covered = {hint['function_id'] for hint in proposal['hints']}
+                if not covered.intersection(cfg['api_function_ids'].values()):
+                    raise ValueError('Native hints do not cover any declared canonical API')
+                if {hint['evidence_id'] for hint in proposal['hints']} & {case['id'] for case in bank['cases']}:
+                    raise ValueError('Native hint development IDs overlap the held-out bank')
             receipt = load(condition['native_hints_validation'])
             refs += [bind(condition['native_hints_validation']), *receipt['artifacts']]
         bind_command(condition.get('adapter'), arm + ' adapter', path.parent, refs)
@@ -117,6 +128,8 @@ def read_condition_config(path):
                 p not in backends[arm]['code_files'] for p in condition['source_hints']):
             raise ValueError('Source guidance must live in committed library source files')
     match_treatments(cfg, backends)
+    if cfg['design'] == 'eight_arm':
+        cfg['alias_validation'] = read_alias_controls(cfg, path.parent, bank, backends, refs)
     controller = _controller_hashes(MODULES)
     refs.extend(bind(Path(__file__).with_name(name)) for name in controller)
     return {'protocol': {1: PROTOCOL, 2: SOURCE_PROTOCOL, 3: NATIVE_PROTOCOL}[cfg['schema_version']],
@@ -134,7 +147,8 @@ def checker_request(payload, arm, case, code):
     # Add condition and backend information to the private checker request.
     # Replay uses the same dictionary to verify the saved request.
     return {'protocol': payload.get('protocol', PROTOCOL), 'condition': arm, 'backend': payload['backends'][arm],
-            **adapter_request(case, code)}
+            **adapter_request(case, code),
+            **({'alias_control': case['alias_control']} if 'alias_control' in case else {})}
 
 
 def _adjudication_artifacts_valid(refs):
@@ -206,6 +220,88 @@ def verify_inputs(payload):
     match_treatments(payload['config'], current)
 
 
+def _alias_control_specs(payload):
+    """Use the existing checker adapter for paired development-only wrapper controls."""
+    plan = payload['config'].get('alias_validation', {})
+    for case in plan.get('cases', []):
+        paths = [('canonical_reference', 'original', case['canonical_reference']),
+                 ('alias_reference', 'alias_only', case['alias_reference'])]
+        paths += [('wrong_output', 'alias_only', path) for path in case['negative_controls']]
+        paths += [('no_alias_call', 'alias_only', path) for path in case['alias_negative_controls']]
+        for number, (role, arm, path) in enumerate(paths):
+            request_case = {**case, 'alias_control': {'name': case['alias'], 'behavior': case['kind'], 'role': role}}
+            yield arm, request_case, number, role, path
+
+
+def _alias_control_passes(payload, arm, case, role, process):
+    verdict = checked_outcome(process, payload['backends'][arm]['sha256'])
+    result = process.get('payload') or {}
+    reached = result.get('aliases_reached')
+    if verdict is None or not isinstance(reached, list) or any(not isinstance(name, str) for name in reached):
+        return False
+    uses_alias = case['alias'] in reached
+    if role in ('canonical_reference', 'alias_reference'):
+        return (verdict is True and uses_alias == (role == 'alias_reference')
+                and result.get('observed_kind') == ('raise' if case['kind'] == 'error' else 'return')
+                and isinstance(result.get('observation_sha256'), str)
+                and re.fullmatch(r'[0-9a-f]{64}', result['observation_sha256']) is not None)
+    if role == 'wrong_output':
+        return uses_alias and control_passes('wrong_output', process)
+    return role == 'no_alias_call' and verdict is True and not uses_alias
+
+
+def verify_alias_validation(payload, validation):
+    """Replay control evidence; a plan's claimed validation flag is never sufficient."""
+    if payload['config']['design'] != 'eight_arm':
+        return
+    expected = {(arm, case['id'], number): (case, role, path)
+                for arm, case, number, role, path in _alias_control_specs(payload)}
+    if not expected or not isinstance(validation, dict) or validation.get('validated') is not True:
+        raise ValueError('Eight-arm alias behavior controls have not passed')
+    seen, observations = set(), {}
+    for record in validation.get('controls', []):
+        key = record.get('arm'), record.get('case_id'), record.get('control')
+        if key not in expected or key in seen:
+            raise ValueError('Unexpected or duplicate alias validation evidence')
+        seen.add(key)
+        case, role, path = expected[key]
+        if (record.get('role') != role or record.get('valid') is not True
+                or not all(verify_artifact(record[field]) for field in ('evidence', 'request'))):
+            raise ValueError('Alias validation artifacts changed or have the wrong role')
+        process, request = load(record['evidence']['path']), load(record['request']['path'])
+        if (request != checker_request(payload, key[0], case, Path(path).read_text())
+                or not _alias_control_passes(payload, key[0], case, role, process)):
+            raise ValueError('Alias validation does not establish the declared behavior')
+        if role in ('canonical_reference', 'alias_reference'):
+            observations.setdefault(case['id'], {})[role] = process['payload']['observation_sha256']
+    if seen != set(expected):
+        raise ValueError('Missing per-alias behavior control evidence')
+    if any(pair['canonical_reference'] != pair['alias_reference'] for pair in observations.values()):
+        raise ValueError('Alias changes observed return or exception behavior')
+
+
+def validate_alias_controls(payload, output):
+    """Run every declared wrapper's paired controls before held-out evaluation."""
+    result = {'validated': False, 'controls': []}
+    for arm, case, number, role, path in _alias_control_specs(payload):
+        directory, process = execute_condition(payload, arm, case, Path(path).read_text(),
+            Path(output) / arm / case['id'] / f'control_{number:03d}', prefix='attempt_')
+        valid = _alias_control_passes(payload, arm, case, role, process)
+        result['controls'].append({'arm': arm, 'case_id': case['id'], 'control': number,
+            'role': role, 'valid': valid, 'evidence': bind(directory / 'process.json'),
+            'request': bind(directory / 'request.json')})
+        atomic_json(Path(output) / 'validation.json', result)
+        if not valid:
+            return result
+    result['validated'] = True
+    try:
+        verify_alias_validation(payload, result)
+    except ValueError as exc:
+        result.update(validated=False, error=str(exc))
+    atomic_json(Path(output) / 'validation.json', result)
+    return result
+
+
 def validate_conditions(payload, output):
     # Input: resolved study inputs and a separate directory for control evidence.
     # Run known-correct, wrong-output and no-target programs for every backend.
@@ -222,6 +318,14 @@ def validate_conditions(payload, output):
             raise ValueError('Condition validation inputs changed; choose a new output')
         atomic_json(identity, {'fingerprint': fingerprint})
         records = []
+        alias_validation = None
+        if payload['config']['design'] == 'eight_arm':
+            alias_validation = validate_alias_controls(payload, output / 'aliases')
+            if not alias_validation['validated']:
+                result = {'fingerprint': fingerprint, 'validated': False, 'controls': records,
+                          'alias_validation': alias_validation}
+                atomic_json(output / 'validation.json', result)
+                return result
         for arm in payload['config']['conditions']:
             for case in payload['bank']['cases']:
                 for index, (role, path) in enumerate(controls(case)):
@@ -235,6 +339,8 @@ def validate_conditions(payload, output):
                                     'evidence': bind(directory / 'process.json'),
                                     'request': bind(directory / 'request.json')})
                     result = {'fingerprint': fingerprint, 'validated': False, 'controls': records}
+                    if alias_validation is not None:
+                        result['alias_validation'] = alias_validation
                     atomic_json(output / 'validation.json', result)
                     if not valid:
                         return result
@@ -271,6 +377,7 @@ def verify_validation(frozen):
             raise ValueError('Condition control evidence does not validate the declared backend')
     if seen != set(expected):
         raise ValueError('Missing condition control evidence')
+    verify_alias_validation(frozen, validation.get('alias_validation'))
 
 
 def freeze_conditions(config, output):

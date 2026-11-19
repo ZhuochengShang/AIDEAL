@@ -649,13 +649,15 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                 from .execution import run_command
                 proc = run_command(cmd, cwd=evidence_dir, timeout=timeout, env=child_env, guard_dir=work_dir)
                 out, err_out, rc = proc.stdout, proc.stderr, proc.returncode
+                output_decoding = getattr(proc, "output_decoding", None)
             except subprocess.TimeoutExpired as e:
                 # TimeoutExpired carries the captured streams as BYTES even with
                 # text=True — concatenating raw killed the 2026-07-01 full run
                 # ("can't concat str to bytes" at plotImage, ~120 APIs in).
                 def _txt(b):
-                    return b.decode("utf-8", "ignore") if isinstance(b, (bytes, bytearray)) else (b or "")
+                    return b.decode("utf-8", "backslashreplace") if isinstance(b, (bytes, bytearray)) else (b or "")
                 out, err_out, rc = _txt(e.stdout), _txt(e.stderr) + "\n[timeout]", 124
+                output_decoding = getattr(e, "output_decoding", None)
             finally:
                 if runtime_profile is not None:
                     verify_runtime_profile(runtime_profile, command=cmd)
@@ -667,6 +669,7 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                 "execution_contract": native_contract, "output_root": output_receipt["output_root"],
                 "exit_code": rc, "wall_s": _time.time() - execution_t0,
                 "stdout_file": "stdout.txt", "stderr_file": "stderr.txt",
+                "output_decoding": output_decoding,
             }, ensure_ascii=False, indent=2), encoding="utf-8")
             merged = (out or "") + "\n" + (err_out or "")
             ran = native_check_passed(out, err_out, rc, entry.name, ex)

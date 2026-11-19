@@ -11,6 +11,8 @@ import fcntl
 import signal
 import subprocess
 import time
+import hashlib
+import tempfile
 
 
 class CleanupError(RuntimeError):
@@ -34,6 +36,35 @@ def exclusive_work_dir(function):
     return wrapped
 
 
+
+def _decode_output(stdout, stderr, cwd):
+    """Decode process bytes without discarding invalid bytes or changing verdicts.
+
+    Keep exact bytes only for invalid UTF-8 streams, with a hash-bound receipt.
+    Printable backslash escapes make diagnostics safe to store as JSON/text.
+    Universal newlines preserve the previous text-mode behavior on valid output.
+    """
+    values, raw_streams = [], {}
+    for name, raw in (("stdout", stdout), ("stderr", stderr)):
+        raw = raw or b""
+        if isinstance(raw, str):  # Supports existing process doubles in tests.
+            raw = raw.encode("utf-8")
+        try:
+            text = raw.decode("utf-8")
+        except UnicodeDecodeError:
+            text = raw.decode("utf-8", errors="backslashreplace")
+            # A unique file prevents a generated program from selecting a
+            # symlink destination for the operator's binary evidence.
+            with tempfile.NamedTemporaryFile(prefix=f"aideal-{name}-", suffix=".raw",
+                                             dir=cwd, delete=False) as saved:
+                saved.write(raw)
+                path = Path(saved.name).resolve()
+            raw_streams[name] = {"path": str(path), "sha256": hashlib.sha256(raw).hexdigest(),
+                                 "bytes": len(raw)}
+        values.append(text.replace("\r\n", "\n").replace("\r", "\n"))
+    return (*values, {"version": "utf8-backslashreplace-v1", "encoding": "utf-8",
+                     "errors": "backslashreplace", "raw_streams": raw_streams})
+
 def run_command(command, *, cwd, env, timeout, guard_dir=None):
     if os.name != 'posix':
         raise RuntimeError('Process-group execution requires POSIX; configure a supported runner')
@@ -49,10 +80,13 @@ def run_command(command, *, cwd, env, timeout, guard_dir=None):
             child_env.pop(name)
     proc = subprocess.Popen(command, shell=True, cwd=cwd, env=child_env,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                            text=True, start_new_session=True)
+                            text=False, start_new_session=True)
     try:
         stdout, stderr = proc.communicate(timeout=timeout)
-        return subprocess.CompletedProcess(command, proc.returncode, stdout, stderr)
+        stdout, stderr, receipt = _decode_output(stdout, stderr, cwd)
+        result = subprocess.CompletedProcess(command, proc.returncode, stdout, stderr)
+        result.output_decoding = receipt
+        return result
     except BaseException as exc:
         def uncertain(message, cause):
             temporary = blocked.with_suffix(f'.{os.getpid()}.tmp')
@@ -87,7 +121,8 @@ def run_command(command, *, cwd, env, timeout, guard_dir=None):
             uncertain(f'Permission denied stopping process group {proc.pid}; '
                       'do not resume this output namespace until reconciled', denied)
         if isinstance(exc, subprocess.TimeoutExpired):
-            exc.output, exc.stderr = stdout, stderr
+            exc.output, exc.stderr, receipt = _decode_output(stdout, stderr, cwd)
+            exc.output_decoding = receipt
             exc.cleanup = {'process_group': proc.pid, 'termination_requested': True,
                            'shell_reaped': proc.returncode is not None}
         raise
