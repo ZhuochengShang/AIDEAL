@@ -1,0 +1,106 @@
+{
+  "observed_at_utc": "2026-11-19T08:20:44.336356+00:00",
+  "selected_count": 1519,
+  "selected_manifest": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/selection-correction-final/api_manifest_public_nonwrapper.json",
+    "sha256": "48d282bcce7b411019dfd4f700d549a9025a23f13dd17dfded00faf95349599a"
+  },
+  "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis",
+  "python_importerror_branch_selected_count": 3,
+  "selected_fallbacks": [
+    {
+      "api": "python:MDAnalysis.coordinates.H5MD.MockH5pyFile",
+      "line": 227,
+      "guard_chain": [
+        {
+          "except_type": "ImportError",
+          "line": 221,
+          "try_line": 219
+        }
+      ],
+      "source": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/H5MD.py",
+        "sha256": "0a03cb6f42db32f310b88015f7efadd4f853cad66dc90a17cb228f7a765c767c"
+      },
+      "excerpt": "    # Allow building documentation even if h5py is not installed\n    import types\n\n    class MockH5pyFile:\n        pass"
+    },
+    {
+      "api": "python:MDAnalysis.coordinates.IMD.MockIMDClient",
+      "line": 157,
+      "guard_chain": [
+        {
+          "except_type": "ImportError",
+          "line": 150,
+          "try_line": 146
+        }
+      ],
+      "source": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/IMD.py",
+        "sha256": "f248d51bfe7e9de7bba24cb60ea9cddf05b116ffb6e6c5f588d4c19ad4b1c5f3"
+      },
+      "excerpt": "    # Allow building documentation without imdclient\n    import types\n\n    class MockIMDClient:\n        pass"
+    },
+    {
+      "api": "python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory",
+      "line": 62,
+      "guard_chain": [
+        {
+          "except_type": "ImportError",
+          "line": 58,
+          "try_line": 55
+        }
+      ],
+      "source": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/GSD.py",
+        "sha256": "3447cb4fbb2d3f9602459a51d72971f76e283a8a4c24e9a04039467460f70e06"
+      },
+      "excerpt": "    HAS_GSD = False\n    import types\n\n    class MockHOOMDTrajectory:\n        pass"
+    }
+  ],
+  "runtime_probe_exit": 0,
+  "runtime_probe": [
+    {
+      "module": "MDAnalysis.coordinates.GSD",
+      "target": "MockHOOMDTrajectory",
+      "present": false,
+      "availability_flag": "HAS_GSD",
+      "available": true,
+      "module_file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/GSD.py"
+    },
+    {
+      "module": "MDAnalysis.coordinates.H5MD",
+      "target": "MockH5pyFile",
+      "present": false,
+      "availability_flag": "HAS_H5PY",
+      "available": true,
+      "module_file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/H5MD.py"
+    },
+    {
+      "module": "MDAnalysis.coordinates.IMD",
+      "target": "MockIMDClient",
+      "present": false,
+      "availability_flag": "HAS_IMDCLIENT",
+      "available": true,
+      "module_file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/IMD.py"
+    }
+  ],
+  "runtime_probe_stderr": "",
+  "inventory_keys": [
+    "schema",
+    "kind",
+    "language",
+    "source_root",
+    "source_version",
+    "source_commit",
+    "source_tree",
+    "source_inventory",
+    "source_inventory_sha256",
+    "declaration_ids",
+    "canonical_selection",
+    "canonical_selection_sha256",
+    "canonical_selection_policy_version",
+    "canonical_declaration_ids",
+    "api_ids"
+  ],
+  "fallback_inventory_metadata": []
+}

@@ -1,6 +1,6 @@
 # AIDEAL execution and paper checklist
 
-Observed **18 November 2026, 23:54:49 Pacific** (**19 November, 07:54:49 UTC**). This is a timestamped review, not a live monitor. The active namespace is `evaluator-correction-2026-11-18/explicit-inputs-r0`. Preserve older namespaces and their measured results.
+Observed **19 November 2026, 00:18:42 Pacific** (**19 November, 08:18:42 UTC**). This is a timestamped review, not a live monitor. The active namespace is `evaluator-correction-2026-11-18/explicit-inputs-r0`. Preserve older namespaces and their measured results.
 
 ## Current execution
 
@@ -16,15 +16,23 @@ The active controller and MDAnalysis worker were alive. **13 of 14 condition run
 | mir_eval | 178 | 134 | 144 | Both complete |
 | Thumbnailator | 225 | 109 | 97 | Both complete |
 
-At this observation, the MDAnalysis D1 checkpoint contained **402 unique targets with recorded outcomes**, including 164 accepted programs. Its final percentage remains **Pending**. There were 403 returned provider receipts because the next target was in progress. One earlier 503 receipt remains preserved. The checkpoint has 403 rows because the failed provider attempt and its later retry refer to the same target. Do not equate checkpoint rows, provider requests and unique completed target outcomes.
+At this observation, the MDAnalysis D1 checkpoint contained **602 unique targets with recorded outcomes**, including 253 accepted programs. Its final percentage remains **Pending**. There were 603 returned provider receipts because the next target was in progress. One earlier 503 receipt remains preserved. The checkpoint has 603 rows because the failed provider attempt and its later retry refer to the same target. Do not equate checkpoint rows, provider requests and unique completed target outcomes.
 
-Across the study, **4,529 of 5,646 planned target outcomes** had been recorded at this snapshot. The earlier 503 was a temporary capacity response, not evidence of depleted credits. Resume preserved completed tasks and created a new physical attempt for the interrupted request. A provider retry stays logical R0.
+Across the study, **4,729 of 5,646 planned target outcomes** had been recorded at this snapshot. The earlier 503 was a temporary capacity response, not evidence of depleted credits. Resume preserved completed tasks and created a new physical attempt for the interrupted request. A provider retry stays logical R0.
+
+## End-to-end audit on November 19
+
+**The complete paper study is not ready.** The current native R0 queue is active. The [detailed audit](../../review/audits/2026-11-19/README.md) traces the inputs, code functions, checks and output evidence at each stage. The [action ledger](../../review/audits/2026-11-19/ACTIONS.json) records completion criteria.
+
+Development fixes address provider-response recovery, selected-condition scope, cumulative retry resources, transport-identity reuse, output URI/path wording and import-failure-only empty API stubs. These fixes do not alter the active frozen release or existing scores. The current MDAnalysis bank retains its1,519 denominator; three conditional mock classes are a disclosed scope limitation.
+
+Before the full study, complete the qualified README evidence and example validation, independent micro/puzzle banks, eight-condition support, alias behavior admission, versioned native-hint builds and repair-memory isolation. Native retries currently retrieve same-API failures without a run/condition filter. Current R0 does not use that retrieval.
 
 ## Completed and remaining work
 
 | Status | Work item | Evidence or completion requirement |
 |---|---|---|
-| Done | Freeze 2,823 current API targets | Current selected bank and revised MDAnalysis/tslearn exclusion ledgers |
+| Frozen; scope correction required for a future bank | Freeze 2,823 current API targets | Current ledger retained; three MDAnalysis import-failure mock classes identified in this audit |
 | Done | Prepare all seven banks | Bound configuration, source, documentation, fixture and runtime receipts |
 | Done | Check matched prompt exposure | Fourteen sampled Original/D1 requests match outside documentation |
 | Done | Check execution mechanisms | Enabled JVM assertions, isolated attempt outputs, Python fixture binding and exact target witness |
@@ -32,7 +40,7 @@ Across the study, **4,529 of 5,646 planned target outcomes** had been recorded a
 | Done | Complete 13 condition runs | Completion receipts and result hashes for all Original arms and six D1 arms |
 | Running | Finish MDAnalysis D1 | Native worker running at the timestamp above; require final completion receipt before a final score |
 | Queued | Replay saved historical programs | The current controller schedules a separate zero-model `rescore` phase after continuation; do not replace original verdicts |
-| Review required | Resolve RDPro Scala URI contract | Explicitly distinguish local paths and `file:///` URIs in the shared contract; freeze any changed protocol in a new namespace |
+| Fixed in development; not deployed | Resolve RDPro Scala URI contract | Native contract v3 distinguishes local paths and URIs; a new matched protocol and readiness receipt are still required |
 | Review required | Validate existing D1 claims and examples | Check constructors, callable expressions, receivers and behavioral claims against actual source and executable examples |
 | Pending | Independent microbenchmark oracles | Fixed task inputs, expected outputs and target-use checks independent of the audience-generated assertions |
 | Pending | Fixed puzzle bank for the main comparison | Document task levels, input/output contract, reference checks and development/evaluation separation for all six libraries |

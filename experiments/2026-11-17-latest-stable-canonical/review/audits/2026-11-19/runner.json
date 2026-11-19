@@ -1,0 +1,110 @@
+{
+  "created_at": "2026-11-19T08:24:41.239230+00:00",
+  "scope": "Current development execution, continuation, scoring, provenance and checkpoints; no paid calls or frozen study edits",
+  "findings": [
+    {
+      "id": "RUN-01",
+      "priority": "P1",
+      "title": "Unusable provider responses were incorrectly reusable checkpoints",
+      "status": "fixed_in_development_only",
+      "file": "vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+      "line": 132,
+      "evidence": "New real-loop mocked-provider regression failed for incomplete, refused and empty output before the fix. Resume made zero calls instead of retrying the stopped API. The helper now rejects all provider-* categories as well as llm-error.",
+      "validation": "Repeated provider failure stops each explicit invocation at round 0; previous successes are reused; earlier attempt bytes stay unchanged."
+    },
+    {
+      "id": "RUN-02",
+      "priority": "P1",
+      "title": "Single-condition CLI silently scheduled both paid arms",
+      "status": "fixed_in_development_only",
+      "file": "scripts/run_verified_readme_continuation.py",
+      "line": 610,
+      "evidence": "--run --condition original scheduled original and generated_d1 in an offline subprocess spy before correction. It now schedules only original.",
+      "validation": "Parametrized tests cover Original only, D1 only, and both when no condition filter is supplied."
+    },
+    {
+      "id": "RUN-03",
+      "priority": "P2",
+      "title": "Summary costs omitted previous failed provider attempts after resume",
+      "status": "fixed_in_development_only",
+      "file": "scripts/run_verified_readme_continuation.py",
+      "line": 396,
+      "evidence": "Real native loop with mocked returned usage generated 3 responses totaling 15 input and 6 output tokens. Final per-target metrics retained only 2 responses, 10 input and 4 output tokens.",
+      "validation": "A new condition-local receipt ledger recovers all 3/15/6, retains unknown usage on interrupted/missing responses, and does not sum historical/replay directories. Separate final_target_metric_totals retains diagnostic metrics without pretending they are total spend."
+    },
+    {
+      "id": "RUN-04",
+      "priority": "P2",
+      "title": "Historical-success reuse omits the transport contract comparison",
+      "status": "fixed_in_development_only",
+      "file": "scripts/run_verified_readme_continuation.py",
+      "line": 85,
+      "evidence": "Changing transport_contract.adapter_sha256 yielded reuse_blockers=[] with runtime_verified=True.",
+      "impact": "Current force_fresh cohort has no historical pass reuse. Future reuse could mix provider adapter or retry-policy versions.",
+      "fix": "Added transport_contract to the strict component comparison. Identical contracts retain reuse eligibility; changed and missing contracts reject it."
+    }
+  ],
+  "tests": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python -m pytest -q -p no:cacheprovider tests/test_doc_check_modules.py tests/test_native_execution_contract.py tests/test_native_output_contract.py tests/test_verified_readme_continuation.py tests/test_evaluator_correction_controller.py tests/test_replay_runtime_profile.py tests/test_native_runtime_profile.py tests/test_runtime_profile.py",
+      "stage": "before changes",
+      "result": "71 passed, 77 subtests passed in 1.95s"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python -m pytest -q -p no:cacheprovider /tmp/test_native_checkpoint_recovery.py",
+      "stage": "pre-fix failure reproduction",
+      "result": "4 regression cases failed; inherited fixture tests also passed. Full log retained.",
+      "log": "/tmp/aideal-audit-resume-before.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python -m pytest -q -p no:cacheprovider tests/test_native_checkpoint_recovery.py tests/test_verified_readme_continuation.py tests/test_doc_check_modules.py tests/test_native_execution_contract.py tests/test_native_output_contract.py tests/test_evaluator_correction_controller.py tests/test_replay_runtime_profile.py tests/test_native_runtime_profile.py tests/test_runtime_profile.py",
+      "stage": "after four runner fixes and concurrent native contract wording change",
+      "result": "83 passed, 79 subtests passed in 2.07s",
+      "log": "/tmp/aideal-audit-runner-tests.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python /tmp/aideal-audit-offline-probes.py",
+      "result": "Cumulative ledger 3 returned calls/15 input/6 output; Original-only schedules one arm.",
+      "evidence": "/tmp/aideal-audit-offline-probes-after.json"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python /tmp/aideal-audit-lock-probe.py",
+      "result": "Second writer and unreconciled subprocess guard blocked before execution.",
+      "evidence": "/tmp/aideal-audit-lock-probe.json"
+    }
+  ],
+  "changed_files": [
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+      "sha256": "3d26657ac592dc1521a27822ab3042de1e1cd3c07f38836ce97ba413b7b4d174"
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/run_verified_readme_continuation.py",
+      "sha256": "63cc2b567053d7dd884fe54b585af9a997e68d426dfa54a47fa9b55d60111951"
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/tests/test_native_checkpoint_recovery.py",
+      "sha256": "1941813da7c4fc956ea592068ef84ffdb403471227d38d7a5f4b51dba2fca135"
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/tests/test_verified_readme_continuation.py",
+      "sha256": "d823db3b597175e4269b608366ae076713b0d4f0e6b46bf9dd86cd3511ddf4f3"
+    }
+  ],
+  "diff": "/tmp/aideal-audit-runner-fixes.diff",
+  "deployment": "Development only; frozen release and measured results were not changed",
+  "paid_calls": 0,
+  "remaining_limitations": [
+    "Native acceptance checks execution and an exact API witness, not independently verified correctness.",
+    "Interrupted provider usage and hidden SDK attempts may remain unknown; the new ledger exposes incompleteness rather than claiming exact billing.",
+    "Partial scores remain numeric lower bounds; reports must gate final percentages on run.complete.",
+    "The historical transport-reuse gap is fixed in development; current frozen force_fresh studies never used that path."
+  ],
+  "evidence_files": [
+    "/tmp/aideal-audit-offline-probes.json",
+    "/tmp/aideal-audit-offline-probes-after.json",
+    "/tmp/aideal-audit-transport-probe.json",
+    "/tmp/aideal-audit-lock-probe.json",
+    "/tmp/aideal-audit-transport-probe-after.json"
+  ]
+}

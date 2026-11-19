@@ -1,0 +1,1052 @@
+{
+  "schema": "aideal.development_readiness_audit/v1",
+  "created_utc": "2026-11-19T08:26:40.472364+00:00",
+  "code_root": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow",
+  "scope": "Read-only study audit plus a narrow future-development inventory scanner fix; no model calls, rebuilds, treatment installation, frozen-record changes or tracker edits",
+  "conclusion": "Current Original/D1 native R0 workflow is distinct from the not-yet-ready full eight-arm independent micro/puzzle/R2/D2 study. 164 focused tests pass, but known readiness and validity gaps remain.",
+  "findings": [
+    {
+      "id": "DEV-01",
+      "severity": "blocker_for_eight_arm_study",
+      "title": "Eight-factorial design is not implemented",
+      "status": "confirmed_current_code",
+      "detail": "Supported designs are five_arm, refactor_pair and six_arm. README+alias, README+hint, and alias+hint factorial arms are absent. Config validation rejects an eight-arm design before a model call.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_inputs.py",
+          "line": 11,
+          "function": "DESIGNS"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_freeze.py",
+          "line": 28,
+          "function": "read_condition_config"
+        }
+      ],
+      "action": "Extend the shared condition schema, factor routing, context exposure and treatment matching once; add all-eight-arm positive/negative and resume tests before publishing a new freeze."
+    },
+    {
+      "id": "DEV-02",
+      "severity": "blocker_for_independent_micro_puzzle_study",
+      "title": "Current API banks are not independent task banks",
+      "status": "confirmed_cluster_and_code",
+      "detail": "All seven current configurations point to absent integration_tasks files. The native R0 path does not use those files and can run legitimately without them. Independent condition evaluation requires a bound bank with complete micro coverage, at least one held-out puzzle, per-case oracle/reference/negative controls, and successful controls for every backend.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_inputs.py",
+          "line": 31,
+          "function": "read_bank"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_freeze.py",
+          "line": 209,
+          "function": "validate_conditions"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_freeze.py",
+          "line": 276,
+          "function": "freeze_conditions"
+        }
+      ],
+      "action": "Author and validate independent micro/puzzle tasks; freeze development and held-out partitions. Do not relabel native self-check acceptance as independent task correctness."
+    },
+    {
+      "id": "DEV-03",
+      "severity": "authoring_quality_gap",
+      "title": "Qualified README authoring still omits test examples and compiler comments",
+      "status": "confirmed_current_code_and_frozen_inputs",
+      "detail": "Qualified generation sets test_index={} even when repository tests exist. It only passes the selected definition description as source_doc. Current selected RDPro Java69/Scala261 and Thumbnailator225 ledger entries all lack description; Python descriptions are retained. This remains live code, not solely a frozen-D1 artifact.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/readme_generation.py",
+          "line": 331,
+          "function": "find_or_create"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/readme_generation.py",
+          "line": 386,
+          "function": "find_or_create"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/api_public_inventory.py",
+          "line": 623,
+          "function": "qualified_inventory_details"
+        }
+      ],
+      "action": "For a new authoring version, bind exact source-comment spans and reviewed exact-API test snippets. Preserve owner identity, constructor/setup dependencies and provenance; reject ambiguous bare-name matches. Keep frozen D1 untouched."
+    },
+    {
+      "id": "DEV-04",
+      "severity": "authoring_validation_gap",
+      "title": "README generation checks structure, not executable truth",
+      "status": "confirmed_current_code",
+      "detail": "find_or_create validates required sections and exact identities but does not execute each generated example. Correct APIs/signatures and a complete README do not establish that constructor, receiver, parameter and semantic advice is correct.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/readme_generation.py",
+          "line": 133,
+          "function": "find_or_create"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/readme_generation.py",
+          "line": 469,
+          "function": "validate_entry call"
+        }
+      ],
+      "action": "Add bounded source-consistency checks plus isolated example build/run gates to future README artifacts. Report these as development validation, separate from independent task outcomes."
+    },
+    {
+      "id": "DEV-05",
+      "severity": "blocker_for_validated_alias_claim",
+      "title": "Aliases can be installed without an equivalence receipt",
+      "status": "confirmed_current_code",
+      "detail": "Proposal checks enforce target/name/source boundaries and Python syntax. apply_treatments creates local commits with applied_unvalidated status. Condition freeze verifies added wrapper files, unchanged baseline code and task controls, but does not require per-alias forwarding/default/return/error equivalence tests.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/improvement_suggestions.py",
+          "line": 96,
+          "function": "alias proposal validation"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/treatment_versions.py",
+          "line": 345,
+          "function": "apply_treatments"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_inputs.py",
+          "line": 153,
+          "function": "match_treatments"
+        }
+      ],
+      "action": "Require a hash-bound alias validation receipt covering representative valid, boundary/default and failing inputs before treating installation as accepted or launching the new alias ablation."
+    },
+    {
+      "id": "DEV-06",
+      "severity": "supported_subset_and_orchestration_gap",
+      "title": "Native hint editing is gated but does not cover every failure or library",
+      "status": "confirmed_current_code_and_tests",
+      "detail": "Native hint path handles existing literal exception messages in Python/Java/Scala. Four distinct programs run on baseline/candidate. Unsupported/compiler/nonliteral/ambiguous failures remain evidence, not patches. Registered SQL lacks a reviewed implementation adapter. install_native_hints leaves an explicit checkout uncommitted; branch/commit/rebuild orchestration is separate.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_hints.py",
+          "line": 51,
+          "function": "_literal_site"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_hints.py",
+          "line": 223,
+          "function": "propose_native_hints"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_hints.py",
+          "line": 348,
+          "function": "validate_native_hints"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_hints.py",
+          "line": 410,
+          "function": "install_native_hints"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/improvement_context.py",
+          "line": 166,
+          "function": "_qualified_library_definitions"
+        }
+      ],
+      "action": "Publish a per-failure intake disposition and a supported-language matrix; prepare trusted controls/adapters, commit/rebuild the verified edits and bind the actual treatment source before evaluation."
+    },
+    {
+      "id": "DEV-07",
+      "severity": "data_partition_gate",
+      "title": "Development labels alone do not prove held-out independence",
+      "status": "confirmed_current_code",
+      "detail": "Native evidence intake verifies original R0 provenance and excludes supplied held-out IDs/APIs. Generic alias-log intake rejects explicit evaluation/held-out labels but permits unlabeled logs; condition bank checks disjoint IDs plus a nonempty holdout_review string. These checks do not prove semantic, fixture or answer independence.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_r0_evidence.py",
+          "line": 225,
+          "function": "build_native_r0_preview"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/improvement_context.py",
+          "line": 64,
+          "function": "_development_errors"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_inputs.py",
+          "line": 68,
+          "function": "read_bank"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_freeze.py",
+          "line": 61,
+          "function": "read_condition_config"
+        }
+      ],
+      "action": "Freeze explicit development/evaluation manifests before treatment authoring; bind provenance and task/fixture partitions. Require a reviewed overlap audit, not only renamed case IDs."
+    },
+    {
+      "id": "DEV-08",
+      "severity": "blocker_for_controlled_native_R1_R2",
+      "title": "Native retry memory is not scoped by trial identity",
+      "status": "confirmed_code_and_synthetic_reproduction",
+      "detail": "R0 supplies no historical failures. At retry the native loop queries failures_for(API), which filters only function and fail/fixed status, not run/task/condition/version. Deterministic FIX_GUIDE advice also enters that log. The independent condition runner instead uses previous attempt feedback and native emitted hints without shared-log lookup.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_execution.py",
+          "line": 519,
+          "function": "native attempt loop"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/error_log.py",
+          "line": 113,
+          "function": "ErrorLog.failures_for"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_execution.py",
+          "line": 689,
+          "function": "FIX_GUIDE feedback logging"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_context.py",
+          "line": 10,
+          "function": "public_context"
+        }
+      ],
+      "action": "Do not just change max_fix_rounds to2. Use trial-scoped feedback or a declared frozen memory/advice policy, with isolation tests and recorded prompt exposure. This does not contaminate the current R0 loop."
+    },
+    {
+      "id": "DEV-09",
+      "severity": "scope_limit_for_D2",
+      "title": "Existing D2 operator is same-bank R0 development revision",
+      "status": "confirmed_current_code",
+      "detail": "revise_readme_from_replay requires completed corrected replay, diagnoses failed D1 entries, and accepts examples after corrected native execution. It explicitly is not a D1/R2 deep dive or held-out correctness experiment. The matched comparison operator is Original/D1/D2 native R0 only.",
+      "anchors": [
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/revise_readme_from_replay.py",
+          "line": 1,
+          "function": "module scope"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/revise_readme_from_replay.py",
+          "line": 120,
+          "function": "prepare"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/revise_readme_from_replay.py",
+          "line": 337,
+          "function": "example validation"
+        },
+        {
+          "file": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/run_corrected_readme_comparison.py",
+          "line": 213,
+          "function": "comparison identity"
+        }
+      ],
+      "action": "For the paper plan, drive D2 only from development failures after the declared repair policy, freeze D2, and conduct fresh held-out evaluation with matched tasks. Keep this existing operator labelled development."
+    }
+  ],
+  "stages": [
+    {
+      "step": 1,
+      "stage": "Pin source and inventory",
+      "status": "implemented; current banks frozen",
+      "input": "source commit/tree + namespace/origin policy + compiler/AST ledger",
+      "call": "api_registry.configured_api_details \u2192 api_public_inventory.qualified_inventory_details \u2192 api_canonical_selection._select_qualified",
+      "output": "bound API ledger and selected IDs; 2,823 current targets",
+      "gate": "Source hash, source ownership, canonical overload family and explicit exclusion receipts are checked. No blanket proof of absence of all semantic duplication."
+    },
+    {
+      "step": 2,
+      "stage": "Map original documentation",
+      "status": "implemented; current seven mappings readable",
+      "input": "version-matched reviewed document corpus + exact API/excerpt map",
+      "call": "original_documents \u2192 original_target_texts",
+      "output": "documented/undocumented/unresolved dispositions and exact excerpt context",
+      "gate": "Missing/unresolved/version/hash mismatches fail; explicit undocumented is allowed. Coverage is relative to the reviewed corpus."
+    },
+    {
+      "step": 3,
+      "stage": "Generate README D1",
+      "status": "implemented and historical D1 exists; quality gaps remain",
+      "input": "selected API facts, available descriptions, original excerpts, distilled original corpus, profile/prompt",
+      "call": "readme_generation.find_or_create",
+      "output": "README entries, requests/responses, checkpoint/fingerprint",
+      "gate": "Structural completion and exact IDs; no current per-entry execution gate; qualified test snippets disabled."
+    },
+    {
+      "step": 4,
+      "stage": "Run current Original/D1 R0",
+      "status": "active measured cohort; native acceptance only",
+      "input": "same selected bank/runtime/fixtures/model with condition documentation",
+      "call": "run_verified_readme_continuation \u2192 comprehension_check \u2192 doc_check_execution",
+      "output": "prompts, snippets, wrapped programs, stdout/stderr, usage, native outcomes",
+      "gate": "Current R0 no shared prior-error prompt; native acceptance is not independent output correctness."
+    },
+    {
+      "step": 5,
+      "stage": "Classify and select development failures",
+      "status": "implemented intake; current cohort not automatically a held-out bank",
+      "input": "bound Original R0 result/checkpoint + explicit development manifest",
+      "call": "source_hint_development.build_development_preview \u2192 native_r0_evidence.build_native_r0_preview",
+      "output": "complete intake dispositions + bounded supported cases",
+      "gate": "Unsupported evidence retained; only matched runtime frame/existing exception goes to native hint patching."
+    },
+    {
+      "step": 6,
+      "stage": "Create aliases",
+      "status": "proposal/install code exists; current cohort has no alias treatment",
+      "input": "project profile + bounded selected source windows + designated development failures",
+      "call": "preview_improvements \u2192 propose_improvements \u2192 bundle_proposals \u2192 apply_treatments",
+      "output": "unvalidated wrappers/interface + recorded calls + local commits",
+      "gate": "Needs added per-alias behavior/equivalence validation; SQL implementation adapter absent."
+    },
+    {
+      "step": 7,
+      "stage": "Embed native hints",
+      "status": "supported subset implemented/tested; current cohort has no hint treatment",
+      "input": "verified failure preview + existing literal exception + independent controls",
+      "call": "propose_native_hints \u2192 validate_native_hints \u2192 install_native_hints",
+      "output": "source message patches, eight executions per hint, uncommitted installed checkout",
+      "gate": "Validated hint required for native condition freeze; explicit commit/build required. Source-comment and JSON retrieval are separate older protocols."
+    },
+    {
+      "step": 8,
+      "stage": "Freeze independent factorial micro/puzzle evaluation",
+      "status": "blocked before paid launch",
+      "input": "eight conditions + independent task bank/oracles + treated library builds",
+      "call": "read_condition_config \u2192 validate_conditions \u2192 freeze_conditions \u2192 run_conditions",
+      "output": "frozen configuration and controlled outcomes",
+      "gate": "Current schema only supports five/six/refactor pair; no current integration banks. Alias behavior acceptance needs strengthening."
+    },
+    {
+      "step": 9,
+      "stage": "R1/R2 audience repair",
+      "status": "shared controlled runner exists; current native cohort R0 only",
+      "input": "same frozen task/resources + previous public failure feedback",
+      "call": "evaluation_runner.run_unit repair loop / evaluation_context.public_context",
+      "output": "round0/1/2 receipts, first-pass/recovery and costs",
+      "gate": "Choose and freeze memory policy; current native retries are cross-run-capable by API."
+    },
+    {
+      "step": 10,
+      "stage": "D2 README repair and fresh evaluation",
+      "status": "development R0 operator exists; full paper R2\u2192D2\u2192held-out study pending",
+      "input": "development failure evidence + source + D1",
+      "call": "revise_readme_from_replay.prepare/revise \u2192 run_corrected_readme_comparison",
+      "output": "new D2.md + revision outcomes/example validation + fresh native comparison",
+      "gate": "Do not use held-out failures to author D2; current operator scope is explicitly same-bank development."
+    }
+  ],
+  "tests": [
+    {
+      "status": "passed",
+      "tests": 106,
+      "seconds": 98.74,
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests:vendor/aideal_engine/src:. /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python -m unittest test_qualified_readme test_qualified_api_selection test_native_hints test_improvement_suggestions test_condition_evaluation test_treatment_versions test_readme_entry_prompt -q",
+      "working_directory": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow",
+      "log": {
+        "path": "/tmp/aideal-audit-2026-11-19-development-tests.log",
+        "sha256": "0e7c320b32af9892106ca31916d2234d62b6b32c1db5473a95289250cdc8a850",
+        "bytes": 757
+      }
+    },
+    {
+      "status": "passed",
+      "tests": 58,
+      "seconds": 14.422,
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests:vendor/aideal_engine/src:. /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python -m unittest test_native_r0_evidence test_source_hint_development test_readme_replay test_corrected_readme_comparison -q",
+      "working_directory": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow",
+      "log": {
+        "path": "/tmp/aideal-audit-2026-11-19-development-gates-tests.log",
+        "sha256": "fe1679bcc257ec9b39fbf0b73698e799cee74a6b1c5272a1141a589c84f6b678",
+        "bytes": 99
+      }
+    }
+  ],
+  "synthetic_memory_proof": {
+    "path": "/tmp/aideal-audit-2026-11-19-memory-proof.json",
+    "sha256": "13e21c3f2728f4ed1aaa11072a429e7466464adce7e36e63ee6d3bdb9b22db49",
+    "bytes": 441
+  },
+  "cluster_snapshot": {
+    "path": "/tmp/aideal-audit-2026-11-19-development-cluster.json",
+    "sha256": "87e7fdb92ef13038330275b8546ca57c4a0805b518ddd6d4e9f2c476f1935bb5",
+    "bytes": 30939
+  },
+  "banks": [
+    {
+      "bank": "rdpro_java",
+      "selected": 69,
+      "configuration": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/configs/continuation.yaml",
+        "exists": true,
+        "sha256": "8187232116ec83aad9dcfb46b2418876ebbaeab0664a0df406cf9a50876a1ab7"
+      },
+      "api_inventory": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/inputs/api_inventory.json",
+        "exists": true,
+        "sha256": "441e186c80096bfdbb74190497914863e7d25459b7a09ed54601b9fe51a74577"
+      },
+      "api_inventory_kind": "qualified_source_api_inventory",
+      "original_document_manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json",
+        "exists": true,
+        "sha256": "0585c743a2e6e574cbc5b369b74a59bcd752a762ab88d81381a08520c175ecdd"
+      },
+      "original_document_dispositions": {
+        "undocumented": 69
+      },
+      "integration_tasks": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/plan/libraries/rdpro_java/configs/integration_tasks.yaml",
+        "exists": false
+      },
+      "configured_aliases": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/plan/libraries/rdpro_java/aliases/aliases.json",
+        "exists": false
+      },
+      "arms": {
+        "original": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/completion.json",
+            "exists": true,
+            "sha256": "7ec799828bd65b05eb069661bceacca7407a1e9d139b96bbe5b5f796bfc12a34"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/result.json",
+            "exists": true,
+            "sha256": "03423ef0f88399bbd3823f8a1f35f0863ea29202bc1b895ea27bfd327da82200"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 12,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        },
+        "generated_d1": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/completion.json",
+            "exists": true,
+            "sha256": "d8b83900fc1309cc027718c18a0f7354ba80a1ebf47a5807646d5e010b715521"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/result.json",
+            "exists": true,
+            "sha256": "5acf9215419edc170d18c49b0b024e9bdfce1110307e31f62942920aa0794fa7"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 4,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        }
+      },
+      "frozen_inventory_comments": {
+        "ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/rdpro/ledger.json",
+          "exists": true,
+          "sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699"
+        },
+        "canonical_definitions_before_later_selection_revision": 1384,
+        "nonempty_description": 0,
+        "missing_description_field": 1384,
+        "current_selected_records_with_direct_identity_match": 69,
+        "current_selected_nonempty_description": 0,
+        "current_selected_missing_description_field": 69,
+        "meaning": "Bound inventory entries, not proof source files lack comments. Current selected match uses exact language-qualified identity; compiler companion identities may need a discriminator."
+      }
+    },
+    {
+      "bank": "rdpro_scala",
+      "selected": 261,
+      "configuration": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/configs/continuation.yaml",
+        "exists": true,
+        "sha256": "d6ac33b777f92cac8ed633fbb1b83f161228315b8abed2a03b8e4b918b77f8fc"
+      },
+      "api_inventory": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/inputs/api_inventory.json",
+        "exists": true,
+        "sha256": "e14a707a398af0b6f7763ffc2230c829758be035e509a6dde07ddd35798f33e8"
+      },
+      "api_inventory_kind": "qualified_source_api_inventory",
+      "original_document_manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json",
+        "exists": true,
+        "sha256": "0585c743a2e6e574cbc5b369b74a59bcd752a762ab88d81381a08520c175ecdd"
+      },
+      "original_document_dispositions": {
+        "undocumented": 245,
+        "documented": 16
+      },
+      "integration_tasks": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/plan/libraries/rdpro_scala/configs/integration_tasks.yaml",
+        "exists": false
+      },
+      "configured_aliases": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/plan/libraries/rdpro_scala/aliases/aliases.json",
+        "exists": false
+      },
+      "arms": {
+        "original": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/completion.json",
+            "exists": true,
+            "sha256": "1d0f03c2e0f7fa01653ebd3a0ff46e0c1fe1d766d5fe969959ebd043ddc2f300"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/result.json",
+            "exists": true,
+            "sha256": "89eef1a2e1f1e3d0326f0b9b20d0f0f5035a913d23657ed85a25251b369f1f2e"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 20,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        },
+        "generated_d1": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/completion.json",
+            "exists": true,
+            "sha256": "284bb1cd495e58d44dc094f51bdb24402b6393801c6b39ff9625f146998edb66"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/result.json",
+            "exists": true,
+            "sha256": "496cd10c323a98c9e7c0badae416560dcd59cc0d516589a4f9a3b190f9301a7b"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 14,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        }
+      },
+      "frozen_inventory_comments": {
+        "ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/rdpro/ledger.json",
+          "exists": true,
+          "sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699"
+        },
+        "canonical_definitions_before_later_selection_revision": 1311,
+        "nonempty_description": 0,
+        "missing_description_field": 1311,
+        "current_selected_records_with_direct_identity_match": 261,
+        "current_selected_nonempty_description": 0,
+        "current_selected_missing_description_field": 261,
+        "meaning": "Bound inventory entries, not proof source files lack comments. Current selected match uses exact language-qualified identity; compiler companion identities may need a discriminator."
+      }
+    },
+    {
+      "bank": "sedonadb",
+      "selected": 217,
+      "configuration": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/configs/continuation.yaml",
+        "exists": true,
+        "sha256": "b8bb6d41c0e7cd602073e7e1fa9a98964da250c50509e31fdc660932db5104dc"
+      },
+      "api_inventory": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/inputs/api_inventory.json",
+        "exists": true,
+        "sha256": "64d18ef9a1a1089de9919840a52bac1d7f52b072e5bbf60342bb56ba8f088fb3"
+      },
+      "api_inventory_kind": "registered_sql",
+      "original_document_manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/sedonadb/original-docs/manifest.json",
+        "exists": true,
+        "sha256": "cd27c949a595a3e41b986c33116a81299de31fb7aa41501cabeb6c9022867fbb"
+      },
+      "original_document_dispositions": {
+        "documented": 211,
+        "undocumented": 6
+      },
+      "integration_tasks": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/sedonadb/configs/integration_tasks.yaml",
+        "exists": false
+      },
+      "configured_aliases": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/sedonadb/aliases/aliases.json",
+        "exists": false
+      },
+      "arms": {
+        "original": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/completion.json",
+            "exists": true,
+            "sha256": "223e2cbdc72686318f6565fdb97d3eb50a7467e6816ed43dcc422be5bef29177"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/result.json",
+            "exists": true,
+            "sha256": "baa775bba32e41f88de5643376000b4dbe225e629a1c4085c0cb447b21d4ead6"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 87,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        },
+        "generated_d1": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/completion.json",
+            "exists": true,
+            "sha256": "2401e3c1193eb1b81faa52cb947f7dc56bf1b1615b44c3c84ec5e93d3e4d53e2"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/result.json",
+            "exists": true,
+            "sha256": "75a3498c23ad4319226eb30419746f3643fc7b0753addad8f10c9625d06a6cbd"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 96,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        }
+      }
+    },
+    {
+      "bank": "mdanalysis",
+      "selected": 1519,
+      "configuration": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/configs/continuation.yaml",
+        "exists": true,
+        "sha256": "a572284491f054caa66fc774824afa944b89aeec2282ad255cf8a630fdea6c01"
+      },
+      "api_inventory": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/inputs/api_inventory.json",
+        "exists": true,
+        "sha256": "c5433ea70ea1c7585c11931fe9ce9311f7ec95fdf0d32db994234ac239973ee8"
+      },
+      "api_inventory_kind": "qualified_source_api_inventory",
+      "original_document_manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/manifest.json",
+        "exists": true,
+        "sha256": "73591399303b377384939068a978a18ea414f158cdd2a2207d714a5a5e6e51ff"
+      },
+      "original_document_dispositions": {
+        "documented": 1061,
+        "undocumented": 458
+      },
+      "integration_tasks": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/mdanalysis/configs/integration_tasks.yaml",
+        "exists": false
+      },
+      "configured_aliases": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/mdanalysis/aliases/aliases.json",
+        "exists": false
+      },
+      "arms": {
+        "original": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/completion.json",
+            "exists": true,
+            "sha256": "0166ede5aee221b1ce925d4aef32c9acb6b0b8241a5a1bfec04e7b6307d6c6de"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/result.json",
+            "exists": true,
+            "sha256": "b74bfac78f82bb707fd1b3479e501ab64bc9f20f78f460d3ed8f1a04027f45df"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 592,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        },
+        "generated_d1": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/completion.json",
+            "exists": false
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/result.json",
+            "exists": true,
+            "sha256": "9a85e5350cc1f8c47a4f2a2dfdb5c978c66907c3b87f7eb6bf1708b086024eda"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 85,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        }
+      },
+      "frozen_inventory_comments": {
+        "ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/ledger.json",
+          "exists": true,
+          "sha256": "125650c40e9cc2a30eed7444c4da330e5865ff188a919ed3a607fc2dd5cc3989"
+        },
+        "canonical_definitions_before_later_selection_revision": 1538,
+        "nonempty_description": 1101,
+        "missing_description_field": 0,
+        "current_selected_records_with_direct_identity_match": 1519,
+        "current_selected_nonempty_description": 1098,
+        "current_selected_missing_description_field": 0,
+        "meaning": "Bound inventory entries, not proof source files lack comments. Current selected match uses exact language-qualified identity; compiler companion identities may need a discriminator."
+      }
+    },
+    {
+      "bank": "tslearn",
+      "selected": 354,
+      "configuration": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/configs/continuation.yaml",
+        "exists": true,
+        "sha256": "85c4886cf16ec0c32af05ce8706e208867bf77f1fbb1384d14288baf0a2427e0"
+      },
+      "api_inventory": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/inputs/api_inventory.json",
+        "exists": true,
+        "sha256": "d6f2f64eaa4343b963a166f2e2f13878a64d232734df4d27b0f9ee78f941a525"
+      },
+      "api_inventory_kind": "qualified_source_api_inventory",
+      "original_document_manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/manifest.json",
+        "exists": true,
+        "sha256": "29eedff49476bfc96c99e2951a72eba34d06596a66be25fb29a73be399ec94da"
+      },
+      "original_document_dispositions": {
+        "undocumented": 132,
+        "documented": 222
+      },
+      "integration_tasks": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/tslearn/configs/integration_tasks.yaml",
+        "exists": false
+      },
+      "configured_aliases": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/tslearn/aliases/aliases.json",
+        "exists": false
+      },
+      "arms": {
+        "original": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/completion.json",
+            "exists": true,
+            "sha256": "30b852a12d7c4cf9fe1ff9c5ca8419ebfa390c0384e02672a76b130553c741a4"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/result.json",
+            "exists": true,
+            "sha256": "074a889564f934e9635afba09412acf1c206cfacb33a10165441fb5df41bd15a"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 211,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        },
+        "generated_d1": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/completion.json",
+            "exists": true,
+            "sha256": "e5be1289a23e34367f1514fc927dd5929e42cb4866a9dcc0a77f672e8408e431"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/result.json",
+            "exists": true,
+            "sha256": "c7867bb3739516a015311185bf78b5190e2032544f5a5c92441e9e61ea53d5bd"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 221,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        }
+      },
+      "frozen_inventory_comments": {
+        "ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/ledger.json",
+          "exists": true,
+          "sha256": "921eb8e68f96628b04088d145b1f48e40a26a1af1f2260e3517fd6b6a007516b"
+        },
+        "canonical_definitions_before_later_selection_revision": 362,
+        "nonempty_description": 277,
+        "missing_description_field": 0,
+        "current_selected_records_with_direct_identity_match": 354,
+        "current_selected_nonempty_description": 276,
+        "current_selected_missing_description_field": 0,
+        "meaning": "Bound inventory entries, not proof source files lack comments. Current selected match uses exact language-qualified identity; compiler companion identities may need a discriminator."
+      }
+    },
+    {
+      "bank": "mir_eval",
+      "selected": 178,
+      "configuration": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/configs/continuation.yaml",
+        "exists": true,
+        "sha256": "9373db52f1910079274f72fdf0c669162a0e28142c2331436e35998fab796ab4"
+      },
+      "api_inventory": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/inputs/api_inventory.json",
+        "exists": true,
+        "sha256": "8b7d902cf539e1ce7a4d3939877221b3042d2198776bbeb9b72ccbc40334790b"
+      },
+      "api_inventory_kind": "qualified_source_api_inventory",
+      "original_document_manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/manifest.json",
+        "exists": true,
+        "sha256": "ce678fc082653439e8b678680296a989b271ccda3195ad6994a64e32fde6c342"
+      },
+      "original_document_dispositions": {
+        "documented": 177,
+        "undocumented": 1
+      },
+      "integration_tasks": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/mir_eval/configs/integration_tasks.yaml",
+        "exists": false
+      },
+      "configured_aliases": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/mir_eval/aliases/aliases.json",
+        "exists": false
+      },
+      "arms": {
+        "original": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/completion.json",
+            "exists": true,
+            "sha256": "074723b74f39dcb8d49ddaf24a8c00c4cccb40fcd27c61d4afc6ae89debf376d"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/result.json",
+            "exists": true,
+            "sha256": "02ac1ce545b272b41297ac521ce8ddaff0a3604d8bba33abda88872a2393b20c"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 134,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        },
+        "generated_d1": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/completion.json",
+            "exists": true,
+            "sha256": "185d50731a98d4d8ffb461374c01cc386337658f2563df7ef87d3af0b8bd56c4"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/result.json",
+            "exists": true,
+            "sha256": "ca114d3d41ef17accc35b542c92ac7c81e454d4ee7e41bbaba1b12482f06d86b"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 144,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        }
+      },
+      "frozen_inventory_comments": {
+        "ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/ledger.json",
+          "exists": true,
+          "sha256": "09219e3ac65f40b119c702f08e20bd11bf80af9dc129a940c3824b68fe0735cb"
+        },
+        "canonical_definitions_before_later_selection_revision": 178,
+        "nonempty_description": 178,
+        "missing_description_field": 0,
+        "current_selected_records_with_direct_identity_match": 178,
+        "current_selected_nonempty_description": 178,
+        "current_selected_missing_description_field": 0,
+        "meaning": "Bound inventory entries, not proof source files lack comments. Current selected match uses exact language-qualified identity; compiler companion identities may need a discriminator."
+      }
+    },
+    {
+      "bank": "thumbnailator",
+      "selected": 225,
+      "configuration": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/configs/continuation.yaml",
+        "exists": true,
+        "sha256": "cafafa4653c10c8440b265158899d478f7c6d9168ff75984a4cce7483e093be3"
+      },
+      "api_inventory": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/inputs/api_inventory.json",
+        "exists": true,
+        "sha256": "60b3c29fd39f4caed6273cbbfbd5bb607c3808aedd5da1cb2ea554205044fc6f"
+      },
+      "api_inventory_kind": "qualified_source_api_inventory",
+      "original_document_manifest": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/thumbnailator/original-docs/manifest.json",
+        "exists": true,
+        "sha256": "f664517b2c0294bbdb508e9ca6d650fe5df10a06333663d7b45f9b7089e67f7f"
+      },
+      "original_document_dispositions": {
+        "documented": 225
+      },
+      "integration_tasks": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/thumbnailator/configs/integration_tasks.yaml",
+        "exists": false
+      },
+      "configured_aliases": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-plan/libraries/thumbnailator/aliases/aliases.json",
+        "exists": false
+      },
+      "arms": {
+        "original": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/completion.json",
+            "exists": true,
+            "sha256": "9af42a8ddd4c4c88295023e0beb976b59c793c334ecd7823921186c637146b91"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/result.json",
+            "exists": true,
+            "sha256": "6df8ce57d718fc093403f474228d02755ac773152d5ec90a10665f10a57cf1c2"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 109,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        },
+        "generated_d1": {
+          "completion": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/completion.json",
+            "exists": true,
+            "sha256": "34cfb24bf3bf5b43f2070a03ef7e0f9ac21deeb3eacbb36dcd0581aa05ce7b00"
+          },
+          "result": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/result.json",
+            "exists": true,
+            "sha256": "de3e8cf5d87f1d500d4d83700497feb63b3a3079897823c7b697120b718d65ee"
+          },
+          "status": null,
+          "selected": null,
+          "reported": null,
+          "passes": 97,
+          "scope": "Native execution and configured self-checks; no independent output oracle."
+        }
+      },
+      "frozen_inventory_comments": {
+        "ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/thumbnailator/ledger.json",
+          "exists": true,
+          "sha256": "869a499fb4188b63c9f5ee61aa70705d76680796c8b0c94abbe3c0191617c25b"
+        },
+        "canonical_definitions_before_later_selection_revision": 225,
+        "nonempty_description": 0,
+        "missing_description_field": 225,
+        "current_selected_records_with_direct_identity_match": 225,
+        "current_selected_nonempty_description": 0,
+        "current_selected_missing_description_field": 225,
+        "meaning": "Bound inventory entries, not proof source files lack comments. Current selected match uses exact language-qualified identity; compiler companion identities may need a discriminator."
+      }
+    }
+  ],
+  "limitations": [
+    "This is a focused audit, not a proof of bug-free operation.",
+    "Offline tests use mocked model requests and small real fixture executions; no paid model calls or six-library treatment run occurred.",
+    "Native hint four-pair controls are tested with small Python fixtures; production control adapters remain library-specific.",
+    "Current code checkout can differ from frozen release d8ba3815cf95; do not overwrite current experiment inputs with these future-development changes."
+  ],
+  "code_receipts": [
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/revise_readme_from_replay.py",
+      "sha256": "6e174e396f570afda36b12e62aa326ff4ffb2f5adc6e4f52c600f065fd4742a6",
+      "bytes": 23251
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/run_corrected_readme_comparison.py",
+      "sha256": "f4f5ddf3c4d053479386eb0146cc6e9c58f42f354caafaf8c2b601c5ae1c2e87",
+      "bytes": 18121
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "sha256": "65f88cfb974ab1081c423fc219f19df4380b0f51c1c0598bcd2627778becd040",
+      "bytes": 52666
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_execution.py",
+      "sha256": "e782d1fc47e62cebb9d85bfd90da07d4363ea7d6e5fb89b248e78b07809b8ccf",
+      "bytes": 50976
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/error_log.py",
+      "sha256": "8d62111cdeed4c66249c4145896c0bfc6ca992bfff8dc22de811e50b6496b0d2",
+      "bytes": 6372
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/readme_generation.py",
+      "sha256": "b042b4e98ff14bb78ae2deb920dbe9b818b14f7e5762a9b923ea7fe02105afba",
+      "bytes": 30480
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_context.py",
+      "sha256": "586045419c97b968476e4af0a0e3aab6e7a94cfdf6f56eb632c46487093707f8",
+      "bytes": 3862
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_freeze.py",
+      "sha256": "86f8cea901f3739102873461d778be0170f32d74cd446c0b5a7826273b75b2e8",
+      "bytes": 18564
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_inputs.py",
+      "sha256": "8368eebbab14a2a6c930dee993855ec83d3049042b09a4666813ffda2e6c21b5",
+      "bytes": 13882
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/improvement_context.py",
+      "sha256": "f7c075f0ecf9fb8905e59a3f72ea558bb601892226883dcf188046b4f8d732f9",
+      "bytes": 23840
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/improvement_suggestions.py",
+      "sha256": "fb805c90fadee974afb35c75aca60d40e4c4f45938a595fedcfcf85a6c577ba5",
+      "bytes": 15865
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_hints.py",
+      "sha256": "a47083f86072cc80cec5ddd36de2c6a31a825e66e616d3139d54562c4b55d42d",
+      "bytes": 27307
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_r0_evidence.py",
+      "sha256": "dcd84154486737ac4496cece9dc6f2e537874db9ea2d5c09872349f98571a374",
+      "bytes": 23014
+    },
+    {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/treatment_versions.py",
+      "sha256": "4680363fa90d1d7cae7973dbd4dbd137d026255dee32e6c3cecf44b64fad44dd",
+      "bytes": 28490
+    }
+  ],
+  "future_inventory_fix": {
+    "status": "implemented_in_development_checkout_only",
+    "mechanism": "Keep typed exception-branch provenance; exclude only empty base-free undecorated classes in explicit source-import ImportError/ModuleNotFoundError handlers. Preserve normal empty classes and nonempty/inherited/transformed fallback implementations.",
+    "selected_current_absent_targets": [
+      "python:MDAnalysis.coordinates.H5MD.MockH5pyFile",
+      "python:MDAnalysis.coordinates.IMD.MockIMDClient",
+      "python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory"
+    ],
+    "evidence": {
+      "path": "/tmp/aideal-audit-2026-11-19-fallbacks.json",
+      "sha256": "a2137e0c8f50f8d5fb43376b87c3e855a7fde1a8f54a42398474f863d9913b59",
+      "bytes": 3952
+    },
+    "code": {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "sha256": "65f88cfb974ab1081c423fc219f19df4380b0f51c1c0598bcd2627778becd040",
+      "bytes": 52666
+    },
+    "tests": {
+      "path": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/tests/test_import_failure_stubs.py",
+      "sha256": "99ef4fa701baf60b2d3f8625252cdb49ba8f07aedf1c33be74e94f601948dbd8",
+      "bytes": 4268
+    },
+    "validation": {
+      "passed": 161,
+      "subtests_passed": 78,
+      "seconds": 1.33,
+      "log": {
+        "path": "/tmp/aideal-audit-2026-11-19-inventory-tests.log",
+        "sha256": "5c2b5add39e1de41fa16330a356613806f1d70aee1c09f6327691b1555595516",
+        "bytes": 274
+      },
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests:vendor/aideal_engine/src:. /Users/clockorangezoe/miniconda3/envs/geo_llm_spark/bin/python -m pytest -q -p no:cacheprovider tests/test_public_api_inventory.py tests/test_qualified_api_selection.py tests/test_api_origin.py tests/test_qualified_api_discovery.py tests/test_api_canonical_selection.py tests/test_compiler_canonical_selection.py tests/test_compiler_api_registry.py tests/test_reviewed_selection_exclusions.py tests/test_import_failure_stubs.py"
+    },
+    "frozen_study_modified": false,
+    "current_selected_count_unchanged": 2823,
+    "required_next_action": "New future inventory and manifest must be generated and reviewed; do not quietly drop these three rows from current reported denominators. New scanner metadata can reject old ledgers under the new engine, so current runs retain their frozen engine."
+  }
+}

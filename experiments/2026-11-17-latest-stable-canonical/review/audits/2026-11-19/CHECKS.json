@@ -1,0 +1,99 @@
+{
+  "schema": "aideal.audit-checks/v1",
+  "created_utc": "2026-11-19T08:27:52.745007+00:00",
+  "paid_model_calls": 0,
+  "frozen_evidence_changed": false,
+  "code_start_lines": [
+    {
+      "file": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "function": "scan_python_surface",
+      "line": 329
+    },
+    {
+      "file": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "function": "reconcile_documentation",
+      "line": 652
+    },
+    {
+      "file": "vendor/aideal_engine/src/aideal/readme_generation.py",
+      "function": "find_or_create",
+      "line": 133
+    },
+    {
+      "file": "scripts/run_evaluator_correction.py",
+      "function": "verify_readiness",
+      "line": 130
+    },
+    {
+      "file": "scripts/run_verified_readme_continuation.py",
+      "function": "prepare",
+      "line": 256
+    },
+    {
+      "file": "vendor/aideal_engine/src/aideal/doc_check_execution.py",
+      "function": "_comprehension_execute",
+      "line": 133
+    },
+    {
+      "file": "vendor/aideal_engine/src/aideal/native_execution_contract.py",
+      "function": "native_check_passed",
+      "line": 142
+    },
+    {
+      "file": "vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+      "function": "_checkpoint_row_reusable",
+      "line": 132
+    },
+    {
+      "file": "scripts/run_verified_readme_continuation.py",
+      "function": "provider_attempt_ledger",
+      "line": 396
+    },
+    {
+      "file": "workflow/evaluation_runner.py",
+      "function": "run_unit",
+      "line": 78
+    },
+    {
+      "file": "workflow/evaluation_context.py",
+      "function": "public_context",
+      "line": 10
+    },
+    {
+      "file": "workflow/native_hints.py",
+      "function": "validate_native_hints",
+      "line": 348
+    }
+  ],
+  "tests": [
+    {
+      "suite": "inventory before narrow stub fix",
+      "count": 111,
+      "result": "pass",
+      "log": "evidence/aideal-inventory-audit-20261119.log"
+    },
+    {
+      "suite": "shared evaluation/recovery/context/provider",
+      "count": 58,
+      "result": "pass",
+      "log": "evidence/aideal-shared-runner-audit-20261119.log"
+    },
+    {
+      "suite": "native path and URI contracts plus real Java assertion",
+      "count": 5,
+      "result": "pass",
+      "log": "evidence/aideal-native-contract-test-20261119.log"
+    }
+  ],
+  "additional_test_receipts": [
+    "development.json",
+    "runner.json"
+  ],
+  "inventory_after_fix": {
+    "tests": 161,
+    "subtests": 78,
+    "result": "pass",
+    "log": "evidence/aideal-audit-2026-11-19-inventory-tests.log"
+  },
+  "caution": "Suite counts overlap; do not sum as unique tests. New inventory regression is recorded separately."
+}

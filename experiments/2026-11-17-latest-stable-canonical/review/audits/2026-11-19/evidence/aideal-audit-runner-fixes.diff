@@ -1,0 +1,364 @@
+--- before/vendor/aideal_engine/src/aideal/doc_check_provenance.py
++++ after/vendor/aideal_engine/src/aideal/doc_check_provenance.py
+@@ -131,5 +131,8 @@
+ 
+ def _checkpoint_row_reusable(row: dict, experiment_fingerprint: str) -> bool:
+     """Only stable terminal rows may suppress work after a restart."""
++    # Transport errors and returned but unusable responses both need a new
++    # provider attempt on an explicit resume. They are not program repairs.
++    category = str(row.get("error_category") or "")
+     return (row.get("experiment_fingerprint") == experiment_fingerprint
+-            and row.get("error_category") != "llm-error")
++            and category != "llm-error" and not category.startswith("provider-"))
+--- before/scripts/run_verified_readme_continuation.py
++++ after/scripts/run_verified_readme_continuation.py
+@@ -85,7 +85,7 @@
+     keys = ('project', 'language', 'doc_source', 'doc_scope', 'class_context',
+             'manifest_sha256', 'document_sha256', 'original_document_files',
+             'source', 'fixtures', 'api_inventory', 'scaffold', 'canonical_requested_targets',
+-            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter')
++            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter', 'transport_contract')
+     reasons = ['changed_or_missing_' + key for key in keys
+                if key not in historical or historical[key] != current.get(key)]
+     if not runtime_verified:
+@@ -393,7 +393,94 @@
+             for key in ('llm_calls', 'input_tokens', 'output_tokens', 'wall_s')}
+ 
+ 
+-def aggregate(old, corrected, fresh, condition):
++def provider_attempt_ledger(work_dir, allowed_apis, recorded_apis=()):
++    """Account for every retained provider attempt, including interrupted retries.
++
++    This reads only this condition's new-generation namespace. Historical
++    generation and saved-program replay remain separate cost scopes. A request
++    without a provider receipt may have been billed, so its usage stays unknown.
++    """
++    work_dir = Path(work_dir).resolve()
++    allowed = set(allowed_apis)
++    totals = {'request_count': 0, 'provider_receipt_count': 0, 'llm_calls': 0,
++              'input_tokens': 0, 'output_tokens': 0, 'missing_usage_attempts': 0,
++              'provider_wall_s': 0.0, 'execution_wall_s': 0.0,
++              'usage_complete': True, 'wall_time_complete': True}
++    records, observed, seen = [], set(), set()
++    for provider_path in work_dir.glob('run_*/attempt_*/provider.json'):
++        if not (provider_path.parent / 'request.json').is_file():
++            raise ValueError('Provider receipt lacks its original request')
++    for request_path in sorted(work_dir.glob('run_*/attempt_*/request.json')):
++        resolved = request_path.resolve(strict=True)
++        if not resolved.is_relative_to(work_dir) or resolved in seen:
++            raise ValueError('Provider request escapes or aliases another attempt')
++        seen.add(resolved)
++        request = read(request_path)
++        api = request.get('api')
++        if api not in allowed:
++            raise ValueError('Provider receipt is outside this condition subset: ' + str(api))
++        observed.add(api)
++        totals['request_count'] += 1
++        record = {'api': api, 'round': request.get('round'),
++                  'attempt_number': request.get('attempt_number'), 'request': binding(request_path)}
++        missing = False
++        provider_path = request_path.parent / 'provider.json'
++        if provider_path.exists():
++            if not provider_path.resolve().is_relative_to(work_dir):
++                raise ValueError('Provider receipt escapes this condition')
++            provider = read(provider_path)
++            record.update(provider=binding(provider_path), status=provider.get('status'),
++                          category=provider.get('category'))
++            totals['provider_receipt_count'] += 1
++            usage = provider.get('usage') or {}
++            for name, key in (('llm_calls', 'calls'), ('input_tokens', 'input_tokens'),
++                              ('output_tokens', 'output_tokens')):
++                value = usage.get(key)
++                if type(value) is int and value >= 0:
++                    totals[name] += value
++                else:
++                    missing = True
++            missing |= (usage.get('usage_complete') is not True
++                        or usage.get('missing_usage_calls', 0) != 0
++                        or usage.get('calls', 0) == 0)
++            duration = provider.get('wall_s')
++            if type(duration) in (int, float) and duration >= 0:
++                totals['provider_wall_s'] += duration
++            else:
++                totals['wall_time_complete'] = False
++        else:
++            record['status'] = 'provider_receipt_missing'
++            missing = True
++            totals['wall_time_complete'] = False
++        execution_path = request_path.parent / 'execution.json'
++        if execution_path.exists():
++            if not execution_path.resolve().is_relative_to(work_dir):
++                raise ValueError('Execution receipt escapes this condition')
++            execution = read(execution_path)
++            record['execution'] = binding(execution_path)
++            duration = execution.get('wall_s')
++            if type(duration) in (int, float) and duration >= 0:
++                totals['execution_wall_s'] += duration
++            else:
++                totals['wall_time_complete'] = False
++        elif record['status'] == 'returned':
++            # Generation finished but execution may have been interrupted.
++            totals['wall_time_complete'] = False
++        record['usage_complete'] = not missing
++        totals['missing_usage_attempts'] += int(missing)
++        records.append(record)
++    missing_apis = sorted(set(recorded_apis) - observed)
++    totals['usage_complete'] = not totals['missing_usage_attempts'] and not missing_apis
++    totals['wall_time_complete'] &= not bool(missing_apis)
++    totals['wall_s'] = totals['provider_wall_s'] + totals['execution_wall_s']
++    totals.update(usage_scope='all retained new-generation attempts; reported usage only',
++                  call_count_scope='returned responses reported by usage; request_count includes interrupted requests; SDK retries are not individually observed',
++                  wall_scope='sum of recorded provider and execution intervals; excludes idle time and unrecorded interrupted intervals',
++                  missing_api_receipts=missing_apis)
++    return {'schema': 'aideal.provider-attempt-ledger/v1', 'totals': totals, 'attempts': records}
++
++
++def aggregate(old, corrected, fresh, condition, provider_costs=None):
+     """Keep old costs, replay costs and new generation costs explicitly separate."""
+     details = {}
+     for api in condition['reused_apis']:
+@@ -430,7 +517,8 @@
+         'prior_generation_cost_scope': 'full_historical_bank', 'costs': {'prior_generation': totals(old.get('metrics', {})),
+             'corrected_saved_program_replay': (totals(corrected.get('metrics', {})) if corrected is not None else
+                 {'status': 'not_consumed', 'calls': 0, 'llm_calls': 0, 'input_tokens': 0, 'output_tokens': 0, 'wall_s': 0}),
+-            'new_generation': totals(fresh_metrics)},
++            'new_generation': provider_costs if provider_costs is not None else totals(fresh_metrics)},
++        'final_target_metric_totals': totals(fresh_metrics),
+         'interpretation': ('Verified saved successes plus new attempts on remaining targets; cumulative continuation, '
+             'not fresh R0 or R1 repair.' if condition['reused_apis'] else
+             'All targets receive fresh initial programs under the new protocol. No prior failure feedback is sent.')}
+@@ -448,6 +536,12 @@
+         if complete_path.exists():
+             summary = read(complete_path)
+             verify([summary['result']])
++            receipt = summary.get('costs', {}).get('new_generation', {}).get('ledger')
++            if receipt:
++                verify([receipt])
++                saved_ledger = read(receipt['path'])
++                verify([record[key] for record in saved_ledger['attempts']
++                        for key in ('request', 'provider', 'execution') if key in record])
+             return summary
+         fresh = {}
+         if condition['pending_apis']:
+@@ -467,7 +561,10 @@
+         verify(identity['bindings'] + [identity['operator']])
+         verify_runtime_profile(runtime)
+         corrected = read(condition['corrected_result']) if condition['corrected_result'] else None
+-        result = aggregate(read(condition['source_result']), corrected, fresh, condition)
++        ledger = provider_attempt_ledger(destination / 'execution', condition['pending_apis'], fresh.get('metrics', {}))
++        common.atomic_json(destination / 'provider_attempt_ledger.json', ledger)
++        provider_costs = {**ledger['totals'], 'ledger': binding(destination / 'provider_attempt_ledger.json')}
++        result = aggregate(read(condition['source_result']), corrected, fresh, condition, provider_costs)
+         result.update(condition=arm, source_result=binding(condition['source_result']),
+                       corrected_result=binding(condition['corrected_result']) if condition['corrected_result'] else None,
+                       fresh_result=binding(destination / 'fresh_result.json') if condition['pending_apis'] else None,
+@@ -509,8 +606,10 @@
+             arm: {'reuse': len(c['reused_apis']), 'new': len(c['pending_apis']), 'blockers': c['reuse_blockers']}
+             for arm, c in identity['conditions'].items()}}), flush=True)
+     if args.run:
++        # A condition filter is also a paid-call scope limit for this launcher.
++        requested_arms = (args.condition,) if args.condition else ARMS
+         for bank, spec in banks.items():
+-            for arm in ARMS:
++            for arm in requested_arms:
+                 command = [sys.executable, str(Path(__file__).resolve()), '--spec', str(args.spec.resolve()),
+                            '--worker', '--condition', arm]
+                 if bank is not None:
+--- before/tests/test_native_checkpoint_recovery.py
++++ after/tests/test_native_checkpoint_recovery.py
+@@ -0,0 +1,84 @@
++"""A resumed provider retry stays at R0 and preserves previous attempt evidence."""
++from contextlib import ExitStack, redirect_stderr
++import io
++import json
++from pathlib import Path
++import subprocess
++import sys
++from unittest.mock import patch
++
++import pytest
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path[:0] = [str(ROOT / 'tests'), str(ROOT / 'vendor/aideal_engine/src')]
++from aideal import doc_check_execution, doc_check_provenance, llm
++from aideal.readme_agent import ApiEntry
++import test_doc_check_modules as native_fixtures
++
++
++@pytest.mark.parametrize('category', [
++    'provider-incomplete-output', 'provider-refused-output', 'provider-empty-output',
++])
++def test_provider_output_retry_keeps_round_and_reuses_finished_api(category):
++    fixture = native_fixtures.DocCheckModuleTests()
++    fixture.setUp()
++    try:
++        cfg = fixture.cfg
++        cfg.comprehension['execute']['stop_on_provider_error'] = True
++        inventory = [ApiEntry(name, 'Return input', '', 'Documentation') for name in ('f', 'g')]
++        error = llm.ProviderOutputError(category, 'partial response', {'finish_reason': category})
++
++        def run(responses, resume=False):
++            with ExitStack() as stack:
++                stack.enter_context(redirect_stderr(io.StringIO()))
++                provider = stack.enter_context(patch('aideal.llm.invoke_text', side_effect=responses))
++                executor = stack.enter_context(patch('aideal.execution.run_command',
++                    return_value=subprocess.CompletedProcess('synthetic', 0, 'DONE', '')))
++                stack.enter_context(patch('subprocess.run', side_effect=AssertionError('Unexpected process')))
++                stack.enter_context(patch.object(doc_check_execution, 'public_api_details', return_value=[]))
++                stack.enter_context(patch.object(doc_check_execution, 'public_api_surface', return_value={'f', 'g'}))
++                stack.enter_context(patch('aideal.readme_agent.public_api_details', return_value=[]))
++                result = doc_check_execution._comprehension_execute(
++                    cfg, inventory, 0, 42, 'original', max_fix_rounds=0, resume=resume)
++                return result, provider.call_count, executor.call_count
++
++        first, calls, executions = run(['print("DONE")', error])
++        assert (calls, executions) == (2, 1)
++        assert not first['run']['complete']
++        preserved = {p: p.read_bytes() for p in (fixture.root / 'work').glob('**/attempt_*/*') if p.is_file()}
++
++        # A second refusal/truncation/empty reply stops this explicit invocation.
++        # It must not spin in an automatic retry or consume a program repair round.
++        repeated, calls, executions = run([error], resume=True)
++        assert (calls, executions) == (1, 0)
++        assert not repeated['run']['complete']
++        assert repeated['run']['resumed_apis'] == 1
++
++        recovered, calls, executions = run(['print("DONE")'], resume=True)
++        assert (calls, executions) == (1, 1)
++        assert recovered['run']['complete'] and recovered['run']['resumed_apis'] == 1
++        assert recovered['metrics']['g']['pass_round'] == 0
++        assert recovered['metrics']['g']['status'] == 'pass'
++        for path, content in preserved.items():
++            assert path.read_bytes() == content
++        attempts = sorted((fixture.root / 'work').glob('**/attempt_*/request.json'))
++        assert len(attempts) == 4
++        assert {json.loads(path.read_text())['round'] for path in attempts} == {0}
++        assert {Path(p).name for p in recovered['metrics']['g']['attempt_evidence']} == {'attempt_0003'}
++
++        # An already finished bank does not spend another model call on resume.
++        finished, calls, executions = run([], resume=True)
++        assert (calls, executions) == (0, 0)
++        assert finished['run']['complete'] and finished['run']['resumed_apis'] == 2
++    finally:
++        fixture.doCleanups()
++
++
++def test_checkpoint_reuse_requires_same_identity_and_terminal_provider_state():
++    reusable = doc_check_provenance._checkpoint_row_reusable
++    assert reusable({'experiment_fingerprint': 'x', 'status': 'pass'}, 'x')
++    assert reusable({'experiment_fingerprint': 'x', 'status': 'fail', 'error_category': 'compile'}, 'x')
++    assert not reusable({'experiment_fingerprint': 'changed', 'status': 'pass'}, 'x')
++    assert not reusable({'experiment_fingerprint': 'x', 'error_category': 'llm-error'}, 'x')
++    for category in ('provider-incomplete-output', 'provider-refused-output', 'provider-empty-output'):
++        assert not reusable({'experiment_fingerprint': 'x', 'status': 'fail', 'error_category': category}, 'x')
+--- before/tests/test_verified_readme_continuation.py
++++ after/tests/test_verified_readme_continuation.py
+@@ -18,7 +18,7 @@
+     keys = ('project', 'language', 'doc_source', 'doc_scope', 'class_context',
+             'manifest_sha256', 'document_sha256', 'original_document_files',
+             'source', 'fixtures', 'api_inventory', 'scaffold', 'canonical_requested_targets',
+-            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter')
++            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter', 'transport_contract')
+     fp = {key: {'test_identity': key} for key in keys}
+     fp.update(models={'audience': 'google:test', 'audience_max_output_tokens': 8192})
+     old = {'run': {'fingerprint_components': fp}, 'details': {'a': {'status': 'pass'}, 'b': {'status': 'fail'}},
+@@ -39,7 +39,7 @@
+     assert c.choose_rows(old, replay, [])[1] == ['a', 'b']
+ 
+ 
+-@pytest.mark.parametrize('field', ['source', 'fixtures', 'document_sha256', 'canonical_requested_targets', 'prompt_contract'])
++@pytest.mark.parametrize('field', ['source', 'fixtures', 'document_sha256', 'canonical_requested_targets', 'prompt_contract', 'transport_contract'])
+ def test_changed_input_disallows_saved_pass(field):
+     old, replay, fp = evidence()
+     fp[field] = 'changed'
+@@ -279,3 +279,90 @@
+     revision.write_text('{}')
+     with pytest.raises(ValueError, match='exact reviewed selection'):
+         c.verify_required_selection({'selection_revision': str(revision)}, runtime, None)
++
++@pytest.mark.parametrize('selected, expected', [
++    ('original', ['original']), ('generated_d1', ['generated_d1']),
++    (None, ['original', 'generated_d1']),
++])
++def test_run_condition_flag_limits_scheduled_workers(tmp_path, selected, expected):
++    """A single-condition request must not silently start another paid arm."""
++    from contextlib import nullcontext
++    from types import SimpleNamespace
++    import sys
++    argv = ['continuation', '--spec', str(tmp_path / 'spec.json'), '--run']
++    if selected:
++        argv.extend(['--condition', selected])
++    prepared = {'selected': 1, 'conditions': {
++        arm: {'reused_apis': [], 'pending_apis': ['a'], 'reuse_blockers': []}
++        for arm in c.ARMS}}
++    with patch.object(sys, 'argv', argv), \
++         patch.object(c, 'read', return_value={'library': 'synthetic', 'output': str(tmp_path / 'out')}), \
++         patch.object(c, 'prepare', return_value=prepared), \
++         patch.object(c.common, 'ownership', side_effect=lambda _: nullcontext()), \
++         patch.object(c.subprocess, 'run', return_value=SimpleNamespace(returncode=0)) as process:
++        assert c.main() == 0
++    commands = [call.args[0] for call in process.call_args_list]
++    assert [command[command.index('--condition') + 1] for command in commands] == expected
++
++def write_attempt(root, number, *, api='b', status='returned', tokens=(5, 2), provider=True, usage_complete=True):
++    folder = root / 'run_b' / f'attempt_{number:04d}'
++    folder.mkdir(parents=True)
++    (folder / 'request.json').write_text(json.dumps({'api': api, 'round': 0, 'attempt_number': number}))
++    if provider:
++        (folder / 'provider.json').write_text(json.dumps({'status': status, 'wall_s': 2,
++            'category': 'provider-incomplete-output' if status == 'error' else None,
++            'usage': {'calls': 1, 'input_tokens': tokens[0], 'output_tokens': tokens[1],
++                      'missing_usage_calls': int(not usage_complete), 'usage_complete': usage_complete}}))
++    if status == 'returned' and provider:
++        (folder / 'execution.json').write_text(json.dumps({'exit_code': 0, 'wall_s': 3}))
++    return folder
++
++
++def test_cumulative_provider_ledger_counts_failed_response_and_resume_once(tmp_path):
++    root = tmp_path / 'new' / 'execution'
++    write_attempt(root, 1, status='error')
++    write_attempt(root, 2, tokens=(7, 3))
++    # Historical/replay receipts live elsewhere and cannot enter this ledger.
++    write_attempt(tmp_path / 'historical' / 'execution', 1, tokens=(1000, 1000))
++    ledger = c.provider_attempt_ledger(root, ['b'], ['b'])
++    cost = ledger['totals']
++    assert (cost['request_count'], cost['llm_calls'], cost['input_tokens'], cost['output_tokens']) == (2, 2, 12, 5)
++    assert cost['usage_complete'] and cost['wall_s'] == 7
++    assert all(record['round'] == 0 for record in ledger['attempts'])
++    assert ledger == c.provider_attempt_ledger(root, ['b'], ['b'])
++    old, replay, _ = evidence()
++    fresh = {'run': {'complete': True, 'remaining_api_count': 0},
++             'metrics': {'b': {'status': 'pass', 'llm_calls': 1, 'input_tokens': 7, 'output_tokens': 3}}}
++    condition = {'selected_apis': ['a', 'b'], 'reused_apis': ['a'], 'pending_apis': ['b']}
++    result = c.aggregate(old, replay, fresh, condition, cost)
++    assert result['passes'] == 2 and result['score_with_infra'] == 1
++    assert result['costs']['new_generation']['llm_calls'] == 2
++    assert result['final_target_metric_totals']['llm_calls'] == 1
++    assert result['costs']['prior_generation']['llm_calls'] == 2
++
++
++def test_interrupted_and_unknown_usage_remain_explicit(tmp_path):
++    write_attempt(tmp_path, 1, provider=False)
++    write_attempt(tmp_path, 2, status='error', usage_complete=False)
++    write_attempt(tmp_path, 3)
++    cost = c.provider_attempt_ledger(tmp_path, ['b'], ['b'])['totals']
++    assert cost['request_count'] == 3 and cost['provider_receipt_count'] == 2
++    assert cost['llm_calls'] == 2 and cost['input_tokens'] == 10
++    assert cost['missing_usage_attempts'] == 2
++    assert not cost['usage_complete'] and not cost['wall_time_complete']
++
++
++def test_missing_or_foreign_attempt_evidence_cannot_claim_complete_costs(tmp_path):
++    cost = c.provider_attempt_ledger(tmp_path, ['b'], ['b'])['totals']
++    assert not cost['usage_complete'] and cost['missing_api_receipts'] == ['b']
++    write_attempt(tmp_path, 1, api='not_in_this_condition')
++    with pytest.raises(ValueError, match='outside this condition'):
++        c.provider_attempt_ledger(tmp_path, ['b'])
++
++
++def test_missing_historical_transport_contract_disallows_reuse():
++    old, replay, current = evidence()
++    old['run']['fingerprint_components'].pop('transport_contract')
++    reasons = c.reuse_reasons(old, current, current['prompt_contract'], 'google:test', [], runtime_verified=True)
++    assert 'changed_or_missing_transport_contract' in reasons
++    assert c.choose_rows(old, replay, reasons)[0] == {}

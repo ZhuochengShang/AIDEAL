@@ -1,0 +1,1788 @@
+{
+  "schema": 1,
+  "audit_kind": "read_only_live_pipeline_check",
+  "observed_start_utc": "2026-11-19T08:18:36.610497+00:00",
+  "observed_start_pacific": "2026-11-19T00:18:36.610497-08:00",
+  "namespace": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0",
+  "state": {
+    "status": "running",
+    "phase": "continuation",
+    "pid": 3289545,
+    "updated_at": "2026-11-19T07:23:59.072911+00:00"
+  },
+  "limits": [
+    "Native acceptance with audience-authored assertions is not independent task accuracy.",
+    "The live worker may advance between per-file reads.",
+    "No provider requests, restarts or frozen-file edits occurred in this audit."
+  ],
+  "processes": [
+    "3289545       1       54:43  0.1 Ssl  /home/zshan011/apps/aideal/venv/bin/python -B /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_evaluator_correction.py --study /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical --output /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0 --runtime-profiles /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/RUNTIME_PROFILES.json --input-overrides /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/INPUT_OVERRIDES.json --phases continuation rescore --run --key-file [credential path omitted]",
+    "3289564 3289545       54:37  2.2 Ss   /home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_verified_readme_continuation.py --spec /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/specs/continuation/mdanalysis.json --run",
+    "3290645 3289564       51:45 40.1 D    /home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_verified_readme_continuation.py --spec /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/specs/continuation/mdanalysis.json --worker --condition generated_d1"
+  ],
+  "locks": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/launch.lock",
+      "inode": 993037153,
+      "proc_lock_records": [
+        "7: FLOCK  ADVISORY  WRITE 3289545 00:32:993037153 0 EOF"
+      ]
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/supervisor/queue.lock",
+      "inode": 993037157,
+      "proc_lock_records": [
+        "9: FLOCK  ADVISORY  WRITE 3289545 00:32:993037157 0 EOF"
+      ]
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/.lock",
+      "inode": 993037581,
+      "proc_lock_records": []
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/.lock",
+      "inode": 993037587,
+      "proc_lock_records": [
+        "10: FLOCK  ADVISORY  WRITE 3290645 00:32:993037587 0 EOF"
+      ]
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/.aideal_execution.lock",
+      "inode": 993658822,
+      "proc_lock_records": [
+        "8: FLOCK  ADVISORY  WRITE 3290645 00:32:993658822 0 EOF"
+      ]
+    }
+  ],
+  "readiness": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/READINESS.json",
+    "sha256": "1576a935826d6738b089b425f12e3fc62e079dd8e4667bebed68df7537579d2d",
+    "status": "passed",
+    "code_commit": "56a42d91d8548ce7e4bf71b17b19fc5155f132f7",
+    "selected_apis": 2823,
+    "max_fix_rounds": 0
+  },
+  "release": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95",
+    "manifest_sha256": "c93fb88fedc7f8be7811024f45569180f3f8658f0179d19589ebc89c6483a2cb",
+    "readiness_bound_manifest_sha256": "c93fb88fedc7f8be7811024f45569180f3f8658f0179d19589ebc89c6483a2cb",
+    "manifest_matches_readiness": true,
+    "declared_content_sha256": "d8ba3815cf9551ded7cf1748bf06e42ce8ab8c6dd6b3bd867177a2d91804eb14",
+    "files": [
+      {
+        "path": "scripts/preflight_cluster_libraries.py",
+        "sha256": "1cbea021e4f7ff4501d2713acd0b081fdc766d1fb95102b31f16c44f41431311",
+        "expected_sha256": "1cbea021e4f7ff4501d2713acd0b081fdc766d1fb95102b31f16c44f41431311",
+        "git_blob_sha": "260a6ecc6488dc1b1585a9c0e72c570b5346bb78"
+      },
+      {
+        "path": "scripts/rescore_native_programs.py",
+        "sha256": "535453fe8b45c9ac6d4fb2e1933226146ee8a7b7d1157899a230cc4bbb513390",
+        "expected_sha256": "535453fe8b45c9ac6d4fb2e1933226146ee8a7b7d1157899a230cc4bbb513390",
+        "git_blob_sha": "df755620c5a3874abf4865112c375b92c72f3ced"
+      },
+      {
+        "path": "scripts/revise_readme_from_replay.py",
+        "sha256": "6e174e396f570afda36b12e62aa326ff4ffb2f5adc6e4f52c600f065fd4742a6",
+        "expected_sha256": "6e174e396f570afda36b12e62aa326ff4ffb2f5adc6e4f52c600f065fd4742a6",
+        "git_blob_sha": "dbbc2fbccc9eef1720295f1176b8304fb9710ccf"
+      },
+      {
+        "path": "scripts/run_cluster_experiment.py",
+        "sha256": "0c922f341941d730cd189ce805ad2b93eb4788d0ad4ec97690849d644d64fe1e",
+        "expected_sha256": "0c922f341941d730cd189ce805ad2b93eb4788d0ad4ec97690849d644d64fe1e",
+        "git_blob_sha": "5e2c23a10a10e0c68c36830aca3e2d24f1635bf3"
+      },
+      {
+        "path": "scripts/run_corrected_readme_comparison.py",
+        "sha256": "f4f5ddf3c4d053479386eb0146cc6e9c58f42f354caafaf8c2b601c5ae1c2e87",
+        "expected_sha256": "f4f5ddf3c4d053479386eb0146cc6e9c58f42f354caafaf8c2b601c5ae1c2e87",
+        "git_blob_sha": "42f4522390ad99a46b40d4a453f4d45bbd1f8dbd"
+      },
+      {
+        "path": "scripts/run_evaluator_correction.py",
+        "sha256": "7ea41b730817ea661f1197e3a7924ebc6d709e8d601acf42ca5aa1e7285ebb0d",
+        "expected_sha256": "7ea41b730817ea661f1197e3a7924ebc6d709e8d601acf42ca5aa1e7285ebb0d",
+        "git_blob_sha": "0e9d81a436dec91fb7ac86fb190bdb7da406bb8a"
+      },
+      {
+        "path": "scripts/run_original_micro.py",
+        "sha256": "4babd07a6dbf537a8e21f1fe2986c038a5083aa066bd19a6958d64ac2d846c6a",
+        "expected_sha256": "4babd07a6dbf537a8e21f1fe2986c038a5083aa066bd19a6958d64ac2d846c6a",
+        "git_blob_sha": "e56807d1de21c95c692eb90a4ca1e2923467cb5b"
+      },
+      {
+        "path": "scripts/run_verified_readme_continuation.py",
+        "sha256": "ff0c5f6419c018746c80aed29362139f8dc9fbaffa0c98456736c2da4086d999",
+        "expected_sha256": "ff0c5f6419c018746c80aed29362139f8dc9fbaffa0c98456736c2da4086d999",
+        "git_blob_sha": "f39f3413e08152f1734dcde0e2c9ae8e55fcddb3"
+      },
+      {
+        "path": "scripts/trace_original_micro.py",
+        "sha256": "7091dde3fcd41471215f69b753ca4da9185d063c527842bc970ee5568be33e3c",
+        "expected_sha256": "7091dde3fcd41471215f69b753ca4da9185d063c527842bc970ee5568be33e3c",
+        "git_blob_sha": "fa6aba383000b873ef63cc23a7d841097535c0bb"
+      },
+      {
+        "path": "scripts/trace_view.py",
+        "sha256": "03bd1dd8369fb4bb85fb4cba3590956a4f602e5613e35f7544a2315d5aab8364",
+        "expected_sha256": "03bd1dd8369fb4bb85fb4cba3590956a4f602e5613e35f7544a2315d5aab8364",
+        "git_blob_sha": "21dcb0a086419f397bd5ba2469aa07aca064ea38"
+      },
+      {
+        "path": "tests/test_canonical_prompt_targets.py",
+        "sha256": "1266f03216ef9f1d4d17f733aa25aa51dc48f6894365c46f6dd3705ede77a58e",
+        "expected_sha256": "1266f03216ef9f1d4d17f733aa25aa51dc48f6894365c46f6dd3705ede77a58e",
+        "git_blob_sha": "b4752a87700629bf9385fccaa1278270590ed992"
+      },
+      {
+        "path": "tests/test_corrected_readme_comparison.py",
+        "sha256": "c1d1495b4d246833d302e3b63fb1b53048389e7ed488905ad9df0c941566f7ab",
+        "expected_sha256": "c1d1495b4d246833d302e3b63fb1b53048389e7ed488905ad9df0c941566f7ab",
+        "git_blob_sha": "c0c1f8255204a6193cbb680e553b7d7792f23f1a"
+      },
+      {
+        "path": "tests/test_doc_check_modules.py",
+        "sha256": "753a865f0cb5433ff9fe8b4ffb10ddf4074c0a5d2cce559bdfa0e8e2b3def2dd",
+        "expected_sha256": "753a865f0cb5433ff9fe8b4ffb10ddf4074c0a5d2cce559bdfa0e8e2b3def2dd",
+        "git_blob_sha": "99295bfc29abe0b4cef75e6c9bb7bf0d4d1ee248"
+      },
+      {
+        "path": "tests/test_evaluation_scope.py",
+        "sha256": "3259f5440a9467210e93c32702dc17a0be51a6e2544267c092a7f4f0c578058e",
+        "expected_sha256": "3259f5440a9467210e93c32702dc17a0be51a6e2544267c092a7f4f0c578058e",
+        "git_blob_sha": "964afcf6f147e44f5f44622ea43b350d426ca7e3"
+      },
+      {
+        "path": "tests/test_evaluator_correction_controller.py",
+        "sha256": "2a87169e2ae1c7e110cd344a6807a8854e2151285f8588a6690c83bddfec1262",
+        "expected_sha256": "2a87169e2ae1c7e110cd344a6807a8854e2151285f8588a6690c83bddfec1262",
+        "git_blob_sha": "c73fd2853adccb5565e00751e5c1451f52e7178a"
+      },
+      {
+        "path": "tests/test_execution_credentials.py",
+        "sha256": "18dc9d64ca75f6276f7663dbb7849470002e80cab163859bd67627fb4caaed12",
+        "expected_sha256": "18dc9d64ca75f6276f7663dbb7849470002e80cab163859bd67627fb4caaed12",
+        "git_blob_sha": "9053251b90d7cd481533983a0bad6d163e303d98"
+      },
+      {
+        "path": "tests/test_native_execution_contract.py",
+        "sha256": "3da2587998b10b419acf02a2e620adb2ff00d908841d138e49e70098e66fce16",
+        "expected_sha256": "3da2587998b10b419acf02a2e620adb2ff00d908841d138e49e70098e66fce16",
+        "git_blob_sha": "815951f3ffc48ab1aa179c096123457e67045ba1"
+      },
+      {
+        "path": "tests/test_native_output_contract.py",
+        "sha256": "58b7426a5b701c95e516a616d4b230941ee0df94b79e064b455fadcc394cd4fc",
+        "expected_sha256": "58b7426a5b701c95e516a616d4b230941ee0df94b79e064b455fadcc394cd4fc",
+        "git_blob_sha": "55a51a2e14cd2ea7431a3b377f8b98e8afcff1fa"
+      },
+      {
+        "path": "tests/test_native_runtime_profile.py",
+        "sha256": "827cfede6950ed11caa52fe29b1a8fe147a0177c755a5c613a7f56cbc977ccae",
+        "expected_sha256": "827cfede6950ed11caa52fe29b1a8fe147a0177c755a5c613a7f56cbc977ccae",
+        "git_blob_sha": "29c92fc1646f4303e85e17e6b3fe2f8b3cde6da8"
+      },
+      {
+        "path": "tests/test_original_micro_launcher.py",
+        "sha256": "2a8123968dbb2d87978592439dffa5434ad8d80464cc73d0a7aef5bcbdd6ff3d",
+        "expected_sha256": "2a8123968dbb2d87978592439dffa5434ad8d80464cc73d0a7aef5bcbdd6ff3d",
+        "git_blob_sha": "dff4f9542efd1657d7d19aa1ef72dfadb826e47b"
+      },
+      {
+        "path": "tests/test_original_micro_trace.py",
+        "sha256": "8c027a7ad51efbeede863074d838833b305be0827c7647c1b401f10412ebff1b",
+        "expected_sha256": "8c027a7ad51efbeede863074d838833b305be0827c7647c1b401f10412ebff1b",
+        "git_blob_sha": "a1555d92bb03d523124819fa7b63b4ce1dd21e78"
+      },
+      {
+        "path": "tests/test_preflight_cluster_libraries.py",
+        "sha256": "f0b90b24b082019c2ccf6c698463ad8fcea490d5df14c23767252586ca3f6d36",
+        "expected_sha256": "f0b90b24b082019c2ccf6c698463ad8fcea490d5df14c23767252586ca3f6d36",
+        "git_blob_sha": "f2792d3653ae322f593c949b5f5186617a53f061"
+      },
+      {
+        "path": "tests/test_readme_entry_prompt.py",
+        "sha256": "2c4b3d7d91bdbb0eab4785ff3b4d0fbc1a24e20b5748bf2d833b92457a42cc16",
+        "expected_sha256": "2c4b3d7d91bdbb0eab4785ff3b4d0fbc1a24e20b5748bf2d833b92457a42cc16",
+        "git_blob_sha": "3826e4262724ed810b53122967bf189189b76234"
+      },
+      {
+        "path": "tests/test_replay_runtime_profile.py",
+        "sha256": "55076b86aa3262e9d63d6df3cbcedc5a1080e33fd0e20832f996736952eae3af",
+        "expected_sha256": "55076b86aa3262e9d63d6df3cbcedc5a1080e33fd0e20832f996736952eae3af",
+        "git_blob_sha": "05d747712e7420d207fe08da51eb0b85003dc885"
+      },
+      {
+        "path": "tests/test_rescore_native_programs.py",
+        "sha256": "a8ef68bcae2d69d079140320d46acfd17d7dffdf59cc054ec7d20d0cc38d73b0",
+        "expected_sha256": "a8ef68bcae2d69d079140320d46acfd17d7dffdf59cc054ec7d20d0cc38d73b0",
+        "git_blob_sha": "5303192d0e2d4c2c39333fb9dec49de0e226f4f2"
+      },
+      {
+        "path": "tests/test_revise_readme_from_replay.py",
+        "sha256": "f327eb9a934d4f98551b928d3a89ec177e20c239e378e8617ad66728d9a0bf47",
+        "expected_sha256": "f327eb9a934d4f98551b928d3a89ec177e20c239e378e8617ad66728d9a0bf47",
+        "git_blob_sha": "4592f23b59cabe4a70bd70f73685372eb3eb38a3"
+      },
+      {
+        "path": "tests/test_runtime_profile.py",
+        "sha256": "689753fd735e022b0e3680616460c7321fda657301be3d2ac87699e66b606059",
+        "expected_sha256": "689753fd735e022b0e3680616460c7321fda657301be3d2ac87699e66b606059",
+        "git_blob_sha": "dd4a7bc064cf985d3ae7cffb3bc3c1a4631e7be5"
+      },
+      {
+        "path": "tests/test_verified_readme_continuation.py",
+        "sha256": "58d1dd544899ad327b134f3e514daafb953464633a7df2c8030c4ef914527e93",
+        "expected_sha256": "58d1dd544899ad327b134f3e514daafb953464633a7df2c8030c4ef914527e93",
+        "git_blob_sha": "2d2488a0622dc7b53122fc5dbbaa8ba34bf74865"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/__init__.py",
+        "sha256": "137e36c7ef8b291cac55efb7cfb384093ff9df4cd762160ebebd47089ab5abd2",
+        "expected_sha256": "137e36c7ef8b291cac55efb7cfb384093ff9df4cd762160ebebd47089ab5abd2",
+        "git_blob_sha": "96a8b101ebae9e9564e8a96805df18de5bb00efd"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/adapters/java.yaml",
+        "sha256": "af0d7e37f2a505caabf1d7a6e619d3720825d64b3c131fed85ddb14d5cd6c7af",
+        "expected_sha256": "af0d7e37f2a505caabf1d7a6e619d3720825d64b3c131fed85ddb14d5cd6c7af",
+        "git_blob_sha": "61dc7fcb58f0c1c3b730669e98456e4868b98c88"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/adapters/python.yaml",
+        "sha256": "701b62e8446e7adc4efd40bb5ed9e20571092ca7ceaed437bac61bc5fb1a5896",
+        "expected_sha256": "701b62e8446e7adc4efd40bb5ed9e20571092ca7ceaed437bac61bc5fb1a5896",
+        "git_blob_sha": "6af89e61e0741e7c298d831a957781953778a023"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/adapters/scala-spark.yaml",
+        "sha256": "7ebb8b4acdeffa901a9e1f1bd6823387b649fffa38515e5023dde04951be3378",
+        "expected_sha256": "7ebb8b4acdeffa901a9e1f1bd6823387b649fffa38515e5023dde04951be3378",
+        "git_blob_sha": "d9c4dfb681a95edcad533ea0da2de5406a6440a5"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/alias_registry.py",
+        "sha256": "c80e542cb2547031a5aaa92df8599ba1115a40ba9faa216129152972b8038883",
+        "expected_sha256": "c80e542cb2547031a5aaa92df8599ba1115a40ba9faa216129152972b8038883",
+        "git_blob_sha": "c61ef4575fe88b41935826cbc74764ac90d0b26f"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_canonical_selection.py",
+        "sha256": "e8f2a440c7b93f4d2aba8f4c3d27149d3cb1e84af3bae8190dbc7d59222e2f78",
+        "expected_sha256": "e8f2a440c7b93f4d2aba8f4c3d27149d3cb1e84af3bae8190dbc7d59222e2f78",
+        "git_blob_sha": "8b27d9e0d28a7e3ce7c1f0a1973f5a77fb28a106"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_discovery.py",
+        "sha256": "3c6b501cd096d4d39b646e25e1886041013e707ce3f18b0a8bcc7bfbdc63b139",
+        "expected_sha256": "3c6b501cd096d4d39b646e25e1886041013e707ce3f18b0a8bcc7bfbdc63b139",
+        "git_blob_sha": "8f35ddb4dcd50fb9026a1af11bc73ae676cb3fe2"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_examples.py",
+        "sha256": "6e3d139e3239f28639ac1606362c1aeb695ad310fba65bc81cc5eb1c3318b7e2",
+        "expected_sha256": "6e3d139e3239f28639ac1606362c1aeb695ad310fba65bc81cc5eb1c3318b7e2",
+        "git_blob_sha": "d35c55950c04fc24be6dc184c8beb9c0fc33b226"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_intent.py",
+        "sha256": "160e6602f2e2348f0ddf8f9564b46d48c77d92990765edac2c367894c2ad4925",
+        "expected_sha256": "160e6602f2e2348f0ddf8f9564b46d48c77d92990765edac2c367894c2ad4925",
+        "git_blob_sha": "f65d1a62369a04055b55e78a5919f78ae0e1061a"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_origin.py",
+        "sha256": "e3c6bccb236e40f8f6ca38767921966c4285986b126459feacc104897de6ad89",
+        "expected_sha256": "e3c6bccb236e40f8f6ca38767921966c4285986b126459feacc104897de6ad89",
+        "git_blob_sha": "99fa50b953fad5d3f09156c79e37f01c866be541"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_overloads.py",
+        "sha256": "a149c2b973d3ff45913034ac01fcd800733023c81832b2228792ab2fc7cb56c9",
+        "expected_sha256": "a149c2b973d3ff45913034ac01fcd800733023c81832b2228792ab2fc7cb56c9",
+        "git_blob_sha": "4d1dc6c100c607a8f10d1c89fde6fe535b8f7a26"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+        "sha256": "eb3e3595ae5ee5b77d614042af953297019b3caf40313c6b66081a0ea6660419",
+        "expected_sha256": "eb3e3595ae5ee5b77d614042af953297019b3caf40313c6b66081a0ea6660419",
+        "git_blob_sha": "89fc9c617f8f38690338dfca3fbc0d063cb2077b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_registry.py",
+        "sha256": "dd6fb20068794db5110c05da439e7c79400af6aaa12b50aa17a0ac9a2101b055",
+        "expected_sha256": "dd6fb20068794db5110c05da439e7c79400af6aaa12b50aa17a0ac9a2101b055",
+        "git_blob_sha": "db046220538faea2bb2c5b8295aa45bd96caa64c"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_signatures.py",
+        "sha256": "425bbff8e68f84893dc81926332bea771a5fb17284383c8223e9dca8c396f2ff",
+        "expected_sha256": "425bbff8e68f84893dc81926332bea771a5fb17284383c8223e9dca8c396f2ff",
+        "git_blob_sha": "fbdb9499db2594a6ee2dd52e76a338581edd0b5d"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_source_registry.py",
+        "sha256": "aa7a4a439d32ebfe19e2fb5e21a02011890bb4bdd74a27a732466b630ee89fca",
+        "expected_sha256": "aa7a4a439d32ebfe19e2fb5e21a02011890bb4bdd74a27a732466b630ee89fca",
+        "git_blob_sha": "2462b8a249036db6303b7163c9f5e8963a1edc04"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_sql_canonical.py",
+        "sha256": "e73fe4b1209df64d904330764a5460c720b124404fe70533eca7092ea9b06367",
+        "expected_sha256": "e73fe4b1209df64d904330764a5460c720b124404fe70533eca7092ea9b06367",
+        "git_blob_sha": "0265fb3afb68368be204f9c5abaf7b300d38597e"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_visibility.py",
+        "sha256": "35f32648dfc35b24ca4a784da53edd299f4de23edea82d221906fe114c65a0d8",
+        "expected_sha256": "35f32648dfc35b24ca4a784da53edd299f4de23edea82d221906fe114c65a0d8",
+        "git_blob_sha": "38d6a61ddddaac8084e1f10c903b5027710cc891"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/checkpoint_compatibility.py",
+        "sha256": "f9a7572e585687d071d3a74212f5f4d3ba89056606658e3e9b52d17caedc00d0",
+        "expected_sha256": "f9a7572e585687d071d3a74212f5f4d3ba89056606658e3e9b52d17caedc00d0",
+        "git_blob_sha": "a69dd285b71461d17700c282906f1771ce57d080"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/cli.py",
+        "sha256": "6b11a777a362fed119117d54087ca9e46e0c23545026f00a6b38113f1f0a9b5a",
+        "expected_sha256": "6b11a777a362fed119117d54087ca9e46e0c23545026f00a6b38113f1f0a9b5a",
+        "git_blob_sha": "f878aff9331565bcb8386ca8d8ce577effe66fad"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/config.py",
+        "sha256": "4b378984faa4ed1f0a5f3e6208c2ae1000f4211a67fae4e5275a323d3cabeef6",
+        "expected_sha256": "4b378984faa4ed1f0a5f3e6208c2ae1000f4211a67fae4e5275a323d3cabeef6",
+        "git_blob_sha": "bf61425fc73d319590df9d0433ad182293552dc1"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/deepdive.py",
+        "sha256": "4dde0aec52c53a831d4e97942dfba496e3d0f54465166f45b29a2f39f8707bc2",
+        "expected_sha256": "4dde0aec52c53a831d4e97942dfba496e3d0f54465166f45b29a2f39f8707bc2",
+        "git_blob_sha": "4dc612262104ac4834cc3f71afbace04872e62b8"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_grade.md",
+        "sha256": "599ee48da8315b321b0580e284b4d54a6569c11d8d1e3d02f945957408831683",
+        "expected_sha256": "599ee48da8315b321b0580e284b4d54a6569c11d8d1e3d02f945957408831683",
+        "git_blob_sha": "cc394309ce4ef46a71408df0e2e120f9d8748df1"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write.md",
+        "sha256": "03c811fec5c45ef882be52bbb2e55f13a56a447f462f17e7cfeb2529b60d842b",
+        "expected_sha256": "03c811fec5c45ef882be52bbb2e55f13a56a447f462f17e7cfeb2529b60d842b",
+        "git_blob_sha": "c5e6da4f837913fa1b4bb1bdaad31e61b1c0d14c"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write_exec.md",
+        "sha256": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501",
+        "expected_sha256": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501",
+        "git_blob_sha": "d0c0681a8724565450dde394e8cb02f29a3979a2"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/deep_dive.md",
+        "sha256": "bcaacb96d675d8e898784eea65319e5ded213c06eb8578f5e40627fd3adce504",
+        "expected_sha256": "bcaacb96d675d8e898784eea65319e5ded213c06eb8578f5e40627fd3adce504",
+        "git_blob_sha": "4bc9ad14c0d5d280458909b74cb93eb05f03d1e6"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/docfix_diagnose.md",
+        "sha256": "d5634de15b571eec7294e743ff844d7f751fd406eb16d41d416f5bd94f607b85",
+        "expected_sha256": "d5634de15b571eec7294e743ff844d7f751fd406eb16d41d416f5bd94f607b85",
+        "git_blob_sha": "a99161f9fe5e989888140f611622c98d3b68a0aa"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/docfix_rewrite.md",
+        "sha256": "c1542f31dc913cfb50ab970ee66d54b3fb5f94e32444870678f15ff64292b896",
+        "expected_sha256": "c1542f31dc913cfb50ab970ee66d54b3fb5f94e32444870678f15ff64292b896",
+        "git_blob_sha": "a91cd106cf0bd42ac103f035f53b886c4ae306c0"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/intended_review.md",
+        "sha256": "05152650aa0df4f8b7b369c81a6f6882ac3b8eb25234d95c0d1f139011531949",
+        "expected_sha256": "05152650aa0df4f8b7b369c81a6f6882ac3b8eb25234d95c0d1f139011531949",
+        "git_blob_sha": "43ec2ad65cf5fb87f87386c995b0c5f74302e76b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/intent_common.md",
+        "sha256": "1748e8b5e12f4675db67b4d1c9b2ca157468e0851b7518a5a14dbd95ac14aa64",
+        "expected_sha256": "1748e8b5e12f4675db67b4d1c9b2ca157468e0851b7518a5a14dbd95ac14aa64",
+        "git_blob_sha": "ea20e09055dfb6ff76a9737275c770b76394042f"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/probe_write.md",
+        "sha256": "e2e29930af185e968baf69e583b051ede4c2acdf13152472de24e53740c72478",
+        "expected_sha256": "e2e29930af185e968baf69e583b051ede4c2acdf13152472de24e53740c72478",
+        "git_blob_sha": "e5b9e9dcc681b29dcb0e0e1788dc16eb904a72a5"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_distill.md",
+        "sha256": "6c6cc6bf74e8169a1206be5898316b9df4cc862daac3956f13d0703d0c5385ba",
+        "expected_sha256": "6c6cc6bf74e8169a1206be5898316b9df4cc862daac3956f13d0703d0c5385ba",
+        "git_blob_sha": "38e72bec3e59fc628f4338571e43e1bcdeadacf3"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_entry.md",
+        "sha256": "82ac63137ec13becb97a1b06aac8db5f206bbde7a2f77ec28209af5275f2b468",
+        "expected_sha256": "82ac63137ec13becb97a1b06aac8db5f206bbde7a2f77ec28209af5275f2b468",
+        "git_blob_sha": "4912df79233d715359d47155ff5d485fc1ab775c"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/tasks_generate.md",
+        "sha256": "65f1272ca7d5a3a8c80e3b03e6b87d51f0717e5daead2e6f9f6fcdeb3cc7b996",
+        "expected_sha256": "65f1272ca7d5a3a8c80e3b03e6b87d51f0717e5daead2e6f9f6fcdeb3cc7b996",
+        "git_blob_sha": "79583ab2fecea7f372e67897c96ddc03c34b9ed9"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/defaults.yaml",
+        "sha256": "1778d383c06f3796b56c9db6b47a985a1adeb5c2451a0a896cfbc8f0fea298aa",
+        "expected_sha256": "1778d383c06f3796b56c9db6b47a985a1adeb5c2451a0a896cfbc8f0fea298aa",
+        "git_blob_sha": "9e954508e539290b95505efddd18219be1fd5279"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_comprehension.py",
+        "sha256": "23cf5ad0386a178621f37907b579e93ef5d21bed7db762111af1a2c34965c6ee",
+        "expected_sha256": "23cf5ad0386a178621f37907b579e93ef5d21bed7db762111af1a2c34965c6ee",
+        "git_blob_sha": "8c0edbd61af7149b644cac8926656c2c404a08cb"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_errors.py",
+        "sha256": "853f96d3b955720222d81a93c155b5f42d4bbee5848cf0da12e14bb8edbd3f85",
+        "expected_sha256": "853f96d3b955720222d81a93c155b5f42d4bbee5848cf0da12e14bb8edbd3f85",
+        "git_blob_sha": "84ebc4b177224823a69d09cc9e9efc299b5d35f2"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_execution.py",
+        "sha256": "8370ec6e87b1bf4b70dcf94b90a89fee2dd07efdc58f634650b454529d033d0c",
+        "expected_sha256": "8370ec6e87b1bf4b70dcf94b90a89fee2dd07efdc58f634650b454529d033d0c",
+        "git_blob_sha": "81561b281e947f2172765da1eb79e3ae42d6d768"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_inputs.py",
+        "sha256": "0450e24754de2a6f2d4f8cfdc9da94189af366041b5fddbc7bba41f0a71e2360",
+        "expected_sha256": "0450e24754de2a6f2d4f8cfdc9da94189af366041b5fddbc7bba41f0a71e2360",
+        "git_blob_sha": "f8208c2892bdd07a9987871780b12c33f27ab6a9"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+        "sha256": "7dfaac9f3e045693e8303cb38cb619b395bab373559fdeaddbe795ae41fca2f7",
+        "expected_sha256": "7dfaac9f3e045693e8303cb38cb619b395bab373559fdeaddbe795ae41fca2f7",
+        "git_blob_sha": "24980087c51c06701053910aecafc2b2c3f97c8d"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_puzzles.py",
+        "sha256": "fe6d49822826994d2338029d0290c449d7863cfc8dadacf1d6356ec6fb5495b4",
+        "expected_sha256": "fe6d49822826994d2338029d0290c449d7863cfc8dadacf1d6356ec6fb5495b4",
+        "git_blob_sha": "6f1e9b61b5dad70835b1a0632bf8cd6f2baf465e"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_sources.py",
+        "sha256": "61804493f3f48f42e8f1827c5f0a68c4ace7933f6f0d9ea7a06793548b13b3c2",
+        "expected_sha256": "61804493f3f48f42e8f1827c5f0a68c4ace7933f6f0d9ea7a06793548b13b3c2",
+        "git_blob_sha": "dcc98c31385a9a551c2588f922876cb2eabf73ae"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_checks.py",
+        "sha256": "b8068dcb107f49b83f27a6b2ceb31e36be56a8bda1af80298c9880ad462689c7",
+        "expected_sha256": "b8068dcb107f49b83f27a6b2ceb31e36be56a8bda1af80298c9880ad462689c7",
+        "git_blob_sha": "0f67de6af97b40106eae9e827c1a44b44acf02b7"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_repair.py",
+        "sha256": "a2b3ea9a17801eaae32fe0aa8a248757295ba60d238a4d1926ae0fb853c4efd6",
+        "expected_sha256": "a2b3ea9a17801eaae32fe0aa8a248757295ba60d238a4d1926ae0fb853c4efd6",
+        "git_blob_sha": "a8006b516740d9bca5a6fec572bd11f1b33068c3"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_snapshot.py",
+        "sha256": "d0a74750430462d1b8d259fcb8bbedfa1f85b4d6187a30f7a732b14c140ef468",
+        "expected_sha256": "d0a74750430462d1b8d259fcb8bbedfa1f85b4d6187a30f7a732b14c140ef468",
+        "git_blob_sha": "0db054c9fb19b6cdf2f1219daeeed83c357eaadc"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/docfix.py",
+        "sha256": "d69d8e6fff3e303601b1803c8462b715f5b985263fc098fb8e15ad98c0151e8b",
+        "expected_sha256": "d69d8e6fff3e303601b1803c8462b715f5b985263fc098fb8e15ad98c0151e8b",
+        "git_blob_sha": "e3803cff43eccb974548a886804d10982e787ef5"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/error_log.py",
+        "sha256": "8d62111cdeed4c66249c4145896c0bfc6ca992bfff8dc22de811e50b6496b0d2",
+        "expected_sha256": "8d62111cdeed4c66249c4145896c0bfc6ca992bfff8dc22de811e50b6496b0d2",
+        "git_blob_sha": "048d80d8d83782edc3f0927e94b3ec247130d465"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/evaluation_scope.py",
+        "sha256": "df6cf221a17f805513f2371f5959c8aa7908ef031a4b4356002caf8659521abd",
+        "expected_sha256": "df6cf221a17f805513f2371f5959c8aa7908ef031a4b4356002caf8659521abd",
+        "git_blob_sha": "3ada41a8c4bba9b4bfb481132ffd1befbf6fe72d"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/execution.py",
+        "sha256": "b4fdd7891866ca9a2d287e6c489fe12d0136b0332a7d2bab2051e99c94e449d0",
+        "expected_sha256": "b4fdd7891866ca9a2d287e6c489fe12d0136b0332a7d2bab2051e99c94e449d0",
+        "git_blob_sha": "c1a96890379831efb53da09456080ee2bbdb0406"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/experiment_identity.py",
+        "sha256": "e79165d01ea62124134d56df6653b93b65df03dc9cf64750c04b749a9b569a2b",
+        "expected_sha256": "e79165d01ea62124134d56df6653b93b65df03dc9cf64750c04b749a9b569a2b",
+        "git_blob_sha": "94b83d23752ad8a9f547755ea83418db02d0206b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/fix_guide.py",
+        "sha256": "199aa52a1a908c8f400802b98a7c3a3e79af05079bbf2b351fb97efd1864219c",
+        "expected_sha256": "199aa52a1a908c8f400802b98a7c3a3e79af05079bbf2b351fb97efd1864219c",
+        "git_blob_sha": "03b63796ad88392af5a629b009546b72610d8975"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/fixreport.py",
+        "sha256": "c8ecfea0adac9587b4d16dbed493f30830e6b34fa906c8f6dc2e685493e1e82a",
+        "expected_sha256": "c8ecfea0adac9587b4d16dbed493f30830e6b34fa906c8f6dc2e685493e1e82a",
+        "git_blob_sha": "a6d9dceb012e7aeae9bcfe2fc4bda464079ac0bf"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/llm.py",
+        "sha256": "da980c4ecbd9709ecbc9543ebfa5dc9e37346362c097bb391d327cc3f3826ebb",
+        "expected_sha256": "da980c4ecbd9709ecbc9543ebfa5dc9e37346362c097bb391d327cc3f3826ebb",
+        "git_blob_sha": "5159acd68e2c55290cbf2ba1f4f61e5328b47106"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/mcp_server.py",
+        "sha256": "2f14c49d4ce4ca06c85165fb2cbf9282745016883e49146b7f7b248152369ff6",
+        "expected_sha256": "2f14c49d4ce4ca06c85165fb2cbf9282745016883e49146b7f7b248152369ff6",
+        "git_blob_sha": "5141ee1d57a85869c47a95ac94b6f56ec276ce3f"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/native_execution_contract.py",
+        "sha256": "5ef4e8de77d1b60c40689999273132a0f3ed2226d808bcf08abbf15a1c9c7e2c",
+        "expected_sha256": "5ef4e8de77d1b60c40689999273132a0f3ed2226d808bcf08abbf15a1c9c7e2c",
+        "git_blob_sha": "806aa4f5f369219090a40e4c4e0a5005567e9f7b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/notes_to_self.py",
+        "sha256": "b1b3a34e25c5adedefc1bcf7b4ccd84ffa0d933191be1f16b542d88772cd51cc",
+        "expected_sha256": "b1b3a34e25c5adedefc1bcf7b4ccd84ffa0d933191be1f16b542d88772cd51cc",
+        "git_blob_sha": "6a3318af02c1ad503dfe097f02bb8f339597a08b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/original_documentation.py",
+        "sha256": "b54785cdebdb8e2f92b9c81698b21e9817c6df7b92e5bc67c47438eb9cc3ff84",
+        "expected_sha256": "b54785cdebdb8e2f92b9c81698b21e9817c6df7b92e5bc67c47438eb9cc3ff84",
+        "git_blob_sha": "b757732b1062d43aa49ff5c05422e5b7db67993b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/probe.py",
+        "sha256": "ea7c4627c26a5e5a199820a0b68af873a6f98a56981edd519eacaeef65878c7a",
+        "expected_sha256": "ea7c4627c26a5e5a199820a0b68af873a6f98a56981edd519eacaeef65878c7a",
+        "git_blob_sha": "f15ddf6ab75e78ff5724a9b786d26fe5023bec34"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/profile.py",
+        "sha256": "e47d5e0778a3bd859e84d9432eb20b43b3278b02bf473f7b447b6de54c416664",
+        "expected_sha256": "e47d5e0778a3bd859e84d9432eb20b43b3278b02bf473f7b447b6de54c416664",
+        "git_blob_sha": "0e4a0f88ab49097f3df334489fcf437c96381d35"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/prompts.py",
+        "sha256": "a77e527d2a5e05bc8ab170b5d06ddb7cd3db0bc8b53d59c16452df19ce05fa29",
+        "expected_sha256": "a77e527d2a5e05bc8ab170b5d06ddb7cd3db0bc8b53d59c16452df19ce05fa29",
+        "git_blob_sha": "cee2979e73309032dda1f521f7c08b7dc0d4650b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/provider_deadline.py",
+        "sha256": "4c40eaea157adb49313ed0b68a538845adafe4f4e942e7aec3658cf57fbe1e2f",
+        "expected_sha256": "4c40eaea157adb49313ed0b68a538845adafe4f4e942e7aec3658cf57fbe1e2f",
+        "git_blob_sha": "d8b35c9953ce01c1bc921a1ed89053611ecdaf4a"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/puzzle_bank.py",
+        "sha256": "5181c7f2ca672d0662c9faf7863fd6b432d97232d11d43f0466d5321f4af49b8",
+        "expected_sha256": "5181c7f2ca672d0662c9faf7863fd6b432d97232d11d43f0466d5321f4af49b8",
+        "git_blob_sha": "344b0d9809c4d5da39c4e3bdac131a773bb17c1a"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_agent.py",
+        "sha256": "f6480448ef79bf7f99314dd4f1add4dd7e34bf052890bfad189813a920266c96",
+        "expected_sha256": "f6480448ef79bf7f99314dd4f1add4dd7e34bf052890bfad189813a920266c96",
+        "git_blob_sha": "465270c252d0c877c2d94526f0432ccfd54de520"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_catalogue.py",
+        "sha256": "533b21f23c4f29a2c8437c36fb56c0afd8a20cb788d5ebd34691fbaf7939a503",
+        "expected_sha256": "533b21f23c4f29a2c8437c36fb56c0afd8a20cb788d5ebd34691fbaf7939a503",
+        "git_blob_sha": "5c1411dc419fa68744c295cf879016ba71affd9e"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_evidence.py",
+        "sha256": "2eccc69c53e502ba99b1ad15f00348c64269fd7cf0c6ccc30973f43d28928771",
+        "expected_sha256": "2eccc69c53e502ba99b1ad15f00348c64269fd7cf0c6ccc30973f43d28928771",
+        "git_blob_sha": "18ea0e75546a095da8eebd76a8f27e82e0651bd6"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_format.py",
+        "sha256": "ecbc0263c9545e6df8a8bec605472fbdadaacffe0b9c954fecdbc293dad1d46e",
+        "expected_sha256": "ecbc0263c9545e6df8a8bec605472fbdadaacffe0b9c954fecdbc293dad1d46e",
+        "git_blob_sha": "5b132caa99716c7e506def694605ea10dc7c51ac"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_generation.py",
+        "sha256": "b042b4e98ff14bb78ae2deb920dbe9b818b14f7e5762a9b923ea7fe02105afba",
+        "expected_sha256": "b042b4e98ff14bb78ae2deb920dbe9b818b14f7e5762a9b923ea7fe02105afba",
+        "git_blob_sha": "de13ba9bdb1f28ce66140a2bf73528397d9641b0"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_recording.py",
+        "sha256": "b51721d2155e580e634e506644b44d09b073f7035f6e6c262d6d8eea0c554bac",
+        "expected_sha256": "b51721d2155e580e634e506644b44d09b073f7035f6e6c262d6d8eea0c554bac",
+        "git_blob_sha": "dd229d591fe0151bb799f4f900a9481da4d79ad3"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_replay.py",
+        "sha256": "1d4708ea0238f241fd3ccc608f4417af674789c11c434e81560e7b5c4c94bd1a",
+        "expected_sha256": "1d4708ea0238f241fd3ccc608f4417af674789c11c434e81560e7b5c4c94bd1a",
+        "git_blob_sha": "20feaea245623ad4a36630edc8cb4ce90896d602"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_validation.py",
+        "sha256": "ff95a844af73233c14563259afb357bb243a7900f704ff0822df5f58bffd6567",
+        "expected_sha256": "ff95a844af73233c14563259afb357bb243a7900f704ff0822df5f58bffd6567",
+        "git_blob_sha": "d144a0578f8df7970eb8ad089233f2dcfb16edee"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/repair_journal.py",
+        "sha256": "35827a1d4715086f26377024ea7aeea32d644eb2ff15cd0ae213d4f8ad73d677",
+        "expected_sha256": "35827a1d4715086f26377024ea7aeea32d644eb2ff15cd0ae213d4f8ad73d677",
+        "git_blob_sha": "b1697840b79647806b4ba02ba62f51d366b9b76b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/scaffold_generation.py",
+        "sha256": "d12afcd7886a2812b7c615ab505b3aab22d2d8bbdb2d3548b30008148b9bb208",
+        "expected_sha256": "d12afcd7886a2812b7c615ab505b3aab22d2d8bbdb2d3548b30008148b9bb208",
+        "git_blob_sha": "7f03d21bfda3a62e7addb189fa1d081c1caf3695"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/task_generator.py",
+        "sha256": "9baea6c041e49db2e4ef6e95ca055b12453e97db183e44903c5d9aea8009614c",
+        "expected_sha256": "9baea6c041e49db2e4ef6e95ca055b12453e97db183e44903c5d9aea8009614c",
+        "git_blob_sha": "08ceb6d0572381f3d6be23aadb9b5ac4c8d2ce83"
+      },
+      {
+        "path": "workflow/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "workflow/__main__.py",
+        "sha256": "2e8667753c04ecc8552b365f7ef8477c153c2234323189ab378f2a1f8f86219d",
+        "expected_sha256": "2e8667753c04ecc8552b365f7ef8477c153c2234323189ab378f2a1f8f86219d",
+        "git_blob_sha": "305b175970c7b2768bf9c51b1206c8aba7c2c2ab"
+      },
+      {
+        "path": "workflow/ablation.py",
+        "sha256": "e5877e25cde0dfbe1ef66531c79298f0d8013794f911381ee050fd0cc46781cd",
+        "expected_sha256": "e5877e25cde0dfbe1ef66531c79298f0d8013794f911381ee050fd0cc46781cd",
+        "git_blob_sha": "0b0229e428c55e1f25f2fcdcd538f36bcd31d682"
+      },
+      {
+        "path": "workflow/compatibility_cli.py",
+        "sha256": "d1628849128f31f3d1e8170ac5fb1d418fb64f534ebd40e29b014cf72e48f58c",
+        "expected_sha256": "d1628849128f31f3d1e8170ac5fb1d418fb64f534ebd40e29b014cf72e48f58c",
+        "git_blob_sha": "def537ec3b5d91b97cba9cc57c50474704916a78"
+      },
+      {
+        "path": "workflow/condition_evaluation.py",
+        "sha256": "648352a1d808170ace0a3e2b877faf3bbc5fdb5d2b2da53ad1685056f015d11d",
+        "expected_sha256": "648352a1d808170ace0a3e2b877faf3bbc5fdb5d2b2da53ad1685056f015d11d",
+        "git_blob_sha": "79c7447cacd842925430b7b39cca7ea0e09afba1"
+      },
+      {
+        "path": "workflow/condition_inputs.py",
+        "sha256": "2d1f7e3183eef8252faa2363def764b80868b0e499f585cbe273bd670604fb55",
+        "expected_sha256": "2d1f7e3183eef8252faa2363def764b80868b0e499f585cbe273bd670604fb55",
+        "git_blob_sha": "ff58e0a0edd0c698c026ac6196bf9cbbb6494f10"
+      },
+      {
+        "path": "workflow/condition_setup.py",
+        "sha256": "eb279d01d1e1987538d7c3588faba89f7d1db5a5c903be52b43d59c7709acc46",
+        "expected_sha256": "eb279d01d1e1987538d7c3588faba89f7d1db5a5c903be52b43d59c7709acc46",
+        "git_blob_sha": "088ee029b9afdd0f6c146cc30a5e4ed3bd78e94e"
+      },
+      {
+        "path": "workflow/development_cli.py",
+        "sha256": "e6de30408fac7d61c9534a3c81c485f71fc4bce6120e2962a298e7e5cc80e60c",
+        "expected_sha256": "e6de30408fac7d61c9534a3c81c485f71fc4bce6120e2962a298e7e5cc80e60c",
+        "git_blob_sha": "fc79773ae2a8f5eada5e49c2355954d7693816c2"
+      },
+      {
+        "path": "workflow/evaluation.py",
+        "sha256": "b4fc6f8e941cee19895e8e7ed18fac18de25e5d47a70075d6301835ef4221a22",
+        "expected_sha256": "b4fc6f8e941cee19895e8e7ed18fac18de25e5d47a70075d6301835ef4221a22",
+        "git_blob_sha": "5842fece54d6064d20fccc9b988dea35cc71875f"
+      },
+      {
+        "path": "workflow/evaluation_conditions.py",
+        "sha256": "98356ec1d1ebf0249088e7e91b0f46b3b463cb8d9b7169e7b4a7a94200ffc372",
+        "expected_sha256": "98356ec1d1ebf0249088e7e91b0f46b3b463cb8d9b7169e7b4a7a94200ffc372",
+        "git_blob_sha": "f45f336da87924f8e165951760f645e616e43099"
+      },
+      {
+        "path": "workflow/evaluation_context.py",
+        "sha256": "586045419c97b968476e4af0a0e3aab6e7a94cfdf6f56eb632c46487093707f8",
+        "expected_sha256": "586045419c97b968476e4af0a0e3aab6e7a94cfdf6f56eb632c46487093707f8",
+        "git_blob_sha": "db021a54f8ffa3a03a528b096909e26efa4048b5"
+      },
+      {
+        "path": "workflow/evaluation_freeze.py",
+        "sha256": "86f8cea901f3739102873461d778be0170f32d74cd446c0b5a7826273b75b2e8",
+        "expected_sha256": "86f8cea901f3739102873461d778be0170f32d74cd446c0b5a7826273b75b2e8",
+        "git_blob_sha": "39e060cb7c0234135d696134a0decd09ae767b82"
+      },
+      {
+        "path": "workflow/evaluation_inputs.py",
+        "sha256": "8368eebbab14a2a6c930dee993855ec83d3049042b09a4666813ffda2e6c21b5",
+        "expected_sha256": "8368eebbab14a2a6c930dee993855ec83d3049042b09a4666813ffda2e6c21b5",
+        "git_blob_sha": "4bd05fb73e6623219406a569115370913d16a245"
+      },
+      {
+        "path": "workflow/evaluation_legacy_hints.py",
+        "sha256": "5043390ea2f16d0cca5ddac6d334ad0394b4bf968770ad970f02b205a4758c24",
+        "expected_sha256": "5043390ea2f16d0cca5ddac6d334ad0394b4bf968770ad970f02b205a4758c24",
+        "git_blob_sha": "79df8ab66e1974c794c1f30d2fc060c457b18acf"
+      },
+      {
+        "path": "workflow/evaluation_program_generation.py",
+        "sha256": "96c1ec2d49af411a392a87ec52af46cb55895fca66614403bf2ff1edfbccbe00",
+        "expected_sha256": "96c1ec2d49af411a392a87ec52af46cb55895fca66614403bf2ff1edfbccbe00",
+        "git_blob_sha": "8257fc0e1f2713e5c713e25419b676a1a24b1e20"
+      },
+      {
+        "path": "workflow/evaluation_readme.py",
+        "sha256": "82421b09f9b1faa085bbfc24a9666a51ba810f90129c06c5fb7e1c74ab938de6",
+        "expected_sha256": "82421b09f9b1faa085bbfc24a9666a51ba810f90129c06c5fb7e1c74ab938de6",
+        "git_blob_sha": "39f06791ec53a61ada8056225a88cf7e2b199ec7"
+      },
+      {
+        "path": "workflow/evaluation_report.py",
+        "sha256": "b9e16d19782481aec067b7c7f6499de3fad1887ba235334ecb9a8b2daf5876e1",
+        "expected_sha256": "b9e16d19782481aec067b7c7f6499de3fad1887ba235334ecb9a8b2daf5876e1",
+        "git_blob_sha": "8b08ad89280210af5f1d51e3a95ca16665d77a83"
+      },
+      {
+        "path": "workflow/evaluation_runner.py",
+        "sha256": "b40cf0db6927a80383a4bafdc0a52d3ec69d617ab57d8649d7adf9e8a36959ae",
+        "expected_sha256": "b40cf0db6927a80383a4bafdc0a52d3ec69d617ab57d8649d7adf9e8a36959ae",
+        "git_blob_sha": "5b3cb2b5309bbd5257748e74de1149402783d3e2"
+      },
+      {
+        "path": "workflow/evaluation_setup.py",
+        "sha256": "ab0bec523ca38fcbc538eb1846fdd45da5e6b54ec39bbb4e599fb7093b01ee7a",
+        "expected_sha256": "ab0bec523ca38fcbc538eb1846fdd45da5e6b54ec39bbb4e599fb7093b01ee7a",
+        "git_blob_sha": "e1d54db0aee849ed8566817e1427e4a1aa28be58"
+      },
+      {
+        "path": "workflow/execution.py",
+        "sha256": "f1010756edd70fe6f628c0344be4bd1b4477ca9f5e5e253446007ca995482e16",
+        "expected_sha256": "f1010756edd70fe6f628c0344be4bd1b4477ca9f5e5e253446007ca995482e16",
+        "git_blob_sha": "9f35fc9c88aae7eb4e1a2787a649aedab784e3a1"
+      },
+      {
+        "path": "workflow/failure_diagnosis.py",
+        "sha256": "b9ba69e504ea051a36f466c4f7d5d9af8f9a3c6f63af067d814dc435439e5e38",
+        "expected_sha256": "b9ba69e504ea051a36f466c4f7d5d9af8f9a3c6f63af067d814dc435439e5e38",
+        "git_blob_sha": "972adab557ee5ea2ebec035eb8e264264c2edd16"
+      },
+      {
+        "path": "workflow/gemini_flash_adapter.py",
+        "sha256": "68ec9c58f157ce62276e18cd2b1b38713b7bbe803d59635f71e2d863c53ed1c0",
+        "expected_sha256": "68ec9c58f157ce62276e18cd2b1b38713b7bbe803d59635f71e2d863c53ed1c0",
+        "git_blob_sha": "0f81b50a5a843a568a99720331e0c36d92443871"
+      },
+      {
+        "path": "workflow/improvement_batches.py",
+        "sha256": "c307cea328139ebd2b33e0e2247a0dd499474ca10adf14cfbbd60c83f1af9a73",
+        "expected_sha256": "c307cea328139ebd2b33e0e2247a0dd499474ca10adf14cfbbd60c83f1af9a73",
+        "git_blob_sha": "b86bb90167a5e8c49c0115e6798e6e54925ec329"
+      },
+      {
+        "path": "workflow/improvement_context.py",
+        "sha256": "f7c075f0ecf9fb8905e59a3f72ea558bb601892226883dcf188046b4f8d732f9",
+        "expected_sha256": "f7c075f0ecf9fb8905e59a3f72ea558bb601892226883dcf188046b4f8d732f9",
+        "git_blob_sha": "f7a823ac81d6cf475f278e78904cc29adc7e0f33"
+      },
+      {
+        "path": "workflow/improvement_suggestions.py",
+        "sha256": "fb805c90fadee974afb35c75aca60d40e4c4f45938a595fedcfcf85a6c577ba5",
+        "expected_sha256": "fb805c90fadee974afb35c75aca60d40e4c4f45938a595fedcfcf85a6c577ba5",
+        "git_blob_sha": "518e30df27fe95fe504538a166eed06270ddd131"
+      },
+      {
+        "path": "workflow/mcp_server.py",
+        "sha256": "8545ba9852d930eb61e4c9964afa5fa60762e00bce9d84088a4df39b0dbc2782",
+        "expected_sha256": "8545ba9852d930eb61e4c9964afa5fa60762e00bce9d84088a4df39b0dbc2782",
+        "git_blob_sha": "faf095a54c1ee7bc7480f99bc739d17dee6b0513"
+      },
+      {
+        "path": "workflow/model_adapter.py",
+        "sha256": "4f0412670092c68a6bdf736b7f7ef615314a2632b1486dd8da4d09be855259ab",
+        "expected_sha256": "4f0412670092c68a6bdf736b7f7ef615314a2632b1486dd8da4d09be855259ab",
+        "git_blob_sha": "a89302e1a10e5b4b8beae88d266c496e07edae49"
+      },
+      {
+        "path": "workflow/native_hints.py",
+        "sha256": "a47083f86072cc80cec5ddd36de2c6a31a825e66e616d3139d54562c4b55d42d",
+        "expected_sha256": "a47083f86072cc80cec5ddd36de2c6a31a825e66e616d3139d54562c4b55d42d",
+        "git_blob_sha": "4511bd02543eac30ced02a3cd2632f7fb42d8b30"
+      },
+      {
+        "path": "workflow/native_r0_evidence.py",
+        "sha256": "dcd84154486737ac4496cece9dc6f2e537874db9ea2d5c09872349f98571a374",
+        "expected_sha256": "dcd84154486737ac4496cece9dc6f2e537874db9ea2d5c09872349f98571a374",
+        "git_blob_sha": "b7ef2dc18540c0c3aa7a54a7c64d015219abe286"
+      },
+      {
+        "path": "workflow/openai_codex_adapter.py",
+        "sha256": "9f73542639b5a56d0aa8adaf9f805a99888f66c827a27148775803e61e503546",
+        "expected_sha256": "9f73542639b5a56d0aa8adaf9f805a99888f66c827a27148775803e61e503546",
+        "git_blob_sha": "836cb861e52463e5ec36cf30b01774ab94a2943b"
+      },
+      {
+        "path": "workflow/preparation.py",
+        "sha256": "98a3e1faf2eacd13ec229e86bad83cc2a72c937654691c7789c15255b370dc9b",
+        "expected_sha256": "98a3e1faf2eacd13ec229e86bad83cc2a72c937654691c7789c15255b370dc9b",
+        "git_blob_sha": "41e7f41ce25e61cc70f19a4c59587e848fb6244a"
+      },
+      {
+        "path": "workflow/provider_budget.py",
+        "sha256": "1d80894845d96badf059abc15e7ad83ab37143baf700fbcb144a3ec9db9f2d06",
+        "expected_sha256": "1d80894845d96badf059abc15e7ad83ab37143baf700fbcb144a3ec9db9f2d06",
+        "git_blob_sha": "1a06e70d6e0292a9acd6e63190da2d92d68c91d5"
+      },
+      {
+        "path": "workflow/refactor_proposals.py",
+        "sha256": "0b40c9d5d5e407e5edba990cac8f1856f39b0a3a43fd4950cf3c88fd5edaee14",
+        "expected_sha256": "0b40c9d5d5e407e5edba990cac8f1856f39b0a3a43fd4950cf3c88fd5edaee14",
+        "git_blob_sha": "682a6fdde34b1b061ea29ab8f0e47a9ed44a0b96"
+      },
+      {
+        "path": "workflow/repair_context.py",
+        "sha256": "3500177ec19178ba526d06a21609627d367d4febff80ffa5731281f4333d62e6",
+        "expected_sha256": "3500177ec19178ba526d06a21609627d367d4febff80ffa5731281f4333d62e6",
+        "git_blob_sha": "6eaa4cc82a16394b0356a67e29a0e5d14b4570d9"
+      },
+      {
+        "path": "workflow/response_status.py",
+        "sha256": "20af3dc8bf9347fd779f517e3a976cb1ab0d4670f6c2b95dd8502e4c7f95abb7",
+        "expected_sha256": "20af3dc8bf9347fd779f517e3a976cb1ab0d4670f6c2b95dd8502e4c7f95abb7",
+        "git_blob_sha": "3667d66754e9574f7af47dc38a1fcacbf6133151"
+      },
+      {
+        "path": "workflow/runtime_profile.py",
+        "sha256": "5a5888af16dac99b5b3e90696a3f6936e68eafcab68734ddd651fe5cf0036507",
+        "expected_sha256": "5a5888af16dac99b5b3e90696a3f6936e68eafcab68734ddd651fe5cf0036507",
+        "git_blob_sha": "820e20381bc4e39c71b81fff725f0f6558a956d0"
+      },
+      {
+        "path": "workflow/scaffolding.py",
+        "sha256": "0bd7d8d58a6a453e1110f3b865c19183723cceb5eaf2835d700957e9917aa393",
+        "expected_sha256": "0bd7d8d58a6a453e1110f3b865c19183723cceb5eaf2835d700957e9917aa393",
+        "git_blob_sha": "7ec663300e9430a4b894e36b4118cec337dc1034"
+      },
+      {
+        "path": "workflow/source_duplicates.py",
+        "sha256": "29c0dbf6a0da28f26a4037ed1be8a1a3db9152ea7d6acf8b4ae8d0c971f5d232",
+        "expected_sha256": "29c0dbf6a0da28f26a4037ed1be8a1a3db9152ea7d6acf8b4ae8d0c971f5d232",
+        "git_blob_sha": "ebfcb6c7696eb63c0a31a900c33537522b9cba0f"
+      },
+      {
+        "path": "workflow/source_hint_development.py",
+        "sha256": "9f06a4243b437446bc1bcc6d903afc4993453b13cd225a8f2e81752a2303784d",
+        "expected_sha256": "9f06a4243b437446bc1bcc6d903afc4993453b13cd225a8f2e81752a2303784d",
+        "git_blob_sha": "c05078e2cdc041fe6e7e081f63f84f52bef1a271"
+      },
+      {
+        "path": "workflow/source_hint_installation.py",
+        "sha256": "4510165e53584cc872c7796314d56f2c3634d50da8055cabaa1ee899d2ef613f",
+        "expected_sha256": "4510165e53584cc872c7796314d56f2c3634d50da8055cabaa1ee899d2ef613f",
+        "git_blob_sha": "7b055b96f245e74cd282caa1414d8dcad3ff60f9"
+      },
+      {
+        "path": "workflow/source_hint_proposals.py",
+        "sha256": "1eb0f08b6e7fddafb31bc9efb35793bb98af5dc56f3bb56619d0a4cadf490926",
+        "expected_sha256": "1eb0f08b6e7fddafb31bc9efb35793bb98af5dc56f3bb56619d0a4cadf490926",
+        "git_blob_sha": "62b7bc007cebad9585b3ca69c45f66f4681b133c"
+      },
+      {
+        "path": "workflow/source_hints.py",
+        "sha256": "634d1b19030e4eabcae1dfd255865cf03dfd02d61918af6331577a46f6c003c3",
+        "expected_sha256": "634d1b19030e4eabcae1dfd255865cf03dfd02d61918af6331577a46f6c003c3",
+        "git_blob_sha": "be79d4bfd781f3e082614a3f5b38904ef49e6fc5"
+      },
+      {
+        "path": "workflow/source_refactors.py",
+        "sha256": "2b1826befd1550c73603026674c98f9acbc048e52ae3d260b50767365169e3a6",
+        "expected_sha256": "2b1826befd1550c73603026674c98f9acbc048e52ae3d260b50767365169e3a6",
+        "git_blob_sha": "e6f7ea77ce2e7f76055ce63320cc33fefbd91a56"
+      },
+      {
+        "path": "workflow/treatment_bundles.py",
+        "sha256": "aee3be52c77b87b5eacae884b7ee2476f77a3756113870770ab92a89c9951bb4",
+        "expected_sha256": "aee3be52c77b87b5eacae884b7ee2476f77a3756113870770ab92a89c9951bb4",
+        "git_blob_sha": "db3fc653ec61a959324b2f2ee710d2567f4e3fea"
+      },
+      {
+        "path": "workflow/treatment_versions.py",
+        "sha256": "4680363fa90d1d7cae7973dbd4dbd137d026255dee32e6c3cecf44b64fad44dd",
+        "expected_sha256": "4680363fa90d1d7cae7973dbd4dbd137d026255dee32e6c3cecf44b64fad44dd",
+        "git_blob_sha": "ef818d2c8684c05544686ec2737578a3aa796a5f"
+      },
+      {
+        "path": "workflow/worktrees.py",
+        "sha256": "36ad0bf5f1aa3ec2deb378f3f7093e45789850c0f4b6765205dff478128e957e",
+        "expected_sha256": "36ad0bf5f1aa3ec2deb378f3f7093e45789850c0f4b6765205dff478128e957e",
+        "git_blob_sha": "98ecfce9ecad283b97af5ed30a1194498bbf902c"
+      }
+    ],
+    "mismatches": []
+  },
+  "arms": [
+    {
+      "bank": "rdpro_java",
+      "arm": "original",
+      "selected": 69,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/result.json",
+      "passes": 12,
+      "detail_count": 69,
+      "reported_selected": 69,
+      "result_sha256": "03423ef0f88399bbd3823f8a1f35f0863ea29202bc1b895ea27bfd327da82200",
+      "completion_sha256": "7ec799828bd65b05eb069661bceacca7407a1e9d139b96bbe5b5f796bfc12a34",
+      "result_hash_matches_completion": true,
+      "logical_completed": 69,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 54,
+        "runtime": 3,
+        "null": 12
+      },
+      "detail_status_counts": {
+        "fail": 57,
+        "pass": 12
+      },
+      "provider_status_counts": {
+        "returned": 69
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "rdpro_java",
+      "arm": "generated_d1",
+      "selected": 69,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/result.json",
+      "passes": 4,
+      "detail_count": 69,
+      "reported_selected": 69,
+      "result_sha256": "5acf9215419edc170d18c49b0b024e9bdfce1110307e31f62942920aa0794fa7",
+      "completion_sha256": "d8b83900fc1309cc027718c18a0f7354ba80a1ebf47a5807646d5e010b715521",
+      "result_hash_matches_completion": true,
+      "logical_completed": 69,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 62,
+        "null": 4,
+        "runtime": 3
+      },
+      "detail_status_counts": {
+        "fail": 65,
+        "pass": 4
+      },
+      "provider_status_counts": {
+        "returned": 69
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "rdpro_scala",
+      "arm": "original",
+      "selected": 261,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/result.json",
+      "passes": 20,
+      "detail_count": 261,
+      "reported_selected": 261,
+      "result_sha256": "89eef1a2e1f1e3d0326f0b9b20d0f0f5035a913d23657ed85a25251b369f1f2e",
+      "completion_sha256": "1d0f03c2e0f7fa01653ebd3a0ff46e0c1fe1d766d5fe969959ebd043ddc2f300",
+      "result_hash_matches_completion": true,
+      "logical_completed": 261,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 229,
+        "null": 20,
+        "runtime": 12
+      },
+      "detail_status_counts": {
+        "fail": 241,
+        "pass": 20
+      },
+      "provider_status_counts": {
+        "returned": 261
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "rdpro_scala",
+      "arm": "generated_d1",
+      "selected": 261,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/result.json",
+      "passes": 14,
+      "detail_count": 261,
+      "reported_selected": 261,
+      "result_sha256": "496cd10c323a98c9e7c0badae416560dcd59cc0d516589a4f9a3b190f9301a7b",
+      "completion_sha256": "284bb1cd495e58d44dc094f51bdb24402b6393801c6b39ff9625f146998edb66",
+      "result_hash_matches_completion": true,
+      "logical_completed": 261,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 227,
+        "null": 14,
+        "runtime": 20
+      },
+      "detail_status_counts": {
+        "fail": 247,
+        "pass": 14
+      },
+      "provider_status_counts": {
+        "returned": 261
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "sedonadb",
+      "arm": "original",
+      "selected": 217,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/result.json",
+      "passes": 87,
+      "detail_count": 217,
+      "reported_selected": 217,
+      "result_sha256": "baa775bba32e41f88de5643376000b4dbe225e629a1c4085c0cb447b21d4ead6",
+      "completion_sha256": "223e2cbdc72686318f6565fdb97d3eb50a7467e6816ed43dcc422be5bef29177",
+      "result_hash_matches_completion": true,
+      "logical_completed": 217,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "unknown": 65,
+        "runtime": 65,
+        "null": 87
+      },
+      "detail_status_counts": {
+        "fail": 130,
+        "pass": 87
+      },
+      "provider_status_counts": {
+        "returned": 217
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "sedonadb",
+      "arm": "generated_d1",
+      "selected": 217,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/result.json",
+      "passes": 96,
+      "detail_count": 217,
+      "reported_selected": 217,
+      "result_sha256": "75a3498c23ad4319226eb30419746f3643fc7b0753addad8f10c9625d06a6cbd",
+      "completion_sha256": "2401e3c1193eb1b81faa52cb947f7dc56bf1b1615b44c3c84ec5e93d3e4d53e2",
+      "result_hash_matches_completion": true,
+      "logical_completed": 217,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "unknown": 45,
+        "runtime": 76,
+        "null": 96
+      },
+      "detail_status_counts": {
+        "fail": 121,
+        "pass": 96
+      },
+      "provider_status_counts": {
+        "returned": 217
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mdanalysis",
+      "arm": "original",
+      "selected": 1519,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/result.json",
+      "passes": 592,
+      "detail_count": 1519,
+      "reported_selected": 1519,
+      "result_sha256": "b74bfac78f82bb707fd1b3479e501ab64bc9f20f78f460d3ed8f1a04027f45df",
+      "completion_sha256": "0166ede5aee221b1ce925d4aef32c9acb6b0b8241a5a1bfec04e7b6307d6c6de",
+      "result_hash_matches_completion": true,
+      "logical_completed": 1519,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "runtime": 896,
+        "null": 592,
+        "timeout": 3,
+        "api-import": 16,
+        "dependency-unverified": 7,
+        "unknown": 5
+      },
+      "detail_status_counts": {
+        "fail": 927,
+        "pass": 592
+      },
+      "provider_status_counts": {
+        "returned": 1519
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mdanalysis",
+      "arm": "generated_d1",
+      "selected": 1519,
+      "complete": false,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/result.json",
+      "checkpoint_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/comprehension_progress.jsonl",
+      "checkpoint_rows": 603,
+      "unique_targets": 602,
+      "logical_completed": 602,
+      "passes": 253,
+      "partial_line_ignored": false,
+      "category_counts": {
+        "null": 253,
+        "runtime": 334,
+        "api-import": 12,
+        "dependency-unverified": 3
+      },
+      "last_api": "python:MDAnalysis.coordinates.timestep.Timestep.__eq__",
+      "recent_failure_sample": [
+        {
+          "api": "python:MDAnalysis.coordinates.memory.MemoryReader",
+          "category": "runtime",
+          "error": "AssertionError:",
+          "source": "source/package/MDAnalysis/coordinates/memory.py:238",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader--6342e5ee979c782998ef610065b36d97753588002266cfd49d864c3efd771839/attempt_0001"
+          ],
+          "candidate_excerpt": "import numpy as np\nimport MDAnalysis as mda\nfrom MDAnalysis.coordinates.memory import MemoryReader\n\n# Create a synthetic trajectory in memory: 5 frames, 10 atoms, 3 coordinates\nn_frames = 5\nn_atoms = 10\ncoords = np.random.rand(n_frames, n_atoms, 3).astype(np.float32)\n\n# Initialize the reader\nreader = MemoryReader(coordinate_array=coords, order='fac')\n\n# Verify the reader properties\nassert reader.n_frames == n_frames\nassert reader.n_atoms == n_atoms\n\n# Create a Universe using the MemoryReader\n# We use a dummy topology (a simple Universe with just the atoms)\nu = mda.Universe.empty(n_atoms, trajectory=reader)\n\n# Verify the Universe trajectory access\nassert len(u.trajectory) == n_frames\nassert u.atoms.positions.shape == (n_atoms, 3)\n\n# Check a specific frame\nu.trajectory[2]\nassert np.allclose(u.atoms.positions, coords[2])\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.memory.MemoryReader {u.trajectory.n_frames}, {u.atoms.n_atoms}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ AssertionError: \nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader--6342e5ee979c782998ef610065b36d97753588002266cfd49d864c3efd771839/attempt_0001/api_test.py\", line 120, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader--6342e5ee979c782998ef610065b36d97753588002266cfd49d864c3efd771839/attempt_0001/api_test.py\", line 115, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader--6342e5ee979c782998ef610065b36d97753588002266cfd49d864c3efd771839/attempt_0001/api_test.py\", line 104, in api_test\n    assert len(u.trajectory) == n_frames\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+          "stdout.txt": ""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.memory.MemoryReader.__repr__",
+          "category": "runtime",
+          "error": "AssertionError:",
+          "source": "source/package/MDAnalysis/coordinates/memory.py:650",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.__repr__--7af0eb4f0b85fd1066aefb0133cfdeaba26bebb10f70b64ed9f988aca3ceb40a/attempt_0001"
+          ],
+          "candidate_excerpt": "universe.transfer_to_memory()\nreader = universe.trajectory\nrepr_str = reader.__repr__()\n\n# Verify the representation contains expected metadata\n# MemoryReader repr typically looks like: <MemoryReader n_frames=X, n_atoms=Y>\nassert \"MemoryReader\" in repr_str\nassert \"n_frames=\" in repr_str\nassert \"n_atoms=\" in repr_str\n\n# Witness: extract the number of frames from the string to verify consistency\nimport re\nmatch = re.search(r\"n_frames=(\\d+)\", repr_str)\nn_frames_repr = int(match.group(1))\nassert n_frames_repr == len(universe.trajectory)\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.memory.MemoryReader.__repr__ {n_frames_repr}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ AssertionError: \nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.__repr__--7af0eb4f0b85fd1066aefb0133cfdeaba26bebb10f70b64ed9f988aca3ceb40a/attempt_0001/api_test.py\", line 108, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.__repr__--7af0eb4f0b85fd1066aefb0133cfdeaba26bebb10f70b64ed9f988aca3ceb40a/attempt_0001/api_test.py\", line 103, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.__repr__--7af0eb4f0b85fd1066aefb0133cfdeaba26bebb10f70b64ed9f988aca3ceb40a/attempt_0001/api_test.py\", line 90, in api_test\n    assert \"n_frames=\" in repr_str\n           ^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+          "stdout.txt": ""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.memory.MemoryReader.add_transformations",
+          "category": "runtime",
+          "error": "AssertionError:",
+          "source": "source/package/MDAnalysis/coordinates/memory.py:658",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.add_transformations--3462c5bf5f46ac01b9070343c0c0239890c9350bb5b19fabd2b87b6f24d5a1b4/attempt_0001"
+          ],
+          "candidate_excerpt": "import MDAnalysis as mda\nimport MDAnalysis.transformations as trans\nimport numpy as np\n\n# Create a MemoryReader-compatible Universe\n# Using a small subset of atoms to ensure deterministic behavior\nu = mda.Universe(psf_path, dcd_path)\natoms = u.atoms[:10]\n\n# Define a simple transformation: translate coordinates by a fixed vector\ndef translate_transform(ts):\n    ts.positions += 1.0\n    return ts\n\n# Register the transformation\n# MemoryReader.add_transformations is the target\nu.trajectory.add_transformations(translate_transform)\n\n# Verify the transformation is applied during iteration\n# We store the original position of the first atom to compare\noriginal_pos = u.atoms[0].position.copy()\nu.trajectory[0]\ntransformed_pos = u.atoms[0].position.copy()\n\n# The transformation adds 1.0 to all coordinates\nexpected_pos = original_pos + 1.0\nnp.testing.assert_allclose(transformed_pos, expected_pos, atol=1e-5)\n\n# Witness: The number of transformations applied (internal state)\n# The Reader stores transfo",
+          "stderr.txt": "-8.445281], dtype=float32)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.add_transformations--3462c5bf5f46ac01b9070343c0c0239890c9350bb5b19fabd2b87b6f24d5a1b4/attempt_0001/api_test.py\", line 125, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.add_transformations--3462c5bf5f46ac01b9070343c0c0239890c9350bb5b19fabd2b87b6f24d5a1b4/attempt_0001/api_test.py\", line 120, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.add_transformations--3462c5bf5f46ac01b9070343c0c0239890c9350bb5b19fabd2b87b6f24d5a1b4/attempt_0001/api_test.py\", line 109, in api_test\n    np.testing.assert_allclose(transformed_pos, expected_pos, atol=1e-5)\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/numpy/testing/_private/utils.py\", line 1711, in assert_allclose\n    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/numpy/testing/_private/utils.py\", line 919, in assert_array_compare\n    raise AssertionError(msg)\nAssertionError: \nNot equal to tolerance rtol=1e-07, atol=1e-05\n\nMismatched elements: 3 / 3 (100%)\nMax absolute difference among violations: 1.\nMax relative difference among violations: 0.11840932\n ACTUAL: array([12.736044,  9.500797, -9.445281], dtype=float32)\n DESIRED: array([13.736044, 10.500797, -8.445281], dtype=float32)\n",
+          "stdout.txt": ""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.memory.MemoryReader.copy",
+          "category": "runtime",
+          "error": "AttributeError: property 'frame' of 'MemoryReader' object has no setter",
+          "source": "source/package/MDAnalysis/coordinates/memory.py:450",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.copy--e62ba0cd2a7cee054b7d810c7fc1753fd2955828cda717a3bfccd29891961483/attempt_0001"
+          ],
+          "candidate_excerpt": "universe.transfer_to_memory()\nreader = universe.trajectory\nreader_copy = reader.copy()\n\n# Verify that the copy is a distinct object but shares the same data\nassert reader_copy is not reader\nassert reader_copy.n_frames == reader.n_frames\nassert reader_copy.n_atoms == reader.n_atoms\n\n# Verify that the copy can be manipulated independently\nreader_copy.frame = 0\nreader.frame = reader.n_frames - 1\nassert reader_copy.frame != reader.frame\n\n# Witness: number of frames and atom count\nwitness = (reader_copy.n_frames, reader_copy.n_atoms)\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.memory.MemoryReader.copy {witness}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ AttributeError: property 'frame' of 'MemoryReader' object has no setter\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.copy--e62ba0cd2a7cee054b7d810c7fc1753fd2955828cda717a3bfccd29891961483/attempt_0001/api_test.py\", line 108, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.copy--e62ba0cd2a7cee054b7d810c7fc1753fd2955828cda717a3bfccd29891961483/attempt_0001/api_test.py\", line 103, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.copy--e62ba0cd2a7cee054b7d810c7fc1753fd2955828cda717a3bfccd29891961483/attempt_0001/api_test.py\", line 93, in api_test\n    reader_copy.frame = 0\n    ^^^^^^^^^^^^^^^^^\nAttributeError: property 'frame' of 'MemoryReader' object has no setter\n",
+          "stdout.txt": ""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.memory.MemoryReader.set_array",
+          "category": "runtime",
+          "error": "TypeError: The input has to be a numpy.ndarray that corresponds to the layout specified by the 'order' keyword.",
+          "source": "source/package/MDAnalysis/coordinates/memory.py:482",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.set_array--c366ef3154de4d61409582633efd72cfe3598a74de65114b8dd6e03c88438e28/attempt_0001"
+          ],
+          "candidate_excerpt": "import numpy as np\nfrom MDAnalysis.coordinates.memory import MemoryReader\n\n# Create a MemoryReader instance\nn_atoms = len(atoms)\nn_frames = 5\n# Create dummy coordinate data in 'fac' order: (frames, atoms, 3)\ncoords = np.random.rand(n_frames, n_atoms, 3).astype(np.float32)\n\n# Initialize MemoryReader with the topology from the existing universe\nreader = MemoryReader(universe.atoms, n_frames=n_frames)\n\n# Set the array using the target API\nreader.set_array(coords, order='fac')\n\n# Verify the result by reading back the coordinates for a specific frame\n# The MemoryReader should now reflect the provided array\nframe_data = reader.get_frame(0)\nassert frame_data.shape == (n_atoms, 3)\nassert np.allclose(frame_data, coords[0])\n\n# Witness: The shape of the internal coordinate array as seen by the reader\nwitness = reader.coordinates.shape\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.memory.MemoryReader.set_array {witness}\")",
+          "stderr.txt": "ecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ TypeError: The input has to be a numpy.ndarray that corresponds to the layout specified by the 'order' keyword.\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.set_array--c366ef3154de4d61409582633efd72cfe3598a74de65114b8dd6e03c88438e28/attempt_0001/api_test.py\", line 115, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.set_array--c366ef3154de4d61409582633efd72cfe3598a74de65114b8dd6e03c88438e28/attempt_0001/api_test.py\", line 110, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.set_array--c366ef3154de4d61409582633efd72cfe3598a74de65114b8dd6e03c88438e28/attempt_0001/api_test.py\", line 93, in api_test\n    reader = MemoryReader(universe.atoms, n_frames=n_frames)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/memory.py\", line 331, in __init__\n    raise TypeError(errmsg) from None\nTypeError: The input has to be a numpy.ndarray that corresponds to the layout specified by the 'order' keyword.\n",
+          "stdout.txt": ""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.memory.MemoryReader.timeseries",
+          "category": "runtime",
+          "error": "AttributeError: 'NoneType' object has no attribute 'indices'",
+          "source": "source/package/MDAnalysis/coordinates/memory.py:512",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.timeseries--5d3b95996f44bfed6672f058717d1c788e5b2fd016666846d54c6ee11acd07e6/attempt_0001"
+          ],
+          "candidate_excerpt": "universe.transfer_to_memory()\nca_atoms = universe.select_atoms(\"name CA\")\nn_frames = len(universe.trajectory)\nn_atoms = len(ca_atoms)\n\n# Extract coordinates in 'fac' order: (frames, atoms, 3)\ncoords = universe.trajectory.timeseries(atomgroup=ca_atoms, order=\"fac\")\n\n# Verify shape: (frames, atoms, 3)\nexpected_shape = (n_frames, n_atoms, 3)\nassert coords.shape == expected_shape, f\"Expected shape {expected_shape}, got {coords.shape}\"\n\n# Verify a deterministic property: the first coordinate of the first atom in the first frame\n# is a float (the coordinate value).\nwitness = coords.shape\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.memory.MemoryReader.timeseries {witness}\")",
+          "stderr.txt": "inates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ AttributeError: 'NoneType' object has no attribute 'indices'\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.timeseries--5d3b95996f44bfed6672f058717d1c788e5b2fd016666846d54c6ee11acd07e6/attempt_0001/api_test.py\", line 107, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.timeseries--5d3b95996f44bfed6672f058717d1c788e5b2fd016666846d54c6ee11acd07e6/attempt_0001/api_test.py\", line 102, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.memory.MemoryReader.timeseries--5d3b95996f44bfed6672f058717d1c788e5b2fd016666846d54c6ee11acd07e6/attempt_0001/api_test.py\", line 89, in api_test\n    coords = universe.trajectory.timeseries(atomgroup=ca_atoms, order=\"fac\")\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/memory.py\", line 616, in timeseries\n    return array.take(asel.indices, a_index)\n                      ^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'indices'\n",
+          "stdout.txt": ""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.null.NullWriter",
+          "category": "runtime",
+          "error": "TypeError: Input obj is neither an AtomGroup or Universe",
+          "source": "source/package/MDAnalysis/coordinates/null.py:43",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.null.NullWriter--fd87306d5314c6035ef0f490204b15b92290872817d6aff982005a0535de51e7/attempt_0001"
+          ],
+          "candidate_excerpt": "from MDAnalysis.coordinates.null import NullWriter\nimport os\n\n# Initialize the NullWriter\nnull_filename = os.path.join(output_dir, \"discarded_output.dcd\")\nwriter = NullWriter(null_filename)\n\n# Use in a loop to suppress output\n# We iterate over a small subset of the trajectory to ensure efficiency\nframe_count = 0\nfor ts in universe.trajectory[:5]:\n    writer.write(ts)\n    frame_count += 1\n\n# Verify that the writer is an instance of NullWriter and that no file was created\n# as per the contract that NullWriter does not perform I/O.\nis_null_writer = isinstance(writer, NullWriter)\nfile_exists = os.path.exists(null_filename)\n\n# The contract states NullWriter is like /dev/null and ignores input.\n# We assert that the file does not exist (or is empty if created by the OS)\n# and that we processed the expected number of frames.\nassert is_null_writer is True\nassert frame_count == 5\nassert file_exists is False\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.null.NullWriter frames_processed={frame_",
+          "stderr.txt": "nates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ TypeError: Input obj is neither an AtomGroup or Universe\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.null.NullWriter--fd87306d5314c6035ef0f490204b15b92290872817d6aff982005a0535de51e7/attempt_0001/api_test.py\", line 118, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.null.NullWriter--fd87306d5314c6035ef0f490204b15b92290872817d6aff982005a0535de51e7/attempt_0001/api_test.py\", line 113, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.null.NullWriter--fd87306d5314c6035ef0f490204b15b92290872817d6aff982005a0535de51e7/attempt_0001/api_test.py\", line 94, in api_test\n    writer.write(ts)\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/base.py\", line 1621, in write\n    return self._write_next_frame(obj)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/null.py\", line 63, in _write_next_frame\n    raise TypeError(errmsg) from None\nTypeError: Input obj is neither an AtomGroup or Universe\n",
+          "stdout.txt": ""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.timestep.Timestep.__eq__",
+          "category": "runtime",
+          "error": "TypeError: __deepcopy__() takes exactly 0 positional arguments (1 given)",
+          "source": "source/package/MDAnalysis/coordinates/timestep.pyx:672",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.timestep.Timestep.__eq__--596d3442e9f1c6f2be85f8ba23f94e5e04af78f131ef73935b97d07f6892a0dd/attempt_0001"
+          ],
+          "candidate_excerpt": "# Extract two Timestep objects from the trajectory\nts1 = trajectory[0]\nts2 = trajectory[0]\n\n# Verify that a Timestep is equal to itself\nis_equal = ts1.__eq__(ts2)\n\n# Verify that a Timestep is equal to a copy of itself\nimport copy\nts3 = copy.deepcopy(ts1)\nis_equal_copy = (ts1 == ts3)\n\n# Verify that comparing to a different frame (if available) returns False\nis_not_equal = True\nif len(trajectory) > 1:\n    ts4 = trajectory[1]\n    is_not_equal = (ts1 != ts4)\n\n# Witness: The equality check results\nwitness = (is_equal, is_equal_copy, is_not_equal)\n\n# Assertions\nassert is_equal is True, \"Timestep should be equal to itself\"\nassert is_equal_copy is True, \"Timestep should be equal to its deepcopy\"\nassert is_not_equal is True, \"Different frames should not be equal\"\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.timestep.Timestep.__eq__ {witness}\")",
+          "stderr.txt": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n__RUN_ERR__ TypeError: __deepcopy__() takes exactly 0 positional arguments (1 given)\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.timestep.Timestep.__eq__--596d3442e9f1c6f2be85f8ba23f94e5e04af78f131ef73935b97d07f6892a0dd/attempt_0001/api_test.py\", line 118, in <module>\n    run()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.timestep.Timestep.__eq__--596d3442e9f1c6f2be85f8ba23f94e5e04af78f131ef73935b97d07f6892a0dd/attempt_0001/api_test.py\", line 113, in run\n    api_test()\n  File \"/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.timestep.Timestep.__eq__--596d3442e9f1c6f2be85f8ba23f94e5e04af78f131ef73935b97d07f6892a0dd/attempt_0001/api_test.py\", line 92, in api_test\n    ts3 = copy.deepcopy(ts1)\n          ^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib64/python3.12/copy.py\", line 143, in deepcopy\n    y = copier(memo)\n        ^^^^^^^^^^^^\nTypeError: __deepcopy__() takes exactly 0 positional arguments (1 given)\n",
+          "stdout.txt": ""
+        }
+      ],
+      "recent_import_flags": [
+        {
+          "api": "python:MDAnalysis.converters.RDKitInferring.MDAnalysisInferrer.__call__",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'MDAnalysisConverter' from 'MDAnalysis.converters.RDKit' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/converters/RDKit.py)",
+          "source": "source/package/MDAnalysis/converters/RDKitInferring.py:182",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.converters.RDKitInferring.MDAnalysisInferrer.__call__--77af43906308957e95e6d8bac0fa10706c0feb2f3d3fae5e519945597219e154/attempt_0001"
+          ],
+          "candidate_excerpt": "from rdkit import Chem\nfrom MDAnalysis.converters.RDKit import MDAnalysisConverter\nfrom MDAnalysis.converters.RDKitInferring import MDAnalysisInferrer\n\n# Create an RDKit molecule from the preloaded protein AtomGroup\n# MDAnalysisConverter is the standard way to get a Chem.Mol from an AtomGroup\nconverter = MDAnalysisConverter()\nmol = converter.convert(protein)\n\n# Initialize the inferrer\ninferrer = MDAnalysisInferrer()\n\n# Perform inference\nrefined_mol = inferrer(mol)\n\n# Verify the result:\n# 1. The result should be a valid RDKit Mol object\n# 2. The number of atoms should be preserved\n# 3. The number of bonds should be preserved (or at least consistent)\nassert isinstance(refined_mol, Chem.Mol)\nassert refined_mol.GetNumAtoms() == protein.n_atoms\n\n# Witness: Number of atoms and number of bonds in the refined molecule\nnum_atoms = refined_mol.GetNumAtoms()\nnum_bonds = refined_mol.GetNumBonds()\n\nprint(f\"__CHECK__ python:MDAnalysis.converters.RDKitInferring.MDAnalysisInferrer.__call__ atoms={num_"
+        },
+        {
+          "api": "python:MDAnalysis.converters.base.ConverterBase.convert",
+          "category": "dependency-unverified",
+          "error": "missing module/import: No module named 'MDAnalysis.converters.PDBConverter'",
+          "source": "source/package/MDAnalysis/converters/base.py:59",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.converters.base.ConverterBase.convert--112b985375428dc0fabed708cad192d78f1e8489ef12fb3b251b8388acecb294/attempt_0001"
+          ],
+          "candidate_excerpt": "from MDAnalysis.converters.PDBConverter import PDBConverter\nimport os\n\n# The PDBConverter is a concrete implementation of ConverterBase.\n# We use the preloaded 'atoms' AtomGroup from the PSF/DCD fixture.\n# PDBConverter.convert() takes an AtomGroup and returns a PDB file content or writes to a file.\n# According to the API, we instantiate the converter and call convert.\n\nconverter = PDBConverter()\noutput_pdb = os.path.join(output_dir, \"test_output.pdb\")\n\n# Convert the AtomGroup to a PDB file\nconverter.convert(atoms, filename=output_pdb)\n\n# Verify the result by checking if the file exists and has the expected number of atoms\nassert os.path.exists(output_pdb)\nwith open(output_pdb, 'r') as f:\n    lines = [line for line in f if line.startswith(\"ATOM\")]\n\n# The witness is the number of ATOM lines in the generated PDB file\nwitness = len(lines)\nassert witness == len(atoms), f\"Expected {len(atoms)} atoms, found {witness}\"\n\nprint(f\"__CHECK__ python:MDAnalysis.converters.base.ConverterBase.convert "
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'MockHOOMDTrajectory' from 'MDAnalysis.coordinates.GSD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/GSD.py)",
+          "source": "source/package/MDAnalysis/coordinates/GSD.py:62",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.GSD.MockHOOMDTrajectory--730f4b1afeda9f0feccc3209ce21c88a81ae39322c81dcfa3c00efc0bcbabe86/attempt_0001"
+          ],
+          "candidate_excerpt": "from MDAnalysis.coordinates.GSD import MockHOOMDTrajectory\n\n# Instantiate the mock trajectory\nmock_traj = MockHOOMDTrajectory()\n\n# Verify the object is an instance of the expected class\nassert isinstance(mock_traj, MockHOOMDTrajectory)\n\n# The mock trajectory should have a defined frame count or basic attributes\n# Based on the GSD reader interface, it should have a 'n_frames' attribute\n# or at least be iterable.\nn_frames = getattr(mock_traj, 'n_frames', -1)\n\n# Verify that the mock trajectory reports a non-negative number of frames\nassert n_frames >= 0\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory {n_frames}\")"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.H5MD.MockH5pyFile",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'MockH5pyFile' from 'MDAnalysis.coordinates.H5MD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/H5MD.py)",
+          "source": "source/package/MDAnalysis/coordinates/H5MD.py:227",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.H5MD.MockH5pyFile--cd64e5d89dcae17111c9b677d11cce8a6bfc41cb38633658b629642d5dc9315a/attempt_0001"
+          ],
+          "candidate_excerpt": "from MDAnalysis.coordinates.H5MD import MockH5pyFile\n\n# Instantiate the mock HDF5 file object\nmock_h5 = MockH5pyFile()\n\n# The MockH5pyFile is designed to mimic h5py.File behavior.\n# We verify it behaves like a dictionary-like object (HDF5 group)\n# and supports basic creation of groups/datasets as expected in H5MD.\nmock_h5.create_group(\"particles\")\nmock_h5[\"particles\"].create_dataset(\"atoms\", data=[1, 2, 3])\n\n# Verify the structure exists and contains the expected data\nassert \"particles\" in mock_h5\nassert \"atoms\" in mock_h5[\"particles\"]\nwitness = len(mock_h5[\"particles\"][\"atoms\"])\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.H5MD.MockH5pyFile {witness}\")\nassert witness == 3, f\"Expected dataset length 3, got {witness}\""
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.IMD.MockIMDClient",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'MockIMDClient' from 'MDAnalysis.coordinates.IMD' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/IMD.py)",
+          "source": "source/package/MDAnalysis/coordinates/IMD.py:157",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.IMD.MockIMDClient--13154fd04e7aeeb676ec00d858977c465edc2223144cb83ceef1a5a76b45a5f6/attempt_0001"
+          ],
+          "candidate_excerpt": "from MDAnalysis.coordinates.IMD import MockIMDClient\n\n# Instantiate the mock client\nclient = MockIMDClient()\n\n# The MockIMDClient is designed to mimic an IMD server connection.\n# It should have a state indicating it is a mock object.\n# We verify that the object is correctly instantiated and has the expected type.\nassert isinstance(client, MockIMDClient)\n\n# Since the MockIMDClient is a testing utility, we check if it exposes \n# expected attributes or methods that would be present in an IMD client interface.\n# Based on the implementation, it should have a 'connected' status or similar.\n# We verify the object exists and is not None.\nassert client is not None\n\n# Witness: The class name of the instantiated object\nwitness = client.__class__.__name__\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.IMD.MockIMDClient {witness}\")"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.base.ConverterBase.convert",
+          "category": "dependency-unverified",
+          "error": "missing module/import: No module named 'MDAnalysis.converters.pdb'",
+          "source": "source/package/MDAnalysis/coordinates/base.py:1858",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.base.ConverterBase.convert--48d7b0d5951b9ddf9c44d1b2e73e6b2b242a055165802dc7cdd47ef15f70c040/attempt_0001"
+          ],
+          "candidate_excerpt": "from MDAnalysis.converters.pdb import PDBConverter\nimport os\n\n# Initialize the converter\nconverter = PDBConverter()\n\n# Convert the preloaded AtomGroup (atoms) to a PDB-formatted string/object\n# The PDBConverter.convert method returns a PDB file content (string)\npdb_output = converter.convert(atoms)\n\n# Verify the output is a string and contains the expected number of lines\n# The number of atoms in the preloaded 'atoms' group is known\nnum_atoms = len(atoms)\nlines = pdb_output.strip().split('\\n')\n\n# PDB format typically has one ATOM line per atom\n# We check that the number of lines matches the number of atoms\nassert len(lines) == num_atoms, f\"Expected {num_atoms} lines, got {len(lines)}\"\nassert lines[0].startswith(\"ATOM\"), \"First line should be an ATOM record\"\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.base.ConverterBase.convert {len(lines)}\")"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.base.ProtoReader.remove_auxiliary",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'AuxReader' from 'MDAnalysis.auxiliary.core' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/auxiliary/core.py)",
+          "source": "source/package/MDAnalysis/coordinates/base.py:1159",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.base.ProtoReader.remove_auxiliary--2d03082dca70f436d55aa6b1dd11369868bb78458b418c87cdfb537955ec4424/attempt_0001"
+          ],
+          "candidate_excerpt": "import numpy as np\nfrom MDAnalysis.auxiliary.core import AuxReader\n\n# Create a dummy auxiliary data file\naux_path = f\"{output_dir}/test_aux.npy\"\ndata = np.arange(10)\nnp.save(aux_path, data)\n\n# Attach the auxiliary data to the trajectory\n# Using a simple numpy array as a dummy auxiliary source\nuniverse.trajectory.add_auxiliary('test_aux', aux_path)\n\n# Verify it was added\nassert 'test_aux' in universe.trajectory.auxiliary_list\ninitial_count = len(universe.trajectory.auxiliary_list)\n\n# Perform the removal\nuniverse.trajectory.remove_auxiliary(auxname='test_aux')\n\n# Verify it was removed\nassert 'test_aux' not in universe.trajectory.auxiliary_list\nfinal_count = len(universe.trajectory.auxiliary_list)\n\n# Correctness witness: the count of auxiliary streams should decrease by 1\nwitness = (initial_count, final_count)\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.base.ProtoReader.remove_auxiliary {witness}\")\nassert final_count == initial_count - 1"
+        },
+        {
+          "api": "python:MDAnalysis.coordinates.base.ProtoReader.set_aux_attribute",
+          "category": "api-import",
+          "error": "ImportError: cannot import name 'AuxReader' from 'MDAnalysis.auxiliary.core' (/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/auxiliary/core.py)",
+          "source": "source/package/MDAnalysis/coordinates/base.py:1296",
+          "evidence_paths": [
+            "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.coordinates.base.ProtoReader.set_aux_attribute--8c52bc3396bbc112e936f9b7390f93be4cece7ca6c45a304e34d4cc39784eca1/attempt_0001"
+          ],
+          "candidate_excerpt": "import numpy as np\nfrom MDAnalysis.auxiliary.core import AuxReader\n\n# Create a dummy auxiliary data stream for the trajectory\n# We use a simple array-based auxiliary\ndata = np.arange(len(universe.trajectory))\naux = AuxReader(data, dt=1.0)\nuniverse.trajectory.add_auxiliary('test_aux', aux)\n\n# Verify the initial state\ninitial_dt = universe.trajectory.get_aux_attribute('test_aux', 'dt')\nassert initial_dt == 1.0\n\n# Use the target API to update the 'dt' attribute\nnew_dt = 2.5\nuniverse.trajectory.set_aux_attribute('test_aux', 'dt', new_dt)\n\n# Verify the update by reading it back\nupdated_dt = universe.trajectory.get_aux_attribute('test_aux', 'dt')\nassert updated_dt == 2.5\n\nprint(f\"__CHECK__ python:MDAnalysis.coordinates.base.ProtoReader.set_aux_attribute {updated_dt}\")"
+        }
+      ],
+      "provider_status_counts": {
+        "returned": 603,
+        "error": 1
+      },
+      "provider_errors": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.analysis.nucleicacids.NucPairDist--7e773ec3a8a19dca48754447617d8c9b47199b501d5e9d9940a109eebf2cd29c/attempt_0001/provider.json",
+          "status": "error",
+          "category": "llm-error",
+          "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "message": null,
+          "wall_s": 2.279982089996338
+        }
+      ]
+    },
+    {
+      "bank": "tslearn",
+      "arm": "original",
+      "selected": 354,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/result.json",
+      "passes": 211,
+      "detail_count": 354,
+      "reported_selected": 354,
+      "result_sha256": "074a889564f934e9635afba09412acf1c206cfacb33a10165441fb5df41bd15a",
+      "completion_sha256": "30b852a12d7c4cf9fe1ff9c5ca8419ebfa390c0384e02672a76b130553c741a4",
+      "result_hash_matches_completion": true,
+      "logical_completed": 354,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "runtime": 132,
+        "null": 211,
+        "api-import": 4,
+        "timeout": 1,
+        "dependency-unverified": 6
+      },
+      "detail_status_counts": {
+        "fail": 143,
+        "pass": 211
+      },
+      "provider_status_counts": {
+        "returned": 354
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "tslearn",
+      "arm": "generated_d1",
+      "selected": 354,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/result.json",
+      "passes": 221,
+      "detail_count": 354,
+      "reported_selected": 354,
+      "result_sha256": "c7867bb3739516a015311185bf78b5190e2032544f5a5c92441e9e61ea53d5bd",
+      "completion_sha256": "e5be1289a23e34367f1514fc927dd5929e42cb4866a9dcc0a77f672e8408e431",
+      "result_hash_matches_completion": true,
+      "logical_completed": 354,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "runtime": 114,
+        "null": 221,
+        "dependency-unverified": 7,
+        "timeout": 1,
+        "api-import": 11
+      },
+      "detail_status_counts": {
+        "fail": 133,
+        "pass": 221
+      },
+      "provider_status_counts": {
+        "returned": 354
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mir_eval",
+      "arm": "original",
+      "selected": 178,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/result.json",
+      "passes": 134,
+      "detail_count": 178,
+      "reported_selected": 178,
+      "result_sha256": "02ac1ce545b272b41297ac521ce8ddaff0a3604d8bba33abda88872a2393b20c",
+      "completion_sha256": "074723b74f39dcb8d49ddaf24a8c00c4cccb40fcd27c61d4afc6ae89debf376d",
+      "result_hash_matches_completion": true,
+      "logical_completed": 178,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "null": 134,
+        "runtime": 44
+      },
+      "detail_status_counts": {
+        "pass": 134,
+        "fail": 44
+      },
+      "provider_status_counts": {
+        "returned": 178
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mir_eval",
+      "arm": "generated_d1",
+      "selected": 178,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/result.json",
+      "passes": 144,
+      "detail_count": 178,
+      "reported_selected": 178,
+      "result_sha256": "ca114d3d41ef17accc35b542c92ac7c81e454d4ee7e41bbaba1b12482f06d86b",
+      "completion_sha256": "185d50731a98d4d8ffb461374c01cc386337658f2563df7ef87d3af0b8bd56c4",
+      "result_hash_matches_completion": true,
+      "logical_completed": 178,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "null": 144,
+        "runtime": 34
+      },
+      "detail_status_counts": {
+        "pass": 144,
+        "fail": 34
+      },
+      "provider_status_counts": {
+        "returned": 178
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "thumbnailator",
+      "arm": "original",
+      "selected": 225,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/result.json",
+      "passes": 109,
+      "detail_count": 225,
+      "reported_selected": 225,
+      "result_sha256": "6df8ce57d718fc093403f474228d02755ac773152d5ec90a10665f10a57cf1c2",
+      "completion_sha256": "9af42a8ddd4c4c88295023e0beb976b59c793c334ecd7823921186c637146b91",
+      "result_hash_matches_completion": true,
+      "logical_completed": 225,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "null": 109,
+        "compile": 80,
+        "runtime": 36
+      },
+      "detail_status_counts": {
+        "pass": 109,
+        "fail": 116
+      },
+      "provider_status_counts": {
+        "returned": 225
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "thumbnailator",
+      "arm": "generated_d1",
+      "selected": 225,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/result.json",
+      "passes": 97,
+      "detail_count": 225,
+      "reported_selected": 225,
+      "result_sha256": "de3e8cf5d87f1d500d4d83700497feb63b3a3079897823c7b697120b718d65ee",
+      "completion_sha256": "34cfb24bf3bf5b43f2070a03ef7e0f9ac21deeb3eacbb36dcd0581aa05ce7b00",
+      "result_hash_matches_completion": true,
+      "logical_completed": 225,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 93,
+        "null": 97,
+        "runtime": 35
+      },
+      "detail_status_counts": {
+        "fail": 128,
+        "pass": 97
+      },
+      "provider_status_counts": {
+        "returned": 225
+      },
+      "provider_errors": []
+    }
+  ],
+  "documentation_sync": {
+    "receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/reports/2026-11-18-professor-meeting/SYNC_VERIFICATION.json",
+    "receipt_sha256": "70861185255ef60efa5d68e5b75afc89e101685895f3ee6511dfa59caf155016",
+    "publication_commit": "5923e92beffabc9dbb78bf774d34685e545b0f49",
+    "review_paths": 146,
+    "cluster_unique_paths": 145,
+    "mismatches": []
+  },
+  "totals": {
+    "complete_arms": 13,
+    "planned_arms": 14,
+    "selected_apis": 2823,
+    "planned_condition_targets": 5646,
+    "recorded_logical_outcomes": 4729,
+    "provider_status_counts": {
+      "returned": 4730,
+      "error": 1
+    }
+  },
+  "controller_log_tail": "",
+  "rescore_result_files": [],
+  "observed_end_utc": "2026-11-19T08:18:42.034934+00:00",
+  "observed_end_pacific": "2026-11-19T00:18:42.034934-08:00",
+  "local_release_comparison": {
+    "root": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow",
+    "files": 146,
+    "mismatches": [
+      {
+        "path": "tests/test_native_execution_contract.py",
+        "sha256": "be09daa3f7e172701be51b817fb5929667afd0b0ec39b416200109803b3a0018",
+        "release_sha256": "3da2587998b10b419acf02a2e620adb2ff00d908841d138e49e70098e66fce16"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_execution.py",
+        "sha256": "e782d1fc47e62cebb9d85bfd90da07d4363ea7d6e5fb89b248e78b07809b8ccf",
+        "release_sha256": "8370ec6e87b1bf4b70dcf94b90a89fee2dd07efdc58f634650b454529d033d0c"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+        "sha256": "3d26657ac592dc1521a27822ab3042de1e1cd3c07f38836ce97ba413b7b4d174",
+        "release_sha256": "7dfaac9f3e045693e8303cb38cb619b395bab373559fdeaddbe795ae41fca2f7"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/native_execution_contract.py",
+        "sha256": "f054a2138af5a3cb3303cccfa824327aa6e95dba9df134a134a8ac0b823fe42e",
+        "release_sha256": "5ef4e8de77d1b60c40689999273132a0f3ed2226d808bcf08abbf15a1c9c7e2c"
+      }
+    ]
+  },
+  "local_documentation_comparison": {
+    "repo_paths": 146,
+    "mismatches": []
+  },
+  "sync_check": {
+    "local_release": {
+      "root": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow",
+      "files": 146,
+      "mismatches": [
+        {
+          "path": "tests/test_native_execution_contract.py",
+          "sha256": "be09daa3f7e172701be51b817fb5929667afd0b0ec39b416200109803b3a0018",
+          "release_sha256": "3da2587998b10b419acf02a2e620adb2ff00d908841d138e49e70098e66fce16"
+        },
+        {
+          "path": "vendor/aideal_engine/src/aideal/doc_check_execution.py",
+          "sha256": "e782d1fc47e62cebb9d85bfd90da07d4363ea7d6e5fb89b248e78b07809b8ccf",
+          "release_sha256": "8370ec6e87b1bf4b70dcf94b90a89fee2dd07efdc58f634650b454529d033d0c"
+        },
+        {
+          "path": "vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+          "sha256": "3d26657ac592dc1521a27822ab3042de1e1cd3c07f38836ce97ba413b7b4d174",
+          "release_sha256": "7dfaac9f3e045693e8303cb38cb619b395bab373559fdeaddbe795ae41fca2f7"
+        },
+        {
+          "path": "vendor/aideal_engine/src/aideal/native_execution_contract.py",
+          "sha256": "f054a2138af5a3cb3303cccfa824327aa6e95dba9df134a134a8ac0b823fe42e",
+          "release_sha256": "5ef4e8de77d1b60c40689999273132a0f3ed2226d808bcf08abbf15a1c9c7e2c"
+        }
+      ]
+    },
+    "local_docs": {
+      "repo_paths": 146,
+      "mismatches": []
+    },
+    "github_release": {
+      "files": 146,
+      "mismatches": []
+    },
+    "github_docs": {
+      "files": 146,
+      "mismatches": []
+    },
+    "github_tree": "c23d6c9312a08745a0f20f57c7c697ea55faf820",
+    "github_commit": "7ac965c80f390fb8cf0403c1c8f7a0d810823d3b",
+    "github_tree_truncated": false
+  },
+  "conditional_fallback_scope_audit": {
+    "observed_at_utc": "2026-11-19T08:20:44.336356+00:00",
+    "selected_count": 1519,
+    "selected_manifest": {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/selection-correction-final/api_manifest_public_nonwrapper.json",
+      "sha256": "48d282bcce7b411019dfd4f700d549a9025a23f13dd17dfded00faf95349599a"
+    },
+    "source_root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis",
+    "python_importerror_branch_selected_count": 3,
+    "selected_fallbacks": [
+      {
+        "api": "python:MDAnalysis.coordinates.H5MD.MockH5pyFile",
+        "line": 227,
+        "guard_chain": [
+          {
+            "except_type": "ImportError",
+            "line": 221,
+            "try_line": 219
+          }
+        ],
+        "source": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/H5MD.py",
+          "sha256": "0a03cb6f42db32f310b88015f7efadd4f853cad66dc90a17cb228f7a765c767c"
+        },
+        "excerpt": "    # Allow building documentation even if h5py is not installed\n    import types\n\n    class MockH5pyFile:\n        pass"
+      },
+      {
+        "api": "python:MDAnalysis.coordinates.IMD.MockIMDClient",
+        "line": 157,
+        "guard_chain": [
+          {
+            "except_type": "ImportError",
+            "line": 150,
+            "try_line": 146
+          }
+        ],
+        "source": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/IMD.py",
+          "sha256": "f248d51bfe7e9de7bba24cb60ea9cddf05b116ffb6e6c5f588d4c19ad4b1c5f3"
+        },
+        "excerpt": "    # Allow building documentation without imdclient\n    import types\n\n    class MockIMDClient:\n        pass"
+      },
+      {
+        "api": "python:MDAnalysis.coordinates.GSD.MockHOOMDTrajectory",
+        "line": 62,
+        "guard_chain": [
+          {
+            "except_type": "ImportError",
+            "line": 58,
+            "try_line": 55
+          }
+        ],
+        "source": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mdanalysis/package/MDAnalysis/coordinates/GSD.py",
+          "sha256": "3447cb4fbb2d3f9602459a51d72971f76e283a8a4c24e9a04039467460f70e06"
+        },
+        "excerpt": "    HAS_GSD = False\n    import types\n\n    class MockHOOMDTrajectory:\n        pass"
+      }
+    ],
+    "runtime_probe_exit": 0,
+    "runtime_probe": [
+      {
+        "module": "MDAnalysis.coordinates.GSD",
+        "target": "MockHOOMDTrajectory",
+        "present": false,
+        "availability_flag": "HAS_GSD",
+        "available": true,
+        "module_file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/GSD.py"
+      },
+      {
+        "module": "MDAnalysis.coordinates.H5MD",
+        "target": "MockH5pyFile",
+        "present": false,
+        "availability_flag": "HAS_H5PY",
+        "available": true,
+        "module_file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/H5MD.py"
+      },
+      {
+        "module": "MDAnalysis.coordinates.IMD",
+        "target": "MockIMDClient",
+        "present": false,
+        "availability_flag": "HAS_IMDCLIENT",
+        "available": true,
+        "module_file": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/IMD.py"
+      }
+    ],
+    "runtime_probe_stderr": "",
+    "inventory_keys": [
+      "schema",
+      "kind",
+      "language",
+      "source_root",
+      "source_version",
+      "source_commit",
+      "source_tree",
+      "source_inventory",
+      "source_inventory_sha256",
+      "declaration_ids",
+      "canonical_selection",
+      "canonical_selection_sha256",
+      "canonical_selection_policy_version",
+      "canonical_declaration_ids",
+      "api_ids"
+    ],
+    "fallback_inventory_metadata": []
+  },
+  "review_findings": [
+    {
+      "severity": "scope",
+      "finding": "Three conditional import-failure-only empty mock classes remain in the MDAnalysis selected bank although the configured runtime has the real dependencies.",
+      "count": 3,
+      "current_denominator_changed": false,
+      "action": "Record the limitation now; improve future inventory policy with source evidence and a new selection revision. Do not uninstall valid dependencies or alter frozen denominators."
+    },
+    {
+      "severity": "known_protocol_limitation",
+      "finding": "RDPro Scala output_dir contains a file URI while the neutral prompt describes a writable directory. Prior bounded inspection found four affected failures.",
+      "action": "Keep current results provisional; apply a common corrected input contract only in a new matched study."
+    },
+    {
+      "severity": "measurement_limit",
+      "finding": "Current scores are native acceptance of generated programs with audience-authored checks and target witnesses, not independent fixed-task accuracy.",
+      "action": "Do not fill planned independent micro/puzzle accuracy tables using these counts without this explicit distinction."
+    },
+    {
+      "severity": "observed_candidate_error",
+      "finding": "Recent MemoryReader.copy assigns to read-only reader.frame; NullWriter candidate passes a Timestep where source requires AtomGroup or Universe; MemoryReader.__repr__ candidate assumes nonexistent n_frames= text.",
+      "action": "Retain as observed candidate/API-contract errors. This bounded sample does not establish the cause of every failure."
+    },
+    {
+      "severity": "classification_limit",
+      "finding": "dependency-unverified labels include model-invented MDAnalysis.converters.pdb/PDBConverter modules. A label alone does not establish missing optional dependencies.",
+      "action": "Review source/import evidence before any environment repair."
+    },
+    {
+      "severity": "active_development",
+      "finding": "The local working code has four development changes after the frozen release. Deployed release and GitHub remain byte-identical for all146 release files at the observed commit.",
+      "action": "Test and publish development changes separately; keep the running evaluator pinned."
+    }
+  ],
+  "review_completed_utc": "2026-11-19T08:21:43.707786+00:00"
+}
