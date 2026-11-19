@@ -1,6 +1,6 @@
 {
-  "state": "ready_launch_pending_publication",
-  "model_calls_this_correction": 0,
+  "state": "replacement_ready_restart_pending_publication",
+  "model_calls_this_correction": 212,
   "banks": [
     {
       "library": "RDPro Java",
@@ -21,8 +21,10 @@
         }
       ],
       "controls_scope": "Previously recorded execution controls; final release/input readiness remains separately gated.",
-      "fresh_original_R0": "ready_launch_pending_publication",
-      "fresh_existing_D1_R0": "ready_launch_pending_publication"
+      "fresh_original_R0": "ready_restart_pending_publication",
+      "fresh_existing_D1_R0": "ready_restart_pending_publication",
+      "observed_original_responses": 0,
+      "observed_original_executions": 0
     },
     {
       "library": "RDPro Scala",
@@ -43,8 +45,10 @@
         }
       ],
       "controls_scope": "Previously recorded execution controls; final release/input readiness remains separately gated.",
-      "fresh_original_R0": "ready_launch_pending_publication",
-      "fresh_existing_D1_R0": "ready_launch_pending_publication"
+      "fresh_original_R0": "ready_restart_pending_publication",
+      "fresh_existing_D1_R0": "ready_restart_pending_publication",
+      "observed_original_responses": 0,
+      "observed_original_executions": 0
     },
     {
       "library": "MDAnalysis",
@@ -65,8 +69,10 @@
         }
       ],
       "controls_scope": "Previously recorded execution controls; final release/input readiness remains separately gated.",
-      "fresh_original_R0": "ready_launch_pending_publication",
-      "fresh_existing_D1_R0": "ready_launch_pending_publication"
+      "fresh_original_R0": "ready_restart_pending_publication",
+      "fresh_existing_D1_R0": "ready_restart_pending_publication",
+      "observed_original_responses": 0,
+      "observed_original_executions": 0
     },
     {
       "library": "tslearn",
@@ -87,8 +93,10 @@
         }
       ],
       "controls_scope": "Previously recorded execution controls; final release/input readiness remains separately gated.",
-      "fresh_original_R0": "ready_launch_pending_publication",
-      "fresh_existing_D1_R0": "ready_launch_pending_publication"
+      "fresh_original_R0": "ready_restart_pending_publication",
+      "fresh_existing_D1_R0": "ready_restart_pending_publication",
+      "observed_original_responses": 0,
+      "observed_original_executions": 0
     },
     {
       "library": "mir_eval",
@@ -109,8 +117,10 @@
         }
       ],
       "controls_scope": "Previously recorded execution controls; final release/input readiness remains separately gated.",
-      "fresh_original_R0": "ready_launch_pending_publication",
-      "fresh_existing_D1_R0": "ready_launch_pending_publication"
+      "fresh_original_R0": "ready_restart_pending_publication",
+      "fresh_existing_D1_R0": "ready_restart_pending_publication",
+      "observed_original_responses": 103,
+      "observed_original_executions": 102
     },
     {
       "library": "Thumbnailator",
@@ -131,8 +141,10 @@
         }
       ],
       "controls_scope": "Previously recorded execution controls; final release/input readiness remains separately gated.",
-      "fresh_original_R0": "ready_launch_pending_publication",
-      "fresh_existing_D1_R0": "ready_launch_pending_publication"
+      "fresh_original_R0": "ready_restart_pending_publication",
+      "fresh_existing_D1_R0": "ready_restart_pending_publication",
+      "observed_original_responses": 109,
+      "observed_original_executions": 109
     },
     {
       "library": "SedonaDB",
@@ -153,14 +165,16 @@
         }
       ],
       "controls_scope": "Previously recorded execution controls; final release/input readiness remains separately gated.",
-      "fresh_original_R0": "ready_launch_pending_publication",
-      "fresh_existing_D1_R0": "ready_launch_pending_publication"
+      "fresh_original_R0": "ready_restart_pending_publication",
+      "fresh_existing_D1_R0": "ready_restart_pending_publication",
+      "observed_original_responses": 0,
+      "observed_original_executions": 0
     }
   ],
   "scope": "Native execution diagnostics with model-authored self-checks; not independent task-correctness accuracy. Setup controls are not experiment scores.",
   "schema": 2,
-  "reviewed_at_utc": "2026-11-18T23:31:03+00:00",
-  "paid_launch_status": "pending_publication",
+  "reviewed_at_utc": "2026-11-19T00:03:12+00:00",
+  "paid_launch_status": "restart_pending_publication",
   "paid_launch_started": false,
   "selected_targets": 2823,
   "historical_selected_targets": 2850,
@@ -206,7 +220,9 @@
       "status": "passed; final MD native equivalence verified"
     },
     "source_selection_audit": "complete_27_exclusions",
-    "readiness_binding": "passed"
+    "readiness_binding": "passed",
+    "replacement_input_output_contract": "passed_7_banks_14_sampled_prompts",
+    "replacement_readiness": "checks_passed_receipt_publication_pending"
   },
   "runtime_readiness_authority": "Deterministic bound imports, builds, fixture/tool checks and positive/negative controls; no LLM certification.",
   "MDAnalysis_setup": {
@@ -232,7 +248,7 @@
     "measured_files_deleted": 0,
     "dependencies_deleted": 0
   },
-  "active_output_namespace": "fresh-original-d1",
+  "active_output_namespace": "explicit-inputs-r0",
   "unlaunched_preflight_namespace": "current",
   "final_runtime_profile": "runtime-mdanalysis-final-2026-11-18/runtime_profile.json",
   "selection_revision": {
@@ -253,13 +269,103 @@
   "publication": {
     "branch": "study/2026-11-17-latest-stable-canonical",
     "commit": "56a42d91d8548ce7e4bf71b17b19fc5155f132f7",
-    "verified_matching_code_files": 146
+    "verified_matching_code_files": 146,
+    "review_commit": "74808d3ec4fa949a805c6b2b916a712c0038b119"
   },
-  "final_preflight": "fresh-original-d1/preflight/ACTUAL_BANK_CONFIGURATION_AND_PROMPTS.json",
+  "final_preflight": "explicit-inputs-r0/preflight/ACTUAL_BANK_CONFIGURATION_AND_PROMPTS.json",
   "readiness": {
     "path": "fresh-original-d1/operator/READINESS.json",
     "sha256": "7df6c823c378614b4851c427c2ff471ebd40d31d96d4bade338b7a3e2b23041b",
     "status": "passed",
-    "checks": 14
-  }
+    "checks": 14,
+    "scope": "stopped initial-run receipt; replacement requires its own gate"
+  },
+  "model_calls_count_scope": "returned responses in stopped initial run; retained historical diagnostic costs, not replacement calls",
+  "observed_at_utc": "2026-11-18T23:40:44Z",
+  "controller": {
+    "status": "stopped",
+    "stopped_at_utc": "2026-11-18T23:40:44Z",
+    "previous_pid": 3058520,
+    "reason": "confirmed shared input-contract omissions"
+  },
+  "launch_receipt": "fresh-original-d1/operator/START.json",
+  "progress_snapshot": "fresh-original-d1/operator/LIVE_STATUS.json",
+  "completed_bank_scores": 0,
+  "jobs_snapshot": {
+    "rdpro_java": {
+      "replacement_status": "not_launched"
+    },
+    "rdpro_scala": {
+      "replacement_status": "not_launched"
+    },
+    "mdanalysis": {
+      "replacement_status": "not_launched"
+    },
+    "tslearn": {
+      "replacement_status": "not_launched"
+    },
+    "mir_eval": {
+      "replacement_status": "not_launched"
+    },
+    "thumbnailator": {
+      "replacement_status": "not_launched"
+    },
+    "sedonadb": {
+      "replacement_status": "not_launched"
+    }
+  },
+  "observed_returned_responses": 212,
+  "observed_executions": 211,
+  "observed_provider_errors": 0,
+  "stopped_measured_namespace": "fresh-original-d1",
+  "replacement_model_calls": 0,
+  "initial_run": {
+    "status": "stopped_not_preplanned_pilot",
+    "namespace": "fresh-original-d1",
+    "returned_responses": 212,
+    "executed": 211,
+    "provider_errors": 0,
+    "mir_eval": {
+      "returned_responses": 103,
+      "executed": 102
+    },
+    "thumbnailator": {
+      "returned_responses": 109,
+      "executed": 109
+    },
+    "other_banks_calls": 0,
+    "evidence_preserved": true,
+    "started_at_utc": "2026-11-18T23:33:57.791806+00:00",
+    "saved_requests": 213,
+    "interrupted_provider_requests": 1,
+    "interrupted_provider_usage": "unavailable_not_zero",
+    "amendment_receipt": "RUN_AMENDMENT.json"
+  },
+  "replacement": {
+    "namespace": "explicit-inputs-r0",
+    "status": "ready_restart_pending_publication",
+    "selected_targets": 2823,
+    "planned_initial_requests": 5646,
+    "model_calls": 0,
+    "source_runtime_bank_changed": false,
+    "changed_shared_context_banks": [
+      "mir_eval",
+      "thumbnailator",
+      "rdpro_java",
+      "rdpro_scala",
+      "mdanalysis",
+      "tslearn",
+      "sedonadb"
+    ],
+    "mandatory_gate": "source-bound input roles, formats, metadata and output rules; matched Original/D1 exposure without expected-answer leakage",
+    "change_scope": "shared input descriptions/permissions and output root only",
+    "verified_source_receipts": 45,
+    "sampled_prompts": 14,
+    "all_seven_preparations": "passed",
+    "contract_blocks": "exactly_once_in_sampled_prompts"
+  },
+  "launch_receipt_scope": "stopped_initial_run",
+  "progress_snapshot_scope": "stopped_initial_run; local mirrored snapshot may predate stop",
+  "final_preflight_scope": "replacement cohort; 7 banks and 14 sampled audience prompts",
+  "input_contract_equivalence": "explicit-inputs-r0/preflight/INPUT_CONTRACT_EQUIVALENCE.json"
 }

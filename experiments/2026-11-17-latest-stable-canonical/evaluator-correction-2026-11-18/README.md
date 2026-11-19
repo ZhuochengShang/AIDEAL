@@ -74,13 +74,13 @@ evaluator-correction-2026-11-18/
   review/                    complete prompt/input/output examples and all-target index
     corrected-profiles/      new shared profile snapshots; historical profiles retained
   current/                   preserved UNLAUNCHED preparation evidence
-  fresh-original-d1/          active corrected comparison namespace
+  explicit-inputs-r0/          active corrected comparison namespace
     operator/                final selected-bank plans and readiness checks
     continuation/            fresh Original/D1 R0 requests and results
     rescore/                 separate zero-model saved-program replay
 ```
 
-The old `current/` namespace contains unlaunched preparation evidence. The active output is `fresh-original-d1/`. The final MDAnalysis runtime profile changes selection metadata only; all 3,767 recorded runtime files remain unchanged.
+The old `current/` namespace contains unlaunched preparation evidence. The active output is `explicit-inputs-r0/`. The final MDAnalysis runtime profile changes selection metadata only; all 3,767 recorded runtime files remain unchanged.
 
 The actual launch paths are recorded in the operator plan; directories listed above may remain pending until their stage is released. Do not infer completion from the existence of a folder.
 
@@ -104,7 +104,7 @@ Historical prompts, responses, source versions and measured results are evidence
 
 The final cluster release is `2026-11-18-corrected-r0-d8ba3815cf95`; all 146 packaged files have verified hashes. [GitHub commit `56a42d9`](https://github.com/ZhuochengShang/AIDEAL/commit/56a42d91d8548ce7e4bf71b17b19fc5155f132f7) on `study/2026-11-17-latest-stable-canonical` contains identical code files. The local full offline suite passed 818 tests and 436 subtests. Final focused checks passed 124 tests and 92 subtests after the latest changes.
 
-The final seven-bank preparation passed for 2,823 selected APIs. Fourteen sampled Original/D1 prompts matched outside documentation, and prepared files remained unchanged. The final gate passed with 14 current runtime control receipts plus six supporting native MDAnalysis controls and a verified environment-equivalence record. See [READINESS.json](fresh-original-d1/operator/READINESS.json) and the [configuration/prompt report](fresh-original-d1/preflight/ACTUAL_BANK_CONFIGURATION_AND_PROMPTS.json). Paid launch follows publication of this review bundle; this snapshot contains no new experiment score.
+The final seven-bank preparation passed for 2,823 selected APIs. Fourteen sampled Original/D1 prompts matched outside documentation, and prepared files remained unchanged. The final gate passed with 14 current runtime control receipts plus six supporting native MDAnalysis controls and a verified environment-equivalence record. See [READINESS.json](explicit-inputs-r0/operator/READINESS.json) and the [configuration/prompt report](explicit-inputs-r0/preflight/ACTUAL_BANK_CONFIGURATION_AND_PROMPTS.json). The first launch was stopped after a live audit found unclear input roles. Its 212 returned responses and 211 executions remain in `fresh-original-d1/`; they will not be pooled with the replacement run. [RUN_AMENDMENT.json](RUN_AMENDMENT.json) preserves recorded usage and the one provider request whose final usage is unavailable. The replacement `explicit-inputs-r0/` makes buffer/file roles, file schemas and deterministic input-construction permission explicit. [Input-equivalence evidence](explicit-inputs-r0/preflight/INPUT_CONTRACT_EQUIVALENCE.json) verifies unchanged source, runtime, data, scaffolds, profiles, documentation, model and selected API set. Both conditions receive the same revised context. Its final seven-bank readiness gate passed; restart follows publication.
 
 ```bash
 # Cluster. This prepares inputs and plans; it makes no model calls.
@@ -114,12 +114,12 @@ cd /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical
   /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_evaluator_correction.py \
   --study "$PWD" \
   --output "$PWD/evaluator-correction-2026-11-18/fresh-original-d1" \
-  --runtime-profiles "$PWD/evaluator-correction-2026-11-18/fresh-original-d1/operator/RUNTIME_PROFILES.json" \
-  --input-overrides "$PWD/evaluator-correction-2026-11-18/fresh-original-d1/operator/INPUT_OVERRIDES.json" \
+  --runtime-profiles "$PWD/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/RUNTIME_PROFILES.json" \
+  --input-overrides "$PWD/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/INPUT_OVERRIDES.json" \
   --phases continuation rescore
 ```
 
-The launch uses this same command with `--run` and the existing permitted credential-file path. The trusted supervisor handles the credential; it is never copied into configuration or Git. Check `fresh-original-d1/operator/STATE.json` and `fresh-original-d1/continuation/supervisor/summary.json` before any restart. Do not start duplicate queues.
+The launch uses this same command with `--run` and the existing permitted credential-file path. The trusted supervisor handles the credential; it is never copied into configuration or Git. Check `explicit-inputs-r0/operator/STATE.json` and `explicit-inputs-r0/continuation/supervisor/summary.json` before any restart. Do not start duplicate queues.
 
 For a local, no-key walkthrough:
 

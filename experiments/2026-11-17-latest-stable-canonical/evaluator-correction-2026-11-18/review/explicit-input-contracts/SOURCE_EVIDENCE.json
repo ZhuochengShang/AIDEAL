@@ -1,0 +1,593 @@
+{
+  "banks": {
+    "mdanalysis": {
+      "base_configs": {
+        "generated_d1": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mdanalysis/generated_d1/configs/continuation.yaml",
+          "sha256": "afbe1aa51a6275c70cd94ae48378e52ad4507f2bb22ca3c05899a32329b3e965"
+        },
+        "original": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mdanalysis/original/configs/continuation.yaml",
+          "sha256": "afbe1aa51a6275c70cd94ae48378e52ad4507f2bb22ca3c05899a32329b3e965"
+        }
+      },
+      "base_exec_hints": "Use the preloaded Universe, AtomGroups, trajectory, and the pinned molecular fixture paths. Keep atom selections and frame ranges small. For analysis classes construct the documented class, call run() when required, and validate a stable scalar, shape, or length. The PSF/DCD pair has no periodic box; use a matching configured periodic fixture only when the target contract requires it. Write any small output only under output_dir; do not modify source fixtures, download data, or open a GUI.",
+      "base_execution_context": "A runnable headless Python test harness is already in scope. The snippet is inserted inside a function and the preamble variables listed under available inputs are already defined. Write executable statements only. Import MDAnalysis submodules or optional dependencies only when the documented public call requires them. Do not define another function or process entry point. Assert a deterministic property and print a compact correctness witness containing a shape, scalar, or length.\nThe same versioned input bundle is available in every documentation condition. File roles tng_path, h5md_path, mmcif_path, gsd_path, tpr_path, edr_path, xvg_path and fasta_path identify actual inputs in those formats. small_pdb_path and imd_trr_path identify a small topology and trajectory. Existing protein-system paths and preloaded universe/atoms remain available. For an IMD or StreamReaderBase target only, a controlled local IMDv3 server is already running: imd_url (str), imd_host (str), imd_port (int) and imd_n_atoms (int) are available; construct the actual documented reader and close it when done. For legacy X3DNA operations, dna_pdb_path is a DNA structure and x3dna_executable is the installed official executable path. The child process already has X3DNA and PATH set for this tool. Output files belong under output_dir. These are input/environment facts, not expected result values. chemfiles_trajectory_path is the trajectory validated with the Chemfiles backend. fixture_catalog_path is a JSON catalog of additional public MDAnalysisTests2.11 inputs; its files entries provide path, relative_path and suffix. The catalog also includes deliberately malformed/negative specimens, so choose data suitable for the intended format. New deterministic synthetic data may be created under output_dir; never modify supplied files.",
+      "bundle_context_handling": {
+        "bundle": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/input_bundle_final.json",
+          "sha256": "86625fec48fe8ade0d255fa8de48310953c423c7c4399c63a5b290acfa7d8e7c"
+        },
+        "reason": "Existing preparation appends the exact bundle execution_context once after applying the override.",
+        "removed_inherited_copy": true
+      },
+      "common_protocol_permission_added": true,
+      "data_role_clarification_added": false,
+      "instruction_alignment_edits": [
+        {
+          "after": "The preloaded Universe, AtomGroups, trajectory, and pinned molecular fixture paths are available inputs.",
+          "before": "Use the preloaded Universe, AtomGroups, trajectory, and the pinned molecular fixture paths.",
+          "field": "hints"
+        }
+      ],
+      "new_context": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/explicit-input-contracts/mdanalysis.json",
+        "sha256": "c857c7ecd4564f9f02ff20fc44f60cc8c9ab80f020f6c0a48f0c201acd84a650"
+      },
+      "preamble": "MDAnalysis = mda  # type: module\nnumpy = np  # type: module\nuniverse = mda.Universe(psf_path, dcd_path)  # type: MDAnalysis.Universe\natoms = universe.atoms  # type: MDAnalysis.core.groups.AtomGroup\nprotein = universe.select_atoms(\"protein\")  # type: MDAnalysis.core.groups.AtomGroup\nbackbone = universe.select_atoms(\"protein and backbone\")  # type: MDAnalysis.core.groups.AtomGroup\ntrajectory = universe.trajectory  # type: MDAnalysis.coordinates.base.ReaderBase\ntimestep = trajectory[0]  # type: MDAnalysis.coordinates.base.Timestep\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mdanalysis/original/inputs/reviewed_api_test_scaffold.py",
+        "sha256": "4a546f0502c94dbea77fb1409b4e58dd6ca6b9d87fb0e4c4bd944e4005807566"
+      },
+      "source_scaffold_and_data_changed": false
+    },
+    "mir_eval": {
+      "base_configs": {
+        "generated_d1": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mir_eval/generated_d1/configs/continuation.yaml",
+          "sha256": "f2f071bebd7a27348b97a552ac480fdb03714c35b466e18e4bf782e81c0ea010"
+        },
+        "original": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mir_eval/original/configs/continuation.yaml",
+          "sha256": "f2f071bebd7a27348b97a552ac480fdb03714c35b466e18e4bf782e81c0ea010"
+        }
+      },
+      "base_exec_hints": "mir_eval functions generally accept NumPy event times, intervals, labels, frequencies, or source matrices. Keep plotting headless. For I/O functions use only the configured files under source/tests/data. Avoid deprecated aliases when the documented public function is available.",
+      "base_execution_context": "A runnable headless Python harness is already in scope. Write statements only for the marked function body. Reuse the small arrays, labels, and repository fixture paths already defined; import the target from its public mir_eval module, call it, validate a deterministic property with assert, and print a compact witness. Do not download or play audio.",
+      "common_protocol_permission_added": true,
+      "data_role_clarification_added": true,
+      "instruction_alignment_edits": [
+        {
+          "after": "Small arrays, labels, and repository fixture paths are available;",
+          "before": "Reuse the small arrays, labels, and repository fixture paths already defined;",
+          "field": "context"
+        },
+        {
+          "after": "For I/O functions, the configured files under source/tests/data are available; additional small deterministic files may be created beneath output_dir.",
+          "before": "For I/O functions use only the configured files under source/tests/data.",
+          "field": "hints"
+        }
+      ],
+      "new_context": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/explicit-input-contracts/mir_eval.json",
+        "sha256": "c929849f3acd3f82c419712a58af64c1dd24c3218df888dae7f82db1a19a7175"
+      },
+      "preamble": "times = np.array([0.0, 0.5, 1.0, 1.5, 2.0])  # type: numpy.ndarray event/frame times\nref_events = np.array([0.0, 0.5, 1.0, 1.5])  # type: numpy.ndarray reference events\nest_events = np.array([0.02, 0.48, 1.03, 1.52])  # type: numpy.ndarray estimated events\nref_intervals = np.array([[0.0, 0.5], [0.5, 1.0], [1.0, 1.5], [1.5, 2.0]])  # type: numpy.ndarray reference intervals\nest_intervals = np.array([[0.0, 0.48], [0.48, 1.02], [1.02, 1.48], [1.48, 2.0]])  # type: numpy.ndarray estimated intervals\nref_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] reference labels\nest_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] estimated labels\nref_freqs = np.array([440.0, 440.0, 0.0, 523.25, 523.25])  # type: numpy.ndarray reference frequencies\nest_freqs = np.array([442.0, 438.0, 0.0, 525.0, 520.0])  # type: numpy.ndarray estimated frequencies\nref_sources = np.vstack([np.sin(2*np.pi*3*times), np.cos(2*np.pi*2*times)])  # type: numpy.ndarray reference sources\nest_sources = ref_sources + 0.001  # type: numpy.ndarray estimated sources\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mir_eval/original/inputs/api_test_scaffold.py",
+        "sha256": "5bef0e892456258728c2961b44abaca24981038af167f943197a3321f8c05bfb"
+      },
+      "source_scaffold_and_data_changed": false
+    },
+    "rdpro_java": {
+      "base_configs": {
+        "generated_d1": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_java/generated_d1/configs/continuation.yaml",
+          "sha256": "aeb4c09d3b1968265177c0ec85a91c76e0134f876676d8f9b615eb4bc7caa774"
+        },
+        "original": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_java/original/configs/continuation.yaml",
+          "sha256": "aeb4c09d3b1968265177c0ec85a91c76e0134f876676d8f9b615eb4bc7caa774"
+        }
+      },
+      "base_exec_hints": "Use Java syntax and public library APIs; fully qualify types missing from imports. Throw AssertionError on an unexpected result. Use only tiny local inputs and outputs under output_dir. No network or repository writes. Use the selected target owner and declaration provided in the request.",
+      "base_execution_context": "Java17 with Spark3.5.1. Write Java statements only. The scaffold provides JavaSparkContext sc, SparkSession spark, a tiny EnvelopeNDLite envelope, JTS point/geometryFactory, 4x4 RasterMetadata metadata, and JavaRDD<Integer> numbers. Local raster_tif, vector_shapefile, hdf_file paths are available. Assert a stable result before printing __CHECK__.",
+      "common_protocol_permission_added": true,
+      "data_role_clarification_added": true,
+      "instruction_alignment_edits": [
+        {
+          "after": "Use only tiny local inputs. Place newly created files and outputs beneath output_dir.",
+          "before": "Use only tiny local inputs and outputs under output_dir.",
+          "field": "hints"
+        }
+      ],
+      "new_context": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/explicit-input-contracts/rdpro_java.json",
+        "sha256": "a164bd1383aefbdcd67b6b894edb68c7dc855e5c73c5010cf4cbfaf036efbb93"
+      },
+      "preamble": "EnvelopeNDLite envelope = new EnvelopeNDLite(2, 0.0, 0.0, 2.0, 3.0);\nGeometryFactory geometryFactory = new GeometryFactory();\nPoint point = geometryFactory.createPoint(new Coordinate(1.0, 2.0));\nRasterMetadata metadata = new RasterMetadata(0, 0, 4, 4, 2, 2, 4326, new AffineTransform());\nJavaRDD<Integer> numbers = sc.parallelize(Arrays.asList(1, 2, 3), 1);\nFiles.createDirectories(Paths.get(output_dir));",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_java/original/inputs/api_test_scaffold.java",
+        "sha256": "530b30186c15b7d67ca72ad4fd14c8f3386e61b60ac4a10c146f8d2a7bcc59a4"
+      },
+      "source_scaffold_and_data_changed": false
+    },
+    "rdpro_scala": {
+      "base_configs": {
+        "generated_d1": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_scala/generated_d1/configs/continuation.yaml",
+          "sha256": "ca4b9b838f7b1e8520ba02838e1d4c0647eae2a30337a68ffe95527d25ae702e"
+        },
+        "original": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_scala/original/configs/continuation.yaml",
+          "sha256": "ca4b9b838f7b1e8520ba02838e1d4c0647eae2a30337a68ffe95527d25ae702e"
+        }
+      },
+      "base_exec_hints": "Use the selected public API and the supplied documentation. Materialize deferred results before checking them. Use a falsifiable assertion supported by the documentation and a deterministic input, then print the exact target witness. Use only configured local inputs and write temporary files under output_dir. No network or repository writes.",
+      "base_execution_context": "Scala 2.12 with Spark 3.5.1 and Java 17. Write Scala body statements only. The scaffold provides sc and sparkContext. The preamble provides rasterRDD: RasterRDD[Array[Float]] (11 Float32 bands, 737 by 628 pixels) and featuresRDD: RDD[IFeature] (2 polygon features). Use the supplied local fixtures or tiny in-memory inputs. The HDF4 fixture layer is LST_Day_1km. Temporary outputs belong in output_dir.",
+      "common_protocol_permission_added": true,
+      "data_role_clarification_added": false,
+      "instruction_alignment_edits": [
+        {
+          "after": "Use configured local inputs or additional small deterministic inputs created beneath output_dir. Write temporary files under output_dir.",
+          "before": "Use only configured local inputs and write temporary files under output_dir.",
+          "field": "hints"
+        }
+      ],
+      "new_context": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/explicit-input-contracts/rdpro_scala.json",
+        "sha256": "21f982c0ed3e4907a0c5e51d7d2de5290e67fdebb5866e3cf80e847903615579"
+      },
+      "preamble": "// Fixed input contract shared by all conditions: the supplied GeoTIFF has11Float32bands.\nval rasterRDD: RasterRDD[Array[Float]] = sc.geoTiff[Array[Float]](raster_tif)\nval featuresRDD: RDD[IFeature] = sc.shapefile(vector_shapefile)\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_scala/original/inputs/api_test_scaffold.scala",
+        "sha256": "5355e0534be46f12f162df1eee6ebeb2160ff73bde28c6b46959f200ae5aac8b"
+      },
+      "source_scaffold_and_data_changed": false
+    },
+    "sedonadb": {
+      "base_configs": {
+        "generated_d1": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/sedonadb/generated_d1/configs/continuation.yaml",
+          "sha256": "8362c92ecb9863005af67db88118b8f00bb4ac0423db19ee723211edae867dad"
+        },
+        "original": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/sedonadb/original/configs/continuation.yaml",
+          "sha256": "8362c92ecb9863005af67db88118b8f00bb4ac0423db19ee723211edae867dad"
+        }
+      },
+      "base_exec_hints": "Use individual SQL statements. Paths raster_cea_tif and raster_test4_tif are available local fixture files; output_dir is available for tiny outputs. Use only these paths when a documented operation needs a file. Tiny SQL VALUES and documented constructors are available for in-memory inputs. Do not use remote URLs. No repairs are permitted in this R0 run.",
+      "base_execution_context": "Write Python statements only. A SedonaDB connection named sd is already provided. The target is a SQL function, not a Python method: call it inside sd.sql(\"SELECT ...\"). Materialize with .to_arrow_table(), which returns a real pyarrow.Table. Read a scalar with table.column(\"name\")[0].as_py() or rows with table.to_pylist(). Setup SQL may use sd.sql(...).execute(). The adapter requires the target SQL function to be called and materialized. Do not import another database or replace sd. Use Python assert with a falsifiable documented expectation and then print the exact target __CHECK__ witness.",
+      "common_protocol_permission_added": true,
+      "data_role_clarification_added": false,
+      "instruction_alignment_edits": [
+        {
+          "after": "These local fixture paths and small deterministic files created beneath output_dir are available when a documented operation needs a file.",
+          "before": "Use only these paths when a documented operation needs a file.",
+          "field": "hints"
+        }
+      ],
+      "new_context": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/explicit-input-contracts/sedonadb.json",
+        "sha256": "f820287e2e63094228ee8d6f3e812c0ab35c34df19870fdf0a725719130c4677"
+      },
+      "preamble": "",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/sedonadb/original/inputs/api_test_scaffold.py",
+        "sha256": "d320b62cc235b9f35687c67129ed6e8a10053fd8fc4e574b44d0e16041e22989"
+      },
+      "source_scaffold_and_data_changed": false
+    },
+    "thumbnailator": {
+      "base_configs": {
+        "generated_d1": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/thumbnailator/generated_d1/configs/continuation.yaml",
+          "sha256": "5ff1777d751d49165dfcadb9300578b54d4bcc2dedaa9ffcea91188910914d66"
+        },
+        "original": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/thumbnailator/original/configs/continuation.yaml",
+          "sha256": "5ff1777d751d49165dfcadb9300578b54d4bcc2dedaa9ffcea91188910914d66"
+        }
+      },
+      "base_exec_hints": "Use Java 8 syntax. Prefer BufferedImage and the provided tiny PNG/JPEG fixtures. Do not open windows, URLs, cameras, or network resources. Close streams you create and avoid overwriting repository fixtures.",
+      "base_execution_context": "A Java headless harness compiled for Java 8 compatibility and run on JDK 17 is already in scope. Write statements only for the marked region. Reuse the in-memory images, output stream/path, and checked-in image paths. Exercise the target public API, assert a stable dimension/pixel/byte/file property, and print a compact witness.",
+      "common_protocol_permission_added": true,
+      "data_role_clarification_added": true,
+      "fixtures": {
+        "exif_jpeg": {
+          "measurement": "PNG IHDR or JPEG SOF dimensions, read without image modification",
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Exif/original.jpg",
+            "sha256": "24c144238c49076bfe6eed9a10ca6189fda5a8d9c2d9c43f68381f094806b7e7"
+          },
+          "stored_pixel_dimensions": [
+            160,
+            160
+          ]
+        },
+        "grid_jpeg": {
+          "measurement": "PNG IHDR or JPEG SOF dimensions, read without image modification",
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.jpg",
+            "sha256": "b84a5be546bfd573b17045dd8e6459d3b265f464dcbe07b40f8205e4f9b305e2"
+          },
+          "stored_pixel_dimensions": [
+            100,
+            100
+          ]
+        },
+        "grid_png": {
+          "measurement": "PNG IHDR or JPEG SOF dimensions, read without image modification",
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/thumbnailator/src/test/resources/Thumbnailator/grid.png",
+            "sha256": "810ca84718b8e4e6dabd0c8178dc2e4909a92abb63e24831d22cef6d74853608"
+          },
+          "stored_pixel_dimensions": [
+            100,
+            100
+          ]
+        }
+      },
+      "instruction_alignment_edits": [
+        {
+          "after": "The harness provides in-memory images, an output stream/path, and checked-in image paths.",
+          "before": "Reuse the in-memory images, output stream/path, and checked-in image paths.",
+          "field": "context"
+        }
+      ],
+      "new_context": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/explicit-input-contracts/thumbnailator.json",
+        "sha256": "4c167f6139926a40a935f41b8aae8cd8c6ac40848a469390efa8b5176fb03016"
+      },
+      "preamble": "BufferedImage sourceImage = new BufferedImage(32, 24, BufferedImage.TYPE_INT_RGB);\nGraphics2D graphics = sourceImage.createGraphics();\ngraphics.setColor(Color.BLUE);\ngraphics.fillRect(0, 0, 32, 24);\ngraphics.setColor(Color.YELLOW);\ngraphics.fillRect(8, 6, 16, 12);\ngraphics.dispose();\nBufferedImage destinationImage = new BufferedImage(16, 12, BufferedImage.TYPE_INT_RGB);\nByteArrayOutputStream imageBytes = new ByteArrayOutputStream();\nPath outputPath = Paths.get(output_dir, \"thumbnail.png\");\nFiles.createDirectories(outputPath.getParent());\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/thumbnailator/original/inputs/api_test_scaffold.java",
+        "sha256": "3c080ca213b715720e4e93a52e8ff19f7890a778289355657b54462db4b6e2c6"
+      },
+      "source_scaffold_and_data_changed": false
+    },
+    "tslearn": {
+      "base_configs": {
+        "generated_d1": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/tslearn/generated_d1/configs/continuation.yaml",
+          "sha256": "4cbade015a798357ef9cc9e67931d2e70b5d350f241c5b44d7ebdc3fd48c7196"
+        },
+        "original": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/tslearn/original/configs/continuation.yaml",
+          "sha256": "4cbade015a798357ef9cc9e67931d2e70b5d350f241c5b44d7ebdc3fd48c7196"
+        }
+      },
+      "base_exec_hints": "Use small deterministic parameters. For file-writing APIs, write only below output_dir. End with a meaningful assertion and print a compact __CHECK__ witness.",
+      "base_execution_context": "A headless Python harness, balanced eight-series training data, a second series set, one-dimensional signals, labels, a small numeric matrix, repository fixture paths, and a pre-created condition-specific output directory are already in scope. Import the target explicitly.",
+      "common_protocol_permission_added": true,
+      "data_role_clarification_added": false,
+      "instruction_alignment_edits": [],
+      "new_context": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/review/explicit-input-contracts/tslearn.json",
+        "sha256": "569b497163fb3459af2a0487dd9a715750a3c81e12a2c2c8e893a91c662f5051"
+      },
+      "preamble": "Path(output_dir).mkdir(parents=True, exist_ok=True)\n_trace = np.load(trace_npz)\n_balanced = np.array([0, 4, 1, 17, 3, 13, 2, 5], dtype=int)\nX = _trace[\"X_train\"][_balanced, :40, :]  # type: balanced time-series dataset ndarray (8, 40, 1)\nX2 = _trace[\"X_test\"][:4, :32, :]  # type: second dataset ndarray (4, 32, 1)\ns1 = X[0].ravel()  # type: 1-D series ndarray (40,)\ns2 = X[1].ravel()  # type: 1-D series ndarray (40,)\ny = _trace[\"y_train\"][_balanced]  # type: four balanced labels, two examples per class\ntiny_matrix = np.arange(12.0).reshape(3, 4)  # type: deterministic numeric matrix\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/tslearn/original/inputs/api_test_scaffold.py",
+        "sha256": "24bbff147ab01f14c185fb91b750a81cc54766df4da313c87c5decce73d21178"
+      },
+      "source_scaffold_and_data_changed": false
+    }
+  },
+  "protocol_decision": "The supplied objects and files are examples, not a promise that one example satisfies every API requirement. Choose supplied inputs when they meet the documented requirements. When they do not, you may construct additional small deterministic inputs using new variable names, without redeclaring the provided bindings. Place any new files beneath output_dir and preserve supplied fixtures. This permission is identical in both documentation conditions; it supplies no expected API result.",
+  "source_receipts": {
+    "mir_eval": {
+      "config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mir_eval/original/configs/continuation.yaml",
+        "sha256": "f2f071bebd7a27348b97a552ac480fdb03714c35b466e18e4bf782e81c0ea010"
+      },
+      "execution_context": "A runnable headless Python harness is already in scope. Write statements only for the marked function body. Reuse the small arrays, labels, and repository fixture paths already defined; import the target from its public mir_eval module, call it, validate a deterministic property with assert, and print a compact witness. Do not download or play audio.",
+      "fixtures": {
+        "beat_estimate_file": {
+          "comment_line_numbers": [
+            1
+          ],
+          "first_data_columns": [
+            "3.572970521541950273e+00"
+          ],
+          "first_data_line": 2,
+          "noncomment_column_counts": [
+            1
+          ],
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/est00.txt",
+            "sha256": "b6de661241e4ebc839acf7dce89e662cf4b23b2ac0b6dcfd5d15a32fd65032e9"
+          }
+        },
+        "beat_reference_file": {
+          "comment_line_numbers": [],
+          "first_data_columns": [
+            "5.980385487528344646e-01"
+          ],
+          "first_data_line": 1,
+          "noncomment_column_counts": [
+            1
+          ],
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/beat/ref00.txt",
+            "sha256": "72c6e638756f89b87cca5fa4a1dfbf520df27f4e088a164fc65526d4f46c94c3"
+          }
+        },
+        "chord_reference_file": {
+          "comment_line_numbers": [],
+          "first_data_columns": [
+            "0.0000",
+            "0.7353",
+            "N"
+          ],
+          "first_data_line": 1,
+          "noncomment_column_counts": [
+            3
+          ],
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/chord/ref00.lab",
+            "sha256": "1d0199db5f9bad024beae49557aa18da14f82ce08ef6e7ffbb283b5faa4a0c46"
+          }
+        },
+        "melody_reference_file": {
+          "comment_line_numbers": [],
+          "first_data_columns": [
+            "0.000",
+            "0.000"
+          ],
+          "first_data_line": 1,
+          "noncomment_column_counts": [
+            2
+          ],
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/mir_eval/tests/data/melody/ref00.txt",
+            "sha256": "c7fe13c6b931df5d424fa30d22f7f1ead139d356b0bd6cb16bbb03fc5f4c8f87"
+          }
+        }
+      },
+      "preamble": "times = np.array([0.0, 0.5, 1.0, 1.5, 2.0])  # type: numpy.ndarray event/frame times\nref_events = np.array([0.0, 0.5, 1.0, 1.5])  # type: numpy.ndarray reference events\nest_events = np.array([0.02, 0.48, 1.03, 1.52])  # type: numpy.ndarray estimated events\nref_intervals = np.array([[0.0, 0.5], [0.5, 1.0], [1.0, 1.5], [1.5, 2.0]])  # type: numpy.ndarray reference intervals\nest_intervals = np.array([[0.0, 0.48], [0.48, 1.02], [1.02, 1.48], [1.48, 2.0]])  # type: numpy.ndarray estimated intervals\nref_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] reference labels\nest_labels = [\"C:maj\", \"G:maj\", \"A:min\", \"F:maj\"]  # type: list[str] estimated labels\nref_freqs = np.array([440.0, 440.0, 0.0, 523.25, 523.25])  # type: numpy.ndarray reference frequencies\nest_freqs = np.array([442.0, 438.0, 0.0, 525.0, 520.0])  # type: numpy.ndarray estimated frequencies\nref_sources = np.vstack([np.sin(2*np.pi*3*times), np.cos(2*np.pi*2*times)])  # type: numpy.ndarray reference sources\nest_sources = ref_sources + 0.001  # type: numpy.ndarray estimated sources\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/mir_eval/original/inputs/api_test_scaffold.py",
+        "sha256": "5bef0e892456258728c2961b44abaca24981038af167f943197a3321f8c05bfb"
+      }
+    },
+    "mir_signal_diagnostic": {
+      "max_abs_by_row": [
+        1.4695761589768238e-15,
+        1.0
+      ],
+      "note": "Read-only fixture construction check; not an API evaluation result.",
+      "shape": [
+        2,
+        5
+      ]
+    },
+    "rdpro_java": {
+      "config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_java/original/configs/continuation.yaml",
+        "sha256": "aeb4c09d3b1968265177c0ec85a91c76e0134f876676d8f9b615eb4bc7caa774"
+      },
+      "execution_context": "Java17 with Spark3.5.1. Write Java statements only. The scaffold provides JavaSparkContext sc, SparkSession spark, a tiny EnvelopeNDLite envelope, JTS point/geometryFactory, 4x4 RasterMetadata metadata, and JavaRDD<Integer> numbers. Local raster_tif, vector_shapefile, hdf_file paths are available. Assert a stable result before printing __CHECK__.",
+      "fixtures": {
+        "hdf_file": {
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf",
+            "sha256": "95f00c649b46985e51d13695e7c20fadf0ea6269cd50f8f163db2dba4dfbe2d0"
+          }
+        },
+        "raster_tif": {
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+            "sha256": "d1583296084ff5511743f4b3c0cf6307313e436410771503e42e097c94e8f407"
+          }
+        },
+        "vector_shapefile": {
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+            "sha256": "2595d72266b1b3decdb8989e679d093996240cf4b891b3c09f37d9372a6a6cd6"
+          }
+        }
+      },
+      "preamble": "EnvelopeNDLite envelope = new EnvelopeNDLite(2, 0.0, 0.0, 2.0, 3.0);\nGeometryFactory geometryFactory = new GeometryFactory();\nPoint point = geometryFactory.createPoint(new Coordinate(1.0, 2.0));\nRasterMetadata metadata = new RasterMetadata(0, 0, 4, 4, 2, 2, 4326, new AffineTransform());\nJavaRDD<Integer> numbers = sc.parallelize(Arrays.asList(1, 2, 3), 1);\nFiles.createDirectories(Paths.get(output_dir));",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_java/original/inputs/api_test_scaffold.java",
+        "sha256": "530b30186c15b7d67ca72ad4fd14c8f3386e61b60ac4a10c146f8d2a7bcc59a4"
+      }
+    },
+    "rdpro_scala": {
+      "config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_scala/original/configs/continuation.yaml",
+        "sha256": "ca4b9b838f7b1e8520ba02838e1d4c0647eae2a30337a68ffe95527d25ae702e"
+      },
+      "execution_context": "Scala 2.12 with Spark 3.5.1 and Java 17. Write Scala body statements only. The scaffold provides sc and sparkContext. The preamble provides rasterRDD: RasterRDD[Array[Float]] (11 Float32 bands, 737 by 628 pixels) and featuresRDD: RDD[IFeature] (2 polygon features). Use the supplied local fixtures or tiny in-memory inputs. The HDF4 fixture layer is LST_Day_1km. Temporary outputs belong in output_dir.",
+      "fixtures": {
+        "hdf_file": {
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/sample.hdf",
+            "sha256": "95f00c649b46985e51d13695e7c20fadf0ea6269cd50f8f163db2dba4dfbe2d0"
+          }
+        },
+        "raster_tif": {
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/nldas_boston_30m.tif",
+            "sha256": "d1583296084ff5511743f4b3c0cf6307313e436410771503e42e097c94e8f407"
+          }
+        },
+        "vector_shapefile": {
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-full-rdpro/inputs/fixtures/Boston_Neighborhood_Boundaries_sample_grail.shp",
+            "sha256": "2595d72266b1b3decdb8989e679d093996240cf4b891b3c09f37d9372a6a6cd6"
+          }
+        }
+      },
+      "preamble": "// Fixed input contract shared by all conditions: the supplied GeoTIFF has11Float32bands.\nval rasterRDD: RasterRDD[Array[Float]] = sc.geoTiff[Array[Float]](raster_tif)\nval featuresRDD: RDD[IFeature] = sc.shapefile(vector_shapefile)\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/rdpro_scala/original/inputs/api_test_scaffold.scala",
+        "sha256": "5355e0534be46f12f162df1eee6ebeb2160ff73bde28c6b46959f200ae5aac8b"
+      }
+    },
+    "sedonadb": {
+      "config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/sedonadb/original/configs/continuation.yaml",
+        "sha256": "8362c92ecb9863005af67db88118b8f00bb4ac0423db19ee723211edae867dad"
+      },
+      "execution_context": "Write Python statements only. A SedonaDB connection named sd is already provided. The target is a SQL function, not a Python method: call it inside sd.sql(\"SELECT ...\"). Materialize with .to_arrow_table(), which returns a real pyarrow.Table. Read a scalar with table.column(\"name\")[0].as_py() or rows with table.to_pylist(). Setup SQL may use sd.sql(...).execute(). The adapter requires the target SQL function to be called and materialized. Do not import another database or replace sd. Use Python assert with a falsifiable documented expectation and then print the exact target __CHECK__ witness.",
+      "fixtures": {
+        "raster_cea_tif": {
+          "first8bytes_hex": "49492a00c41f0400",
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/cea.tif",
+            "sha256": "26acb9b05d42c6ffc9b1b62a4bb9be7f3c208d9c5b5ec05e3b2a06e97230ead6"
+          }
+        },
+        "raster_test4_tif": {
+          "first8bytes_hex": "49492a0008000000",
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-16-six-library-gemini-flash-lite/libraries/sedonadb/fixtures/test4.tiff",
+            "sha256": "18b098729e8fa5616cceba25c22bbddfa2df986df507d9e4ff2e284f57112793"
+          }
+        }
+      },
+      "preamble": "",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/sedonadb/original/inputs/api_test_scaffold.py",
+        "sha256": "d320b62cc235b9f35687c67129ed6e8a10053fd8fc4e574b44d0e16041e22989"
+      }
+    },
+    "tslearn": {
+      "config": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/tslearn/original/configs/continuation.yaml",
+        "sha256": "4cbade015a798357ef9cc9e67931d2e70b5d350f241c5b44d7ebdc3fd48c7196"
+      },
+      "execution_context": "A headless Python harness, balanced eight-series training data, a second series set, one-dimensional signals, labels, a small numeric matrix, repository fixture paths, and a pre-created condition-specific output directory are already in scope. Import the target explicitly.",
+      "fixtures": {
+        "trace_npz": {
+          "arrays": {
+            "X_test": {
+              "dtype": "float64",
+              "shape": [
+                100,
+                275,
+                1
+              ]
+            },
+            "X_train": {
+              "dtype": "float64",
+              "shape": [
+                100,
+                275,
+                1
+              ]
+            },
+            "y_test": {
+              "dtype": "int64",
+              "shape": [
+                100
+              ]
+            },
+            "y_train": {
+              "dtype": "int64",
+              "shape": [
+                100
+              ]
+            }
+          },
+          "receipt": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/tslearn/tslearn/.cached_datasets/Trace.npz",
+            "sha256": "0de0b7fa727cfabaf8481552db2b95fcccd12e54b67058aea79ff05b483cf807"
+          }
+        }
+      },
+      "preamble": "Path(output_dir).mkdir(parents=True, exist_ok=True)\n_trace = np.load(trace_npz)\n_balanced = np.array([0, 4, 1, 17, 3, 13, 2, 5], dtype=int)\nX = _trace[\"X_train\"][_balanced, :40, :]  # type: balanced time-series dataset ndarray (8, 40, 1)\nX2 = _trace[\"X_test\"][:4, :32, :]  # type: second dataset ndarray (4, 32, 1)\ns1 = X[0].ravel()  # type: 1-D series ndarray (40,)\ns2 = X[1].ravel()  # type: 1-D series ndarray (40,)\ny = _trace[\"y_train\"][_balanced]  # type: four balanced labels, two examples per class\ntiny_matrix = np.arange(12.0).reshape(3, 4)  # type: deterministic numeric matrix\n",
+      "scaffold": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/fresh-original-d1/continuation/tslearn/original/inputs/api_test_scaffold.py",
+        "sha256": "24bbff147ab01f14c185fb91b750a81cc54766df4da313c87c5decce73d21178"
+      }
+    },
+    "unit_source_evidence": {
+      "beat.py": {
+        "lines": [
+          {
+            "line": 22,
+            "text": "times in seconds in increasing order.  Typically, any beats which occur before"
+          },
+          {
+            "line": 63,
+            "text": "Array of beat times in seconds."
+          },
+          {
+            "line": 84,
+            "text": "reference beat times, in seconds"
+          },
+          {
+            "line": 86,
+            "text": "estimated beat times, in seconds"
+          },
+          {
+            "line": 104,
+            "text": "beat locations in seconds"
+          },
+          {
+            "line": 152,
+            "text": "reference beat times, in seconds"
+          },
+          {
+            "line": 154,
+            "text": "estimated beat times, in seconds"
+          },
+          {
+            "line": 156,
+            "text": "Window size, in seconds"
+          }
+        ],
+        "receipt": {
+          "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/mir_eval/beat.py",
+          "sha256": "959b9b99abc11dbf51c726868aa3a1da518550d99a1106b630e7c00911965e2a"
+        }
+      },
+      "chord.py": {
+        "lines": [],
+        "receipt": {
+          "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/mir_eval/chord.py",
+          "sha256": "a4354921817a22d6602c0f0fe3eabfea3c480bec672192faf5a704540126ce83"
+        }
+      },
+      "melody.py": {
+        "lines": [
+          {
+            "line": 37,
+            "text": "frames can be indicated either by 0 Hz or by a negative Hz value - negative"
+          },
+          {
+            "line": 44,
+            "text": "convert a sequence of estimated and reference times and frequency values in Hz"
+          },
+          {
+            "line": 139,
+            "text": "\"\"\"Convert an array of frequency values in Hz to cents."
+          },
+          {
+            "line": 145,
+            "text": "Array of frequencies in Hz."
+          },
+          {
+            "line": 327,
+            "text": "\"\"\"Convert reference and estimated time/frequency (Hz) annotations to sampled"
+          },
+          {
+            "line": 365,
+            "text": "Base frequency in Hz for conversion to cents"
+          },
+          {
+            "line": 369,
+            "text": "Hop size, in seconds, to resample,"
+          }
+        ],
+        "receipt": {
+          "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/mir_eval/melody.py",
+          "sha256": "97cf790d144af00e4b4f13f335ac9b66708822ff84f2bc290be88ca4d370dd46"
+        }
+      }
+    }
+  }
+}
