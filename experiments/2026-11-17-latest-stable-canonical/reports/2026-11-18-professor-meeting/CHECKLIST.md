@@ -1,74 +1,42 @@
 # AIDEAL execution and paper checklist
 
-Observed **19 November 2026, 00:18:42 Pacific** (**19 November, 08:18:42 UTC**). This is a timestamped review, not a live monitor. The active namespace is `evaluator-correction-2026-11-18/explicit-inputs-r0`. Preserve older namespaces and their measured results.
+Observed November 19, 2026 at 09:24:19 Pacific. [Detailed follow-through](../../review/followthrough-2026-11-19/README.md). Snapshots do not update automatically.
 
-## Current execution
+## Current result
 
-The active controller and MDAnalysis worker were alive. **13 of 14 condition runs are complete.** The current run uses `gemini-3.1-flash-lite`, one initial audience program per selected API, zero program repairs and the existing generated README D1. D1 authoring and D2 revision do not run in this queue.
+All 14 current R0 arms are complete. These are native acceptance measurements with model-written assertions, one trial and zero repairs; independent micro/puzzle accuracy remains pending.
 
-| Bank | Selected APIs | Original R0 accepted | Generated D1 R0 accepted | Status |
-|---|---:|---:|---:|---|
-| RDPro Java | 69 | 12 | 4 | Both complete |
-| RDPro Scala | 261 | 20 | 14 | Both complete; shared URI issue limits interpretation |
-| SedonaDB | 217 | 87 | 96 | Both complete |
-| MDAnalysis | 1,519 | 592 | Pending | D1 running |
-| tslearn | 354 | 211 | 221 | Both complete |
-| mir_eval | 178 | 134 | 144 | Both complete |
-| Thumbnailator | 225 | 109 | 97 | Both complete |
+| Bank | Targets | Original R0 | Existing D1 R0 |
+|---|---:|---:|---:|
+| RDPro Scala | 261 | 20/261 (7.7%) | 14/261 (5.4%) |
+| RDPro Java | 69 | 12/69 (17.4%) | 4/69 (5.8%) |
+| MDAnalysis | 1,519 | 592/1519 (39.0%) | 621/1519 (40.9%) |
+| tslearn | 354 | 211/354 (59.6%) | 221/354 (62.4%) |
+| mir_eval | 178 | 134/178 (75.3%) | 144/178 (80.9%) |
+| Thumbnailator | 225 | 109/225 (48.4%) | 97/225 (43.1%) |
+| SedonaDB | 217 | 87/217 (40.1%) | 96/217 (44.2%) |
 
-At this observation, the MDAnalysis D1 checkpoint contained **602 unique targets with recorded outcomes**, including 253 accepted programs. Its final percentage remains **Pending**. There were 603 returned provider receipts because the next target was in progress. One earlier 503 receipt remains preserved. The checkpoint has 603 rows because the failed provider attempt and its later retry refer to the same target. Do not equate checkpoint rows, provider requests and unique completed target outcomes.
+## Work and acceptance gates
 
-Across the study, **4,729 of 5,646 planned target outcomes** had been recorded at this snapshot. The earlier 503 was a temporary capacity response, not evidence of depleted credits. Resume preserved completed tasks and created a new physical attempt for the interrupted request. A provider retry stays logical R0.
-
-## End-to-end audit on November 19
-
-**The complete paper study is not ready.** The current native R0 queue is active. The [detailed audit](../../review/audits/2026-11-19/README.md) traces the inputs, code functions, checks and output evidence at each stage. The [action ledger](../../review/audits/2026-11-19/ACTIONS.json) records completion criteria.
-
-Development fixes address provider-response recovery, selected-condition scope, cumulative retry resources, transport-identity reuse, output URI/path wording and import-failure-only empty API stubs. These fixes do not alter the active frozen release or existing scores. The current MDAnalysis bank retains its1,519 denominator; three conditional mock classes are a disclosed scope limitation.
-
-Before the full study, complete the qualified README evidence and example validation, independent micro/puzzle banks, eight-condition support, alias behavior admission, versioned native-hint builds and repair-memory isolation. Native retries currently retrieve same-API failures without a run/condition filter. Current R0 does not use that retrieval.
-
-## Completed and remaining work
-
-| Status | Work item | Evidence or completion requirement |
+| Status | Work | Evidence or next acceptance condition |
 |---|---|---|
-| Frozen; scope correction required for a future bank | Freeze 2,823 current API targets | Current ledger retained; three MDAnalysis import-failure mock classes identified in this audit |
-| Done | Prepare all seven banks | Bound configuration, source, documentation, fixture and runtime receipts |
-| Done | Check matched prompt exposure | Fourteen sampled Original/D1 requests match outside documentation |
-| Done | Check execution mechanisms | Enabled JVM assertions, isolated attempt outputs, Python fixture binding and exact target witness |
-| Done | Preserve prior runs | Historical results and the stopped initial run remain separate from current results |
-| Done | Complete 13 condition runs | Completion receipts and result hashes for all Original arms and six D1 arms |
-| Running | Finish MDAnalysis D1 | Native worker running at the timestamp above; require final completion receipt before a final score |
-| Queued | Replay saved historical programs | The current controller schedules a separate zero-model `rescore` phase after continuation; do not replace original verdicts |
-| Fixed in development; not deployed | Resolve RDPro Scala URI contract | Native contract v3 distinguishes local paths and URIs; a new matched protocol and readiness receipt are still required |
-| Review required | Validate existing D1 claims and examples | Check constructors, callable expressions, receivers and behavioral claims against actual source and executable examples |
-| Pending | Independent microbenchmark oracles | Fixed task inputs, expected outputs and target-use checks independent of the audience-generated assertions |
-| Pending | Fixed puzzle bank for the main comparison | Document task levels, input/output contract, reference checks and development/evaluation separation for all six libraries |
-| Pending | Full eight-condition implementation and validation | O, R, A, H, RA, RH, AH and RAH with identical tasks/runtime/repair settings; the current generic runner alone does not establish a complete eight-arm study |
-| Pending | R1/R2 measurement | Record initial passes, newly repaired passes per round and cumulative R2 separately; current run has no program repairs |
-| Pending | D2 development and fresh evaluation | Diagnose designated development failures after the planned repair rounds, validate the revised README and start fresh audience trials |
-| Pending | Validate alias and native hint treatments | Build and paired behavior checks, installed source hashes and branch manifests before audience evaluation |
-| Pending | Reconcile historical RDPro 92/171 | The earlier presentation reports this value; the located generated result records 73/171 and the revised README result records 132/171 |
-| Done locally; publication recorded separately | Align all “current” entry points | Guide, current-study/current-launch pointers, tracker, review status and start page now use the current cohort; old navigation files are preserved in navigation-history |
+| Complete | Frozen current Original/D1 R0 | 5,646 outcomes and14 bound completion/result receipts |
+| Complete | R0 attempt and resource audit | 5,647 attempts; one unknown-usage 503 retained explicitly |
+| Complete | Historical MDAnalysis Original replay recovery | 1538/1538 programs; no model calls; 13,847 unique evidence files verified |
+| Complete | Other historical replay arms | 13 bound results; kept separate from current R0 |
+| Deployed for isolated replay | Binary diagnostic recording | 19 cluster tests + 7 subtests; 3 real preflight verdicts |
+| Development tests passed | Exact-owner author comments/test excerpts | Review all-library coverage and allowed source-test scope; execute README examples |
+| Development tests passed | Eight-condition routing and alias controls | Freeze and validate actual library treatments and independent banks |
+| Still required | D1 claims and examples | Validate constructors, signatures, receivers, outputs and behavioral claims |
+| Still required | Fixed micro/puzzle tasks | Independent expected outputs and reference/wrong-output/no-target controls |
+| Still required | Alias and native hint builds | Per-alias forwarding/default/error tests and native exception message comparisons |
+| Still required | Memory isolation | Verify actual repair backend exposure; no cross-trial or cross-condition history |
+| Not launched | R1/R2 and D2 | Preceding gates must pass; keep development and held-out evaluation separate |
+| Preserved limitation | Four Scala URI failures; three MDAnalysis mock targets | Correct only in a newly frozen protocol; never rewrite measured denominators |
 
-## Gates before the next controlled run
+The complete independent paper study is **not ready**. Software test success does not establish correctness of every installed treatment or of every generated program. AIDEAL failures and model-program failures must remain distinct.
 
-1. **Choose and freeze the measurement.** Keep native acceptance separate from independently checked task accuracy. Model-authored assertions and a target marker do not prove that a fixed task was solved correctly.
-2. **Freeze a matched task bank.** Retain canonical owners and signatures, data roles, reference programs, independent checks and coverage strata. Keep documented and no-reviewed-excerpt APIs in the bank instead of silently dropping difficult cases.
-3. **Resolve confirmed shared setup ambiguities.** RDPro Scala has four recorded URI/path failures across both conditions. Preserve those results and review the common contract before launching a new comparison. Wrong generated API calls are not automatically environment defects.
-4. **Validate D1 before treating it as improved documentation.** The current saved authoring pass had no selected test snippets, and all 555 JVM API fact records had null extracted source comments. Those extractor outputs do not prove that the source lacks comments. Corrected future author prompts do not retroactively repair frozen D1.
-5. **Keep development evidence separate.** Alias proposals, embedded exception guidance and D2 may use development failures. Do not expose held-out evaluation answers or accumulating cross-trial memory to later evaluation tasks.
-6. **Run deterministic positive and negative controls.** Check every configured execution family and fixture format required by the selected tasks. Passing one example per library does not certify every API.
-7. **Freeze treatment versions.** Bind source commits, README D0/D1/D2, alias code, native exception-message edits, model settings and permitted context. R0/R1/R2 are attempts inside a condition, not Git branches.
-8. **Check reporting arithmetic and completeness.** Use the selected denominator. Separate provider retries, program repairs, documentation revision, model request time and compile/run time. Publish complete arms or explicitly marked partial progress.
-
-## Current interpretation and known issues
-
-- Current native paired results have 118 gained passes and 115 lost passes across 1,304 APIs with both arms complete. These are differences between independently generated R0 programs, not 118 successful repairs.
-- RDPro D1 contains confirmed inaccurate constructor guidance for `GeoTiffMetadata.getGeoKey` and an incorrect initial-state claim for `Statistics.isValid`. The audience reproduces those errors in inspected attempts. This does not explain every regression.
-- RDPro Scala supplies `output_dir` as a `file:///` URI while the prompt describes only a writable directory. Four inspected traces consume it as an ordinary path. Their original scores remain unchanged.
-- The two MDAnalysis D1 `dependency-unverified` rows reviewed at this snapshot use invented module paths, `MDAnalysis.auxiliary.auxreader` and `MDAnalysis.converters.PDBConverter`. Those labels do not establish that an optional dependency is missing. This bounded review found no new confirmed setup blocker.
-- The old RDPro bank used 171 bare names and Gemini 3.1 Pro Preview. The current bank has 330 qualified raster/support targets and Gemini 3.1 Flash Lite. Only 48 old names lexically match 58 current qualified targets, with ambiguous owners. Treat these as separate studies.
+The recovery completed independently on the cluster at 09:15:39 Pacific. Logs and completion receipts are saved; no recovery worker remains active and no unvalidated paid stage started. Local Codex work may pause when the laptop sleeps.
 
 ## Navigation audit
 

@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-11-19T16:42:38.425898+00:00",
+  "status": "passed",
+  "tests_passed": 78,
+  "subtests_passed": 53,
+  "source_files": {
+    "vendor/aideal_engine/src/aideal/execution.py": "a63caa65122749a343942b542050fa7e7e2774c0f60691f7d3b469d23078e268",
+    "vendor/aideal_engine/src/aideal/doc_check_execution.py": "11ee9f4909726ce5b6cef604b9f6d5920a69e01e499983fc3a4c95ac87c3bc3e",
+    "vendor/aideal_engine/src/aideal/doc_check_provenance.py": "846ca84843d4d7397792b144004b935691ab4dadd5c96c2a1eefa7c2200867c3",
+    "vendor/aideal_engine/src/aideal/readme_generation.py": "2f646aa0b566e109240ae1660d51778c2d38f317b278b0f137f6d5b9534ce816",
+    "vendor/aideal_engine/src/aideal/readme_author_evidence.py": "b01bba95d8184489789288f7dd1424ce3d8bf260a852410dcf52f5a35d5e1b23",
+    "scripts/rescore_native_programs.py": "e419014fb225faa81fea2ea9994d81c8a13889cc1c0460e3a6e7962279c0da4e",
+    "workflow/evaluation_inputs.py": "df7897b12353d2bc8d7a2e5bce1a480225b6f80e614bea2a66c233071c701d40",
+    "workflow/evaluation_freeze.py": "2650ffd8a47c093d3d851352710e7d4631f434ea2eb11aad51cd4069d888a417",
+    "tests/test_binary_process_output.py": "a3da8d175374d0556bb2437ee56a5eeba356ac3ce35cc0b13aa7a05a1cd6b25f",
+    "tests/test_readme_author_evidence.py": "ea0318597cf60aa60c156459e70c03dfc1053c3720398b1a87b7ebad397626e9",
+    "tests/test_eight_condition_evaluation.py": "fe6c76edb62769f269c521040ef58d5abaa8cd75cb13e4f6f39db281d4c52ea5",
+    "configs/condition_evaluation_factorial.example.yaml": "0771d8ecb753902eb65226c50002baa93c67522a086d85072495bebe88ff5061"
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=vendor/aideal_engine/src:tests:. python -m pytest -q -p no:cacheprovider tests/test_eight_condition_evaluation.py tests/test_condition_evaluation.py tests/test_condition_context.py tests/test_readme_author_evidence.py tests/test_qualified_readme.py tests/test_doc_check_modules.py",
+  "log_sha256": "70114b4b57fdfa9010ac11270156aa69eea526fb2c049acbdc2a37dee3d402f6",
+  "limits": [
+    "Software regression checks, not a six-library treatment admission or audience measurement.",
+    "README examples are source excerpts, not execution-validated examples.",
+    "The active recovery contains only the two binary-output fixes, not the future authoring or factorial changes."
+  ]
+}

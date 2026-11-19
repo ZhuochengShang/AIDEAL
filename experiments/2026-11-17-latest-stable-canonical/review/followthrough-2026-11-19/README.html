@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIDEAL experiment review</title><style>body{font:16px/1.6 system-ui;color:#263444;max-width:1200px;margin:32px auto;padding:0 24px}table{border-collapse:collapse;width:100%;display:block;overflow:auto}td,th{padding:9px 12px;border:1px solid #ccd6e0;text-align:left}th{background:#eef3f8}pre{padding:15px;background:#eef3f8;overflow:auto}img{max-width:100%}a{color:#2168a5}h1,h2{line-height:1.25}</style><h1>AIDEAL pipeline follow-through</h1>
+<p>Observed November 19, 2026 at 09:24:19 Pacific. This is a saved snapshot, not a live monitor.</p>
+<h2>What is complete and what is running</h2>
+<p>All <strong>14 current Original/D1 R0 arms and 5,646 target outcomes are complete</strong>. The model is <code>gemini-3.1-flash-lite</code>; each target has one initial program and zero program repairs. Existing D1 was not regenerated.</p>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th style="text-align:right">Targets</th>
+  <th style="text-align:right">Original R0</th>
+  <th style="text-align:right">Existing D1 R0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Scala</td>
+  <td style="text-align:right">261</td>
+  <td style="text-align:right">20/261 (7.7%)</td>
+  <td style="text-align:right">14/261 (5.4%)</td>
+</tr>
+<tr>
+  <td>RDPro Java</td>
+  <td style="text-align:right">69</td>
+  <td style="text-align:right">12/69 (17.4%)</td>
+  <td style="text-align:right">4/69 (5.8%)</td>
+</tr>
+<tr>
+  <td>MDAnalysis</td>
+  <td style="text-align:right">1,519</td>
+  <td style="text-align:right">592/1519 (39.0%)</td>
+  <td style="text-align:right">621/1519 (40.9%)</td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td style="text-align:right">354</td>
+  <td style="text-align:right">211/354 (59.6%)</td>
+  <td style="text-align:right">221/354 (62.4%)</td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td style="text-align:right">178</td>
+  <td style="text-align:right">134/178 (75.3%)</td>
+  <td style="text-align:right">144/178 (80.9%)</td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">109/225 (48.4%)</td>
+  <td style="text-align:right">97/225 (43.1%)</td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">87/217 (40.1%)</td>
+  <td style="text-align:right">96/217 (44.2%)</td>
+</tr>
+</tbody>
+</table>
+<p>These results measure <strong>native acceptance with model-written assertions</strong>, not independent accuracy on fixed tasks. Four Scala URI/path failures and three MDAnalysis conditional mock targets remain disclosed; the frozen measurements and denominators have not changed.</p>
+<p>The separate historical replay completed 13/14 arms under the original frozen evaluator. MDAnalysis Original stopped at target 434 when binary stderr could not be decoded as UTF-8. Its historical bank contains 1,538 targets; it is different from the current 1,519-target bank. A new, separately recorded evaluator <strong>completed all 1,538 saved Original programs</strong> with 620 accepted and 918 failing. It made <strong>zero model calls</strong>. The final audit verified 13,847 unique files and found identical verdicts for all 433 programs completed before the old crash. The other 13 replay arms are also complete. <a href="replay-output-recovery/FINAL_VERIFICATION.json">Final verification</a>.</p>
+<h2>Why earlier checks missed the recorder failure</h2>
+<p>Earlier checks exercised imports, representative programs, assertions, target-use checks and checkpoint handling. They did not include non-UTF-8 subprocess output. The new failure occurred while AIDEAL read a program's diagnostic, not because the model needed another repair. The corrected recorder captures bytes, preserves invalid streams with hashes, and writes a readable diagnostic. The affected program still fails; its wrong input is not converted into a pass.</p>
+<p>The deployment changes only <code>execution.py</code> and <code>rescore_native_programs.py</code> in a new immutable release. The other 144 release files and the original measured outputs remain unchanged. Positive, negative, invalid-byte, timeout, resume and evidence-tamper checks passed on the actual cluster. The real TNG failure, a correct MDAnalysis program and an intentionally wrong program all produced the expected verdicts in preflight.</p>
+<table>
+<thead>
+<tr>
+  <th>Check</th>
+  <th>Recorded result</th>
+  <th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Cluster recovery regression suite</td>
+  <td>19 tests and 7 subtests passed</td>
+  <td>Includes real subprocess timeout cleanup and raw-byte receipt validation</td>
+</tr>
+<tr>
+  <td>Real MDAnalysis replay preflight</td>
+  <td>3/3 expected verdicts</td>
+  <td>Previously crashing program remains a recorded failure; correct/incorrect controls discriminate</td>
+</tr>
+<tr>
+  <td>Local recovery/evidence checks</td>
+  <td>27 tests and 56 subtests passed; 1 platform-specific test deselected</td>
+  <td>macOS process-group permission prevented that local timeout case; it passed on the cluster</td>
+</tr>
+<tr>
+  <td>Future authoring and eight-condition checks</td>
+  <td>78 tests and 53 subtests passed</td>
+  <td>Software contracts only; no paid audience experiment or revised README</td>
+</tr>
+</tbody>
+</table>
+<h2>Independent cluster execution and completion</h2>
+<p>The supervisor ran with parent PID 1, no terminal and its own process session. The worker and supervisor held their expected locks. The job completed at <strong>09:15:39 Pacific</strong>, independently of this laptop's SSH connection. No recovery worker remains active. Closing the laptop cannot interrupt this completed job. All logs and final receipts remain on the cluster. The supervisor did not launch paid R1/R2, D2 or ablation runs. Local Codex editing may pause when the laptop sleeps.</p>
+<pre><code class="language-mermaid">flowchart TD
+    A[Freeze source, APIs, docs, data and runtime] --&gt; B[Pass positive and negative setup checks]
+    B --&gt; C[Original R0 and existing D1 R0: complete]
+    C --&gt; D[Verify receipts, selected denominators and costs]
+    D --&gt; E[Replay historical programs: no model calls]
+    E --&gt; F[All 14 historical replay arms complete]
+    F --&gt; G[Record final replay and reconcile results]
+    G --&gt; H[Validate independent banks and real treatments]
+    H --&gt; I[Freeze eight conditions and run R0/R1/R2]
+    I --&gt; J[Development-only README revision D2; fresh evaluation]
+</code></pre>
+<h2>Development updates and remaining gates</h2>
+<table>
+<thead>
+<tr>
+  <th>Component</th>
+  <th>Current status</th>
+  <th>Still required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Output recording</td>
+  <td>Deployed and historical replay completed</td>
+  <td>Final evidence audit passed; preserve the separate evaluator identity</td>
+</tr>
+<tr>
+  <td>README author evidence</td>
+  <td>Exact-owner comments and selected explicit-call test excerpts now pass regression checks</td>
+  <td>Review all-library coverage; only approved source tests may enter prompts; execute examples before calling them validated</td>
+</tr>
+<tr>
+  <td>Eight-condition runner</td>
+  <td>Shared runner now accepts O/R/A/H/RA/RH/AH/RAH and passes software tests</td>
+  <td>Real library treatment bundles, independent reference/wrong-output/no-target controls and runtime admission</td>
+</tr>
+<tr>
+  <td>Alias admission</td>
+  <td>Paired canonical/alias valid and error controls required by the new configuration</td>
+  <td>Verify every installed alias, including defaults, outputs and exception behavior</td>
+</tr>
+<tr>
+  <td>Native embedded hints</td>
+  <td>Required by the new eight-condition schema; legacy JSON hints rejected</td>
+  <td>Build and validate each library's actual exception-message patches</td>
+</tr>
+<tr>
+  <td>Evaluation memory</td>
+  <td>Eight-condition configuration requires episode-only policy</td>
+  <td>Check actual backend exposure for every frozen bank; native repair path still needs separate review</td>
+</tr>
+<tr>
+  <td>R1/R2 and D2</td>
+  <td>Not launched</td>
+  <td>Complete the preceding gates; preserve development/evaluation separation</td>
+</tr>
+</tbody>
+</table>
+<p>The test suite is evidence for these checks, not a proof that every possible path is bug-free. A failed generated program is an expected experimental outcome; an evaluator failure is recorded separately and must not be counted as a successful test.</p>
+<h2>Recorded usage for the completed current R0 comparison</h2>
+<p><strong>22,188,748 input tokens and 1,351,468 output tokens</strong> are recorded across 5,647 provider attempts for 5,646 target outcomes. One retained 503 attempt has unknown usage. These totals are not exact billing. Recorded model-request intervals sum to 10,327.87 seconds; execution intervals sum to 25,055.89 seconds. These are accumulated intervals, not elapsed study time. SDK-internal retries may lack separate receipts.</p>
+<h2>Open the evidence</h2>
+<ul>
+<li><a href="COMPLETED_R0_STATUS.json">Current completed R0 receipts</a></li>
+<li><a href="replay-output-recovery/RELEASE_RECEIPT.json">Recovery release and source hashes</a></li>
+<li><a href="replay-output-recovery/CLUSTER_TESTS.json">Cluster regression checks</a> and <a href="replay-output-recovery/CLUSTER_TESTS.log">test output</a></li>
+<li><a href="replay-output-recovery/preflight/SUMMARY.json">Three real preflight programs and verdict receipts</a></li>
+<li><a href="DETACHED_PROCESS_CHECK.json">Detached process and lock check</a></li>
+<li><a href="replay-output-recovery/operator/LAUNCH.json">Recovery launch</a>, <a href="replay-output-recovery/operator/STATE.json">state snapshot</a> and <a href="replay-output-recovery/full-original/progress.json">progress snapshot</a></li>
+<li><a href="HISTORICAL_REPLAY_STATUS.json">Historical replay completion receipts</a></li>
+<li><a href="completed-r0-cost-audit/SUMMARY.json">Complete cost audit</a>; detailed per-bank ledgers stay alongside it locally and on the cluster</li>
+<li><a href="DEVELOPMENT_TESTS.json">Development test scope and file hashes</a></li>
+</ul>
+<p>To inspect the saved completion after reopening the laptop, run this read-only command:</p>
+<pre><code class="language-sh">ssh -o ClearAllForwardings=yes lab 'cat /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review/followthrough-2026-11-19/replay-output-recovery/operator/STATE.json /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review/followthrough-2026-11-19/replay-output-recovery/full-original/progress.json'
+</code></pre>
+<p>The files above are snapshots. The recovery is complete; no restart is needed. <a href="../../EXPERIMENT_GUIDE.md">Full experiment guide</a> and <a href="../../reports/2026-11-18-professor-meeting/CHECKLIST.md">action tracker</a>.</p>
+<h2>Publication and synchronization</h2>
+<p>Tested changes are published in <a href="https://github.com/ZhuochengShang/AIDEAL/commit/d85f6fa4a96a1539f47ffd97fa985fc16ac8880f">development commit d85f6fa</a>. The cluster keeps these future changes in a separate review copy; its completed recovery used only the two-file patch. <a href="CLUSTER_SYNC.json">Cluster synchronization receipt</a>.</p>
+</html>

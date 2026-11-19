@@ -1,0 +1,1779 @@
+{
+  "schema": 1,
+  "audit_kind": "read_only_live_pipeline_check",
+  "observed_start_utc": "2026-11-19T14:29:27.089240+00:00",
+  "observed_start_pacific": "2026-11-19T06:29:27.089240-08:00",
+  "namespace": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0",
+  "state": {
+    "status": "running",
+    "phase": "rescore",
+    "pid": 3289545,
+    "updated_at": "2026-11-19T10:06:59.513784+00:00"
+  },
+  "limits": [
+    "Native acceptance with audience-authored assertions is not independent task accuracy.",
+    "The live worker may advance between per-file reads.",
+    "No provider requests, restarts or frozen-file edits occurred in this audit."
+  ],
+  "processes": [
+    "3289545       1    07:05:33  0.0 Ssl  /home/zshan011/apps/aideal/venv/bin/python -B /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_evaluator_correction.py --study /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical --output /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0 --runtime-profiles /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/RUNTIME_PROFILES.json --input-overrides /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/INPUT_OVERRIDES.json --phases continuation rescore --run --key-file [credential path omitted]",
+    "3515873 3289545    01:45:27 42.4 Ss   /home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py --source-result /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/ablation-2026-11-18/generated-readme-r0/mdanalysis/result.json --output /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/mdanalysis --runtime-profile /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-final-2026-11-18/runtime_profile.json"
+  ],
+  "locks": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/launch.lock",
+      "inode": 993037153,
+      "proc_lock_records": [
+        "7: FLOCK  ADVISORY  WRITE 3289545 00:32:993037153 0 EOF"
+      ]
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/supervisor/queue.lock",
+      "inode": 993037157,
+      "proc_lock_records": []
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/.lock",
+      "inode": 993037581,
+      "proc_lock_records": []
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/.lock",
+      "inode": 993037587,
+      "proc_lock_records": []
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/.aideal_execution.lock",
+      "inode": 993658822,
+      "proc_lock_records": []
+    }
+  ],
+  "readiness": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/READINESS.json",
+    "sha256": "1576a935826d6738b089b425f12e3fc62e079dd8e4667bebed68df7537579d2d",
+    "status": "passed",
+    "code_commit": "56a42d91d8548ce7e4bf71b17b19fc5155f132f7",
+    "selected_apis": 2823,
+    "max_fix_rounds": 0
+  },
+  "release": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95",
+    "manifest_sha256": "c93fb88fedc7f8be7811024f45569180f3f8658f0179d19589ebc89c6483a2cb",
+    "readiness_bound_manifest_sha256": "c93fb88fedc7f8be7811024f45569180f3f8658f0179d19589ebc89c6483a2cb",
+    "manifest_matches_readiness": true,
+    "declared_content_sha256": "d8ba3815cf9551ded7cf1748bf06e42ce8ab8c6dd6b3bd867177a2d91804eb14",
+    "files": [
+      {
+        "path": "scripts/preflight_cluster_libraries.py",
+        "sha256": "1cbea021e4f7ff4501d2713acd0b081fdc766d1fb95102b31f16c44f41431311",
+        "expected_sha256": "1cbea021e4f7ff4501d2713acd0b081fdc766d1fb95102b31f16c44f41431311",
+        "git_blob_sha": "260a6ecc6488dc1b1585a9c0e72c570b5346bb78"
+      },
+      {
+        "path": "scripts/rescore_native_programs.py",
+        "sha256": "535453fe8b45c9ac6d4fb2e1933226146ee8a7b7d1157899a230cc4bbb513390",
+        "expected_sha256": "535453fe8b45c9ac6d4fb2e1933226146ee8a7b7d1157899a230cc4bbb513390",
+        "git_blob_sha": "df755620c5a3874abf4865112c375b92c72f3ced"
+      },
+      {
+        "path": "scripts/revise_readme_from_replay.py",
+        "sha256": "6e174e396f570afda36b12e62aa326ff4ffb2f5adc6e4f52c600f065fd4742a6",
+        "expected_sha256": "6e174e396f570afda36b12e62aa326ff4ffb2f5adc6e4f52c600f065fd4742a6",
+        "git_blob_sha": "dbbc2fbccc9eef1720295f1176b8304fb9710ccf"
+      },
+      {
+        "path": "scripts/run_cluster_experiment.py",
+        "sha256": "0c922f341941d730cd189ce805ad2b93eb4788d0ad4ec97690849d644d64fe1e",
+        "expected_sha256": "0c922f341941d730cd189ce805ad2b93eb4788d0ad4ec97690849d644d64fe1e",
+        "git_blob_sha": "5e2c23a10a10e0c68c36830aca3e2d24f1635bf3"
+      },
+      {
+        "path": "scripts/run_corrected_readme_comparison.py",
+        "sha256": "f4f5ddf3c4d053479386eb0146cc6e9c58f42f354caafaf8c2b601c5ae1c2e87",
+        "expected_sha256": "f4f5ddf3c4d053479386eb0146cc6e9c58f42f354caafaf8c2b601c5ae1c2e87",
+        "git_blob_sha": "42f4522390ad99a46b40d4a453f4d45bbd1f8dbd"
+      },
+      {
+        "path": "scripts/run_evaluator_correction.py",
+        "sha256": "7ea41b730817ea661f1197e3a7924ebc6d709e8d601acf42ca5aa1e7285ebb0d",
+        "expected_sha256": "7ea41b730817ea661f1197e3a7924ebc6d709e8d601acf42ca5aa1e7285ebb0d",
+        "git_blob_sha": "0e9d81a436dec91fb7ac86fb190bdb7da406bb8a"
+      },
+      {
+        "path": "scripts/run_original_micro.py",
+        "sha256": "4babd07a6dbf537a8e21f1fe2986c038a5083aa066bd19a6958d64ac2d846c6a",
+        "expected_sha256": "4babd07a6dbf537a8e21f1fe2986c038a5083aa066bd19a6958d64ac2d846c6a",
+        "git_blob_sha": "e56807d1de21c95c692eb90a4ca1e2923467cb5b"
+      },
+      {
+        "path": "scripts/run_verified_readme_continuation.py",
+        "sha256": "ff0c5f6419c018746c80aed29362139f8dc9fbaffa0c98456736c2da4086d999",
+        "expected_sha256": "ff0c5f6419c018746c80aed29362139f8dc9fbaffa0c98456736c2da4086d999",
+        "git_blob_sha": "f39f3413e08152f1734dcde0e2c9ae8e55fcddb3"
+      },
+      {
+        "path": "scripts/trace_original_micro.py",
+        "sha256": "7091dde3fcd41471215f69b753ca4da9185d063c527842bc970ee5568be33e3c",
+        "expected_sha256": "7091dde3fcd41471215f69b753ca4da9185d063c527842bc970ee5568be33e3c",
+        "git_blob_sha": "fa6aba383000b873ef63cc23a7d841097535c0bb"
+      },
+      {
+        "path": "scripts/trace_view.py",
+        "sha256": "03bd1dd8369fb4bb85fb4cba3590956a4f602e5613e35f7544a2315d5aab8364",
+        "expected_sha256": "03bd1dd8369fb4bb85fb4cba3590956a4f602e5613e35f7544a2315d5aab8364",
+        "git_blob_sha": "21dcb0a086419f397bd5ba2469aa07aca064ea38"
+      },
+      {
+        "path": "tests/test_canonical_prompt_targets.py",
+        "sha256": "1266f03216ef9f1d4d17f733aa25aa51dc48f6894365c46f6dd3705ede77a58e",
+        "expected_sha256": "1266f03216ef9f1d4d17f733aa25aa51dc48f6894365c46f6dd3705ede77a58e",
+        "git_blob_sha": "b4752a87700629bf9385fccaa1278270590ed992"
+      },
+      {
+        "path": "tests/test_corrected_readme_comparison.py",
+        "sha256": "c1d1495b4d246833d302e3b63fb1b53048389e7ed488905ad9df0c941566f7ab",
+        "expected_sha256": "c1d1495b4d246833d302e3b63fb1b53048389e7ed488905ad9df0c941566f7ab",
+        "git_blob_sha": "c0c1f8255204a6193cbb680e553b7d7792f23f1a"
+      },
+      {
+        "path": "tests/test_doc_check_modules.py",
+        "sha256": "753a865f0cb5433ff9fe8b4ffb10ddf4074c0a5d2cce559bdfa0e8e2b3def2dd",
+        "expected_sha256": "753a865f0cb5433ff9fe8b4ffb10ddf4074c0a5d2cce559bdfa0e8e2b3def2dd",
+        "git_blob_sha": "99295bfc29abe0b4cef75e6c9bb7bf0d4d1ee248"
+      },
+      {
+        "path": "tests/test_evaluation_scope.py",
+        "sha256": "3259f5440a9467210e93c32702dc17a0be51a6e2544267c092a7f4f0c578058e",
+        "expected_sha256": "3259f5440a9467210e93c32702dc17a0be51a6e2544267c092a7f4f0c578058e",
+        "git_blob_sha": "964afcf6f147e44f5f44622ea43b350d426ca7e3"
+      },
+      {
+        "path": "tests/test_evaluator_correction_controller.py",
+        "sha256": "2a87169e2ae1c7e110cd344a6807a8854e2151285f8588a6690c83bddfec1262",
+        "expected_sha256": "2a87169e2ae1c7e110cd344a6807a8854e2151285f8588a6690c83bddfec1262",
+        "git_blob_sha": "c73fd2853adccb5565e00751e5c1451f52e7178a"
+      },
+      {
+        "path": "tests/test_execution_credentials.py",
+        "sha256": "18dc9d64ca75f6276f7663dbb7849470002e80cab163859bd67627fb4caaed12",
+        "expected_sha256": "18dc9d64ca75f6276f7663dbb7849470002e80cab163859bd67627fb4caaed12",
+        "git_blob_sha": "9053251b90d7cd481533983a0bad6d163e303d98"
+      },
+      {
+        "path": "tests/test_native_execution_contract.py",
+        "sha256": "3da2587998b10b419acf02a2e620adb2ff00d908841d138e49e70098e66fce16",
+        "expected_sha256": "3da2587998b10b419acf02a2e620adb2ff00d908841d138e49e70098e66fce16",
+        "git_blob_sha": "815951f3ffc48ab1aa179c096123457e67045ba1"
+      },
+      {
+        "path": "tests/test_native_output_contract.py",
+        "sha256": "58b7426a5b701c95e516a616d4b230941ee0df94b79e064b455fadcc394cd4fc",
+        "expected_sha256": "58b7426a5b701c95e516a616d4b230941ee0df94b79e064b455fadcc394cd4fc",
+        "git_blob_sha": "55a51a2e14cd2ea7431a3b377f8b98e8afcff1fa"
+      },
+      {
+        "path": "tests/test_native_runtime_profile.py",
+        "sha256": "827cfede6950ed11caa52fe29b1a8fe147a0177c755a5c613a7f56cbc977ccae",
+        "expected_sha256": "827cfede6950ed11caa52fe29b1a8fe147a0177c755a5c613a7f56cbc977ccae",
+        "git_blob_sha": "29c92fc1646f4303e85e17e6b3fe2f8b3cde6da8"
+      },
+      {
+        "path": "tests/test_original_micro_launcher.py",
+        "sha256": "2a8123968dbb2d87978592439dffa5434ad8d80464cc73d0a7aef5bcbdd6ff3d",
+        "expected_sha256": "2a8123968dbb2d87978592439dffa5434ad8d80464cc73d0a7aef5bcbdd6ff3d",
+        "git_blob_sha": "dff4f9542efd1657d7d19aa1ef72dfadb826e47b"
+      },
+      {
+        "path": "tests/test_original_micro_trace.py",
+        "sha256": "8c027a7ad51efbeede863074d838833b305be0827c7647c1b401f10412ebff1b",
+        "expected_sha256": "8c027a7ad51efbeede863074d838833b305be0827c7647c1b401f10412ebff1b",
+        "git_blob_sha": "a1555d92bb03d523124819fa7b63b4ce1dd21e78"
+      },
+      {
+        "path": "tests/test_preflight_cluster_libraries.py",
+        "sha256": "f0b90b24b082019c2ccf6c698463ad8fcea490d5df14c23767252586ca3f6d36",
+        "expected_sha256": "f0b90b24b082019c2ccf6c698463ad8fcea490d5df14c23767252586ca3f6d36",
+        "git_blob_sha": "f2792d3653ae322f593c949b5f5186617a53f061"
+      },
+      {
+        "path": "tests/test_readme_entry_prompt.py",
+        "sha256": "2c4b3d7d91bdbb0eab4785ff3b4d0fbc1a24e20b5748bf2d833b92457a42cc16",
+        "expected_sha256": "2c4b3d7d91bdbb0eab4785ff3b4d0fbc1a24e20b5748bf2d833b92457a42cc16",
+        "git_blob_sha": "3826e4262724ed810b53122967bf189189b76234"
+      },
+      {
+        "path": "tests/test_replay_runtime_profile.py",
+        "sha256": "55076b86aa3262e9d63d6df3cbcedc5a1080e33fd0e20832f996736952eae3af",
+        "expected_sha256": "55076b86aa3262e9d63d6df3cbcedc5a1080e33fd0e20832f996736952eae3af",
+        "git_blob_sha": "05d747712e7420d207fe08da51eb0b85003dc885"
+      },
+      {
+        "path": "tests/test_rescore_native_programs.py",
+        "sha256": "a8ef68bcae2d69d079140320d46acfd17d7dffdf59cc054ec7d20d0cc38d73b0",
+        "expected_sha256": "a8ef68bcae2d69d079140320d46acfd17d7dffdf59cc054ec7d20d0cc38d73b0",
+        "git_blob_sha": "5303192d0e2d4c2c39333fb9dec49de0e226f4f2"
+      },
+      {
+        "path": "tests/test_revise_readme_from_replay.py",
+        "sha256": "f327eb9a934d4f98551b928d3a89ec177e20c239e378e8617ad66728d9a0bf47",
+        "expected_sha256": "f327eb9a934d4f98551b928d3a89ec177e20c239e378e8617ad66728d9a0bf47",
+        "git_blob_sha": "4592f23b59cabe4a70bd70f73685372eb3eb38a3"
+      },
+      {
+        "path": "tests/test_runtime_profile.py",
+        "sha256": "689753fd735e022b0e3680616460c7321fda657301be3d2ac87699e66b606059",
+        "expected_sha256": "689753fd735e022b0e3680616460c7321fda657301be3d2ac87699e66b606059",
+        "git_blob_sha": "dd4a7bc064cf985d3ae7cffb3bc3c1a4631e7be5"
+      },
+      {
+        "path": "tests/test_verified_readme_continuation.py",
+        "sha256": "58d1dd544899ad327b134f3e514daafb953464633a7df2c8030c4ef914527e93",
+        "expected_sha256": "58d1dd544899ad327b134f3e514daafb953464633a7df2c8030c4ef914527e93",
+        "git_blob_sha": "2d2488a0622dc7b53122fc5dbbaa8ba34bf74865"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/__init__.py",
+        "sha256": "137e36c7ef8b291cac55efb7cfb384093ff9df4cd762160ebebd47089ab5abd2",
+        "expected_sha256": "137e36c7ef8b291cac55efb7cfb384093ff9df4cd762160ebebd47089ab5abd2",
+        "git_blob_sha": "96a8b101ebae9e9564e8a96805df18de5bb00efd"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/adapters/java.yaml",
+        "sha256": "af0d7e37f2a505caabf1d7a6e619d3720825d64b3c131fed85ddb14d5cd6c7af",
+        "expected_sha256": "af0d7e37f2a505caabf1d7a6e619d3720825d64b3c131fed85ddb14d5cd6c7af",
+        "git_blob_sha": "61dc7fcb58f0c1c3b730669e98456e4868b98c88"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/adapters/python.yaml",
+        "sha256": "701b62e8446e7adc4efd40bb5ed9e20571092ca7ceaed437bac61bc5fb1a5896",
+        "expected_sha256": "701b62e8446e7adc4efd40bb5ed9e20571092ca7ceaed437bac61bc5fb1a5896",
+        "git_blob_sha": "6af89e61e0741e7c298d831a957781953778a023"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/adapters/scala-spark.yaml",
+        "sha256": "7ebb8b4acdeffa901a9e1f1bd6823387b649fffa38515e5023dde04951be3378",
+        "expected_sha256": "7ebb8b4acdeffa901a9e1f1bd6823387b649fffa38515e5023dde04951be3378",
+        "git_blob_sha": "d9c4dfb681a95edcad533ea0da2de5406a6440a5"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/alias_registry.py",
+        "sha256": "c80e542cb2547031a5aaa92df8599ba1115a40ba9faa216129152972b8038883",
+        "expected_sha256": "c80e542cb2547031a5aaa92df8599ba1115a40ba9faa216129152972b8038883",
+        "git_blob_sha": "c61ef4575fe88b41935826cbc74764ac90d0b26f"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_canonical_selection.py",
+        "sha256": "e8f2a440c7b93f4d2aba8f4c3d27149d3cb1e84af3bae8190dbc7d59222e2f78",
+        "expected_sha256": "e8f2a440c7b93f4d2aba8f4c3d27149d3cb1e84af3bae8190dbc7d59222e2f78",
+        "git_blob_sha": "8b27d9e0d28a7e3ce7c1f0a1973f5a77fb28a106"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_discovery.py",
+        "sha256": "3c6b501cd096d4d39b646e25e1886041013e707ce3f18b0a8bcc7bfbdc63b139",
+        "expected_sha256": "3c6b501cd096d4d39b646e25e1886041013e707ce3f18b0a8bcc7bfbdc63b139",
+        "git_blob_sha": "8f35ddb4dcd50fb9026a1af11bc73ae676cb3fe2"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_examples.py",
+        "sha256": "6e3d139e3239f28639ac1606362c1aeb695ad310fba65bc81cc5eb1c3318b7e2",
+        "expected_sha256": "6e3d139e3239f28639ac1606362c1aeb695ad310fba65bc81cc5eb1c3318b7e2",
+        "git_blob_sha": "d35c55950c04fc24be6dc184c8beb9c0fc33b226"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_intent.py",
+        "sha256": "160e6602f2e2348f0ddf8f9564b46d48c77d92990765edac2c367894c2ad4925",
+        "expected_sha256": "160e6602f2e2348f0ddf8f9564b46d48c77d92990765edac2c367894c2ad4925",
+        "git_blob_sha": "f65d1a62369a04055b55e78a5919f78ae0e1061a"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_origin.py",
+        "sha256": "e3c6bccb236e40f8f6ca38767921966c4285986b126459feacc104897de6ad89",
+        "expected_sha256": "e3c6bccb236e40f8f6ca38767921966c4285986b126459feacc104897de6ad89",
+        "git_blob_sha": "99fa50b953fad5d3f09156c79e37f01c866be541"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_overloads.py",
+        "sha256": "a149c2b973d3ff45913034ac01fcd800733023c81832b2228792ab2fc7cb56c9",
+        "expected_sha256": "a149c2b973d3ff45913034ac01fcd800733023c81832b2228792ab2fc7cb56c9",
+        "git_blob_sha": "4d1dc6c100c607a8f10d1c89fde6fe535b8f7a26"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+        "sha256": "eb3e3595ae5ee5b77d614042af953297019b3caf40313c6b66081a0ea6660419",
+        "expected_sha256": "eb3e3595ae5ee5b77d614042af953297019b3caf40313c6b66081a0ea6660419",
+        "git_blob_sha": "89fc9c617f8f38690338dfca3fbc0d063cb2077b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_registry.py",
+        "sha256": "dd6fb20068794db5110c05da439e7c79400af6aaa12b50aa17a0ac9a2101b055",
+        "expected_sha256": "dd6fb20068794db5110c05da439e7c79400af6aaa12b50aa17a0ac9a2101b055",
+        "git_blob_sha": "db046220538faea2bb2c5b8295aa45bd96caa64c"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_signatures.py",
+        "sha256": "425bbff8e68f84893dc81926332bea771a5fb17284383c8223e9dca8c396f2ff",
+        "expected_sha256": "425bbff8e68f84893dc81926332bea771a5fb17284383c8223e9dca8c396f2ff",
+        "git_blob_sha": "fbdb9499db2594a6ee2dd52e76a338581edd0b5d"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_source_registry.py",
+        "sha256": "aa7a4a439d32ebfe19e2fb5e21a02011890bb4bdd74a27a732466b630ee89fca",
+        "expected_sha256": "aa7a4a439d32ebfe19e2fb5e21a02011890bb4bdd74a27a732466b630ee89fca",
+        "git_blob_sha": "2462b8a249036db6303b7163c9f5e8963a1edc04"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_sql_canonical.py",
+        "sha256": "e73fe4b1209df64d904330764a5460c720b124404fe70533eca7092ea9b06367",
+        "expected_sha256": "e73fe4b1209df64d904330764a5460c720b124404fe70533eca7092ea9b06367",
+        "git_blob_sha": "0265fb3afb68368be204f9c5abaf7b300d38597e"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/api_visibility.py",
+        "sha256": "35f32648dfc35b24ca4a784da53edd299f4de23edea82d221906fe114c65a0d8",
+        "expected_sha256": "35f32648dfc35b24ca4a784da53edd299f4de23edea82d221906fe114c65a0d8",
+        "git_blob_sha": "38d6a61ddddaac8084e1f10c903b5027710cc891"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/checkpoint_compatibility.py",
+        "sha256": "f9a7572e585687d071d3a74212f5f4d3ba89056606658e3e9b52d17caedc00d0",
+        "expected_sha256": "f9a7572e585687d071d3a74212f5f4d3ba89056606658e3e9b52d17caedc00d0",
+        "git_blob_sha": "a69dd285b71461d17700c282906f1771ce57d080"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/cli.py",
+        "sha256": "6b11a777a362fed119117d54087ca9e46e0c23545026f00a6b38113f1f0a9b5a",
+        "expected_sha256": "6b11a777a362fed119117d54087ca9e46e0c23545026f00a6b38113f1f0a9b5a",
+        "git_blob_sha": "f878aff9331565bcb8386ca8d8ce577effe66fad"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/config.py",
+        "sha256": "4b378984faa4ed1f0a5f3e6208c2ae1000f4211a67fae4e5275a323d3cabeef6",
+        "expected_sha256": "4b378984faa4ed1f0a5f3e6208c2ae1000f4211a67fae4e5275a323d3cabeef6",
+        "git_blob_sha": "bf61425fc73d319590df9d0433ad182293552dc1"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/deepdive.py",
+        "sha256": "4dde0aec52c53a831d4e97942dfba496e3d0f54465166f45b29a2f39f8707bc2",
+        "expected_sha256": "4dde0aec52c53a831d4e97942dfba496e3d0f54465166f45b29a2f39f8707bc2",
+        "git_blob_sha": "4dc612262104ac4834cc3f71afbace04872e62b8"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_grade.md",
+        "sha256": "599ee48da8315b321b0580e284b4d54a6569c11d8d1e3d02f945957408831683",
+        "expected_sha256": "599ee48da8315b321b0580e284b4d54a6569c11d8d1e3d02f945957408831683",
+        "git_blob_sha": "cc394309ce4ef46a71408df0e2e120f9d8748df1"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write.md",
+        "sha256": "03c811fec5c45ef882be52bbb2e55f13a56a447f462f17e7cfeb2529b60d842b",
+        "expected_sha256": "03c811fec5c45ef882be52bbb2e55f13a56a447f462f17e7cfeb2529b60d842b",
+        "git_blob_sha": "c5e6da4f837913fa1b4bb1bdaad31e61b1c0d14c"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/comprehension_write_exec.md",
+        "sha256": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501",
+        "expected_sha256": "f557fcc5d4534cdfa6e596066b2106fd4d9f1ed459be8afccb8676070275c501",
+        "git_blob_sha": "d0c0681a8724565450dde394e8cb02f29a3979a2"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/deep_dive.md",
+        "sha256": "bcaacb96d675d8e898784eea65319e5ded213c06eb8578f5e40627fd3adce504",
+        "expected_sha256": "bcaacb96d675d8e898784eea65319e5ded213c06eb8578f5e40627fd3adce504",
+        "git_blob_sha": "4bc9ad14c0d5d280458909b74cb93eb05f03d1e6"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/docfix_diagnose.md",
+        "sha256": "d5634de15b571eec7294e743ff844d7f751fd406eb16d41d416f5bd94f607b85",
+        "expected_sha256": "d5634de15b571eec7294e743ff844d7f751fd406eb16d41d416f5bd94f607b85",
+        "git_blob_sha": "a99161f9fe5e989888140f611622c98d3b68a0aa"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/docfix_rewrite.md",
+        "sha256": "c1542f31dc913cfb50ab970ee66d54b3fb5f94e32444870678f15ff64292b896",
+        "expected_sha256": "c1542f31dc913cfb50ab970ee66d54b3fb5f94e32444870678f15ff64292b896",
+        "git_blob_sha": "a91cd106cf0bd42ac103f035f53b886c4ae306c0"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/intended_review.md",
+        "sha256": "05152650aa0df4f8b7b369c81a6f6882ac3b8eb25234d95c0d1f139011531949",
+        "expected_sha256": "05152650aa0df4f8b7b369c81a6f6882ac3b8eb25234d95c0d1f139011531949",
+        "git_blob_sha": "43ec2ad65cf5fb87f87386c995b0c5f74302e76b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/intent_common.md",
+        "sha256": "1748e8b5e12f4675db67b4d1c9b2ca157468e0851b7518a5a14dbd95ac14aa64",
+        "expected_sha256": "1748e8b5e12f4675db67b4d1c9b2ca157468e0851b7518a5a14dbd95ac14aa64",
+        "git_blob_sha": "ea20e09055dfb6ff76a9737275c770b76394042f"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/probe_write.md",
+        "sha256": "e2e29930af185e968baf69e583b051ede4c2acdf13152472de24e53740c72478",
+        "expected_sha256": "e2e29930af185e968baf69e583b051ede4c2acdf13152472de24e53740c72478",
+        "git_blob_sha": "e5b9e9dcc681b29dcb0e0e1788dc16eb904a72a5"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_distill.md",
+        "sha256": "6c6cc6bf74e8169a1206be5898316b9df4cc862daac3956f13d0703d0c5385ba",
+        "expected_sha256": "6c6cc6bf74e8169a1206be5898316b9df4cc862daac3956f13d0703d0c5385ba",
+        "git_blob_sha": "38e72bec3e59fc628f4338571e43e1bcdeadacf3"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/readme_entry.md",
+        "sha256": "82ac63137ec13becb97a1b06aac8db5f206bbde7a2f77ec28209af5275f2b468",
+        "expected_sha256": "82ac63137ec13becb97a1b06aac8db5f206bbde7a2f77ec28209af5275f2b468",
+        "git_blob_sha": "4912df79233d715359d47155ff5d485fc1ab775c"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/default_prompts/aideal/tasks_generate.md",
+        "sha256": "65f1272ca7d5a3a8c80e3b03e6b87d51f0717e5daead2e6f9f6fcdeb3cc7b996",
+        "expected_sha256": "65f1272ca7d5a3a8c80e3b03e6b87d51f0717e5daead2e6f9f6fcdeb3cc7b996",
+        "git_blob_sha": "79583ab2fecea7f372e67897c96ddc03c34b9ed9"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/defaults.yaml",
+        "sha256": "1778d383c06f3796b56c9db6b47a985a1adeb5c2451a0a896cfbc8f0fea298aa",
+        "expected_sha256": "1778d383c06f3796b56c9db6b47a985a1adeb5c2451a0a896cfbc8f0fea298aa",
+        "git_blob_sha": "9e954508e539290b95505efddd18219be1fd5279"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_comprehension.py",
+        "sha256": "23cf5ad0386a178621f37907b579e93ef5d21bed7db762111af1a2c34965c6ee",
+        "expected_sha256": "23cf5ad0386a178621f37907b579e93ef5d21bed7db762111af1a2c34965c6ee",
+        "git_blob_sha": "8c0edbd61af7149b644cac8926656c2c404a08cb"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_errors.py",
+        "sha256": "853f96d3b955720222d81a93c155b5f42d4bbee5848cf0da12e14bb8edbd3f85",
+        "expected_sha256": "853f96d3b955720222d81a93c155b5f42d4bbee5848cf0da12e14bb8edbd3f85",
+        "git_blob_sha": "84ebc4b177224823a69d09cc9e9efc299b5d35f2"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_execution.py",
+        "sha256": "8370ec6e87b1bf4b70dcf94b90a89fee2dd07efdc58f634650b454529d033d0c",
+        "expected_sha256": "8370ec6e87b1bf4b70dcf94b90a89fee2dd07efdc58f634650b454529d033d0c",
+        "git_blob_sha": "81561b281e947f2172765da1eb79e3ae42d6d768"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_inputs.py",
+        "sha256": "0450e24754de2a6f2d4f8cfdc9da94189af366041b5fddbc7bba41f0a71e2360",
+        "expected_sha256": "0450e24754de2a6f2d4f8cfdc9da94189af366041b5fddbc7bba41f0a71e2360",
+        "git_blob_sha": "f8208c2892bdd07a9987871780b12c33f27ab6a9"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+        "sha256": "7dfaac9f3e045693e8303cb38cb619b395bab373559fdeaddbe795ae41fca2f7",
+        "expected_sha256": "7dfaac9f3e045693e8303cb38cb619b395bab373559fdeaddbe795ae41fca2f7",
+        "git_blob_sha": "24980087c51c06701053910aecafc2b2c3f97c8d"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_puzzles.py",
+        "sha256": "fe6d49822826994d2338029d0290c449d7863cfc8dadacf1d6356ec6fb5495b4",
+        "expected_sha256": "fe6d49822826994d2338029d0290c449d7863cfc8dadacf1d6356ec6fb5495b4",
+        "git_blob_sha": "6f1e9b61b5dad70835b1a0632bf8cd6f2baf465e"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_check_sources.py",
+        "sha256": "61804493f3f48f42e8f1827c5f0a68c4ace7933f6f0d9ea7a06793548b13b3c2",
+        "expected_sha256": "61804493f3f48f42e8f1827c5f0a68c4ace7933f6f0d9ea7a06793548b13b3c2",
+        "git_blob_sha": "dcc98c31385a9a551c2588f922876cb2eabf73ae"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_checks.py",
+        "sha256": "b8068dcb107f49b83f27a6b2ceb31e36be56a8bda1af80298c9880ad462689c7",
+        "expected_sha256": "b8068dcb107f49b83f27a6b2ceb31e36be56a8bda1af80298c9880ad462689c7",
+        "git_blob_sha": "0f67de6af97b40106eae9e827c1a44b44acf02b7"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_repair.py",
+        "sha256": "a2b3ea9a17801eaae32fe0aa8a248757295ba60d238a4d1926ae0fb853c4efd6",
+        "expected_sha256": "a2b3ea9a17801eaae32fe0aa8a248757295ba60d238a4d1926ae0fb853c4efd6",
+        "git_blob_sha": "a8006b516740d9bca5a6fec572bd11f1b33068c3"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/doc_snapshot.py",
+        "sha256": "d0a74750430462d1b8d259fcb8bbedfa1f85b4d6187a30f7a732b14c140ef468",
+        "expected_sha256": "d0a74750430462d1b8d259fcb8bbedfa1f85b4d6187a30f7a732b14c140ef468",
+        "git_blob_sha": "0db054c9fb19b6cdf2f1219daeeed83c357eaadc"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/docfix.py",
+        "sha256": "d69d8e6fff3e303601b1803c8462b715f5b985263fc098fb8e15ad98c0151e8b",
+        "expected_sha256": "d69d8e6fff3e303601b1803c8462b715f5b985263fc098fb8e15ad98c0151e8b",
+        "git_blob_sha": "e3803cff43eccb974548a886804d10982e787ef5"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/error_log.py",
+        "sha256": "8d62111cdeed4c66249c4145896c0bfc6ca992bfff8dc22de811e50b6496b0d2",
+        "expected_sha256": "8d62111cdeed4c66249c4145896c0bfc6ca992bfff8dc22de811e50b6496b0d2",
+        "git_blob_sha": "048d80d8d83782edc3f0927e94b3ec247130d465"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/evaluation_scope.py",
+        "sha256": "df6cf221a17f805513f2371f5959c8aa7908ef031a4b4356002caf8659521abd",
+        "expected_sha256": "df6cf221a17f805513f2371f5959c8aa7908ef031a4b4356002caf8659521abd",
+        "git_blob_sha": "3ada41a8c4bba9b4bfb481132ffd1befbf6fe72d"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/execution.py",
+        "sha256": "b4fdd7891866ca9a2d287e6c489fe12d0136b0332a7d2bab2051e99c94e449d0",
+        "expected_sha256": "b4fdd7891866ca9a2d287e6c489fe12d0136b0332a7d2bab2051e99c94e449d0",
+        "git_blob_sha": "c1a96890379831efb53da09456080ee2bbdb0406"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/experiment_identity.py",
+        "sha256": "e79165d01ea62124134d56df6653b93b65df03dc9cf64750c04b749a9b569a2b",
+        "expected_sha256": "e79165d01ea62124134d56df6653b93b65df03dc9cf64750c04b749a9b569a2b",
+        "git_blob_sha": "94b83d23752ad8a9f547755ea83418db02d0206b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/fix_guide.py",
+        "sha256": "199aa52a1a908c8f400802b98a7c3a3e79af05079bbf2b351fb97efd1864219c",
+        "expected_sha256": "199aa52a1a908c8f400802b98a7c3a3e79af05079bbf2b351fb97efd1864219c",
+        "git_blob_sha": "03b63796ad88392af5a629b009546b72610d8975"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/fixreport.py",
+        "sha256": "c8ecfea0adac9587b4d16dbed493f30830e6b34fa906c8f6dc2e685493e1e82a",
+        "expected_sha256": "c8ecfea0adac9587b4d16dbed493f30830e6b34fa906c8f6dc2e685493e1e82a",
+        "git_blob_sha": "a6d9dceb012e7aeae9bcfe2fc4bda464079ac0bf"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/llm.py",
+        "sha256": "da980c4ecbd9709ecbc9543ebfa5dc9e37346362c097bb391d327cc3f3826ebb",
+        "expected_sha256": "da980c4ecbd9709ecbc9543ebfa5dc9e37346362c097bb391d327cc3f3826ebb",
+        "git_blob_sha": "5159acd68e2c55290cbf2ba1f4f61e5328b47106"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/mcp_server.py",
+        "sha256": "2f14c49d4ce4ca06c85165fb2cbf9282745016883e49146b7f7b248152369ff6",
+        "expected_sha256": "2f14c49d4ce4ca06c85165fb2cbf9282745016883e49146b7f7b248152369ff6",
+        "git_blob_sha": "5141ee1d57a85869c47a95ac94b6f56ec276ce3f"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/native_execution_contract.py",
+        "sha256": "5ef4e8de77d1b60c40689999273132a0f3ed2226d808bcf08abbf15a1c9c7e2c",
+        "expected_sha256": "5ef4e8de77d1b60c40689999273132a0f3ed2226d808bcf08abbf15a1c9c7e2c",
+        "git_blob_sha": "806aa4f5f369219090a40e4c4e0a5005567e9f7b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/notes_to_self.py",
+        "sha256": "b1b3a34e25c5adedefc1bcf7b4ccd84ffa0d933191be1f16b542d88772cd51cc",
+        "expected_sha256": "b1b3a34e25c5adedefc1bcf7b4ccd84ffa0d933191be1f16b542d88772cd51cc",
+        "git_blob_sha": "6a3318af02c1ad503dfe097f02bb8f339597a08b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/original_documentation.py",
+        "sha256": "b54785cdebdb8e2f92b9c81698b21e9817c6df7b92e5bc67c47438eb9cc3ff84",
+        "expected_sha256": "b54785cdebdb8e2f92b9c81698b21e9817c6df7b92e5bc67c47438eb9cc3ff84",
+        "git_blob_sha": "b757732b1062d43aa49ff5c05422e5b7db67993b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/probe.py",
+        "sha256": "ea7c4627c26a5e5a199820a0b68af873a6f98a56981edd519eacaeef65878c7a",
+        "expected_sha256": "ea7c4627c26a5e5a199820a0b68af873a6f98a56981edd519eacaeef65878c7a",
+        "git_blob_sha": "f15ddf6ab75e78ff5724a9b786d26fe5023bec34"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/profile.py",
+        "sha256": "e47d5e0778a3bd859e84d9432eb20b43b3278b02bf473f7b447b6de54c416664",
+        "expected_sha256": "e47d5e0778a3bd859e84d9432eb20b43b3278b02bf473f7b447b6de54c416664",
+        "git_blob_sha": "0e4a0f88ab49097f3df334489fcf437c96381d35"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/prompts.py",
+        "sha256": "a77e527d2a5e05bc8ab170b5d06ddb7cd3db0bc8b53d59c16452df19ce05fa29",
+        "expected_sha256": "a77e527d2a5e05bc8ab170b5d06ddb7cd3db0bc8b53d59c16452df19ce05fa29",
+        "git_blob_sha": "cee2979e73309032dda1f521f7c08b7dc0d4650b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/provider_deadline.py",
+        "sha256": "4c40eaea157adb49313ed0b68a538845adafe4f4e942e7aec3658cf57fbe1e2f",
+        "expected_sha256": "4c40eaea157adb49313ed0b68a538845adafe4f4e942e7aec3658cf57fbe1e2f",
+        "git_blob_sha": "d8b35c9953ce01c1bc921a1ed89053611ecdaf4a"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/puzzle_bank.py",
+        "sha256": "5181c7f2ca672d0662c9faf7863fd6b432d97232d11d43f0466d5321f4af49b8",
+        "expected_sha256": "5181c7f2ca672d0662c9faf7863fd6b432d97232d11d43f0466d5321f4af49b8",
+        "git_blob_sha": "344b0d9809c4d5da39c4e3bdac131a773bb17c1a"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_agent.py",
+        "sha256": "f6480448ef79bf7f99314dd4f1add4dd7e34bf052890bfad189813a920266c96",
+        "expected_sha256": "f6480448ef79bf7f99314dd4f1add4dd7e34bf052890bfad189813a920266c96",
+        "git_blob_sha": "465270c252d0c877c2d94526f0432ccfd54de520"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_catalogue.py",
+        "sha256": "533b21f23c4f29a2c8437c36fb56c0afd8a20cb788d5ebd34691fbaf7939a503",
+        "expected_sha256": "533b21f23c4f29a2c8437c36fb56c0afd8a20cb788d5ebd34691fbaf7939a503",
+        "git_blob_sha": "5c1411dc419fa68744c295cf879016ba71affd9e"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_evidence.py",
+        "sha256": "2eccc69c53e502ba99b1ad15f00348c64269fd7cf0c6ccc30973f43d28928771",
+        "expected_sha256": "2eccc69c53e502ba99b1ad15f00348c64269fd7cf0c6ccc30973f43d28928771",
+        "git_blob_sha": "18ea0e75546a095da8eebd76a8f27e82e0651bd6"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_format.py",
+        "sha256": "ecbc0263c9545e6df8a8bec605472fbdadaacffe0b9c954fecdbc293dad1d46e",
+        "expected_sha256": "ecbc0263c9545e6df8a8bec605472fbdadaacffe0b9c954fecdbc293dad1d46e",
+        "git_blob_sha": "5b132caa99716c7e506def694605ea10dc7c51ac"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_generation.py",
+        "sha256": "b042b4e98ff14bb78ae2deb920dbe9b818b14f7e5762a9b923ea7fe02105afba",
+        "expected_sha256": "b042b4e98ff14bb78ae2deb920dbe9b818b14f7e5762a9b923ea7fe02105afba",
+        "git_blob_sha": "de13ba9bdb1f28ce66140a2bf73528397d9641b0"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_recording.py",
+        "sha256": "b51721d2155e580e634e506644b44d09b073f7035f6e6c262d6d8eea0c554bac",
+        "expected_sha256": "b51721d2155e580e634e506644b44d09b073f7035f6e6c262d6d8eea0c554bac",
+        "git_blob_sha": "dd229d591fe0151bb799f4f900a9481da4d79ad3"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_replay.py",
+        "sha256": "1d4708ea0238f241fd3ccc608f4417af674789c11c434e81560e7b5c4c94bd1a",
+        "expected_sha256": "1d4708ea0238f241fd3ccc608f4417af674789c11c434e81560e7b5c4c94bd1a",
+        "git_blob_sha": "20feaea245623ad4a36630edc8cb4ce90896d602"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/readme_validation.py",
+        "sha256": "ff95a844af73233c14563259afb357bb243a7900f704ff0822df5f58bffd6567",
+        "expected_sha256": "ff95a844af73233c14563259afb357bb243a7900f704ff0822df5f58bffd6567",
+        "git_blob_sha": "d144a0578f8df7970eb8ad089233f2dcfb16edee"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/repair_journal.py",
+        "sha256": "35827a1d4715086f26377024ea7aeea32d644eb2ff15cd0ae213d4f8ad73d677",
+        "expected_sha256": "35827a1d4715086f26377024ea7aeea32d644eb2ff15cd0ae213d4f8ad73d677",
+        "git_blob_sha": "b1697840b79647806b4ba02ba62f51d366b9b76b"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/scaffold_generation.py",
+        "sha256": "d12afcd7886a2812b7c615ab505b3aab22d2d8bbdb2d3548b30008148b9bb208",
+        "expected_sha256": "d12afcd7886a2812b7c615ab505b3aab22d2d8bbdb2d3548b30008148b9bb208",
+        "git_blob_sha": "7f03d21bfda3a62e7addb189fa1d081c1caf3695"
+      },
+      {
+        "path": "vendor/aideal_engine/src/aideal/task_generator.py",
+        "sha256": "9baea6c041e49db2e4ef6e95ca055b12453e97db183e44903c5d9aea8009614c",
+        "expected_sha256": "9baea6c041e49db2e4ef6e95ca055b12453e97db183e44903c5d9aea8009614c",
+        "git_blob_sha": "08ceb6d0572381f3d6be23aadb9b5ac4c8d2ce83"
+      },
+      {
+        "path": "workflow/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "workflow/__main__.py",
+        "sha256": "2e8667753c04ecc8552b365f7ef8477c153c2234323189ab378f2a1f8f86219d",
+        "expected_sha256": "2e8667753c04ecc8552b365f7ef8477c153c2234323189ab378f2a1f8f86219d",
+        "git_blob_sha": "305b175970c7b2768bf9c51b1206c8aba7c2c2ab"
+      },
+      {
+        "path": "workflow/ablation.py",
+        "sha256": "e5877e25cde0dfbe1ef66531c79298f0d8013794f911381ee050fd0cc46781cd",
+        "expected_sha256": "e5877e25cde0dfbe1ef66531c79298f0d8013794f911381ee050fd0cc46781cd",
+        "git_blob_sha": "0b0229e428c55e1f25f2fcdcd538f36bcd31d682"
+      },
+      {
+        "path": "workflow/compatibility_cli.py",
+        "sha256": "d1628849128f31f3d1e8170ac5fb1d418fb64f534ebd40e29b014cf72e48f58c",
+        "expected_sha256": "d1628849128f31f3d1e8170ac5fb1d418fb64f534ebd40e29b014cf72e48f58c",
+        "git_blob_sha": "def537ec3b5d91b97cba9cc57c50474704916a78"
+      },
+      {
+        "path": "workflow/condition_evaluation.py",
+        "sha256": "648352a1d808170ace0a3e2b877faf3bbc5fdb5d2b2da53ad1685056f015d11d",
+        "expected_sha256": "648352a1d808170ace0a3e2b877faf3bbc5fdb5d2b2da53ad1685056f015d11d",
+        "git_blob_sha": "79c7447cacd842925430b7b39cca7ea0e09afba1"
+      },
+      {
+        "path": "workflow/condition_inputs.py",
+        "sha256": "2d1f7e3183eef8252faa2363def764b80868b0e499f585cbe273bd670604fb55",
+        "expected_sha256": "2d1f7e3183eef8252faa2363def764b80868b0e499f585cbe273bd670604fb55",
+        "git_blob_sha": "ff58e0a0edd0c698c026ac6196bf9cbbb6494f10"
+      },
+      {
+        "path": "workflow/condition_setup.py",
+        "sha256": "eb279d01d1e1987538d7c3588faba89f7d1db5a5c903be52b43d59c7709acc46",
+        "expected_sha256": "eb279d01d1e1987538d7c3588faba89f7d1db5a5c903be52b43d59c7709acc46",
+        "git_blob_sha": "088ee029b9afdd0f6c146cc30a5e4ed3bd78e94e"
+      },
+      {
+        "path": "workflow/development_cli.py",
+        "sha256": "e6de30408fac7d61c9534a3c81c485f71fc4bce6120e2962a298e7e5cc80e60c",
+        "expected_sha256": "e6de30408fac7d61c9534a3c81c485f71fc4bce6120e2962a298e7e5cc80e60c",
+        "git_blob_sha": "fc79773ae2a8f5eada5e49c2355954d7693816c2"
+      },
+      {
+        "path": "workflow/evaluation.py",
+        "sha256": "b4fc6f8e941cee19895e8e7ed18fac18de25e5d47a70075d6301835ef4221a22",
+        "expected_sha256": "b4fc6f8e941cee19895e8e7ed18fac18de25e5d47a70075d6301835ef4221a22",
+        "git_blob_sha": "5842fece54d6064d20fccc9b988dea35cc71875f"
+      },
+      {
+        "path": "workflow/evaluation_conditions.py",
+        "sha256": "98356ec1d1ebf0249088e7e91b0f46b3b463cb8d9b7169e7b4a7a94200ffc372",
+        "expected_sha256": "98356ec1d1ebf0249088e7e91b0f46b3b463cb8d9b7169e7b4a7a94200ffc372",
+        "git_blob_sha": "f45f336da87924f8e165951760f645e616e43099"
+      },
+      {
+        "path": "workflow/evaluation_context.py",
+        "sha256": "586045419c97b968476e4af0a0e3aab6e7a94cfdf6f56eb632c46487093707f8",
+        "expected_sha256": "586045419c97b968476e4af0a0e3aab6e7a94cfdf6f56eb632c46487093707f8",
+        "git_blob_sha": "db021a54f8ffa3a03a528b096909e26efa4048b5"
+      },
+      {
+        "path": "workflow/evaluation_freeze.py",
+        "sha256": "86f8cea901f3739102873461d778be0170f32d74cd446c0b5a7826273b75b2e8",
+        "expected_sha256": "86f8cea901f3739102873461d778be0170f32d74cd446c0b5a7826273b75b2e8",
+        "git_blob_sha": "39e060cb7c0234135d696134a0decd09ae767b82"
+      },
+      {
+        "path": "workflow/evaluation_inputs.py",
+        "sha256": "8368eebbab14a2a6c930dee993855ec83d3049042b09a4666813ffda2e6c21b5",
+        "expected_sha256": "8368eebbab14a2a6c930dee993855ec83d3049042b09a4666813ffda2e6c21b5",
+        "git_blob_sha": "4bd05fb73e6623219406a569115370913d16a245"
+      },
+      {
+        "path": "workflow/evaluation_legacy_hints.py",
+        "sha256": "5043390ea2f16d0cca5ddac6d334ad0394b4bf968770ad970f02b205a4758c24",
+        "expected_sha256": "5043390ea2f16d0cca5ddac6d334ad0394b4bf968770ad970f02b205a4758c24",
+        "git_blob_sha": "79df8ab66e1974c794c1f30d2fc060c457b18acf"
+      },
+      {
+        "path": "workflow/evaluation_program_generation.py",
+        "sha256": "96c1ec2d49af411a392a87ec52af46cb55895fca66614403bf2ff1edfbccbe00",
+        "expected_sha256": "96c1ec2d49af411a392a87ec52af46cb55895fca66614403bf2ff1edfbccbe00",
+        "git_blob_sha": "8257fc0e1f2713e5c713e25419b676a1a24b1e20"
+      },
+      {
+        "path": "workflow/evaluation_readme.py",
+        "sha256": "82421b09f9b1faa085bbfc24a9666a51ba810f90129c06c5fb7e1c74ab938de6",
+        "expected_sha256": "82421b09f9b1faa085bbfc24a9666a51ba810f90129c06c5fb7e1c74ab938de6",
+        "git_blob_sha": "39f06791ec53a61ada8056225a88cf7e2b199ec7"
+      },
+      {
+        "path": "workflow/evaluation_report.py",
+        "sha256": "b9e16d19782481aec067b7c7f6499de3fad1887ba235334ecb9a8b2daf5876e1",
+        "expected_sha256": "b9e16d19782481aec067b7c7f6499de3fad1887ba235334ecb9a8b2daf5876e1",
+        "git_blob_sha": "8b08ad89280210af5f1d51e3a95ca16665d77a83"
+      },
+      {
+        "path": "workflow/evaluation_runner.py",
+        "sha256": "b40cf0db6927a80383a4bafdc0a52d3ec69d617ab57d8649d7adf9e8a36959ae",
+        "expected_sha256": "b40cf0db6927a80383a4bafdc0a52d3ec69d617ab57d8649d7adf9e8a36959ae",
+        "git_blob_sha": "5b3cb2b5309bbd5257748e74de1149402783d3e2"
+      },
+      {
+        "path": "workflow/evaluation_setup.py",
+        "sha256": "ab0bec523ca38fcbc538eb1846fdd45da5e6b54ec39bbb4e599fb7093b01ee7a",
+        "expected_sha256": "ab0bec523ca38fcbc538eb1846fdd45da5e6b54ec39bbb4e599fb7093b01ee7a",
+        "git_blob_sha": "e1d54db0aee849ed8566817e1427e4a1aa28be58"
+      },
+      {
+        "path": "workflow/execution.py",
+        "sha256": "f1010756edd70fe6f628c0344be4bd1b4477ca9f5e5e253446007ca995482e16",
+        "expected_sha256": "f1010756edd70fe6f628c0344be4bd1b4477ca9f5e5e253446007ca995482e16",
+        "git_blob_sha": "9f35fc9c88aae7eb4e1a2787a649aedab784e3a1"
+      },
+      {
+        "path": "workflow/failure_diagnosis.py",
+        "sha256": "b9ba69e504ea051a36f466c4f7d5d9af8f9a3c6f63af067d814dc435439e5e38",
+        "expected_sha256": "b9ba69e504ea051a36f466c4f7d5d9af8f9a3c6f63af067d814dc435439e5e38",
+        "git_blob_sha": "972adab557ee5ea2ebec035eb8e264264c2edd16"
+      },
+      {
+        "path": "workflow/gemini_flash_adapter.py",
+        "sha256": "68ec9c58f157ce62276e18cd2b1b38713b7bbe803d59635f71e2d863c53ed1c0",
+        "expected_sha256": "68ec9c58f157ce62276e18cd2b1b38713b7bbe803d59635f71e2d863c53ed1c0",
+        "git_blob_sha": "0f81b50a5a843a568a99720331e0c36d92443871"
+      },
+      {
+        "path": "workflow/improvement_batches.py",
+        "sha256": "c307cea328139ebd2b33e0e2247a0dd499474ca10adf14cfbbd60c83f1af9a73",
+        "expected_sha256": "c307cea328139ebd2b33e0e2247a0dd499474ca10adf14cfbbd60c83f1af9a73",
+        "git_blob_sha": "b86bb90167a5e8c49c0115e6798e6e54925ec329"
+      },
+      {
+        "path": "workflow/improvement_context.py",
+        "sha256": "f7c075f0ecf9fb8905e59a3f72ea558bb601892226883dcf188046b4f8d732f9",
+        "expected_sha256": "f7c075f0ecf9fb8905e59a3f72ea558bb601892226883dcf188046b4f8d732f9",
+        "git_blob_sha": "f7a823ac81d6cf475f278e78904cc29adc7e0f33"
+      },
+      {
+        "path": "workflow/improvement_suggestions.py",
+        "sha256": "fb805c90fadee974afb35c75aca60d40e4c4f45938a595fedcfcf85a6c577ba5",
+        "expected_sha256": "fb805c90fadee974afb35c75aca60d40e4c4f45938a595fedcfcf85a6c577ba5",
+        "git_blob_sha": "518e30df27fe95fe504538a166eed06270ddd131"
+      },
+      {
+        "path": "workflow/mcp_server.py",
+        "sha256": "8545ba9852d930eb61e4c9964afa5fa60762e00bce9d84088a4df39b0dbc2782",
+        "expected_sha256": "8545ba9852d930eb61e4c9964afa5fa60762e00bce9d84088a4df39b0dbc2782",
+        "git_blob_sha": "faf095a54c1ee7bc7480f99bc739d17dee6b0513"
+      },
+      {
+        "path": "workflow/model_adapter.py",
+        "sha256": "4f0412670092c68a6bdf736b7f7ef615314a2632b1486dd8da4d09be855259ab",
+        "expected_sha256": "4f0412670092c68a6bdf736b7f7ef615314a2632b1486dd8da4d09be855259ab",
+        "git_blob_sha": "a89302e1a10e5b4b8beae88d266c496e07edae49"
+      },
+      {
+        "path": "workflow/native_hints.py",
+        "sha256": "a47083f86072cc80cec5ddd36de2c6a31a825e66e616d3139d54562c4b55d42d",
+        "expected_sha256": "a47083f86072cc80cec5ddd36de2c6a31a825e66e616d3139d54562c4b55d42d",
+        "git_blob_sha": "4511bd02543eac30ced02a3cd2632f7fb42d8b30"
+      },
+      {
+        "path": "workflow/native_r0_evidence.py",
+        "sha256": "dcd84154486737ac4496cece9dc6f2e537874db9ea2d5c09872349f98571a374",
+        "expected_sha256": "dcd84154486737ac4496cece9dc6f2e537874db9ea2d5c09872349f98571a374",
+        "git_blob_sha": "b7ef2dc18540c0c3aa7a54a7c64d015219abe286"
+      },
+      {
+        "path": "workflow/openai_codex_adapter.py",
+        "sha256": "9f73542639b5a56d0aa8adaf9f805a99888f66c827a27148775803e61e503546",
+        "expected_sha256": "9f73542639b5a56d0aa8adaf9f805a99888f66c827a27148775803e61e503546",
+        "git_blob_sha": "836cb861e52463e5ec36cf30b01774ab94a2943b"
+      },
+      {
+        "path": "workflow/preparation.py",
+        "sha256": "98a3e1faf2eacd13ec229e86bad83cc2a72c937654691c7789c15255b370dc9b",
+        "expected_sha256": "98a3e1faf2eacd13ec229e86bad83cc2a72c937654691c7789c15255b370dc9b",
+        "git_blob_sha": "41e7f41ce25e61cc70f19a4c59587e848fb6244a"
+      },
+      {
+        "path": "workflow/provider_budget.py",
+        "sha256": "1d80894845d96badf059abc15e7ad83ab37143baf700fbcb144a3ec9db9f2d06",
+        "expected_sha256": "1d80894845d96badf059abc15e7ad83ab37143baf700fbcb144a3ec9db9f2d06",
+        "git_blob_sha": "1a06e70d6e0292a9acd6e63190da2d92d68c91d5"
+      },
+      {
+        "path": "workflow/refactor_proposals.py",
+        "sha256": "0b40c9d5d5e407e5edba990cac8f1856f39b0a3a43fd4950cf3c88fd5edaee14",
+        "expected_sha256": "0b40c9d5d5e407e5edba990cac8f1856f39b0a3a43fd4950cf3c88fd5edaee14",
+        "git_blob_sha": "682a6fdde34b1b061ea29ab8f0e47a9ed44a0b96"
+      },
+      {
+        "path": "workflow/repair_context.py",
+        "sha256": "3500177ec19178ba526d06a21609627d367d4febff80ffa5731281f4333d62e6",
+        "expected_sha256": "3500177ec19178ba526d06a21609627d367d4febff80ffa5731281f4333d62e6",
+        "git_blob_sha": "6eaa4cc82a16394b0356a67e29a0e5d14b4570d9"
+      },
+      {
+        "path": "workflow/response_status.py",
+        "sha256": "20af3dc8bf9347fd779f517e3a976cb1ab0d4670f6c2b95dd8502e4c7f95abb7",
+        "expected_sha256": "20af3dc8bf9347fd779f517e3a976cb1ab0d4670f6c2b95dd8502e4c7f95abb7",
+        "git_blob_sha": "3667d66754e9574f7af47dc38a1fcacbf6133151"
+      },
+      {
+        "path": "workflow/runtime_profile.py",
+        "sha256": "5a5888af16dac99b5b3e90696a3f6936e68eafcab68734ddd651fe5cf0036507",
+        "expected_sha256": "5a5888af16dac99b5b3e90696a3f6936e68eafcab68734ddd651fe5cf0036507",
+        "git_blob_sha": "820e20381bc4e39c71b81fff725f0f6558a956d0"
+      },
+      {
+        "path": "workflow/scaffolding.py",
+        "sha256": "0bd7d8d58a6a453e1110f3b865c19183723cceb5eaf2835d700957e9917aa393",
+        "expected_sha256": "0bd7d8d58a6a453e1110f3b865c19183723cceb5eaf2835d700957e9917aa393",
+        "git_blob_sha": "7ec663300e9430a4b894e36b4118cec337dc1034"
+      },
+      {
+        "path": "workflow/source_duplicates.py",
+        "sha256": "29c0dbf6a0da28f26a4037ed1be8a1a3db9152ea7d6acf8b4ae8d0c971f5d232",
+        "expected_sha256": "29c0dbf6a0da28f26a4037ed1be8a1a3db9152ea7d6acf8b4ae8d0c971f5d232",
+        "git_blob_sha": "ebfcb6c7696eb63c0a31a900c33537522b9cba0f"
+      },
+      {
+        "path": "workflow/source_hint_development.py",
+        "sha256": "9f06a4243b437446bc1bcc6d903afc4993453b13cd225a8f2e81752a2303784d",
+        "expected_sha256": "9f06a4243b437446bc1bcc6d903afc4993453b13cd225a8f2e81752a2303784d",
+        "git_blob_sha": "c05078e2cdc041fe6e7e081f63f84f52bef1a271"
+      },
+      {
+        "path": "workflow/source_hint_installation.py",
+        "sha256": "4510165e53584cc872c7796314d56f2c3634d50da8055cabaa1ee899d2ef613f",
+        "expected_sha256": "4510165e53584cc872c7796314d56f2c3634d50da8055cabaa1ee899d2ef613f",
+        "git_blob_sha": "7b055b96f245e74cd282caa1414d8dcad3ff60f9"
+      },
+      {
+        "path": "workflow/source_hint_proposals.py",
+        "sha256": "1eb0f08b6e7fddafb31bc9efb35793bb98af5dc56f3bb56619d0a4cadf490926",
+        "expected_sha256": "1eb0f08b6e7fddafb31bc9efb35793bb98af5dc56f3bb56619d0a4cadf490926",
+        "git_blob_sha": "62b7bc007cebad9585b3ca69c45f66f4681b133c"
+      },
+      {
+        "path": "workflow/source_hints.py",
+        "sha256": "634d1b19030e4eabcae1dfd255865cf03dfd02d61918af6331577a46f6c003c3",
+        "expected_sha256": "634d1b19030e4eabcae1dfd255865cf03dfd02d61918af6331577a46f6c003c3",
+        "git_blob_sha": "be79d4bfd781f3e082614a3f5b38904ef49e6fc5"
+      },
+      {
+        "path": "workflow/source_refactors.py",
+        "sha256": "2b1826befd1550c73603026674c98f9acbc048e52ae3d260b50767365169e3a6",
+        "expected_sha256": "2b1826befd1550c73603026674c98f9acbc048e52ae3d260b50767365169e3a6",
+        "git_blob_sha": "e6f7ea77ce2e7f76055ce63320cc33fefbd91a56"
+      },
+      {
+        "path": "workflow/treatment_bundles.py",
+        "sha256": "aee3be52c77b87b5eacae884b7ee2476f77a3756113870770ab92a89c9951bb4",
+        "expected_sha256": "aee3be52c77b87b5eacae884b7ee2476f77a3756113870770ab92a89c9951bb4",
+        "git_blob_sha": "db3fc653ec61a959324b2f2ee710d2567f4e3fea"
+      },
+      {
+        "path": "workflow/treatment_versions.py",
+        "sha256": "4680363fa90d1d7cae7973dbd4dbd137d026255dee32e6c3cecf44b64fad44dd",
+        "expected_sha256": "4680363fa90d1d7cae7973dbd4dbd137d026255dee32e6c3cecf44b64fad44dd",
+        "git_blob_sha": "ef818d2c8684c05544686ec2737578a3aa796a5f"
+      },
+      {
+        "path": "workflow/worktrees.py",
+        "sha256": "36ad0bf5f1aa3ec2deb378f3f7093e45789850c0f4b6765205dff478128e957e",
+        "expected_sha256": "36ad0bf5f1aa3ec2deb378f3f7093e45789850c0f4b6765205dff478128e957e",
+        "git_blob_sha": "98ecfce9ecad283b97af5ed30a1194498bbf902c"
+      }
+    ],
+    "mismatches": []
+  },
+  "arms": [
+    {
+      "bank": "rdpro_java",
+      "arm": "original",
+      "selected": 69,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/result.json",
+      "passes": 12,
+      "detail_count": 69,
+      "reported_selected": 69,
+      "result_sha256": "03423ef0f88399bbd3823f8a1f35f0863ea29202bc1b895ea27bfd327da82200",
+      "completion_sha256": "7ec799828bd65b05eb069661bceacca7407a1e9d139b96bbe5b5f796bfc12a34",
+      "result_hash_matches_completion": true,
+      "logical_completed": 69,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 54,
+        "runtime": 3,
+        "null": 12
+      },
+      "detail_status_counts": {
+        "fail": 57,
+        "pass": 12
+      },
+      "provider_status_counts": {
+        "returned": 69
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "rdpro_java",
+      "arm": "generated_d1",
+      "selected": 69,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/result.json",
+      "passes": 4,
+      "detail_count": 69,
+      "reported_selected": 69,
+      "result_sha256": "5acf9215419edc170d18c49b0b024e9bdfce1110307e31f62942920aa0794fa7",
+      "completion_sha256": "d8b83900fc1309cc027718c18a0f7354ba80a1ebf47a5807646d5e010b715521",
+      "result_hash_matches_completion": true,
+      "logical_completed": 69,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 62,
+        "null": 4,
+        "runtime": 3
+      },
+      "detail_status_counts": {
+        "fail": 65,
+        "pass": 4
+      },
+      "provider_status_counts": {
+        "returned": 69
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "rdpro_scala",
+      "arm": "original",
+      "selected": 261,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/result.json",
+      "passes": 20,
+      "detail_count": 261,
+      "reported_selected": 261,
+      "result_sha256": "89eef1a2e1f1e3d0326f0b9b20d0f0f5035a913d23657ed85a25251b369f1f2e",
+      "completion_sha256": "1d0f03c2e0f7fa01653ebd3a0ff46e0c1fe1d766d5fe969959ebd043ddc2f300",
+      "result_hash_matches_completion": true,
+      "logical_completed": 261,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 229,
+        "null": 20,
+        "runtime": 12
+      },
+      "detail_status_counts": {
+        "fail": 241,
+        "pass": 20
+      },
+      "provider_status_counts": {
+        "returned": 261
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "rdpro_scala",
+      "arm": "generated_d1",
+      "selected": 261,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/result.json",
+      "passes": 14,
+      "detail_count": 261,
+      "reported_selected": 261,
+      "result_sha256": "496cd10c323a98c9e7c0badae416560dcd59cc0d516589a4f9a3b190f9301a7b",
+      "completion_sha256": "284bb1cd495e58d44dc094f51bdb24402b6393801c6b39ff9625f146998edb66",
+      "result_hash_matches_completion": true,
+      "logical_completed": 261,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 227,
+        "null": 14,
+        "runtime": 20
+      },
+      "detail_status_counts": {
+        "fail": 247,
+        "pass": 14
+      },
+      "provider_status_counts": {
+        "returned": 261
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "sedonadb",
+      "arm": "original",
+      "selected": 217,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/result.json",
+      "passes": 87,
+      "detail_count": 217,
+      "reported_selected": 217,
+      "result_sha256": "baa775bba32e41f88de5643376000b4dbe225e629a1c4085c0cb447b21d4ead6",
+      "completion_sha256": "223e2cbdc72686318f6565fdb97d3eb50a7467e6816ed43dcc422be5bef29177",
+      "result_hash_matches_completion": true,
+      "logical_completed": 217,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "unknown": 65,
+        "runtime": 65,
+        "null": 87
+      },
+      "detail_status_counts": {
+        "fail": 130,
+        "pass": 87
+      },
+      "provider_status_counts": {
+        "returned": 217
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "sedonadb",
+      "arm": "generated_d1",
+      "selected": 217,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/result.json",
+      "passes": 96,
+      "detail_count": 217,
+      "reported_selected": 217,
+      "result_sha256": "75a3498c23ad4319226eb30419746f3643fc7b0753addad8f10c9625d06a6cbd",
+      "completion_sha256": "2401e3c1193eb1b81faa52cb947f7dc56bf1b1615b44c3c84ec5e93d3e4d53e2",
+      "result_hash_matches_completion": true,
+      "logical_completed": 217,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "unknown": 45,
+        "runtime": 76,
+        "null": 96
+      },
+      "detail_status_counts": {
+        "fail": 121,
+        "pass": 96
+      },
+      "provider_status_counts": {
+        "returned": 217
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mdanalysis",
+      "arm": "original",
+      "selected": 1519,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/result.json",
+      "passes": 592,
+      "detail_count": 1519,
+      "reported_selected": 1519,
+      "result_sha256": "b74bfac78f82bb707fd1b3479e501ab64bc9f20f78f460d3ed8f1a04027f45df",
+      "completion_sha256": "0166ede5aee221b1ce925d4aef32c9acb6b0b8241a5a1bfec04e7b6307d6c6de",
+      "result_hash_matches_completion": true,
+      "logical_completed": 1519,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "runtime": 896,
+        "null": 592,
+        "timeout": 3,
+        "api-import": 16,
+        "dependency-unverified": 7,
+        "unknown": 5
+      },
+      "detail_status_counts": {
+        "fail": 927,
+        "pass": 592
+      },
+      "provider_status_counts": {
+        "returned": 1519
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mdanalysis",
+      "arm": "generated_d1",
+      "selected": 1519,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/result.json",
+      "passes": 621,
+      "detail_count": 1519,
+      "reported_selected": 1519,
+      "result_sha256": "604c8f517dfe53d85428a7f1fe8574e4d515a324af004f451861c089f48f7738",
+      "completion_sha256": "af7a4c83299ea8d506881329ee65635388407a27cd24c380fa0507d7e8476262",
+      "result_hash_matches_completion": true,
+      "logical_completed": 1519,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "null": 621,
+        "runtime": 870,
+        "api-import": 15,
+        "dependency-unverified": 12,
+        "timeout": 1
+      },
+      "detail_status_counts": {
+        "pass": 621,
+        "fail": 898
+      },
+      "provider_status_counts": {
+        "returned": 1519,
+        "error": 1
+      },
+      "provider_errors": [
+        {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.analysis.nucleicacids.NucPairDist--7e773ec3a8a19dca48754447617d8c9b47199b501d5e9d9940a109eebf2cd29c/attempt_0001/provider.json",
+          "status": "error",
+          "category": "llm-error",
+          "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "message": null,
+          "wall_s": 2.279982089996338
+        }
+      ]
+    },
+    {
+      "bank": "tslearn",
+      "arm": "original",
+      "selected": 354,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/result.json",
+      "passes": 211,
+      "detail_count": 354,
+      "reported_selected": 354,
+      "result_sha256": "074a889564f934e9635afba09412acf1c206cfacb33a10165441fb5df41bd15a",
+      "completion_sha256": "30b852a12d7c4cf9fe1ff9c5ca8419ebfa390c0384e02672a76b130553c741a4",
+      "result_hash_matches_completion": true,
+      "logical_completed": 354,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "runtime": 132,
+        "null": 211,
+        "api-import": 4,
+        "timeout": 1,
+        "dependency-unverified": 6
+      },
+      "detail_status_counts": {
+        "fail": 143,
+        "pass": 211
+      },
+      "provider_status_counts": {
+        "returned": 354
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "tslearn",
+      "arm": "generated_d1",
+      "selected": 354,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/result.json",
+      "passes": 221,
+      "detail_count": 354,
+      "reported_selected": 354,
+      "result_sha256": "c7867bb3739516a015311185bf78b5190e2032544f5a5c92441e9e61ea53d5bd",
+      "completion_sha256": "e5be1289a23e34367f1514fc927dd5929e42cb4866a9dcc0a77f672e8408e431",
+      "result_hash_matches_completion": true,
+      "logical_completed": 354,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "runtime": 114,
+        "null": 221,
+        "dependency-unverified": 7,
+        "timeout": 1,
+        "api-import": 11
+      },
+      "detail_status_counts": {
+        "fail": 133,
+        "pass": 221
+      },
+      "provider_status_counts": {
+        "returned": 354
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mir_eval",
+      "arm": "original",
+      "selected": 178,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/result.json",
+      "passes": 134,
+      "detail_count": 178,
+      "reported_selected": 178,
+      "result_sha256": "02ac1ce545b272b41297ac521ce8ddaff0a3604d8bba33abda88872a2393b20c",
+      "completion_sha256": "074723b74f39dcb8d49ddaf24a8c00c4cccb40fcd27c61d4afc6ae89debf376d",
+      "result_hash_matches_completion": true,
+      "logical_completed": 178,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "null": 134,
+        "runtime": 44
+      },
+      "detail_status_counts": {
+        "pass": 134,
+        "fail": 44
+      },
+      "provider_status_counts": {
+        "returned": 178
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "mir_eval",
+      "arm": "generated_d1",
+      "selected": 178,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/result.json",
+      "passes": 144,
+      "detail_count": 178,
+      "reported_selected": 178,
+      "result_sha256": "ca114d3d41ef17accc35b542c92ac7c81e454d4ee7e41bbaba1b12482f06d86b",
+      "completion_sha256": "185d50731a98d4d8ffb461374c01cc386337658f2563df7ef87d3af0b8bd56c4",
+      "result_hash_matches_completion": true,
+      "logical_completed": 178,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "null": 144,
+        "runtime": 34
+      },
+      "detail_status_counts": {
+        "pass": 144,
+        "fail": 34
+      },
+      "provider_status_counts": {
+        "returned": 178
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "thumbnailator",
+      "arm": "original",
+      "selected": 225,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/result.json",
+      "passes": 109,
+      "detail_count": 225,
+      "reported_selected": 225,
+      "result_sha256": "6df8ce57d718fc093403f474228d02755ac773152d5ec90a10665f10a57cf1c2",
+      "completion_sha256": "9af42a8ddd4c4c88295023e0beb976b59c793c334ecd7823921186c637146b91",
+      "result_hash_matches_completion": true,
+      "logical_completed": 225,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "null": 109,
+        "compile": 80,
+        "runtime": 36
+      },
+      "detail_status_counts": {
+        "pass": 109,
+        "fail": 116
+      },
+      "provider_status_counts": {
+        "returned": 225
+      },
+      "provider_errors": []
+    },
+    {
+      "bank": "thumbnailator",
+      "arm": "generated_d1",
+      "selected": 225,
+      "complete": true,
+      "completion_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/completion.json",
+      "result_path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/result.json",
+      "passes": 97,
+      "detail_count": 225,
+      "reported_selected": 225,
+      "result_sha256": "de3e8cf5d87f1d500d4d83700497feb63b3a3079897823c7b697120b718d65ee",
+      "completion_sha256": "34cfb24bf3bf5b43f2070a03ef7e0f9ac21deeb3eacbb36dcd0581aa05ce7b00",
+      "result_hash_matches_completion": true,
+      "logical_completed": 225,
+      "max_fix_rounds": 0,
+      "category_counts": {
+        "compile": 93,
+        "null": 97,
+        "runtime": 35
+      },
+      "detail_status_counts": {
+        "fail": 128,
+        "pass": 97
+      },
+      "provider_status_counts": {
+        "returned": 225
+      },
+      "provider_errors": []
+    }
+  ],
+  "totals": {
+    "complete_arms": 14,
+    "planned_arms": 14,
+    "selected_apis": 2823,
+    "planned_condition_targets": 5646,
+    "recorded_logical_outcomes": 5646,
+    "provider_status_counts": {
+      "returned": 5646,
+      "error": 1
+    }
+  },
+  "controller_log_tail": "",
+  "rescore_result_files": [
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/summary.json"
+  ],
+  "phase_artifacts": [
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/MATCHED_QUEUE.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/RUNTIME_PROFILES.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/RESCORE_QUEUE.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/D2_QUEUE.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/READINESS.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/START.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/INPUT_OVERRIDES.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/CONTINUATION_QUEUE.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/LIVE_STATUS.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/STATE.json",
+    "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/PLAN.json"
+  ],
+  "rescore_result_count": 4327,
+  "observed_end_utc": "2026-11-19T14:30:00.707699+00:00",
+  "observed_end_pacific": "2026-11-19T06:30:00.707699-08:00",
+  "replay_followthrough": {
+    "observed_at_utc": "2026-11-19T14:31:58.509029+00:00",
+    "observed_at_pacific": "2026-11-19T06:31:58.509029-08:00",
+    "status_counts": {
+      "running": 1,
+      "failed": 1,
+      "complete": 12
+    },
+    "jobs": [
+      {
+        "job": "mdanalysis-generated_readme",
+        "library": "mdanalysis",
+        "stage": "r0",
+        "status": "running",
+        "started_at": "2026-11-19T12:44:00.047098+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "8e7c287247b8cf609e18c21c27ea2af410b03c9fb85379ce3d5e92939095e592",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mdanalysis-generated_readme/state.json",
+          "sha256": "2e7f655315a566670b85d79980c9e9d8d817be32cf9a5252b64f86b83ab3d2f2"
+        },
+        "progress": {
+          "selected": 1538,
+          "recorded": 1273,
+          "passes": 558,
+          "failures": 715,
+          "last_api": "python:MDAnalysis.lib.util.NamedStream.tell"
+        },
+        "progress_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/mdanalysis/progress.json",
+          "sha256": "bdc4138a58d196187c26911dffdae8c07a433b2136b22bd158440e1b7845b6f8"
+        },
+        "console_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mdanalysis-generated_readme/attempt_0001/console.log",
+          "sha256": "93ea0df3537fafe57161c97087bb69cc09d42173b4507ee876a7c0c105731387"
+        },
+        "console_tail": "[1239/1538] python:MDAnalysis.lib.util.FORTRANReader.number_of_matches: fail -> fail\n[1240/1538] python:MDAnalysis.lib.util.FORTRANReader.parse_FORTRAN_format: fail -> fail\n[1241/1538] python:MDAnalysis.lib.util.FORTRANReader.read: fail -> fail\n[1242/1538] python:MDAnalysis.lib.util.FixedcolumnEntry: fail -> fail\n[1243/1538] python:MDAnalysis.lib.util.FixedcolumnEntry.__len__: fail -> fail\n[1244/1538] python:MDAnalysis.lib.util.FixedcolumnEntry.__repr__: fail -> fail\n[1245/1538] python:MDAnalysis.lib.util.FixedcolumnEntry.read: fail -> fail\n[1246/1538] python:MDAnalysis.lib.util.NamedStream: pass -> pass\n[1247/1538] python:MDAnalysis.lib.util.NamedStream.__add__: fail -> fail\n[1248/1538] python:MDAnalysis.lib.util.NamedStream.__del__: pass -> pass\n[1249/1538] python:MDAnalysis.lib.util.NamedStream.__enter__: fail -> fail\n[1250/1538] python:MDAnalysis.lib.util.NamedStream.__eq__: pass -> pass\n[1251/1538] python:MDAnalysis.lib.util.NamedStream.__exit__: fail -> fail\n[1252/1538] python:MDAnalysis.lib.util.NamedStream.__format__: pass -> pass\n[1253/1538] python:MDAnalysis.lib.util.NamedStream.__fspath__: fail -> fail\n[1254/1538] python:MDAnalysis.lib.util.NamedStream.__getattr__: pass -> pass\n[1255/1538] python:MDAnalysis.lib.util.NamedStream.__getitem__: fail -> fail\n[1256/1538] python:MDAnalysis.lib.util.NamedStream.__iter__: fail -> fail\n[1257/1538] python:MDAnalysis.lib.util.NamedStream.__len__: fail -> fail\n[1258/1538] python:MDAnalysis.lib.util.NamedStream.__lt__: fail -> fail\n[1259/1538] python:MDAnalysis.lib.util.NamedStream.__mul__: fail -> fail\n[1260/1538] python:MDAnalysis.lib.util.NamedStream.__ne__: fail -> fail\n[1261/1538] python:MDAnalysis.lib.util.NamedStream.__next__: fail -> fail\n[1262/1538] python:MDAnalysis.lib.util.NamedStream.__radd__: fail -> fail\n[1263/1538] python:MDAnalysis.lib.util.NamedStream.__repr__: fail -> fail\n[1264/1538] python:MDAnalysis.lib.util.NamedStream.__str__: fail -> fail\n[1265/1538] python:MDAnalysis.lib.util.NamedStream.close: pass -> pass\n[1266/1538] python:MDAnalysis.lib.util.NamedStream.fileno: pass -> pass\n[1267/1538] python:MDAnalysis.lib.util.NamedStream.flush: fail -> fail\n[1268/1538] python:MDAnalysis.lib.util.NamedStream.readable: pass -> pass\n[1269/1538] python:MDAnalysis.lib.util.NamedStream.readline: fail -> fail\n[1270/1538] python:MDAnalysis.lib.util.NamedStream.reset: fail -> fail\n[1271/1538] python:MDAnalysis.lib.util.NamedStream.seek: pass -> pass\n[1272/1538] python:MDAnalysis.lib.util.NamedStream.seekable: pass -> pass\n[1273/1538] python:MDAnalysis.lib.util.NamedStream.tell: fail -> fail"
+      },
+      {
+        "job": "mdanalysis-original",
+        "library": "mdanalysis",
+        "stage": "r0",
+        "status": "failed",
+        "started_at": "2026-11-19T12:38:21.800481+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "672edf7935f3e719be706e053e0905b888b62011a56ecbdbbdf46e80cb0482bb",
+        "exit_code": 1,
+        "finished_at": "2026-11-19T13:37:42.008354+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mdanalysis-original/state.json",
+          "sha256": "52a8d5884fe8377bbf1b1daed694e41257a598d0d680955fae4df72d0953069a"
+        },
+        "progress": {
+          "selected": 1538,
+          "recorded": 433,
+          "passes": 160,
+          "failures": 273,
+          "last_api": "python:MDAnalysis.coordinates.TNG.TNGReader"
+        },
+        "progress_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/progress.json",
+          "sha256": "b2ba63b5376c851d3873cb059716abf5332d18f042eeb56c58f4c9c351335a16"
+        },
+        "console_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mdanalysis-original/attempt_0001/console.log",
+          "sha256": "77701dfe6024dfbd9302123189d96a0162b880227c0fc1da125f36d0401240d5"
+        },
+        "console_tail": "[430/1538] python:MDAnalysis.coordinates.PQR.PQRReader.Writer: pass -> pass\n[431/1538] python:MDAnalysis.coordinates.PQR.PQRWriter: fail -> fail\n[432/1538] python:MDAnalysis.coordinates.PQR.PQRWriter.write: pass -> pass\n[433/1538] python:MDAnalysis.coordinates.TNG.TNGReader: fail -> fail\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/vendor/aideal_engine/src/aideal/execution.py\", line 54, in run_command\n    stdout, stderr = proc.communicate(timeout=timeout)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1154, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 2063, in _communicate\n    stderr = self._translate_newlines(stderr,\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1031, in _translate_newlines\n    data = data.decode(encoding, errors)\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0x88 in position 1657: invalid start byte\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 348, in <module>\n    main()\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 344, in main\n    run_bank(args.source_result, args.output, args.apis, args.runtime_profile)\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 307, in run_bank\n    result = run_program_case(p, api, output / 'execution' / api_storage_key(api),\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 190, in run_program_case\n    proc = run_command(cmd, cwd=physical, env=env, timeout=int(execution['timeout_s']), guard_dir=dest)\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/vendor/aideal_engine/src/aideal/execution.py\", line 76, in run_command\n    stdout, stderr = proc.communicate(timeout=2)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1154, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 2063, in _communicate\n    stderr = self._translate_newlines(stderr,\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1031, in _translate_newlines\n    data = data.decode(encoding, errors)\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0x88 in position 1657: invalid start byte"
+      },
+      {
+        "job": "mir_eval-generated_readme",
+        "library": "mir_eval",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:07:01.162302+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "e092b94bea0d75a650751c3c72779da15758b7489ec92898cfe4bbc854b58c84",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/mir_eval/completion.json",
+        "artifact_sha256": "e142566bf44a8920d1f76789560f3f691f4bf01564b2c89b4472fdbc92a9e6b9",
+        "finished_at": "2026-11-19T10:13:40.590399+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mir_eval-generated_readme/state.json",
+          "sha256": "074f91c996146021d7791085b2db8152246e818215b5e114b893c013886006fa"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 132,
+        "selected": 178,
+        "new_model_calls": 0
+      },
+      {
+        "job": "mir_eval-original",
+        "library": "mir_eval",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:07:01.162192+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "75b1b92cb87a00ab9705d48ca84f207a79c5ec832bb7d1aafade1739ab7fc5cc",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mir_eval/completion.json",
+        "artifact_sha256": "7b0b9680b9a74d3d2ca32a971d35a6182a17c375e846428c23a46facd72d2ac3",
+        "finished_at": "2026-11-19T10:13:40.590504+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mir_eval-original/state.json",
+          "sha256": "00a545c9e2c0977846bd7dad62ff627f980df0b48b8cfe9484e2eae7c1e169c0"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 128,
+        "selected": 178,
+        "new_model_calls": 0
+      },
+      {
+        "job": "rdpro_java-generated_readme",
+        "library": "rdpro_java",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:24:47.096164+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "86b842836d7f8ff053fcafa5d585332238d0fffce12fef0ac7f8555a9e1dd8a0",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/rdpro_java/completion.json",
+        "artifact_sha256": "a7e6085f3ea4f088ac9864461fc8ea619396e4addc98e23abc2110f3a62e71a4",
+        "finished_at": "2026-11-19T10:34:24.823051+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_java-generated_readme/state.json",
+          "sha256": "c48a05c189065c343753ade145f3c7dcf01d691316e478053853f3d71abb97c9"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 5,
+        "selected": 69,
+        "new_model_calls": 0
+      },
+      {
+        "job": "rdpro_java-original",
+        "library": "rdpro_java",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:24:39.813481+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "ccfe9f05149ff572c1a2a852a93a19338f48593f6d8ae42eebe708e399b0cbe7",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/rdpro_java/completion.json",
+        "artifact_sha256": "85753b53b24bfab20ec0f9b7f8efd6b56c386a16c5bb197e2b415328b778a63f",
+        "finished_at": "2026-11-19T10:43:16.900383+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_java-original/state.json",
+          "sha256": "86d7f82cbdaff19144ef554f51bf97b51fb52f2344972ca00f55d5540b3e9804"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 13,
+        "selected": 69,
+        "new_model_calls": 0
+      },
+      {
+        "job": "rdpro_scala-generated_readme",
+        "library": "rdpro_scala",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:43:17.004635+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "9c42681a89a9e8aaaac567910356669b5e9f81b75ffa4400f434d97a4e127806",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/rdpro_scala/completion.json",
+        "artifact_sha256": "6f70a206504d82d8d3af49ac3be9f2e74a824f18731b9a4c3b2bdad1f310d6a0",
+        "finished_at": "2026-11-19T11:45:34.406497+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_scala-generated_readme/state.json",
+          "sha256": "e9a8d3018a7ba7fb5f6a5a5aa680703f7aef490267201c4920745891e9b23549"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 19,
+        "selected": 261,
+        "new_model_calls": 0
+      },
+      {
+        "job": "rdpro_scala-original",
+        "library": "rdpro_scala",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:34:24.947590+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "2ad773f1029c024491dc9d6d47baad6487e0873c72bde7837ec7ed78c569aafc",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/rdpro_scala/completion.json",
+        "artifact_sha256": "b0ea73fbbbc36100d403bdd5896cd6626ca44974834e9c6fda1f34db81b2ddd9",
+        "finished_at": "2026-11-19T11:42:52.245313+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_scala-original/state.json",
+          "sha256": "ee24cced451fa524a468896c52668a0a8413fff60b5a066742160f6f7dbf325a"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 25,
+        "selected": 261,
+        "new_model_calls": 0
+      },
+      {
+        "job": "sedonadb-generated_readme",
+        "library": "sedonadb",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:19:34.080355+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "fbd4d9eff7854f3ddfd6c3816495b4735a133ba2a64b30369010e27fc08c30c1",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/sedonadb/completion.json",
+        "artifact_sha256": "9c8bd4c7fa700dd6b4d8428e146fe30f97a6fa424fd846d27864800edb233ced",
+        "finished_at": "2026-11-19T10:24:46.998158+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/sedonadb-generated_readme/state.json",
+          "sha256": "a0d79649ec7d3249227913a44d68118c81df1158795214be6181901d9f5570fe"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 100,
+        "selected": 217,
+        "new_model_calls": 0
+      },
+      {
+        "job": "sedonadb-original",
+        "library": "sedonadb",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:19:30.804575+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "da780d6f4de5175550bcbe3c61a86526a265a72132cbf2e4332c1b6ce0b274da",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/sedonadb/completion.json",
+        "artifact_sha256": "136520048582e1d45514f0a88a5b2227fe8ce0029a761f107a13b2da1d1afa26",
+        "finished_at": "2026-11-19T10:24:39.557087+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/sedonadb-original/state.json",
+          "sha256": "60a0ecec3f2c33f889b516382d919a08db95921e2244c771be64cc4044c30eac"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 78,
+        "selected": 217,
+        "new_model_calls": 0
+      },
+      {
+        "job": "thumbnailator-generated_readme",
+        "library": "thumbnailator",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:13:40.765395+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "1bc07cfa4e0bbbd2127d15545b1ed1727639d2fe07dea7f76fc3cf0ad9e012ff",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/thumbnailator/completion.json",
+        "artifact_sha256": "518c2376f5898ee3ff012a1bb8d82bd46bdbe764265ffe66cd0ee0d743555ade",
+        "finished_at": "2026-11-19T10:19:30.651308+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/thumbnailator-generated_readme/state.json",
+          "sha256": "250abee574b8089050fb67fee42d3f85cb9a6300c41a4e5eb12a8bc92d952a3e"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 74,
+        "selected": 225,
+        "new_model_calls": 0
+      },
+      {
+        "job": "thumbnailator-original",
+        "library": "thumbnailator",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T10:13:40.765233+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "b4a0b6e3c548c9eeba1acd23665ee39fef9709ab8b208f5cad80a884f5a2e0d8",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/thumbnailator/completion.json",
+        "artifact_sha256": "98aa1adc4bf92625ec32dc489094835a1dc8b77b98bfa933675476897e5ecced",
+        "finished_at": "2026-11-19T10:19:33.979228+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/thumbnailator-original/state.json",
+          "sha256": "0ebf4badd56f46b5b7d470de7f00144b08b06d83ad37d1b3b918ec97f83671db"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 85,
+        "selected": 225,
+        "new_model_calls": 0
+      },
+      {
+        "job": "tslearn-generated_readme",
+        "library": "tslearn",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T11:45:34.567923+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "cfef69e184c0cba34fee93c15025bc892879e654fa2e28b17b9ff0c43f5cf058",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/tslearn/completion.json",
+        "artifact_sha256": "03f0b9b3d0c9af9b4e624f0eca10e8f2e940ff1ff98b096b0765084ce391ca35",
+        "finished_at": "2026-11-19T12:43:59.894358+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/tslearn-generated_readme/state.json",
+          "sha256": "4ba78a2ab13fe21e236b518363311bc0ec86bdbdfce7afbe88e61a3940a4aa79"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 231,
+        "selected": 362,
+        "new_model_calls": 0
+      },
+      {
+        "job": "tslearn-original",
+        "library": "tslearn",
+        "stage": "r0",
+        "status": "complete",
+        "started_at": "2026-11-19T11:42:52.389105+00:00",
+        "attempt": "attempt_0001",
+        "command_sha256": "037e397f08b7572095173a160dcd3dcd25edda9c4b4e48b6443e1fb0daa8fc17",
+        "exit_code": 0,
+        "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/tslearn/completion.json",
+        "artifact_sha256": "4d271d754b2cc028329951bdba78e496d77082b6e205feb6ca66e294732f55a4",
+        "finished_at": "2026-11-19T12:38:21.649910+00:00",
+        "state_receipt": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/tslearn-original/state.json",
+          "sha256": "a84140193a8dd0286973ca1383886972f8b22037da12460027f31027edd419fe"
+        },
+        "completion_matches_supervisor": true,
+        "result_matches_completion": true,
+        "passes": 219,
+        "selected": 362,
+        "new_model_calls": 0
+      }
+    ],
+    "locks": [
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/queue.lock",
+        "inode": 993037601,
+        "owners": [
+          "9: FLOCK  ADVISORY  WRITE 3289545 00:32:993037601 0 EOF"
+        ]
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/.lock",
+        "inode": 994541981,
+        "owners": []
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/mdanalysis/.lock",
+        "inode": 994542580,
+        "owners": [
+          "8: FLOCK  ADVISORY  WRITE 3515873 00:32:994542580 0 EOF"
+        ]
+      }
+    ],
+    "failed_case": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7",
+    "failed_case_files": [
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/replay_identity.json",
+        "size": 3850
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/attempt_0001/requested_target.json",
+        "size": 1371
+      },
+      {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/attempt_0001/api_test.py",
+        "size": 3489
+      }
+    ],
+    "next_phase": "Already running: replay historical saved programs without any model calls. This is not a new paid condition or a replacement for the completed fresh R0 results.",
+    "action": "Preserve healthy replay. Do not resume deterministic decoding failure on unchanged evaluator; prepare reviewed output-decoding fix in a new version/namespace."
+  },
+  "actions_taken": [
+    "Read-only progress, completion, release and ownership checks",
+    "Preserved healthy zero-model replay; no restart or provider request",
+    "Reported deterministic subprocess UTF-8 decoding failure for isolated recovery"
+  ]
+}

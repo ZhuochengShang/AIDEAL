@@ -1,12 +1,10 @@
 # AIDEAL current status
 
-Current review snapshot: November 19, 2026 at 00:18:42 Pacific. The six-library Original versus existing generated README comparison uses 2,823 targets across seven banks with `gemini-3.1-flash-lite`. Thirteen of fourteen R0 bank runs are complete; MDAnalysis D1 remains running and its final percentage is Pending. R1, R2, D2 and the full independently checked ablation are not completed in this cohort.
+Observed November 19, 2026 at 09:24:19 Pacific. All 14 Original/D1 R0 bank runs are complete, covering 5,646 outcomes across 2,823 targets. MDAnalysis D1 is 621/1519 (40.9%). These are native acceptance scores with model-written assertions, not independently checked task accuracy.
 
-[Current full experiment guide](../experiments/2026-11-17-latest-stable-canonical/EXPERIMENT_GUIDE.md) · [Action tracker](../experiments/2026-11-17-latest-stable-canonical/reports/2026-11-18-professor-meeting/CHECKLIST.md) · [Complete banks](../experiments/2026-11-17-latest-stable-canonical/reports/2026-11-18-professor-meeting/API_BANK_RECONCILIATION.md) · [Six real examples](../experiments/2026-11-17-latest-stable-canonical/reports/2026-11-18-professor-meeting/real_examples/EXAMPLES.md)
+[Experiment guide](../experiments/2026-11-17-latest-stable-canonical/EXPERIMENT_GUIDE.md) · [Follow-through and live-check command](../experiments/2026-11-17-latest-stable-canonical/review/followthrough-2026-11-19/README.md) · [Tracker](../experiments/2026-11-17-latest-stable-canonical/reports/2026-11-18-professor-meeting/CHECKLIST.md)
 
-The recorded values measure native acceptance with model-written assertions. Scala interpretation remains provisional because four attempts expose an output URI description problem. The cluster runs frozen code and inputs; this page is a review snapshot, not a live status feed.
-
-[End-to-end audit and remaining gates](../experiments/2026-11-17-latest-stable-canonical/review/audits/2026-11-19/README.md). Reviewed fixes are on `development/2026-11-19-evaluation-audit`, separate from the active pinned evaluator. The current bank retains three conditional MDAnalysis mock-class targets that need correction in a future selection. Full independent micro/puzzle, eight-arm, R2 and D2 stages remain pending.
+Historical replay recovery completed on the cluster without model calls; all 14 historical arms now have completed results. Only its two-file binary-output fix is deployed in the new recovery release. Future README evidence and eight-condition changes passed development tests; real-library treatment admission, independent banks, R1/R2 and D2 remain pending. Old measured results and frozen inputs are preserved.
 
 ## Historical September 2026 pilot
 

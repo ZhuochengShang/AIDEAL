@@ -1,0 +1,89 @@
+{
+  "checked_at_utc": "2026-11-19T14:36:43.029940+00:00",
+  "release": {
+    "path": "/home/zshan011/apps/aideal/releases/2026-11-19-output-decoding-7a215d86ab63/EVALUATOR_RELEASE.json",
+    "sha256": "a57aea8965af2385d6a5272c4fb212ec9b66f462abd0040a62a385c3cf5c720d"
+  },
+  "source_result": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/qualified/runs/original/mdanalysis/mdanalysis/result.json",
+    "sha256": "d8f8f1dba0a875e851c0c07bfb3e299fa1d24ec60e27213aabf2d3f4e65b73ac"
+  },
+  "runtime_profile": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/runtime-mdanalysis-final-2026-11-18/runtime_profile.json",
+    "sha256": "cc272ed3356ef4c4a5befbb9fee61319b9a81604ab54c256f8beca566483799a"
+  },
+  "checks": [
+    {
+      "name": "affected_tng_writer",
+      "api": "python:MDAnalysis.coordinates.TNG.TNGReader.Writer",
+      "expected": "fail",
+      "observed": "fail",
+      "exit_code": 1,
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review/followthrough-2026-11-19/replay-output-recovery/preflight/affected_tng_writer/result.json",
+        "sha256": "3e931374edbb69395e100278c46ad21083f669e99c781ffea25b24edbe45a849"
+      },
+      "output_decoding": {
+        "version": "utf8-backslashreplace-v1",
+        "encoding": "utf-8",
+        "errors": "backslashreplace",
+        "raw_streams": {
+          "stderr": {
+            "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/followthrough-2026-11-19/replay-output-recovery/preflight/affected_tng_writer/attempt_0001/aideal-stderr-xfz0heny.raw",
+            "sha256": "b973528ac4e3bf0c47dcf108a9ab0184fb6acd662d54cab639d81e11d6c3666d",
+            "bytes": 295223
+          }
+        }
+      },
+      "raw_binding_count": 1,
+      "llm_calls": 0,
+      "correct": true,
+      "diagnostic": "AssertionError: Expected NotImplementedError but got a different exception."
+    },
+    {
+      "name": "positive",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected": "pass",
+      "observed": "pass",
+      "exit_code": 0,
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review/followthrough-2026-11-19/replay-output-recovery/preflight/positive/result.json",
+        "sha256": "90da0841bfc2103d08df4acffa0b70fbc9f0dd677f0620dbbb5b700828bbf57d"
+      },
+      "output_decoding": {
+        "version": "utf8-backslashreplace-v1",
+        "encoding": "utf-8",
+        "errors": "backslashreplace",
+        "raw_streams": {}
+      },
+      "raw_binding_count": 0,
+      "llm_calls": 0,
+      "correct": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "negative",
+      "api": "python:MDAnalysis.lib.distances.calc_bonds",
+      "expected": "fail",
+      "observed": "fail",
+      "exit_code": 1,
+      "result": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review/followthrough-2026-11-19/replay-output-recovery/preflight/negative/result.json",
+        "sha256": "eb8586425b5f9cf67224aca0b586da750a53f1b90b819d6fedeb6b5ca8a25346"
+      },
+      "output_decoding": {
+        "version": "utf8-backslashreplace-v1",
+        "encoding": "utf-8",
+        "errors": "backslashreplace",
+        "raw_streams": {}
+      },
+      "raw_binding_count": 0,
+      "llm_calls": 0,
+      "correct": true,
+      "diagnostic": "AssertionError:"
+    }
+  ],
+  "status": "passed",
+  "new_model_calls": 0,
+  "preserved_old_output": true
+}

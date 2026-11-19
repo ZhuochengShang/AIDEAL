@@ -1,197 +1,141 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIDEAL execution and paper checklist</title><style>body{font:16px/1.6 system-ui,sans-serif;color:#193246;background:#f3f6fa;margin:0}main{max-width:1160px;margin:auto;padding:28px 30px 80px}h1{font-size:34px;line-height:1.2}h2{margin-top:36px;border-top:1px solid #cfdae3;padding-top:22px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;background:white;margin:22px 0}th,td{padding:10px 12px;border:1px solid #dce5ec;text-align:left;vertical-align:top}th{background:#e8f0f6}a{color:#116497}code{font-size:.86em;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#e6edf3;padding:18px;border-radius:8px}img{max-width:100%}nav{background:white;padding:14px 30px;border-bottom:1px solid #c7d7e3;display:flex;gap:24px}</style><nav><a href="../../EXPERIMENT_GUIDE.html">Guide</a><a href="CHECKLIST.html">Tracker</a><a href="../../review/audits/2026-11-19/README.html">Audit</a><a href="real_examples/EXAMPLES.html">Examples</a></nav><main><h1 id="aideal-execution-and-paper-checklist">AIDEAL execution and paper checklist</h1>
-<p>Observed <strong>19 November 2026, 00:18:42 Pacific</strong> (<strong>19 November, 08:18:42 UTC</strong>). This is a timestamped review, not a live monitor. The active namespace is <code>evaluator-correction-2026-11-18/explicit-inputs-r0</code>. Preserve older namespaces and their measured results.</p>
-<h2 id="current-execution">Current execution</h2>
-<p>The active controller and MDAnalysis worker were alive. <strong>13 of 14 condition runs are complete.</strong> The current run uses <code>gemini-3.1-flash-lite</code>, one initial audience program per selected API, zero program repairs and the existing generated README D1. D1 authoring and D2 revision do not run in this queue.</p>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIDEAL experiment review</title><style>body{font:16px/1.6 system-ui;color:#263444;max-width:1200px;margin:32px auto;padding:0 24px}table{border-collapse:collapse;width:100%;display:block;overflow:auto}td,th{padding:9px 12px;border:1px solid #ccd6e0;text-align:left}th{background:#eef3f8}pre{padding:15px;background:#eef3f8;overflow:auto}img{max-width:100%}a{color:#2168a5}h1,h2{line-height:1.25}</style><h1>AIDEAL execution and paper checklist</h1>
+<p>Observed November 19, 2026 at 09:24:19 Pacific. <a href="../../review/followthrough-2026-11-19/README.md">Detailed follow-through</a>. Snapshots do not update automatically.</p>
+<h2>Current result</h2>
+<p>All 14 current R0 arms are complete. These are native acceptance measurements with model-written assertions, one trial and zero repairs; independent micro/puzzle accuracy remains pending.</p>
 <table>
 <thead>
 <tr>
   <th>Bank</th>
-  <th style="text-align:right">Selected APIs</th>
-  <th style="text-align:right">Original R0 accepted</th>
-  <th style="text-align:right">Generated D1 R0 accepted</th>
-  <th>Status</th>
+  <th style="text-align:right">Targets</th>
+  <th style="text-align:right">Original R0</th>
+  <th style="text-align:right">Existing D1 R0</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>RDPro Java</td>
-  <td style="text-align:right">69</td>
-  <td style="text-align:right">12</td>
-  <td style="text-align:right">4</td>
-  <td>Both complete</td>
-</tr>
-<tr>
   <td>RDPro Scala</td>
   <td style="text-align:right">261</td>
-  <td style="text-align:right">20</td>
-  <td style="text-align:right">14</td>
-  <td>Both complete; shared URI issue limits interpretation</td>
+  <td style="text-align:right">20/261 (7.7%)</td>
+  <td style="text-align:right">14/261 (5.4%)</td>
 </tr>
 <tr>
-  <td>SedonaDB</td>
-  <td style="text-align:right">217</td>
-  <td style="text-align:right">87</td>
-  <td style="text-align:right">96</td>
-  <td>Both complete</td>
+  <td>RDPro Java</td>
+  <td style="text-align:right">69</td>
+  <td style="text-align:right">12/69 (17.4%)</td>
+  <td style="text-align:right">4/69 (5.8%)</td>
 </tr>
 <tr>
   <td>MDAnalysis</td>
   <td style="text-align:right">1,519</td>
-  <td style="text-align:right">592</td>
-  <td style="text-align:right">Pending</td>
-  <td>D1 running</td>
+  <td style="text-align:right">592/1519 (39.0%)</td>
+  <td style="text-align:right">621/1519 (40.9%)</td>
 </tr>
 <tr>
   <td>tslearn</td>
   <td style="text-align:right">354</td>
-  <td style="text-align:right">211</td>
-  <td style="text-align:right">221</td>
-  <td>Both complete</td>
+  <td style="text-align:right">211/354 (59.6%)</td>
+  <td style="text-align:right">221/354 (62.4%)</td>
 </tr>
 <tr>
   <td>mir_eval</td>
   <td style="text-align:right">178</td>
-  <td style="text-align:right">134</td>
-  <td style="text-align:right">144</td>
-  <td>Both complete</td>
+  <td style="text-align:right">134/178 (75.3%)</td>
+  <td style="text-align:right">144/178 (80.9%)</td>
 </tr>
 <tr>
   <td>Thumbnailator</td>
   <td style="text-align:right">225</td>
-  <td style="text-align:right">109</td>
-  <td style="text-align:right">97</td>
-  <td>Both complete</td>
+  <td style="text-align:right">109/225 (48.4%)</td>
+  <td style="text-align:right">97/225 (43.1%)</td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">87/217 (40.1%)</td>
+  <td style="text-align:right">96/217 (44.2%)</td>
 </tr>
 </tbody>
 </table>
-<p>At this observation, the MDAnalysis D1 checkpoint contained <strong>602 unique targets with recorded outcomes</strong>, including 253 accepted programs. Its final percentage remains <strong>Pending</strong>. There were 603 returned provider receipts because the next target was in progress. One earlier 503 receipt remains preserved. The checkpoint has 603 rows because the failed provider attempt and its later retry refer to the same target. Do not equate checkpoint rows, provider requests and unique completed target outcomes.</p>
-<p>Across the study, <strong>4,729 of 5,646 planned target outcomes</strong> had been recorded at this snapshot. The earlier 503 was a temporary capacity response, not evidence of depleted credits. Resume preserved completed tasks and created a new physical attempt for the interrupted request. A provider retry stays logical R0.</p>
-<h2 id="end-to-end-audit-on-november-19">End-to-end audit on November 19</h2>
-<p><strong>The complete paper study is not ready.</strong> The current native R0 queue is active. The <a href="../../review/audits/2026-11-19/README.html">detailed audit</a> traces the inputs, code functions, checks and output evidence at each stage. The <a href="../../review/audits/2026-11-19/ACTIONS.json">action ledger</a> records completion criteria.</p>
-<p>Development fixes address provider-response recovery, selected-condition scope, cumulative retry resources, transport-identity reuse, output URI/path wording and import-failure-only empty API stubs. These fixes do not alter the active frozen release or existing scores. The current MDAnalysis bank retains its1,519 denominator; three conditional mock classes are a disclosed scope limitation.</p>
-<p>Before the full study, complete the qualified README evidence and example validation, independent micro/puzzle banks, eight-condition support, alias behavior admission, versioned native-hint builds and repair-memory isolation. Native retries currently retrieve same-API failures without a run/condition filter. Current R0 does not use that retrieval.</p>
-<h2 id="completed-and-remaining-work">Completed and remaining work</h2>
+<h2>Work and acceptance gates</h2>
 <table>
 <thead>
 <tr>
   <th>Status</th>
-  <th>Work item</th>
-  <th>Evidence or completion requirement</th>
+  <th>Work</th>
+  <th>Evidence or next acceptance condition</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>Frozen; scope correction required for a future bank</td>
-  <td>Freeze 2,823 current API targets</td>
-  <td>Current ledger retained; three MDAnalysis import-failure mock classes identified in this audit</td>
+  <td>Complete</td>
+  <td>Frozen current Original/D1 R0</td>
+  <td>5,646 outcomes and14 bound completion/result receipts</td>
 </tr>
 <tr>
-  <td>Done</td>
-  <td>Prepare all seven banks</td>
-  <td>Bound configuration, source, documentation, fixture and runtime receipts</td>
+  <td>Complete</td>
+  <td>R0 attempt and resource audit</td>
+  <td>5,647 attempts; one unknown-usage 503 retained explicitly</td>
 </tr>
 <tr>
-  <td>Done</td>
-  <td>Check matched prompt exposure</td>
-  <td>Fourteen sampled Original/D1 requests match outside documentation</td>
+  <td>Complete</td>
+  <td>Historical MDAnalysis Original replay recovery</td>
+  <td>1538/1538 programs; no model calls; 13,847 unique evidence files verified</td>
 </tr>
 <tr>
-  <td>Done</td>
-  <td>Check execution mechanisms</td>
-  <td>Enabled JVM assertions, isolated attempt outputs, Python fixture binding and exact target witness</td>
+  <td>Complete</td>
+  <td>Other historical replay arms</td>
+  <td>13 bound results; kept separate from current R0</td>
 </tr>
 <tr>
-  <td>Done</td>
-  <td>Preserve prior runs</td>
-  <td>Historical results and the stopped initial run remain separate from current results</td>
+  <td>Deployed for isolated replay</td>
+  <td>Binary diagnostic recording</td>
+  <td>19 cluster tests + 7 subtests; 3 real preflight verdicts</td>
 </tr>
 <tr>
-  <td>Done</td>
-  <td>Complete 13 condition runs</td>
-  <td>Completion receipts and result hashes for all Original arms and six D1 arms</td>
+  <td>Development tests passed</td>
+  <td>Exact-owner author comments/test excerpts</td>
+  <td>Review all-library coverage and allowed source-test scope; execute README examples</td>
 </tr>
 <tr>
-  <td>Running</td>
-  <td>Finish MDAnalysis D1</td>
-  <td>Native worker running at the timestamp above; require final completion receipt before a final score</td>
+  <td>Development tests passed</td>
+  <td>Eight-condition routing and alias controls</td>
+  <td>Freeze and validate actual library treatments and independent banks</td>
 </tr>
 <tr>
-  <td>Queued</td>
-  <td>Replay saved historical programs</td>
-  <td>The current controller schedules a separate zero-model <code>rescore</code> phase after continuation; do not replace original verdicts</td>
+  <td>Still required</td>
+  <td>D1 claims and examples</td>
+  <td>Validate constructors, signatures, receivers, outputs and behavioral claims</td>
 </tr>
 <tr>
-  <td>Fixed in development; not deployed</td>
-  <td>Resolve RDPro Scala URI contract</td>
-  <td>Native contract v3 distinguishes local paths and URIs; a new matched protocol and readiness receipt are still required</td>
+  <td>Still required</td>
+  <td>Fixed micro/puzzle tasks</td>
+  <td>Independent expected outputs and reference/wrong-output/no-target controls</td>
 </tr>
 <tr>
-  <td>Review required</td>
-  <td>Validate existing D1 claims and examples</td>
-  <td>Check constructors, callable expressions, receivers and behavioral claims against actual source and executable examples</td>
+  <td>Still required</td>
+  <td>Alias and native hint builds</td>
+  <td>Per-alias forwarding/default/error tests and native exception message comparisons</td>
 </tr>
 <tr>
-  <td>Pending</td>
-  <td>Independent microbenchmark oracles</td>
-  <td>Fixed task inputs, expected outputs and target-use checks independent of the audience-generated assertions</td>
+  <td>Still required</td>
+  <td>Memory isolation</td>
+  <td>Verify actual repair backend exposure; no cross-trial or cross-condition history</td>
 </tr>
 <tr>
-  <td>Pending</td>
-  <td>Fixed puzzle bank for the main comparison</td>
-  <td>Document task levels, input/output contract, reference checks and development/evaluation separation for all six libraries</td>
+  <td>Not launched</td>
+  <td>R1/R2 and D2</td>
+  <td>Preceding gates must pass; keep development and held-out evaluation separate</td>
 </tr>
 <tr>
-  <td>Pending</td>
-  <td>Full eight-condition implementation and validation</td>
-  <td>O, R, A, H, RA, RH, AH and RAH with identical tasks/runtime/repair settings; the current generic runner alone does not establish a complete eight-arm study</td>
-</tr>
-<tr>
-  <td>Pending</td>
-  <td>R1/R2 measurement</td>
-  <td>Record initial passes, newly repaired passes per round and cumulative R2 separately; current run has no program repairs</td>
-</tr>
-<tr>
-  <td>Pending</td>
-  <td>D2 development and fresh evaluation</td>
-  <td>Diagnose designated development failures after the planned repair rounds, validate the revised README and start fresh audience trials</td>
-</tr>
-<tr>
-  <td>Pending</td>
-  <td>Validate alias and native hint treatments</td>
-  <td>Build and paired behavior checks, installed source hashes and branch manifests before audience evaluation</td>
-</tr>
-<tr>
-  <td>Pending</td>
-  <td>Reconcile historical RDPro 92/171</td>
-  <td>The earlier presentation reports this value; the located generated result records 73/171 and the revised README result records 132/171</td>
-</tr>
-<tr>
-  <td>Done locally; publication recorded separately</td>
-  <td>Align all “current” entry points</td>
-  <td>Guide, current-study/current-launch pointers, tracker, review status and start page now use the current cohort; old navigation files are preserved in navigation-history</td>
+  <td>Preserved limitation</td>
+  <td>Four Scala URI failures; three MDAnalysis mock targets</td>
+  <td>Correct only in a newly frozen protocol; never rewrite measured denominators</td>
 </tr>
 </tbody>
 </table>
-<h2 id="gates-before-the-next-controlled-run">Gates before the next controlled run</h2>
-<ol>
-<li><strong>Choose and freeze the measurement.</strong> Keep native acceptance separate from independently checked task accuracy. Model-authored assertions and a target marker do not prove that a fixed task was solved correctly.</li>
-<li><strong>Freeze a matched task bank.</strong> Retain canonical owners and signatures, data roles, reference programs, independent checks and coverage strata. Keep documented and no-reviewed-excerpt APIs in the bank instead of silently dropping difficult cases.</li>
-<li><strong>Resolve confirmed shared setup ambiguities.</strong> RDPro Scala has four recorded URI/path failures across both conditions. Preserve those results and review the common contract before launching a new comparison. Wrong generated API calls are not automatically environment defects.</li>
-<li><strong>Validate D1 before treating it as improved documentation.</strong> The current saved authoring pass had no selected test snippets, and all 555 JVM API fact records had null extracted source comments. Those extractor outputs do not prove that the source lacks comments. Corrected future author prompts do not retroactively repair frozen D1.</li>
-<li><strong>Keep development evidence separate.</strong> Alias proposals, embedded exception guidance and D2 may use development failures. Do not expose held-out evaluation answers or accumulating cross-trial memory to later evaluation tasks.</li>
-<li><strong>Run deterministic positive and negative controls.</strong> Check every configured execution family and fixture format required by the selected tasks. Passing one example per library does not certify every API.</li>
-<li><strong>Freeze treatment versions.</strong> Bind source commits, README D0/D1/D2, alias code, native exception-message edits, model settings and permitted context. R0/R1/R2 are attempts inside a condition, not Git branches.</li>
-<li><strong>Check reporting arithmetic and completeness.</strong> Use the selected denominator. Separate provider retries, program repairs, documentation revision, model request time and compile/run time. Publish complete arms or explicitly marked partial progress.</li>
-</ol>
-<h2 id="current-interpretation-and-known-issues">Current interpretation and known issues</h2>
-<ul>
-<li>Current native paired results have 118 gained passes and 115 lost passes across 1,304 APIs with both arms complete. These are differences between independently generated R0 programs, not 118 successful repairs.</li>
-<li>RDPro D1 contains confirmed inaccurate constructor guidance for <code>GeoTiffMetadata.getGeoKey</code> and an incorrect initial-state claim for <code>Statistics.isValid</code>. The audience reproduces those errors in inspected attempts. This does not explain every regression.</li>
-<li>RDPro Scala supplies <code>output_dir</code> as a <code>file:///</code> URI while the prompt describes only a writable directory. Four inspected traces consume it as an ordinary path. Their original scores remain unchanged.</li>
-<li>The two MDAnalysis D1 <code>dependency-unverified</code> rows reviewed at this snapshot use invented module paths, <code>MDAnalysis.auxiliary.auxreader</code> and <code>MDAnalysis.converters.PDBConverter</code>. Those labels do not establish that an optional dependency is missing. This bounded review found no new confirmed setup blocker.</li>
-<li>The old RDPro bank used 171 bare names and Gemini 3.1 Pro Preview. The current bank has 330 qualified raster/support targets and Gemini 3.1 Flash Lite. Only 48 old names lexically match 58 current qualified targets, with ambiguous owners. Treat these as separate studies.</li>
-</ul>
-<h2 id="navigation-audit">Navigation audit</h2>
+<p>The complete independent paper study is <strong>not ready</strong>. Software test success does not establish correctness of every installed treatment or of every generated program. AIDEAL failures and model-program failures must remain distinct.</p>
+<p>The recovery completed independently on the cluster at 09:15:39 Pacific. Logs and completion receipts are saved; no recovery worker remains active and no unvalidated paid stage started. Local Codex work may pause when the laptop sleeps.</p>
+<h2>Navigation audit</h2>
 <p>This table records the stale navigation found before the refresh. The guide, pointers and review snapshots have now been updated locally, with all replaced versions preserved in <a href="navigation-history/">navigation history</a>. No immutable experiment evidence was changed. Publication and cluster synchronization have their own receipt.</p>
 <table>
 <thead>
@@ -239,17 +183,17 @@
 </tr>
 </tbody>
 </table>
-<h2 id="where-to-inspect-evidence">Where to inspect evidence</h2>
+<h2>Where to inspect evidence</h2>
 <ul>
 <li><a href="MEETING_REPORT.md">Meeting report</a> explains methods, all library results, historical counts and code review starting lines.</li>
 <li><a href="evidence/CURRENT_RESULTS.json">Frozen result snapshot</a> contains exact per-arm result paths and hashes. It is the earlier 23:44:56 Pacific meeting snapshot, so MDAnalysis progress differs from the live check above.</li>
 <li><a href="../../evaluator-correction-2026-11-18/review/final-scope/SELECTED_API_BANK.tsv">Current API identity bank</a> lists the 2,823 selected targets. This is a native API target bank, not a completed independently scored puzzle bank.</li>
 <li><a href="../../evaluator-correction-2026-11-18/review/run-checks/PROGRESS.md">Recorded native execution progress</a> preserves the result interpretation and provider resume history.</li>
-<li><a href="real_examples/EXAMPLES.html">Six real usage-test examples</a> link exact saved prompts, code, inputs and outputs for all six libraries. These are native usage probes; independent task oracles remain pending.</li>
+<li><a href="real_examples/EXAMPLES.md">Six real usage-test examples</a> link exact saved prompts, code, inputs and outputs for all six libraries. These are native usage probes; independent task oracles remain pending.</li>
 <li><a href="evidence/RDPRO_FAILURE_AUDIT.json">RDPro failure audit</a> links exact source, prompt and failure receipts.</li>
 <li><a href="evidence/HISTORICAL_171_RECORDS.json">Historical result provenance</a> and <a href="evidence/HISTORICAL_API_OVERLAP.json">API overlap audit</a> support the old/new count distinction.</li>
 </ul>
 <p>Cluster active root: <code>/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/</code>.</p>
 <p>Use <code>continuation/&lt;bank&gt;/&lt;condition&gt;/configs/continuation.yaml</code> for the effective condition configuration, <code>inputs/</code> for its bound bank/resources, <code>execution/</code> for per-target attempts, and <code>completion.json</code> plus <code>result.json</code> for completed results. Read the full saved <code>request.json</code>, <code>response.txt</code>, executable program, <code>execution.json</code>, <code>stdout.txt</code> and <code>stderr.txt</code> when auditing a task. A stale status file does not prove a worker is stopped.</p>
 <p>This review made no provider calls, changed no frozen input or output, and did not restart the controller.</p>
-</main></html>
+</html>

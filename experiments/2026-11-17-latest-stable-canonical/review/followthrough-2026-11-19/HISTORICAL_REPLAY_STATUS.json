@@ -1,0 +1,361 @@
+{
+  "observed_at_utc": "2026-11-19T16:42:14.577481+00:00",
+  "observed_at_pacific": "2026-11-19T08:42:14.577481-08:00",
+  "status_counts": {
+    "complete": 13,
+    "failed": 1
+  },
+  "jobs": [
+    {
+      "job": "mdanalysis-generated_readme",
+      "library": "mdanalysis",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T12:44:00.047098+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "8e7c287247b8cf609e18c21c27ea2af410b03c9fb85379ce3d5e92939095e592",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/mdanalysis/completion.json",
+      "artifact_sha256": "52e194c1de2f1980d3d1f92612027c48c57fd2432a9d3aef8efbab029c44d9e6",
+      "finished_at": "2026-11-19T14:56:28.814987+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mdanalysis-generated_readme/state.json",
+        "sha256": "498ca659c4526da7777aff98ff024800a3da0c02bc285ea26a9ec65292388ce5"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 669,
+      "selected": 1538,
+      "new_model_calls": 0
+    },
+    {
+      "job": "mdanalysis-original",
+      "library": "mdanalysis",
+      "stage": "r0",
+      "status": "failed",
+      "started_at": "2026-11-19T12:38:21.800481+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "672edf7935f3e719be706e053e0905b888b62011a56ecbdbbdf46e80cb0482bb",
+      "exit_code": 1,
+      "finished_at": "2026-11-19T13:37:42.008354+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mdanalysis-original/state.json",
+        "sha256": "52a8d5884fe8377bbf1b1daed694e41257a598d0d680955fae4df72d0953069a"
+      },
+      "progress": {
+        "selected": 1538,
+        "recorded": 433,
+        "passes": 160,
+        "failures": 273,
+        "last_api": "python:MDAnalysis.coordinates.TNG.TNGReader"
+      },
+      "progress_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/progress.json",
+        "sha256": "b2ba63b5376c851d3873cb059716abf5332d18f042eeb56c58f4c9c351335a16"
+      },
+      "console_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mdanalysis-original/attempt_0001/console.log",
+        "sha256": "77701dfe6024dfbd9302123189d96a0162b880227c0fc1da125f36d0401240d5"
+      },
+      "console_tail": "[430/1538] python:MDAnalysis.coordinates.PQR.PQRReader.Writer: pass -> pass\n[431/1538] python:MDAnalysis.coordinates.PQR.PQRWriter: fail -> fail\n[432/1538] python:MDAnalysis.coordinates.PQR.PQRWriter.write: pass -> pass\n[433/1538] python:MDAnalysis.coordinates.TNG.TNGReader: fail -> fail\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/vendor/aideal_engine/src/aideal/execution.py\", line 54, in run_command\n    stdout, stderr = proc.communicate(timeout=timeout)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1154, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 2063, in _communicate\n    stderr = self._translate_newlines(stderr,\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1031, in _translate_newlines\n    data = data.decode(encoding, errors)\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0x88 in position 1657: invalid start byte\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 348, in <module>\n    main()\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 344, in main\n    run_bank(args.source_result, args.output, args.apis, args.runtime_profile)\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 307, in run_bank\n    result = run_program_case(p, api, output / 'execution' / api_storage_key(api),\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/rescore_native_programs.py\", line 190, in run_program_case\n    proc = run_command(cmd, cwd=physical, env=env, timeout=int(execution['timeout_s']), guard_dir=dest)\n  File \"/home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/vendor/aideal_engine/src/aideal/execution.py\", line 76, in run_command\n    stdout, stderr = proc.communicate(timeout=2)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1154, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 2063, in _communicate\n    stderr = self._translate_newlines(stderr,\n  File \"/home/zshan011/anaconda3/lib/python3.10/subprocess.py\", line 1031, in _translate_newlines\n    data = data.decode(encoding, errors)\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0x88 in position 1657: invalid start byte"
+    },
+    {
+      "job": "mir_eval-generated_readme",
+      "library": "mir_eval",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:07:01.162302+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "e092b94bea0d75a650751c3c72779da15758b7489ec92898cfe4bbc854b58c84",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/mir_eval/completion.json",
+      "artifact_sha256": "e142566bf44a8920d1f76789560f3f691f4bf01564b2c89b4472fdbc92a9e6b9",
+      "finished_at": "2026-11-19T10:13:40.590399+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mir_eval-generated_readme/state.json",
+        "sha256": "074f91c996146021d7791085b2db8152246e818215b5e114b893c013886006fa"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 132,
+      "selected": 178,
+      "new_model_calls": 0
+    },
+    {
+      "job": "mir_eval-original",
+      "library": "mir_eval",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:07:01.162192+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "75b1b92cb87a00ab9705d48ca84f207a79c5ec832bb7d1aafade1739ab7fc5cc",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mir_eval/completion.json",
+      "artifact_sha256": "7b0b9680b9a74d3d2ca32a971d35a6182a17c375e846428c23a46facd72d2ac3",
+      "finished_at": "2026-11-19T10:13:40.590504+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/mir_eval-original/state.json",
+        "sha256": "00a545c9e2c0977846bd7dad62ff627f980df0b48b8cfe9484e2eae7c1e169c0"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 128,
+      "selected": 178,
+      "new_model_calls": 0
+    },
+    {
+      "job": "rdpro_java-generated_readme",
+      "library": "rdpro_java",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:24:47.096164+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "86b842836d7f8ff053fcafa5d585332238d0fffce12fef0ac7f8555a9e1dd8a0",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/rdpro_java/completion.json",
+      "artifact_sha256": "a7e6085f3ea4f088ac9864461fc8ea619396e4addc98e23abc2110f3a62e71a4",
+      "finished_at": "2026-11-19T10:34:24.823051+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_java-generated_readme/state.json",
+        "sha256": "c48a05c189065c343753ade145f3c7dcf01d691316e478053853f3d71abb97c9"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 5,
+      "selected": 69,
+      "new_model_calls": 0
+    },
+    {
+      "job": "rdpro_java-original",
+      "library": "rdpro_java",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:24:39.813481+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "ccfe9f05149ff572c1a2a852a93a19338f48593f6d8ae42eebe708e399b0cbe7",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/rdpro_java/completion.json",
+      "artifact_sha256": "85753b53b24bfab20ec0f9b7f8efd6b56c386a16c5bb197e2b415328b778a63f",
+      "finished_at": "2026-11-19T10:43:16.900383+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_java-original/state.json",
+        "sha256": "86d7f82cbdaff19144ef554f51bf97b51fb52f2344972ca00f55d5540b3e9804"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 13,
+      "selected": 69,
+      "new_model_calls": 0
+    },
+    {
+      "job": "rdpro_scala-generated_readme",
+      "library": "rdpro_scala",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:43:17.004635+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "9c42681a89a9e8aaaac567910356669b5e9f81b75ffa4400f434d97a4e127806",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/rdpro_scala/completion.json",
+      "artifact_sha256": "6f70a206504d82d8d3af49ac3be9f2e74a824f18731b9a4c3b2bdad1f310d6a0",
+      "finished_at": "2026-11-19T11:45:34.406497+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_scala-generated_readme/state.json",
+        "sha256": "e9a8d3018a7ba7fb5f6a5a5aa680703f7aef490267201c4920745891e9b23549"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 19,
+      "selected": 261,
+      "new_model_calls": 0
+    },
+    {
+      "job": "rdpro_scala-original",
+      "library": "rdpro_scala",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:34:24.947590+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "2ad773f1029c024491dc9d6d47baad6487e0873c72bde7837ec7ed78c569aafc",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/rdpro_scala/completion.json",
+      "artifact_sha256": "b0ea73fbbbc36100d403bdd5896cd6626ca44974834e9c6fda1f34db81b2ddd9",
+      "finished_at": "2026-11-19T11:42:52.245313+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/rdpro_scala-original/state.json",
+        "sha256": "ee24cced451fa524a468896c52668a0a8413fff60b5a066742160f6f7dbf325a"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 25,
+      "selected": 261,
+      "new_model_calls": 0
+    },
+    {
+      "job": "sedonadb-generated_readme",
+      "library": "sedonadb",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:19:34.080355+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "fbd4d9eff7854f3ddfd6c3816495b4735a133ba2a64b30369010e27fc08c30c1",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/sedonadb/completion.json",
+      "artifact_sha256": "9c8bd4c7fa700dd6b4d8428e146fe30f97a6fa424fd846d27864800edb233ced",
+      "finished_at": "2026-11-19T10:24:46.998158+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/sedonadb-generated_readme/state.json",
+        "sha256": "a0d79649ec7d3249227913a44d68118c81df1158795214be6181901d9f5570fe"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 100,
+      "selected": 217,
+      "new_model_calls": 0
+    },
+    {
+      "job": "sedonadb-original",
+      "library": "sedonadb",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:19:30.804575+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "da780d6f4de5175550bcbe3c61a86526a265a72132cbf2e4332c1b6ce0b274da",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/sedonadb/completion.json",
+      "artifact_sha256": "136520048582e1d45514f0a88a5b2227fe8ce0029a761f107a13b2da1d1afa26",
+      "finished_at": "2026-11-19T10:24:39.557087+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/sedonadb-original/state.json",
+        "sha256": "60a0ecec3f2c33f889b516382d919a08db95921e2244c771be64cc4044c30eac"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 78,
+      "selected": 217,
+      "new_model_calls": 0
+    },
+    {
+      "job": "thumbnailator-generated_readme",
+      "library": "thumbnailator",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:13:40.765395+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "1bc07cfa4e0bbbd2127d15545b1ed1727639d2fe07dea7f76fc3cf0ad9e012ff",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/thumbnailator/completion.json",
+      "artifact_sha256": "518c2376f5898ee3ff012a1bb8d82bd46bdbe764265ffe66cd0ee0d743555ade",
+      "finished_at": "2026-11-19T10:19:30.651308+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/thumbnailator-generated_readme/state.json",
+        "sha256": "250abee574b8089050fb67fee42d3f85cb9a6300c41a4e5eb12a8bc92d952a3e"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 74,
+      "selected": 225,
+      "new_model_calls": 0
+    },
+    {
+      "job": "thumbnailator-original",
+      "library": "thumbnailator",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T10:13:40.765233+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "b4a0b6e3c548c9eeba1acd23665ee39fef9709ab8b208f5cad80a884f5a2e0d8",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/thumbnailator/completion.json",
+      "artifact_sha256": "98aa1adc4bf92625ec32dc489094835a1dc8b77b98bfa933675476897e5ecced",
+      "finished_at": "2026-11-19T10:19:33.979228+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/thumbnailator-original/state.json",
+        "sha256": "0ebf4badd56f46b5b7d470de7f00144b08b06d83ad37d1b3b918ec97f83671db"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 85,
+      "selected": 225,
+      "new_model_calls": 0
+    },
+    {
+      "job": "tslearn-generated_readme",
+      "library": "tslearn",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T11:45:34.567923+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "cfef69e184c0cba34fee93c15025bc892879e654fa2e28b17b9ff0c43f5cf058",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/tslearn/completion.json",
+      "artifact_sha256": "03f0b9b3d0c9af9b4e624f0eca10e8f2e940ff1ff98b096b0765084ce391ca35",
+      "finished_at": "2026-11-19T12:43:59.894358+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/tslearn-generated_readme/state.json",
+        "sha256": "4ba78a2ab13fe21e236b518363311bc0ec86bdbdfce7afbe88e61a3940a4aa79"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 231,
+      "selected": 362,
+      "new_model_calls": 0
+    },
+    {
+      "job": "tslearn-original",
+      "library": "tslearn",
+      "stage": "r0",
+      "status": "complete",
+      "started_at": "2026-11-19T11:42:52.389105+00:00",
+      "attempt": "attempt_0001",
+      "command_sha256": "037e397f08b7572095173a160dcd3dcd25edda9c4b4e48b6443e1fb0daa8fc17",
+      "exit_code": 0,
+      "artifact": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/tslearn/completion.json",
+      "artifact_sha256": "4d271d754b2cc028329951bdba78e496d77082b6e205feb6ca66e294732f55a4",
+      "finished_at": "2026-11-19T12:38:21.649910+00:00",
+      "state_receipt": {
+        "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/tslearn-original/state.json",
+        "sha256": "a84140193a8dd0286973ca1383886972f8b22037da12460027f31027edd419fe"
+      },
+      "completion_matches_supervisor": true,
+      "result_matches_completion": true,
+      "passes": 219,
+      "selected": 362,
+      "new_model_calls": 0
+    }
+  ],
+  "locks": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/supervisor/queue.lock",
+      "inode": 993037601,
+      "owners": []
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/.lock",
+      "inode": 994541981,
+      "owners": []
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/generated_readme/mdanalysis/.lock",
+      "inode": 994542580,
+      "owners": []
+    }
+  ],
+  "failed_case": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7",
+  "failed_case_files": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/replay_identity.json",
+      "size": 3850
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/attempt_0001/requested_target.json",
+      "size": 1371
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/rescore/original/mdanalysis/execution/python_MDAnalysis.coordinates.TNG.TNGReader.Writer--7d198dc8e93b2c8772469e29726ef4b267afba90ad554d74f0e366aa94e2bae7/attempt_0001/api_test.py",
+      "size": 3489
+    }
+  ],
+  "next_phase": "Already running: replay historical saved programs without any model calls. This is not a new paid condition or a replacement for the completed fresh R0 results.",
+  "action": "Preserve healthy replay. Do not resume deterministic decoding failure on unchanged evaluator; prepare reviewed output-decoding fix in a new version/namespace."
+}
