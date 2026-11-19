@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "observed_at_utc": "2026-11-19T08:31:21.364624+00:00",
+  "observed_at_pacific": "2026-11-19T00:31:21.364624-08:00",
+  "namespace": "evaluator-correction-2026-11-18/explicit-inputs-r0",
+  "score_kind": "native acceptance, not independently verified task accuracy",
+  "model": "gemini-3.1-flash-lite",
+  "max_fix_rounds": 0,
+  "state": {
+    "status": "running",
+    "phase": "continuation",
+    "pid": 3289545,
+    "updated_at": "2026-11-19T07:23:59.072911+00:00"
+  },
+  "processes": [
+    "3289545       1    01:07:28 Ssl  /home/zshan011/apps/aideal/venv/bin/python -B /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_evaluator_correction.py --study /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical --output /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0 --runtime-profiles /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/RUNTIME_PROFILES.json --input-overrides /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/INPUT_OVERRIDES.json --phases continuation rescore --run --key-file [credential path omitted]",
+    "3289564 3289545    01:07:22 Ss   /home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_verified_readme_continuation.py --spec /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/specs/continuation/mdanalysis.json --run",
+    "3290645 3289564    01:04:30 S    /home/zshan011/apps/aideal/venv/bin/python /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_verified_readme_continuation.py --spec /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/specs/continuation/mdanalysis.json --worker --condition generated_d1"
+  ],
+  "complete_arms": 13,
+  "planned_arms": 14,
+  "md_d1_selected": 1519,
+  "md_d1_completed": 716,
+  "md_d1_accepted": 328,
+  "md_checkpoint_rows": 717,
+  "total_completed": 4843,
+  "total_planned": 5646,
+  "md_provider_status": {
+    "returned": 717,
+    "error": 1
+  },
+  "md_provider_errors": [
+    {
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/run_python_MDAnalysis.analysis.nucleicacids.NucPairDist--7e773ec3a8a19dca48754447617d8c9b47199b501d5e9d9940a109eebf2cd29c/attempt_0001/provider.json",
+      "category": "llm-error",
+      "error": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "last_api": "python:MDAnalysis.core.selection.ByResSelection",
+  "caveats": [
+    "Checkpoint and provider receipt reads are not an atomic snapshot; one returned response may still be executing.",
+    "MDAnalysis Generated README is incomplete; its partial count is not a final percentage.",
+    "The existing three conditional mock targets and RDPro Scala URI limitation remain in the frozen measured study."
+  ]
+}
