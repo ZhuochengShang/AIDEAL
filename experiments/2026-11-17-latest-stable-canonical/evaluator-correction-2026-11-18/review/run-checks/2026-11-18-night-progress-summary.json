@@ -1,0 +1,636 @@
+{
+  "kind": "read_only_progress_and_bounded_failure_review",
+  "as_of_utc": "2026-11-19T07:23:38.368126+00:00",
+  "global_counts": {
+    "selected": 5646,
+    "passes": 1826,
+    "native_details": 4333,
+    "native_attempted": 4333,
+    "native_remaining": 1313,
+    "metrics_with_recorded_returned_call": 4332,
+    "recorded_llm_calls": 4332,
+    "execution_outcomes_with_exit_code": 4332,
+    "provider_error_rows": 1
+  },
+  "completed_arms": 13,
+  "pending_successful_generation_targets": 1314,
+  "recorded_provider_usage": {
+    "calls": 4332,
+    "input_tokens": 18136565,
+    "output_tokens": 1018797,
+    "missing_usage_calls": 0
+  },
+  "rows": [
+    {
+      "bank": "mdanalysis",
+      "arm": "generated_d1",
+      "complete": false,
+      "selected": 1519,
+      "passes": 85,
+      "native_details": 206,
+      "native_status_counts": {
+        "pass": 85,
+        "fail": 121
+      },
+      "failure_categories": {
+        "runtime": 114,
+        "api-import": 6,
+        "llm-error": 1
+      },
+      "native_attempted": 206,
+      "native_remaining": 1313,
+      "metrics_with_recorded_returned_call": 205,
+      "execution_outcomes_with_exit_code": 205,
+      "provider_error_rows": 1,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/result.json",
+          "sha256": "9a85e5350cc1f8c47a4f2a2dfdb5c978c66907c3b87f7eb6bf1708b086024eda"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/fresh_result.json",
+          "sha256": "a9165e878921edc85b56b1ea8bed9a8c3050ad5fc4eaab5208bf6a933d2a4e21"
+        },
+        "completion": null
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "incomplete_has_no_completion": true
+      }
+    },
+    {
+      "bank": "mdanalysis",
+      "arm": "original",
+      "complete": true,
+      "selected": 1519,
+      "passes": 592,
+      "native_details": 1519,
+      "native_status_counts": {
+        "fail": 927,
+        "pass": 592
+      },
+      "failure_categories": {
+        "runtime": 896,
+        "timeout": 3,
+        "api-import": 16,
+        "dependency-unverified": 7,
+        "unknown": 5
+      },
+      "native_attempted": 1519,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 1519,
+      "execution_outcomes_with_exit_code": 1519,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/result.json",
+          "sha256": "b74bfac78f82bb707fd1b3479e501ab64bc9f20f78f460d3ed8f1a04027f45df"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/fresh_result.json",
+          "sha256": "4c0f461fe24ea106e9b57b0fa379170fdf4da4b728ff3d971dcfd990c898b455"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/completion.json",
+          "sha256": "0166ede5aee221b1ce925d4aef32c9acb6b0b8241a5a1bfec04e7b6307d6c6de"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "mir_eval",
+      "arm": "generated_d1",
+      "complete": true,
+      "selected": 178,
+      "passes": 144,
+      "native_details": 178,
+      "native_status_counts": {
+        "pass": 144,
+        "fail": 34
+      },
+      "failure_categories": {
+        "runtime": 34
+      },
+      "native_attempted": 178,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 178,
+      "execution_outcomes_with_exit_code": 178,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/result.json",
+          "sha256": "ca114d3d41ef17accc35b542c92ac7c81e454d4ee7e41bbaba1b12482f06d86b"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/fresh_result.json",
+          "sha256": "4384122b0b6a2e58ca0b29e8c8e3a1d2c4ba557089cf68d36df32dc34d539269"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/completion.json",
+          "sha256": "185d50731a98d4d8ffb461374c01cc386337658f2563df7ef87d3af0b8bd56c4"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "mir_eval",
+      "arm": "original",
+      "complete": true,
+      "selected": 178,
+      "passes": 134,
+      "native_details": 178,
+      "native_status_counts": {
+        "pass": 134,
+        "fail": 44
+      },
+      "failure_categories": {
+        "runtime": 44
+      },
+      "native_attempted": 178,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 178,
+      "execution_outcomes_with_exit_code": 178,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/result.json",
+          "sha256": "02ac1ce545b272b41297ac521ce8ddaff0a3604d8bba33abda88872a2393b20c"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/fresh_result.json",
+          "sha256": "716a63a65889b48505a8c645f1658d0c3f7e155520d9603283e7493be4eccb10"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/completion.json",
+          "sha256": "074723b74f39dcb8d49ddaf24a8c00c4cccb40fcd27c61d4afc6ae89debf376d"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "rdpro_java",
+      "arm": "generated_d1",
+      "complete": true,
+      "selected": 69,
+      "passes": 4,
+      "native_details": 69,
+      "native_status_counts": {
+        "fail": 65,
+        "pass": 4
+      },
+      "failure_categories": {
+        "compile": 62,
+        "runtime": 3
+      },
+      "native_attempted": 69,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 69,
+      "execution_outcomes_with_exit_code": 69,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/result.json",
+          "sha256": "5acf9215419edc170d18c49b0b024e9bdfce1110307e31f62942920aa0794fa7"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/fresh_result.json",
+          "sha256": "ce3c21f73920843706f197abf1f8e42faa943f38e4d264e4b306e0e6fc48bc64"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/completion.json",
+          "sha256": "d8b83900fc1309cc027718c18a0f7354ba80a1ebf47a5807646d5e010b715521"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "rdpro_java",
+      "arm": "original",
+      "complete": true,
+      "selected": 69,
+      "passes": 12,
+      "native_details": 69,
+      "native_status_counts": {
+        "fail": 57,
+        "pass": 12
+      },
+      "failure_categories": {
+        "compile": 54,
+        "runtime": 3
+      },
+      "native_attempted": 69,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 69,
+      "execution_outcomes_with_exit_code": 69,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/result.json",
+          "sha256": "03423ef0f88399bbd3823f8a1f35f0863ea29202bc1b895ea27bfd327da82200"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/fresh_result.json",
+          "sha256": "1f16b71a2606033faec42e07a0af6682a00a23a90c2f91d82d225ca47d924158"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/completion.json",
+          "sha256": "7ec799828bd65b05eb069661bceacca7407a1e9d139b96bbe5b5f796bfc12a34"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "rdpro_scala",
+      "arm": "generated_d1",
+      "complete": true,
+      "selected": 261,
+      "passes": 14,
+      "native_details": 261,
+      "native_status_counts": {
+        "fail": 247,
+        "pass": 14
+      },
+      "failure_categories": {
+        "compile": 227,
+        "runtime": 20
+      },
+      "native_attempted": 261,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 261,
+      "execution_outcomes_with_exit_code": 261,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/result.json",
+          "sha256": "496cd10c323a98c9e7c0badae416560dcd59cc0d516589a4f9a3b190f9301a7b"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/fresh_result.json",
+          "sha256": "ad7b8c5a1badca6925b38e1c37d3e5abc9d1de56dc2dd0f20ed9bc9be5207919"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/completion.json",
+          "sha256": "284bb1cd495e58d44dc094f51bdb24402b6393801c6b39ff9625f146998edb66"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "rdpro_scala",
+      "arm": "original",
+      "complete": true,
+      "selected": 261,
+      "passes": 20,
+      "native_details": 261,
+      "native_status_counts": {
+        "fail": 241,
+        "pass": 20
+      },
+      "failure_categories": {
+        "compile": 229,
+        "runtime": 12
+      },
+      "native_attempted": 261,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 261,
+      "execution_outcomes_with_exit_code": 261,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/result.json",
+          "sha256": "89eef1a2e1f1e3d0326f0b9b20d0f0f5035a913d23657ed85a25251b369f1f2e"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/fresh_result.json",
+          "sha256": "8be450b0fe610221257cd3214247925fec2e37161faa2f242389c652a062a3dd"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/completion.json",
+          "sha256": "1d0f03c2e0f7fa01653ebd3a0ff46e0c1fe1d766d5fe969959ebd043ddc2f300"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "sedonadb",
+      "arm": "generated_d1",
+      "complete": true,
+      "selected": 217,
+      "passes": 96,
+      "native_details": 217,
+      "native_status_counts": {
+        "fail": 121,
+        "pass": 96
+      },
+      "failure_categories": {
+        "unknown": 45,
+        "runtime": 76
+      },
+      "native_attempted": 217,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 217,
+      "execution_outcomes_with_exit_code": 217,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/result.json",
+          "sha256": "75a3498c23ad4319226eb30419746f3643fc7b0753addad8f10c9625d06a6cbd"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/fresh_result.json",
+          "sha256": "e864f96ffa47887f9edad4550c5c0764b54973ddfa0e1b1f2e06357de0fb775d"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/completion.json",
+          "sha256": "2401e3c1193eb1b81faa52cb947f7dc56bf1b1615b44c3c84ec5e93d3e4d53e2"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "sedonadb",
+      "arm": "original",
+      "complete": true,
+      "selected": 217,
+      "passes": 87,
+      "native_details": 217,
+      "native_status_counts": {
+        "fail": 130,
+        "pass": 87
+      },
+      "failure_categories": {
+        "unknown": 65,
+        "runtime": 65
+      },
+      "native_attempted": 217,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 217,
+      "execution_outcomes_with_exit_code": 217,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/result.json",
+          "sha256": "baa775bba32e41f88de5643376000b4dbe225e629a1c4085c0cb447b21d4ead6"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/fresh_result.json",
+          "sha256": "5fecbdb87082034501cb0fbd4e15578b94ee9d925b5057aa76643a9302d426d8"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/completion.json",
+          "sha256": "223e2cbdc72686318f6565fdb97d3eb50a7467e6816ed43dcc422be5bef29177"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "thumbnailator",
+      "arm": "generated_d1",
+      "complete": true,
+      "selected": 225,
+      "passes": 97,
+      "native_details": 225,
+      "native_status_counts": {
+        "fail": 128,
+        "pass": 97
+      },
+      "failure_categories": {
+        "compile": 93,
+        "runtime": 35
+      },
+      "native_attempted": 225,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 225,
+      "execution_outcomes_with_exit_code": 225,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/result.json",
+          "sha256": "de3e8cf5d87f1d500d4d83700497feb63b3a3079897823c7b697120b718d65ee"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/fresh_result.json",
+          "sha256": "18276f4c08fa6ad4de1050562e62a2382cb70942191ba27facb8efb1ccdd7d9c"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/completion.json",
+          "sha256": "34cfb24bf3bf5b43f2070a03ef7e0f9ac21deeb3eacbb36dcd0581aa05ce7b00"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "thumbnailator",
+      "arm": "original",
+      "complete": true,
+      "selected": 225,
+      "passes": 109,
+      "native_details": 225,
+      "native_status_counts": {
+        "pass": 109,
+        "fail": 116
+      },
+      "failure_categories": {
+        "compile": 80,
+        "runtime": 36
+      },
+      "native_attempted": 225,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 225,
+      "execution_outcomes_with_exit_code": 225,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/result.json",
+          "sha256": "6df8ce57d718fc093403f474228d02755ac773152d5ec90a10665f10a57cf1c2"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/fresh_result.json",
+          "sha256": "86adaf0755c4db489f2e6e24de2b6c87511038d1f783f65a50cfc06a2274011c"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/completion.json",
+          "sha256": "9af42a8ddd4c4c88295023e0beb976b59c793c334ecd7823921186c637146b91"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "tslearn",
+      "arm": "generated_d1",
+      "complete": true,
+      "selected": 354,
+      "passes": 221,
+      "native_details": 354,
+      "native_status_counts": {
+        "fail": 133,
+        "pass": 221
+      },
+      "failure_categories": {
+        "runtime": 114,
+        "dependency-unverified": 7,
+        "timeout": 1,
+        "api-import": 11
+      },
+      "native_attempted": 354,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 354,
+      "execution_outcomes_with_exit_code": 354,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/result.json",
+          "sha256": "c7867bb3739516a015311185bf78b5190e2032544f5a5c92441e9e61ea53d5bd"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/fresh_result.json",
+          "sha256": "ff9f87bdf43bfad8b8ec37dfd9259be7e7ce598cf21b35fda0152ddc6d98c87a"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/completion.json",
+          "sha256": "e5be1289a23e34367f1514fc927dd5929e42cb4866a9dcc0a77f672e8408e431"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    },
+    {
+      "bank": "tslearn",
+      "arm": "original",
+      "complete": true,
+      "selected": 354,
+      "passes": 211,
+      "native_details": 354,
+      "native_status_counts": {
+        "fail": 143,
+        "pass": 211
+      },
+      "failure_categories": {
+        "runtime": 132,
+        "api-import": 4,
+        "timeout": 1,
+        "dependency-unverified": 6
+      },
+      "native_attempted": 354,
+      "native_remaining": 0,
+      "metrics_with_recorded_returned_call": 354,
+      "execution_outcomes_with_exit_code": 354,
+      "provider_error_rows": 0,
+      "receipts": {
+        "result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/result.json",
+          "sha256": "074a889564f934e9635afba09412acf1c206cfacb33a10165441fb5df41bd15a"
+        },
+        "fresh_result": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/fresh_result.json",
+          "sha256": "f308fcf2788fa519374aa5b8150938df3f149bd949d73db5ec1401c7d2f107ea"
+        },
+        "completion": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/completion.json",
+          "sha256": "30b852a12d7c4cf9fe1ff9c5ca8419ebfa390c0384e02672a76b130553c741a4"
+        }
+      },
+      "receipt_checks": {
+        "native_result_bound": true,
+        "completion_result_bound": true,
+        "complete_status_matches": true
+      }
+    }
+  ],
+  "non_rd_review": [
+    {
+      "library": "mir_eval",
+      "observation": "The completed D1 result improves from 134/178 to 144/178. All recorded nonpasses in both arms have the native runtime category. Recent failures include using zero pitch values, an invalid list type, a missing argument, or incorrect self-written assertions. No setup-keyword matches appeared in the full error-text screen.",
+      "interpretation": "These observed cases show generated-program/API-use errors. This review does not prove documentation caused or fixed them."
+    },
+    {
+      "library": "Thumbnailator",
+      "observation": "D1 decreases from 109/225 to 97/225. Native categories are Original 80 compile + 36 runtime versus D1 93 compile + 35 runtime. A recent D1 compiler error references nonexistent net.coobird.thumbnailator.util.exif.ExifReader. Another asserts Orientation.typeOf(6) is named ROTATE_90 but actual output is RIGHT_TOP.",
+      "interpretation": "The additional failures predominantly compile in the recorded top-level categorization. No missing-classpath or fixture-path setup defect was established in the bounded sample."
+    },
+    {
+      "library": "SedonaDB",
+      "observation": "D1 improves from 87/217 to 96/217. Native unknown categories contain SQL planning/type errors and are not automatically infrastructure errors. Recent examples pass non-POINT values to ST_X/ST_Y or compare WKT string whitespace exactly (POINT (2 5) versus POINT(2 5)).",
+      "interpretation": "The native unknown label is coarse; diagnostic inspection is required before attributing cause."
+    },
+    {
+      "library": "tslearn",
+      "observation": "D1 improves from 211/354 to 221/354. The 13 dependency-unverified rows across both arms consist of 9 candidate TensorFlow imports and 4 references to nonexistent library paths tslearn.base/forecasting.knn/forecasting.tfkeras. Current execution explicitly sets KERAS_BACKEND=torch. Installed shapelets code imports Keras ops/layers and its backend selector, not TensorFlow directly.",
+      "interpretation": "Do not count these 13 rows as proven environment failures from the label alone. Source/prompt evidence supports invented import paths or a candidate-selected incompatible backend in this reviewed group. No package installation was attempted."
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/shapelets/shapelets.py",
+      "sha256": "16f750c43d2edfbb3c4a23c4ad12b2379681c30185cbc39b7023ad1c5d19a3a8",
+      "lines": "3-27 select the backend and import keras.layers/keras.ops;97 GlobalArgminPooling1D; 167 LocalSquaredDistanceLayer"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/forecasting/__init__.py",
+      "sha256": "0d7e39ca67008ed8506595b576cdf235fe5f4736c5529ad5a42a81e3683d6773",
+      "lines": "7-10 export VARIMA, AutoVARIMA, ScaledForecastingPipeline; inspected directory contains __init__.py, _arima.py, _pipeline.py"
+    },
+    {
+      "path": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib64/python3.12/site-packages/tslearn/metrics/__init__.py",
+      "sha256": "635df4e4fa6ee20add2534dbc00c150e94cd950330d12ca354c21555f5b9233f",
+      "lines": "26/34 rename accumulated_matrix to dtw_accumulated_matrix/frechet_accumulated_matrix"
+    }
+  ],
+  "review_scope": "All 14 native reports and aggregate receipts; all non-RD non-MD failure categories ; 40 recent failed programs (5 per arm across 4 libraries), plus a setup-keyword screen and selected tslearn source definitions. No cluster writes, execution reruns, provider calls or new model judgments.",
+  "full_evidence": {
+    "path": "/tmp/aideal-explicit-inputs-progress-audit.json",
+    "sha256": "29a160bbc81370552f9799e93ea22dafe910f020752133602afe27bf5fe5d81b"
+  },
+  "limitations": [
+    "Native pass means the corrected execution and target-use acceptance checks passed; it is not an independent task-output oracle.",
+    "Setup keywords are a screen, not proof of an environment defect.",
+    "Incomplete MD D1 is a snapshot, not a final score."
+  ]
+}
