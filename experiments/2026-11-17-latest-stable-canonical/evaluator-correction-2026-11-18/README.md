@@ -74,7 +74,8 @@ evaluator-correction-2026-11-18/
   review/                    complete prompt/input/output examples and all-target index
     corrected-profiles/      new shared profile snapshots; historical profiles retained
   current/                   preserved UNLAUNCHED preparation evidence
-  explicit-inputs-r0/          active corrected comparison namespace
+  fresh-original-d1/         stopped initial run; retained protocol-development evidence
+  explicit-inputs-r0/         active corrected comparison namespace
     operator/                final selected-bank plans and readiness checks
     continuation/            fresh Original/D1 R0 requests and results
     rescore/                 separate zero-model saved-program replay
@@ -104,7 +105,7 @@ Historical prompts, responses, source versions and measured results are evidence
 
 The final cluster release is `2026-11-18-corrected-r0-d8ba3815cf95`; all 146 packaged files have verified hashes. [GitHub commit `56a42d9`](https://github.com/ZhuochengShang/AIDEAL/commit/56a42d91d8548ce7e4bf71b17b19fc5155f132f7) on `study/2026-11-17-latest-stable-canonical` contains identical code files. The local full offline suite passed 818 tests and 436 subtests. Final focused checks passed 124 tests and 92 subtests after the latest changes.
 
-The final seven-bank preparation passed for 2,823 selected APIs. Fourteen sampled Original/D1 prompts matched outside documentation, and prepared files remained unchanged. The final gate passed with 14 current runtime control receipts plus six supporting native MDAnalysis controls and a verified environment-equivalence record. See [READINESS.json](explicit-inputs-r0/operator/READINESS.json) and the [configuration/prompt report](explicit-inputs-r0/preflight/ACTUAL_BANK_CONFIGURATION_AND_PROMPTS.json). The first launch was stopped after a live audit found unclear input roles. Its 212 returned responses and 211 executions remain in `fresh-original-d1/`; they will not be pooled with the replacement run. [RUN_AMENDMENT.json](RUN_AMENDMENT.json) preserves recorded usage and the one provider request whose final usage is unavailable. The replacement `explicit-inputs-r0/` makes buffer/file roles, file schemas and deterministic input-construction permission explicit. [Input-equivalence evidence](explicit-inputs-r0/preflight/INPUT_CONTRACT_EQUIVALENCE.json) verifies unchanged source, runtime, data, scaffolds, profiles, documentation, model and selected API set. Both conditions receive the same revised context. Its final seven-bank readiness gate passed; restart follows publication.
+The final seven-bank preparation passed for 2,823 selected APIs. Fourteen sampled Original/D1 prompts matched outside documentation, and prepared files remained unchanged. The final gate passed with 14 current runtime control receipts plus six supporting native MDAnalysis controls and a verified environment-equivalence record. See [READINESS.json](explicit-inputs-r0/operator/READINESS.json) and the [configuration/prompt report](explicit-inputs-r0/preflight/ACTUAL_BANK_CONFIGURATION_AND_PROMPTS.json). The first launch was stopped after a live audit found unclear input roles. Its 212 returned responses and 211 executions remain in `fresh-original-d1/`; they will not be pooled with the replacement run. [RUN_AMENDMENT.json](RUN_AMENDMENT.json) preserves recorded usage and the one provider request whose final usage is unavailable. The replacement `explicit-inputs-r0/` makes buffer/file roles, file schemas and deterministic input-construction permission explicit. [Input-equivalence evidence](explicit-inputs-r0/preflight/INPUT_CONTRACT_EQUIVALENCE.json) verifies unchanged source, runtime, data, scaffolds, profiles, documentation, model and selected API set. Both conditions receive the same revised context. Its final seven-bank readiness gate passed. After publication of the [reviewed protocol](https://github.com/ZhuochengShang/AIDEAL/commit/726bd29f0f583d4967c7152adc3049e7814272c0), the replacement started on November 18 at 16:07 Pacific (November 19, 00:07 UTC). The 00:10 UTC snapshot records 41 mir_eval and 39 Thumbnailator responses, all 80 executed, with no provider errors; five other banks remain queued. These are progress counts, not completed condition scores. See [START.json](explicit-inputs-r0/operator/START.json), [STATE.json](explicit-inputs-r0/operator/STATE.json), and the timestamped [LIVE_STATUS.json](explicit-inputs-r0/operator/LIVE_STATUS.json).
 
 ```bash
 # Cluster. This prepares inputs and plans; it makes no model calls.
@@ -113,7 +114,7 @@ cd /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical
 /home/zshan011/apps/aideal/venv/bin/python \
   /home/zshan011/apps/aideal/releases/2026-11-18-corrected-r0-d8ba3815cf95/scripts/run_evaluator_correction.py \
   --study "$PWD" \
-  --output "$PWD/evaluator-correction-2026-11-18/fresh-original-d1" \
+  --output "$PWD/evaluator-correction-2026-11-18/explicit-inputs-r0" \
   --runtime-profiles "$PWD/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/RUNTIME_PROFILES.json" \
   --input-overrides "$PWD/evaluator-correction-2026-11-18/explicit-inputs-r0/operator/INPUT_OVERRIDES.json" \
   --phases continuation rescore
@@ -130,3 +131,7 @@ cd /Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow
 ```
 
 This walkthrough uses scripted model responses and real local execution. Full library execution uses the pinned Linux cluster runtime; reviewing identical files locally does not make Mac and Linux dependencies interchangeable.
+
+## Post-launch check
+
+A read-only review of ten recent failures at 00:11 UTC found candidate-code errors and no new setup blocker in that sample. Examples include an invalid plotting attribute, missing required constructor arguments, and a nonexistent Java method. The review does not certify every remaining API. [Review and evidence](review/run-checks/LATEST_REVIEW.json). The frozen run continues unchanged.

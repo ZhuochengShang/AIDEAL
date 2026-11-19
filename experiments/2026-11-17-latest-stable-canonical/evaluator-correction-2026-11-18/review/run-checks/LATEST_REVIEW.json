@@ -1,0 +1,24 @@
+{
+  "observed_at_utc": "2026-11-19T00:11:10+00:00",
+  "scope": "Ten recent failing executions from the active explicit-inputs-r0 comparison; read-only inspection, no model calls or mutations. Not a complete failure audit.",
+  "conclusion": "No new setup blocker observed in this sample.",
+  "examples": [
+    {
+      "library": "mir_eval",
+      "api": "display.events",
+      "failure": "The candidate refers to nonexistent plt.LineCollection after plotting succeeds."
+    },
+    {
+      "library": "mir_eval",
+      "api": "IntervalFormatter.__call__",
+      "failure": "The candidate omits required base and ticks constructor arguments."
+    },
+    {
+      "library": "Thumbnailator",
+      "api": "sourceRegion",
+      "failure": "The candidate calls nonexistent toBufferedImage(); javac rejects it."
+    }
+  ],
+  "raw_evidence": "2026-11-19T001110Z-recent-failures.json",
+  "interpretation": "These are candidate-code failures. Preserve their recorded verdicts; do not change the frozen environment or prompt to make these programs pass."
+}
