@@ -1,0 +1,123 @@
+{
+  "library": "sedonadb",
+  "bank": "sedonadb",
+  "condition": "generated_d1",
+  "api": "sql:ST_Distance",
+  "model": "google:gemini-3.1-flash-lite",
+  "round": 0,
+  "metric": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "b1ab5c95c9b2cadeb8dad15d9ebe8df91e82ba7c61b2953fc97044c098a25aae"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 2.9,
+    "llm_calls": 1,
+    "input_tokens": 2295,
+    "output_tokens": 243,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2295,
+        "output_tokens": 243,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 2339,
+    "document_sha256": "9b1d7a419bbb7ff7c7d3e795f2a0ac327cb02b55b1dde549b61a6810006317a5",
+    "source": "source/docs/reference/sql/st_distance.qmd:19",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "native_verdict": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "table_geom = sd.sql(\"SELECT ST_Distance(ST_Point(0.0, 0.0), ST_Point(3.0, 4.0)) as dist\").to_arrow_table()\ndist_geom = table_geom.column(\"dist\")[0].as_py()\nassert abs(dist_geom - 5.0) < 1e-9\nprint(f\"__CHECK__ sql:ST_Distance {dist_geom}\")\n\ntable_geog = sd.sql(\"SELECT ST_Distance(ST_GeogPoint(0.0, 0.0), ST_GeogPoint(0.0, 1.0)) as dist\").to_arrow_table()\ndist_geog = table_geog.column(\"dist\")[0].as_py()\n# 1 degree of latitude is approximately 111,319 meters\nassert dist_geog > 110000 and dist_geog < 112000\nprint(f\"__CHECK__ sql:ST_Distance {dist_geog}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/ApiTest.py",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ sql:ST_Distance 5.0\n__CHECK__ sql:ST_Distance 111195.10117748393\n__DONE__\n",
+    "stderr_tail": ""
+  },
+  "attempt_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001",
+  "program_file": "ApiTest.py",
+  "files": [
+    {
+      "local_file": "request.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/request.json",
+      "sha256": "93e2cf89b2ba4a97837fe44de25d1f76aba37008832f78461576f0b14609eaa8",
+      "bytes": 10886
+    },
+    {
+      "local_file": "response.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/response.txt",
+      "sha256": "b653a267c26f45802433082e0961da441243420373d18d584d1807da9a75dc10",
+      "bytes": 555
+    },
+    {
+      "local_file": "provider.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/provider.json",
+      "sha256": "34932fe810a99a0c70c3a1de07b01c02d1fe22db50b5c291a4448f2b04bb1e7f",
+      "bytes": 418
+    },
+    {
+      "local_file": "execution.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/execution.json",
+      "sha256": "7642357060b0cb8c9afa27616aaecb93adb22b8f1a52f04961587ff9d19542ed",
+      "bytes": 1502
+    },
+    {
+      "local_file": "execution_contract.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/execution_contract.json",
+      "sha256": "81baf3014d685264d50d055fb917b7c51c9f4189ba2eab5080ac16de9d7d01a2",
+      "bytes": 2294
+    },
+    {
+      "local_file": "requested_target.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/requested_target.json",
+      "sha256": "628615e539d3f6b725bf5a1c08e1032cbbd157a10f01aba2ea980f7e70bfda0b",
+      "bytes": 764
+    },
+    {
+      "local_file": "stdout.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/stdout.txt",
+      "sha256": "94958a06c610712580cc9d10cb8ec425fa8d43b8868a98e2899cfca9fbbc3d0b",
+      "bytes": 84
+    },
+    {
+      "local_file": "stderr.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "local_file": "ApiTest.py",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/execution/run_sql_ST_Distance--8bed70b7baaedb77e88e151d5fb938563729570191d96e27fb565ca1ab1eebd5/attempt_0001/ApiTest.py",
+      "sha256": "cbefa73496ddc7277c239ba2ef2ad24e03c4c5d11d53dfff5c3b984e5de42d37",
+      "bytes": 1658
+    }
+  ],
+  "result_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/fresh_result.json",
+    "sha256": "e864f96ffa47887f9edad4550c5c0764b54973ddfa0e1b1f2e06357de0fb775d",
+    "bytes": 812430
+  },
+  "configuration_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/configs/continuation.yaml",
+    "sha256": "b8bb6d41c0e7cd602073e7e1fa9a98964da250c50509e31fdc660932db5104dc",
+    "bytes": 44455
+  },
+  "acceptance_limit": "The audience authored its own assertions. Native success is not independent validation of all output values or API behavior."
+}

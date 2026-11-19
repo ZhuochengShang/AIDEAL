@@ -1,0 +1,5 @@
+durations = mir_eval.util.intervals_to_durations(ref_intervals)
+assert durations.shape == (4,)
+expected_durations = ref_intervals[:, 1] - ref_intervals[:, 0]
+assert (durations == expected_durations).all()
+print(f"__CHECK__ python:mir_eval.util.intervals_to_durations {durations.tolist()}")

@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "kind": "bounded_read_only_RDPro_failure_audit",
+  "created_at_utc": "2026-11-19T07:27:35+00:00",
+  "scope": "Completed explicit-inputs-r0 Original/D1 RDPro Java and Scala; category scan and selected trace/source inspection only. No edits, launches, rescoring, provider calls or result changes.",
+  "score_interpretation": "Native execution and model-authored self-checks, not independently verified task accuracy. RDScala treatment interpretation remains provisional because shared URI/path representation is undisclosed.",
+  "category_summary": [
+    {
+      "bank": "rdpro_java",
+      "condition": "original",
+      "selected": 69,
+      "passes": 12,
+      "percent": 17.39,
+      "compile_failures": 54,
+      "runtime_failures": 3,
+      "result": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/result.json",
+      "complete": true,
+      "repairs": 0
+    },
+    {
+      "bank": "rdpro_java",
+      "condition": "generated_d1",
+      "selected": 69,
+      "passes": 4,
+      "percent": 5.8,
+      "compile_failures": 62,
+      "runtime_failures": 3,
+      "result": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/result.json",
+      "complete": true,
+      "repairs": 0
+    },
+    {
+      "bank": "rdpro_scala",
+      "condition": "original",
+      "selected": 261,
+      "passes": 20,
+      "percent": 7.66,
+      "compile_failures": 229,
+      "runtime_failures": 12,
+      "result": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/result.json",
+      "complete": true,
+      "repairs": 0
+    },
+    {
+      "bank": "rdpro_scala",
+      "condition": "generated_d1",
+      "selected": 261,
+      "passes": 14,
+      "percent": 5.36,
+      "compile_failures": 227,
+      "runtime_failures": 20,
+      "result": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/result.json",
+      "complete": true,
+      "repairs": 0
+    }
+  ],
+  "dominant_compile_patterns": {
+    "rdpro_scala_original_rasterRDD_metadata_not_member": 56,
+    "rdpro_scala_D1_rasterRDD_metadata_not_member": 44,
+    "rdpro_java_original_invalid_GeoTiffMetadata_constructor": 10,
+    "rdpro_java_D1_invalid_GeoTiffMetadata_constructor": 11,
+    "rdpro_java_original_illegal_start_expression": 9,
+    "rdpro_java_D1_illegal_start_expression": 15
+  },
+  "spark_log_noise": {
+    "message": "Cannot invoke org.apache.spark.storage.BlockManagerId.executorId() because idWithoutTopologyInfo is null",
+    "occurs_in_all_successful_JVM_traces": true,
+    "successful_trace_counts": {
+      "java_original": 12,
+      "java_D1": 4,
+      "scala_original": 20,
+      "scala_D1": 14
+    },
+    "runtime_failure_trace_counts": {
+      "java_original": 3,
+      "java_D1": 3,
+      "scala_original": 12,
+      "scala_D1": 20
+    },
+    "all_runtime_failures_have_later_explicit_RUN_ERR": true,
+    "conclusion": "Repeated Spark message is not the demonstrated pass/fail cause. Use explicit __RUN_ERR__ and candidate code for diagnosis; preserve raw logging."
+  },
+  "shared_URI_contract_issue": {
+    "confirmed_direct_failures": 4,
+    "unique_APIs": 3,
+    "Original": 2,
+    "D1": 2,
+    "prompt_describes": "Writable output_dir is a directory unique to this attempt; keep generated files beneath it.",
+    "prompt_does_not_disclose": "file:// URI representation of the String binding; no filesystem-path/URI distinction in system/user text",
+    "scaffold_fact": "val output_dir = \"file:///.../attempt_0001/output\" at ApiTest.scala:344",
+    "assessment": "Shared audience input-contract ambiguity, not evidence solely of README quality. A future protocol must explicitly distinguish URI and local-path bindings in both arms. Correcting representation alone does not prove these programs would pass all other checks.",
+    "future_review_required": true,
+    "scores_unchanged": true,
+    "cases": [
+      {
+        "bank": "rdpro_scala",
+        "condition": "original",
+        "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj",
+        "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/request.json",
+        "executed_source": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/ApiTest.scala",
+        "output_binding_line": 344,
+        "actual_output_binding": "file:///home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/output",
+        "candidate_expression": "new File(output_dir, \"schema.bin\") followed by FileOutputStream",
+        "diagnostic": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/stderr.txt",
+        "execution_receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/execution.json",
+        "primary_failure": "__RUN_ERR__ java.io.FileNotFoundException: file:/.../output/schema.bin (No such file or directory)",
+        "status": "confirmed_uri_string_consumed_as_plain_filesystem_path"
+      },
+      {
+        "bank": "rdpro_scala",
+        "condition": "original",
+        "api": "scala:edu.ucr.cs.bdlab.raptor.GeoTiffTileSerializer.read",
+        "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffTileSerializer.read--a59a993080af0be31e3d8e6210dc4ea90408287cea3f14253e805e08edb7b5c3/attempt_0001/request.json",
+        "executed_source": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffTileSerializer.read--a59a993080af0be31e3d8e6210dc4ea90408287cea3f14253e805e08edb7b5c3/attempt_0001/ApiTest.scala",
+        "output_binding_line": 344,
+        "actual_output_binding": "file:///home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffTileSerializer.read--a59a993080af0be31e3d8e6210dc4ea90408287cea3f14253e805e08edb7b5c3/attempt_0001/output",
+        "candidate_expression": "new FileOutputStream(output_dir + \"/tile.bin\")",
+        "diagnostic": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffTileSerializer.read--a59a993080af0be31e3d8e6210dc4ea90408287cea3f14253e805e08edb7b5c3/attempt_0001/stderr.txt",
+        "execution_receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/execution/run_scala_edu.ucr.cs.bdlab.raptor.GeoTiffTileSerializer.read--a59a993080af0be31e3d8e6210dc4ea90408287cea3f14253e805e08edb7b5c3/attempt_0001/execution.json",
+        "primary_failure": "__RUN_ERR__ java.io.FileNotFoundException: file:/.../output/tile.bin (No such file or directory)",
+        "status": "confirmed_uri_string_consumed_as_plain_filesystem_path"
+      },
+      {
+        "bank": "rdpro_scala",
+        "condition": "generated_d1",
+        "api": "scala:edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write",
+        "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write--3802e86d587cdd1097143e513939509d09cee61bf7b6837a3955969e0c01eeae/attempt_0001/request.json",
+        "executed_source": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write--3802e86d587cdd1097143e513939509d09cee61bf7b6837a3955969e0c01eeae/attempt_0001/ApiTest.scala",
+        "output_binding_line": 344,
+        "actual_output_binding": "file:///home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write--3802e86d587cdd1097143e513939509d09cee61bf7b6837a3955969e0c01eeae/attempt_0001/output",
+        "candidate_expression": "Paths.get(output_dir, \"tile.bin\").toString followed by FileOutputStream",
+        "diagnostic": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write--3802e86d587cdd1097143e513939509d09cee61bf7b6837a3955969e0c01eeae/attempt_0001/stderr.txt",
+        "execution_receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.ITileSerializer.write--3802e86d587cdd1097143e513939509d09cee61bf7b6837a3955969e0c01eeae/attempt_0001/execution.json",
+        "primary_failure": "__RUN_ERR__ java.io.FileNotFoundException: file:/.../output/tile.bin (No such file or directory)",
+        "status": "confirmed_uri_string_consumed_as_plain_filesystem_path"
+      },
+      {
+        "bank": "rdpro_scala",
+        "condition": "generated_d1",
+        "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj",
+        "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/request.json",
+        "executed_source": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/ApiTest.scala",
+        "output_binding_line": 344,
+        "actual_output_binding": "file:///home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/output",
+        "candidate_expression": "new File(output_dir, \"schema.bin\") followed by FileOutputStream",
+        "diagnostic": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/stderr.txt",
+        "execution_receipt": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterSchemaHelper.writeExternalObj--507d807dc779cc8cae0aaacf7309f2c5e44be8c0fc13164ba38c832a0e32c8ff/attempt_0001/execution.json",
+        "primary_failure": "__RUN_ERR__ java.io.FileNotFoundException: file:/.../output/schema.bin (No such file or directory)",
+        "status": "confirmed_uri_string_consumed_as_plain_filesystem_path"
+      }
+    ],
+    "additional_unconfirmed_candidate": "Original RasterFileRDD.buildIndex checks new java.io.File(output_dir + \"/raster_index.idx\").exists; it also indexes an empty output directory. Do not include this in the confirmed four without isolated verification."
+  },
+  "documentation_examples": [
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey",
+      "condition": "generated_d1",
+      "finding": "Delivered D1 explicitly invents new GeoTiffMetadata(tiffFilePath); audience copies it and compiler rejects String because constructor requires ITiffReader,TiffRaster.",
+      "source": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/GeoTiffMetadata.java",
+      "source_line": 46,
+      "evidence": {
+        "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey--15c7c9486aa6945333ce3511568c3f59d40910be15178cf269f0e96b2e278033/attempt_0001/request.json",
+        "program": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey--15c7c9486aa6945333ce3511568c3f59d40910be15178cf269f0e96b2e278033/attempt_0001/ApiTest.java",
+        "stderr": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/execution/run_java_edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey--15c7c9486aa6945333ce3511568c3f59d40910be15178cf269f0e96b2e278033/attempt_0001/stderr.txt"
+      },
+      "attribution": "specific inaccurate D1 example, directly reflected in generated call"
+    },
+    {
+      "api": "java:edu.ucr.cs.bdlab.raptor.Statistics.isValid",
+      "condition": "generated_d1",
+      "finding": "Delivered D1 says unpopulated Statistics returns false. Audience asserts this; actual new Statistics returns true and assertion fails. Original condition passed this API.",
+      "source": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/raptor/src/main/java/edu/ucr/cs/bdlab/raptor/Statistics.java",
+      "source_line": 132,
+      "source_logic": "return !this.invalid;",
+      "evidence": {
+        "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/attempt_0001/request.json",
+        "program": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/attempt_0001/ApiTest.java",
+        "stderr": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/execution/run_java_edu.ucr.cs.bdlab.raptor.Statistics.isValid--6c0f78fe70a54eca1bf8019101ad6ceda4830aa4109402de2c80cb07d08bebe6/attempt_0001/stderr.txt"
+      },
+      "attribution": "specific inaccurate D1 behavioral claim, directly reflected in generated assertion"
+    },
+    {
+      "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable",
+      "condition": "generated_d1",
+      "finding": "Audience assumes a new serializer returns false; source unconditionally returns true. D1 discusses mutability/configuration but does not state the constant true behavior. Original passed.",
+      "source": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/sources/rdpro/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadataSerializer.scala",
+      "source_line": 53,
+      "source_logic": "override def isImmutable: Boolean = true",
+      "evidence": {
+        "request": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/attempt_0001/request.json",
+        "program": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/attempt_0001/ApiTest.scala",
+        "stderr": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadataSerializer.isImmutable--10a4779af6a96f7f695512495ffe6f0888372fdb5949914831ee95f75b3ae765/attempt_0001/stderr.txt"
+      },
+      "attribution": "unsupported audience expectation; delivered D1 omits decisive behavior, not proof of a universal treatment effect"
+    }
+  ],
+  "original_document_retrieval_coverage": {
+    "manifest_local": "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/2026-11-17-latest-stable-canonical/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json",
+    "java": {
+      "reviewed_api_excerpt": 0,
+      "no_reviewed_api_excerpt": 69
+    },
+    "scala": {
+      "reviewed_api_excerpt": 16,
+      "no_reviewed_api_excerpt": 245
+    },
+    "qualification": "Both conditions still receive canonical declarations/shared setup; absence of a reviewed exact excerpt does not mean no related documentation or source comments exist."
+  },
+  "causality_limits": [
+    "Most failures are compiler errors in the generated candidate, including wrong receivers, packages, constructors and Java imports inside a method-body contract.",
+    "The source bank includes low-level raster support and serializer APIs; zero-shot use often requires construction knowledge not supplied by the exact target signature alone.",
+    "Two inspected D1 entries contain concrete inaccurate claims/examples; that does not establish that documentation explains every failure or the entire aggregate difference.",
+    "Single-trial native outputs and self-authored expectations can differ stochastically; do not claim independent task accuracy."
+  ],
+  "result_action": "preserve completed scores and evidence; mark Scala interpretation provisional; no paid rerun or edits authorized/performed by this audit"
+}

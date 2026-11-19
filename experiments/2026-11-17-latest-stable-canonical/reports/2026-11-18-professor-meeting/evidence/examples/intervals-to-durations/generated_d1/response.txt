@@ -1,0 +1,17 @@
+import numpy as np
+import mir_eval.util
+
+# Use the provided ref_intervals (shape (4, 2))
+durations = mir_eval.util.intervals_to_durations(ref_intervals)
+
+# Verify the shape matches the number of intervals
+assert durations.shape == (4,)
+
+# Verify the invariant: duration = end - start
+# We check the first interval specifically
+expected_first = ref_intervals[0, 1] - ref_intervals[0, 0]
+assert np.isclose(durations[0], expected_first)
+
+# Witness: print the sum of durations
+total_duration = np.sum(durations)
+print(f"__CHECK__ python:mir_eval.util.intervals_to_durations {total_duration}")

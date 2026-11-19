@@ -1,0 +1,66 @@
+
+    private int geoKeyDirVersion;
+
+    private int geoKeyRevision;
+
+    private int geoKeyMinorRevision;
+    
+    private final PixelScale pixelScale;
+
+    private final TiePoint[] tiePoints;
+
+    private final double noData;
+
+    private final AffineTransform modelTransformation;
+    public static final int TAG_GEO_KEY_DIRECTORY = 34735;
+
+    public GeoTiffMetadata(ITiffReader reader , TiffRaster raster) throws IOException {
+        this.reader = reader;
+        this.raster = raster;
+        geoKeys = new HashMap<>();
+
+        // 1. Get value associated with GeoKeyDirectoryTag.
+        AbstractIFDEntry entry = raster.getEntry((short) TAG_GEO_KEY_DIRECTORY);
+        if(entry != null)
+        {
+            // Get No of keys indexed by GeoKeyDirectory.
+            // GeoKeyDirectory header  consists of {KeyDirectoryVersion, KeyRevision, MinorRevision, NumberOfKeys}
+            // Value Type SHORT (2-byte unsigned short).
+            ByteBuffer buffer = reader.readEntry(entry, null);
+
+            geoKeyDirVersion = buffer.getShort() & 0xffff;
+            geoKeyRevision = buffer.getShort() & 0xffff;
+            geoKeyMinorRevision = buffer.getShort() & 0xffff;
+            short NumberofKeys = buffer.getShort();
+
+            for(short i=0;i<NumberofKeys;i++)
+            {
+                // next lines of GeoKeyDirectory follows the structure : { KeyID, TIFFTagLocation, Count, Value_Offset }
+                int keyID = buffer.getShort()& 0xffff;
+                GeoKeyEntry directoryEntry = new GeoKeyEntry(
+                        keyID,
+                        buffer.getShort()& 0xffff, // Tiff tag location
+                        buffer.getShort()& 0xffff, // count
+                        buffer.getShort()& 0xffff); // value offset
+
+                if(!geoKeys.containsKey(keyID))
+                {
+                    geoKeys.put(keyID,directoryEntry);
+                }
+            }
+        }
+        pixelScale = calculatePixelScales();
+        modelTransformation = calculateModelTransformation();
+        tiePoints = calculateTiePoints();
+        noData = calculateNoData();
+    }
+    public static final int TIFFTAG_NODATA = 42113;
+
+    private double calculateNoData() throws IOException {
+        AbstractIFDEntry entry = raster.getEntry((short) TIFFTAG_NODATA);
+        if (entry != null) {
+            ByteBuffer buffer = reader.readEntry(entry,null);
+            String noData = getTiffAscii(buffer,-1,-1);
+
+            try {
+                return Double.parseDouble(noData);

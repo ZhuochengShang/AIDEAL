@@ -1,0 +1,18 @@
+edu.ucr.cs.bdlab.raptor.GeoTiffMetadata geoTiffMetadata = new edu.ucr.cs.bdlab.raptor.GeoTiffMetadata(raster_tif);
+
+// GeoKey ID 3072 is the ProjectedCSTypeGeoKey (standard GeoTIFF)
+int keyID = 3072;
+String result = geoTiffMetadata.getGeoKey(keyID);
+
+// Verify that the result is not null (as the file is a valid GeoTIFF)
+if (result == null) {
+    throw new AssertionError("GeoKey 3072 should be present in the provided GeoTIFF metadata.");
+}
+
+// The witness is the length of the string, which must be positive for a valid projection code
+int witness = result.length();
+if (witness <= 0) {
+    throw new AssertionError("Retrieved GeoKey value is empty.");
+}
+
+System.out.println("__CHECK__ java:edu.ucr.cs.bdlab.raptor.GeoTiffMetadata.getGeoKey " + witness);

@@ -1,0 +1,123 @@
+{
+  "library": "thumbnailator",
+  "bank": "thumbnailator",
+  "condition": "generated_d1",
+  "api": "java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage",
+  "model": "google:gemini-3.1-flash-lite",
+  "round": 0,
+  "metric": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "103f5418865601643720e0aa425b1acb7c7fc15a8cd8193e848abeff4d304eef"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 3.1,
+    "llm_calls": 1,
+    "input_tokens": 2468,
+    "output_tokens": 169,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2468,
+        "output_tokens": 169,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 2239,
+    "document_sha256": "c403c6fb54964dbc54a0f50145fee54f0510b85a00eb2d62565de94fb4935e57",
+    "source": "source/src/main/java/net/coobird/thumbnailator/Thumbnails.java:2342",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "native_verdict": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "java.awt.image.BufferedImage result = net.coobird.thumbnailator.Thumbnails.of(sourceImage)\n    .size(16, 12)\n    .asBufferedImage();\n\nif (result.getWidth() != 16 || result.getHeight() != 12) {\n    throw new AssertionError(\"Thumbnail dimensions mismatch: expected 16x12, got \" + result.getWidth() + \"x\" + result.getHeight());\n}\n\nint pixel = result.getRGB(8, 6);\nSystem.out.println(\"__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage \" + result.getWidth() + \"x\" + result.getHeight() + \"@\" + Integer.toHexString(pixel));",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/ApiTest.java",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ java:net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage 16x12@ffffff00\n__DONE__\n",
+    "stderr_tail": "Picked up JAVA_TOOL_OPTIONS: -ea\nPicked up JAVA_TOOL_OPTIONS: -ea\n"
+  },
+  "attempt_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001",
+  "program_file": "ApiTest.java",
+  "files": [
+    {
+      "local_file": "request.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/request.json",
+      "sha256": "dee11709af58b0579b99516ae736eba84e03a33176e8297779caaa1423605dc7",
+      "bytes": 13017
+    },
+    {
+      "local_file": "response.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/response.txt",
+      "sha256": "fc14244a7c740c56a9b02f9abecd8b92018157937faeb3b605b51fb099e596fe",
+      "bytes": 542
+    },
+    {
+      "local_file": "provider.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/provider.json",
+      "sha256": "5adcd847f19b06299f1e15ee44f68c03c18febbf27898f719a163145893586d1",
+      "bytes": 419
+    },
+    {
+      "local_file": "execution.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/execution.json",
+      "sha256": "a560915861c4acf89faca08853105fa336a48d30e208cf56286b4944187b51c9",
+      "bytes": 2813
+    },
+    {
+      "local_file": "execution_contract.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/execution_contract.json",
+      "sha256": "b707588b49f93105c028859ff94229a6b640161baef4d080fa4366e67e881c38",
+      "bytes": 2848
+    },
+    {
+      "local_file": "requested_target.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/requested_target.json",
+      "sha256": "f32da697da4ff77c7c4b0204d62a5dcb93becb3afa348e2cb0f6477863fd289f",
+      "bytes": 1434
+    },
+    {
+      "local_file": "stdout.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/stdout.txt",
+      "sha256": "cf571ad2137e443431efd2c8aed2415730abef37c3add53e68a733cd35914e98",
+      "bytes": 100
+    },
+    {
+      "local_file": "stderr.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/stderr.txt",
+      "sha256": "8c32a7bba5f3acbc068c539fceafa98ca584ebd9e67bf9b6e95ae49b57e4fe11",
+      "bytes": 66
+    },
+    {
+      "local_file": "ApiTest.java",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/execution/run_java_net.coobird.thumbnailator.Thumbnails.Builder.asBufferedImage--7e25aefac1397ac15ca99f5389fe8864c872975d1762ffe7aa5bab4c89328326/attempt_0001/ApiTest.java",
+      "sha256": "7c51bfc89f8fa4552d6a84b4eb7d1ca6abad4ef309c0c94d28092ef1849c3271",
+      "bytes": 3465
+    }
+  ],
+  "result_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/fresh_result.json",
+    "sha256": "18276f4c08fa6ad4de1050562e62a2382cb70942191ba27facb8efb1ccdd7d9c",
+    "bytes": 893308
+  },
+  "configuration_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/configs/continuation.yaml",
+    "sha256": "cafafa4653c10c8440b265158899d478f7c6d9168ff75984a4cce7483e093be3",
+    "bytes": 27990
+  },
+  "acceptance_limit": "The audience authored its own assertions. Native success is not independent validation of all output values or API behavior."
+}

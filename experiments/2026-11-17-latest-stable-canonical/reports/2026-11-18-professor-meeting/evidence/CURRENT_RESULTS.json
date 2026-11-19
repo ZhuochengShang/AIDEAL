@@ -1,0 +1,1555 @@
+{
+  "schema": 1,
+  "scope": "explicit-inputs-r0; current corrected protocol; no historical results pooled",
+  "snapshot_start_utc": "2026-11-19T07:44:47.088709+00:00",
+  "snapshot_end_utc": "2026-11-19T07:44:56.858652+00:00",
+  "snapshot_pacific": "2026-11-18T23:44:56.858652-08:00",
+  "root": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation",
+  "frozen_release": "2026-11-18-corrected-r0-d8ba3815cf95",
+  "model": "gemini-3.1-flash-lite",
+  "max_output_tokens": 8192,
+  "protocol": {
+    "conditions": [
+      "Original",
+      "Generated README D1"
+    ],
+    "trials_per_selected_api_per_condition": 1,
+    "initial_program_round": 0,
+    "program_repairs": 0,
+    "D2_readme_revision": false,
+    "aliases": false,
+    "embedded_hints": false,
+    "new_context": "shared source-backed input-role descriptions",
+    "readiness_measure": "native execution, generated assertions and exact target witness; no independent output oracle"
+  },
+  "totals": {
+    "selected_condition_targets": 5646,
+    "completed_arms": 13,
+    "finalized_complete_targets": 4127,
+    "complete_arm_passes": 1741,
+    "complete_arm_calls": 4127,
+    "complete_arm_input_tokens": 17494841,
+    "complete_arm_output_tokens": 965287,
+    "latest_executed_targets": 4443,
+    "latest_unique_recorded_targets": 4443,
+    "live_incomplete_input_tokens": 980188,
+    "live_incomplete_output_tokens": 81198,
+    "live_incomplete_returned_calls": 316
+  },
+  "completed_paired_comparison": {
+    "selected_apis": 1304,
+    "transitions": {
+      "fail_to_fail": 613,
+      "pass_to_fail": 115,
+      "pass_to_pass": 458,
+      "fail_to_pass": 118
+    },
+    "net_pass_gain": 3
+  },
+  "rows": [
+    {
+      "bank": "rdpro_java",
+      "library": "RDPro",
+      "source_version": "0.10.1",
+      "selected": 69,
+      "historical_count": 69,
+      "excluded_count": 0,
+      "arms": {
+        "original": {
+          "complete": true,
+          "selected": 69,
+          "finalized_passes": 12,
+          "finalized_details": 69,
+          "paper_percentage": 17.391304347826086,
+          "usage": {
+            "calls": 69,
+            "input_tokens": 156675,
+            "output_tokens": 11360,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 69,
+                "input_tokens": 156675,
+                "output_tokens": 11360,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 69,
+            "provider_status_counts": {
+              "returned": 69
+            },
+            "model_request_seconds": 120.9741473197937,
+            "compile_run_receipt_count": 69,
+            "compile_run_seconds": 851.813976764679,
+            "per_api_wall_seconds_sum": 996.3,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 1017.3
+          },
+          "failure_categories": {
+            "compile": 54,
+            "runtime": 3
+          },
+          "prompt_document_characters": {
+            "n": 69,
+            "min": 2240,
+            "median": 2252,
+            "max": 2281,
+            "sum": 155611
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "5edfff48d412465fd8cd76b61c756f3d693f7a1f215bfe7f1afa8e5de30e0d2e",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/result.json",
+              "sha256": "03423ef0f88399bbd3823f8a1f35f0863ea29202bc1b895ea27bfd327da82200"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/fresh_result.json",
+              "sha256": "1f16b71a2606033faec42e07a0af6682a00a23a90c2f91d82d225ca47d924158"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/completion.json",
+              "sha256": "7ec799828bd65b05eb069661bceacca7407a1e9d139b96bbe5b5f796bfc12a34"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/original/configs/continuation.yaml",
+              "sha256": "8187232116ec83aad9dcfb46b2418876ebbaeab0664a0df406cf9a50876a1ab7"
+            }
+          },
+          "live": null
+        },
+        "generated_d1": {
+          "complete": true,
+          "selected": 69,
+          "finalized_passes": 4,
+          "finalized_details": 69,
+          "paper_percentage": 5.797101449275362,
+          "usage": {
+            "calls": 69,
+            "input_tokens": 155117,
+            "output_tokens": 15396,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 69,
+                "input_tokens": 155117,
+                "output_tokens": 15396,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 69,
+            "provider_status_counts": {
+              "returned": 69
+            },
+            "model_request_seconds": 115.41652750968933,
+            "compile_run_receipt_count": 69,
+            "compile_run_seconds": 536.806764125824,
+            "per_api_wall_seconds_sum": 678.3000000000002,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 699.3
+          },
+          "failure_categories": {
+            "compile": 62,
+            "runtime": 3
+          },
+          "prompt_document_characters": {
+            "n": 69,
+            "min": 1621,
+            "median": 2195,
+            "max": 3200,
+            "sum": 152275
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "6b4139c543c10089b870cf399c05c44e91a462643ac35f53236bf71284e1e57c",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/result.json",
+              "sha256": "5acf9215419edc170d18c49b0b024e9bdfce1110307e31f62942920aa0794fa7"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/fresh_result.json",
+              "sha256": "ce3c21f73920843706f197abf1f8e42faa943f38e4d264e4b306e0e6fc48bc64"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/completion.json",
+              "sha256": "d8b83900fc1309cc027718c18a0f7354ba80a1ebf47a5807646d5e010b715521"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_java/generated_d1/configs/continuation.yaml",
+              "sha256": "8187232116ec83aad9dcfb46b2418876ebbaeab0664a0df406cf9a50876a1ab7"
+            }
+          },
+          "live": null
+        }
+      },
+      "delta_percentage_points": -11.594202898550723,
+      "paired_transitions": {
+        "fail_to_fail": 56,
+        "pass_to_fail": 9,
+        "pass_to_pass": 3,
+        "fail_to_pass": 1
+      },
+      "original_documentation_coverage": {
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json",
+          "sha256": "0585c743a2e6e574cbc5b369b74a59bcd752a762ab88d81381a08520c175ecdd"
+        },
+        "scope": "Strict Raster/Raptor implementation bank. Native wrappers/adapters and unimplemented methods are excluded as independent targets. Original native facade examples are mapped to retained implementations only with exact source-expression evidence, preserving original text. Coverage of a facade does not certify all signatures, overloads, constructor options, or executable correctness of examples.",
+        "status_counts": {
+          "undocumented": 69
+        },
+        "strata": [
+          {
+            "original_coverage_status": "undocumented",
+            "selected": 69,
+            "original_passes": 12,
+            "generated_d1_passes": 4
+          }
+        ]
+      },
+      "source_target_kinds": {
+        "source_ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/rdpro/ledger.json",
+          "sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699"
+        },
+        "counts": {
+          "ambiguous": 7,
+          "method": 62
+        },
+        "note": "Exact selected API-ID matches to existing source ledger; unmatched/ambiguous identities remain explicit. These counts describe bank composition, not proven causes of failures."
+      }
+    },
+    {
+      "bank": "rdpro_scala",
+      "library": "RDPro",
+      "source_version": "0.10.1",
+      "selected": 261,
+      "historical_count": 261,
+      "excluded_count": 0,
+      "arms": {
+        "original": {
+          "complete": true,
+          "selected": 261,
+          "finalized_passes": 20,
+          "finalized_details": 261,
+          "paper_percentage": 7.662835249042145,
+          "usage": {
+            "calls": 261,
+            "input_tokens": 597438,
+            "output_tokens": 53216,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 261,
+                "input_tokens": 597438,
+                "output_tokens": 53216,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 261,
+            "provider_status_counts": {
+              "returned": 261
+            },
+            "model_request_seconds": 465.9389638900757,
+            "compile_run_receipt_count": 261,
+            "compile_run_seconds": 2868.6546943187714,
+            "per_api_wall_seconds_sum": 3417.8,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 3445.4
+          },
+          "failure_categories": {
+            "compile": 229,
+            "runtime": 12
+          },
+          "prompt_document_characters": {
+            "n": 261,
+            "min": 2240,
+            "median": 2260,
+            "max": 14416,
+            "sum": 631240
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "10c541116e6b0e630816a009c1eb7c8399d61d6274070b5c4a525c345a9cabf6",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/result.json",
+              "sha256": "89eef1a2e1f1e3d0326f0b9b20d0f0f5035a913d23657ed85a25251b369f1f2e"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/fresh_result.json",
+              "sha256": "8be450b0fe610221257cd3214247925fec2e37161faa2f242389c652a062a3dd"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/completion.json",
+              "sha256": "1d0f03c2e0f7fa01653ebd3a0ff46e0c1fe1d766d5fe969959ebd043ddc2f300"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/original/configs/continuation.yaml",
+              "sha256": "d6ac33b777f92cac8ed633fbb1b83f161228315b8abed2a03b8e4b918b77f8fc"
+            }
+          },
+          "live": null
+        },
+        "generated_d1": {
+          "complete": true,
+          "selected": 261,
+          "finalized_passes": 14,
+          "finalized_details": 261,
+          "paper_percentage": 5.363984674329502,
+          "usage": {
+            "calls": 261,
+            "input_tokens": 599828,
+            "output_tokens": 63745,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 261,
+                "input_tokens": 599828,
+                "output_tokens": 63745,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 261,
+            "provider_status_counts": {
+              "returned": 261
+            },
+            "model_request_seconds": 467.37610268592834,
+            "compile_run_receipt_count": 261,
+            "compile_run_seconds": 2928.785507917404,
+            "per_api_wall_seconds_sum": 3479.100000000001,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 3505.7
+          },
+          "failure_categories": {
+            "compile": 227,
+            "runtime": 20
+          },
+          "prompt_document_characters": {
+            "n": 261,
+            "min": 1732,
+            "median": 2387,
+            "max": 3558,
+            "sum": 643823
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "cde52ab2cdaa7cd1bd8f7462615ad17bc618d3e635204a63d3426e1e5e514376",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/result.json",
+              "sha256": "496cd10c323a98c9e7c0badae416560dcd59cc0d516589a4f9a3b190f9301a7b"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/fresh_result.json",
+              "sha256": "ad7b8c5a1badca6925b38e1c37d3e5abc9d1de56dc2dd0f20ed9bc9be5207919"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/completion.json",
+              "sha256": "284bb1cd495e58d44dc094f51bdb24402b6393801c6b39ff9625f146998edb66"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/configs/continuation.yaml",
+              "sha256": "d6ac33b777f92cac8ed633fbb1b83f161228315b8abed2a03b8e4b918b77f8fc"
+            }
+          },
+          "live": null
+        }
+      },
+      "delta_percentage_points": -2.2988505747126435,
+      "paired_transitions": {
+        "fail_to_fail": 235,
+        "pass_to_pass": 8,
+        "pass_to_fail": 12,
+        "fail_to_pass": 6
+      },
+      "original_documentation_coverage": {
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/raptor-scope/strict-no-wrappers/original-docs/manifest.json",
+          "sha256": "0585c743a2e6e574cbc5b369b74a59bcd752a762ab88d81381a08520c175ecdd"
+        },
+        "scope": "Strict Raster/Raptor implementation bank. Native wrappers/adapters and unimplemented methods are excluded as independent targets. Original native facade examples are mapped to retained implementations only with exact source-expression evidence, preserving original text. Coverage of a facade does not certify all signatures, overloads, constructor options, or executable correctness of examples.",
+        "status_counts": {
+          "undocumented": 245,
+          "documented": 16
+        },
+        "strata": [
+          {
+            "original_coverage_status": "undocumented",
+            "selected": 245,
+            "original_passes": 15,
+            "generated_d1_passes": 10
+          },
+          {
+            "original_coverage_status": "documented",
+            "selected": 16,
+            "original_passes": 5,
+            "generated_d1_passes": 4
+          }
+        ]
+      },
+      "source_target_kinds": {
+        "source_ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/rdpro/ledger.json",
+          "sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699"
+        },
+        "counts": {
+          "method": 209,
+          "ambiguous": 52
+        },
+        "note": "Exact selected API-ID matches to existing source ledger; unmatched/ambiguous identities remain explicit. These counts describe bank composition, not proven causes of failures."
+      }
+    },
+    {
+      "bank": "sedonadb",
+      "library": "sedonadb",
+      "source_version": "0.5.0",
+      "selected": 217,
+      "historical_count": 217,
+      "excluded_count": 0,
+      "arms": {
+        "original": {
+          "complete": true,
+          "selected": 217,
+          "finalized_passes": 87,
+          "finalized_details": 217,
+          "paper_percentage": 40.09216589861751,
+          "usage": {
+            "calls": 217,
+            "input_tokens": 1275702,
+            "output_tokens": 59127,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 217,
+                "input_tokens": 1275702,
+                "output_tokens": 59127,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 217,
+            "provider_status_counts": {
+              "returned": 217
+            },
+            "model_request_seconds": 393.5121018886566,
+            "compile_run_receipt_count": 217,
+            "compile_run_seconds": 184.66521334648132,
+            "per_api_wall_seconds_sum": 656.6000000000001,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 666.3
+          },
+          "failure_categories": {
+            "unknown": 65,
+            "runtime": 65
+          },
+          "prompt_document_characters": {
+            "n": 217,
+            "min": 9414,
+            "median": 10755,
+            "max": 16642,
+            "sum": 2375195
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "7208b89fcb5fe62e2debb553e02c6283c1fe2c69768c065523a070469db7a8d2",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/result.json",
+              "sha256": "baa775bba32e41f88de5643376000b4dbe225e629a1c4085c0cb447b21d4ead6"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/fresh_result.json",
+              "sha256": "5fecbdb87082034501cb0fbd4e15578b94ee9d925b5057aa76643a9302d426d8"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/completion.json",
+              "sha256": "223e2cbdc72686318f6565fdb97d3eb50a7467e6816ed43dcc422be5bef29177"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/configs/continuation.yaml",
+              "sha256": "b8bb6d41c0e7cd602073e7e1fa9a98964da250c50509e31fdc660932db5104dc"
+            }
+          },
+          "live": null
+        },
+        "generated_d1": {
+          "complete": true,
+          "selected": 217,
+          "finalized_passes": 96,
+          "finalized_details": 217,
+          "paper_percentage": 44.23963133640553,
+          "usage": {
+            "calls": 217,
+            "input_tokens": 555222,
+            "output_tokens": 62863,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 217,
+                "input_tokens": 555222,
+                "output_tokens": 62863,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 217,
+            "provider_status_counts": {
+              "returned": 217
+            },
+            "model_request_seconds": 396.048091173172,
+            "compile_run_receipt_count": 217,
+            "compile_run_seconds": 201.43423628807068,
+            "per_api_wall_seconds_sum": 688.4999999999999,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 698.5
+          },
+          "failure_categories": {
+            "unknown": 45,
+            "runtime": 76
+          },
+          "prompt_document_characters": {
+            "n": 217,
+            "min": 1935,
+            "median": 3256,
+            "max": 4722,
+            "sum": 690543
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "b915765fb2cb6efe6d1ac1d178c83fb0fa8b079194b403433b5e59de28356279",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/result.json",
+              "sha256": "75a3498c23ad4319226eb30419746f3643fc7b0753addad8f10c9625d06a6cbd"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/fresh_result.json",
+              "sha256": "e864f96ffa47887f9edad4550c5c0764b54973ddfa0e1b1f2e06357de0fb775d"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/completion.json",
+              "sha256": "2401e3c1193eb1b81faa52cb947f7dc56bf1b1615b44c3c84ec5e93d3e4d53e2"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/generated_d1/configs/continuation.yaml",
+              "sha256": "b8bb6d41c0e7cd602073e7e1fa9a98964da250c50509e31fdc660932db5104dc"
+            }
+          },
+          "live": null
+        }
+      },
+      "delta_percentage_points": 4.147465437788021,
+      "paired_transitions": {
+        "fail_to_fail": 102,
+        "fail_to_pass": 28,
+        "pass_to_fail": 19,
+        "pass_to_pass": 68
+      },
+      "original_documentation_coverage": {
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/sedonadb/original-docs/manifest.json",
+          "sha256": "cd27c949a595a3e41b986c33116a81299de31fb7aa41501cabeb6c9022867fbb"
+        },
+        "scope": "All 214 reviewed pinned SQL reference QMD documents. Registered SQL names and source-validated aliases are matched to exact page names; Rust factory arity is not used as SQL arity. The exact pinned top-level README is shared Original context for every API, without adding API documentation coverage credit.",
+        "status_counts": {
+          "documented": 211,
+          "undocumented": 6
+        },
+        "strata": [
+          {
+            "original_coverage_status": "documented",
+            "selected": 211,
+            "original_passes": 85,
+            "generated_d1_passes": 94
+          },
+          {
+            "original_coverage_status": "undocumented",
+            "selected": 6,
+            "original_passes": 2,
+            "generated_d1_passes": 2
+          }
+        ]
+      },
+      "source_target_kinds": {
+        "source_ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/sedonadb/original/inputs/api_inventory.json",
+          "sha256": "64d18ef9a1a1089de9919840a52bac1d7f52b072e5bbf60342bb56ba8f088fb3"
+        },
+        "counts": {
+          "unmapped": 217
+        },
+        "note": "Exact selected API-ID matches to existing source ledger; unmatched/ambiguous identities remain explicit. These counts describe bank composition, not proven causes of failures."
+      }
+    },
+    {
+      "bank": "mdanalysis",
+      "library": "mdanalysis",
+      "source_version": "2.11.0",
+      "selected": 1519,
+      "historical_count": 1538,
+      "excluded_count": 19,
+      "arms": {
+        "original": {
+          "complete": true,
+          "selected": 1519,
+          "finalized_passes": 592,
+          "finalized_details": 1519,
+          "paper_percentage": 38.973008558262016,
+          "usage": {
+            "calls": 1519,
+            "input_tokens": 9095325,
+            "output_tokens": 331191,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 1519,
+                "input_tokens": 9095325,
+                "output_tokens": 331191,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 1519,
+            "provider_status_counts": {
+              "returned": 1519
+            },
+            "model_request_seconds": 2649.068813085556,
+            "compile_run_receipt_count": 1519,
+            "compile_run_seconds": 5239.969444513321,
+            "per_api_wall_seconds_sum": 11495.499999999978,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 11563.5
+          },
+          "failure_categories": {
+            "runtime": 896,
+            "timeout": 3,
+            "api-import": 16,
+            "dependency-unverified": 7,
+            "unknown": 5
+          },
+          "prompt_document_characters": {
+            "n": 1519,
+            "min": 9971,
+            "median": 10176,
+            "max": 90555,
+            "sum": 17635909
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "a7629b281bdec69f49d762a6c64e2ecca5dd828a99087cb38a5d90600d1fa37c",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/result.json",
+              "sha256": "b74bfac78f82bb707fd1b3479e501ab64bc9f20f78f460d3ed8f1a04027f45df"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/fresh_result.json",
+              "sha256": "4c0f461fe24ea106e9b57b0fa379170fdf4da4b728ff3d971dcfd990c898b455"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/completion.json",
+              "sha256": "0166ede5aee221b1ce925d4aef32c9acb6b0b8241a5a1bfec04e7b6307d6c6de"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/configs/continuation.yaml",
+              "sha256": "a572284491f054caa66fc774824afa944b89aeec2282ad255cf8a630fdea6c01"
+            }
+          },
+          "live": null
+        },
+        "generated_d1": {
+          "complete": false,
+          "selected": 1519,
+          "finalized_passes": 85,
+          "finalized_details": 206,
+          "paper_percentage": null,
+          "usage": {
+            "calls": 205,
+            "input_tokens": 641724,
+            "output_tokens": 53510,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 205,
+                "input_tokens": 641724,
+                "output_tokens": 53510,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 206,
+            "provider_status_counts": {
+              "returned": 205,
+              "error": 1
+            },
+            "model_request_seconds": 363.55183386802673,
+            "compile_run_receipt_count": 205,
+            "compile_run_seconds": 771.1255922317505,
+            "per_api_wall_seconds_sum": 1622.2999999999993,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 1642.3
+          },
+          "failure_categories": {
+            "runtime": 114,
+            "api-import": 6,
+            "llm-error": 1
+          },
+          "prompt_document_characters": {
+            "n": 206,
+            "min": 1831,
+            "median": 3076.0,
+            "max": 8326,
+            "sum": 711374
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis_incomplete",
+          "fingerprint": "d851e92d40050ebe87e7065b88b49a7aa8fa9687ca689add61387a4f784c14e2",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/result.json",
+              "sha256": "9a85e5350cc1f8c47a4f2a2dfdb5c978c66907c3b87f7eb6bf1708b086024eda"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/fresh_result.json",
+              "sha256": "a9165e878921edc85b56b1ea8bed9a8c3050ad5fc4eaab5208bf6a933d2a4e21"
+            },
+            "completion": null,
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/configs/continuation.yaml",
+              "sha256": "a572284491f054caa66fc774824afa944b89aeec2282ad255cf8a630fdea6c01"
+            }
+          },
+          "live": {
+            "snapshot_kind": "live_checkpoint_not_finalized_result",
+            "checkpoint": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/generated_d1/execution/comprehension_progress.jsonl",
+              "sha256_of_read_bytes": "a9f14c64970ddaf4fb3756b1f21469943ec8807ad3116202a55c19f10c4e98b0",
+              "bytes": 1428170
+            },
+            "recorded_lines": 317,
+            "trailing_partial_lines_ignored": 0,
+            "unique_targets": 316,
+            "executed_unique": 316,
+            "passes": 137,
+            "provider_error_unique": 0,
+            "historical_provider_error_rows": 1,
+            "input_tokens_all_checkpoint_rows": 980188,
+            "output_tokens_all_checkpoint_rows": 81198,
+            "returned_calls_all_checkpoint_rows": 316
+          }
+        }
+      },
+      "delta_percentage_points": null,
+      "paired_transitions": null,
+      "original_documentation_coverage": {
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/original-docs/manifest.json",
+          "sha256": "73591399303b377384939068a978a18ea414f158cdd2a2207d714a5a5e6e51ff"
+        },
+        "scope": "Complete reviewed API-page corpus targeted by the official version-matched Sphinx inventory: 148 rendered pages. This is not the entire documentation website. Exact anchor excerpts include nested member prose where the original class definition list contains it. The exact pinned top-level README is shared Original context for every API, without adding API documentation coverage credit.",
+        "status_counts": {
+          "documented": 1061,
+          "undocumented": 458
+        },
+        "strata": [
+          {
+            "original_coverage_status": "documented",
+            "selected": 1061,
+            "original_passes": 441,
+            "generated_d1_passes": null
+          },
+          {
+            "original_coverage_status": "undocumented",
+            "selected": 458,
+            "original_passes": 151,
+            "generated_d1_passes": null
+          }
+        ]
+      },
+      "source_target_kinds": {
+        "source_ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mdanalysis/ledger.json",
+          "sha256": "125650c40e9cc2a30eed7444c4da330e5865ff188a919ed3a607fc2dd5cc3989"
+        },
+        "counts": {
+          "class_constructor": 353,
+          "function": 337,
+          "method": 829
+        },
+        "note": "Exact selected API-ID matches to existing source ledger; unmatched/ambiguous identities remain explicit. These counts describe bank composition, not proven causes of failures."
+      }
+    },
+    {
+      "bank": "tslearn",
+      "library": "tslearn",
+      "source_version": "0.10.0",
+      "selected": 354,
+      "historical_count": 362,
+      "excluded_count": 8,
+      "arms": {
+        "original": {
+          "complete": true,
+          "selected": 354,
+          "finalized_passes": 211,
+          "finalized_details": 354,
+          "paper_percentage": 59.6045197740113,
+          "usage": {
+            "calls": 354,
+            "input_tokens": 1963040,
+            "output_tokens": 93815,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 354,
+                "input_tokens": 1963040,
+                "output_tokens": 93815,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 354,
+            "provider_status_counts": {
+              "returned": 354
+            },
+            "model_request_seconds": 722.531858921051,
+            "compile_run_receipt_count": 354,
+            "compile_run_seconds": 3174.4065783023834,
+            "per_api_wall_seconds_sum": 4044.6000000000004,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 4066.2
+          },
+          "failure_categories": {
+            "runtime": 132,
+            "api-import": 4,
+            "timeout": 1,
+            "dependency-unverified": 6
+          },
+          "prompt_document_characters": {
+            "n": 354,
+            "min": 14597,
+            "median": 14811.5,
+            "max": 33098,
+            "sum": 5621586
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "401f0c08f4d9af13ae90d6f43c2c4ab201d0bb145703ac2cefd004c238258ac0",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/result.json",
+              "sha256": "074a889564f934e9635afba09412acf1c206cfacb33a10165441fb5df41bd15a"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/fresh_result.json",
+              "sha256": "f308fcf2788fa519374aa5b8150938df3f149bd949d73db5ec1401c7d2f107ea"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/completion.json",
+              "sha256": "30b852a12d7c4cf9fe1ff9c5ca8419ebfa390c0384e02672a76b130553c741a4"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/original/configs/continuation.yaml",
+              "sha256": "85c4886cf16ec0c32af05ce8706e208867bf77f1fbb1384d14288baf0a2427e0"
+            }
+          },
+          "live": null
+        },
+        "generated_d1": {
+          "complete": true,
+          "selected": 354,
+          "finalized_passes": 221,
+          "finalized_details": 354,
+          "paper_percentage": 62.429378531073446,
+          "usage": {
+            "calls": 354,
+            "input_tokens": 920425,
+            "output_tokens": 99276,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 354,
+                "input_tokens": 920425,
+                "output_tokens": 99276,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 354,
+            "provider_status_counts": {
+              "returned": 354
+            },
+            "model_request_seconds": 670.1648292541504,
+            "compile_run_receipt_count": 354,
+            "compile_run_seconds": 3333.5559136867523,
+            "per_api_wall_seconds_sum": 4130.800000000002,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 4151.6
+          },
+          "failure_categories": {
+            "runtime": 114,
+            "dependency-unverified": 7,
+            "timeout": 1,
+            "api-import": 11
+          },
+          "prompt_document_characters": {
+            "n": 354,
+            "min": 1788,
+            "median": 2972.5,
+            "max": 9241,
+            "sum": 1203433
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "04b69c545e39921f9ce5a3a0aff9a80d3916f9979e4221dd002cb79d5dac6cfc",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/result.json",
+              "sha256": "c7867bb3739516a015311185bf78b5190e2032544f5a5c92441e9e61ea53d5bd"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/fresh_result.json",
+              "sha256": "ff9f87bdf43bfad8b8ec37dfd9259be7e7ce598cf21b35fda0152ddc6d98c87a"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/completion.json",
+              "sha256": "e5be1289a23e34367f1514fc927dd5929e42cb4866a9dcc0a77f672e8408e431"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/configs/continuation.yaml",
+              "sha256": "85c4886cf16ec0c32af05ce8706e208867bf77f1fbb1384d14288baf0a2427e0"
+            }
+          },
+          "live": null
+        }
+      },
+      "delta_percentage_points": 2.8248587570621453,
+      "paired_transitions": {
+        "fail_to_fail": 96,
+        "pass_to_pass": 174,
+        "pass_to_fail": 37,
+        "fail_to_pass": 47
+      },
+      "original_documentation_coverage": {
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/original-docs/manifest.json",
+          "sha256": "29eedff49476bfc96c99e2951a72eba34d06596a66be25fb29a73be399ec94da"
+        },
+        "scope": "Complete reviewed API-page corpus targeted by the official version-matched Sphinx inventory: 99 rendered pages. This is not the entire documentation website. Exact anchor excerpts include nested member prose where the original class definition list contains it. The exact pinned top-level README is shared Original context for every API, without adding API documentation coverage credit.",
+        "status_counts": {
+          "undocumented": 132,
+          "documented": 222
+        },
+        "strata": [
+          {
+            "original_coverage_status": "undocumented",
+            "selected": 132,
+            "original_passes": 54,
+            "generated_d1_passes": 60
+          },
+          {
+            "original_coverage_status": "documented",
+            "selected": 222,
+            "original_passes": 157,
+            "generated_d1_passes": 161
+          }
+        ]
+      },
+      "source_target_kinds": {
+        "source_ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/tslearn/ledger.json",
+          "sha256": "921eb8e68f96628b04088d145b1f48e40a26a1af1f2260e3517fd6b6a007516b"
+        },
+        "counts": {
+          "class_constructor": 53,
+          "method": 194,
+          "function": 107
+        },
+        "note": "Exact selected API-ID matches to existing source ledger; unmatched/ambiguous identities remain explicit. These counts describe bank composition, not proven causes of failures."
+      }
+    },
+    {
+      "bank": "mir_eval",
+      "library": "mir_eval",
+      "source_version": "0.8.2",
+      "selected": 178,
+      "historical_count": 178,
+      "excluded_count": 0,
+      "arms": {
+        "original": {
+          "complete": true,
+          "selected": 178,
+          "finalized_passes": 134,
+          "finalized_details": 178,
+          "paper_percentage": 75.28089887640449,
+          "usage": {
+            "calls": 178,
+            "input_tokens": 479380,
+            "output_tokens": 34949,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 178,
+                "input_tokens": 479380,
+                "output_tokens": 34949,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 178,
+            "provider_status_counts": {
+              "returned": 178
+            },
+            "model_request_seconds": 304.492311000824,
+            "compile_run_receipt_count": 178,
+            "compile_run_seconds": 289.8865828514099,
+            "per_api_wall_seconds_sum": 651.1000000000004,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 658.6
+          },
+          "failure_categories": {
+            "runtime": 44
+          },
+          "prompt_document_characters": {
+            "n": 178,
+            "min": 1777,
+            "median": 2491.0,
+            "max": 5258,
+            "sum": 459819
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "bdee410551bfc8488f69263505f8abdf3b81018a6a5c8f5465c4484d311fbb95",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/result.json",
+              "sha256": "02ac1ce545b272b41297ac521ce8ddaff0a3604d8bba33abda88872a2393b20c"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/fresh_result.json",
+              "sha256": "716a63a65889b48505a8c645f1658d0c3f7e155520d9603283e7493be4eccb10"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/completion.json",
+              "sha256": "074723b74f39dcb8d49ddaf24a8c00c4cccb40fcd27c61d4afc6ae89debf376d"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/original/configs/continuation.yaml",
+              "sha256": "9373db52f1910079274f72fdf0c669162a0e28142c2331436e35998fab796ab4"
+            }
+          },
+          "live": null
+        },
+        "generated_d1": {
+          "complete": true,
+          "selected": 178,
+          "finalized_passes": 144,
+          "finalized_details": 178,
+          "paper_percentage": 80.89887640449439,
+          "usage": {
+            "calls": 178,
+            "input_tokens": 516025,
+            "output_tokens": 44508,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 178,
+                "input_tokens": 516025,
+                "output_tokens": 44508,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 178,
+            "provider_status_counts": {
+              "returned": 178
+            },
+            "model_request_seconds": 341.8629732131958,
+            "compile_run_receipt_count": 178,
+            "compile_run_seconds": 287.49871730804443,
+            "per_api_wall_seconds_sum": 687.3000000000003,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 694.6
+          },
+          "failure_categories": {
+            "runtime": 34
+          },
+          "prompt_document_characters": {
+            "n": 178,
+            "min": 2013,
+            "median": 3563.5,
+            "max": 7206,
+            "sum": 646595
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "7d37178643f96a6d24ad76b9afdebbd6608fbf36d2305e34076c2d0f988c5b51",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/result.json",
+              "sha256": "ca114d3d41ef17accc35b542c92ac7c81e454d4ee7e41bbaba1b12482f06d86b"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/fresh_result.json",
+              "sha256": "4384122b0b6a2e58ca0b29e8c8e3a1d2c4ba557089cf68d36df32dc34d539269"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/completion.json",
+              "sha256": "185d50731a98d4d8ffb461374c01cc386337658f2563df7ef87d3af0b8bd56c4"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mir_eval/generated_d1/configs/continuation.yaml",
+              "sha256": "9373db52f1910079274f72fdf0c669162a0e28142c2331436e35998fab796ab4"
+            }
+          },
+          "live": null
+        }
+      },
+      "delta_percentage_points": 5.617977528089895,
+      "paired_transitions": {
+        "pass_to_pass": 124,
+        "fail_to_fail": 24,
+        "pass_to_fail": 10,
+        "fail_to_pass": 20
+      },
+      "original_documentation_coverage": {
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/original-docs/manifest.json",
+          "sha256": "ce678fc082653439e8b678680296a989b271ccda3195ad6994a64e32fde6c342"
+        },
+        "scope": "Complete reviewed API-page corpus targeted by the official version-matched Sphinx inventory: 18 rendered pages. This is not the entire documentation website. Exact anchor excerpts include nested member prose where the original class definition list contains it. The exact pinned top-level README is shared Original context for every API, without adding API documentation coverage credit.",
+        "status_counts": {
+          "documented": 177,
+          "undocumented": 1
+        },
+        "strata": [
+          {
+            "original_coverage_status": "documented",
+            "selected": 177,
+            "original_passes": 134,
+            "generated_d1_passes": 144
+          },
+          {
+            "original_coverage_status": "undocumented",
+            "selected": 1,
+            "original_passes": 0,
+            "generated_d1_passes": 0
+          }
+        ]
+      },
+      "source_target_kinds": {
+        "source_ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/mir_eval/ledger.json",
+          "sha256": "09219e3ac65f40b119c702f08e20bd11bf80af9dc129a940c3824b68fe0735cb"
+        },
+        "counts": {
+          "function": 175,
+          "class_constructor": 2,
+          "method": 1
+        },
+        "note": "Exact selected API-ID matches to existing source ledger; unmatched/ambiguous identities remain explicit. These counts describe bank composition, not proven causes of failures."
+      }
+    },
+    {
+      "bank": "thumbnailator",
+      "library": "thumbnailator",
+      "source_version": "0.4.21",
+      "selected": 225,
+      "historical_count": 225,
+      "excluded_count": 0,
+      "arms": {
+        "original": {
+          "complete": true,
+          "selected": 225,
+          "finalized_passes": 109,
+          "finalized_details": 225,
+          "paper_percentage": 48.44444444444444,
+          "usage": {
+            "calls": 225,
+            "input_tokens": 620183,
+            "output_tokens": 45787,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 225,
+                "input_tokens": 620183,
+                "output_tokens": 45787,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 225,
+            "provider_status_counts": {
+              "returned": 225
+            },
+            "model_request_seconds": 439.27766394615173,
+            "compile_run_receipt_count": 225,
+            "compile_run_seconds": 246.76947569847107,
+            "per_api_wall_seconds_sum": 754.9999999999999,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 764.9
+          },
+          "failure_categories": {
+            "compile": 80,
+            "runtime": 36
+          },
+          "prompt_document_characters": {
+            "n": 225,
+            "min": 2559,
+            "median": 2895,
+            "max": 15446,
+            "sum": 718045
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "4f7412b1bad5e6714a0093811aff08d50593c8e28acf1625f81bc399eb3aa551",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/result.json",
+              "sha256": "6df8ce57d718fc093403f474228d02755ac773152d5ec90a10665f10a57cf1c2"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/fresh_result.json",
+              "sha256": "86adaf0755c4db489f2e6e24de2b6c87511038d1f783f65a50cfc06a2274011c"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/completion.json",
+              "sha256": "9af42a8ddd4c4c88295023e0beb976b59c793c334ecd7823921186c637146b91"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/original/configs/continuation.yaml",
+              "sha256": "cafafa4653c10c8440b265158899d478f7c6d9168ff75984a4cce7483e093be3"
+            }
+          },
+          "live": null
+        },
+        "generated_d1": {
+          "complete": true,
+          "selected": 225,
+          "finalized_passes": 97,
+          "finalized_details": 225,
+          "paper_percentage": 43.111111111111114,
+          "usage": {
+            "calls": 225,
+            "input_tokens": 560481,
+            "output_tokens": 50054,
+            "missing_usage_calls": 0,
+            "usage_complete": true,
+            "by_model": {
+              "google:gemini-3.1-flash-lite": {
+                "calls": 225,
+                "input_tokens": 560481,
+                "output_tokens": 50054,
+                "missing_usage_calls": 0,
+                "usage_complete": true
+              }
+            }
+          },
+          "time": {
+            "provider_receipt_count": 225,
+            "provider_status_counts": {
+              "returned": 225
+            },
+            "model_request_seconds": 423.82793402671814,
+            "compile_run_receipt_count": 225,
+            "compile_run_seconds": 245.8251450061798,
+            "per_api_wall_seconds_sum": 735.8999999999997,
+            "missing_provider_receipts": 0,
+            "timing_scope": "sum over distinct recorded per-API attempt directories",
+            "native_run_wall_seconds": 745.2
+          },
+          "failure_categories": {
+            "compile": 93,
+            "runtime": 35
+          },
+          "prompt_document_characters": {
+            "n": 225,
+            "min": 1608,
+            "median": 2368,
+            "max": 3816,
+            "sum": 535603
+          },
+          "model": "google:gemini-3.1-flash-lite",
+          "max_fix_rounds": 0,
+          "score_scope": "selected_apis",
+          "fingerprint": "d6fcc1d9313f1be407b09e546c2c1ba373c1a64f674d7deffc26b31a70e29fa4",
+          "receipts": {
+            "result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/result.json",
+              "sha256": "de3e8cf5d87f1d500d4d83700497feb63b3a3079897823c7b697120b718d65ee"
+            },
+            "fresh_result": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/fresh_result.json",
+              "sha256": "18276f4c08fa6ad4de1050562e62a2382cb70942191ba27facb8efb1ccdd7d9c"
+            },
+            "completion": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/completion.json",
+              "sha256": "34cfb24bf3bf5b43f2070a03ef7e0f9ac21deeb3eacbb36dcd0581aa05ce7b00"
+            },
+            "config": {
+              "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/thumbnailator/generated_d1/configs/continuation.yaml",
+              "sha256": "cafafa4653c10c8440b265158899d478f7c6d9168ff75984a4cce7483e093be3"
+            }
+          },
+          "live": null
+        }
+      },
+      "delta_percentage_points": -5.333333333333329,
+      "paired_transitions": {
+        "pass_to_fail": 28,
+        "fail_to_fail": 100,
+        "fail_to_pass": 16,
+        "pass_to_pass": 81
+      },
+      "original_documentation_coverage": {
+        "manifest": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/thumbnailator/original-docs/manifest.json",
+          "sha256": "f664517b2c0294bbdb508e9ca6d650fe5df10a06333663d7b45f9b7089e67f7f"
+        },
+        "scope": "Complete reviewed official 0.4.21 Javadoc API/package pages plus overview and pinned source README: 83 documents. Exact member anchors preserve overload signatures; source implementation is not added. The exact pinned top-level README is shared Original context for every API, without adding API documentation coverage credit.",
+        "status_counts": {
+          "documented": 225
+        },
+        "strata": [
+          {
+            "original_coverage_status": "documented",
+            "selected": 225,
+            "original_passes": 109,
+            "generated_d1_passes": 97
+          }
+        ]
+      },
+      "source_target_kinds": {
+        "source_ledger": {
+          "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/review_snapshot/review/qualified-api/thumbnailator/ledger.json",
+          "sha256": "869a499fb4188b63c9f5ee61aa70705d76680796c8b0c94abbe3c0191617c25b"
+        },
+        "counts": {
+          "class_constructor": 33,
+          "method": 192
+        },
+        "note": "Exact selected API-ID matches to existing source ledger; unmatched/ambiguous identities remain explicit. These counts describe bank composition, not proven causes of failures."
+      }
+    }
+  ],
+  "libraries": [
+    {
+      "library": "RDPro",
+      "selected": 330,
+      "arms": {
+        "original": {
+          "complete": true,
+          "passes": 32,
+          "percentage": 9.696969696969697
+        },
+        "generated_d1": {
+          "complete": true,
+          "passes": 18,
+          "percentage": 5.454545454545454
+        }
+      },
+      "delta_percentage_points": -4.242424242424243,
+      "paired_transitions": {
+        "fail_to_fail": 291,
+        "pass_to_fail": 21,
+        "pass_to_pass": 11,
+        "fail_to_pass": 7
+      }
+    },
+    {
+      "library": "sedonadb",
+      "selected": 217,
+      "arms": {
+        "original": {
+          "complete": true,
+          "passes": 87,
+          "percentage": 40.09216589861751
+        },
+        "generated_d1": {
+          "complete": true,
+          "passes": 96,
+          "percentage": 44.23963133640553
+        }
+      },
+      "delta_percentage_points": 4.147465437788021,
+      "paired_transitions": {
+        "fail_to_fail": 102,
+        "fail_to_pass": 28,
+        "pass_to_fail": 19,
+        "pass_to_pass": 68
+      }
+    },
+    {
+      "library": "mdanalysis",
+      "selected": 1519,
+      "arms": {
+        "original": {
+          "complete": true,
+          "passes": 592,
+          "percentage": 38.973008558262016
+        },
+        "generated_d1": {
+          "complete": false,
+          "passes": null,
+          "percentage": null
+        }
+      },
+      "delta_percentage_points": null,
+      "paired_transitions": null
+    },
+    {
+      "library": "tslearn",
+      "selected": 354,
+      "arms": {
+        "original": {
+          "complete": true,
+          "passes": 211,
+          "percentage": 59.6045197740113
+        },
+        "generated_d1": {
+          "complete": true,
+          "passes": 221,
+          "percentage": 62.429378531073446
+        }
+      },
+      "delta_percentage_points": 2.8248587570621453,
+      "paired_transitions": {
+        "fail_to_fail": 96,
+        "pass_to_pass": 174,
+        "pass_to_fail": 37,
+        "fail_to_pass": 47
+      }
+    },
+    {
+      "library": "mir_eval",
+      "selected": 178,
+      "arms": {
+        "original": {
+          "complete": true,
+          "passes": 134,
+          "percentage": 75.28089887640449
+        },
+        "generated_d1": {
+          "complete": true,
+          "passes": 144,
+          "percentage": 80.89887640449439
+        }
+      },
+      "delta_percentage_points": 5.617977528089895,
+      "paired_transitions": {
+        "pass_to_pass": 124,
+        "fail_to_fail": 24,
+        "pass_to_fail": 10,
+        "fail_to_pass": 20
+      }
+    },
+    {
+      "library": "thumbnailator",
+      "selected": 225,
+      "arms": {
+        "original": {
+          "complete": true,
+          "passes": 109,
+          "percentage": 48.44444444444444
+        },
+        "generated_d1": {
+          "complete": true,
+          "passes": 97,
+          "percentage": 43.111111111111114
+        }
+      },
+      "delta_percentage_points": -5.333333333333329,
+      "paired_transitions": {
+        "pass_to_fail": 28,
+        "fail_to_fail": 100,
+        "fail_to_pass": 16,
+        "pass_to_pass": 81
+      }
+    }
+  ],
+  "timing_definitions": {
+    "model_request_seconds": "Sum of provider.json wall_s over distinct recorded attempt directories, including failed requests with receipts; request latency, not pure model compute.",
+    "compile_run_seconds": "Sum of execution.json wall_s; includes compiler plus program command where configured, e.g. javac && java.",
+    "native_run_wall_seconds": "Native evaluator run-loop elapsed wall_s; excludes queue waiting and does not equal whole study elapsed time.",
+    "per_api_wall_seconds_sum": "Sum of API metric wall_s; includes model and execution stages plus per-target overhead."
+  },
+  "limitations": [
+    "Native acceptance does not establish correctness against an independently authored task-output oracle.",
+    "One fresh program per target per condition; no confidence claim or multi-trial repair study.",
+    "Paired transitions compare independently generated R0 programs; fail-to-pass is not an observed program repair.",
+    "Original documentation coverage is exact reviewed corpus mapping, not proof that related prose or source comments do not exist.",
+    "MDAnalysis D1 is live and incomplete; do not publish its partial result as a final percentage.",
+    "Model-visible source-derived signatures and access paths are shared across both conditions."
+  ]
+}

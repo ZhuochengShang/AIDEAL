@@ -1,0 +1,184 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>API bank reconciliation</title><style>body{margin:0;background:#f3f6fa;color:#1b2e3e;font:16px/1.62 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:30px 26px 80px}h1{font-size:36px;line-height:1.2}h2{font-size:26px;padding-top:24px;border-top:1px solid #ccd8e1;margin-top:36px}h3{font-size:20px}a{color:#145e92;text-underline-offset:3px}p,li{max-width:1050px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;background:white;border:1px solid #d9e3eb;border-radius:8px;margin:20px 0}th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid #e0e7ed}th{background:#eaf1f7;white-space:nowrap}tr:last-child td{border:0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf2f6;border:1px solid #d5e0e8;border-radius:8px;padding:18px;font:13px/1.5 ui-monospace,monospace}code{font-size:.87em;overflow-wrap:anywhere}img{max-width:100%;height:auto;background:white}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #ccd8e1;padding:12px 24px;z-index:5;display:flex;gap:18px;flex-wrap:wrap}nav a{font-weight:600}details{background:white;border:1px solid #d4dfe7;border-radius:8px;padding:12px 18px;margin:14px 0}summary{cursor:pointer;font-weight:650}small{color:#52697c}input{padding:10px;font:inherit;max-width:600px;width:95%;border:1px solid #9aafbf;border-radius:6px}@media(max-width:700px){main{padding:20px 14px}h1{font-size:28px}td,th{padding:8px;font-size:14px}}</style><nav><a href="../../EXPERIMENT_GUIDE.html">Guide</a> <a href="CHECKLIST.html">Tracker</a> <a href="API_BANK_RECONCILIATION.html">All banks</a> <a href="real_examples/EXAMPLES.html">Six examples</a> <a href="MEETING_REPORT.html">Meeting report</a></nav><main><h1 id="api-bank-reconciliation">API bank reconciliation</h1>
+<p>The older table combines catalog counts, bare name inventories, selected evaluation targets and SQL example counts. The current experiment uses explicit qualified target manifests. These numbers answer different questions and must not share a denominator without a source mapping.</p>
+<p>The complete current selection contains <strong>2,823 targets across seven banks</strong>. RDPro contributes <strong>261 Scala targets and 69 Java targets</strong>, or 330 in total. A table that focuses on the Scala bank should report 261 and state the separate Java bank in a note. It should not rename the 330 combined count as Scala.</p>
+<h2 id="current-selection-and-complete-bank-access">Current selection and complete bank access</h2>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th>Source version</th>
+  <th style="text-align:right">Current targets</th>
+  <th>Complete readable list</th>
+  <th>Frozen selection manifest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Java</td>
+  <td>0.10.1</td>
+  <td style="text-align:right">69</td>
+  <td><a href="banks/rdpro_java.tsv">All 69 targets</a></td>
+  <td><a href="../../review/raptor-scope/strict-no-wrappers/api_manifest.java.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>RDPro Scala</td>
+  <td>0.10.1</td>
+  <td style="text-align:right">261</td>
+  <td><a href="banks/rdpro_scala.tsv">All 261 targets</a></td>
+  <td><a href="../../review/raptor-scope/strict-no-wrappers/api_manifest.scala.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td>0.5.0</td>
+  <td style="text-align:right">217</td>
+  <td><a href="banks/sedonadb.tsv">All 217 targets</a></td>
+  <td><a href="../../review/qualified-plan/libraries/sedonadb/inputs/api_manifest.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>MDAnalysis</td>
+  <td>2.11.0</td>
+  <td style="text-align:right">1,519</td>
+  <td><a href="banks/mdanalysis.tsv">All 1519 targets</a></td>
+  <td><a href="../../evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/selection-correction-final/api_manifest_public_nonwrapper.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td>0.10.0</td>
+  <td style="text-align:right">354</td>
+  <td><a href="banks/tslearn.tsv">All 354 targets</a></td>
+  <td><a href="../../evaluator-correction-2026-11-18/review/final-scope/tslearn/api_manifest.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td>0.8.2</td>
+  <td style="text-align:right">178</td>
+  <td><a href="banks/mir_eval.tsv">All 178 targets</a></td>
+  <td><a href="../../review/qualified-plan/libraries/mir_eval/inputs/api_manifest.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td>0.4.21</td>
+  <td style="text-align:right">225</td>
+  <td><a href="banks/thumbnailator.tsv">All 225 targets</a></td>
+  <td><a href="../../review/qualified-plan/libraries/thumbnailator/inputs/api_manifest.json">Manifest</a></td>
+</tr>
+</tbody>
+</table>
+<p>The linked TSV files retain every row from the authoritative current selection. Their partition check confirms 2,823 rows, no duplicate bank and API pairs and equality with all seven final manifests. The bank index links the original document mapping, source inventory and exclusions for each library.</p>
+<h2 id="why-the-earlier-numbers-differ">Why the earlier numbers differ</h2>
+<table>
+<thead>
+<tr>
+  <th>Library</th>
+  <th>Earlier number and unit</th>
+  <th>Current selected target count</th>
+  <th>Supported explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro</td>
+  <td>280 owner qualified API families in a September catalog, 341 definition sites and 169 bare names. The separate native study used 161 bare names.</td>
+  <td>261 Scala and 69 Java</td>
+  <td>Different catalog and evaluation scopes, different target identity and explicit wrapper and overload decisions. The 280 catalog was not the 161 target test bank.</td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td>201 documented SQL function pages and 322 SQL example blocks</td>
+  <td>217 selected SQL target IDs in version 0.5.0</td>
+  <td>A function can have several examples. The earlier sweep executed existing SQL, whereas the current audience generates a program for each retained target. No one to one mapping from 322 examples to 217 targets is established.</td>
+</tr>
+<tr>
+  <td>MDAnalysis</td>
+  <td>1,032 public bare names in the 2.9.0 full surface plan. An older generated document cohort contained 661 entries.</td>
+  <td>1,519 qualified targets in version 2.11.0</td>
+  <td>Owner identity retains distinct class and module operations that bare names merge. The current discovery also covers the newer source and then removes nineteen audited entries from 1,538.</td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td>235 bare names in the saved full manifest</td>
+  <td>354 qualified targets in version 0.10.0</td>
+  <td>Distinct owners and callable kinds produce a different count. The final audit removes eight import hooks or forwarding operations from 362 current candidates.</td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td>148 bare names in the earlier result</td>
+  <td>178 qualified targets in version 0.8.2</td>
+  <td>The source and identity rules differ. The earlier source reconciliation found that register_colormap no longer appears as a declared callable in the pinned source. This does not imply that the other 147 names map one to one to the current 178 IDs.</td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td>149 bare names in the earlier result</td>
+  <td>225 qualified targets in version 0.4.21</td>
+  <td>The qualified inventory preserves owner identity and supported constructors. An earlier audit also found an if statement mistaken for a declaration and excluded nonpublic operations. Thus neither the increase nor the decrease of one subcount measures library growth alone.</td>
+</tr>
+</tbody>
+</table>
+<p>The current RDPro strict audit starts with 452 candidate sites. It excludes 72 wrappers or adapters, 25 unimplemented bodies, three abstract constructors, fifteen bodyless methods and seven redundant overloads. Its 330 retained sites comprise 271 methods and 59 concrete constructors. The older 171 July count is another separate scope. It contains 161 intent selected Scala names plus ten additional generated README names, across a broader Beast module selection.</p>
+<p>The earlier paper says that the 280 family catalog comes from a newer source revision than the 161 name study. The saved September study plan records source revision <code>5ee41a6</code>, while the source receipt shows that this publication snapshot has the same full source tree as official commit <code>547f7f9</code> used in the historical source comparison. Consequently, the available evidence does not support explaining the count change through source growth alone. The report treats source identity, inventory rules and study scope separately.</p>
+<h2 id="what-the-audit-verified">What the audit verified</h2>
+<table>
+<thead>
+<tr>
+  <th>Evidence</th>
+  <th>Verification level</th>
+  <th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro 280 families, 341 sites and 169 names</td>
+  <td>recorded plan metadata</td>
+  <td><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/rdpro/2026-09-22-gpt-5.3-codex-broad-study/development/study_plan.json">Source artifact</a></td>
+</tr>
+<tr>
+  <td>MDAnalysis 1,032 names</td>
+  <td>recounted artifact entries</td>
+  <td><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_mdanalysis_full1032_v4_A1/experiments/mdanalysis/docs/full_1032/api_manifest.json">Source artifact</a></td>
+</tr>
+<tr>
+  <td>MDAnalysis 661 result entries</td>
+  <td>recounted artifact entries</td>
+  <td><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_mdanalysis_setup/experiments/mdanalysis/docs/comprehension_A2_generated661_zero.json">Source artifact</a></td>
+</tr>
+<tr>
+  <td>tslearn 235 names</td>
+  <td>recounted artifact entries</td>
+  <td><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_tslearn_full235_freeze/experiments/tslearn/docs/eval/api_manifest.json">Source artifact</a></td>
+</tr>
+<tr>
+  <td>mir_eval 148 result entries</td>
+  <td>recounted artifact entries</td>
+  <td><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_mir_eval_A1/experiments/external/mir_eval/docs/eval/A1/comprehension.json">Source artifact</a></td>
+</tr>
+<tr>
+  <td>Thumbnailator 149 result entries</td>
+  <td>recounted artifact entries</td>
+  <td><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_thumbnailator_A1/experiments/external/thumbnailator/docs/eval/A1/comprehension.json">Source artifact</a></td>
+</tr>
+<tr>
+  <td>SedonaDB 201 function pages and 322 examples</td>
+  <td>recounted artifact entries</td>
+  <td><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/studies/sedonadb/evidence/sql_reference_inventory.json">Source artifact</a></td>
+</tr>
+</tbody>
+</table>
+<p>The 280 value has support in the saved plan metadata. This task did not independently reconstruct every historical family grouping. The historical paper also states 1,397 MDAnalysis sites, 343 tslearn sites, 179 mir_eval sites and 340 Thumbnailator sites. Those site counts describe older extraction records. The current manifests do not validate those totals, and this report does not treat them as current public API counts. The MDAnalysis 2.9.0 plan explicitly records its 1,397 site count.</p>
+<p>The existing source reconciliation describes an intermediate discovery stage before final qualification and exclusions. For example, it reports 1,053 current MDAnalysis bare names and 237 tslearn bare names. Those values are not alternatives to 1,519 and 354 qualified targets. A single short name can represent several class or module operations. No count in that intermediate CSV should replace the final bank manifest.</p>
+<h2 id="native-usage-bank-versus-independent-test-bank">Native usage bank versus independent test bank</h2>
+<p>The current bank fixes the API identity, library version, allowed documentation, fixtures, scaffold and execution policy. It asks the audience to write its own usage example and assertions. Therefore, the TSV explicitly records <code>audience_written_native_usage_example</code> and <code>fixed_independent_oracle = not_configured</code>. A native pass confirms the configured execution and witness checks. It does not independently prove task output correctness.</p>
+<p>A fixed microbenchmark bank instead supplies the same task, input and independent expected output across conditions. A puzzle bank supplies a broader task that may require API composition. The historical RDPro study has a separate bank with sixteen micro tasks and sixteen puzzles. It is not the current 330 target usage bank and does not establish complete task coverage of other libraries.</p>
+<p>R0 means the initial audience program. R1 and R2 mean additional attempts to repair a failed program under fixed resources. They do not mean different API inventories or Git branches. The current Original and existing D1 cohort uses R0 only. Changing the selected API bank, runtime or shared input contract requires a new recorded protocol rather than silently relabeling previous results.</p>
+<h2 id="source-navigation">Source navigation</h2>
+<ul>
+<li><a href="banks/README.html">All seven current banks and their source records</a></li>
+<li><a href="banks/BANK_PARTITION_VERIFICATION.json">Current bank partition proof</a></li>
+<li><a href="API_BANK_RECONCILIATION.json">Machine readable reconciliation and hashes</a></li>
+<li><a href="../../review/raptor-scope/history-171/AUDIT.json">RDPro 171 denominator and source identity</a></li>
+<li><a href="../../review/raptor-scope/strict-no-wrappers/ALL_CANDIDATE_DECISIONS.json">RDPro final selection decisions</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_mdanalysis_full1032_v4_A1/experiments/mdanalysis/docs/full_1032/FULL_SURFACE_2X2_PLAN.md">MDAnalysis old source and full surface plan</a></li>
+<li><a href="../../review/audit/latest-source/SOURCE_SCOPE_RECONCILIATION.json">Intermediate source name comparison</a></li>
+<li><a href="../../review/api-audit/COUNT_RECONCILIATION.csv">Intermediate declaration count table</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_WORKSPACE/03_Experiments/rdpro/2026-09-22-gpt-5.3-codex-broad-study/bank/bank.json">Historical independent RDPro task contracts</a></li>
+</ul>
+</main></html>

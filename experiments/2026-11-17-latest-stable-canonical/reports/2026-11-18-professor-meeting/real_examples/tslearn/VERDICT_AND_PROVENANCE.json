@@ -1,0 +1,123 @@
+{
+  "library": "tslearn",
+  "bank": "tslearn",
+  "condition": "generated_d1",
+  "api": "python:tslearn.metrics._dtw.dtw",
+  "model": "google:gemini-3.1-flash-lite",
+  "round": 0,
+  "metric": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "39ff452bf691d943096070d16514f24218f3a96355650ec695ba48e191ecd5f6"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 22.8,
+    "llm_calls": 1,
+    "input_tokens": 3281,
+    "output_tokens": 354,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 3281,
+        "output_tokens": 354,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 5707,
+    "document_sha256": "07fee47f5b988828e12813c339d0ac52a7852fb55877b73fabf872722d43c9d4",
+    "source": "source/tslearn/metrics/_dtw.py:30",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "native_verdict": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "from tslearn.metrics import dtw\nimport numpy as np\n\n# Use the provided 1D series s1 and s2\n# DTW distance between identical series should be 0.0\ndist_identical = dtw(s1, s1)\nassert dist_identical == 0.0, f\"Expected 0.0 for identical series, got {dist_identical}\"\n\n# Compute DTW with Sakoe-Chiba constraint\n# Using a small radius on a subset of the provided data\ns1_sub = s1[:10]\ns2_sub = s2[:10]\ndist_constrained = dtw(s1_sub, s2_sub, global_constraint=\"sakoe_chiba\", sakoe_chiba_radius=2)\n\n# Verify the result is a non-negative float\nassert isinstance(dist_constrained, float), \"Result must be a float\"\nassert dist_constrained >= 0.0, \"Distance must be non-negative\"\n\n# Verify against a known simple case: distance between [0, 1] and [0, 2]\n# Path: (0,0) -> (1,1) => sqrt((0-0)^2 + (1-2)^2) = 1.0\ndist_simple = dtw([0, 1], [0, 2])\nassert np.isclose(dist_simple, 1.0), f\"Expected 1.0, got {dist_simple}\"\n\nprint(f\"__CHECK__ python:tslearn.metrics._dtw.dtw {dist_constrained:.4f}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/api_test.py",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ python:tslearn.metrics._dtw.dtw 0.1175\n__DONE__\n",
+    "stderr_tail": ""
+  },
+  "attempt_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001",
+  "program_file": "api_test.py",
+  "files": [
+    {
+      "local_file": "request.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/request.json",
+      "sha256": "ed6a40f1fdaa66c6148dbdcb51fa7c2a5de583d0fba8bf174ca73b9987543d28",
+      "bytes": 15796
+    },
+    {
+      "local_file": "response.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/response.txt",
+      "sha256": "2cee3f83f600f873d4b3f8cc24a25f86a9db8efd2c234b16a7eae8e1506a0f2d",
+      "bytes": 979
+    },
+    {
+      "local_file": "provider.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/provider.json",
+      "sha256": "7b28ef9d508c80514ffe7d5143bd63a62db49f87c32a6c0a979444c2548f6cce",
+      "bytes": 418
+    },
+    {
+      "local_file": "execution.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/execution.json",
+      "sha256": "386cd75e88469cf9047a8fe15d42854e64e32123451a7753a6c4a88ab0c7536b",
+      "bytes": 1615
+    },
+    {
+      "local_file": "execution_contract.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/execution_contract.json",
+      "sha256": "a589ccc096663a501911a2a0d455d428009a167a1ddcd85df9d94e39c0c06f5f",
+      "bytes": 2077
+    },
+    {
+      "local_file": "requested_target.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/requested_target.json",
+      "sha256": "c22ac4d5cb54caab96dc1974b7c43abe8822ea601d207af509ce02957b001954",
+      "bytes": 1824
+    },
+    {
+      "local_file": "stdout.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/stdout.txt",
+      "sha256": "b3cd45cf40d6719a3399316aeec407cfac5bc8bc05332a4f7abfa4f537a8d270",
+      "bytes": 58
+    },
+    {
+      "local_file": "stderr.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "local_file": "api_test.py",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/execution/run_python_tslearn.metrics._dtw.dtw--1030f6652ac41edcbb4e216b7eeb1c69a54f12c8b6a7ac83287e9655cc75932b/attempt_0001/api_test.py",
+      "sha256": "70e758c7106932ce49bc51b587833bd0fe8beb82af7d9cee08233ee2a45f8a7f",
+      "bytes": 3372
+    }
+  ],
+  "result_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/fresh_result.json",
+    "sha256": "ff9f87bdf43bfad8b8ec37dfd9259be7e7ce598cf21b35fda0152ddc6d98c87a",
+    "bytes": 1352221
+  },
+  "configuration_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/tslearn/generated_d1/configs/continuation.yaml",
+    "sha256": "85c4886cf16ec0c32af05ce8706e208867bf77f1fbb1384d14288baf0a2427e0",
+    "bytes": 29934
+  },
+  "acceptance_limit": "The audience authored its own assertions. Native success is not independent validation of all output values or API behavior."
+}

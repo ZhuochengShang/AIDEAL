@@ -1,0 +1,24 @@
+from tslearn.metrics import dtw
+import numpy as np
+
+# Use the provided 1D series s1 and s2
+# DTW distance between identical series should be 0.0
+dist_identical = dtw(s1, s1)
+assert dist_identical == 0.0, f"Expected 0.0 for identical series, got {dist_identical}"
+
+# Compute DTW with Sakoe-Chiba constraint
+# Using a small radius on a subset of the provided data
+s1_sub = s1[:10]
+s2_sub = s2[:10]
+dist_constrained = dtw(s1_sub, s2_sub, global_constraint="sakoe_chiba", sakoe_chiba_radius=2)
+
+# Verify the result is a non-negative float
+assert isinstance(dist_constrained, float), "Result must be a float"
+assert dist_constrained >= 0.0, "Distance must be non-negative"
+
+# Verify against a known simple case: distance between [0, 1] and [0, 2]
+# Path: (0,0) -> (1,1) => sqrt((0-0)^2 + (1-2)^2) = 1.0
+dist_simple = dtw([0, 1], [0, 2])
+assert np.isclose(dist_simple, 1.0), f"Expected 1.0, got {dist_simple}"
+
+print(f"__CHECK__ python:tslearn.metrics._dtw.dtw {dist_constrained:.4f}")

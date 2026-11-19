@@ -1,0 +1,123 @@
+{
+  "library": "mdanalysis",
+  "bank": "mdanalysis",
+  "condition": "original",
+  "api": "python:MDAnalysis.lib.distances.calc_bonds",
+  "model": "google:gemini-3.1-flash-lite",
+  "round": 0,
+  "metric": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "6b261dbc0cf1209975d43a7fa765aaeada9fe40415cd2608fe1eab8123d2f2ba"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 6.3,
+    "llm_calls": 1,
+    "input_tokens": 6393,
+    "output_tokens": 227,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 6393,
+        "output_tokens": 227,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 12980,
+    "document_sha256": "00c807375d1edaa4892c744b1636ae85b5984adf22d68e1fbf9bbed91fe2d0f4",
+    "source": "source/package/MDAnalysis/lib/distances.py:1678",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "native_verdict": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "import MDAnalysis.lib.distances as dists\nimport numpy as np\n\n# Use the preloaded universe and select two small groups of atoms\n# to calculate bond lengths between corresponding pairs.\n# We select the first 5 atoms and the next 5 atoms to form 5 pairs.\nag1 = universe.atoms[:5]\nag2 = universe.atoms[5:10]\n\n# Calculate bond lengths\nbond_lengths = dists.calc_bonds(ag1, ag2)\n\n# Verify the result shape matches the number of pairs\nassert bond_lengths.shape == (5,)\nassert isinstance(bond_lengths, np.ndarray)\n\n# Verify that the bond lengths are non-negative (physical constraint)\nassert np.all(bond_lengths >= 0)\n\n# Print witness: the number of bonds calculated and the mean bond length\nprint(f\"__CHECK__ python:MDAnalysis.lib.distances.calc_bonds {bond_lengths.shape[0]} {np.mean(bond_lengths):.4f}\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/api_test.py",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ python:MDAnalysis.lib.distances.calc_bonds 5 2.7657\n__DONE__\n",
+    "stderr_tail": "/home/zshan011/apps/aideal/envs/2026-11-17-latest-stable/lib/python3.12/site-packages/MDAnalysis/coordinates/DCD.py:176: DeprecationWarning: DCDReader currently makes independent timesteps by copying self.ts while other readers update self.ts inplace. This behavior will be changed in 3.0 to be the same as other readers. Read more at https://github.com/MDAnalysis/mdanalysis/issues/3889 to learn if this change in behavior might affect you.\n  warnings.warn(\n"
+  },
+  "attempt_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001",
+  "program_file": "api_test.py",
+  "files": [
+    {
+      "local_file": "request.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/request.json",
+      "sha256": "5752bef2ddd11d070f48a9b3be5e1bfa3763723e593541852d7e1833be2c4547",
+      "bytes": 27498
+    },
+    {
+      "local_file": "response.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/response.txt",
+      "sha256": "f536baf24378eaf8b3ff6f6488daf5db3ec369267547ee238dc66aedeedd3afe",
+      "bytes": 797
+    },
+    {
+      "local_file": "provider.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/provider.json",
+      "sha256": "02ef4affd84428746686c275612ae10b100600a7d33009ef3f39a64119f880ea",
+      "bytes": 418
+    },
+    {
+      "local_file": "execution.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/execution.json",
+      "sha256": "012643e4c8bfd982808830eb6baf162e54f0c7a67ecb0c80978a716637782f82",
+      "bytes": 1584
+    },
+    {
+      "local_file": "execution_contract.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/execution_contract.json",
+      "sha256": "1f939357c41b7ed3df85fa91f4c3c7022b17c357190a688a8cbf00e46934b4ab",
+      "bytes": 8194
+    },
+    {
+      "local_file": "requested_target.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/requested_target.json",
+      "sha256": "6ff58186068a75becb24c188ef28b0f4202b037ad2ba62d5057946b93355cbbf",
+      "bytes": 2663
+    },
+    {
+      "local_file": "stdout.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/stdout.txt",
+      "sha256": "72d7dce6eb07bbaf62698c7585e358f1ab12bcac8f66b0a31bec00689f9cc435",
+      "bytes": 71
+    },
+    {
+      "local_file": "stderr.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/stderr.txt",
+      "sha256": "0b58cce0bd98cf8cdce8ff51d22627622ff7eb25ce505abfa23f2fa9595ae439",
+      "bytes": 459
+    },
+    {
+      "local_file": "api_test.py",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/execution/run_python_MDAnalysis.lib.distances.calc_bonds--c2004adb96ba20b08138ff003bed3fe2c1171dcd6667795a2f36a032114a31cc/attempt_0001/api_test.py",
+      "sha256": "c78da2562c0f077db92640dc2f693d2156fa7d5a433f7ce865f673e9f84652a7",
+      "bytes": 8982
+    }
+  ],
+  "result_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/fresh_result.json",
+    "sha256": "4c0f461fe24ea106e9b57b0fa379170fdf4da4b728ff3d971dcfd990c898b455",
+    "bytes": 6981134
+  },
+  "configuration_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/mdanalysis/original/configs/continuation.yaml",
+    "sha256": "a572284491f054caa66fc774824afa944b89aeec2282ad255cf8a630fdea6c01",
+    "bytes": 45689
+  },
+  "acceptance_limit": "The audience authored its own assertions. Native success is not independent validation of all output values or API behavior."
+}

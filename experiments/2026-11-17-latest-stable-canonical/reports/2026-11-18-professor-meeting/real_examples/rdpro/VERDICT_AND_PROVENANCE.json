@@ -1,0 +1,123 @@
+{
+  "library": "rdpro",
+  "bank": "rdpro_scala",
+  "condition": "generated_d1",
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata",
+  "model": "google:gemini-3.1-flash-lite",
+  "round": 0,
+  "metric": {
+    "status": "pass",
+    "attempts": 1,
+    "rendered_prompt_sha256": [
+      "8928be27b39b3196669c2b95766a719d12fd22194dafc1cd539f2f5ed23f2173"
+    ],
+    "attempt_evidence": [
+      "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001"
+    ],
+    "pass_round": 0,
+    "wall_s": 51.9,
+    "llm_calls": 1,
+    "input_tokens": 2625,
+    "output_tokens": 428,
+    "by_model": {
+      "google:gemini-3.1-flash-lite": {
+        "calls": 1,
+        "input_tokens": 2625,
+        "output_tokens": 428,
+        "missing_usage_calls": 0,
+        "usage_complete": true
+      }
+    },
+    "error_category": null,
+    "error": null,
+    "locus": null,
+    "doc_chars": 3222,
+    "document_sha256": "fcf86d29b077f89343c3b18bf723e3419f42da6751304cbd2694e37570399908",
+    "source": "source/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:45",
+    "source_other_sites": 0,
+    "codebase_frames": null
+  },
+  "native_verdict": {
+    "status": "pass",
+    "rounds": [
+      {
+        "round": 0,
+        "status": "pass"
+      }
+    ],
+    "code": "import edu.ucr.cs.bdlab.beast.geolite.RasterMetadata\nimport java.awt.geom.AffineTransform\n\n// Define parameters for a 737x628 raster (matching the provided rasterRDD dimensions)\nval x1 = 0\nval y1 = 0\nval x2 = 737\nval y2 = 628\nval tileWidth = 256\nval tileHeight = 256\nval srid = 4326\n\n// Create an AffineTransform: scale 0.01, shear 0, 0, -0.01, minX -180, maxY 90\nval g2m = new AffineTransform(0.01, 0.0, 0.0, -0.01, -180.0, 90.0)\n\n// Construct the RasterMetadata\nval meta = new RasterMetadata(x1, y1, x2, y2, tileWidth, tileHeight, srid, g2m)\n\n// Verify the metadata properties match the input parameters\nval isCorrect = (meta.x1 == x1) && \n                (meta.y1 == y1) && \n                (meta.x2 == x2) && \n                (meta.y2 == y2) && \n                (meta.tileWidth == tileWidth) && \n                (meta.tileHeight == tileHeight) && \n                (meta.srid == srid)\n\nassert(isCorrect, \"RasterMetadata properties do not match the provided constructor arguments\")\n\n// Witness: The total number of pixels in the defined extent\nval totalPixels = (meta.x2 - meta.x1) * (meta.y2 - meta.y1)\nprintln(s\"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata $totalPixels\")",
+    "scala_file": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/ApiTest.scala",
+    "exit_code": 0,
+    "stdout_tail": "__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata 462836\n__DONE__ object=GeoJob\n",
+    "stderr_tail": "fully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 38123.\n26/11/18 18:02:17 INFO NettyBlockTransferService: Server created on 127.0.0.1:38123\n26/11/18 18:02:17 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy\n26/11/18 18:02:17 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 127.0.0.1, 38123, None)\n26/11/18 18:02:17 INFO BlockManagerMasterEndpoint: Registering block manager 127.0.0.1:38123 with 1048.8 MiB RAM, BlockManagerId(driver, 127.0.0.1, 38123, None)\n26/11/18 18:02:17 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 127.0.0.1, 38123, None)\n26/11/18 18:02:17 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 127.0.0.1, 38123, None)\n26/11/18 18:02:18 INFO ENGINE: dataFileCache open start\n26/11/18 18:02:19 INFO SparkContext: SparkContext is stopping with exitCode 0.\n26/11/18 18:02:19 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!\n26/11/18 18:02:19 INFO MemoryStore: MemoryStore cleared\n26/11/18 18:02:19 INFO BlockManager: BlockManager stopped\n26/11/18 18:02:19 INFO BlockManagerMaster: BlockManagerMaster stopped\n26/11/18 18:02:19 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!\n26/11/18 18:02:19 INFO SparkContext: Successfully stopped SparkContext\n26/11/18 18:02:19 INFO ShutdownHookManager: Shutdown hook called\n26/11/18 18:02:19 INFO ShutdownHookManager: Deleting directory /home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/spark-tmp/spark-494ee296-269c-4d83-ad1b-6c4224715856\n26/11/18 18:02:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-06696010-7f21-41a1-84a9-bfdc9180c1d5\n"
+  },
+  "attempt_directory": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001",
+  "program_file": "ApiTest.scala",
+  "files": [
+    {
+      "local_file": "request.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/request.json",
+      "sha256": "2b319e37de8e6ce4bcd980fda6e564157dc68edf19e6817359d82496ecfeed9f",
+      "bytes": 13159
+    },
+    {
+      "local_file": "response.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/response.txt",
+      "sha256": "f8b0e1ec251b405e646a6cf6bbb91360d48e04c4620efa1a8a3168a25c6df5e3",
+      "bytes": 1192
+    },
+    {
+      "local_file": "provider.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/provider.json",
+      "sha256": "99123b69228314a2c216406ed379f925025a7a851fce9bb605d813864a78af29",
+      "bytes": 417
+    },
+    {
+      "local_file": "execution.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/execution.json",
+      "sha256": "6f50f0d57f7d4890faf04143e97e5d1d6a2613bf2da10033161de694e605e374",
+      "bytes": 2063
+    },
+    {
+      "local_file": "execution_contract.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/execution_contract.json",
+      "sha256": "24c6da3f54e04b5af9c48aefa8d79913cbdf0669e9b028c6a1940a5949d9d252",
+      "bytes": 2665
+    },
+    {
+      "local_file": "requested_target.json",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/requested_target.json",
+      "sha256": "8e177a9fd54459824f3962b5ee6fc0312fdaa46a0102620a843ba85448c6a54d",
+      "bytes": 1910
+    },
+    {
+      "local_file": "stdout.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/stdout.txt",
+      "sha256": "62e45ac642299167d94d80204ae2684bbdac3dcb422c3ce8708a9cc69574cbba",
+      "bytes": 92
+    },
+    {
+      "local_file": "stderr.txt",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/stderr.txt",
+      "sha256": "9c005c697cc2584beba59428630359c01725acba6976ee5e8e51c6df73765f79",
+      "bytes": 559622
+    },
+    {
+      "local_file": "ApiTest.scala",
+      "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/execution/run_scala_edu.ucr.cs.bdlab.beast.geolite.RasterMetadata--6d17178d7882e606f753b657dc9d2cdfffaaa36ede596f6dc6e640b654eee892/attempt_0001/ApiTest.scala",
+      "sha256": "622cb54b7526f7a097dd65db4c06fbe5ea42d0b2e468ee248dbcea685adee627",
+      "bytes": 20602
+    }
+  ],
+  "result_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/fresh_result.json",
+    "sha256": "ad7b8c5a1badca6925b38e1c37d3e5abc9d1de56dc2dd0f20ed9bc9be5207919",
+    "bytes": 1398021
+  },
+  "configuration_receipt": {
+    "path": "/home/zshan011/apps/aideal/studies/2026-11-17-latest-stable-canonical/evaluator-correction-2026-11-18/explicit-inputs-r0/continuation/rdpro_scala/generated_d1/configs/continuation.yaml",
+    "sha256": "d6ac33b777f92cac8ed633fbb1b83f161228315b8abed2a03b8e4b918b77f8fc",
+    "bytes": 12929
+  },
+  "acceptance_limit": "The audience authored its own assertions. Native success is not independent validation of all output values or API behavior."
+}

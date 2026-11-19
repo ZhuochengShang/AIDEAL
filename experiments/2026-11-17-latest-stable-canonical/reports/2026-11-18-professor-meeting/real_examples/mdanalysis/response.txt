@@ -1,0 +1,21 @@
+import MDAnalysis.lib.distances as dists
+import numpy as np
+
+# Use the preloaded universe and select two small groups of atoms
+# to calculate bond lengths between corresponding pairs.
+# We select the first 5 atoms and the next 5 atoms to form 5 pairs.
+ag1 = universe.atoms[:5]
+ag2 = universe.atoms[5:10]
+
+# Calculate bond lengths
+bond_lengths = dists.calc_bonds(ag1, ag2)
+
+# Verify the result shape matches the number of pairs
+assert bond_lengths.shape == (5,)
+assert isinstance(bond_lengths, np.ndarray)
+
+# Verify that the bond lengths are non-negative (physical constraint)
+assert np.all(bond_lengths >= 0)
+
+# Print witness: the number of bonds calculated and the mean bond length
+print(f"__CHECK__ python:MDAnalysis.lib.distances.calc_bonds {bond_lengths.shape[0]} {np.mean(bond_lengths):.4f}")

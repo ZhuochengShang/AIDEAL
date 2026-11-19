@@ -1,0 +1,32 @@
+import edu.ucr.cs.bdlab.beast.geolite.RasterMetadata
+import java.awt.geom.AffineTransform
+
+// Define parameters for a 737x628 raster (matching the provided rasterRDD dimensions)
+val x1 = 0
+val y1 = 0
+val x2 = 737
+val y2 = 628
+val tileWidth = 256
+val tileHeight = 256
+val srid = 4326
+
+// Create an AffineTransform: scale 0.01, shear 0, 0, -0.01, minX -180, maxY 90
+val g2m = new AffineTransform(0.01, 0.0, 0.0, -0.01, -180.0, 90.0)
+
+// Construct the RasterMetadata
+val meta = new RasterMetadata(x1, y1, x2, y2, tileWidth, tileHeight, srid, g2m)
+
+// Verify the metadata properties match the input parameters
+val isCorrect = (meta.x1 == x1) && 
+                (meta.y1 == y1) && 
+                (meta.x2 == x2) && 
+                (meta.y2 == y2) && 
+                (meta.tileWidth == tileWidth) && 
+                (meta.tileHeight == tileHeight) && 
+                (meta.srid == srid)
+
+assert(isCorrect, "RasterMetadata properties do not match the provided constructor arguments")
+
+// Witness: The total number of pixels in the defined extent
+val totalPixels = (meta.x2 - meta.x1) * (meta.y2 - meta.y1)
+println(s"__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata $totalPixels")

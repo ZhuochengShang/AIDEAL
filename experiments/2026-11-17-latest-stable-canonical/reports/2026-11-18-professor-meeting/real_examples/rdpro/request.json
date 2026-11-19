@@ -1,0 +1,78 @@
+{
+  "api": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata",
+  "round": 0,
+  "run_id": "20261119-015447Z",
+  "attempt_number": 1,
+  "execution_contract": {
+    "version": "native-execution-v2",
+    "working_directory": "per_attempt",
+    "output_bindings": "per_attempt",
+    "correctness_witness": "exact_target_stdout",
+    "jvm_assertions": true,
+    "python_fixture_scope": null
+  },
+  "provider": "google",
+  "model": "gemini-3.1-flash-lite",
+  "max_output_tokens": 8192,
+  "system": "You write Scala code that will be spliced into a runnable test harness.\nScala 2.12 with Spark 3.5.1 and Java 17. Write Scala body statements only. The scaffold provides sc and sparkContext. The preamble provides rasterRDD: RasterRDD[Array[Float]] (11 Float32 bands, 737 by 628 pixels) and featuresRDD: RDD[IFeature] (2 polygon features). Use the supplied local fixtures or tiny in-memory inputs. The HDF4 fixture layer is LST_Day_1km. Temporary outputs belong in output_dir.\n\nThe supplied objects and files are examples, not a promise that one example satisfies every API requirement. Choose supplied inputs when they meet the documented requirements. When they do not, you may construct additional small deterministic inputs using new variable names, without redeclaring the provided bindings. Place any new files beneath output_dir and preserve supplied fixtures. This permission is identical in both documentation conditions; it supplies no expected API result.\n\nRequested target declaration (frozen canonical selection):\nQualified name: edu.ucr.cs.bdlab.beast.geolite.RasterMetadata\nOwner: edu.ucr.cs.bdlab.beast.geolite.RasterMetadata\nDeclaration: [](x1:Int,y1:Int,x2:Int,y2:Int,tileWidth:Int,tileHeight:Int,srid:Int,g2m:AffineTransform):<type ?>\nParameters in declaration order (8): x1: Int; y1: Int; x2: Int; y2: Int; tileWidth: Int; tileHeight: Int; srid: Int; g2m: AffineTransform\nWrite the requested call against this owner and declaration, with its indicated parameter list.\nVerified public access paths for the same defining API: edu.ucr.cs.bdlab.beast.geolite.RasterMetadata. Use a public access path when the defining namespace is internal.\n\nPick the input variable(s) whose type matches the API's parameters. Do not\nredeclare provided variables or write wrapper boilerplate unless the execution\ncontext explicitly asks for it. Output ONLY the body statements that exercise the\nAPI. Use ONLY the documentation provided. Output only code, no markdown fences.\n\nRole: An expert Scala developer using public RDPro/Raptor raster APIs.\nProject: RDPro (Scala) - Pinned official Beast0.10.1 production source\nDomain: Geospatial computing\nTarget users: Scala geospatial developers\nUse cases: Raster processing and raster metadata; Raster/vector joins and zonal statistics; Local Spark transformations supporting raster workflows\nConstraints: Use original APIs only.; Use provided local raster, shapefile, and HDF4 fixtures or tiny in-memory values.; Write temporary outputs only under the run output directory.; Do not contact services or change repository files.",
+  "user": "Documentation:\n## API Test: `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata`\n\n### Signature\n```scala\n[](x1:Int,y1:Int,x2:Int,y2:Int,tileWidth:Int,tileHeight:Int,srid:Int,g2m:AffineTransform):<type ?>\n```\n_Source: source/cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:45_\n\n### Goal\nDefines the spatial and structural metadata for a raster dataset, including its coordinate extent, tiling configuration, and the affine transformation mapping pixel coordinates to map coordinates.\n\n### Parameters\n- `x1` (`Int`): The minimum x-coordinate (column) of the raster extent.\n- `y1` (`Int`): The minimum y-coordinate (row) of the raster extent.\n- `x2` (`Int`): The maximum x-coordinate (column) of the raster extent.\n- `y2` (`Int`): The maximum y-coordinate (row) of the raster extent.\n- `tileWidth` (`Int`): The width of individual tiles in pixels.\n- `tileHeight` (`Int`): The height of individual tiles in pixels.\n- `srid` (`Int`): The Spatial Reference System Identifier (EPSG code) for the raster.\n- `g2m` (`AffineTransform`): The transformation matrix used to convert grid (pixel) coordinates to map (geospatial) coordinates.\n\n### Input\nThe caller must provide valid integer bounds for the raster grid and a properly initialized `java.awt.geom.AffineTransform` object. This metadata is typically required when initializing custom raster sources or performing manual raster reshaping operations within the Raptor framework.\n\n### Output\nReturns an instance of `RasterMetadata` (type inferred from class context) representing the spatial configuration of the raster.\n\n### Valid Call Patterns\n```scala\n// Example inferred from signature\nval metadata = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadata(\n  0, 0, 1024, 1024, 256, 256, 4326, new java.awt.geom.AffineTransform()\n)\n```\n\n### LLM Instruction Prompt\n- When generating code using `RasterMetadata`, ensure the `AffineTransform` is correctly configured to map the grid space defined by `(x1, y1)` to `(x2, y2)` into the target map projection.\n- Always verify that `tileWidth` and `tileHeight` are positive integers, as these define the internal tiling structure used by Beast's Raptor join operations.\n\n### Prompt Snippet\n```text\n// Constructing RasterMetadata for a 1024x1024 raster with 256x256 tiles in EPSG:4326\nval meta = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadata(0, 0, 1024, 1024, 256, 256, 4326, transform)\n```\n\n### Common Failure Modes\n- **Coordinate Mismatch:** Providing `x1, y1, x2, y2` values that do not align with the actual pixel dimensions of the underlying raster data, leading to incorrect spatial joins.\n- **Invalid AffineTransform:** Passing an identity transform when the raster requires specific scaling or rotation, resulting in misaligned geospatial data.\n- **Incompatible Metadata:** Attempting to perform `overlay` or `raptorJoin` operations between two rasters with differing `RasterMetadata` configurations; use `reshape` to align them first.\n\n### Fix Code Hint\n```scala\n// Ensure the AffineTransform matches the raster's resolution\nval g2m = new java.awt.geom.AffineTransform(pixelSizeX, 0, 0, -pixelSizeY, minX, maxY)\nval meta = new edu.ucr.cs.bdlab.beast.geolite.RasterMetadata(0, 0, width, height, 256, 256, srid, g2m)\n```\n\nAvailable input path variables already in scope (choose the matching one(s) by type):\nPre-loaded and already in scope — use these directly, do NOT re-load:\n- rasterRDD: RasterRDD[Array[Float]]\n- featuresRDD: RDD[IFeature]\n(raw input path strings also in scope if needed: vector_shapefile, raster_tif, hdf_file, output_dir)\nWritable output_dir is a directory unique to this attempt; keep generated files beneath it.\n\nRECEIVER — call `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata` on the RIGHT type (calling it on the wrong receiver is\nthe #1 failure; if it is an instance method, first obtain a value of the owner type,\ndo NOT call it on an unrelated preloaded input):\n`scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata` denotes the CLASS/TYPE `edu.ucr.cs.bdlab.beast.geolite.RasterMetadata`, not a method on an existing value. Use its documented construction pattern when it is directly constructible. For an abstract class or trait, use a documented concrete implementation or a valid subclass instead of directly instantiating the abstract type. Do not call the class name as a same-named instance method.\n\n(none yet)\n\nWrite minimal body statements that use `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata` correctly per the docs,\nreading from the appropriate input variable(s) above.\n\nThe snippet MUST EXECUTE the operation AND VERIFY the result is correct — not just\nthat it ran (some frameworks defer/lazily evaluate, and incorrectly interpreted\ndata can produce plausible output without throwing). End with a CORRECTNESS CHECK\nwritten in valid Scala syntax:\n- force the result to materialize and compute a small witness of it — a count, a\n  size, or a sampled element;\n- use the language's normal assertion mechanism with a FALSIFIABLE condition tied\n  to the documented contract or to values chosen earlier in the snippet;\n- print a STRUCTURED line whose literal prefix is exactly\n  `__CHECK__ scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata ` followed by the witness, using the language's normal\n  output function and formatting syntax.\n\nThe assertion must be capable of rejecting a plausible but incorrect result.\nThe following are TAUTOLOGIES and MUST NOT be the only correctness check:\n- a Boolean value is either true or false;\n- a count, size, offset, or index is merely non-negative;\n- a value has the type already guaranteed by the language;\n- an object is non-null when construction itself guarantees that;\n- the operation completed without throwing.\n\nChoose the strongest lightweight oracle supported by the documentation and the\navailable inputs:\n- for setters/configuration APIs, read the value back and compare it with the exact\n  value set;\n- for generators, filters, joins, aggregations, and collections, compare a count,\n  key, membership relation, or aggregate with a known expectation derived from a\n  deliberately small input or an independently computed input property;\n- for readers, validate representative content plus relevant size/shape/schema or\n  metadata, rather than checking only that some output exists;\n- for transformations, check deterministic sampled output values or a documented\n  input/output invariant;\n- for writers, read the output back and compare representative content or a known\n  aggregate with the input.\n\nIf the documentation does not support any non-tautological oracle, still call and\nmaterialize `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata`, but deliberately fail the assertion with a short message\nstating that the documented contract is insufficient to verify the result. This is\na documentation-comprehension test: an unverifiable contract must not earn a pass.\nIf `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata` is itself a writer/output API, use an output binding only when one\nis listed among the available inputs or execution context; then read back a small\npart of the output, assert a known content/aggregate relation when the documented\ncontract permits it, and print the same structured line.\nDo not call other heavyweight operations unless `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata` is the writer; keep the\nbody focused on `scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata` so the run isolates that one call.\nUse the selected public API and the supplied documentation. Materialize deferred results before checking them. Use a falsifiable assertion supported by the documentation and a deterministic input, then print the exact target witness. Use configured local inputs or additional small deterministic inputs created beneath output_dir. Write temporary files under output_dir. No network or repository writes.",
+  "requested_target_declaration": {
+    "schema_version": 2,
+    "selection_policy_version": "owner_qualified_max_arity_v2",
+    "selection_receipt_sha256": "feb40fcb7087800d57195bf3d4b7241702de4a5bbf8acf1a10552830f1ac8e08",
+    "selected_site_id": "Scala:cg/src/main/scala/edu/ucr/cs/bdlab/beast/geolite/RasterMetadata.scala:2072:constructor:<init>",
+    "qualified_name": "edu.ucr.cs.bdlab.beast.geolite.RasterMetadata",
+    "owner": "edu.ucr.cs.bdlab.beast.geolite.RasterMetadata",
+    "signature": "[](x1:Int,y1:Int,x2:Int,y2:Int,tileWidth:Int,tileHeight:Int,srid:Int,g2m:AffineTransform):<type ?>",
+    "parameters": [
+      {
+        "name": "x1",
+        "type": "Int"
+      },
+      {
+        "name": "y1",
+        "type": "Int"
+      },
+      {
+        "name": "x2",
+        "type": "Int"
+      },
+      {
+        "name": "y2",
+        "type": "Int"
+      },
+      {
+        "name": "tileWidth",
+        "type": "Int"
+      },
+      {
+        "name": "tileHeight",
+        "type": "Int"
+      },
+      {
+        "name": "srid",
+        "type": "Int"
+      },
+      {
+        "name": "g2m",
+        "type": "AffineTransform"
+      }
+    ],
+    "parameter_count": 8,
+    "api_id": "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata",
+    "identity_version": "language_qualified_api_v1",
+    "display_name": "RasterMetadata",
+    "parameter_count_status": "compiler_declared",
+    "exposure_ids": [
+      "scala:edu.ucr.cs.bdlab.beast.geolite.RasterMetadata"
+    ],
+    "preferred_public_path": "edu.ucr.cs.bdlab.beast.geolite.RasterMetadata",
+    "inventory_kind": "qualified_source_api_inventory",
+    "api_inventory_sha256": "e14a707a398af0b6f7763ffc2230c829758be035e509a6dde07ddd35798f33e8",
+    "source_inventory_sha256": "267a2b3c2234fe7cc17ea003f68d015e9d39914bcaeb18277b3ec38aad2be699",
+    "source_commit": "547f7f912131a8032f6b5d26991415a5faf05cef",
+    "source_tree": "757142fe21ba53b1388880d6abc7423aff844295",
+    "source_version": "0.10.1",
+    "target_fingerprint": "0db2b1e0b1fd156d9f1669709f74e7d7114ff1e583a3d60ccc975403b133ec91"
+  }
+}

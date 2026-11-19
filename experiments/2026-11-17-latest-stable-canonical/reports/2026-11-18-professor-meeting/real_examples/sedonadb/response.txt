@@ -1,0 +1,10 @@
+table_geom = sd.sql("SELECT ST_Distance(ST_Point(0.0, 0.0), ST_Point(3.0, 4.0)) as dist").to_arrow_table()
+dist_geom = table_geom.column("dist")[0].as_py()
+assert abs(dist_geom - 5.0) < 1e-9
+print(f"__CHECK__ sql:ST_Distance {dist_geom}")
+
+table_geog = sd.sql("SELECT ST_Distance(ST_GeogPoint(0.0, 0.0), ST_GeogPoint(0.0, 1.0)) as dist").to_arrow_table()
+dist_geog = table_geog.column("dist")[0].as_py()
+# 1 degree of latitude is approximately 111,319 meters
+assert dist_geog > 110000 and dist_geog < 112000
+print(f"__CHECK__ sql:ST_Distance {dist_geog}")

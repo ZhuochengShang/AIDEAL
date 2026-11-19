@@ -1,0 +1,125 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Current API bank index</title><style>body{margin:0;background:#f3f6fa;color:#1b2e3e;font:16px/1.62 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:30px 26px 80px}h1{font-size:36px;line-height:1.2}h2{font-size:26px;padding-top:24px;border-top:1px solid #ccd8e1;margin-top:36px}h3{font-size:20px}a{color:#145e92;text-underline-offset:3px}p,li{max-width:1050px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;background:white;border:1px solid #d9e3eb;border-radius:8px;margin:20px 0}th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid #e0e7ed}th{background:#eaf1f7;white-space:nowrap}tr:last-child td{border:0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf2f6;border:1px solid #d5e0e8;border-radius:8px;padding:18px;font:13px/1.5 ui-monospace,monospace}code{font-size:.87em;overflow-wrap:anywhere}img{max-width:100%;height:auto;background:white}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #ccd8e1;padding:12px 24px;z-index:5;display:flex;gap:18px;flex-wrap:wrap}nav a{font-weight:600}details{background:white;border:1px solid #d4dfe7;border-radius:8px;padding:12px 18px;margin:14px 0}summary{cursor:pointer;font-weight:650}small{color:#52697c}input{padding:10px;font:inherit;max-width:600px;width:95%;border:1px solid #9aafbf;border-radius:6px}@media(max-width:700px){main{padding:20px 14px}h1{font-size:28px}td,th{padding:8px;font-size:14px}}</style><nav><a href="../../../EXPERIMENT_GUIDE.html">Guide</a> <a href="../CHECKLIST.html">Tracker</a> <a href="../API_BANK_RECONCILIATION.html">All banks</a> <a href="../real_examples/EXAMPLES.html">Six examples</a> <a href="../MEETING_REPORT.html">Meeting report</a></nav><main><h1 id="current-api-bank-index">Current API bank index</h1>
+<p>These files partition the authoritative current selection without changing its rows, order within each bank or selection policy. The seven banks contain 2,823 distinct qualified target IDs. Original and existing D1 use the same IDs. The rows describe audience written native usage examples, with no fixed independent output oracle.</p>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th>Source version</th>
+  <th style="text-align:right">Current targets</th>
+  <th>Complete readable list</th>
+  <th>Frozen selection manifest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Java</td>
+  <td>0.10.1</td>
+  <td style="text-align:right">69</td>
+  <td><a href="rdpro_java.tsv">All 69 targets</a></td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/api_manifest.java.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>RDPro Scala</td>
+  <td>0.10.1</td>
+  <td style="text-align:right">261</td>
+  <td><a href="rdpro_scala.tsv">All 261 targets</a></td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/api_manifest.scala.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td>0.5.0</td>
+  <td style="text-align:right">217</td>
+  <td><a href="sedonadb.tsv">All 217 targets</a></td>
+  <td><a href="../../../review/qualified-plan/libraries/sedonadb/inputs/api_manifest.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>MDAnalysis</td>
+  <td>2.11.0</td>
+  <td style="text-align:right">1,519</td>
+  <td><a href="mdanalysis.tsv">All 1519 targets</a></td>
+  <td><a href="../../../evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/selection-correction-final/api_manifest_public_nonwrapper.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td>0.10.0</td>
+  <td style="text-align:right">354</td>
+  <td><a href="tslearn.tsv">All 354 targets</a></td>
+  <td><a href="../../../evaluator-correction-2026-11-18/review/final-scope/tslearn/api_manifest.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td>0.8.2</td>
+  <td style="text-align:right">178</td>
+  <td><a href="mir_eval.tsv">All 178 targets</a></td>
+  <td><a href="../../../review/qualified-plan/libraries/mir_eval/inputs/api_manifest.json">Manifest</a></td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td>0.4.21</td>
+  <td style="text-align:right">225</td>
+  <td><a href="thumbnailator.tsv">All 225 targets</a></td>
+  <td><a href="../../../review/qualified-plan/libraries/thumbnailator/inputs/api_manifest.json">Manifest</a></td>
+</tr>
+</tbody>
+</table>
+<p>The authoritative combined list is <a href="../../../evaluator-correction-2026-11-18/review/final-scope/SELECTED_API_BANK.tsv">SELECTED_API_BANK.tsv</a>. <a href="BANK_PARTITION_VERIFICATION.json">BANK_PARTITION_VERIFICATION.json</a> records hashes and equality checks.</p>
+<h2 id="source-and-original-document-evidence">Source and original document evidence</h2>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th>Original corpus map</th>
+  <th>Full source inventory</th>
+  <th>Selection and exclusion evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Java</td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/original-docs/manifest.json">Coverage manifest</a></td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/api_inventory.java.json">Inventory</a></td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/ALL_CANDIDATE_DECISIONS.json">Audit</a></td>
+</tr>
+<tr>
+  <td>RDPro Scala</td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/original-docs/manifest.json">Coverage manifest</a></td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/api_inventory.scala.json">Inventory</a></td>
+  <td><a href="../../../review/raptor-scope/strict-no-wrappers/ALL_CANDIDATE_DECISIONS.json">Audit</a></td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td><a href="../../../review/qualified-api/sedonadb/original-docs/manifest.json">Coverage manifest</a></td>
+  <td><a href="../../../review/qualified-api/sedonadb/api_inventory.sql.json">Inventory</a></td>
+  <td><a href="../../../review/qualified-api/sedonadb/canonical-selection.json">Audit</a></td>
+</tr>
+<tr>
+  <td>MDAnalysis</td>
+  <td><a href="../../../review/qualified-api/mdanalysis/original-docs/manifest.json">Coverage manifest</a></td>
+  <td><a href="../../../review/qualified-api/mdanalysis/api_inventory.python.json">Inventory</a></td>
+  <td><a href="../../../evaluator-correction-2026-11-18/fixture-development-v1/mdanalysis/selection-correction-final/exclusion_audit.json">Audit</a></td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td><a href="../../../review/qualified-api/tslearn/original-docs/manifest.json">Coverage manifest</a></td>
+  <td><a href="../../../review/qualified-api/tslearn/api_inventory.python.json">Inventory</a></td>
+  <td><a href="../../../evaluator-correction-2026-11-18/review/final-scope/tslearn/audit.json">Audit</a></td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td><a href="../../../review/qualified-api/mir_eval/original-docs/manifest.json">Coverage manifest</a></td>
+  <td><a href="../../../review/qualified-api/mir_eval/api_inventory.python.json">Inventory</a></td>
+  <td><a href="../../../evaluator-correction-2026-11-18/review/final-scope/mir_eval/candidate_review.json">Audit</a></td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td><a href="../../../review/qualified-api/thumbnailator/original-docs/manifest.json">Coverage manifest</a></td>
+  <td><a href="../../../review/qualified-api/thumbnailator/api_inventory.java.json">Inventory</a></td>
+  <td><a href="../../../review/qualified-api/thumbnailator/canonical-selection.json">Audit</a></td>
+</tr>
+</tbody>
+</table>
+<p>The full inventories can contain candidates outside the final selection. Apply the final manifest before computing study denominators. Original corpus matches describe the reviewed retrieval map, not verified completeness of every API description or absence of all other documentation. Source inventories and original document manifests remain in place rather than duplicating large files here.</p>
+<h2 id="prompt-and-execution-evidence">Prompt and execution evidence</h2>
+<p>Each current target has an Original request and a D1 request under the cluster cohort <code>explicit-inputs-r0/continuation/&lt;bank&gt;/&lt;condition&gt;/execution/run_&lt;qualified-target-key&gt;/attempt_&lt;number&gt;/</code>. The files include <code>request.json</code>, <code>response.txt</code>, the complete generated program, <code>provider.json</code>, <code>execution.json</code>, <code>stdout.txt</code> and <code>stderr.txt</code>. The exact attempt directory can differ after a provider interruption. Provider retry attempts do not create program repair rounds.</p>
+<p>For complete small examples, open the <a href="../MEETING_REPORT.html">meeting report</a> and its linked trace folders. The historical <a href="../../../evaluator-correction-2026-11-18/review/prompt-audit/INDEX.html">prompt index</a> covers 2,850 earlier target records and must not replace the current 2,823 target manifest.</p>
+</main></html>

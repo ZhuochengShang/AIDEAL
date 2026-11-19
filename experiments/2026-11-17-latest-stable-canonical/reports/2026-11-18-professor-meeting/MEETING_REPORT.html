@@ -1,0 +1,776 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIDEAL professor meeting report</title><style>body{margin:0;background:#f3f6fa;color:#1b2e3e;font:16px/1.62 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:30px 26px 80px}h1{font-size:36px;line-height:1.2}h2{font-size:26px;padding-top:24px;border-top:1px solid #ccd8e1;margin-top:36px}h3{font-size:20px}a{color:#145e92;text-underline-offset:3px}p,li{max-width:1050px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;background:white;border:1px solid #d9e3eb;border-radius:8px;margin:20px 0}th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid #e0e7ed}th{background:#eaf1f7;white-space:nowrap}tr:last-child td{border:0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf2f6;border:1px solid #d5e0e8;border-radius:8px;padding:18px;font:13px/1.5 ui-monospace,monospace}code{font-size:.87em;overflow-wrap:anywhere}img{max-width:100%;height:auto;background:white}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #ccd8e1;padding:12px 24px;z-index:5;display:flex;gap:18px;flex-wrap:wrap}nav a{font-weight:600}details{background:white;border:1px solid #d4dfe7;border-radius:8px;padding:12px 18px;margin:14px 0}summary{cursor:pointer;font-weight:650}small{color:#52697c}input{padding:10px;font:inherit;max-width:600px;width:95%;border:1px solid #9aafbf;border-radius:6px}@media(max-width:700px){main{padding:20px 14px}h1{font-size:28px}td,th{padding:8px;font-size:14px}}</style><nav><a href="../../EXPERIMENT_GUIDE.html">Guide</a> <a href="CHECKLIST.html">Tracker</a> <a href="API_BANK_RECONCILIATION.html">All banks</a> <a href="real_examples/EXAMPLES.html">Six examples</a> <a href="MEETING_REPORT.html">Meeting report</a></nav><main><h1 id="aideal-professor-meeting-report">AIDEAL professor meeting report</h1>
+<h2 id="1-main-finding-and-current-status">1. Main finding and current status</h2>
+<p>AIDEAL aims to turn failures in agent use into improvements that a library can distribute with its documentation and code. The current experiment evaluates the first part of this process. It compares the original documentation with an existing generated README across six libraries and seven execution banks. RDPro has separate Java and Scala banks.</p>
+<p>The results do not show a uniform benefit from README generation. The current D1 improves native acceptance for mir_eval, SedonaDB and tslearn, while RDPro and Thumbnailator decline. Concrete RDPro traces identify incorrect generated documentation, but they do not explain every failure. A shared path representation omission also affects four Scala attempts. These findings motivate validation and selective revision before broader treatment claims.</p>
+<p>This report captures <strong>18 November 2026 at 23:44:56 Pacific</strong>, corresponding to <strong>19 November at 07:44:56 UTC</strong>. Thirteen of fourteen condition runs have completed. MDAnalysis D1 has resumed after a provider interruption and has executed 316 of 1,519 targets at this snapshot. Its final result remains pending. The snapshot does not update automatically.</p>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th style="text-align:right">Selected APIs</th>
+  <th style="text-align:right">Original R0</th>
+  <th style="text-align:right">Generated D1 R0</th>
+  <th style="text-align:right">Change in percentage points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Java</td>
+  <td style="text-align:right">69</td>
+  <td style="text-align:right">12/69 (17.4%)</td>
+  <td style="text-align:right">4/69 (5.8%)</td>
+  <td style="text-align:right">-11.6</td>
+</tr>
+<tr>
+  <td>RDPro Scala</td>
+  <td style="text-align:right">261</td>
+  <td style="text-align:right">20/261 (7.7%)</td>
+  <td style="text-align:right">14/261 (5.4%)</td>
+  <td style="text-align:right">-2.3</td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">87/217 (40.1%)</td>
+  <td style="text-align:right">96/217 (44.2%)</td>
+  <td style="text-align:right">+4.1</td>
+</tr>
+<tr>
+  <td>MDAnalysis</td>
+  <td style="text-align:right">1,519</td>
+  <td style="text-align:right">592/1519 (39.0%)</td>
+  <td style="text-align:right">Pending</td>
+  <td style="text-align:right">Pending</td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td style="text-align:right">354</td>
+  <td style="text-align:right">211/354 (59.6%)</td>
+  <td style="text-align:right">221/354 (62.4%)</td>
+  <td style="text-align:right">+2.8</td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td style="text-align:right">178</td>
+  <td style="text-align:right">134/178 (75.3%)</td>
+  <td style="text-align:right">144/178 (80.9%)</td>
+  <td style="text-align:right">+5.6</td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">109/225 (48.4%)</td>
+  <td style="text-align:right">97/225 (43.1%)</td>
+  <td style="text-align:right">-5.3</td>
+</tr>
+</tbody>
+</table>
+<p>Each percentage divides accepted programs by all selected APIs in that bank. <strong>These are native execution and generated self check results, not accuracy against independent task oracles.</strong> Scala treatment interpretation remains provisional. The report preserves its recorded scores rather than deleting affected cases or predicting their corrected outcomes.</p>
+<p>Across the six completed paired banks, D1 gains 118 accepted cases and loses 115 among 1,304 targets. The net gain of three conceals different behavior across libraries. These transitions compare two independently generated initial programs. They do not measure repair success. MDAnalysis does not enter this paired summary because its D1 run remains incomplete.</p>
+<h2 id="2-motivation-and-research-question">2. Motivation and research question</h2>
+<p>An agent can fail to use a data processing library even when the library implements the required operation correctly. Documentation may omit a receiver construction path, a name may obscure an operation, or an exception may identify an invalid value without explaining its requirement. Repairing one generated program leaves these obstacles in place for the next user.</p>
+<p>AIDEAL evaluates agent use, records the failure evidence and develops reusable library resources. Its improvement components generate and revise README entries, add executable aliases that delegate to existing operations, and append corrective guidance to existing exception messages. Shared development memory preserves recurring errors and verified or unverified corrections so that later development can reuse the evidence.</p>
+<p>The main research question asks which resource changes improve correct task completion and recovery, and at what cost, under matched tasks, agent settings and environments. The present native probe measures a narrower prerequisite. It checks whether the model can construct and execute a usage example with its own assertions under each documentation condition.</p>
+<h2 id="3-workflow-from-repository-to-result">3. Workflow from repository to result</h2>
+<pre><code class="language-mermaid">flowchart TD
+  U[1 Developer supplies source, documents, data and configuration] --&gt; I[2 Inventory source APIs and original document coverage]
+  I --&gt; S[3 Apply explicit scope and overlap rules]
+  S --&gt; E[4 Verify environment, fixtures and input roles]
+  E --&gt; D[5 Freeze original D0 and existing generated D1]
+  D --&gt; P[6 Build paired audience requests]
+  P --&gt; M[7 Gemini writes one initial program per target]
+  M --&gt; X[8 Insert program into the execution scaffold]
+  X --&gt; C[9 Compile and run with assertions enabled]
+  C --&gt; V[10 Apply native verdict and retain full evidence]
+  V --&gt; T[11 Report per bank outcomes, time and tokens]
+  T -. Future development .-&gt; A[Author diagnoses supported failures]
+  A -. Future development .-&gt; R[Revise README, propose aliases or embed hints]
+  R -. New frozen version .-&gt; P
+</code></pre>
+<table>
+<thead>
+<tr>
+  <th>Step</th>
+  <th>Actual input and action</th>
+  <th>Output that supports review</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Inventory</td>
+  <td>Read source declarations and defining owners, then map the original document corpus to retained IDs</td>
+  <td>Selected API list, exclusion decisions and document coverage manifest</td>
+</tr>
+<tr>
+  <td>Environment</td>
+  <td>Check imports, dependencies, fixtures and positive and negative controls with ordinary programs</td>
+  <td>Setup report, runtime bindings and control execution records</td>
+</tr>
+<tr>
+  <td>Preparation</td>
+  <td>Bind source, documents, selected targets, scaffold, model and execution settings</td>
+  <td>Prepared configuration and hashes</td>
+</tr>
+<tr>
+  <td>Audience request</td>
+  <td>Supply exact target identity and signature, permitted documentation, typed input roles and execution instructions</td>
+  <td>Complete request.json</td>
+</tr>
+<tr>
+  <td>Generation</td>
+  <td>Call the configured audience model once at R0</td>
+  <td>response.txt and provider.json</td>
+</tr>
+<tr>
+  <td>Execution</td>
+  <td>Insert the generated body into the existing scaffold and run in a separate attempt directory</td>
+  <td>Full source program, execution.json, stdout.txt and stderr.txt</td>
+</tr>
+<tr>
+  <td>Verdict</td>
+  <td>Check exit status, markers and a nonempty exact target witness in stdout</td>
+  <td>Native result and error category</td>
+</tr>
+<tr>
+  <td>Persistence</td>
+  <td>Append a checkpoint and retain immutable attempt evidence</td>
+  <td>comprehension_progress.jsonl, result.json and completion.json</td>
+</tr>
+</tbody>
+</table>
+<h3 id="environment-checks-and-optional-llm-diagnosis">Environment checks and optional LLM diagnosis</h3>
+<p>The environment gate does not need an LLM to decide whether a dependency imports, a fixture opens, a compiler runs or a known negative control fails. Deterministic checks provide the direct evidence. An LLM can help investigate an unfamiliar setup failure, but its explanation cannot replace an executable check or grant a passing status.</p>
+<p>The final preparation checked all seven bank configurations and fourteen sampled paired prompts. The prompts matched outside documentation. Fourteen current positive and negative controls and six supporting native MDAnalysis controls verified the relevant execution mechanisms. MDAnalysis also has evidence for 160 defining modules, 523 upstream data files, eighteen fixture roles, IMD, Chemfiles and real 3DNA execution. These checks cover the recorded cases and capabilities. They do not certify every API or every possible input contract.</p>
+<p>A later bounded audit found a Scala output URI omission despite these passing controls. This demonstrates why environment readiness and input contract review require separate checks. An upstream implementation defect also differs from a missing runtime dependency. Neither a low score nor an unfamiliar exception alone identifies a setup fault.</p>
+<h2 id="4-api-inventory-and-documentation-coverage">4. API inventory and documentation coverage</h2>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th>Source version</th>
+  <th style="text-align:right">Selected targets</th>
+  <th style="text-align:right">Original corpus matches</th>
+  <th style="text-align:right">No reviewed corpus match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Java</td>
+  <td>0.10.1</td>
+  <td style="text-align:right">69</td>
+  <td style="text-align:right">0</td>
+  <td style="text-align:right">69</td>
+</tr>
+<tr>
+  <td>RDPro Scala</td>
+  <td>0.10.1</td>
+  <td style="text-align:right">261</td>
+  <td style="text-align:right">16</td>
+  <td style="text-align:right">245</td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td>0.5.0</td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">211</td>
+  <td style="text-align:right">6</td>
+</tr>
+<tr>
+  <td>MDAnalysis</td>
+  <td>2.11.0</td>
+  <td style="text-align:right">1,519</td>
+  <td style="text-align:right">1,061</td>
+  <td style="text-align:right">458</td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td>0.10.0</td>
+  <td style="text-align:right">354</td>
+  <td style="text-align:right">222</td>
+  <td style="text-align:right">132</td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td>0.8.2</td>
+  <td style="text-align:right">178</td>
+  <td style="text-align:right">177</td>
+  <td style="text-align:right">1</td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td>0.4.21</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table>
+<p>The current selection contains <strong>2,823 targets</strong> and schedules <strong>5,646 initial programs</strong> across Original and D1. The earlier 2,850 target index remains historical. Source audits excluded nineteen MDAnalysis and eight tslearn entries under the agreed rules for private, external, introspection or forwarding functions.</p>
+<p>The selection preserves distinct defining classes and modules. Within one API owner, it retains the overload with the largest parameter count. It removes reviewed wrappers and unsupported declaration forms. It does not merge unrelated functions merely because their names match. The exclusion records identify the evidence for each decision. They do not prove semantic equivalence for every short function in every library.</p>
+<p>Original document coverage records an exact match in the reviewed corpus. It does not imply that all signatures, construction requirements or examples are correct. A missing match does not prove that the entire repository lacks related prose or source comments. Both conditions receive the same source derived signature and access information. Only the documentation condition changes.</p>
+<h3 id="why-rdpro-had-171-targets-before-and-now-has-330">Why RDPro had 171 targets before and now has 330</h3>
+<p>The old 171 denominator counted selected bare names from a generated README. The earlier intent filter selected 161 Scala names, and the README contained ten additional names. Bare names collapsed distinct owners. Java supplied type context but did not contribute independent target declarations. That bank also included vector and visualization operations from the broader Beast repository.</p>
+<p>The current RDPro bank covers Raster and Raptor implementations and their supporting types. It distinguishes owners and includes Java and Scala. The source audit starts with 452 candidate sites and removes 72 wrappers or adapters, 25 unimplemented bodies, three abstract constructors, fifteen bodyless methods and seven redundant overloads. The remaining 330 sites comprise 271 methods and 59 concrete constructors.</p>
+<p>A lexical comparison finds only 48 old names among the current bank. Those names map to 58 current qualified targets, and eight names map to multiple owners. The other 123 old names do not occur in the current selection. Even the 48 matching names do not establish identical tasks, signatures or fixtures.</p>
+<h2 id="5-exact-model-inputs-and-scoring">5. Exact model inputs and scoring</h2>
+<h3 id="audience-generation">Audience generation</h3>
+<p>The current audience uses <strong>gemini-3.1-flash-lite</strong> with an output limit of <strong>8,192 tokens</strong>. Each condition generates one initial program for each selected target. The current configuration sets <strong>max_fix_rounds to zero</strong>. Provider retries after a service error do not constitute R1 or R2.</p>
+<p>The audience receives the canonical target identifier, declaration and public access path, the selected documentation, the shared project profile and the permitted inputs. It also receives instructions for the scaffold, output location, materialization and assertions. It does not receive author diagnosis source windows. R0 excludes previous failure memory.</p>
+<p>The model writes body statements that fit the scaffold. For Scala, the scaffold already supplies Spark objects and typed raster or feature inputs. Python and Java banks use their configured runners. The instructions require a meaningful assertion and a line with the literal prefix <code>__CHECK__</code> followed by the exact target ID and a witness. If the supplied documentation cannot support a meaningful check, the prompt asks the model to report that insufficiency through a failed assertion.</p>
+<h3 id="a-complete-small-successful-example">A complete small successful example</h3>
+<p>The saved mir_eval example calls <code>intervals_to_durations</code> on four supplied intervals, each lasting 0.5 seconds. The Original program compares every returned duration with the difference between each end and start. Its output is <code>[0.5, 0.5, 0.5, 0.5]</code>. The D1 program checks the array shape and the first duration, then prints the sum, 2.0. Both pass the native evaluator, although the Original assertion covers more elements. This illustrates why a shared API target does not guarantee equal assertion strength.</p>
+<ul>
+<li><a href="evidence/examples/intervals-to-durations/original/request.json">Original full prompt</a></li>
+<li><a href="evidence/examples/intervals-to-durations/original/api_test.py">Original full program</a></li>
+<li><a href="evidence/examples/intervals-to-durations/original/stdout.txt">Original actual output</a></li>
+<li><a href="evidence/examples/intervals-to-durations/generated_d1/request.json">D1 full prompt</a></li>
+<li><a href="evidence/examples/intervals-to-durations/generated_d1/api_test.py">D1 full program</a></li>
+<li><a href="evidence/examples/intervals-to-durations/generated_d1/stdout.txt">D1 actual output</a></li>
+<li><a href="evidence/examples/rdpro_java/generated_d1/request.json">RDPro constructor failure prompt</a></li>
+<li><a href="evidence/examples/rdpro_java/generated_d1/stderr.txt">RDPro emitted compiler diagnostic</a></li>
+<li><a href="evidence/examples/rdpro_java/generated_d1/source_window.txt">Actual RDPro source window</a></li>
+</ul>
+<p>Each example folder also contains the raw model response, provider usage, executable command, target declaration and original evidence bindings. No model call produced these report copies.</p>
+<h3 id="readme-authoring">README authoring</h3>
+<p>Authoring precedes audience evaluation. It uses the project profile, API facts and signatures, available source comments, selected examples, original document excerpts and a distilled README summary. It does not normally transmit the entire repository. Diagnosis and revision can receive separate source windows.</p>
+<p>The saved author audit exposes important limitations of the existing D1. The historical qualified extraction path supplied no selected test snippets for the 2,850 entries in that authoring record. All 555 JVM fact records had a null extracted source comment field. These facts describe the extractor output, not the absence of comments in the source. The author prompt also contained misleading illustrative call syntax for qualified target IDs. The code now separates identifiers from callable expressions, but <strong>the current experiment retains the existing D1</strong>. It does not silently substitute a newly generated README after the template correction.</p>
+<h3 id="what-a-pass-means">What a pass means</h3>
+<p>For a completed bank, native acceptance equals the number of accepted initial programs divided by the number of selected APIs, multiplied by 100. An accepted program must exit successfully, satisfy the configured success and failure markers, and emit a nonempty witness for the exact target on stdout. JVM assertions now remain enabled, and each attempt has its own working and output directories.</p>
+<p>The model supplies both the example and its assertions. The evaluator does not independently prove that the assertion is sound, that the intended API actually executed or that the result meets an externally specified task. Therefore, the current result belongs in a separate native usage table. It must not fill the planned tables for independently checked microbenchmarks and puzzles.</p>
+<p>A checkpoint can resume an interrupted condition only under its unchanged input fingerprint. The current cohort does not reuse old model responses from the earlier protocol. The completion file distinguishes a completed bank from a partial result. MDAnalysis D1 remains pending even though its checkpoint already contains executable observations.</p>
+<h2 id="6-interpretation-of-the-current-results">6. Interpretation of the current results</h2>
+<table>
+<thead>
+<tr>
+  <th>Bank</th>
+  <th style="text-align:right">Original fail to D1 pass</th>
+  <th style="text-align:right">Original pass to D1 fail</th>
+  <th style="text-align:right">Net change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Java</td>
+  <td style="text-align:right">1</td>
+  <td style="text-align:right">9</td>
+  <td style="text-align:right">-8</td>
+</tr>
+<tr>
+  <td>RDPro Scala</td>
+  <td style="text-align:right">6</td>
+  <td style="text-align:right">12</td>
+  <td style="text-align:right">-6</td>
+</tr>
+<tr>
+  <td>SedonaDB</td>
+  <td style="text-align:right">28</td>
+  <td style="text-align:right">19</td>
+  <td style="text-align:right">+9</td>
+</tr>
+<tr>
+  <td>tslearn</td>
+  <td style="text-align:right">47</td>
+  <td style="text-align:right">37</td>
+  <td style="text-align:right">+10</td>
+</tr>
+<tr>
+  <td>mir_eval</td>
+  <td style="text-align:right">20</td>
+  <td style="text-align:right">10</td>
+  <td style="text-align:right">+10</td>
+</tr>
+<tr>
+  <td>Thumbnailator</td>
+  <td style="text-align:right">16</td>
+  <td style="text-align:right">28</td>
+  <td style="text-align:right">-12</td>
+</tr>
+</tbody>
+</table>
+<p>The gains for mir_eval, SedonaDB and tslearn show that a generated entry can help some APIs while harming others. The paired counts are more informative than a net percentage alone. For example, tslearn gains 47 cases but loses 37. A source validated revision should inspect both groups rather than optimize only the already failing entries and assume earlier passes remain stable.</p>
+<p>The reductions in RDPro and Thumbnailator do not establish that generated documentation generally hurts. Each target receives a fresh generated example, and a single sample cannot separate changes in documentation from variation in the program and its assertions. The current model and API scope also differ from earlier experiments. Targeted trace inspection can establish a concrete mechanism for an individual failure, but it cannot assign a cause to every score change.</p>
+<h3 id="confirmed-rdpro-documentation-defects">Confirmed RDPro documentation defects</h3>
+<p><strong>GeoTiffMetadata.getGeoKey.</strong> The D1 entry demonstrates <code>new GeoTiffMetadata(tiffFilePath)</code>. The audience follows that example and compilation rejects the String argument. The actual constructor requires <code>ITiffReader</code> and <code>TiffRaster</code>. The failure therefore links a concrete documentation error to a concrete rejected call. The example supports correcting the constructor guidance. It does not show that the entire bank would pass after that edit.</p>
+<p><strong>Statistics.isValid.</strong> The D1 failure guidance says that an untouched Statistics object is invalid. The source returns <code>!invalid</code>, and the field initially remains false, so a new object reports true. The D1 audience asserts the opposite and fails. The Original audience passes this target. This provides direct evidence that an incorrect behavioral statement can generate an incorrect assertion.</p>
+<p><strong>RasterMetadataSerializer.isImmutable.</strong> The source returns true. The D1 audience assumes that a new serializer is mutable and asserts false. The inspected documentation does not establish that false expectation. This example combines missing decisive guidance with an unsupported model assumption, so its causal claim is weaker than the explicit incorrect constructor and Statistics statements.</p>
+<h3 id="failure-distribution-and-shared-scala-limitation">Failure distribution and shared Scala limitation</h3>
+<table>
+<thead>
+<tr>
+  <th>RDPro bank and condition</th>
+  <th style="text-align:right">Accepted</th>
+  <th style="text-align:right">Compile failures</th>
+  <th style="text-align:right">Runtime failures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Java Original</td>
+  <td style="text-align:right">12</td>
+  <td style="text-align:right">54</td>
+  <td style="text-align:right">3</td>
+</tr>
+<tr>
+  <td>Java D1</td>
+  <td style="text-align:right">4</td>
+  <td style="text-align:right">62</td>
+  <td style="text-align:right">3</td>
+</tr>
+<tr>
+  <td>Scala Original</td>
+  <td style="text-align:right">20</td>
+  <td style="text-align:right">229</td>
+  <td style="text-align:right">12</td>
+</tr>
+<tr>
+  <td>Scala D1</td>
+  <td style="text-align:right">14</td>
+  <td style="text-align:right">227</td>
+  <td style="text-align:right">20</td>
+</tr>
+</tbody>
+</table>
+<p>Compilation dominates both Scala conditions. A common error accesses <code>rasterRDD.metadata</code>, although metadata belongs to a tile. The first diagnostic contains that error in 56 Original and 44 D1 attempts. Other failures use nonexistent methods, wrong constructors, wrong packages or invalid body syntax. These observations show that receiver construction and available context deserve investigation alongside document quality.</p>
+<p>Four direct Scala runtime failures also expose a shared input contract omission. The scaffold binds <code>output_dir</code> to a <code>file://</code> URI, while the audience prompt describes a writable directory without stating its representation. Ordinary <code>File</code>, <code>FileOutputStream</code> or <code>Paths.get</code> use then produces a malformed local path.</p>
+<table>
+<thead>
+<tr>
+  <th>Condition</th>
+  <th>Target with a confirmed URI and path mismatch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Original</td>
+  <td>RasterSchemaHelper.writeExternalObj</td>
+</tr>
+<tr>
+  <td>Original</td>
+  <td>GeoTiffTileSerializer.read</td>
+</tr>
+<tr>
+  <td>D1</td>
+  <td>ITileSerializer.write</td>
+</tr>
+<tr>
+  <td>D1</td>
+  <td>RasterSchemaHelper.writeExternalObj</td>
+</tr>
+</tbody>
+</table>
+<p>The report retains these observations in the completed denominator and marks Scala interpretation provisional. A future protocol correction must describe the representation equally in both arms and use a new version. Removing the four failures or assuming they would pass would overstate the evidence.</p>
+<p>Spark also emits a BlockManagerId message in every passing JVM trace. The runtime failures contain a later candidate error marker. The logging message alone therefore does not establish that Spark setup caused those failures. The audit uses the explicit candidate diagnostic rather than the first alarming stderr line.</p>
+<h2 id="7-historical-rdpro-comparison">7. Historical RDPro comparison</h2>
+<table>
+<thead>
+<tr>
+  <th>Recorded study</th>
+  <th>Audience model</th>
+  <th>Scope and repair policy</th>
+  <th>Verified outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>July Original shared set</td>
+  <td>gemini-3.1-pro-preview</td>
+  <td>88 bare names, R0</td>
+  <td>37/88</td>
+</tr>
+<tr>
+  <td>July Original complement</td>
+  <td>gemini-3.1-pro-preview</td>
+  <td>83 names, up to five repairs</td>
+  <td>9 first attempt passes and 27 eventual passes</td>
+</tr>
+<tr>
+  <td>July generated README</td>
+  <td>gemini-3.1-pro-preview</td>
+  <td>171 names, R0, run 20260714-081234Z</td>
+  <td>73/171 raw, 42.7%</td>
+</tr>
+<tr>
+  <td>July revised README</td>
+  <td>gemini-3.1-pro-preview</td>
+  <td>171 names, fresh R0, run 20260716-103803Z</td>
+  <td>132/171 raw, 77.2%</td>
+</tr>
+<tr>
+  <td>Prior presentation summary</td>
+  <td>Not reconciled to a complete matching result record</td>
+  <td>The slide reports 92/171 for generated README</td>
+  <td>Retain as unverified provenance</td>
+</tr>
+<tr>
+  <td>Current Original and D1</td>
+  <td>gemini-3.1-flash-lite</td>
+  <td>330 qualified Raster and support targets, R0</td>
+  <td>32/330 and 18/330, Scala provisional</td>
+</tr>
+</tbody>
+</table>
+<p>The familiar Original 46/171 combines 37 dedicated R0 passes with nine first attempt passes from the complement run that allowed five repairs. It is not one dedicated 171 target R0 invocation. The inspected July generated artifact records 73 raw passes rather than 92. Its top level score excludes eight infrastructure classifications and reports 44.8%, while its raw field reports 42.7%. The revised artifact similarly reports 80.0% after excluding six cases and 77.2% over all 171. The current table uses the full selected denominator.</p>
+<p>The earlier audience model is Pro Preview, while the current audience is Flash Lite. The API identities, documentation, source selection, prompt context, fixtures and execution rules also differ. The available evidence cannot attribute the drop to model choice alone. The surviving earlier executor accepts a generic check marker in merged output, while the corrected evaluator requires an exact target witness in stdout and isolates outputs. The July artifacts lack the newer complete fingerprint fields, so the report does not claim that every surviving prompt and scaffold byte matches the historical request.</p>
+<p>One concrete shared name illustrates the gap. In both July generated and revised runs, <code>getTileIDAtPixel</code> passes after obtaining a tile with <code>rasterRDD.first()</code> and metadata with <code>tile.rasterMetadata</code>. Current Original and D1 both try <code>rasterRDD.metadata</code> and fail compilation. This is a useful comparison of receiver reasoning, but a controlled model comparison still requires identical owner identity, input and documentation context.</p>
+<h2 id="8-tokens-and-execution-time">8. Tokens and execution time</h2>
+<table>
+<thead>
+<tr>
+  <th>Bank and condition</th>
+  <th style="text-align:right">Returned calls</th>
+  <th style="text-align:right">Input tokens</th>
+  <th style="text-align:right">Output tokens</th>
+  <th style="text-align:right">Model request seconds</th>
+  <th style="text-align:right">Compile and run seconds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDPro Java Original</td>
+  <td style="text-align:right">69</td>
+  <td style="text-align:right">156,675</td>
+  <td style="text-align:right">11,360</td>
+  <td style="text-align:right">121.0</td>
+  <td style="text-align:right">851.8</td>
+</tr>
+<tr>
+  <td>RDPro Java D1</td>
+  <td style="text-align:right">69</td>
+  <td style="text-align:right">155,117</td>
+  <td style="text-align:right">15,396</td>
+  <td style="text-align:right">115.4</td>
+  <td style="text-align:right">536.8</td>
+</tr>
+<tr>
+  <td>RDPro Scala Original</td>
+  <td style="text-align:right">261</td>
+  <td style="text-align:right">597,438</td>
+  <td style="text-align:right">53,216</td>
+  <td style="text-align:right">465.9</td>
+  <td style="text-align:right">2,868.7</td>
+</tr>
+<tr>
+  <td>RDPro Scala D1</td>
+  <td style="text-align:right">261</td>
+  <td style="text-align:right">599,828</td>
+  <td style="text-align:right">63,745</td>
+  <td style="text-align:right">467.4</td>
+  <td style="text-align:right">2,928.8</td>
+</tr>
+<tr>
+  <td>SedonaDB Original</td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">1,275,702</td>
+  <td style="text-align:right">59,127</td>
+  <td style="text-align:right">393.5</td>
+  <td style="text-align:right">184.7</td>
+</tr>
+<tr>
+  <td>SedonaDB D1</td>
+  <td style="text-align:right">217</td>
+  <td style="text-align:right">555,222</td>
+  <td style="text-align:right">62,863</td>
+  <td style="text-align:right">396.0</td>
+  <td style="text-align:right">201.4</td>
+</tr>
+<tr>
+  <td>MDAnalysis Original</td>
+  <td style="text-align:right">1,519</td>
+  <td style="text-align:right">9,095,325</td>
+  <td style="text-align:right">331,191</td>
+  <td style="text-align:right">2,649.1</td>
+  <td style="text-align:right">5,240.0</td>
+</tr>
+<tr>
+  <td>tslearn Original</td>
+  <td style="text-align:right">354</td>
+  <td style="text-align:right">1,963,040</td>
+  <td style="text-align:right">93,815</td>
+  <td style="text-align:right">722.5</td>
+  <td style="text-align:right">3,174.4</td>
+</tr>
+<tr>
+  <td>tslearn D1</td>
+  <td style="text-align:right">354</td>
+  <td style="text-align:right">920,425</td>
+  <td style="text-align:right">99,276</td>
+  <td style="text-align:right">670.2</td>
+  <td style="text-align:right">3,333.6</td>
+</tr>
+<tr>
+  <td>mir_eval Original</td>
+  <td style="text-align:right">178</td>
+  <td style="text-align:right">479,380</td>
+  <td style="text-align:right">34,949</td>
+  <td style="text-align:right">304.5</td>
+  <td style="text-align:right">289.9</td>
+</tr>
+<tr>
+  <td>mir_eval D1</td>
+  <td style="text-align:right">178</td>
+  <td style="text-align:right">516,025</td>
+  <td style="text-align:right">44,508</td>
+  <td style="text-align:right">341.9</td>
+  <td style="text-align:right">287.5</td>
+</tr>
+<tr>
+  <td>Thumbnailator Original</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">620,183</td>
+  <td style="text-align:right">45,787</td>
+  <td style="text-align:right">439.3</td>
+  <td style="text-align:right">246.8</td>
+</tr>
+<tr>
+  <td>Thumbnailator D1</td>
+  <td style="text-align:right">225</td>
+  <td style="text-align:right">560,481</td>
+  <td style="text-align:right">50,054</td>
+  <td style="text-align:right">423.8</td>
+  <td style="text-align:right">245.8</td>
+</tr>
+</tbody>
+</table>
+<p>The thirteen completed arms record 4,127 returned model calls, 17,494,841 input tokens and 965,287 output tokens. The incomplete MDAnalysis D1 checkpoint separately records 316 returned calls, 980,188 input tokens and 81,198 output tokens at the snapshot. Its resource counters must not enter a final complete condition table yet.</p>
+<p>Model request seconds sum elapsed provider request durations. They measure service latency rather than pure model compute. Compile and run seconds sum the command durations, including compilation when the command builds the program. Native run wall time also includes per target overhead. Queue delays and concurrent workers prevent the sum of these columns from representing study elapsed time. The report uses these concrete labels instead of the ambiguous term harness time.</p>
+<p>These figures cover the current audience cohort. README authoring, treatment development, stopped runs and future repairs require separate totals. Dollar cost requires the applicable billing rates and provider billing reconciliation. This report does not invent a charge from token counts alone.</p>
+<h2 id="9-improvement-components-and-the-full-planned-study">9. Improvement components and the full planned study</h2>
+<table>
+<thead>
+<tr>
+  <th>Component</th>
+  <th>Implemented responsibility</th>
+  <th>Relation to the current measured cohort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Generated README</td>
+  <td>Author entries from extracted API evidence and project context</td>
+  <td>Current comparison uses the existing D1</td>
+</tr>
+<tr>
+  <td>Deep dive</td>
+  <td>Diagnose development failures with source context and revise affected entries</td>
+  <td>No D2 result in the current cohort</td>
+</tr>
+<tr>
+  <td>Aliases</td>
+  <td>Propose clearer names or calling patterns through executable forwarding wrappers</td>
+  <td>Separate development evidence exists, but the current Original and D1 comparison installs no new alias treatment</td>
+</tr>
+<tr>
+  <td>Native embedded hints</td>
+  <td>Append supported guidance to an existing exception message and validate paired cases</td>
+  <td>No native hint condition in the current cohort</td>
+</tr>
+<tr>
+  <td>Learned memory</td>
+  <td>Categorize and condense development failures and corrections</td>
+  <td>R0 requests exclude previous failure history</td>
+</tr>
+</tbody>
+</table>
+<p>Alias generation does not create a wrapper for every API automatically. The author receives selected definitions, source windows and available development failures. It can return no proposal. Each proposal must identify its target and expected benefit. Compilation and finite execution checks support acceptance on tested cases. They do not prove equivalence for every input.</p>
+<p>Native hint generation uses a failed program, its diagnostic, the relevant signature and source evidence. The supported patcher changes literal text in an existing exception message, preserving the error condition and exception type. Validation compares the triggering failure, a corrected program, a separate valid program and a different failure against original and modified libraries. An annotation that a repair prompt retrieves is a different mechanism and must carry a different label.</p>
+<p>Learned error memory records the API, diagnostic, category, attempted correction and observed outcome. Deterministic grouping condenses recurring function and error pairs. The shared development record lets README diagnosis, alias investigation and hint authoring consult the same evidence. Evaluation trials must not gain access to failures from other evaluation conditions unless a separate memory treatment explicitly allows it.</p>
+<pre><code class="language-mermaid">flowchart LR
+  D0[Original D0] --&gt; O[O]
+  D0 --&gt; A[A]
+  D0 --&gt; H[H]
+  D0 --&gt; AH[AH]
+  D1[Generated D1] --&gt; R[R]
+  D1 --&gt; RA[RA]
+  D1 --&gt; RH[RH]
+  D1 --&gt; RAH[RAH]
+  O --&gt; E[Matched fixed tasks and independent checks]
+  A --&gt; E
+  H --&gt; E
+  AH --&gt; E
+  R --&gt; E
+  RA --&gt; E
+  RH --&gt; E
+  RAH --&gt; E
+  E --&gt; P0[R0 initial program]
+  P0 --&gt;|failure| P1[R1 first program repair]
+  P1 --&gt;|failure| P2[R2 second program repair]
+  P2 -. Development evidence only .-&gt; DD[Author deep dive and revised D2]
+  DD -. Fresh cohort .-&gt; F[README only and Combined with D2]
+</code></pre>
+<table>
+<thead>
+<tr>
+  <th>Planned arm</th>
+  <th>Documentation</th>
+  <th>Alias code</th>
+  <th>Native embedded hints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>O</td>
+  <td>Original D0</td>
+  <td>No</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>R</td>
+  <td>Generated D1</td>
+  <td>No</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>A</td>
+  <td>Original D0</td>
+  <td>Yes</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>H</td>
+  <td>Original D0</td>
+  <td>No</td>
+  <td>Yes</td>
+</tr>
+<tr>
+  <td>RA</td>
+  <td>Generated D1</td>
+  <td>Yes</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>RH</td>
+  <td>Generated D1</td>
+  <td>No</td>
+  <td>Yes</td>
+</tr>
+<tr>
+  <td>AH</td>
+  <td>Original D0</td>
+  <td>Yes</td>
+  <td>Yes</td>
+</tr>
+<tr>
+  <td>RAH</td>
+  <td>Generated D1</td>
+  <td>Yes</td>
+  <td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>R0 is the initial program. R1 and R2 revise that program after its first and second failures, while the resources remain fixed. A successful episode stops early. D1 and D2 name document versions rather than repair rounds. After development episodes reach the intended repair limit, deep dive can revise D1 into D2. A separate fresh evaluation then tests D2 under the same fixed tasks.</p>
+<p>The current general condition runner exposes five arm and refactor designs. It does not yet provide a completed eight factor study across all six libraries. The R0 based README revision operator also represents a development route, not the full planned post R2 study with separate held out evaluation. The paper should present the eight arm design as planned until its configuration, controls and measurements exist.</p>
+<h2 id="10-professor-decisions-and-next-actions">10. Professor decisions and next actions</h2>
+<table>
+<thead>
+<tr>
+  <th>Decision</th>
+  <th>Reason</th>
+  <th>Proposed action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Define the primary claim</td>
+  <td>Native acceptance and independent task accuracy answer different questions</td>
+  <td>Keep the current native table as diagnostic evidence and build independent micro and puzzle tasks for the principal comparison</td>
+</tr>
+<tr>
+  <td>Reconcile the historical narrative</td>
+  <td>The 171 and 330 scopes and models differ</td>
+  <td>Report historical runs separately and retain the unreconciled 92 value only as a provenance question</td>
+</tr>
+<tr>
+  <td>Repair the Scala contract</td>
+  <td>Four measured attempts expose an undisclosed URI representation</td>
+  <td>Prepare one shared context correction and a new matched cohort without editing completed results</td>
+</tr>
+<tr>
+  <td>Validate D1 before claiming benefit</td>
+  <td>The constructor and Statistics examples contain source contradicted guidance</td>
+  <td>Validate affected examples, retain an edit ledger and evaluate a distinct D2</td>
+</tr>
+<tr>
+  <td>Decide the model comparison</td>
+  <td>Pro Preview and Flash Lite differ alongside many other factors</td>
+  <td>If model sensitivity matters, use a reviewed matched subset and hold resources and tasks fixed</td>
+</tr>
+<tr>
+  <td>Complete the ablation</td>
+  <td>Current measurements cover only Original and D1 at R0</td>
+  <td>Freeze aliases and native hints, implement the pairwise arms and run R0 through R2 under independent checks</td>
+</tr>
+<tr>
+  <td>Prevent development leakage</td>
+  <td>Memory and D2 can incorporate earlier failures</td>
+  <td>Separate development and evaluation banks and record allowed memory exposure per request</td>
+</tr>
+</tbody>
+</table>
+<p>A useful paper contribution would show how execution evidence produces reusable and validated library improvements, then measure their separate and combined effects under fixed tasks. More generated text or a larger API count alone would not establish that contribution. The current results support the need for source grounded validation and careful evaluation contracts, while leaving the main ablation claims open.</p>
+<h2 id="11-evidence-and-code-review-route">11. Evidence and code review route</h2>
+<ul>
+<li><a href="evidence/CURRENT_RESULTS.json">Current result snapshot with per arm hashes</a></li>
+<li><a href="evidence/RDPRO_FAILURE_AUDIT.json">RDPro bounded failure audit with exact trace and source paths</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL/experiments/rdpro/docs/comprehension_A2_generated_all.json">Verified July generated result</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL/experiments/rdpro/docs/comprehension_B2_final_all171.json">Verified July revised README result</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_rdpro_final_A1/experiments/rdpro/docs/comprehension_A1_original.json">Historical Original shared R0 result</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/GRAIL_rdpro_final_A1/experiments/rdpro/docs/comprehension_A1_fix5_complement83.json">Historical Original complement with five repairs</a></li>
+<li><a href="evidence/HISTORICAL_171_RECORDS.json">Historical 171 result records</a></li>
+<li><a href="evidence/HISTORICAL_API_OVERLAP.json">Historical and current lexical API overlap</a></li>
+<li><a href="../../evaluator-correction-2026-11-18/review/final-scope/SELECTED_API_BANK.tsv">All selected current API IDs</a></li>
+<li><a href="../../review/raptor-scope/strict-no-wrappers/ALL_CANDIDATE_DECISIONS.json">RDPro strict source decisions</a></li>
+<li><a href="../../review/raptor-scope/history-171/AUDIT.json">Historical 171 denominator audit</a></li>
+<li><a href="../../review/raptor-scope/strict-no-wrappers/original-docs/manifest.json">Original document corpus and coverage</a></li>
+<li><a href="../../evaluator-correction-2026-11-18/review/prompt-audit/INDEX.html">Full historical prompt audit</a></li>
+<li><a href="../../evaluator-correction-2026-11-18/review/explicit-input-contracts/MANIFEST.json">Shared explicit input contracts</a></li>
+<li><a href="../../evaluator-correction-2026-11-18/explicit-inputs-r0/operator/READINESS.json">Current readiness gate</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/run_evaluator_correction.py:130">Controller readiness checks</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/run_verified_readme_continuation.py:256">Preparation and input binding</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/run_verified_readme_continuation.py:439">Current condition entry point</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_execution.py:133">Native target and program loop</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_execution.py:520">R0 exclusion of prior failures</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_execution.py:558">Saved prompt and provider response</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/doc_check_execution.py:634">Compile and run evidence</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/native_execution_contract.py:141">Native verdict</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/readme_generation.py:133">Actual README generation</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/readme_recording.py:47">Author request recording</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/improvement_suggestions.py:20">Alias proposal instructions</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/improvement_context.py:294">Selected source windows</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_hints.py:138">Native exception message patcher</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/native_hints.py:348">Paired native hint validation</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/vendor/aideal_engine/src/aideal/error_log.py:94">Failure memory and compact retrieval</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_runner.py:78">Controlled program repair loop</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/workflow/evaluation_inputs.py:12">Available general condition designs</a></li>
+<li><a href="/Users/clockorangezoe/Documents/phd_projects/code/geoAI/AIDEAL_workflow/scripts/revise_readme_from_replay.py:245">Separate README revision operator</a></li>
+</ul>
+<p>The active cluster evidence uses the following layout. Each attempt retains the full prompt and diagnostic, while summary tables retain the exact source paths and hashes.</p>
+<pre><code class="language-text">explicit-inputs-r0/
+  operator/
+    READINESS.json
+    START.json
+    STATE.json
+  continuation/
+    &lt;bank&gt;/
+      original/ or generated_d1/
+        configs/continuation.yaml
+        inputs/pending_manifest.json
+        execution/
+          comprehension_progress.jsonl
+          run_&lt;qualified_target&gt;/attempt_0001/
+            request.json
+            response.txt
+            provider.json
+            requested_target.json
+            execution_contract.json
+            ApiTest.scala or the configured program filename
+            execution.json
+            stdout.txt
+            stderr.txt
+            output/
+        fresh_result.json
+        result.json
+        completion.json
+</code></pre>
+<p>The namespace <code>current</code> retains unlaunched preparation evidence. The namespace <code>fresh-original-d1</code> retains the stopped initial run with 213 saved requests, 212 returned responses and 211 executions. One interrupted provider request has unknown usage. That run stopped after the audit found missing shared input roles. It was not a planned pilot. Its outputs and costs remain separate from <code>explicit-inputs-r0</code>.</p>
+<p>The current code release is <code>2026-11-18-corrected-r0-d8ba3815cf95</code>. GitHub code commit <code>56a42d91d8548ce7e4bf71b17b19fc5155f132f7</code> matches the packaged release, and review commit <code>726bd29f0f583d4967c7152adc3049e7814272c0</code> records the explicit input amendment. Branch names identify code and library treatments. R0, R1 and R2 identify attempts within a frozen condition, not Git branches.</p>
+</main></html>
