@@ -131,5 +131,8 @@ def _comprehension_fingerprint_components(
 
 def _checkpoint_row_reusable(row: dict, experiment_fingerprint: str) -> bool:
     """Only stable terminal rows may suppress work after a restart."""
+    # Transport errors and returned but unusable responses both need a new
+    # provider attempt on an explicit resume. They are not program repairs.
+    category = str(row.get("error_category") or "")
     return (row.get("experiment_fingerprint") == experiment_fingerprint
-            and row.get("error_category") != "llm-error")
+            and category != "llm-error" and not category.startswith("provider-"))

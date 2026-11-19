@@ -9,7 +9,7 @@ from pathlib import Path
 import re
 from urllib.parse import unquote, urlparse
 
-NATIVE_EXECUTION_CONTRACT_VERSION = 'native-execution-v2'
+NATIVE_EXECUTION_CONTRACT_VERSION = 'native-execution-v3'
 
 
 def execution_contract(language: str) -> dict:
@@ -18,6 +18,7 @@ def execution_contract(language: str) -> dict:
         'version': NATIVE_EXECUTION_CONTRACT_VERSION,
         'working_directory': 'per_attempt',
         'output_bindings': 'per_attempt',
+        'output_representation': 'explicit_path_or_file_uri_in_prompt',
         'correctness_witness': 'exact_target_stdout',
         'jvm_assertions': language.lower() in {'java', 'scala'},
         'python_fixture_scope': 'explicit_function_bindings' if language.lower() == 'python' else None,

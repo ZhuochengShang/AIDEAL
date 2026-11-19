@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "status": "reviewed_development_not_deployed",
+  "branch": "development/2026-11-19-evaluation-audit",
+  "parent_commit": "7ac965c80f390fb8cf0403c1c8f7a0d810823d3b",
+  "prepared_at_utc": "2026-11-19T08:28:22.349124+00:00",
+  "active_release": "2026-11-18-corrected-r0-d8ba3815cf95",
+  "active_execution_contract": "native-execution-v2",
+  "candidate_execution_contract": "native-execution-v3",
+  "candidate_paid_calls": 0,
+  "changes": [
+    "Retry unusable provider responses only on explicit resume, preserving logical R0 and evidence",
+    "Honor an explicit condition filter when scheduling paid workers",
+    "Report cumulative usage from all retained new-generation attempts with unknown usage explicit",
+    "Bind transport contract before historical success reuse",
+    "Explain whether output_dir is a path or file URI in both documentation arms",
+    "Exclude only source-proven empty import-error fallback placeholders in future inventories"
+  ],
+  "validation": [
+    {
+      "scope": "runner regression suite",
+      "result": "83 passed, 79 subtests passed",
+      "log_sha256": "bb2242425ad2871fd7f9c40cd0fc86b5eebb76562a140df86a72dabf88f2f239"
+    },
+    {
+      "scope": "inventory regression suite",
+      "result": "161 passed, 78 subtests passed",
+      "log_sha256": "5c2b5add39e1de41fa16330a356613806f1d70aee1c09f6327691b1555595516"
+    },
+    {
+      "scope": "shared runner checks",
+      "log_sha256": "dd747de2756dd8b48764a305dcde2dce15478852f07c916d436791b455a41b18"
+    },
+    {
+      "scope": "native execution contract checks",
+      "log_sha256": "e7ea90e8a11c4240f30ea6333e6f97309ec7950158604407b6f6faf173ef0a72"
+    }
+  ],
+  "test_totals_are_not_disjoint": true,
+  "code_files": [
+    {
+      "path": "vendor/aideal_engine/src/aideal/doc_check_provenance.py",
+      "sha256": "3d26657ac592dc1521a27822ab3042de1e1cd3c07f38836ce97ba413b7b4d174",
+      "git_blob_sha": "7a0ef6dc8995c61cae7bbb45d5d2b437005c53bc",
+      "bytes": 6842
+    },
+    {
+      "path": "scripts/run_verified_readme_continuation.py",
+      "sha256": "63cc2b567053d7dd884fe54b585af9a997e68d426dfa54a47fa9b55d60111951",
+      "git_blob_sha": "c9fe29204ca0393948a26bed99932f4160474fc2",
+      "bytes": 36615
+    },
+    {
+      "path": "tests/test_native_checkpoint_recovery.py",
+      "sha256": "1941813da7c4fc956ea592068ef84ffdb403471227d38d7a5f4b51dba2fca135",
+      "git_blob_sha": "52789231aaa8ee9a064092fa1d02de9b65031d1c",
+      "bytes": 4616
+    },
+    {
+      "path": "tests/test_verified_readme_continuation.py",
+      "sha256": "d823db3b597175e4269b608366ae076713b0d4f0e6b46bf9dd86cd3511ddf4f3",
+      "git_blob_sha": "79a46eb38834a109b05d24bafeae7ffb6c0f397d",
+      "bytes": 21480
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/native_execution_contract.py",
+      "sha256": "f054a2138af5a3cb3303cccfa824327aa6e95dba9df134a134a8ac0b823fe42e",
+      "git_blob_sha": "f0f93c1e2693f22008bce1d2f3ec302a5aed3024",
+      "bytes": 7395
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/doc_check_execution.py",
+      "sha256": "e782d1fc47e62cebb9d85bfd90da07d4363ea7d6e5fb89b248e78b07809b8ccf",
+      "git_blob_sha": "80ffd937c8060fa3989a0d638c9f78b6b0857f23",
+      "bytes": 50976
+    },
+    {
+      "path": "tests/test_native_execution_contract.py",
+      "sha256": "be09daa3f7e172701be51b817fb5929667afd0b0ec39b416200109803b3a0018",
+      "git_blob_sha": "8926229be7c479acd3a9c7f7213901711db4ba5a",
+      "bytes": 10148
+    },
+    {
+      "path": "vendor/aideal_engine/src/aideal/api_public_inventory.py",
+      "sha256": "65f88cfb974ab1081c423fc219f19df4380b0f51c1c0598bcd2627778becd040",
+      "git_blob_sha": "297ed0a40de3b464c1b2f87120a0d7deaabdcd9a",
+      "bytes": 52666
+    },
+    {
+      "path": "tests/test_import_failure_stubs.py",
+      "sha256": "99ef4fa701baf60b2d3f8625252cdb49ba8f07aedf1c33be74e94f601948dbd8",
+      "git_blob_sha": "5261202ab0c7a0216cbec2e6df0a721f122f3573",
+      "bytes": 4268
+    }
+  ],
+  "not_changed": [
+    "frozen evaluator release",
+    "active study API manifest and denominators",
+    "recorded prompts and programs",
+    "measured results",
+    "current cluster job"
+  ],
+  "remaining_gates": [
+    "Create a new reviewed release and input manifest before any use in experiments",
+    "Use a new matched study when changing prompt/output or selection contracts",
+    "Validate generated README claims against source and executable checks",
+    "Keep native acceptance distinct from independent task correctness",
+    "No claim that arbitrary programs are bug-free or every API can execute successfully"
+  ]
+}

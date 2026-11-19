@@ -85,7 +85,7 @@ def reuse_reasons(old, current, intended_prompt, model, runtime_receipts, runtim
     keys = ('project', 'language', 'doc_source', 'doc_scope', 'class_context',
             'manifest_sha256', 'document_sha256', 'original_document_files',
             'source', 'fixtures', 'api_inventory', 'scaffold', 'canonical_requested_targets',
-            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter')
+            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter', 'transport_contract')
     reasons = ['changed_or_missing_' + key for key in keys
                if key not in historical or historical[key] != current.get(key)]
     if not runtime_verified:
@@ -393,7 +393,94 @@ def totals(rows):
             for key in ('llm_calls', 'input_tokens', 'output_tokens', 'wall_s')}
 
 
-def aggregate(old, corrected, fresh, condition):
+def provider_attempt_ledger(work_dir, allowed_apis, recorded_apis=()):
+    """Account for every retained provider attempt, including interrupted retries.
+
+    This reads only this condition's new-generation namespace. Historical
+    generation and saved-program replay remain separate cost scopes. A request
+    without a provider receipt may have been billed, so its usage stays unknown.
+    """
+    work_dir = Path(work_dir).resolve()
+    allowed = set(allowed_apis)
+    totals = {'request_count': 0, 'provider_receipt_count': 0, 'llm_calls': 0,
+              'input_tokens': 0, 'output_tokens': 0, 'missing_usage_attempts': 0,
+              'provider_wall_s': 0.0, 'execution_wall_s': 0.0,
+              'usage_complete': True, 'wall_time_complete': True}
+    records, observed, seen = [], set(), set()
+    for provider_path in work_dir.glob('run_*/attempt_*/provider.json'):
+        if not (provider_path.parent / 'request.json').is_file():
+            raise ValueError('Provider receipt lacks its original request')
+    for request_path in sorted(work_dir.glob('run_*/attempt_*/request.json')):
+        resolved = request_path.resolve(strict=True)
+        if not resolved.is_relative_to(work_dir) or resolved in seen:
+            raise ValueError('Provider request escapes or aliases another attempt')
+        seen.add(resolved)
+        request = read(request_path)
+        api = request.get('api')
+        if api not in allowed:
+            raise ValueError('Provider receipt is outside this condition subset: ' + str(api))
+        observed.add(api)
+        totals['request_count'] += 1
+        record = {'api': api, 'round': request.get('round'),
+                  'attempt_number': request.get('attempt_number'), 'request': binding(request_path)}
+        missing = False
+        provider_path = request_path.parent / 'provider.json'
+        if provider_path.exists():
+            if not provider_path.resolve().is_relative_to(work_dir):
+                raise ValueError('Provider receipt escapes this condition')
+            provider = read(provider_path)
+            record.update(provider=binding(provider_path), status=provider.get('status'),
+                          category=provider.get('category'))
+            totals['provider_receipt_count'] += 1
+            usage = provider.get('usage') or {}
+            for name, key in (('llm_calls', 'calls'), ('input_tokens', 'input_tokens'),
+                              ('output_tokens', 'output_tokens')):
+                value = usage.get(key)
+                if type(value) is int and value >= 0:
+                    totals[name] += value
+                else:
+                    missing = True
+            missing |= (usage.get('usage_complete') is not True
+                        or usage.get('missing_usage_calls', 0) != 0
+                        or usage.get('calls', 0) == 0)
+            duration = provider.get('wall_s')
+            if type(duration) in (int, float) and duration >= 0:
+                totals['provider_wall_s'] += duration
+            else:
+                totals['wall_time_complete'] = False
+        else:
+            record['status'] = 'provider_receipt_missing'
+            missing = True
+            totals['wall_time_complete'] = False
+        execution_path = request_path.parent / 'execution.json'
+        if execution_path.exists():
+            if not execution_path.resolve().is_relative_to(work_dir):
+                raise ValueError('Execution receipt escapes this condition')
+            execution = read(execution_path)
+            record['execution'] = binding(execution_path)
+            duration = execution.get('wall_s')
+            if type(duration) in (int, float) and duration >= 0:
+                totals['execution_wall_s'] += duration
+            else:
+                totals['wall_time_complete'] = False
+        elif record['status'] == 'returned':
+            # Generation finished but execution may have been interrupted.
+            totals['wall_time_complete'] = False
+        record['usage_complete'] = not missing
+        totals['missing_usage_attempts'] += int(missing)
+        records.append(record)
+    missing_apis = sorted(set(recorded_apis) - observed)
+    totals['usage_complete'] = not totals['missing_usage_attempts'] and not missing_apis
+    totals['wall_time_complete'] &= not bool(missing_apis)
+    totals['wall_s'] = totals['provider_wall_s'] + totals['execution_wall_s']
+    totals.update(usage_scope='all retained new-generation attempts; reported usage only',
+                  call_count_scope='returned responses reported by usage; request_count includes interrupted requests; SDK retries are not individually observed',
+                  wall_scope='sum of recorded provider and execution intervals; excludes idle time and unrecorded interrupted intervals',
+                  missing_api_receipts=missing_apis)
+    return {'schema': 'aideal.provider-attempt-ledger/v1', 'totals': totals, 'attempts': records}
+
+
+def aggregate(old, corrected, fresh, condition, provider_costs=None):
     """Keep old costs, replay costs and new generation costs explicitly separate."""
     details = {}
     for api in condition['reused_apis']:
@@ -430,7 +517,8 @@ def aggregate(old, corrected, fresh, condition):
         'prior_generation_cost_scope': 'full_historical_bank', 'costs': {'prior_generation': totals(old.get('metrics', {})),
             'corrected_saved_program_replay': (totals(corrected.get('metrics', {})) if corrected is not None else
                 {'status': 'not_consumed', 'calls': 0, 'llm_calls': 0, 'input_tokens': 0, 'output_tokens': 0, 'wall_s': 0}),
-            'new_generation': totals(fresh_metrics)},
+            'new_generation': provider_costs if provider_costs is not None else totals(fresh_metrics)},
+        'final_target_metric_totals': totals(fresh_metrics),
         'interpretation': ('Verified saved successes plus new attempts on remaining targets; cumulative continuation, '
             'not fresh R0 or R1 repair.' if condition['reused_apis'] else
             'All targets receive fresh initial programs under the new protocol. No prior failure feedback is sent.')}
@@ -448,6 +536,12 @@ def run_condition(spec, arm):
         if complete_path.exists():
             summary = read(complete_path)
             verify([summary['result']])
+            receipt = summary.get('costs', {}).get('new_generation', {}).get('ledger')
+            if receipt:
+                verify([receipt])
+                saved_ledger = read(receipt['path'])
+                verify([record[key] for record in saved_ledger['attempts']
+                        for key in ('request', 'provider', 'execution') if key in record])
             return summary
         fresh = {}
         if condition['pending_apis']:
@@ -467,7 +561,10 @@ def run_condition(spec, arm):
         verify(identity['bindings'] + [identity['operator']])
         verify_runtime_profile(runtime)
         corrected = read(condition['corrected_result']) if condition['corrected_result'] else None
-        result = aggregate(read(condition['source_result']), corrected, fresh, condition)
+        ledger = provider_attempt_ledger(destination / 'execution', condition['pending_apis'], fresh.get('metrics', {}))
+        common.atomic_json(destination / 'provider_attempt_ledger.json', ledger)
+        provider_costs = {**ledger['totals'], 'ledger': binding(destination / 'provider_attempt_ledger.json')}
+        result = aggregate(read(condition['source_result']), corrected, fresh, condition, provider_costs)
         result.update(condition=arm, source_result=binding(condition['source_result']),
                       corrected_result=binding(condition['corrected_result']) if condition['corrected_result'] else None,
                       fresh_result=binding(destination / 'fresh_result.json') if condition['pending_apis'] else None,
@@ -509,8 +606,10 @@ def main():
             arm: {'reuse': len(c['reused_apis']), 'new': len(c['pending_apis']), 'blockers': c['reuse_blockers']}
             for arm, c in identity['conditions'].items()}}), flush=True)
     if args.run:
+        # A condition filter is also a paid-call scope limit for this launcher.
+        requested_arms = (args.condition,) if args.condition else ARMS
         for bank, spec in banks.items():
-            for arm in ARMS:
+            for arm in requested_arms:
                 command = [sys.executable, str(Path(__file__).resolve()), '--spec', str(args.spec.resolve()),
                            '--worker', '--condition', arm]
                 if bank is not None:

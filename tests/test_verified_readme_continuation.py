@@ -18,7 +18,7 @@ def evidence():
     keys = ('project', 'language', 'doc_source', 'doc_scope', 'class_context',
             'manifest_sha256', 'document_sha256', 'original_document_files',
             'source', 'fixtures', 'api_inventory', 'scaffold', 'canonical_requested_targets',
-            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter')
+            'prompt_contract', 'owner_overrides', 'execute_config', 'interpreter', 'transport_contract')
     fp = {key: {'test_identity': key} for key in keys}
     fp.update(models={'audience': 'google:test', 'audience_max_output_tokens': 8192})
     old = {'run': {'fingerprint_components': fp}, 'details': {'a': {'status': 'pass'}, 'b': {'status': 'fail'}},
@@ -39,7 +39,7 @@ def test_only_corrected_saved_pass_is_reused():
     assert c.choose_rows(old, replay, [])[1] == ['a', 'b']
 
 
-@pytest.mark.parametrize('field', ['source', 'fixtures', 'document_sha256', 'canonical_requested_targets', 'prompt_contract'])
+@pytest.mark.parametrize('field', ['source', 'fixtures', 'document_sha256', 'canonical_requested_targets', 'prompt_contract', 'transport_contract'])
 def test_changed_input_disallows_saved_pass(field):
     old, replay, fp = evidence()
     fp[field] = 'changed'
@@ -279,3 +279,90 @@ def test_runtime_readiness_cannot_be_used_with_wrong_selection(tmp_path):
     revision.write_text('{}')
     with pytest.raises(ValueError, match='exact reviewed selection'):
         c.verify_required_selection({'selection_revision': str(revision)}, runtime, None)
+
+@pytest.mark.parametrize('selected, expected', [
+    ('original', ['original']), ('generated_d1', ['generated_d1']),
+    (None, ['original', 'generated_d1']),
+])
+def test_run_condition_flag_limits_scheduled_workers(tmp_path, selected, expected):
+    """A single-condition request must not silently start another paid arm."""
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    import sys
+    argv = ['continuation', '--spec', str(tmp_path / 'spec.json'), '--run']
+    if selected:
+        argv.extend(['--condition', selected])
+    prepared = {'selected': 1, 'conditions': {
+        arm: {'reused_apis': [], 'pending_apis': ['a'], 'reuse_blockers': []}
+        for arm in c.ARMS}}
+    with patch.object(sys, 'argv', argv), \
+         patch.object(c, 'read', return_value={'library': 'synthetic', 'output': str(tmp_path / 'out')}), \
+         patch.object(c, 'prepare', return_value=prepared), \
+         patch.object(c.common, 'ownership', side_effect=lambda _: nullcontext()), \
+         patch.object(c.subprocess, 'run', return_value=SimpleNamespace(returncode=0)) as process:
+        assert c.main() == 0
+    commands = [call.args[0] for call in process.call_args_list]
+    assert [command[command.index('--condition') + 1] for command in commands] == expected
+
+def write_attempt(root, number, *, api='b', status='returned', tokens=(5, 2), provider=True, usage_complete=True):
+    folder = root / 'run_b' / f'attempt_{number:04d}'
+    folder.mkdir(parents=True)
+    (folder / 'request.json').write_text(json.dumps({'api': api, 'round': 0, 'attempt_number': number}))
+    if provider:
+        (folder / 'provider.json').write_text(json.dumps({'status': status, 'wall_s': 2,
+            'category': 'provider-incomplete-output' if status == 'error' else None,
+            'usage': {'calls': 1, 'input_tokens': tokens[0], 'output_tokens': tokens[1],
+                      'missing_usage_calls': int(not usage_complete), 'usage_complete': usage_complete}}))
+    if status == 'returned' and provider:
+        (folder / 'execution.json').write_text(json.dumps({'exit_code': 0, 'wall_s': 3}))
+    return folder
+
+
+def test_cumulative_provider_ledger_counts_failed_response_and_resume_once(tmp_path):
+    root = tmp_path / 'new' / 'execution'
+    write_attempt(root, 1, status='error')
+    write_attempt(root, 2, tokens=(7, 3))
+    # Historical/replay receipts live elsewhere and cannot enter this ledger.
+    write_attempt(tmp_path / 'historical' / 'execution', 1, tokens=(1000, 1000))
+    ledger = c.provider_attempt_ledger(root, ['b'], ['b'])
+    cost = ledger['totals']
+    assert (cost['request_count'], cost['llm_calls'], cost['input_tokens'], cost['output_tokens']) == (2, 2, 12, 5)
+    assert cost['usage_complete'] and cost['wall_s'] == 7
+    assert all(record['round'] == 0 for record in ledger['attempts'])
+    assert ledger == c.provider_attempt_ledger(root, ['b'], ['b'])
+    old, replay, _ = evidence()
+    fresh = {'run': {'complete': True, 'remaining_api_count': 0},
+             'metrics': {'b': {'status': 'pass', 'llm_calls': 1, 'input_tokens': 7, 'output_tokens': 3}}}
+    condition = {'selected_apis': ['a', 'b'], 'reused_apis': ['a'], 'pending_apis': ['b']}
+    result = c.aggregate(old, replay, fresh, condition, cost)
+    assert result['passes'] == 2 and result['score_with_infra'] == 1
+    assert result['costs']['new_generation']['llm_calls'] == 2
+    assert result['final_target_metric_totals']['llm_calls'] == 1
+    assert result['costs']['prior_generation']['llm_calls'] == 2
+
+
+def test_interrupted_and_unknown_usage_remain_explicit(tmp_path):
+    write_attempt(tmp_path, 1, provider=False)
+    write_attempt(tmp_path, 2, status='error', usage_complete=False)
+    write_attempt(tmp_path, 3)
+    cost = c.provider_attempt_ledger(tmp_path, ['b'], ['b'])['totals']
+    assert cost['request_count'] == 3 and cost['provider_receipt_count'] == 2
+    assert cost['llm_calls'] == 2 and cost['input_tokens'] == 10
+    assert cost['missing_usage_attempts'] == 2
+    assert not cost['usage_complete'] and not cost['wall_time_complete']
+
+
+def test_missing_or_foreign_attempt_evidence_cannot_claim_complete_costs(tmp_path):
+    cost = c.provider_attempt_ledger(tmp_path, ['b'], ['b'])['totals']
+    assert not cost['usage_complete'] and cost['missing_api_receipts'] == ['b']
+    write_attempt(tmp_path, 1, api='not_in_this_condition')
+    with pytest.raises(ValueError, match='outside this condition'):
+        c.provider_attempt_ledger(tmp_path, ['b'])
+
+
+def test_missing_historical_transport_contract_disallows_reuse():
+    old, replay, current = evidence()
+    old['run']['fingerprint_components'].pop('transport_contract')
+    reasons = c.reuse_reasons(old, current, current['prompt_contract'], 'google:test', [], runtime_verified=True)
+    assert 'changed_or_missing_transport_contract' in reasons
+    assert c.choose_rows(old, replay, reasons)[0] == {}

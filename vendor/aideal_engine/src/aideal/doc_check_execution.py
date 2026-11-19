@@ -541,7 +541,20 @@ def _comprehension_execute(cfg: AidealConfig, inventory, sample, seed, doc_sourc
                 sample_data, evidence_dir, placeholders, ex.get("output_bindings"))
             attempt_bindings = rebind_output_text(bindings, output_receipt)
             attempt_inputs = rebind_output_text(available_inputs, output_receipt)
-            attempt_inputs += "\nWritable output_dir is a directory unique to this attempt; keep generated files beneath it."
+            # State the representation as well as the destination. JVM local
+            # filesystem constructors and URI-aware APIs accept different inputs.
+            # This shared instruction is independent of the documentation arm.
+            if str(attempt_data['output_dir']).startswith('file://'):
+                output_format = (
+                    "a file URI, not a filesystem path. For local filesystem APIs, "
+                    "convert it with the language's URI/path utilities; URI-aware "
+                    "APIs may use it directly")
+            else:
+                output_format = "a local filesystem path"
+            attempt_inputs += (
+                f"\nWritable output_dir is {output_format}. "
+                "It identifies a directory unique to this attempt; "
+                "keep generated files beneath it.")
             scala_file = evidence_dir / str(ex.get("test_filename", "ApiTest.scala"))
             cmd = (cmd_template.replace("{scala_file}", str(scala_file))
                    .replace("{test_file}", str(scala_file))

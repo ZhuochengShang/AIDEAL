@@ -86,57 +86,62 @@ class NativeExecutionContractTests(unittest.TestCase):
             self.assertIn('AssertionError: must fail', result.stderr)
 
     def test_native_runner_separates_apis_and_repair_rounds(self):
-        with tempfile.TemporaryDirectory() as folder:
-            root = Path(folder).resolve()
-            (root / 'fixture.csv').write_text('fixed-input\n')
-            (root / 'library.py').write_text('def f(): pass\ndef g(): pass\n')
-            (root / 'README.md').write_text('Synthetic library.')
-            (root / 'scaffold.py').write_text('def run():\n    # AIDEAL_DATA_BINDINGS\n    # START\n    # END\n    print("DONE")\nrun()\n')
-            (root / 'dummy.jar').write_bytes(b'fixture avoids importing Spark')
-            config = {
-                'project': {'name': 'isolation-regression', 'language': 'Python'},
-                'codebase': {'source_globs': ['library.py']},
-                'files': {'original_readme': 'README.md'},
-                'models': {'registry': {'fake': {'provider': 'synthetic', 'model': 'offline'}},
-                           'roles': {'audience': 'fake', 'author': 'fake'}},
-                'comprehension': {'execute': {
-                    'command': shlex.quote(sys.executable) + ' "{test_file}"',
-                    'scaffold': 'scaffold.py', 'region': ['# START', '# END'],
-                    'work_dir': 'work', 'test_filename': 'ApiTest.py', 'success_marker': 'DONE',
-                    'spark_jars': '*.jar', 'local_uris': False,
-                    'sample_data': {'csv_input': str(root / 'fixture.csv')}, 'output_dir': str(root / 'shared-output'),
-                }},
-            }
-            (root / 'configs').mkdir()
-            (root / 'configs/aideal.yaml').write_text(yaml.safe_dump(config))
-            cfg = load_config(root / 'configs/aideal.yaml')
-            snippets = [
-                'from pathlib import Path\nPath(output_dir, "image.png").mkdir()\nraise ValueError("first attempt")',
-                'from pathlib import Path\nPath(output_dir, "image.png").write_text("fixed")',
-                'from pathlib import Path\nPath(output_dir, "image.png").write_text("next API")',
-            ]
-            with ExitStack() as stack:
-                provider = stack.enter_context(patch('aideal.llm.invoke_text', side_effect=snippets))
-                stack.enter_context(patch('aideal.doc_check_execution.public_api_details', return_value=[]))
-                stack.enter_context(patch('aideal.doc_check_execution.public_api_surface', return_value={'f', 'g'}))
-                stack.enter_context(patch('aideal.readme_agent.public_api_details', return_value=[]))
-                result = _comprehension_execute(cfg, [ApiEntry(x, '', '', 'Use the function.') for x in ['f', 'g']],
-                                                0, 42, 'original', show_code=True, max_fix_rounds=1)
-            self.assertEqual(result['score'], 1)
-            self.assertEqual(result['metrics']['f']['pass_round'], 1)
-            self.assertEqual(result['metrics']['g']['pass_round'], 0)
-            evidence = [Path(p) for m in result['metrics'].values() for p in m['attempt_evidence']]
-            self.assertEqual(len(evidence), 3)
-            self.assertEqual(len({json.loads((p / 'execution.json').read_text())['cwd'] for p in evidence}), 3)
-            for p in evidence:
-                receipt = json.loads((p / 'execution_contract.json').read_text())
-                self.assertEqual(receipt['sample_data']['csv_input'], str(root / 'fixture.csv'))
-                self.assertEqual(receipt['output_root'], str(p / 'output'))
-                prompt = json.loads((p / 'request.json').read_text())['user']
-                self.assertIn(str(p / 'output'), prompt)
-            self.assertEqual((root / 'fixture.csv').read_text(), 'fixed-input\n')
-            self.assertFalse((root / 'shared-output').exists())
-            self.assertEqual(result['run']['execution_contract']['version'], 'native-execution-v2')
+        for local_uris in (False, True):
+            with self.subTest(local_uris=local_uris):
+                with tempfile.TemporaryDirectory() as folder:
+                    root = Path(folder).resolve()
+                    (root / 'fixture.csv').write_text('fixed-input\n')
+                    (root / 'library.py').write_text('def f(): pass\ndef g(): pass\n')
+                    (root / 'README.md').write_text('Synthetic library.')
+                    (root / 'scaffold.py').write_text('def run():\n    # AIDEAL_DATA_BINDINGS\n    # START\n    # END\n    print("DONE")\nrun()\n')
+                    (root / 'dummy.jar').write_bytes(b'fixture avoids importing Spark')
+                    config = {
+                        'project': {'name': 'isolation-regression', 'language': 'Python'},
+                        'codebase': {'source_globs': ['library.py']},
+                        'files': {'original_readme': 'README.md'},
+                        'models': {'registry': {'fake': {'provider': 'synthetic', 'model': 'offline'}},
+                                   'roles': {'audience': 'fake', 'author': 'fake'}},
+                        'comprehension': {'execute': {
+                            'command': shlex.quote(sys.executable) + ' "{test_file}"',
+                            'scaffold': 'scaffold.py', 'region': ['# START', '# END'],
+                            'work_dir': 'work', 'test_filename': 'ApiTest.py', 'success_marker': 'DONE',
+                            'spark_jars': '*.jar', 'local_uris': local_uris,
+                            'sample_data': {'csv_input': str(root / 'fixture.csv')}, 'output_dir': str(root / 'shared-output'),
+                        }},
+                    }
+                    (root / 'configs').mkdir()
+                    (root / 'configs/aideal.yaml').write_text(yaml.safe_dump(config))
+                    cfg = load_config(root / 'configs/aideal.yaml')
+                    snippets = [
+                        'from pathlib import Path\nfrom urllib.parse import urlparse, unquote\noutput_dir = unquote(urlparse(output_dir).path) if output_dir.startswith("file://") else output_dir\nPath(output_dir, "image.png").mkdir()\nraise ValueError("first attempt")',
+                        'from pathlib import Path\nfrom urllib.parse import urlparse, unquote\noutput_dir = unquote(urlparse(output_dir).path) if output_dir.startswith("file://") else output_dir\nPath(output_dir, "image.png").write_text("fixed")',
+                        'from pathlib import Path\nfrom urllib.parse import urlparse, unquote\noutput_dir = unquote(urlparse(output_dir).path) if output_dir.startswith("file://") else output_dir\nPath(output_dir, "image.png").write_text("next API")',
+                    ]
+                    with ExitStack() as stack:
+                        provider = stack.enter_context(patch('aideal.llm.invoke_text', side_effect=snippets))
+                        stack.enter_context(patch('aideal.doc_check_execution.public_api_details', return_value=[]))
+                        stack.enter_context(patch('aideal.doc_check_execution.public_api_surface', return_value={'f', 'g'}))
+                        stack.enter_context(patch('aideal.readme_agent.public_api_details', return_value=[]))
+                        result = _comprehension_execute(cfg, [ApiEntry(x, '', '', 'Use the function.') for x in ['f', 'g']],
+                                                        0, 42, 'original', show_code=True, max_fix_rounds=1)
+                    self.assertEqual(result['score'], 1)
+                    self.assertEqual(result['metrics']['f']['pass_round'], 1)
+                    self.assertEqual(result['metrics']['g']['pass_round'], 0)
+                    evidence = [Path(p) for m in result['metrics'].values() for p in m['attempt_evidence']]
+                    self.assertEqual(len(evidence), 3)
+                    self.assertEqual(len({json.loads((p / 'execution.json').read_text())['cwd'] for p in evidence}), 3)
+                    for p in evidence:
+                        receipt = json.loads((p / 'execution_contract.json').read_text())
+                        self.assertEqual(receipt['sample_data']['csv_input'], (root / 'fixture.csv').as_uri() if local_uris else str(root / 'fixture.csv'))
+                        self.assertEqual(receipt['output_root'], str(p / 'output'))
+                        prompt = json.loads((p / 'request.json').read_text())['user']
+                        self.assertIn(str(p / 'output'), prompt)
+                        self.assertIn('a file URI, not a filesystem path' if local_uris else 'a local filesystem path', prompt)
+                        if local_uris:
+                            self.assertIn("convert it with the language's URI/path utilities", prompt)
+                    self.assertEqual((root / 'fixture.csv').read_text(), 'fixed-input\n')
+                    self.assertFalse((root / 'shared-output').exists())
+                    self.assertEqual(result['run']['execution_contract']['version'], 'native-execution-v3')
 
 
 if __name__ == '__main__':

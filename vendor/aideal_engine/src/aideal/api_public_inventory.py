@@ -97,6 +97,22 @@ def _literal_names(node):
     return None
 
 
+def _empty_import_failure_stub(node, condition):
+    """Recognize only empty, undecorated classes in explicit import-error arms.
+
+    Ordinary empty classes and inherited/decorated classes can have real API
+    semantics. Keep them, and keep nonempty fallback implementations. This
+    narrow rule excludes documentation placeholders without importing code.
+    """
+    if node.bases or node.keywords or node.decorator_list:
+        return False
+    if _body(node, '')['category'] != 'no_body':
+        return False
+    return any(isinstance(clause, dict) and clause.get('kind') == 'except'
+               and clause.get('import_error_only') and clause.get('try_imports')
+               for clause in condition)
+
+
 def _python_file(path, root, module, library, source):
     tree = ast.parse(source, filename=str(path), type_comments=True)
     lines, starts = _offsets(source)
@@ -107,6 +123,11 @@ def _python_file(path, root, module, library, source):
     exports = None
     all_known = True
     package = module if path.stem == '__init__' else module.rsplit('.', 1)[0]
+    # If source binds an exception name, do not assume it means the builtin.
+    # A conservative whole-file check also avoids evaluating dynamic bindings.
+    bound_names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store)}
+    bound_names.update(n.name for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)))
+    bound_names.update(n.asname or n.name.split('.')[0] for n in ast.walk(tree) if isinstance(n, ast.alias))
 
     def alias(name, target, node, condition=(), relation='import'):
         aliases.append({'exposed_name': module+'.'+name, 'target': target, 'path': relative, 'line': node.lineno,
@@ -138,6 +159,14 @@ def _python_file(path, root, module, library, source):
                     row.update(signature='class '+node.name+('('+', '.join(bases)+')' if bases else ''), returns=qualified,
                                class_bases=bases, class_keywords=[_expr(x) for x in node.keywords], constructor_signature='def '+chosen.name+'('+_expr(chosen.args)+')' if chosen else '',
                                body_classification={'category':'implementation','reviewed':True,'evidence':{'method':'Declared class API; constructor arity recorded separately; class body is not a wrapper classification','source_span_sha256':row['source_span_sha256']}})
+                    if _empty_import_failure_stub(node, condition):
+                        row['import_failure_stub'] = True
+                        row['body_presence'] = 'absent'
+                        row['body_classification'] = {
+                            'category': 'no_body', 'reviewed': True,
+                            'evidence': {'method': 'Empty class without bases, decorators or keywords in an explicit import-error handler for a source import',
+                                         'source_span_sha256': row['source_span_sha256'],
+                                         'conditional_context': list(condition)}}
                     classes[qualified]={'row':row,'bases':bases,'module':module,'owners':owners,'node':node}
                 else:
                     row.update(_params(node,bool(owners) and 'staticmethod' not in decorators))
@@ -201,7 +230,18 @@ def _python_file(path, root, module, library, source):
                     value=getattr(node,field,None)
                     clause={'kind':'if','line':node.lineno,'expression':_expr(node.test),'expected':field=='body'} if isinstance(node,ast.If) else {'kind':type(node).__name__,'line':getattr(node,'lineno',0),'branch':field}
                     if isinstance(value,list):visit(value,owners,condition+(clause,))
-                for arm in [*getattr(node,'handlers',[]),*getattr(node,'cases',[])]:
+                for arm in getattr(node, 'handlers', []):
+                    types = list(arm.type.elts) if isinstance(arm.type, ast.Tuple) else [arm.type]
+                    exceptions = [_expr(value) for value in types]
+                    clause = {'kind': 'except', 'line': arm.lineno, 'try_line': node.lineno,
+                              'exception_type': _expr(arm.type),
+                              'import_error_only': bool(exceptions) and all(value.split('.')[0] not in bound_names and value in {
+                                  'ImportError', 'ModuleNotFoundError',
+                                  'builtins.ImportError', 'builtins.ModuleNotFoundError'} for value in exceptions),
+                              'try_imports': [_expr(value) for value in node.body
+                                              if isinstance(value, (ast.Import, ast.ImportFrom))]}
+                    visit(arm.body, owners, condition + (clause,))
+                for arm in getattr(node, 'cases', []):
                     visit(arm.body,owners,condition+(f'{type(node).__name__}@{getattr(node,"lineno",0)}',))
     visit(tree.body)
     if not all_known:issues.append({'path':relative,'status':'unresolved','reason':'dynamic___all__','module':module})
@@ -451,6 +491,7 @@ def scan_python_surface(root, package_roots, library, source_snapshot=None, bind
         row['preferred_public_path']=min((x.split(':',1)[1] for x in row['exposure_ids']),key=lambda x:(len(x.split('.')),len(x),x),default=None)
         reason=None
         if row.get('python_exposed') is False:reason='c_only_cython_declaration'
+        elif row.get('import_failure_stub'):reason='empty_import_failure_placeholder'
         elif row['name'] in {'__init__','__new__','__cinit__','__dealloc__'}:reason='constructor_or_lifecycle_part_of_class'
         elif not row['exposure_ids']:reason='no_public_owned_exposure'
         elif not row['callable']:reason='noncallable_property'
